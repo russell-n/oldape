@@ -4,10 +4,10 @@ A module to hold a file-like object for output.
 
 # python Libraries
 import Queue
-from timetorecovertest.threads import threads
+from tottest.threads import threads
 
 #time to recover Libraries
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 from errors import TimeoutError
 
 EMPTY_STRING = ''

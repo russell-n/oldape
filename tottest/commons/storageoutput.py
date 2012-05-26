@@ -10,8 +10,8 @@ import copy
 import shutil
 
 
-# timetorecoverytest libraries
-from timetorecovertest.baseclass import BaseClass
+# tottest libraries
+from tottest.baseclass import BaseClass
 #from assertions import assert_is
 from errors import StorageError
 

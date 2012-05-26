@@ -2,8 +2,8 @@
 A module to hold a setup class for a single iteration.
 """
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
+# tottest Libraries
+from tottest.baseclass import BaseClass
 from sleep import Sleep
 
 class SetupIteration(BaseClass):

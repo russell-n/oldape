@@ -4,12 +4,12 @@ A module to hold a translator of configurations to parameters
 #python
 from collections import namedtuple
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
-from timetorecovertest.commons.generators import shallow_find
+# tottest Libraries
+from tottest.baseclass import BaseClass
+from tottest.commons.generators import shallow_find
 from configurationmap import ConfigurationMap
 from config_options import ConfigOptions
-from timetorecovertest.commons import errors
+from tottest.commons import errors
 
 parameters = ('source_file output_folder data_file repetitions recovery_time timeout' +
               ' threshold criteria target wifi_interface' +

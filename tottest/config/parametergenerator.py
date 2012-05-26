@@ -10,8 +10,8 @@ and the parameter-generator will create 10 parameter-objects
 #python
 from collections import namedtuple
 
-# timetorecovertest
-from timetorecovertest.baseclass import BaseClass
+# tottest
+from tottest.baseclass import BaseClass
 
 
 parameters = ("repetition repetitions output_folder recovery_time timeout" +

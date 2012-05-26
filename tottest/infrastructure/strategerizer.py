@@ -6,17 +6,17 @@ A module to hold a keeper of Strategies
 
 # testrunner Libraries
 from setup import SetUp
-from teardown import TearDown
+#from teardown import TearDown
 from crashhandler import CrashHandler
-from timetorecovertest.config.configfetcher import ConfigFetcher
-from timetorecovertest.info.helper import Helper
-from timetorecovertest.baseclass import BaseClass
+from tottest.config.configfetcher import ConfigFetcher
+from tottest.info.helper import Helper
+from tottest.baseclass import BaseClass
 
 # commons
-from timetorecovertest.commons import errors
+from tottest.commons import errors
 
 # tools
-from timetorecovertest.tools import testsl4a
+from tottest.tools import testsl4a
 
 
 class Strategerizer(BaseClass):

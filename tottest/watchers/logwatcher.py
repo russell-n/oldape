@@ -2,9 +2,9 @@
 A module for watchers of kmsg logs.
 """
 
-from timetorecovertest.baseclass import BaseClass
-from timetorecovertest.connections import adbconnection
-from timetorecovertest.threads import threads
+from tottest.baseclass import BaseClass
+from tottest.connections import adbconnection
+from tottest.threads import threads
 
 
 class LogWatcher(BaseClass):

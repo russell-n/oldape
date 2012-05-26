@@ -5,9 +5,9 @@ An extension of the ConfigParser to do conversions
 import ConfigParser
 from string import whitespace
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
-from timetorecovertest.commons.errors import ConfigurationError
+# tottest Libraries
+from tottest.baseclass import BaseClass
+from tottest.commons.errors import ConfigurationError
 
 STRIP_LIST = "'\"" + whitespace
 EMPTY_STRING = ''

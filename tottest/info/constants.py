@@ -20,7 +20,7 @@ TEMPLATE="""
 """.format(bold=BOLD, reset=RESET)
 
 NAME_TEMPLATE="{0}{{name}}{1} - {{description}}".format(BOLD, RESET)
-HELP_FOLDER = "timetorecovertest.info.helpfiles"
+HELP_FOLDER = "tottest.info.helpfiles"
 OUTPUT_VARIABLE = "output"
 HELP_BASE = "helpmain"
 

@@ -5,7 +5,7 @@ The Abstract Base for devices
 from abc import ABCMeta, abstractproperty, abstractmethod
 
 #local
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 
 class BaseDevice(BaseClass):

@@ -32,10 +32,10 @@ try:
 except ImportError as error:
     print error
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
-from timetorecovertest.commons.errors import ConnectionError
-from timetorecovertest.commons.readoutput import StandardOutput
+# tottest Libraries
+from tottest.baseclass import BaseClass
+from tottest.commons.errors import ConnectionError
+from tottest.commons.readoutput import StandardOutput
 
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "

@@ -15,7 +15,7 @@ Contents:
    Commands <commands>
    Commons <commons/index>
    Config Classes <config/index>
-   Connection Classes <connections>
+   Connection Classes <connections.index>
    Device Classes <devices>
    Helper Classes <helper>
    Infrastructure Classes <infrastructure/index>

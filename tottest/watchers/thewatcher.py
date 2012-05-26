@@ -2,7 +2,7 @@
 The Watcher Watches Watchers.
 """
 
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 
 class TheWatcher(BaseClass):

@@ -2,7 +2,7 @@
 A module to hold actions for the end of a single test-iteration.
 """
 
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 from sleep import Sleep
 
 class TeardownIteration(BaseClass):

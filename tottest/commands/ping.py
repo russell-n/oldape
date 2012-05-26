@@ -5,9 +5,9 @@ A Ping command pings and checks the response.
 import re
 from collections import namedtuple
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
-import timetorecovertest.connections.adbconnection as adbconnection
+# tottest Libraries
+from tottest.baseclass import BaseClass
+import tottest.connections.adbconnection as adbconnection
 
 NAMED = r"(?P<{n}>{p})"
 ONE_OR_MORE = r"+"

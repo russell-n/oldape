@@ -4,11 +4,14 @@ interprets errors
 """
 # python Libraries
 import re
+from StringIO import StringIO
 
-# timetorecovertest Libraries
+# tottest Libraries
 from localconnection import LocalNixConnection
-from timetorecovertest.commons.errors import ConnectionError, ConnectionWarning
-from timetorecovertest.commons.readoutput import ValidatingOutput
+from localconnection import OutputError
+from localconnection import EOF
+from tottest.commons.errors import ConnectionError, ConnectionWarning
+from tottest.commons.readoutput import ValidatingOutput
 
 # Error messages
 DEVICE_NOT_FOUND = "error: device not found"
@@ -20,10 +23,13 @@ NOT_ROOTED = "This Android device isn't rootable."
 #regular expressions
 ALPHA = r'\w'
 ONE_OR_MORE = "+"
+ZERO_OR_MORE = "*"
 SPACE = r"\s"
 SPACES = SPACE + ONE_OR_MORE
 NAMED = "(?P<{n}>{p})"
 COMMAND_GROUP = "command"
+ANYTHING = r'.'
+EVERYTHING = ANYTHING + ZERO_OR_MORE
 
 class ADBConnection(LocalNixConnection):
     """
@@ -47,7 +53,7 @@ class ADBConnection(LocalNixConnection):
         Overrides the LocalConnection._rpc to check for errors
         """
         output = self._main(command, arguments, timeout)
-        return ValidatingOutput(lines=output.output, validate=self.check_errors)
+        return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), StringIO(EOF))
 
 
     def check_errors(self, line):
@@ -107,7 +113,7 @@ class ADBShellConnection(ADBConnection):
         """
         if self._unknown_command is None:
             self._unknown_command = re.compile(SPACES.join([NAMED.format(n=COMMAND_GROUP, p=ALPHA + ONE_OR_MORE) + ":",
-                                                            "permission", "denied"]))
+                                                            EVERYTHING, 'not', 'found']))
         return self._unknown_command
 
     def check_errors(self, line):
@@ -122,7 +128,7 @@ class ADBShellConnection(ADBConnection):
 
 
 if __name__ == "__main__":
-    from timetorecovertest.main import watcher
+    from tottest.main import watcher
     import sys
     watcher()
     adb = ADBShellConnection()

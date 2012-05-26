@@ -5,7 +5,7 @@ A module to hold the CrashHandler
 import traceback
 
 # ttr
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 
 class CrashHandler(BaseClass):

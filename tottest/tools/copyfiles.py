@@ -2,7 +2,7 @@
 A module for file copiers.
 """
 
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 class CopyFiles(BaseClass):
     """

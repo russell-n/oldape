@@ -2,7 +2,7 @@
 An SL4a Device provides the common device-methods using an SL4a connection
 """
 
-from timetorecovertest.connections.sl4aconnection import SL4AConnection
+from tottest.connections.sl4aconnection import SL4AConnection
 from basedevice import BaseDevice
 
 

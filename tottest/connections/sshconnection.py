@@ -20,8 +20,6 @@ import Queue
 import socket
 
 # tottest Libraries
-from tottest.baseclass import BaseClass
-from tottest.commons.errors import ConnectionError
 from tottest.commons.readoutput import StandardOutput
 
 # connections
@@ -75,6 +73,9 @@ class SSHConnection(LocalConnection):
     
     def run(self, command, arguments):
         """
+        Despite its name, this isn't intended to be run.
+        The . notation is the expected interface.
+        
         runs the SimpleClient exec_command and puts lines of output on the Queue
 
         :param:
@@ -105,21 +106,31 @@ class SSHConnection(LocalConnection):
 if __name__ == "__main__":
     arguments = "-l"
     sc = SSHConnection("localhost", "allion")
+
+    print "Testing 'ls -l'"
     output = sc.ls(arguments='-l')
     print output.output.read()
+
+    print "Testing ping"
     output = sc.ping(arguments="-c 10 192.168.10.1", timeout=1)
     for x in output.output:
         print x
-    print output.error.read()
-    output = sc.iperf('-i 1 -c localhost')
-    print output.output.read()
-    if len(output.error.buf):
-        print "Error: " + output.error.read()
 
-    #lc = LocalNixConnection()
-    output = sc.iperf('-h')
+    print "Reading the error"
+    # the error blocks until both standard out and standard error are finished
+    # so if you check the error first, you will probably get a socket timeout unless
+    # it goes straight to standard error (see the iperf -v example below)
+
     print output.error.read()
-    #for line in  output.output:
-    #    print line
+    print "Testing iperf"
+    output = sc.iperf('-i 1 -c localhost')
+    for line in output.output:
+        print line
+    print "Checking the error"
+    print "Error: " + output.error.read()
+
+    print "Checking iperf version"
+    output = sc.iperf('-v')
+
     print output.output.read()
-    
+    print output.error.read()    

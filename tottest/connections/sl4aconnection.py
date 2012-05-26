@@ -8,10 +8,10 @@ import logging
 # Third party Libraries
 import android
 
-# timetorecovertest Libraries
-#from timetorecovertest.baseclass import BaseClass
-from timetorecovertest.commons.errors import CommandError
-from timetorecovertest.commons.errors import ConnectionError
+# tottest Libraries
+#from tottest.baseclass import BaseClass
+from tottest.commons.errors import CommandError
+from tottest.commons.errors import ConnectionError
 
 class SL4AConnection(android.Android):
     def __init__(self, *args, **kwargs):

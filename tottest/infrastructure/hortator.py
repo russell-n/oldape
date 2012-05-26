@@ -5,10 +5,10 @@ A module to hold an exhorter of operators
 # python Libraries
 from datetime import datetime as clock
 from collections import namedtuple
-import threading
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
+
+# tottest Libraries
+from tottest.baseclass import BaseClass
 from errors import OperatorError
 
 ELAPSED_TIME = 'Elapsed Time: {t}'

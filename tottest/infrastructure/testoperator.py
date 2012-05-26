@@ -4,11 +4,11 @@ An operator operates tests.
 #python Libraries
 from collections import namedtuple
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
+# tottest Libraries
+from tottest.baseclass import BaseClass
 from countdowntimer import CountdownTimer
-from timetorecovertest.tools import sleep
-from timetorecovertest.commons import errors
+from tottest.tools import sleep
+from tottest.commons import errors
 
 TIME_REMAINING = "Estimated time Remaining: {t}"
 

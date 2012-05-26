@@ -2,7 +2,7 @@
 A module to hold the TearDown
 """
 
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 
 class TearDown(BaseClass):

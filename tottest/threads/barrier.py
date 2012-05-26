@@ -1,9 +1,9 @@
 """
 A module for an enforcer of barriers for threads.
 """
-#timetorecovertest
+#tottest
 from semaphore import Semaphore
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 class Barrier(BaseClass):
     """

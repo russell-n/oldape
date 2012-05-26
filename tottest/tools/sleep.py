@@ -5,8 +5,8 @@ A module to hold a sleeping class.
 # python Libraries
 import time
 
-#timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
+#tottest Libraries
+from tottest.baseclass import BaseClass
 
 ONE_SECOND = 1
 MESSAGE = "Sleeping for {0} seconds"

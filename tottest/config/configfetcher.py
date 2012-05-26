@@ -12,8 +12,8 @@ in the `config.constants` module.
 import os
 import shutil
 
-# timetorecovertest Libraries
-import timetorecovertest.baseclass as baseclass
+# tottest Libraries
+import tottest.baseclass as baseclass
 from constants import CONFIG_FOLDER, DEFAULTS
 
 INI_EXTENSION = '.ini'

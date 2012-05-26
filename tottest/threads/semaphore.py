@@ -5,8 +5,8 @@ A module to wrap the python semaphores.
 import threading
 from itertools import repeat
 
-# timetorecovertest
-from timetorecovertest.baseclass import BaseClass
+# tottest
+from tottest.baseclass import BaseClass
 
 
 class Semaphore(BaseClass):

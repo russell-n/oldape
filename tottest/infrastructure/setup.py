@@ -2,10 +2,10 @@
 A module to hold the SetUp
 """
 
-# timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
+# tottest Libraries
+from tottest.baseclass import BaseClass
 from builder import Builder
-from timetorecovertest.config.lexicographer import Lexicographer
+from tottest.config.lexicographer import Lexicographer
 
 class SetUp(BaseClass):
     """

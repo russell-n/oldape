@@ -5,9 +5,9 @@ The time to failure pings a target until the pings fail.
 import time
 now = time.time
 
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
-from timetorecovertest.commands import ping
+from tottest.commands import ping
 
 
 class TimeToFailure(BaseClass):

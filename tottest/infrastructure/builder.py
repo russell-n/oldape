@@ -6,37 +6,36 @@ a module to hold a builder of objects
 import threading
 import os
 
-# timetorecovertest
-from timetorecovertest.baseclass import BaseClass
+# tottest
+from tottest.baseclass import BaseClass
 
 from hortator import Hortator
 from testoperator import TestOperator, OperatorStaticTestParameters, OperatorParameters
-from timetorecovertest.config.parametergenerator import ParameterGenerator
+from tottest.config.parametergenerator import ParameterGenerator
 
 # testoperator tools
-from timetorecovertest.tools import setupiteration
-from timetorecovertest.tools import timetofailure
-from timetorecovertest.tools import teardowniteration
-from timetorecovertest.tools import timetorecovery
-from timetorecovertest.tools import timetorecoverytest
-from timetorecovertest.tools import copyfiles
-from timetorecovertest.tools import movefiles
+from tottest.tools import setupiteration
+from tottest.tools import timetofailure
+from tottest.tools import teardowniteration
+from tottest.tools import timetorecovery
+from tottest.tools import timetorecoverytest
+from tottest.tools import copyfiles
 
 # devices
-from timetorecovertest.devices import sl4adevice
+from tottest.devices import sl4adevice
 
 #commons
-from timetorecovertest.commons import storageoutput
+from tottest.commons import storageoutput
 #connections
-from timetorecovertest.connections import adbconnection
+from tottest.connections import adbconnection
 #watchers
-from timetorecovertest.watchers import logcatwatcher, logwatcher, thewatcher
+from tottest.watchers import logcatwatcher, logwatcher, thewatcher
 # commands
-from timetorecovertest.commands import ping
+from tottest.commands import ping
 
 # infrastructur
 from teardown import TearDown
-from timetorecovertest.log_setter import LOGNAME
+from tottest.log_setter import LOGNAME
 
 class Builder(BaseClass):
     """

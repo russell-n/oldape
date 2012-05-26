@@ -2,7 +2,7 @@
 A module for file movers
 """
 
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 class MoveFiles(BaseClass):
     """

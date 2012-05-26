@@ -6,7 +6,7 @@ A module to hold the time-to-recovery test.
 from collections import namedtuple
 
 #timetorecovery libraries
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 
 TimeToRecoveryTestParameters = namedtuple("TimeToRecoveryTestParameters",
                                           ['output',

@@ -13,8 +13,8 @@ that holds the help string.
 from subprocess import Popen, PIPE, STDOUT
 import importlib
 
-#timetorecovertest Libraries
-from timetorecovertest.baseclass import BaseClass
+#tottest Libraries
+from tottest.baseclass import BaseClass
 from constants import HELP_FOLDER, BOLD, RESET, HELP_BASE, OUTPUT_VARIABLE
 
 IMPORT_PATH = "{f}.{t}"
