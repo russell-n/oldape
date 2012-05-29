@@ -77,17 +77,17 @@ qthelp:
 	@echo
 	@echo "Build finished; now you can run "qcollectiongenerator" with the" \
 	      ".qhcp project file in $(BUILDDIR)/qthelp, like this:"
-	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/Time-To-RecoverTest.qhcp"
+	@echo "# qcollectiongenerator $(BUILDDIR)/qthelp/ThroughputOverTime.qhcp"
 	@echo "To view the help file:"
-	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/Time-To-RecoverTest.qhc"
+	@echo "# assistant -collectionFile $(BUILDDIR)/qthelp/ThroughputOverTime.qhc"
 
 devhelp:
 	$(SPHINXBUILD) -b devhelp $(ALLSPHINXOPTS) $(BUILDDIR)/devhelp
 	@echo
 	@echo "Build finished."
 	@echo "To view the help file:"
-	@echo "# mkdir -p $$HOME/.local/share/devhelp/Time-To-RecoverTest"
-	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/Time-To-RecoverTest"
+	@echo "# mkdir -p $$HOME/.local/share/devhelp/ThroughputOverTime"
+	@echo "# ln -s $(BUILDDIR)/devhelp $$HOME/.local/share/devhelp/ThroughputOverTime"
 	@echo "# devhelp"
 
 epub:

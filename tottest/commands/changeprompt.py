@@ -1,12 +1,13 @@
 """
 A module to change the prompt variable on a device.
+Meant to help serial, telnet and other connections that read streams.
 """
 
 #python libraries
 import random
 from string import ascii_letters, digits
 from itertools import repeat
-from time import sleep
+#from time import sleep
 
 # tottest libraries
 from tottest.baseclass import BaseClass

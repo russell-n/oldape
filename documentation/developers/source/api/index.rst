@@ -22,6 +22,9 @@ The **Commands** bundle specific commands with device connections. It is their r
 .. autosummary::
    :toctree: commands_api
 
+   changeprompt
+   ifconfig
+   netcfg
    ping
 
 Commons
