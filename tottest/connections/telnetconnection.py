@@ -1,12 +1,12 @@
 """
-a module to hold an SSH connection.
+A module to hold an Telnet connection.
 
-The SSHConnection takes the command-line command as a property and
+The TelnetConnection takes the command-line command as a property and
 the arguments to the command as parameters.
 
 e.g.
 
-    `sc = SSHConnection()`
+    `sc = TelnetConnection()`
     `output = sc.ls('-l')`
     `print output.output`
 
@@ -17,14 +17,16 @@ prints the output of the `ls -l` command line command
 #python Libraries
 from collections import namedtuple
 import Queue
-import socket
+from StringIO import StringIO
 
 # tottest Libraries
 from tottest.commons.readoutput import StandardOutput
+#commands
+from tottest.commands import changeprompt
 
 # connections
 from localconnection import LocalConnection
-from sshadapter import SimpleClient
+from telnetadapter import TelnetAdapter
 
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
@@ -33,29 +35,30 @@ EOF = ''
 OutputError = namedtuple("OutputError", 'output error')
 
 
-class SSHConnection(LocalConnection):
+class TelnetConnection(LocalConnection):
     """
-    An SSHConnection executes commands over an SSHConnection
+    A TelnetConnection executes commands over a Telnet Connection
 
     """
-    def __init__(self, hostname, username,
-                 password=None, port=22, timeout=5,
+    def __init__(self, hostname, port=23, login="root", prompt="#", timeout=2, end_of_line='\r\n',
                  *args, **kwargs):
         """
         :param:
 
          - `hostname`: The IP Address or hostname
-         - `username`: The login username.
-         - `password`: The login password
-         - `port`: The ssh port
-         - `timeout`: The login timeout
+         - `port`: The telnet port 
+         - `login`: The login name
+         - `prompt`: The prompt to expect
+         - `timeout`: The readline timeout
+         - `end_of_line`: The string indicating the end of a line.
         """
-        super(SSHConnection, self).__init__(*args, **kwargs)
+        super(TelnetConnection, self).__init__(*args, **kwargs)
         self.hostname = hostname
-        self.username = username
-        self.password = password
         self.port = port
+        self.login = login
+        self.prompt = prompt
         self.timeout = timeout
+        self.end_of_line = end_of_line
         self._logger = None
         self._client = None
         return
@@ -63,12 +66,16 @@ class SSHConnection(LocalConnection):
     @property
     def client(self):
         """
-        :return: SimpleClient for the SSHConnection
+        :return: TelnetAdapter for the telnet connection
         """
         if self._client is None:
-            self._client = SimpleClient(hostname=self.hostname, username=self.username,
-                                        password=self.password, port=self.port,
-                                        timeout=self.timeout)
+            self._client = TelnetAdapter(host=self.hostname, 
+                                         login=self.login, port=self.port,
+                                         timeout=self.timeout,
+                                         end_of_line=self.end_of_line,
+                                         prompt=self.prompt)
+            changer = changeprompt.ChangePrompt(adapter=self._client)
+            self.logger.debug(changer.run())
         return self._client
     
     def run(self, command, arguments):
@@ -88,48 +95,43 @@ class SSHConnection(LocalConnection):
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
-        stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
+        stdout = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
         line = None
 
         output_queue = Queue.Queue()
         output = StandardOutput(queue=output_queue)
+        stderr = StringIO("")
         self.queue.put(OutputError(output, stderr))
         while line != EOF:
-            try:
-                line = stdout.readline()
-                output_queue.put(line)
-            except socket.timeout:
-                self.logger.debug("stdout.readline() timed out")
+            line = stdout.readline()
+            output_queue.put(line)
         output_queue.put(line)
 # end class LocalNixConnection        
     
 if __name__ == "__main__":
+    import curses.ascii
     arguments = "-l"
-    sc = SSHConnection("192.168.10.61", "root", 'root')
-
+    sc = TelnetConnection("192.168.10.172")
+    sc.client.writeline(curses.ascii.crtl("c"))
     print "Testing 'ls -l'"
     output = sc.ls(arguments='-l')
-    print output.output.read()
+    for x in output.output:
+        print x
 
+    from time import sleep
+    sleep(0.1)
     print "Testing ping"
     output = sc.ping(arguments="-c 10 192.168.10.1", timeout=1)
     for x in output.output:
         print x
 
-    print "Reading the error"
-    # the error blocks until both standard out and standard error are finished
-    # so if you check the error first, you will probably get a socket timeout unless
-    # it goes straight to standard error (see the iperf -v example below)
-
-    print output.error.read()
+    sleep(0.1)
     print "Testing iperf"
-    sc.bash("PATH=$PATH:/opt/wifi")
-    output = sc.iperf(' -i 1 -c 192.168.10.51')
+    output = sc.iperf('-i 1 -c 192.168.10.51')
     for line in output.output:
         print line
-    print "Checking the error"
-    print "Error: " + output.error.read()
 
+    sleep(0.1)
     print "Checking iperf version"
     output = sc.iperf('-v')
 
