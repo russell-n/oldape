@@ -57,6 +57,21 @@ The **Config** is the primary user-interface for the test. It allows the APE to 
    lexicographer
    parametergenerator
    
+Adapters
+--------
+
+The **Adapters** adapt external libraries for connections to provide a common interface.
+
+.. currentmodule:: tottest.connections
+
+.. autosummary::
+   :toctree: adapters_api
+
+   serialadapter
+   sshadapter
+   telnetadapter
+
+
 Connections
 -----------
 
@@ -69,7 +84,9 @@ The **Connections** provide connectivity to devices. It is their responsibility 
 
    adbconnection
    localconnection
+   serialconnection
    sshconnection
+   telnetconnection
 
 Devices
 -------
