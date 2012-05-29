@@ -7,30 +7,9 @@ from collections import namedtuple
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
-import tottest.connections.adbconnection as adbconnection
+from tottest.commons import expressions
+from tottest.commons import enumerations
 
-NAMED = r"(?P<{n}>{p})"
-ONE_OR_MORE = r"+"
-ZERO_OR_MORE = r"*"
-DIGIT = r'[0-9]'
-SPACE = r'\s'
-SPACES = SPACE + ONE_OR_MORE
-
-INTEGER = DIGIT + ONE_OR_MORE
-DOT = r"\."
-GROUP = "({g})"
-
-REAL = INTEGER + GROUP.format(g= DOT + INTEGER) + ZERO_OR_MORE
-M_TO_N_TIMES = "{{{m},{n}}}"
-
-OCTET = DIGIT + M_TO_N_TIMES.format(m=1, n=3)
-IP_ADDRESS = NAMED.format(n="ip_address", p=DOT.join([OCTET] * 4))
-RTT = NAMED.format(n="rtt", p=REAL)
-
-ADB_PING = SPACES.join([INTEGER, "bytes", "from", IP_ADDRESS + ":",
-                        "icmp_seq=" + INTEGER,
-                        "ttl=" + INTEGER,
-                        "time=" + RTT])
 
 class PingData(namedtuple("PingData", ["target", "rtt"])):
     __slots__ = ()
@@ -39,31 +18,32 @@ class PingData(namedtuple("PingData", ["target", "rtt"])):
         return ",".join(["{f}:{v}".format(f=f,v=getattr(self, f)) for f in self._fields])
                    
 
-class ADBPing(BaseClass):
+class PingArguments(object):
+    """
+    PingArguments is a holder of ping arguments
+    """
+    android = ' -c 1 -w 1 '
+
+    
+class PingCommand(BaseClass):
     """
     A ping is a simple ping-command.
     """
-    def __init__(self, target=None, *args, **kwargs):
+    def __init__(self, target, connection, operating_system, *args, **kwargs):
         """
         :param:
 
          - `target`: An IP Address to ping.
+         - `connection`: A Connection to the device
+         - `operating_system`: The operating system of the device
         """
-        super(ADBPing, self).__init__(*args, **kwargs)
+        super(PingCommand, self).__init__(*args, **kwargs)
         self.target = target
-        self._connection = None
+        self.connection = connection
+        self.operating_system = operating_system
         self._arguments = None
-        self._success_expression = None
+        self._expression = None
         return
-
-    @property
-    def connection(self):
-        """
-        :return: An ADBShellConnection
-        """
-        if self._connection is None:
-            self._connection = adbconnection.ADBShellConnection()
-        return self._connection
 
     @property
     def arguments(self):
@@ -71,17 +51,21 @@ class ADBPing(BaseClass):
         :return: The ping arguments to use
         """
         if self._arguments is None:
-            self._arguments = "-c 1 -w 1 {target}".format(target=self.target)
+            if self.operating_system == enumerations.OperatingSystem.android:
+                self._arguments = "-c 1 -w 1 {target}".format(target=self.target)
         return self._arguments
 
     @property
-    def success_expression(self):
+    def expression(self):
         """
-        :return: compiled regular expressino matching a successful ping.
+        :return: compiled regular expression matching a successful ping.
         """
-        if self._success_expression is None:
-            self._success_expression = re.compile(ADB_PING)
-        return self._success_expression
+        if self._expression is None:
+            if self.operating_system in (enumerations.OperatingSystem.android,
+                                         enumerations.OperatingSystem.linux):
+                expression = expressions.PING
+            self._expression = re.compile(expression)
+        return self._expression
     
     def run(self, target=None):
         """
@@ -100,14 +84,14 @@ class ADBPing(BaseClass):
             self.target = target
         for line in self.connection.ping(self.arguments, timeout=1):
             self.logger.debug(line)
-            match = self.success_expression.search(line)
+            match = self.expression.search(line)
             if match:
                 return PingData(match.group("ip_address"), match.group('rtt'))
         return
 # end class Ping
 
 if __name__ == "__main__":
-    ping = ADBPing('192.168.20.1')
+    ping = PingCommand('192.168.20.1')
     print str(ping.run())
-    ping = ADBPing("192.168.30.1")
+    ping = PingCommand("192.168.30.1")
     print str(ping.run())
