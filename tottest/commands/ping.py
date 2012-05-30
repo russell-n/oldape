@@ -29,7 +29,7 @@ class PingCommand(BaseClass):
     """
     A ping is a simple ping-command.
     """
-    def __init__(self, target, connection, operating_system, *args, **kwargs):
+    def __init__(self, target, connection, operating_system):
         """
         :param:
 
@@ -37,7 +37,7 @@ class PingCommand(BaseClass):
          - `connection`: A Connection to the device
          - `operating_system`: The operating system of the device
         """
-        super(PingCommand, self).__init__(*args, **kwargs)
+        super(PingCommand, self).__init__()
         self.target = target
         self.connection = connection
         self.operating_system = operating_system

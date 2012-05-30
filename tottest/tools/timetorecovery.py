@@ -5,9 +5,14 @@ The time to failure pings a target until the pings fail.
 import time
 now = time.time
 
+from collections import namedtuple
+
+# tottest libraries
 from tottest.baseclass import BaseClass
 
 from tottest.commands import ping
+
+TTRData = namedtuple("TTRData", "ttr rtt")
 
 
 class TimeToRecovery(BaseClass):
@@ -15,7 +20,7 @@ class TimeToRecovery(BaseClass):
     A TimeToRecovery pings a target until the pings succeeed.
     """
     def __init__(self, pinger=None, target=None, timeout=300,
-                 threshold=5, *args, **kwargs):
+                 threshold=5):
         """
         :param:
 
@@ -24,7 +29,7 @@ class TimeToRecovery(BaseClass):
          - `timeout`: The length of time to try in seconds.
          - `threshold`: The number of consecutive pings to make a recovery
         """
-        super(TimeToRecovery, self).__init__(*args, **kwargs)
+        super(TimeToRecovery, self).__init__()
         self._pinger = pinger
         self.target = target
         self.target = target
@@ -41,7 +46,13 @@ class TimeToRecovery(BaseClass):
             self._pinger = ping.ADBPing()
         return self._pinger
 
-    def run(self, parameters):
+    def _unpack_parameters(self, parameters):
+        if parameters is None:
+            return self.target, self.timeout, self.threshold
+        else:
+            return parameters.target, parameters.timeout, parameters.threshold
+        
+    def run(self, parameters=None):
         """
         Pings until failure or timeout.
 
@@ -54,18 +65,7 @@ class TimeToRecovery(BaseClass):
         :rtype: FloatType or NoneType
         :return: time from start of run to first of successful pings (or None)
         """
-        if parameters.target is None:
-            target = self.target
-        else:
-            target = parameters.target
-        if parameters.timeout is None:
-            timeout = self.timeout
-        else:
-            timeout = parameters.timeout
-        if parameters.threshold is None:
-            threshold = self.threshold
-        else:
-            threshold = parameters.threshold
+        target, timeout, threshold = self._unpack_parameters(parameters)
 
         start = now()
         time_limit = start + timeout
@@ -73,17 +73,19 @@ class TimeToRecovery(BaseClass):
         first = None
 
         while pings < threshold and now() < time_limit:
-            if self.pinger.run(target) is not None:
+            result = self.pinger.run(target)
+            if result is not None:
                 pings += 1
                 if pings == 1:
                     self.logger.info("Pinged target")
                     first = now()
+                    first_result = result
             else:
                 self.logger.debug("Failed ping")
                 pings = 0
                 first = None
         if pings == threshold:
-            return first - start
+            return TTRData(ttr=first - start, rtt=first_result.rtt)
         return
                  
 # end TimeToFailure
