@@ -3,7 +3,7 @@ from mock import MagicMock
 from tottest.commands import netcfg
 #from tottest.commons import enumerations
 
-from common import assert_equal
+from ..common import assert_equal
 
 
 def test():

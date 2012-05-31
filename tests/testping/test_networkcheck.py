@@ -8,9 +8,9 @@ from tottest.commons import enumerations
 from tottest.tools import timetorecovery
 
 # test folder
-from ifconfig_samples import ifconfig_linux
-from netcfg_samples import netcfg_android
-from common import assert_equal
+from ..testifconfig.ifconfig_samples import ifconfig_linux
+from ..testifconfig.netcfg_samples import netcfg_android
+from ..common import assert_equal
 from ping_samples import ping_linux, ping_android, ping_fail_linux, ping_fail_android
 
 NEWLINE = "\n"
@@ -18,21 +18,11 @@ NEWLINE = "\n"
 tpc_pings = [ping_fail_linux, ping_fail_linux, ping_linux]
 dut_pings = [ping_fail_android, ping_fail_android, ping_fail_android, ping_android]
 
-
-tpc_fail = [ping_fail_linux] * 10
-dut_fail = [ping_fail_android] * 10
-
 def tpc_ping_effetcs():
     return tpc_pings.pop(0)
 
 def dut_ping_effects():
     return dut_pings.pop(0)
-
-def dut_fail_effects():
-    return dut_fail.pop()
-
-def tpc_fail_effects():
-    return tpc_fail.pop()
 
 def test():
     # Setup the mock connections
@@ -62,8 +52,8 @@ def test():
     assert_equal("98.4", tpc_ping.rtt)
 
     # get the consecutive ping results
-    dut_connection.ping.side_effects = dut_ping_effects
-    tpc_connection.ping.side_effects = tpc_ping_effetcs
+    dut_connection.side_effects = dut_ping_effects
+    tpc_connection.side_effects = tpc_ping_effetcs
 
     dut_to_pc = timetorecovery.TimeToRecovery(ping_to_tpc, timeout=10, threshold=1)
     pc_to_dut = timetorecovery.TimeToRecovery(ping_to_dut, timeout=10, threshold=1)
@@ -73,17 +63,6 @@ def test():
 
     assert_equal("0.196", dut_pinged.rtt)
     assert_equal("98.4", tpc_pinged.rtt)
-
-    # what happens when it fails?
-    dut_connection.ping.side_effects = dut_fail_effects
-    tpc_connection.ping.side_effects = tpc_fail_effects
-    
-    dut_to_pc = timetorecovery.TimeToRecovery(ping_to_tpc, timeout=10, threshold=1)
-    pc_to_dut = timetorecovery.TimeToRecovery(ping_to_dut, timeout=10, threshold=1)
-
-    tpc_pinged = dut_to_pc.run()
-    dut_pinged = pc_to_dut.run()
-
     return
 
 if __name__ == "__main__":

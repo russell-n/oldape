@@ -4,32 +4,38 @@ A module to test pings
 
 # python
 from StringIO import StringIO
+
+# third party
 from mock import MagicMock
 
 from tottest.commons import enumerations
 from tottest.commands import ping
 
-from common import assert_equal
+from ..common import assert_equal
 
 
 def testandroid():
+    target="192.168.20.24"
     connection = MagicMock()
     connection.ping.return_value = StringIO(ping_android)
-    pinger = ping.PingCommand(target="192.168.20.24",
+    pinger = ping.PingCommand(target=target,
                               connection= connection,
                               operating_system = enumerations.OperatingSystem.android)
     result = pinger.run()
     assert_equal("98.4", result.rtt)
+    assert_equal(target, result.target)
     return
 
 def testlinux():
+    elin = "192.168.20.24"
     connection = MagicMock()
     connection.ping.return_value = StringIO(ping_linux)
-    pinger = ping.PingCommand(target="192.168.20.24",
+    pinger = ping.PingCommand(target=elin,
                               connection= connection,
                               operating_system = enumerations.OperatingSystem.linux)
     result = pinger.run()
     assert_equal("0.196", result.rtt)
+    assert_equal(elin, result.target)
     return
     
 

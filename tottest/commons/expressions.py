@@ -4,6 +4,7 @@ NAMED = r"(?P<{name}>{pattern})"
 GROUP = r"({group})"
 CLASS = "[{0}]"
 OR = "|"
+NOT = "^"
 
 SPACE = r'\s'
 DIGIT = r"\d"
@@ -57,3 +58,12 @@ PING = SPACES.join([INTEGER, "bytes", "from", IP_ADDRESS + ":",
                         "time=" + RTT])
 
 
+# ps expressions
+PSE_NAME = "pse"
+PID_NAME = 'pid'
+PID = NAMED.format(name=PID_NAME,  pattern=INTEGER)
+TTY = GROUP.format(group="\?" + OR + "pts/" + INTEGER)
+TIME = ":".join([DIGIT + EXACTLY.format(2)] * 3)
+PROCESS_NAME = "process"
+PROCESS = NAMED.format(name=PROCESS_NAME,pattern=CLASS.format(NOT + SPACE) + ONE_OR_MORE)
+PSE_LINUX = SPACES.join([PID, TTY, TIME, PROCESS])

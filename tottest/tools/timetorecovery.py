@@ -12,7 +12,14 @@ from tottest.baseclass import BaseClass
 
 from tottest.commands import ping
 
-TTRData = namedtuple("TTRData", "ttr rtt")
+class TTRData(namedtuple("TTRData", "ttr rtt")):
+    """
+    A TTRData holds the TimeToRecovery data
+    """
+    __slots__ = ()
+
+    def __str__(self):
+        return "ttr={0},rtt={1}".format(self.ttr, self.rtt)
 
 
 class TimeToRecovery(BaseClass):
