@@ -16,9 +16,9 @@ from tottest.tools import timetorecovery
 # test folder
 
 from ..common import assert_equal, assert_is
-from ping_samples import ping_linux, ping_linux_2, ping_linux_3
-from ping_samples import ping_linux_rtt, ping_linux_3_rtt
-from ping_samples import ping_fail_linux
+from ..testping.ping_samples import ping_linux, ping_linux_2, ping_linux_3
+from ..testping.ping_samples import ping_linux_rtt, ping_linux_3_rtt
+from ..testping.ping_samples import ping_fail_linux
 
 dut_ip = "192.168.20.153"
 

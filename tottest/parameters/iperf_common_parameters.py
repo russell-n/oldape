@@ -16,7 +16,7 @@ ConfigurationError = errors.ConfigurationError
 SPACE = ' '
 UNDERSCORE = "_"
 
-VALID_BUFFER_LENGTHS = expressions.REAL + expressions.CLASS.format("KM") + expressions.ZERO_OR_ONE + expressions.WORD_ENDING
+VALID_BUFFER_LENGTHS = expressions.REAL + expressions.CLASS.format("KM") + expressions.ZERO_OR_ONE + expressions.WORD_ENDING + expressions.LINE_ENDING
 VALID_FORMATS = 'b k m K M'.split()
 MAXIMUM_PORT = 65535
 MINIMUM_PORT = 1
@@ -269,7 +269,6 @@ class IperfCommonParameters(BaseClass):
         super(IperfCommonParameters, self).__setattr__(key, value)
         return
 # end class IperfCommonParameters
-
 
 
         
