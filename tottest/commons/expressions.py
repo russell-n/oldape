@@ -11,6 +11,7 @@ NOT_SPACE = r'\S'
 DIGIT = r"\d"
 ANYTHING = '.'
 WORD_ENDING = r'\b'
+LINE_ENDING = r"$"
 
 # counts
 M_TO_N_TIMES = "{{{m},{n}}}"
@@ -22,7 +23,8 @@ ZERO_OR_ONE = '?'
 
 EVERYTHING = ANYTHING + ZERO_OR_MORE
 
-# special characters 
+# special characters
+SPACES_OPTIONAL = SPACE + ZERO_OR_ONE
 SPACES = SPACE + ONE_OR_MORE
 DOT = r"\."
 
@@ -30,7 +32,8 @@ DOT = r"\."
 # numbers
 HEX = CLASS.format(string.hexdigits)
 INTEGER = DIGIT + ONE_OR_MORE
-REAL = INTEGER + GROUP.format(group= DOT + INTEGER) + ZERO_OR_MORE
+FLOAT = INTEGER + DOT + INTEGER
+REAL = INTEGER + GROUP.format(group=DOT + INTEGER) + ZERO_OR_ONE
 
 # Addresses
 OCTET = DIGIT + ONE_TO_3
