@@ -7,9 +7,10 @@ OR = "|"
 NOT = "^"
 
 SPACE = r'\s'
+NOT_SPACE = r'\S'
 DIGIT = r"\d"
 ANYTHING = '.'
-
+WORD_ENDING = r'\b'
 
 # counts
 M_TO_N_TIMES = "{{{m},{n}}}"
@@ -17,6 +18,7 @@ ONE_TO_3 = M_TO_N_TIMES.format(m=1, n=3)
 EXACTLY = "{{{0}}}"
 ONE_OR_MORE = "+"
 ZERO_OR_MORE = '*'
+ZERO_OR_ONE = '?'
 
 EVERYTHING = ANYTHING + ZERO_OR_MORE
 
