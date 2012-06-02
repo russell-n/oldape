@@ -38,6 +38,7 @@ The **Commons** is a place to put things that the different sub-modules need to 
    :toctree: commons_api
 
    assertions
+   enumerations
    errors
    expressions
    generators
@@ -63,7 +64,7 @@ The **Config** is the primary user-interface for the test. It allows the APE to 
 Adapters
 --------
 
-The **Adapters** adapt external libraries for connections to provide a common interface.
+The **Adapters** adapt external libraries for connections to provide a common interface (and are kept with their connections).
 
 .. currentmodule:: tottest.connections
 
@@ -88,8 +89,13 @@ The **Connections** provide connectivity to devices. It is their responsibility 
    adbconnection
    localconnection
    serialconnection
+   sl4aconnection   
    sshconnection
    telnetconnection
+
+   lineproducer
+
+* The `lineproducer` is a utility used to break up lines for connections that only have access to streams (not files). 
 
 Devices
 -------
@@ -102,6 +108,7 @@ The **Devices** provide a set of standardized method calls to the connections (t
    :toctree: devices_api
 
    basedevice
+   sl4adevice
 
 Info
 ----
@@ -139,6 +146,24 @@ The **Infrastructure** contains modules to help run the test. It corresponds to 
    teardown
    testoperator
 
+Parameters
+----------
+
+**Parameters** hold complex parameters for complicated commands. Besides being holders of values, they allow for errors in settings and dynamically generated values.
+
+.. currentmodule:: tottest.parameters
+
+.. autosummary:: 
+   :toctree: parameters_api
+
+   iperf_client_parameters
+   iperf_common_parameters
+   iperf_common_tcp_parameters
+   iperf_server_parameters
+   iperf_udp_server_parameters
+
+Since the parameters define the behavior of commands, choosing them in many ways declares their behavior, much as the choice and ordering of the tools defines the behavior of the Test Operator. 
+
 Threads
 -------
 
@@ -165,7 +190,10 @@ The **Tools** are bundled commands that the operator uses. By ordering the set o
    :toctree: tools_api
 
    copyfiles
+   getipaddress
+   killall
    movefiles
+   networktester
    setupiteration
    sleep
    teardowniteration
@@ -173,10 +201,12 @@ The **Tools** are bundled commands that the operator uses. By ordering the set o
    timetorecovery
    timetorecoverytest
 
+The difference between a tool and a command is somewhat obscure right now. The idea is that the tools have a defined singular purpose and so might have one or more commands bundled inside them. If the operator is using it, it should be a tool.
+
 Watchers
 --------
 
-The **Watchers** watch logs.x
+The **Watchers** watch logs.
 
 .. currentmodule:: tottest.watchers
 

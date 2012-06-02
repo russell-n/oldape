@@ -16,7 +16,7 @@ from tottest.baseclass import BaseClass
 from tottest.commons import errors
 
 # tools
-from tottest.tools import testsl4a
+#from tottest.tools import testsl4a
 
 
 class Strategerizer(BaseClass):
@@ -74,8 +74,8 @@ class Strategerizer(BaseClass):
             self.logger.debug("Running the SL4a Tester")
             for parameters in setup.lexicographer.parameters:
                 # test sl4a
-                test = testsl4a.TestSl4a(parameters)
-                test.run()
+                #test = testsl4a.TestSl4a(parameters)
+                #test.run()
 
                 #test the network
                 target = parameters.target

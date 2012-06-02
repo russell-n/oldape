@@ -9,7 +9,11 @@ from collections import namedtuple
 from tottest.baseclass import BaseClass
 from tottest.commons import expressions
 from tottest.commons import enumerations
+from tottest.commons import errors
 
+ConfigurationError = errors.ConfigurationError
+
+UNKNOWN_HOST = 'unknown host'
 
 class PingData(namedtuple("PingData", ["target", "rtt"])):
     __slots__ = ()
@@ -24,6 +28,7 @@ class PingArguments(object):
     """
     android = ' -c 1 -w 1 '
 
+    
     
 class PingCommand(BaseClass):
     """
@@ -76,6 +81,7 @@ class PingCommand(BaseClass):
          - `target`: The host to ping.
         
         :return: PingData or None
+        :raise: ConfigurationError if the target is unknown
         """
         if target is None:
             target = self.target
@@ -87,6 +93,8 @@ class PingCommand(BaseClass):
             match = self.expression.search(line)
             if match:
                 return PingData(match.group("ip_address"), match.group('rtt'))
+            if UNKNOWN_HOST in line:
+                raise ConfigurationError("Unknown Host: {0}".format(target))
         return
 # end class Ping
 

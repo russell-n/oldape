@@ -10,7 +10,7 @@ import os
 from tottest.baseclass import BaseClass
 
 from hortator import Hortator
-from testoperator import TestOperator, OperatorStaticTestParameters, OperatorParameters
+from testoperator import TestOperator
 from tottest.config.parametergenerator import ParameterGenerator
 
 # testoperator tools

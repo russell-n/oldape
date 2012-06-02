@@ -9,6 +9,8 @@ import re
 # tottest
 from iperf_common_tcp_parameters import IperfCommonTcpParameters
 from iperf_common_parameters import VALID_BUFFER_LENGTHS as VALID_BYTES
+from iperf_common_parameters import MAXIMUM_PORT, MINIMUM_PORT, LOWEST_PORT
+
 from tottest.commons import errors, expressions
 
 ConfigurationError = errors.ConfigurationError
@@ -19,6 +21,9 @@ VALID_TIME_INTEGER = re.compile(expressions.INTEGER + expressions.WORD_ENDING +
 VALID_TIME_FLOAT = re.compile(expressions.FLOAT + expressions.WORD_ENDING +
                               expressions.SPACES_OPTIONAL+
                               expressions.LINE_ENDING)
+
+VALID_BANDWIDTHS = VALID_BYTES
+
 SPACE = ' '
 
 
@@ -32,20 +37,21 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
         self._client = None
         self._dualtest = None
         self._fileinput = None
-        #self._linux_confgestion = None
-        #self._listenport = None
+        #self._linux_congestion = None
+        self._listenport = None
         self._num = None
-        #self._parallele = None
+        self._parallel = None
         #self._stdin = None
         self._time = None
         self._tradeoff = None
-        #self._ttl = None
+        self._ttl = None
+        self._block_attributes = True
         return
 
     @property
     def client(self):
         """
-        :return: client flag
+        :return: client flag (-c <hostname>)
         """
         return self._client
 
@@ -56,13 +62,15 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
 
          - `hostname`: The hostname of the server
         """
+        if any((hostname is None, not len(hostname), SPACE in hostname)):
+            raise ConfigurationError("Invalid hostname: {0}".format(hostname))
         self._client = "--client {0}".format(hostname)
         return
 
     @property
     def dualtest(self):
         """
-        :return: The dualtest flag
+        :return: The dualtest flag (-d)
         """
         return self._dualtest
 
@@ -82,7 +90,7 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
     @property
     def fileinput(self):
         """
-        :return: The --fileinput flag
+        :return: '--fileinput <filename>' 
         """
         return self._fileinput
 
@@ -98,12 +106,38 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
             raise ConfigurationError("No spaces allowed in filename - {0}".format(filename))
         self._fileinput = "--fileinput {0}".format(filename)
         return
-    
+
+    @property
+    def listenport(self):
+        """
+        :return: The listenport flag (-L <port>)  
+        """
+        return self._listenport
+
+    @listenport.setter
+    def listenport(self, port):
+        """
+        :param:
+
+         - `port`: A network port to listen on for bidirectional test.
+        """
+        try:
+            port = int(port)
+        except ValueError as error:
+            self.logger.error(error)
+            raise ConfigurationError("{0} not castable to an integer".format(port))
+        if MAXIMUM_PORT < port or port < MINIMUM_PORT:
+            raise ConfigurationError("{0} outside of valid port range ({1} to {2})".format(port, MINIMUM_PORT, MAXIMUM_PORT))
+        if port < LOWEST_PORT:
+            self.logger.warning("{0} is within the well-known ports range ({1} to {2})".format(port, MINIMUM_PORT, LOWEST_PORT))
+            
+        self._listenport = "--listenport {0}".format(int(port))
+        return 
     
     @property
     def num(self):
         """
-        :return: The number of bytes to send flag
+        :return: The number of bytes to send flag (-n <bytes>[KM])
         """
         return self._num
 
@@ -120,9 +154,31 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
         return
 
     @property
+    def parallel(self):
+        """
+        :return: The parallel thread flag (-P <count>)
+        """
+        return self._parallel
+
+    @parallel.setter
+    def parallel(self, thread_count):
+        """
+        :param:
+
+         - `thread_count`: The number of parallel threads to run
+        """
+        try:
+            thread_count = int(thread_count)
+        except ValueError as error:
+            self.logger.error(error)
+            raise ConfigurationError("Thread count must be an integer, not {0}".format(thread_count))
+        self._parallel = "--parallel {0}".format(thread_count)
+        return
+
+    @property
     def time(self):
         """
-        :return: The --time flag
+        :return: The time flag (-t <seconds>)
         """    
         return self._time
 
@@ -144,7 +200,7 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
     @property
     def tradeoff(self):
         """
-        :return: the Tradeoff flag
+        :return: the Tradeoff flag (-r)
         """
         return self._tradeoff
 
@@ -160,4 +216,59 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
         if set_tradeoff:
             self._tradeoff = "--tradeoff"
         return
+
+    @property
+    def ttl(self):
+        """
+        :return: The time-to-live flag (-T <hops>)
+        """        
+        return self._ttl
+
+    @ttl.setter
+    def ttl(self, hops):
+        """
+        :param:
+
+         - `hops`: The time-to-live
+        """
+        try:
+            hops = int(hops)
+        except ValueError as error:
+            self.logger.error(error)
+            raise ConfigurationError("ttl must be an integer, not '{0}'".format(hops))
+        self._ttl = "--ttl {0}".format(hops)
+        return
 # end class IperfTcpClientParameters
+
+class IperfUdpClientParameters(IperfTcpClientParameters):
+    """
+    IperfUdpClientParameters is a superset of the IperfTcpClientParameters.
+    Adds udp and bandwidth.
+    """
+    def __init__(self):
+        super(IperfUdpClientParameters, self).__init__()
+        self._block_attributes = False
+        self._bandwidth = None
+        self.udp = "--udp"
+        self._block_attributes = True
+        return
+
+    @property
+    def bandwidth(self):
+        """
+        :return: The udp bandwidth flag (-b n[KM])
+        """        
+        return self._bandwidth
+
+    @bandwidth.setter
+    def bandwidth(self, new_bandwidth):
+        """
+        :param:
+
+         - `new_bandwidth`: the bandwidth to set
+        """
+        if not re.match(VALID_BANDWIDTHS, new_bandwidth):
+            raise ConfigurationError("Invalid Bandwidth: {0}".format(new_bandwidth))
+        self._bandwidth = "--bandwidth {0}".format(new_bandwidth)
+        return
+# end class IperfUdpClientParameters
