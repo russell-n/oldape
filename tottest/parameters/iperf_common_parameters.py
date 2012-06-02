@@ -1,5 +1,11 @@
 """
 A module to hold iperf parameter classes
+
+Names of parameters match the long-options given to iperf :
+
+    e.g. --port becomes IperfCommonParameters.port
+
+and the doc-strings cross-reference them as the short form (-p)
 """
 #python
 import re
@@ -27,7 +33,7 @@ VALID_REPORT_STYLES = "cC"
 
 class IperfCommonParameters(BaseClass):
     """
-    Iperf Common Parameters are common to all Iperf commands
+    Iperf Common Parameters are common to all Iperf commands.
     """
     _block_attributes = False
     def __init__(self):
@@ -49,7 +55,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def format(self):
         """
-        :return: the format parameter (--format <value>)
+        :return: the format parameter (--f [bkmKM])
         """
         return self._format
 
@@ -68,7 +74,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def interval(self):
         """
-        :return: The time between data reports
+        :return: The time between data reports (-i <seconds>)
         """
         return self._interval
 
@@ -92,7 +98,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def len(self):
         """
-        :return: The length of the read-write-buffer (called `len` by iperf)
+        :return: The length of the read-write-buffer (-l [KM])
         """
         return self._len
 
@@ -111,7 +117,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def output(self):
         """
-        :return: The name iperf should use as the file-name
+        :return: The name iperf should use as the file-name (-o <filename>)
         """
         return self._output
 
@@ -130,7 +136,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def port(self):
         """
-        :return: The network port the server is (will be) using
+        :return: The network port the server is (will be) using (-p <port>)
         """
         return self._port
 
@@ -159,7 +165,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def bind(self):
         """
-        :return: The host to bind to. (--bind)
+        :return: The host to bind to. (-B <host>)
         """
         return self._bind
 
@@ -176,7 +182,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def compatibility(self):
         """
-        :return: backwards-compatability flag
+        :return: backwards-compatability flag (-C)
         """
         return self._compatibility
 
@@ -196,7 +202,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def ipv6version(self):
         """
-        :return: The flag to indicate IPv6 is being used.
+        :return: The flag to indicate IPv6 is being used (-V).
         """
         return self._ipv6version
 
@@ -216,7 +222,13 @@ class IperfCommonParameters(BaseClass):
     @property
     def reportexclude(self):
         """
-        :return: The report exclude flags
+        :return: The report exclude flags (-x [CDMSV])
+
+         * C - Connection
+         * D - Data
+         * M - Mutlicast
+         * S - Settings
+         * V - serVer reports
         """
         return self._reportexclude
 
@@ -235,7 +247,7 @@ class IperfCommonParameters(BaseClass):
     @property
     def reportstyle(self):
         """
-        :return: The output-to-csv flag.
+        :return: The output-to-csv flag (-y C|c)
         """
         return self._reportstyle
 
@@ -254,8 +266,8 @@ class IperfCommonParameters(BaseClass):
         """
         :return: string of set flags in alphabetical order (of the flags, not the values)
         """
-        prefixes = ("_block_attributes" , "_logger")
-        keys = (key for key in sorted(self.__dict__.keys()) if prefix_check(key, prefixes))
+        non_parameters = ("_block_attributes" , "_logger")
+        keys = (key for key in sorted(self.__dict__.keys()) if key not in non_parameters)
         values = (getattr(self, key.lstrip(UNDERSCORE)) for key in keys)
         filtered_values = (value for value in values if value is not None)
         return SPACE.join(filtered_values)
@@ -269,11 +281,3 @@ class IperfCommonParameters(BaseClass):
         super(IperfCommonParameters, self).__setattr__(key, value)
         return
 # end class IperfCommonParameters
-
-
-        
-def prefix_check(key, prefixes):
-    for prefix in prefixes:
-        if key.startswith(prefix):
-            return False
-    return True

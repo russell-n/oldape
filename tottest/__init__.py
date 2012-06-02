@@ -25,3 +25,4 @@ The `run` will by default look for any file that ends with `.ini` in it as the c
 
     ttr run [filename | file-glob]
 """
+from connections.localconnection import LocalNixConnection
