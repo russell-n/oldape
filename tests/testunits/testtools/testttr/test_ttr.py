@@ -11,7 +11,7 @@ from tottest.tools import timetorecovery
 from ..testifconfig.ifconfig_samples import ifconfig_linux
 from ..testifconfig.netcfg_samples import netcfg_android
 from ..common import assert_equal
-from ..testping.ping_samples import ping_linux, ping_android, ping_fail_linux, ping_fail_android
+from ping_samples import ping_linux, ping_android, ping_fail_linux, ping_fail_android
 
 NEWLINE = "\n"
 

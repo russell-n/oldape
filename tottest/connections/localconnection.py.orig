@@ -12,12 +12,19 @@ e.g.
 
 prints the output of the `ls -l` command line command
 
-The localConnection uses Subprocess, while the LocalNixConnection uses
-pexepect. If the LocalConnection is hanging because the output is being
-buffered, use the LocalNixConnection instead.
+This is using subprocess so sometimes thing with lots of outout runs the risk of
+causing the output to block (i.e. it is file-buffered, not line or character buffered).
+
+if that's the case and you're using linux/unix/cygwin, use the LocalNixConnection
 """
 
 #python Libraries
+import os
+try:
+    import pty
+except ImportError as error:
+    print error
+import select
 from subprocess import PIPE, Popen
 from StringIO import StringIO
 import shlex
@@ -26,10 +33,10 @@ import Queue
 import threading
 
 # Third-party Libraries
-try:
-    import pexpect
-except ImportError as error:
-    print error
+#try:
+#    import pexpect
+#except ImportError as error:
+#    print error
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
@@ -164,52 +171,52 @@ class LocalNixConnection(LocalConnection):
 
         :postcondition: OutputError with output and error file-like objects
         """
+        try:
+            if len(self.command_prefix):
+                command = SPACER.format(self.command_prefix, command)
 
-        if len(self.command_prefix):
-            command = SPACER.format(self.command_prefix,
-                                    command)
-        child = pexpect.spawn(SPACER.format(command, arguments), timeout=None)
-        line = None
+            master, slave = pty.openpty()
+            process = Popen(shlex.split(SPACER.format(command, arguments)),
+                        stdout=slave, stderr=slave)
 
-        output_queue = Queue.Queue()
-        output = StandardOutput(queue=output_queue)
-        error = StringIO('')
-        self.queue.put(OutputError(output, error))
-        while line != EOF:
-            try:
-                line = child.readline()
-                output_queue.put(line)
-            except pexpect.TIMEOUT:
-                self.logger.debug("pexpect.readline() timed out")
-        output_queue.put(line)
+            
+            self.queue.put(OutputError(process.stdout, process.stderr))
+        except OSError as error:
+            self.logger.error(error)
+            raise ConnectionError(UNKNOWN + command)
+        return
+
+        #child = pexpect.spawn(SPACER.format(command, arguments), timeout=None)
 # end class LocalNixConnection        
-
-
-def yield_output(output):
-    line = output.readline()
-    while line:
-        yield line.rstrip()
-        line = output.readline()
-    return
-
+    
 if __name__ == "__main__":
+    #import pudb;pudb.set_trace()
     arguments = "-l"
-    lc = LocalNixConnection()
-    #lc = LocalNixConnection()
+    lc = LocalConnection()
     output = lc.ls(arguments='-l')
     print output.output.read()
-    output = lc.ping(arguments="-c 10 192.168.0.1", timeout=1)
-    for x in yield_output(output.output):
-        print x
+
+    lc = LocalConnection()
+    output = lc.ping(arguments="192.168.0.1 -c 1 -w 1", timeout=1)
+
+
+    line = output.output.readline()
+    while line is not None and line != '':
+        print line
+        line = output.output.readline()
     print output.error.read()
     output = lc.iperf('-i 1 -c localhost')
 
-    for line in yield_output( output.output):
+
+    line = output.output.readline()
+    while line is not None and line != '':
         print line
+        line = output.output.readline()
+    error = output.error.readline()
+    if len(error):
+        print "Error: " + error
 
-    print output.error.read()
-
-
+    #lc = LocalNixConnection()
     output = lc.iperf('-h')
     print output.error.read()
     #for line in  output.output:
