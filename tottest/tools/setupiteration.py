@@ -4,22 +4,28 @@ A module to hold a setup class for a single iteration.
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
+from tottest.commons import errors
 from sleep import Sleep
+
+ConfigurationError = errors.ConfigurationError
+
 
 class SetupIteration(BaseClass):
     """
     A setupIteration sets-up a test iteration.
     """
-    def __init__(self, device, time_to_failure_checker, *args, **kwargs):
+    def __init__(self, device, affector, time_to_recovery, *args, **kwargs):
         """
         :param:
 
          - `device`: A device interface.
-         - `time_to_failure_checker`: A device that waits until a device has failed.
+         - `affector`: An environmental affector
+         - `time_to_recovery`: A device that waits until a device has recovered.
         """
         super(SetupIteration, self).__init__(*args, **kwargs)
         self.device = device
-        self.ttf = time_to_failure_checker
+        self.affector = affector
+        self.time_to_recovery = time_to_recovery
         self._sleep = None
         return
 
@@ -37,15 +43,26 @@ class SetupIteration(BaseClass):
 
          - `parameters`: An object with the parameters for ttf and sleep.
         """
-        info = self.device.get_wifi_info()
-        self.logger.debug(info)
-        self.device.wake_screen()
-        self.device.display(info)
-        self.logger.info("Disabling the Radio")
-        self.device.disable_wifi()
-        self.logger.info("Waiting for the Device to stop responding")
-        self.ttf.run(parameters)
+        self.affector.run(parameters.ap)
+        recovery_time = self.time_to_recovery.run()
+        if not recovery_time:
+            raise ConfigurationError("Unable to recover from environmental affect")
 
+        self.log("Time to recovery: {0}".format(recovery_time))
+        info = self.device.get_wifi_info()
+        self.log(info)
         self.sleep.run(parameters.recovery_time)
+        return
+
+    def log(self, message):
+        """
+        :param:
+
+         - `message`: A String to send to the loggers
+
+        :postcondition: message sent to device log and self.logger
+        """
+        self.device.log(message)
+        self.logger.info(message)
         return
 # end class SetupIteration

@@ -7,11 +7,10 @@ from datetime import datetime as clock
 from datetime import timedelta
 
 # third party Libraries
-from data import Data
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
-
+from data import Data
 
 class CountdownTimer(BaseClass):
     """
@@ -101,5 +100,4 @@ class CountdownTimer(BaseClass):
         self.start = self.lap_start = clock.now()
         self.current_repetition = 0
         return
-
 # end class CountdownTimer

@@ -14,7 +14,7 @@ class NetcfgCommand(BaseClass):
     """
     The NetcfgCommand interprets netcfg
     """
-    def __init__(self, connection, interface, operating_system=None):
+    def __init__(self, connection, interface=None, operating_system=None):
         """
         :param:
 
@@ -24,7 +24,7 @@ class NetcfgCommand(BaseClass):
         """
         super(NetcfgCommand, self).__init__()
         self.connection = connection
-        self.interface = interface
+        self._interface = interface
         self._operating_system = operating_system
         self._ip_address = None
         self._mac_address = None
@@ -53,6 +53,22 @@ class NetcfgCommand(BaseClass):
         return self._ip_address
 
     @property
+    def interface(self):
+        """
+        :return: The name of the (presumably wireless) interface
+        """
+        if self._interface is None:
+            expression = re.compile(expressions.NETCFG_INTERFACE)
+            for line in self.output:
+                match = expression.search(line)
+                if match:
+                    if (match.group(expressions.INTERFACE_STATE_NAME) == "UP" and
+                        not match.group(expressions.IP_ADDRESS_NAME).startswith("127")):
+                        self._interface = match.group(expressions.INTERFACE_NAME)
+                        break
+        return self._interface
+    
+    @property
     def mac_address(self):
         """
         :return: MAC Address of the interface
@@ -75,7 +91,8 @@ class NetcfgCommand(BaseClass):
         :return: The output of the netcfg command on the device
         """
         if self._output is None:
-            self._output, output = tee(self.connection.netcfg())
+            out, self.error = self.connection.netcfg()
+            self._output, output = tee(out)
         else:
             self._output, output = tee(self._output)
         return output
@@ -90,10 +107,21 @@ class NetcfgCommand(BaseClass):
         :return: The named-group that matched or None
         """
         expression = re.compile(expression)
+    
         for line in self.output:
             match = expression.search(line)
             if match:
                 return match.group(name)
         return
+
+    def __str__(self):
+        return "({interface}) IP: {ip}, MAC: {mac}".format(ip=self.ip_address,
+                                                           interface=self.interface,
+                                                           mac=self.mac_address)
 # end class IfconfigCommand
     
+if __name__ == "__main__":
+    from tottest.connections import adbconnection
+    connection = adbconnection.ADBShellConnection()
+    netcfg = NetcfgCommand(connection)
+    print str(netcfg)

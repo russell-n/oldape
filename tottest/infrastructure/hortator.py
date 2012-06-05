@@ -6,7 +6,6 @@ A module to hold an exhorter of operators
 from datetime import datetime as clock
 from collections import namedtuple
 
-
 # tottest Libraries
 from tottest.baseclass import BaseClass
 from errors import OperatorError

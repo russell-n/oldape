@@ -55,6 +55,18 @@ class SL4ADevice(BaseDevice):
 
     def get_wifi_info(self):
         """
+        On SL4a, this returns:
+
+            * ssid
+            * bssid
+            * network_id
+            * supplicant_state
+            * link_speed
+            * mac_address
+            * rssi
+            * ip_address
+            * hidden_ssid
+           
         :return: The wifi information as a single csv line
         """
         return COMMA.join((KEY_VALUE.format(k=key, v=value) for key, value in

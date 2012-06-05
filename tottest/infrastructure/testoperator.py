@@ -8,6 +8,7 @@ from collections import namedtuple
 from tottest.baseclass import BaseClass
 from tottest.tools import sleep
 from tottest.commons import errors
+from countdowntimer import CountdownTimer
 
 TIME_REMAINING = "Estimated time Remaining: {t}"
 
@@ -58,7 +59,7 @@ class TestOperator(BaseClass):
         if self._sleep is None:
             self._sleep = sleep.Sleep()
         return self._sleep
-    
+        
     def log_message(self, message):
         """
         Send message to running-code log and device log.
