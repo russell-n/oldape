@@ -12,6 +12,7 @@ DIGIT = r"\d"
 ANYTHING = '.'
 WORD_ENDING = r'\b'
 LINE_ENDING = r"$"
+LINE_START = "^"
 
 # counts
 M_TO_N_TIMES = "{{{m},{n}}}"
@@ -23,7 +24,9 @@ ZERO_OR_ONE = '?'
 
 EVERYTHING = ANYTHING + ZERO_OR_MORE
 
-# special characters
+# characters
+LETTER = CLASS.format(string.ascii_letters)
+LETTERS = LETTER + ONE_OR_MORE
 SPACES_OPTIONAL = SPACE + ZERO_OR_ONE
 SPACES = SPACE + ONE_OR_MORE
 DOT = r"\."
@@ -51,9 +54,15 @@ MAC_ADDRESS = NAMED.format(name=MAC_ADDRESS_NAME,
 LINUX_IP = SPACES.join('inet addr:'.split()) + IP_ADDRESS
 LINUX_MAC = "HWaddr" + SPACES + MAC_ADDRESS
 ANDROID_IP = 'ip' + SPACES + IP_ADDRESS
+INTERFACE_STATE_NAME = "state"
+INTERFACE_STATE =  NAMED.format(name=INTERFACE_STATE_NAME,
+                                pattern="UP" + OR + "DOWN")
 
-NETCFG_IP = SPACES + GROUP.format(group= "UP" + OR + "DOWN") + SPACES + IP_ADDRESS + EVERYTHING + MAC_ADDRESS
-
+NETCFG_IP = SPACES + INTERFACE_STATE + SPACES + IP_ADDRESS + EVERYTHING + MAC_ADDRESS
+INTERFACE_NAME = "interface"
+INTERFACE = NAMED.format(name=INTERFACE_NAME,
+                                pattern=LETTERS + INTEGER) 
+NETCFG_INTERFACE = INTERFACE + NETCFG_IP
 #ping expressions
 RTT = NAMED.format(name="rtt", pattern=REAL)
 
@@ -72,3 +81,19 @@ TIME = ":".join([DIGIT + EXACTLY.format(2)] * 3)
 PROCESS_NAME = "process"
 PROCESS = NAMED.format(name=PROCESS_NAME,pattern=CLASS.format(NOT + SPACE) + ONE_OR_MORE)
 PSE_LINUX = SPACES.join([PID, TTY, TIME, PROCESS])
+
+# iw expressions
+IW_INTERFACE = "Interface" + SPACES + INTERFACE
+
+RSSI_NAME = 'rssi'
+IW_RSSI = "signal:" + SPACES + NAMED.format(name=RSSI_NAME,
+                                            pattern="-" + INTEGER + SPACES + "dBm")
+
+# wpa_cli expressions
+WPA_MAC = "address=" + MAC_ADDRESS
+WPA_IP = "ip_address=" + IP_ADDRESS
+WPA_INTERFACE = "Using" + SPACES + "interface" + SPACES + "'" + INTERFACE + "'"
+SSID_NAME = "ssid"
+SSID = NAMED.format(name=SSID_NAME,
+                    pattern=EVERYTHING)
+WPA_SSID = LINE_START + "ssid=" + SSID
