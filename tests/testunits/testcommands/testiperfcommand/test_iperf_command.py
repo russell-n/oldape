@@ -19,15 +19,21 @@ import iperf_server_failure
 
 
 class IperfCommandClientTest(TestCase):
+    def debug(self):
+        import pudb
+        pudb.set_trace()
+        return
+    
     def setUp(self):
         self.parameters = '-c localhost -i 1 -P4'
         success_output = StringIO(sample_client.output)
         error_output = MagicMock()
         self.output = MagicMock()
-        self.output.write.return_value = None
+        self.file_output = MagicMock()
+        self.output.open.return_value = self.file_output
         self.connection = MagicMock()
         self.connection.iperf.return_value = success_output, error_output
-        self.command = iperfcommand.IperfCommand(self.connection, self.output, self.parameters)
+        self.command = iperfcommand.IperfCommand(connection=self.connection, output=self.output, role="client", parameters=self.parameters)
         return
 
     def test_client(self):
@@ -37,7 +43,7 @@ class IperfCommandClientTest(TestCase):
         self.command.run(new_parameters)
         self.connection.iperf.assert_called_with(new_parameters)
         calls = [call(line) for line in StringIO(sample_client.output)]
-        self.output.write.assert_has_calls(calls)
+        self.file_output.write.assert_has_calls(calls)
         return
 
     @raises(IperfError)
@@ -75,16 +81,20 @@ class IperfCommandServerTest(TestCase):
         success_output = StringIO(iperf_server.output)
         error_output = MagicMock()
         self.output = MagicMock()
-        self.output.write.return_value = None
+        self.file_output = MagicMock()
+        self.output.open.return_value = self.file_output
         self.connection = MagicMock()
         self.connection.iperf.return_value = success_output, error_output
-        self.command = iperfcommand.IperfCommand(self.connection, self.output, self.parameters)
+        self.command = iperfcommand.IperfCommand(connection=self.connection,
+                                                 output=self.output,
+                                                 role='server',
+                                                 parameters = self.parameters)
         return
 
     def test_server_command(self):
         self.command.run()
         calls = [call(line) for line in StringIO(iperf_server.output)]
-        self.output.write.assert_has_calls(calls)
+        self.file_output.write.assert_has_calls(calls)
         return
 
     @raises(IperfError)

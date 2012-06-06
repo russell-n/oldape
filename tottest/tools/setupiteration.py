@@ -43,7 +43,7 @@ class SetupIteration(BaseClass):
 
          - `parameters`: An object with the parameters for ttf and sleep.
         """
-        self.affector.run(parameters.ap)
+        self.affector.run(parameters.affector)
         recovery_time = self.time_to_recovery.run()
         if not recovery_time:
             raise ConfigurationError("Unable to recover from environmental affect")

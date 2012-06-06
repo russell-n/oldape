@@ -3,7 +3,7 @@ Auto-Generated API
 
 The Sections correspond to sub-modules within the timetorecovertest package.
 
-.. currentmodule:: timetorecovertest
+.. currentmodule:: tottest
 
 .. autosummary::
    :toctree: base_api
@@ -11,6 +11,19 @@ The Sections correspond to sub-modules within the timetorecovertest package.
    baseclass
    log_setter
    main
+
+Builders
+--------
+
+The **Builders** build. They map the Lexicographer's parameters to objects.
+
+.. currentmodule:: tottest.buiders
+
+.. autosummary::
+   :toctree: builders_api
+   
+   builder
+   
 
 Commands
 --------
@@ -24,8 +37,11 @@ The **Commands** bundle specific commands with device connections. It is their r
 
    changeprompt
    ifconfig
+   iperfcommand
+   iwcommand
    netcfg
    ping
+   wpacli
 
 Commons
 -------
@@ -108,6 +124,7 @@ The **Devices** provide a set of standardized method calls to the connections (t
    :toctree: devices_api
 
    basedevice
+   adbdevice
    sl4adevice
 
 Info
@@ -126,7 +143,7 @@ Info
 Infrastructure
 --------------
 
-The **Infrastructure** contains modules to help run the test. It corresponds to the workers (TACOs)  who would run a physical test.
+The **Infrastructure** contains modules to help run the test. It corresponds to the workers (TACOs)  who would run a physical test. These are kernel modules that shouldn't change for different types of tests.
 
 .. currentmodule:: tottest.infrastructure
 
@@ -134,7 +151,6 @@ The **Infrastructure** contains modules to help run the test. It corresponds to 
    :toctree: infrastructure_api
 
    argumentparser
-   builder
    countdowntimer
    crashhandler
    data
@@ -160,7 +176,6 @@ Parameters
    iperf_common_parameters
    iperf_common_tcp_parameters
    iperf_server_parameters
-   iperf_udp_server_parameters
 
 Since the parameters define the behavior of commands, choosing them in many ways declares their behavior, much as the choice and ordering of the tools defines the behavior of the Test Operator. 
 
@@ -191,6 +206,7 @@ The **Tools** are bundled commands that the operator uses. By ordering the set o
 
    copyfiles
    getipaddress
+   iperftest
    killall
    movefiles
    networktester
@@ -200,6 +216,7 @@ The **Tools** are bundled commands that the operator uses. By ordering the set o
    timetofailure
    timetorecovery
    timetorecoverytest
+   wifitool
 
 The difference between a tool and a command is somewhat obscure right now. The idea is that the tools have a defined singular purpose and so might have one or more commands bundled inside them. If the operator is using it, it should be a tool.
 

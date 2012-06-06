@@ -4,7 +4,7 @@ A module to hold the SetUp
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
-from builder import Builder
+from tottest.builders import builder
 from tottest.config.lexicographer import Lexicographer
 
 class SetUp(BaseClass):
@@ -44,7 +44,7 @@ class SetUp(BaseClass):
             l = self.lexicographer
             message = "Building builder with Lexicographer '{0}'".format(str(l))
             self.logger.debug(message)
-            self._builder = Builder(l.parameters)
+            self._builder = builder.Builder(l.parameters)
         return self._builder
         
     def run(self):

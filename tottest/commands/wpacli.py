@@ -16,34 +16,25 @@ class WpaCliCommand(BaseClass):
     """
     The WpaCliCommand interprets ifconfig
     """
-    def __init__(self, connection, interface=None, operating_system=None):
+    def __init__(self, connection, interface=None):
         """
         :param:
 
          - `connection`: A connection to the device
          - `interface`: The interface to check
-         - `operating_system` : The operating system on the devices.
         """
         super(WpaCliCommand, self).__init__()
         self.connection = connection
         self._interface = interface
-        self._operating_system = operating_system
         self._ip_address = None
         self._mac_address = None
         self._status = None
         self._ssid = None
+        self._supplicant_state = None
         self.status_command = "status"
         self.interface_list_command = "interface_list"
         return
 
-    @property
-    def operating_system(self):
-        """
-        :return: the operating system for the device to query
-        """
-        if self._operating_system is None:
-            self._operating_system = enumerations.OperatingSystem.linux
-        return self._operating_system
 
     @property
     def status(self):
@@ -78,6 +69,18 @@ class WpaCliCommand(BaseClass):
         """
         expression = expressions.WPA_SSID
         name = expressions.SSID_NAME
+        command = self.status_command
+        return self._match(expression, name, command)
+
+    @property
+    def supplicant_state(self):
+        """
+        This is dynamically generated.
+
+        :return: The supplicant-state
+        """
+        expression = expressions.WPA_SUPPLICANT_STATE
+        name = expressions.SUPPLICANT_STATE_NAME
         command = self.status_command
         return self._match(expression, name, command)
     
@@ -135,14 +138,19 @@ class WpaCliCommand(BaseClass):
             self.logger.error(err)
             raise CommandError(err)
         return
+
+    def __str__(self):
+        return "({i}) IP: {ip}, MAC: {mac}, ssid: {ssid}, suplicant-state: {sup}".format(i=self.interface,
+                                                                                         ip = self.ip_address,
+                                                                                         mac = self.mac_address,
+                                                                                         ssid = self.ssid,
+                                                                                         sup=self.supplicant_state)
+
 # end class WpaCliCommand
     
 if __name__ == "__main__":
     from tottest.connections import adbconnection
     connection = adbconnection.ADBShellConnection()
     command = WpaCliCommand(connection)
-    print command.mac_address
-    print command.ip_address
-    print command.interface
+    print str(command)
     print command.status
-    print command.ssid

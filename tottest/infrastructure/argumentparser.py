@@ -97,7 +97,7 @@ class ArgumentParser(BaseClass):
         runner = self.subparsers.add_parser("run", help="Run a Test")
         runner.add_argument("glob", help="A file glob to match config files (e.g. *.ini - default='%(default)s').",
                             metavar="<config-file glob>",
-                            default="ttr.ini",
+                            default="*.ini",
                             nargs="?")
         runner.set_defaults(function=self.strategerizer.run)
 
@@ -107,7 +107,7 @@ class ArgumentParser(BaseClass):
         tester = self.subparsers.add_parser('test', help='Test your setup.')
         tester.add_argument("glob", help="A file glob to match config files (e.g. *.ini - default='%(default)s').",
                             metavar="<config-file glob>",
-                            default="ttr.ini",
+                            default="*.ini",
                             nargs="?")
 
         tester.set_defaults(function=self.strategerizer.test)

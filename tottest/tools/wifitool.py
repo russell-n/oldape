@@ -3,7 +3,7 @@ An aggregator of wifi commands to create a single interface.
 """
 
 from tottest.baseclass import BaseClass
-from tottest.commands import wpacli, iwcommand
+from tottest.commands import wpacli, iwcommand, netcfg
 from tottest.connections import adbconnection
 
 class WifiToolAdb(BaseClass):
@@ -25,8 +25,18 @@ class WifiToolAdb(BaseClass):
         self._ssid_command = ssid_command
         self._wpacli_command = None
         self._iw_command = None
+        self._netcfg = None
         self._connection = None
         return
+
+    @property
+    def netcfg(self):
+        """
+        :return: The netcfg command
+        """
+        if self._netcfg is None:
+            self._netcfg = netcfg.NetcfgCommand(self.connection)
+        return self._netcfg
 
     @property
     def iw_command(self):

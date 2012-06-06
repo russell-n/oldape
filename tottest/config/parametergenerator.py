@@ -12,10 +12,11 @@ from collections import namedtuple
 
 # tottest
 from tottest.baseclass import BaseClass
+from tottest.parameters import iperf_server_parameters
+from tottest.parameters import iperf_client_parameters
 
-
-parameters = ("repetition repetitions output_folder recovery_time timeout" +
-              " threshold criteria target wifi_interface").split()
+parameters = ("repetition repetitions output_folder " +
+              " receiver sender sleep").split()
 
 class TestParameter(namedtuple('TestParameter', parameters)):
     """
@@ -45,6 +46,42 @@ class ParameterGenerator(BaseClass):
         self.parameters = parameters
         return
 
+    def get_values(self, source, target):
+        """
+        :param:
+
+         - `source`: A named tuple
+         - `target`: Object to take tuples values
+
+        :return: The target with updated values
+        """
+        for field in source._fields:
+            setattr(target, field, getattr(source, field))
+        return target
+                    
+    def receiver_parameters(self, parameters):
+        """
+        :param:
+
+         - `parameters`: IperfStaticParameters object
+        :return: IperfServerParameters
+        """
+        receiver_parameters = iperf_server_parameters.IperfServerParameters()
+        receiver_parameters.window = parameters.window
+        return receiver_parameters
+
+    def sender_parameters(self, parameters):
+        """
+        :param:
+
+         - `parameters`: an IperfStaticParameters object
+
+        :return: IperfTcpClientParameters
+        """
+        sender_parameters = iperf_client_parameters.IperfTcpClientParameters()
+        return self.get_values(parameters, sender_parameters)
+        
+        
     def forward(self):
         """
         The yielder of parameters for the iterator
@@ -53,15 +90,15 @@ class ParameterGenerator(BaseClass):
         """
         #for params in self.parameters:
         for rep in range(1, self.parameters.repetitions + 1):
+            receiver_parameters = self.receiver_parameters(self.parameters.iperf)
+            sender_parameters = self.sender_parameters(self.parameters.iperf)
+            
             yield TestParameter(repetition=rep,
                                 repetitions=self.parameters.repetitions,
                                 output_folder=self.parameters.output_folder,
-                                recovery_time=self.parameters.recovery_time,
-                                criteria=self.parameters.criteria,
-                                timeout=self.parameters.timeout,
-                                threshold=self.parameters.threshold,
-                                target=self.parameters.target,
-                                wifi_interface=self.parameters.wifi_interface)
+                                receiver=receiver_parameters,
+                                sender=sender_parameters,
+                                sleep=5)
         return
 
     def __iter__(self):
