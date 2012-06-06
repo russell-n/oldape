@@ -91,7 +91,7 @@ class ConfigFetcher(baseclass.BaseClass):
         :yield: .ini file name
         """
         for file_name in os.listdir(self.config_folder_path):
-            if file_name.endswith(INI_EXTENSION) or file_name in DEFAULTS:
+            if file_name in DEFAULTS:
                 yield file_name
         return
 

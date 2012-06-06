@@ -20,7 +20,7 @@ class SetupIterationTest(TestCase):
         self.time_to_recovery.run.return_value = 10
         self.sleep = MagicMock()
         self.parameters = MagicMock()
-        self.parameters.ap.return_value = 2
+        self.parameters.affector.return_value = 2
         self.parameters.recovery_time = 5
         self.setupiteration = setupiteration.SetupIteration(device=self.device,
                                                             affector=self.affector,
@@ -30,7 +30,7 @@ class SetupIterationTest(TestCase):
 
     def test_run(self):
         self.setupiteration.run(self.parameters)
-        self.affector.run.assert_called_with(self.parameters.ap)
+        self.affector.run.assert_called_with(self.parameters.affector)
         self.time_to_recovery.run.assert_called_with()
         calls = [call("Time to recovery: 10"), call(output)]
         self.assertEqual(self.device.log.mock_calls, calls)

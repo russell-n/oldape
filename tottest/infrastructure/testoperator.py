@@ -8,7 +8,6 @@ from collections import namedtuple
 from tottest.baseclass import BaseClass
 from tottest.tools import sleep
 from tottest.commons import errors
-from countdowntimer import CountdownTimer
 
 TIME_REMAINING = "Estimated time Remaining: {t}"
 
@@ -26,11 +25,12 @@ class TestOperator(BaseClass):
     """
     An operator runs the sequence of operations.
     """
-    def __init__(self, setup, teardown, test, device, watchers, cleanup,
-                 countdown_timer, sleep=None):
+    def __init__(self, test_parameters, setup, teardown, test, device, watchers,
+                 cleanup, countdown_timer, sleep=None):
         """
         :params:
 
+         - `test_parameters`: A generator of test parameters
          - `setup`: A SetUp to run for each repetition
          - `teardown`: A TearDown to run for each repetition
          - `test`: A test to run between setup and teardown
@@ -41,6 +41,7 @@ class TestOperator(BaseClass):
          - `sleep`: A sleep for recovery times
         """
         super(TestOperator, self).__init__()
+        self.test_parameters = test_parameters
         self.setup = setup
         self.teardown = teardown
         self.test = test

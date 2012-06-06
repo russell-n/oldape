@@ -4,6 +4,7 @@ A module to kill processes
 
 #python
 import re
+
 # tottest
 from tottest.baseclass import BaseClass
 from tottest.tools import sleep
@@ -54,6 +55,8 @@ class KillAll(BaseClass):
         if self._expression is None:
             if self.operating_system == operating_systems.linux:
                 self._expression = re.compile(expressions.PSE_LINUX)
+            elif self.operating_system == operating_systems.android:
+                self._expression = re.compile(expressions.PS_ANDROID)
         return self._expression
 
     @property
@@ -64,6 +67,8 @@ class KillAll(BaseClass):
         if self._arguments is None:
             if self.operating_system == operating_systems.linux:
                 self._arguments = "-e"
+            elif self.operating_system == operating_systems.android:
+                self._arguments = ''
         return self._arguments
 
     @property
@@ -83,14 +88,22 @@ class KillAll(BaseClass):
         """
         if name is None:
             name = self.name
-        for process in self.connection.ps(self.arguments):
+        output, error = self.connection.ps(self.arguments)
+        for process in output:
             match = self.expression.search(process)
             if match and match.group(expressions.PROCESS_NAME) == name:
                 self.connection.kill(match.group(expressions.PID_NAME))
+        err = error.read()
+        if len(err):
+            self.logger.error(err)
         self.sleep()
-        for process in self.connection.ps(self.arguments):
+        output, error = self.connection.ps(self.arguments)
+        for process in output:
             match = self.expression.search(process)
             if match and match.group(expressions.PROCESS_NAME) == name:
                 raise KillAllError("Unable to kill {0}".format(name))
+        err = error.read()
+        if len(err):
+            self.logger.error(err)
         return
 # class KillAll

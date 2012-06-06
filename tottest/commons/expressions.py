@@ -27,6 +27,10 @@ EVERYTHING = ANYTHING + ZERO_OR_MORE
 # characters
 LETTER = CLASS.format(string.ascii_letters)
 LETTERS = LETTER + ONE_OR_MORE
+ALPHA_NUM = string.ascii_letters + string.digits
+ALPHA_NUMS = ALPHA_NUM + ONE_OR_MORE
+ALPHA_NUM_UNDERSCORE = r'\w'
+ALPHA_NUM_UNDERSCORES = ALPHA_NUM_UNDERSCORE + ONE_OR_MORE
 SPACES_OPTIONAL = SPACE + ZERO_OR_ONE
 SPACES = SPACE + ONE_OR_MORE
 DOT = r"\."
@@ -34,6 +38,7 @@ DOT = r"\."
 
 # numbers
 HEX = CLASS.format(string.hexdigits)
+HEXADECIMALS = HEX + ONE_OR_MORE
 INTEGER = DIGIT + ONE_OR_MORE
 FLOAT = INTEGER + DOT + INTEGER
 REAL = INTEGER + GROUP.format(group=DOT + INTEGER) + ZERO_OR_ONE
@@ -82,6 +87,15 @@ PROCESS_NAME = "process"
 PROCESS = NAMED.format(name=PROCESS_NAME,pattern=CLASS.format(NOT + SPACE) + ONE_OR_MORE)
 PSE_LINUX = SPACES.join([PID, TTY, TIME, PROCESS])
 
+#android ps
+USER = ALPHA_NUM_UNDERSCORES
+PPID = INTEGER
+VSIZE = INTEGER
+RSS = INTEGER
+WCHAN = ALPHA_NUMS
+PC = HEXADECIMALS
+S_OR_R = "S" + OR + "R"
+PS_ANDROID = SPACES.join((USER, PID, PPID, VSIZE, RSS, WCHAN, PC, S_OR_R, PROCESS_NAME))
 # iw expressions
 IW_INTERFACE = "Interface" + SPACES + INTERFACE
 
@@ -95,5 +109,9 @@ WPA_IP = "ip_address=" + IP_ADDRESS
 WPA_INTERFACE = "Using" + SPACES + "interface" + SPACES + "'" + INTERFACE + "'"
 SSID_NAME = "ssid"
 SSID = NAMED.format(name=SSID_NAME,
-                    pattern=EVERYTHING)
+                    pattern=EVERYTHING + WORD_ENDING)
 WPA_SSID = LINE_START + "ssid=" + SSID
+SUPPLICANT_STATE_NAME = "supplicant_state"
+SUPPLICANT_STATE = NAMED.format(name=SUPPLICANT_STATE_NAME,
+                                pattern=LETTERS)
+WPA_SUPPLICANT_STATE = "wpa_state=" + SUPPLICANT_STATE

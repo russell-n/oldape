@@ -3,38 +3,45 @@ a module to hold a builder of objects
 """
 
 # python
-import threading
-import os
+#import threading
+#import os
+
+# third party
+from mock import Mock
 
 # tottest
 from tottest.baseclass import BaseClass
 
-from hortator import Hortator
+# infrastructure
+from tottest.infrastructure import teardown
+from tottest.infrastructure import hortator
 from tottest.infrastructure.testoperator import TestOperator
+
+#config
 from tottest.config.parametergenerator import ParameterGenerator
 
 # testoperator tools
-from tottest.tools import setupiteration
-from tottest.tools import timetofailure
-from tottest.tools import teardowniteration
-from tottest.tools import timetorecovery
-from tottest.tools import timetorecoverytest
+from tottest.tools import iperftest, killall
 from tottest.tools import copyfiles
 
 # devices
-from tottest.devices import sl4adevice
+from tottest.devices import adbdevice
 
 #commons
 from tottest.commons import storageoutput
+from tottest.commons import enumerations
+operating_systems = enumerations.OperatingSystem
 #connections
 from tottest.connections import adbconnection
-#watchers
-from tottest.watchers import logcatwatcher, logwatcher, thewatcher
-# commands
-from tottest.commands import ping
+from tottest.connections import sshconnection
 
-# infrastructur
-from teardown import TearDown
+
+
+#watchers
+
+# commands
+from tottest.commands import iperfcommand
+
 from tottest.log_setter import LOGNAME
 
 class Builder(BaseClass):
@@ -50,14 +57,14 @@ class Builder(BaseClass):
         super(Builder, self).__init__(*args, **kwargs)
         self.parameters = parameters
         self._operators = None
-        self._watchers = None
         self._hortator = None
-        self._pinger = None
         self._device = None
-        self._thread_connection = None
-        self._mutex = None
+        self.tpc = None
+        self._sender = None
+        self._receiver = None
+        self._killers = None
+        self._dut_connection = None
         self.storage = None
-        self._event = None
         return
 
     @property
@@ -67,24 +74,9 @@ class Builder(BaseClass):
         """
         if self._hortator is None:
             self.logger.debug("Builing the Hortator")
-            self._hortator = Hortator(operators=self.operators)
+            self._hortator = hortator.Hortator(operators=self.operators)
         return self._hortator
 
-    @property
-    def pinger(self):
-        """
-        :warning: This returns the same connection repeatedly - threads need locks.
-        
-        :todo:
-
-         - This is currently only an adb-pinger, this needs to be made flexible
-         
-        :return: pinger
-        """
-        if self._pinger is None:
-            self.logger.debug("Building the pinger")
-            self._pinger = ping.ADBPing()
-        return self._pinger
 
     @property
     def device(self):
@@ -98,62 +90,51 @@ class Builder(BaseClass):
         :return: device
         """
         if self._device is None:
-            self.logger.debug("Building the SL4A Device")
-            self._device = sl4adevice.SL4ADevice()
+            self.logger.debug("Building the ADB Device")
+            self._device = adbdevice.AdbDevice()
         return self._device
 
     @property
-    def thread_connection(self):
+    def dut_connection(self):
         """
-        :rtype: ADBShellConnection
-        :return: A connection meant for threads (so they can setup locks).
+        :return: ADBShell connection to the dut
         """
-        if self._thread_connection is None:
-            self._thread_connection = adbconnection.ADBShellConnection() 
-        return self._thread_connection
+        if self._dut_connection is None:
+            self._dut_connection = adbconnection.ADBShellConnection()
+        return self._dut_connection
+    
+    def get_tpc(self, login=None, address=None, password=None):
+        """
+        This only creates a connection the first time.
+        If used in threads it needs a lock.
+        
+        :param:
+
+         - `login`: The user login name
+         - `address`: ip address or resolvable name
+         - `password`: An optional login password
+        
+        :return: SSHConnection to the traffic pc
+        """
+        if self.tpc is None:
+            self.tpc = sshconnection.SSHConnection(hostname=address,
+                                                   username=login,
+                                                   password=password)
+        return self.tpc
+    
 
     @property
-    def mutex(self):
+    def killers(self):
         """
-        :return: a Semaphore set to allow 1 thread to pass.
+        :return: tuple of iperf killers        
         """
-        if self._mutex is None:
-            self._mutex = threading.RLock()
-        return self._mutex
-
-    @property
-    def event(self):
-        """
-        :return: A threading event.
-        """
-        if self._event is None:
-            self._event = threading.Event()
-            self._event.clear()
-        return self._event
-
-    def log_watchers(self, output_folder, data_file, logs):
-        """
-        : param:
-
-         - `output_folder`: The name of the folder to store the log in.
-         - `data_file`: The name of the file to store the log in.
-         - `logs`: A list of log paths
-         
-        :return: List of log watchers or None
-        """
-        if logs is None:
-            return
-        watchers = []
-        for log in logs:
-            extension = ".{0}".format(os.path.basename(log))
-            watchers.append(logwatcher.SafeLogWatcher(lock=self.mutex,
-                                                     event=self.event,
-                                                     output=self.get_storage(output_folder).open(data_file,
-                                                                                                 extension=extension),
-                                                     path=log,
-                                                     connection=self.thread_connection))
-
-        return  watchers
+        if self._killers is None:
+            tpc_killer = killall.KillAll(connection=self.get_tpc(), name="iperf")
+            dut_killer = killall.KillAll(connection=self.dut_connection,
+                                         name="iperf",
+                                         operating_system=operating_systems.android)
+            self._killers = (tpc_killer, dut_killer)
+        return self._killers
     
     @property
     def operators(self):
@@ -164,31 +145,17 @@ class Builder(BaseClass):
             self.logger.debug("Building the TestParameters with StaticParameters - {0}".format(static_parameters))
             config_copier = copyfiles.CopyFiles((static_parameters.source_file,), self.get_storage(static_parameters.output_folder))
             log_copier = copyfiles.CopyFiles((LOGNAME,), self.get_storage(static_parameters.output_folder))
-            cleanup=TearDown((config_copier, log_copier))
-            setup = self.setup_iteration()
-            teardown = teardowniteration.TeardownIteration()
+            cleanup = teardown.TearDown((config_copier, log_copier))
             test =self.test(static_parameters)
             test_parameters = ParameterGenerator(static_parameters)
 
-            logcat_watcher = logcatwatcher.SafeLogcatWatcher(lock=self.mutex,
-                                                             logs=static_parameters.logcat_logs,
-                                                             event=self.event,
-                                                             output=self.get_storage(static_parameters.output_folder).open(static_parameters.data_file,
-                                                                                                                     extension=".logcat"),
-                                                             connection=self.thread_connection)
-            watchers = self.log_watchers(static_parameters.output_folder, static_parameters.data_file, static_parameters.logwatcher_logs)
-            if watchers is not None:
-                watchers.append(logcat_watcher)
-            else:
-                watchers = [logcat_watcher]
-                
-            watcher = thewatcher.TheWatcher(watchers=watchers, event=self.event)
-            op_parameters = OperatorParameters(setup, teardown, test, self.device,
-                                               watcher, cleanup)
-            ost_parameters = OperatorStaticTestParameters(op_parameters,
-                                                          static_parameters,
-                                                          test_parameters)
-            yield TestOperator(ost_parameters)
+            setup = Mock()
+            #teardown = Mock()
+            watchers = Mock()
+            countdown_timer = Mock()
+            
+            yield TestOperator(test_parameters=test_parameters, setup=setup, teardown=teardown, test=test,
+                               device=self.device, watchers=watchers, cleanup=cleanup, countdown_timer=countdown_timer)
         return
     
     def get_storage(self, folder_name=None):
@@ -212,20 +179,14 @@ class Builder(BaseClass):
          
         :return: TimeToRecoveryTest object
         """
-        ttrt = timetorecoverytest
-        storage = self.get_storage(parameters.output_folder).open(parameters.data_file, extension="_data.csv")
-        ttr = timetorecovery.TimeToRecovery(self.pinger)
-        ttrtp = ttrt.TimeToRecoveryTestParameters(output=storage,
-                                                  device=self.device,
-                                                  time_to_recovery=ttr)
-        return ttrt.TimeToRecoveryTest(ttrtp)
+        storage = self.get_storage(parameters.output_folder)
+        sender = iperfcommand.IperfCommand(connection=self.get_tpc(address=parameters.tpc_control_ip, login=parameters.tpc_login, password=parameters.tpc_password),
+                                           output=storage,
+                                           role="tpc_to_dut")
+        receiver = iperfcommand.IperfCommand(connection=self.device,
+                                             output=storage,
+                                             role="dut_from_tpc")
+        return iperftest.IperfTest(sender=sender, receiver=receiver,killers=self.killers)
         
-    def setup_iteration(self):
-        """
-        :return: A SetupIteration object
-        """
-        ttf = timetofailure.TimeToFailure(self.pinger)
-        return setupiteration.SetupIteration(self.device, ttf)
-
 # end Builder
     

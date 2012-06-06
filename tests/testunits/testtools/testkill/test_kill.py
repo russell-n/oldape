@@ -1,6 +1,7 @@
 """
 Tests the killall module
 """
+from StringIO import StringIO
 from mock import MagicMock
 import mock
 import nose
@@ -36,13 +37,13 @@ def test_expression():
 @nose.tools.raises(errors.CommandError)
 def test_kill_failure():
     """
-    :description: passing in the same ps output twice will raise an exception
+    :description: if the process remains on the second ps check, an exception is raised
 
     :assert: killall calls connection.kill('firefox')
     :assert: raises CommandError
     """
     connection = MagicMock()
-    connection.ps.return_value = PSE_LINUX
+    connection.ps.return_value = PSE_LINUX, StringIO("")
     connection.kill = MagicMock()
     killer = killall.KillAll(connection, "firefox")
     killer.run()
@@ -64,7 +65,7 @@ def test_kill_success():
     # setup the changing outputs
     output = [PSE_LINUX, PSE_LINUX_NO_FIREFOX]
     def outputs(*args, **kwargs):
-        return output.pop(0)
+        return output.pop(0), StringIO('')
     
     connection = MagicMock()
     connection.ps.side_effect = outputs
