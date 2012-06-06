@@ -24,9 +24,6 @@ from tottest.config.parametergenerator import ParameterGenerator
 from tottest.tools import iperftest, killall
 from tottest.tools import copyfiles
 
-# devices
-from tottest.devices import adbdevice
-
 #commons
 from tottest.commons import storageoutput
 from tottest.commons import enumerations
@@ -35,14 +32,17 @@ operating_systems = enumerations.OperatingSystem
 from tottest.connections import adbconnection
 from tottest.connections import sshconnection
 
-
-
 #watchers
 
 # commands
 from tottest.commands import iperfcommand
 
 from tottest.log_setter import LOGNAME
+
+# builders
+from device_builder import DeviceBuilder
+from dutconnectionbuilder import DutConnection
+from tpcbuilder import TpcConnection
 
 class Builder(BaseClass):
     """
@@ -58,7 +58,7 @@ class Builder(BaseClass):
         self.parameters = parameters
         self._operators = None
         self._hortator = None
-        self._device = None
+        self._dut_device = None
         self.tpc = None
         self._sender = None
         self._receiver = None
@@ -79,7 +79,7 @@ class Builder(BaseClass):
 
 
     @property
-    def device(self):
+    def dut_device(self):
         """
         :warning: This returns the same connection repeatedly - don't use in threads.
 
@@ -90,8 +90,7 @@ class Builder(BaseClass):
         :return: device
         """
         if self._device is None:
-            self.logger.debug("Building the ADB Device")
-            self._device = adbdevice.AdbDevice()
+            self._device = DeviceBuilder().device
         return self._device
 
     @property
@@ -100,7 +99,7 @@ class Builder(BaseClass):
         :return: ADBShell connection to the dut
         """
         if self._dut_connection is None:
-            self._dut_connection = adbconnection.ADBShellConnection()
+            self._dut_connection = DutConnection().connection
         return self._dut_connection
     
     def get_tpc(self, login=None, address=None, password=None):
@@ -117,9 +116,9 @@ class Builder(BaseClass):
         :return: SSHConnection to the traffic pc
         """
         if self.tpc is None:
-            self.tpc = sshconnection.SSHConnection(hostname=address,
-                                                   username=login,
-                                                   password=password)
+            self.tpc = TpcConnection(hostname=address,
+                                     username=login,
+                                     password=password)
         return self.tpc
     
 
@@ -155,7 +154,7 @@ class Builder(BaseClass):
             countdown_timer = Mock()
             
             yield TestOperator(test_parameters=test_parameters, setup=setup, teardown=teardown, test=test,
-                               device=self.device, watchers=watchers, cleanup=cleanup, countdown_timer=countdown_timer)
+                               device=self.dut_device, watchers=watchers, cleanup=cleanup, countdown_timer=countdown_timer)
         return
     
     def get_storage(self, folder_name=None):
