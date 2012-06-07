@@ -1,11 +1,14 @@
 """
-This is a module to hold a device builder
+This is a module to hold device builders.
+
+* Each builder expects a single parameter on initialization
+* Each builder has a `device` property that will return the built device
 """
 
 from tottest.baseclass import BaseClass
 from tottest.devices import adbdevice
 
-class DutDeviceBuilder(BaseClass):
+class AdbDeviceBuilder(BaseClass):
     """
     A Device Builder builds DUT devices
     """
@@ -13,9 +16,9 @@ class DutDeviceBuilder(BaseClass):
         """
         :param:
 
-         - `parameters`: Depending on the device being built, this might have values for the device
+         - `parameters`: Just used to keep the interface uniform
         """
-        super(DutDeviceBuilder, self).__init__()
+        super(AdbDeviceBuilder, self).__init__()
         self.parameters = parameters
         self._device = None
         return

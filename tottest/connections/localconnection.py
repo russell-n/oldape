@@ -35,6 +35,7 @@ except ImportError as error:
 from tottest.baseclass import BaseClass
 from tottest.commons.errors import ConnectionError
 from tottest.commons.readoutput import StandardOutput
+from tottest.commons.enumerations import OperatingSystem
 
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
@@ -151,7 +152,17 @@ class LocalNixConnection(LocalConnection):
     def __init__(self, *args, **kwargs):
         super(LocalNixConnection, self).__init__(*args, **kwargs)
         self._logger = None
+        self._operating_system = None
         return
+
+    @property
+    def operating_system(self):
+        """
+        :return: OperatingSystem.linux
+        """
+        if self._operating_system is None:
+            self._operating_system = OperatingSystem.linux
+        return self._operating_system
 
     def run(self, command, arguments):
         """

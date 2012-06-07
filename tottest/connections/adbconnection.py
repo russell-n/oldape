@@ -10,8 +10,14 @@ from StringIO import StringIO
 from localconnection import LocalNixConnection
 from localconnection import OutputError
 from localconnection import EOF
-from tottest.commons.errors import ConnectionError, ConnectionWarning
-from tottest.commons.readoutput import ValidatingOutput
+from tottest.commons import errors 
+from tottest.commons import readoutput 
+from tottest.commons import enumerations
+
+ConnectionError = errors.ConnectionError
+ConnectionWarning = errors.ConnectionWarning
+ValidatingOutput = readoutput.ValidatingOutput
+OperatingSystem = enumerations.OperatingSystem
 
 # Error messages
 DEVICE_NOT_FOUND = "error: device not found"
@@ -46,7 +52,17 @@ class ADBConnection(LocalNixConnection):
         self.command_prefix = "adb"
         if serial_number is not None:
             self.command_prefix += " -s " + serial_number
+        self._operating_system = None
         return
+
+    @property
+    def operating_system(self):
+        """
+        :return: enumeration for android
+        """
+        if self._operating_system is None:
+            self._operating_system = OperatingSystem.android
+        return self._operating_system
 
     def _rpc(self, command, arguments='', timeout=None):
         """
