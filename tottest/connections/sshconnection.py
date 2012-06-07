@@ -40,6 +40,7 @@ class SSHConnection(LocalConnection):
     """
     def __init__(self, hostname, username,
                  password=None, port=22, timeout=5,
+                 operating_system=None,
                  *args, **kwargs):
         """
         :param:
@@ -48,6 +49,7 @@ class SSHConnection(LocalConnection):
          - `username`: The login username.
          - `password`: The login password
          - `port`: The ssh port
+         - `operating_system`: OperatingSystem enumeration
          - `timeout`: The login timeout
         """
         super(SSHConnection, self).__init__(*args, **kwargs)
@@ -55,6 +57,7 @@ class SSHConnection(LocalConnection):
         self.username = username
         self.password = password
         self.port = port
+        self.operating_system = operating_system
         self.timeout = timeout
         self._logger = None
         self._client = None

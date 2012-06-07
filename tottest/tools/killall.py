@@ -21,20 +21,23 @@ class KillAll(BaseClass):
     """
     A killall kills processes. The default operating system is linux
     """
-    def __init__(self, connection, name=None, operating_system=None):
+    def __init__(self, connection, name=None, operating_system=None, sleep=5):
         """
         :param:
 
          - `connection`: a device connection
          - `name`: The name of a process to kill
          - `operating_system`: The OS whose `ps` will be used
+         - `sleep`: The number of seconds to wait for a process to die.
         """
         super(BaseClass, self).__init__()
+        self._logger = None
         self.connection = connection
         self.name = name
         self._operating_system = operating_system
         self._expression = None
         self._arguments = None
+        self.time_to_sleep = sleep
         self._sleep = None
         return
 
@@ -44,7 +47,10 @@ class KillAll(BaseClass):
         :return: The operating system that issues the commands.
         """
         if self._operating_system is None:
-            self._operating_system = operating_systems.linux
+            self._operating_system = self.connection.operating_system
+            if self._operating_system is None:
+                self._operating_system = operating_systems.linux
+            self.logger.debug("KillAll Operating sytem: {0}".format(self._operating_system))
         return self._operating_system
 
     @property
@@ -53,10 +59,13 @@ class KillAll(BaseClass):
         :return: The regular expression for the ps command
         """
         if self._expression is None:
-            if self.operating_system == operating_systems.linux:
-                self._expression = re.compile(expressions.PSE_LINUX)
-            elif self.operating_system == operating_systems.android:
+            if self.operating_system == operating_systems.android:
+                self.logger.debug("Using Android Expression")
                 self._expression = re.compile(expressions.PS_ANDROID)
+            else:
+                self.logger.debug("Using linux expression")
+                self._expression = re.compile(expressions.PSE_LINUX)
+
         return self._expression
 
     @property
@@ -65,10 +74,11 @@ class KillAll(BaseClass):
         :return: The arguments to the `ps` call        
         """
         if self._arguments is None:
-            if self.operating_system == operating_systems.linux:
-                self._arguments = "-e"
-            elif self.operating_system == operating_systems.android:
+            if self.operating_system == operating_systems.android:
                 self._arguments = ''
+            else:
+                self._arguments = "-e"
+            
         return self._arguments
 
     @property
@@ -80,7 +90,7 @@ class KillAll(BaseClass):
             self._sleep = sleep.Sleep().run
         return self._sleep
     
-    def run(self, name=None):
+    def run(self, name=None, time_to_sleep=None):
         """
         :name: The process to kill
 
@@ -88,15 +98,26 @@ class KillAll(BaseClass):
         """
         if name is None:
             name = self.name
+
+        if time_to_sleep is None:
+            time_to_sleep = self.time_to_sleep
+
+        self.logger.debug("name = " + name)
         output, error = self.connection.ps(self.arguments)
-        for process in output:
-            match = self.expression.search(process)
+        
+        for line in output:
+            # line is the next line returned from stdout
+            if name in line:
+                self.logger.debug(line)
+            match = self.expression.search(line)
             if match and match.group(expressions.PROCESS_NAME) == name:
+                self.logger.debug("matched: " + line)
+                self.logger.debug("killing: " + match.group(expressions.PID_NAME))                
                 self.connection.kill(match.group(expressions.PID_NAME))
         err = error.read()
         if len(err):
             self.logger.error(err)
-        self.sleep()
+        self.sleep(time_to_sleep)
         output, error = self.connection.ps(self.arguments)
         for process in output:
             match = self.expression.search(process)

@@ -13,36 +13,24 @@ from mock import Mock
 from tottest.baseclass import BaseClass
 
 # infrastructure
-from tottest.infrastructure import teardown
+
 from tottest.infrastructure import hortator
 from tottest.infrastructure.testoperator import TestOperator
 
 #config
 from tottest.config.parametergenerator import ParameterGenerator
 
-# testoperator tools
-from tottest.tools import iperftest, killall
-from tottest.tools import copyfiles
-
 #commons
 from tottest.commons import storageoutput
 from tottest.commons import enumerations
 operating_systems = enumerations.OperatingSystem
-#connections
-from tottest.connections import adbconnection
-from tottest.connections import sshconnection
-
-#watchers
-
-# commands
-from tottest.commands import iperfcommand
-
-from tottest.log_setter import LOGNAME
 
 # builders
-from device_builder import DeviceBuilder
-from dutconnectionbuilder import DutConnection
-from tpcbuilder import TpcConnection
+from devicebuilder import AdbDeviceBuilder
+from connectionbuilder import AdbShellConnectionBuilder, SshConnectionBuilder
+from teardownbuilder import TearDownBuilder
+from testbuilder import IperfTestToDutBuilder
+
 
 class Builder(BaseClass):
     """
@@ -58,12 +46,9 @@ class Builder(BaseClass):
         self.parameters = parameters
         self._operators = None
         self._hortator = None
-        self._dut_device = None
-        self.tpc = None
-        self._sender = None
-        self._receiver = None
-        self._killers = None
-        self._dut_connection = None
+        self.dut_device = None
+        self.dut_connection = None
+        self.tpc_connection = None
         self.storage = None
         return
 
@@ -73,68 +58,59 @@ class Builder(BaseClass):
         :return: The Hortator for the test operators
         """
         if self._hortator is None:
-            self.logger.debug("Builing the Hortator")
+            self.logger.debug("Building the Hortator")
             self._hortator = hortator.Hortator(operators=self.operators)
         return self._hortator
 
 
-    @property
-    def dut_device(self):
+
+    def get_teardown(self, configfilename, storage):
         """
+        :param:
+
+         - `configfilename`: The name of the config-file to copy.
+        :return: A Teardown for the TestOperator's cleanup
+        """
+        return TearDownBuilder(configfilename, storage).teardown
+    
+    def get_dut_device(self, parameters=None):
+        """
+        :param:
+
+         - `parameters`: Nothing for the current ADB connection, meant to be used when generalized
+        
         :warning: This returns the same connection repeatedly - don't use in threads.
 
-        :todo:
-
-         - Currently only SL4ADevice - need flexibility
-         
         :return: device
         """
-        if self._device is None:
-            self._device = DeviceBuilder().device
-        return self._device
+        if self.device is None:
+            self.device = AdbDeviceBuilder().device
+        return self.device
 
-    @property
-    def dut_connection(self):
+    def get_dut_connection(self, parameters=None):
         """
-        :return: ADBShell connection to the dut
+        :return: connection to the dut
         """
-        if self._dut_connection is None:
-            self._dut_connection = DutConnection().connection
-        return self._dut_connection
-    
-    def get_tpc(self, login=None, address=None, password=None):
+        if self.dut_connection is None:
+            self.dut_connection = AdbShellConnectionBuilder().connection
+        return self.dut_connection
+
+    def get_tpc_connection(self, parameters):
         """
         This only creates a connection the first time.
         If used in threads it needs a lock.
         
         :param:
 
-         - `login`: The user login name
-         - `address`: ip address or resolvable name
-         - `password`: An optional login password
+         - `parameters`: TpcConnection parameters
         
-        :return: SSHConnection to the traffic pc
+        :return: Connection to the traffic pc
         """
         if self.tpc is None:
-            self.tpc = TpcConnection(hostname=address,
-                                     username=login,
-                                     password=password)
+            self.tpc_builder = SshConnectionBuilder(parameters)
+            self.tpc = self.tpc_builder.connection
         return self.tpc
-    
-
-    @property
-    def killers(self):
-        """
-        :return: tuple of iperf killers        
-        """
-        if self._killers is None:
-            tpc_killer = killall.KillAll(connection=self.get_tpc(), name="iperf")
-            dut_killer = killall.KillAll(connection=self.dut_connection,
-                                         name="iperf",
-                                         operating_system=operating_systems.android)
-            self._killers = (tpc_killer, dut_killer)
-        return self._killers
-    
+        
     @property
     def operators(self):
         """
@@ -142,19 +118,18 @@ class Builder(BaseClass):
         """
         for static_parameters in self.parameters:
             self.logger.debug("Building the TestParameters with StaticParameters - {0}".format(static_parameters))
-            config_copier = copyfiles.CopyFiles((static_parameters.source_file,), self.get_storage(static_parameters.output_folder))
-            log_copier = copyfiles.CopyFiles((LOGNAME,), self.get_storage(static_parameters.output_folder))
-            cleanup = teardown.TearDown((config_copier, log_copier))
-            test =self.test(static_parameters)
+            test = self.get_test(static_parameters)
             test_parameters = ParameterGenerator(static_parameters)
-
+            cleanup = self.get_teardown(static_parameters.source_file,
+                                        self.get_storage(static_parameters.output_folder))
+            device = self.get_dut_device(static_parameters.dut_parameters)
             setup = Mock()
-            #teardown = Mock()
+            teardown = Mock()
             watchers = Mock()
             countdown_timer = Mock()
             
             yield TestOperator(test_parameters=test_parameters, setup=setup, teardown=teardown, test=test,
-                               device=self.dut_device, watchers=watchers, cleanup=cleanup, countdown_timer=countdown_timer)
+                               device=device, watchers=watchers, cleanup=cleanup, countdown_timer=countdown_timer)
         return
     
     def get_storage(self, folder_name=None):
@@ -170,7 +145,8 @@ class Builder(BaseClass):
             self.storage = storageoutput.StorageOutput(folder_name)
         return self.storage
 
-    def test(self, parameters):
+
+    def get_test(self, parameters):
         """
         :param:
 
@@ -179,13 +155,20 @@ class Builder(BaseClass):
         :return: TimeToRecoveryTest object
         """
         storage = self.get_storage(parameters.output_folder)
-        sender = iperfcommand.IperfCommand(connection=self.get_tpc(address=parameters.tpc_control_ip, login=parameters.tpc_login, password=parameters.tpc_password),
-                                           output=storage,
-                                           role="tpc_to_dut")
-        receiver = iperfcommand.IperfCommand(connection=self.device,
-                                             output=storage,
-                                             role="dut_from_tpc")
-        return iperftest.IperfTest(sender=sender, receiver=receiver,killers=self.killers)
-        
+        tpc = self.get_tpc_connection(parameters.tpc_parameters)
+        dut = self.get_dut_connection(parameters.dut_parameters)
+        return IperfTestToDutBuilder(tpc_connection=tpc,
+                                     dut_connection=dut,
+                                     storage=storage)
+
+    def reset(self):
+        """
+        To be called when an operator has been built to reset the object.
+        """
+        self.dut_device = None
+        self.dut_connection = None
+        self.tpc_connection = None
+        self.storage = None
+        return
 # end Builder
     
