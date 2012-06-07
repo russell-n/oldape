@@ -16,7 +16,7 @@ from tottest.parameters import iperf_server_parameters
 from tottest.parameters import iperf_client_parameters
 
 parameters = ("repetition repetitions output_folder " +
-              " receiver sender sleep").split()
+              " receiver sender recovery_time").split()
 
 class TestParameter(namedtuple('TestParameter', parameters)):
     """
@@ -90,15 +90,15 @@ class ParameterGenerator(BaseClass):
         """
         #for params in self.parameters:
         for rep in range(1, self.parameters.repetitions + 1):
-            receiver_parameters = self.receiver_parameters(self.parameters.iperf)
-            sender_parameters = self.sender_parameters(self.parameters.iperf)
+            receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
+            sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters)
             
             yield TestParameter(repetition=rep,
                                 repetitions=self.parameters.repetitions,
                                 output_folder=self.parameters.output_folder,
                                 receiver=receiver_parameters,
                                 sender=sender_parameters,
-                                sleep=5)
+                                recovery_time=5)
         return
 
     def __iter__(self):

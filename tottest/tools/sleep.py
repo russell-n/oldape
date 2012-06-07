@@ -36,7 +36,7 @@ class Sleep(BaseClass):
 
         self.logger.info(MESSAGE.format(sleep_time))
         for t in range(sleep_time):
-            print("Sleeping for {0} seconds.".format(sleep_time - t))
+            print("Wake up in {0} seconds.".format(sleep_time - t))
             time.sleep(1)
         return
 # end class Sleep

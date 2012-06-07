@@ -95,16 +95,16 @@ class TestOperator(BaseClass):
         """
         self.watchers.start()
         self.countdown_timer.start_timer()
+        
         try:
             for parameter in self.test_parameters:
                 self.one_repetition(parameter)
-
             self.log_message(TEST_POSTAMBLE.format(t=self.countdown_timer.total_time))
-        except errors.ConnectionError as error:
-            self.logger.error(error)
-        finally:
             self.logger.info("Sleeping to let the logs finish recording the test-information")
             self.sleep.run()
+        except (errors.ConnectionError, errors.CommandError, errors.ConfigurationError) as error:
+            self.logger.error(error)
+        finally:
             self.watchers.stop()
             self.cleanup.run()
         return

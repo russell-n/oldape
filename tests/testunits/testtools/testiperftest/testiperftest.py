@@ -2,7 +2,7 @@
 from unittest import TestCase
 
 # third party
-from mock import MagicMock, call
+from mock import MagicMock
 
 
 from tottest.tools import iperftest
@@ -27,5 +27,5 @@ class IperfTestTest(TestCase):
         self.senderkill.run.assert_called_with()
         self.receiverkill.run.assert_called_with()
         self.receiver.start.assert_called_with(self.parameters.receiver)
-        self.sleep.run.assert_called_with(self.parameters.sleep)
+        self.sleep.run.assert_called_with(self.parameters.recovery_time)
         self.sender.run.assert_called_with(self.parameters.sender)

@@ -127,4 +127,7 @@ class KillAll(BaseClass):
         if len(err):
             self.logger.error(err)
         return
+
+    def __str__(self):
+        return "{0} ({2}):{1}".format(self.__class__.__name__, self.name, self.connection)
 # class KillAll

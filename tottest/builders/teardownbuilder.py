@@ -24,7 +24,7 @@ class TearDownBuilder(BaseClass):
         self.storage = storage
         self._configcopier = None
         self._logcopier = None
-        self._teardown is None
+        self._teardown = None
         return
 
     @property
@@ -34,7 +34,7 @@ class TearDownBuilder(BaseClass):
         """
         if self._configcopier is None:
             self._configcopier = copyfiles.CopyFiles((self.configfilename,),
-                                                     self.storage())
+                                                     self.storage)
 
         return self._configcopier
 
@@ -44,8 +44,8 @@ class TearDownBuilder(BaseClass):
         :return: A file copier aimed at the log file
         """
         if self._logcopier is None:
-            self.logcopier = copyfiles.CopyFiles((LOGNAME,),
-                                                  self.storage())
+            self._logcopier = copyfiles.CopyFiles((LOGNAME,),
+                                                  self.storage)
         return self._logcopier
     
     @property

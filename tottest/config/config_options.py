@@ -5,7 +5,7 @@ class ConfigOptions(object):
     test_section = 'TEST'
     output_folder_option = 'output_folder'
     data_file_option = "data_file"
-    repetitions_option = "repetitions"
+    repetitions_option = "repeat"
     
     dut_section = 'DUT'
     traffic_pc_section = "TRAFFIC_PC"
