@@ -70,6 +70,7 @@ class StorageOutput(BaseClass):
         filename = self._fix_duplicate_names(filename, extension)
         filename += extension
         self.filename = os.path.join(self.path, filename)
+        #self.logger.debug("Opening File: {0}".format(self.filename))
         clone = copy.deepcopy(self)
         clone.output_file = open(self.filename, WRITEABLE)
         return clone

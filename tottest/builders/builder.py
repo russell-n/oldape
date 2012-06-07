@@ -13,9 +13,9 @@ from mock import Mock
 from tottest.baseclass import BaseClass
 
 # infrastructure
-
 from tottest.infrastructure import hortator
 from tottest.infrastructure.testoperator import TestOperator
+from tottest.infrastructure import countdowntimer
 
 #config
 from tottest.config.parametergenerator import ParameterGenerator
@@ -106,10 +106,10 @@ class Builder(BaseClass):
         
         :return: Connection to the traffic pc
         """
-        if self.tpc is None:
+        if self.tpc_connection is None:
             self.tpc_builder = SshConnectionBuilder(parameters)
-            self.tpc = self.tpc_builder.connection
-        return self.tpc
+            self.tpc_connection = self.tpc_builder.connection
+        return self.tpc_connection
         
     @property
     def operators(self):
@@ -118,18 +118,25 @@ class Builder(BaseClass):
         """
         for static_parameters in self.parameters:
             self.logger.debug("Building the TestParameters with StaticParameters - {0}".format(static_parameters))
-            test = self.get_test(static_parameters)
+
             test_parameters = ParameterGenerator(static_parameters)
-            cleanup = self.get_teardown(static_parameters.source_file,
-                                        self.get_storage(static_parameters.output_folder))
-            device = self.get_dut_device(static_parameters.dut_parameters)
             setup = Mock()
             teardown = Mock()
+            test = self.get_test(static_parameters)
+            device = self.get_dut_connection(static_parameters.dut_parameters)
             watchers = Mock()
-            countdown_timer = Mock()
+            cleanup = self.get_teardown(static_parameters.config_file_name,
+                                        self.get_storage(static_parameters.output_folder))
+            countdown_timer = countdowntimer.CountdownTimer(static_parameters.repetitions)
             
-            yield TestOperator(test_parameters=test_parameters, setup=setup, teardown=teardown, test=test,
-                               device=device, watchers=watchers, cleanup=cleanup, countdown_timer=countdown_timer)
+            yield TestOperator(test_parameters=test_parameters,
+                               setup=setup,
+                               teardown=teardown,
+                               test=test,
+                               device=device,
+                               watchers=watchers,
+                               cleanup=cleanup,
+                               countdown_timer=countdown_timer)
         return
     
     def get_storage(self, folder_name=None):
@@ -159,7 +166,7 @@ class Builder(BaseClass):
         dut = self.get_dut_connection(parameters.dut_parameters)
         return IperfTestToDutBuilder(tpc_connection=tpc,
                                      dut_connection=dut,
-                                     storage=storage)
+                                     storage=storage).test
 
     def reset(self):
         """

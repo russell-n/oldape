@@ -1,11 +1,12 @@
 """
 A module to hold a generic iperf command.
 """
+import threading
 
 from tottest.baseclass import BaseClass
 from tottest.commons import errors
 from tottest.commons import readoutput
-from tottest.threads import threads
+
 
 ConfigurationError = errors.ConfigurationError
 
@@ -61,14 +62,26 @@ class IperfCommand(BaseClass):
         :param:
 
          - `parameters`: A string or IperfParameters to override self.parameters
+
+        :postcondition:
+
+         - `Data sent to a file formatted {parameters}_{role}_{timestamp}.iperf
         """
         if parameters is None:
             parameters = self.parameters
-        file_output = self.output.open(filename="{param}_{role}".format(param=parameters,
-                                                                        role=self.role),
+        param_string = str(parameters)
+        param_string = param_string.replace("-", "")
+        param_string = param_string.replace(" ", "_")
+        filename = "{param}_{role}_{{t}}".format(param=param_string,
+                                                 role=self.role)
+        file_output = self.output.open(filename=filename,
                                        extension=".iperf")
         output, error = self.connection.iperf(str(parameters))
         for line in readoutput.ValidatingOutput(output, self.validate):
+            if "SUM" in line:
+                self.logger.info(line.rstrip())
+            else:
+                self.logger.debug(line)
             file_output.write(line)
 
         err = error.readline()
@@ -86,7 +99,13 @@ class IperfCommand(BaseClass):
 
          - `parameters`: A parameters string or object to send to iperf
         """
-        self.thread = threads.Thread(self.run, name='IperfCommand',
+        
+        self.thread = threading.Thread(target=self.run, name='IperfCommand',
                                      args=(parameters,))
+        self.thread.daemon = True
+        self.thread.start()
         return
+
+    def __str__(self):
+        return "{0} : {1}".format(self.__class__.__name__, self.role)
 # end IperfCommand

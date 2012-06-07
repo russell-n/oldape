@@ -6,7 +6,7 @@ import traceback
 
 # ttr
 from tottest.baseclass import BaseClass
-
+from tottest.commons import storageoutput
 
 class CrashHandler(BaseClass):
     """
@@ -32,9 +32,11 @@ class CrashHandler(BaseClass):
         """
         self.logger.error("The program has crashed. I weep for you.")
         self.logger.error(error)
-        with open("crashreport.log", 'w') as f:
-            traceback.print_exc(file=f)
-
+        output = storageoutput.StorageOutput("CrashReports")
+        #with open("crashreport.log", 'w') as f:
+        #    traceback.print_exc(file=f)
+        f = output.open("crash_report_{t}", '.log')
+        traceback.print_exc(file=f)
         separator = "*" * 20
         message = " Crash Report "
         print separator + message + separator

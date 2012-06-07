@@ -21,6 +21,7 @@ import socket
 
 # tottest Libraries
 from tottest.commons.readoutput import StandardOutput
+from tottest.commons import enumerations
 
 # connections
 from localconnection import LocalConnection
@@ -40,7 +41,7 @@ class SSHConnection(LocalConnection):
     """
     def __init__(self, hostname, username,
                  password=None, port=22, timeout=5,
-                 operating_system=None,
+                 operating_system=enumerations.OperatingSystem.linux,
                  *args, **kwargs):
         """
         :param:
@@ -104,7 +105,11 @@ class SSHConnection(LocalConnection):
             except socket.timeout:
                 self.logger.debug("stdout.readline() timed out")
         output_queue.put(line)
-# end class LocalNixConnection        
+        return
+    
+    def __str__(self):
+        return "{0} ({1}): {2}@{3} ".format(self.__class__.__name__, self.operating_system, self.username, self.hostname)
+# end class SSHConnection
     
 if __name__ == "__main__":
     arguments = "-l"

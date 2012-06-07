@@ -141,6 +141,8 @@ class LocalConnection(BaseClass):
             return self._rpc(command, *args, **kwargs)
         return rpc_call
 
+    def __str__(self):
+        return "{0}".format(self.__class__.__name__)
 # end class LocalConnection
 
 class LocalNixConnection(LocalConnection):

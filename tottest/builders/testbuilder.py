@@ -12,7 +12,8 @@ class IperfTestToDutBuilder(BaseClass):
     """
     The IperfTestBuilder builds IperfTests
     """
-    def __init__(self, tpc_connection, dut_connection, storage, command="iperf"):
+    def __init__(self, tpc_connection, dut_connection, storage,
+                 command="iperf"):
         """
         :param:
 
@@ -30,7 +31,7 @@ class IperfTestToDutBuilder(BaseClass):
         self._sender = None
         self._receiver = None
         self._killers = None
-        self._iperftest = None
+        self._test = None
         return
 
     @property
@@ -42,7 +43,7 @@ class IperfTestToDutBuilder(BaseClass):
             self.logger.debug("Building the TPC as the sender (client).")
             self._sender = iperfcommand.IperfCommand(connection=self.tpc_connection,
                                                      output=self.storage,
-                                                     role="tcp_traffic_sent_to_dut.")
+                                                     role="tcp_traffic_sent_to_dut")
         return self._sender
 
     @property
@@ -76,14 +77,14 @@ class IperfTestToDutBuilder(BaseClass):
         return self._killers
 
     @property
-    def iperftest(self):
+    def test(self):
         """
         :return: An iperf test object that runs traffic to the dut.
         """
-        if self._iperftest is None:
+        if self._test is None:
             self.logger.debug("Building the iperf test (TCP -> DUT)")
-            self._iperftest = iperftest.IperfTest(sender=self.sender,
+            self._test = iperftest.IperfTest(sender=self.sender,
                                                   receiver=self.receiver,
                                                   killers=self.killers)                                                  
-        return self._iperftest
+        return self._test
 # end class IperfTestBuilder

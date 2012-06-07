@@ -40,9 +40,13 @@ class IperfTest(BaseClass):
         Runs the test.
         """
         for killer in self.killers:
+            self.logger.info(str(killer))
             killer.run()
+        self.logger.info("Starting the iperf server (receiver)")
         self.receiver.start(parameters.receiver)
-        self.sleep.run(parameters.sleep)
+        self.logger.info("Sleeping to let the server start.")
+        self.sleep.run(parameters.recovery_time)
+        self.logger.info("Running the client (sender)")
         self.sender.run(parameters.sender)
         return
 # end class IperfTest

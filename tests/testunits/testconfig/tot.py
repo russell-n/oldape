@@ -10,7 +10,7 @@ output_folder = data_{t}
 # The data files will be appended with .iperf
 data_file = %(output_folder)s
 # This is the number of times to repeat the throughput test
-repetitions = 1
+repeat = 1
 
 [DUT]
 test_ip_address = %(test_network)s.70

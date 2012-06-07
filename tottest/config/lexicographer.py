@@ -1,5 +1,8 @@
 """
-A module to hold a translator of configurations to parameters
+A module to hold a translator of configurations to parameters.
+
+Parameter classes in this module are named tuples whose __str__ is defined
+with `field_value,field_value,...` formatting for debug logging.
 """
 #python
 from collections import namedtuple
@@ -11,18 +14,33 @@ from configurationmap import ConfigurationMap
 from config_options import ConfigOptions
 from tottest.commons import errors
 
-parameters = ('source_file output_folder data_file  repetitions dut_test_ip '
-              'tpc_control_ip tpc_test_ip tpc_login tpc_password iperf').split()
+static_parameters = ('config_file_name output_folder repetitions '
+                     'tpc_parameters dut_parameters iperf_client_parameters '
+                     'iperf_server_parameters').split()
 
-iperf_parameters = 'window len parallel interval format time'.split()
-class IperfStaticParameters(namedtuple("IperfStaticParameters", iperf_parameters)):
+iperf_client_parameters = 'client window len parallel interval format time'.split()
+iperf_server_parameters = 'window'
+dut_parameters = "test_ip"
+tpc_parameters = "hostname test_ip username password".split()
+
+class IperfClientParameters(namedtuple("IperfClientParameters", iperf_client_parameters)):
+    """
+    lexicographer.IperfClientParameters is a named tuple of raw parameters 
+    """
     __slots__ = ()
     def __str__(self):
         return ','.join(("{f}_{v}".format(f=f, v=getattr(self, f))
                          for f in self._fields))
+# end IperfClientParameters
 
-
-class StaticParameters(namedtuple("StatictParameters", parameters)):
+class IperfServerParameters(namedtuple("IperfServerParameters", iperf_server_parameters)):
+    __slots__ = ()
+    def __str__(self):
+        return ','.join(("{f}_{v}".format(f=f, v=getattr(self, f))
+                         for f in self._fields))
+# end IperfServerParameters
+    
+class StaticParameters(namedtuple("StaticParameters", static_parameters)):
     """
     A set of parameters for a single test.
     """
@@ -31,8 +49,29 @@ class StaticParameters(namedtuple("StatictParameters", parameters)):
     def __str__(self):
         return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
                          for f in self._fields))
+# end StaticParameters
 
+class DutParameters(namedtuple("DutParameters", dut_parameters)):
+    """
+    Parameters needed to configure dut connections
+    """
+    __slots__ = ()
+    def __str__(self):
+        return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
+                         for f in self._fields))
+# end DutParameters
 
+class TpcParameters(namedtuple("TpcParameters", tpc_parameters)):
+    """
+    Parameters needed to configure the TPC connections
+    """
+    __slots__ = ()
+    def __str__(self):
+        return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
+                         for f in self._fields))
+
+# end TpcParameters
+    
 class Lexicographer(BaseClass):
     """
     A Lexicographer compiles parameters.
@@ -44,8 +83,10 @@ class Lexicographer(BaseClass):
          - `glob`: a file glob to match the config file.
         """
         super(Lexicographer, self).__init__(*args, **kwargs)
+        self.logger.debug("Lexicographer using glob: {0}".format(glob))
         self.glob = glob
         self._parameters = None
+        self.dut_parameters = None
         return
 
     def filenames(self):
@@ -68,31 +109,28 @@ class Lexicographer(BaseClass):
         """
         found = False
         for file_name in self.filenames():
+            self.logger.debug("Translating file '{0}'".format(file_name))
             found = True
             parser = self.get_parser(file_name)
 
             # start with the test section
-            output_folder_name, data_file_name, repetitions = self.test_section(parser)
+            output_folder_name, repetitions = self.test_section(parser)
 
             # now the dut
-            dut_test_ip = self.dut_section(parser)
-                                        
+            dut_parameters = self.dut_section(parser)
 
             # now the tpc
-            tpc_control_ip, tpc_test_ip, tpc_login, tpc_password = self.tpc_section(parser)
+            tpc_parameters = self.tpc_section(parser)
 
             # now the iperf section
-            iperf = self.iperf_section(parser)
-            yield StaticParameters(source_file=file_name,
+            client, server = self.iperf_section(parser)
+            yield StaticParameters(config_file_name=file_name,
                                    output_folder=output_folder_name,
-                                   data_file=data_file_name,
                                    repetitions=repetitions,
-                                   dut_test_ip=dut_test_ip,
-                                   tpc_login=tpc_login,
-                                   tpc_control_ip=tpc_control_ip,
-                                   tpc_test_ip=tpc_test_ip,
-                                   tpc_password=tpc_password,
-                                   iperf=iperf)
+                                   tpc_parameters=tpc_parameters,
+                                   dut_parameters=dut_parameters,
+                                   iperf_client_parameters=client,
+                                   iperf_server_parameters=server)
         if not found:
             raise errors.ConfigurationError("Unable to find '{0}' in this directory.".format(self.glob))
         return
@@ -113,28 +151,38 @@ class Lexicographer(BaseClass):
 
          - `parser`: An open Configuration map
 
-        :rtype: IperfStaticParameters
-        :return: iperf parameters
+        :rtype: Tuple
+        :return: IperfClientParameters, IperfServerParameters
         """
         section = ConfigOptions.iperf_section
-        window = parser.get(section,
-                            ConfigOptions.window_option)
-        length = parser.get(section,
-                            ConfigOptions.length_option)
-        parallel = parser.get(section,
-                              ConfigOptions.parallel_option)
-        interval = parser.get(section,
-                              ConfigOptions.interval_option)
-        _format = parser.get(section,
-                             ConfigOptions.format_option)[0]
+        self.logger.debug("Getting the {0} section".format(section))
+        window = parser.get_optional(section,
+                                     ConfigOptions.window_option,
+                                     default="256K")
+        length = parser.get_optional(section,
+                                     ConfigOptions.length_option,
+                                     default="1470")
+        parallel = parser.get_optional(section,
+                                       ConfigOptions.parallel_option,
+                                       '4')
+        interval = parser.get_optional(section,
+                                       ConfigOptions.interval_option,
+                                       '1')
+        _format = parser.get_optional(section,
+                                      ConfigOptions.format_option,
+                                      default='megabits')[0]
         time = parser.get_time(section,
-                               ConfigOptions.time_option)                              
-        return IperfStaticParameters(window=window,
-                                     len=length,
-                                     parallel=parallel,
-                                     interval=interval,
-                                     format=_format,
-                                     time=str(time))
+                               ConfigOptions.time_option)
+        client = self.dut_section(parser).test_ip
+        iperf_client = IperfClientParameters(client=client,
+                                             window=window,
+                                             len=length,
+                                             parallel=parallel,
+                                             interval=interval,
+                                             format=_format,
+                                             time=str(time))
+        iperf_server = IperfServerParameters(window=window)
+        return iperf_client, iperf_server
     
     def dut_section(self, parser):
         """
@@ -142,12 +190,15 @@ class Lexicographer(BaseClass):
 
          - `parser`: An open Configuration Map
 
-        :return: dut_test_ip
+        :return: DutParameters populated with the dut's values
         """
-        section = ConfigOptions.dut_section
-        test = parser.get(section,
-                          ConfigOptions.test_ip_option)
-        return test
+        if self.dut_parameters is None:
+            section = ConfigOptions.dut_section
+            self.logger.debug("Getting the {0} section".format(section))
+            test = parser.get(section,
+                              ConfigOptions.test_ip_option)
+            self.dut_parameters = DutParameters(test_ip=test)
+        return self.dut_parameters
 
     def tpc_section(self, parser):
         """
@@ -155,9 +206,10 @@ class Lexicographer(BaseClass):
 
          - `parser`: A Configuration map
 
-        :return: tpc_control_ip, tpc_test_ip, tpc_login, password
+        :return: TpcParameters with values set
         """
         section = ConfigOptions.traffic_pc_section
+        self.logger.debug("Getting the {0} section.".format(section))
         control = parser.get(section,
                              ConfigOptions.control_ip_option)
         test = parser.get(section,
@@ -166,7 +218,10 @@ class Lexicographer(BaseClass):
                            ConfigOptions.login_option)
         password = parser.get_optional(section,
                                        ConfigOptions.password_option)
-        return control, test, login, password
+        return TpcParameters(hostname=control,
+                             test_ip=test,
+                             username=login,
+                             password=password)
     
     def test_section(self, parser):
         """
@@ -180,11 +235,11 @@ class Lexicographer(BaseClass):
         self.logger.debug("Getting the {0} section".format(section))
         output_folder_name  = parser.get(section,
                                          ConfigOptions.output_folder_option)
-        data_file_name = parser.get(section,
-                                    ConfigOptions.data_file_option)
+        #data_file_name = parser.get(section,
+        #                            ConfigOptions.data_file_option)
         repetitions = parser.get_int(section,
                                  ConfigOptions.repetitions_option)
-        return output_folder_name, data_file_name, repetitions
+        return output_folder_name, repetitions
 # end class Lexicographer
 
 if __name__ == "__main__":
