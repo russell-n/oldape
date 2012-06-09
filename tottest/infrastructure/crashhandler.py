@@ -4,9 +4,11 @@ A module to hold the CrashHandler
 # python
 import traceback
 
-# ttr
+# tot
 from tottest.baseclass import BaseClass
 from tottest.commons import storageoutput
+from tottest.log_setter import LOGNAME
+
 
 class CrashHandler(BaseClass):
     """
@@ -42,5 +44,7 @@ class CrashHandler(BaseClass):
         print separator + message + separator
         traceback.print_exc()
         print separator + separator + "*" * len(message)
+
+        f.copy(LOGNAME)
         return
 # end CrashHandler

@@ -19,20 +19,22 @@ class IperfCommand(BaseClass):
     """
     An Iperf Command executes iperf commands
     """
-    def __init__(self, connection, output, role, parameters=None):
+    def __init__(self, connection, output, role, name, parameters=None):
         """
         :param:
 
          - `connection`: a connection to the device
          - `output`: an output to get writeable files from
          - `parameters`: An IperfParameter to use if none passed to run()
-         - `role`: client | server
+         - `role`: a string to add to the output file to identify it
+         - `name` : DUT or TPC
         """
         super(IperfCommand, self).__init__()
         self.connection = connection
         self.output = output
         self.parameters = parameters
         self.role = role
+        self.name = name
         return
 
     def validate(self, line):
@@ -107,5 +109,5 @@ class IperfCommand(BaseClass):
         return
 
     def __str__(self):
-        return "{0} : {1}".format(self.__class__.__name__, self.role)
+        return self.name
 # end IperfCommand

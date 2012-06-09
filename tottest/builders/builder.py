@@ -164,7 +164,10 @@ class Builder(BaseClass):
         storage = self.get_storage(parameters.output_folder)
         tpc = self.get_tpc_connection(parameters.tpc_parameters)
         dut = self.get_dut_connection(parameters.dut_parameters)
-        return IperfTestToDutBuilder(tpc_connection=tpc,
+        direction = parameters.direction
+        
+        return IperfTestToDutBuilder(direction=direction,
+                                     tpc_connection=tpc,
                                      dut_connection=dut,
                                      storage=storage).test
 

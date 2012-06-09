@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 1
 
    Developer Documentation <developer/index>
+   Requirements <requirements>
    Use Cases <usecases/index>
    API <api/index>
 

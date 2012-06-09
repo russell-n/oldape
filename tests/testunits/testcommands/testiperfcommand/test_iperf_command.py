@@ -33,7 +33,9 @@ class IperfCommandClientTest(TestCase):
         self.output.open.return_value = self.file_output
         self.connection = MagicMock()
         self.connection.iperf.return_value = success_output, error_output
-        self.command = iperfcommand.IperfCommand(connection=self.connection, output=self.output, role="client", parameters=self.parameters)
+        self.command = iperfcommand.IperfCommand(connection=self.connection, output=self.output, role="client",
+                                                 name="TPC",
+                                                 parameters=self.parameters)
         return
 
     def test_client(self):
@@ -88,6 +90,7 @@ class IperfCommandServerTest(TestCase):
         self.command = iperfcommand.IperfCommand(connection=self.connection,
                                                  output=self.output,
                                                  role='server',
+                                                 name="DUT",
                                                  parameters = self.parameters)
         return
 
