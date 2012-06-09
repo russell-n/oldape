@@ -6,15 +6,21 @@ with `field_value,field_value,...` formatting for debug logging.
 """
 #python
 from collections import namedtuple
+import re
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
 from tottest.commons.generators import shallow_find
+from tottest.commons import errors
+from tottest.commons import enumerations
+
+# tottest.config
 from configurationmap import ConfigurationMap
 from config_options import ConfigOptions
-from tottest.commons import errors
 
-static_parameters = ('config_file_name output_folder repetitions '
+IperfDirection = enumerations.IperfDirection
+
+static_parameters = ('config_file_name output_folder repetitions direction '
                      'tpc_parameters dut_parameters iperf_client_parameters '
                      'iperf_server_parameters').split()
 
@@ -71,7 +77,14 @@ class TpcParameters(namedtuple("TpcParameters", tpc_parameters)):
                          for f in self._fields))
 
 # end TpcParameters
-    
+
+
+ANYTHING = '.'
+ZERO_OR_MORE = "*"
+EVERYTHING = ANYTHING + ZERO_OR_MORE
+OR = "|"
+CLASS = "[{0}]"
+
 class Lexicographer(BaseClass):
     """
     A Lexicographer compiles parameters.
@@ -87,7 +100,30 @@ class Lexicographer(BaseClass):
         self.glob = glob
         self._parameters = None
         self.dut_parameters = None
+        self.direction = None
+        self._from_dut_expression = None
+        self._to_dut_expression = None
         return
+
+    @property
+    def from_dut_expression(self):
+        """
+        :return: A regular expression to match the 'from-dut' direction for iperf test.
+        """
+        if self._from_dut_expression is None:
+            self._from_dut_expression = re.compile(CLASS.format("fFuUsS") + EVERYTHING + OR +
+                                                   CLASS.format("tT") + CLASS.format("rRxX") + EVERYTHING)
+        return self._from_dut_expression
+
+    @property
+    def to_dut_expression(self):
+        """
+        :return: compiled regular expression to match 'to-dut'direction.
+        """
+        if self._to_dut_expression is None:
+            self._to_dut_expression = re.compile(CLASS.format("dDrR") + EVERYTHING + OR +
+                                                 CLASS.format("tT") + CLASS.format("oO") + EVERYTHING)
+        return self._to_dut_expression
 
     def filenames(self):
         """
@@ -123,10 +159,12 @@ class Lexicographer(BaseClass):
             tpc_parameters = self.tpc_section(parser)
 
             # now the iperf section
+            direction = self.get_direction(parser)
             client, server = self.iperf_section(parser)
             yield StaticParameters(config_file_name=file_name,
                                    output_folder=output_folder_name,
                                    repetitions=repetitions,
+                                   direction=direction,
                                    tpc_parameters=tpc_parameters,
                                    dut_parameters=dut_parameters,
                                    iperf_client_parameters=client,
@@ -156,6 +194,7 @@ class Lexicographer(BaseClass):
         """
         section = ConfigOptions.iperf_section
         self.logger.debug("Getting the {0} section".format(section))
+        
         window = parser.get_optional(section,
                                      ConfigOptions.window_option,
                                      default="256K")
@@ -173,7 +212,7 @@ class Lexicographer(BaseClass):
                                       default='megabits')[0]
         time = parser.get_time(section,
                                ConfigOptions.time_option)
-        client = self.dut_section(parser).test_ip
+        client = self.get_client(parser)
         iperf_client = IperfClientParameters(client=client,
                                              window=window,
                                              len=length,
@@ -183,6 +222,42 @@ class Lexicographer(BaseClass):
                                              time=str(time))
         iperf_server = IperfServerParameters(window=window)
         return iperf_client, iperf_server
+
+
+    def get_direction(self, parser):
+        """
+        :param:
+
+         - `parser`: A map to the configuration file.
+         
+        :return: The direction of traffic (using a IperfDirection enumeration value)
+        :raise: ConfigurationError if the value is not recognized as a direction.
+        """
+        if self.direction is None:
+            section = ConfigOptions.iperf_section
+            value = parser.get_optional(section, ConfigOptions.direction_option, 'to')
+            if self.from_dut_expression.match(value):
+                self.direction = IperfDirection.from_dut
+            elif self.to_dut_expression.match(value):
+                self.direction = IperfDirection.to_dut
+            else:
+                raise errors.ConfigurationError("Unkown traffic direction: {0}".format(value))
+        return self.direction
+
+    def get_client(self, parser):
+        """
+        :param:
+
+         - `parser`: The configuration parser
+         
+        :return: client
+        """
+        direction = self.get_direction(parser)
+        if direction == IperfDirection.from_dut:
+            client = self.tpc_section(parser).test_ip
+        else:
+            client = self.dut_section(parser).test_ip
+        return client
     
     def dut_section(self, parser):
         """

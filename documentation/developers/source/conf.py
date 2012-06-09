@@ -23,6 +23,17 @@ import sys, os
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
 
+rst_epilog = """
+.. |APE| replace:: *Allion Performance Evaluator (APE)*
+.. |DUT| replace:: *Device Under Test (DUT)*
+.. |TPC| replace:: *Traffic PC (TPC)*
+.. |CPC| replace:: *Control PC (CPC)*
+.. |AP| replace::  *Access Point (AP)*
+.. |TOT| replace:: *Throughput Over Time (TOT)*
+.. |ADB| replace:: *Android Debug Bridge (ADB)*
+.. |SSH| replace:: *Secure Shell (SSH)*
+"""
+
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = ['sphinx.ext.autosummary',

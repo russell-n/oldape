@@ -15,6 +15,7 @@ class ConfigOptions(object):
     test_ip_option = "test_ip_address"
     
     iperf_section = "IPERF"
+    direction_option = "direction"
     window_option = "window"
     length_option = "length"
     parallel_option = "parallel"
