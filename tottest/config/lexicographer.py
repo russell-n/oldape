@@ -235,7 +235,7 @@ class Lexicographer(BaseClass):
         """
         if self.direction is None:
             section = ConfigOptions.iperf_section
-            value = parser.get_optional(section, ConfigOptions.direction_option, 'to')
+            value = parser.get_optional(section, ConfigOptions.directions_option, 'to')
             if self.from_dut_expression.match(value):
                 self.direction = IperfDirection.from_dut
             elif self.to_dut_expression.match(value):

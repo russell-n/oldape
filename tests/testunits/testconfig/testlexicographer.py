@@ -40,5 +40,3 @@ class LexicographerTest(TestCase):
             self.assertEqual(tot.data_units, parameters.iperf_client_parameters.format)
             self.assertEqual(str(float(tot.test_duration)), parameters.iperf_client_parameters.time)
         return
-
-    
