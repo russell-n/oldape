@@ -20,11 +20,11 @@ from config_options import ConfigOptions
 
 IperfDirection = enumerations.IperfDirection
 
-static_parameters = ('config_file_name output_folder repetitions direction '
+static_parameters = ('config_file_name output_folder repetitions directions '
                      'tpc_parameters dut_parameters iperf_client_parameters '
                      'iperf_server_parameters').split()
 
-iperf_client_parameters = 'client window len parallel interval format time'.split()
+iperf_client_parameters = 'window len parallel interval format time'.split()
 iperf_server_parameters = 'window'
 dut_parameters = "test_ip"
 tpc_parameters = "hostname test_ip username password".split()
@@ -100,7 +100,7 @@ class Lexicographer(BaseClass):
         self.glob = glob
         self._parameters = None
         self.dut_parameters = None
-        self.direction = None
+        self.directions = None
         self._from_dut_expression = None
         self._to_dut_expression = None
         return
@@ -159,12 +159,12 @@ class Lexicographer(BaseClass):
             tpc_parameters = self.tpc_section(parser)
 
             # now the iperf section
-            direction = self.get_direction(parser)
+            directions = self.get_directions(parser)
             client, server = self.iperf_section(parser)
             yield StaticParameters(config_file_name=file_name,
                                    output_folder=output_folder_name,
                                    repetitions=repetitions,
-                                   direction=direction,
+                                   directions=directions,
                                    tpc_parameters=tpc_parameters,
                                    dut_parameters=dut_parameters,
                                    iperf_client_parameters=client,
@@ -212,9 +212,7 @@ class Lexicographer(BaseClass):
                                       default='megabits')[0]
         time = parser.get_time(section,
                                ConfigOptions.time_option)
-        client = self.get_client(parser)
-        iperf_client = IperfClientParameters(client=client,
-                                             window=window,
+        iperf_client = IperfClientParameters(window=window,
                                              len=length,
                                              parallel=parallel,
                                              interval=interval,
@@ -224,25 +222,31 @@ class Lexicographer(BaseClass):
         return iperf_client, iperf_server
 
 
-    def get_direction(self, parser):
+    def get_directions(self, parser):
         """
         :param:
 
          - `parser`: A map to the configuration file.
          
-        :return: The direction of traffic (using a IperfDirection enumeration value)
+        :return: list of iperf directions (default is to_dut)
         :raise: ConfigurationError if the value is not recognized as a direction.
         """
-        if self.direction is None:
+        if self.directions is None:
             section = ConfigOptions.iperf_section
-            value = parser.get_optional(section, ConfigOptions.directions_option, 'to')
-            if self.from_dut_expression.match(value):
-                self.direction = IperfDirection.from_dut
-            elif self.to_dut_expression.match(value):
-                self.direction = IperfDirection.to_dut
-            else:
-                raise errors.ConfigurationError("Unkown traffic direction: {0}".format(value))
-        return self.direction
+            values = parser.get_list(section, ConfigOptions.directions_option, optional=True)
+            if values is None:
+                self.directions = [IperfDirection.to_dut]
+                return self.directions
+
+            self.directions = []
+            for value in values:
+                if self.from_dut_expression.match(value):
+                    self.directions.append(IperfDirection.from_dut)
+                elif self.to_dut_expression.match(value):
+                    self.directions.append(IperfDirection.to_dut)
+                else:
+                    raise errors.ConfigurationError("Unkown traffic direction: {0}".format(value))
+        return self.directions
 
     def get_client(self, parser):
         """
