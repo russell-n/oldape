@@ -14,6 +14,7 @@ Contents:
    Developer Documentation <developer/index>
    Requirements <requirements>
    Use Cases <usecases/index>
+   Activities <activities/index>
    API <api/index>
 
 Indices and tables
