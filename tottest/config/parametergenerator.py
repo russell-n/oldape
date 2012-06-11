@@ -12,10 +12,14 @@ from collections import namedtuple
 
 # tottest
 from tottest.baseclass import BaseClass
+from tottest.commons import enumerations, errors
 from tottest.parameters import iperf_server_parameters
 from tottest.parameters import iperf_client_parameters
 
-parameters = ("repetition repetitions output_folder " +
+IperfDirection = enumerations.IperfDirection
+ConfigurationError = errors.ConfigurationError
+
+parameters = ("test_id repetition repetitions output_folder " +
               " receiver sender recovery_time").split()
 
 class TestParameter(namedtuple('TestParameter', parameters)):
@@ -70,16 +74,18 @@ class ParameterGenerator(BaseClass):
         receiver_parameters.window = parameters.window
         return receiver_parameters
 
-    def sender_parameters(self, parameters):
+    def sender_parameters(self, parameters, target):
         """
         :param:
 
          - `parameters`: an IperfStaticParameters object
-
+         - `target`: The hostname or IP of the target
         :return: IperfTcpClientParameters
         """
         sender_parameters = iperf_client_parameters.IperfTcpClientParameters()
-        return self.get_values(parameters, sender_parameters)
+        sender =  self.get_values(parameters, sender_parameters)
+        sender.client = target
+        return sender
         
         
     def forward(self):
@@ -90,15 +96,23 @@ class ParameterGenerator(BaseClass):
         """
         #for params in self.parameters:
         for rep in range(1, self.parameters.repetitions + 1):
-            receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
-            sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters)
+            for direction in self.parameters.directions:
+                if direction == IperfDirection.to_dut:
+                    sender = self.parameters.dut_parameters.test_ip
+                elif direction == IperfDirection.from_dut:
+                    sender = self.parameters.tpc_parameters.test_ip
+                else:
+                    raise ConfigurationError("Unknown Direction: {0}".format(direction))
+                receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
+                sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters, sender)
             
-            yield TestParameter(repetition=rep,
-                                repetitions=self.parameters.repetitions,
-                                output_folder=self.parameters.output_folder,
-                                receiver=receiver_parameters,
-                                sender=sender_parameters,
-                                recovery_time=5)
+                yield TestParameter(test_id=direction,
+                                    repetition=rep,
+                                    repetitions=self.parameters.repetitions,
+                                    output_folder=self.parameters.output_folder,
+                                    receiver=receiver_parameters,
+                                    sender=sender_parameters,
+                                    recovery_time=5)
         return
 
     def __iter__(self):

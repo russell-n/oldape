@@ -17,7 +17,7 @@ OperatorStaticTestParameters = namedtuple("OperatorStaticTestParameters",
                                            'test_parameters'])
 
 
-TEST_PREAMBLE = "**** ALLION: Starting Repetition {r} of {t} ****"
+TEST_PREAMBLE = "**** ALLION: Repetition {r} of {t} ****"
 TEST_POSTAMBLE = "**** ALLION: Ending test - elapsed time = {t} ****"
 TEST_RESULT = "**** ALLION: Test Result = {r} ****"
 
@@ -25,7 +25,7 @@ class TestOperator(BaseClass):
     """
     An operator runs the sequence of operations.
     """
-    def __init__(self, test_parameters, setup, teardown, test, device, watchers,
+    def __init__(self, test_parameters, setup, teardown, tests, device, watchers,
                  cleanup, countdown_timer, sleep=None):
         """
         :params:
@@ -33,7 +33,7 @@ class TestOperator(BaseClass):
          - `test_parameters`: A generator of test parameters
          - `setup`: A SetUp to run for each repetition
          - `teardown`: A TearDown to run for each repetition
-         - `test`: A test to run between setup and teardown
+         - `tests`: A dictionary of test_id:test where tests are to be run
          - `device`: A device to send log messages to
          - `watcher`: threaded watchers to start
          - `cleanup`: A CleanUp to run after all the tests are done
@@ -44,7 +44,7 @@ class TestOperator(BaseClass):
         self.test_parameters = test_parameters
         self.setup = setup
         self.teardown = teardown
-        self.test = test
+        self.tests = tests
         self.device = device
         self.watchers = watchers
         self.cleanup = cleanup
@@ -80,10 +80,11 @@ class TestOperator(BaseClass):
         #. Runs Teardown
         """
         self.logger.debug("Running Parameters: {0}".format(parameter))
+        test = self.tests[parameter.test_id]
         self.log_message(TEST_PREAMBLE.format(r=parameter.repetition,
                                                t=parameter.repetitions))
         self.setup.run(parameter)
-        test_result = self.test.run(parameter)
+        test_result = test.run(parameter)
         self.log_message(TEST_RESULT.format(r=test_result))
         self.teardown.run(parameter)
         self.logger.info(TIME_REMAINING.format(t=self.countdown_timer.remaining_time))

@@ -24,12 +24,13 @@ from tottest.config.parametergenerator import ParameterGenerator
 from tottest.commons import storageoutput
 from tottest.commons import enumerations
 operating_systems = enumerations.OperatingSystem
+iperf_direction = enumerations.IperfDirection
 
 # builders
 from devicebuilder import AdbDeviceBuilder
 from connectionbuilder import AdbShellConnectionBuilder, SshConnectionBuilder
 from teardownbuilder import TearDownBuilder
-from testbuilder import IperfTestToDutBuilder
+from testbuilder import IperfTestToDutBuilder, IperfTestFromDutBuilder
 
 
 class Builder(BaseClass):
@@ -122,7 +123,7 @@ class Builder(BaseClass):
             test_parameters = ParameterGenerator(static_parameters)
             setup = Mock()
             teardown = Mock()
-            test = self.get_test(static_parameters)
+            tests = self.get_tests(static_parameters)
             device = self.get_dut_connection(static_parameters.dut_parameters)
             watchers = Mock()
             cleanup = self.get_teardown(static_parameters.config_file_name,
@@ -132,7 +133,7 @@ class Builder(BaseClass):
             yield TestOperator(test_parameters=test_parameters,
                                setup=setup,
                                teardown=teardown,
-                               test=test,
+                               tests=tests,
                                device=device,
                                watchers=watchers,
                                cleanup=cleanup,
@@ -153,23 +154,28 @@ class Builder(BaseClass):
         return self.storage
 
 
-    def get_test(self, parameters):
+    def get_tests(self, parameters):
         """
         :param:
 
          - `parameters` : named tuple with output_file and data_file names.
          
-        :return: TimeToRecoveryTest object
+        :return: dictionary of direction:TimeToRecoveryTest 
         """
         storage = self.get_storage(parameters.output_folder)
         tpc = self.get_tpc_connection(parameters.tpc_parameters)
         dut = self.get_dut_connection(parameters.dut_parameters)
-        direction = parameters.direction
-        
-        return IperfTestToDutBuilder(direction=direction,
-                                     tpc_connection=tpc,
-                                     dut_connection=dut,
-                                     storage=storage).test
+        tests = {}
+        for direction in parameters.directions:
+            if direction == iperf_direction.to_dut:
+                tests[direction] = IperfTestToDutBuilder(tpc_connection=tpc,
+                                                         dut_connection=dut,
+                                                         storage=storage).test
+            elif direction == iperf_direction.from_dut:
+                tests[direction] = IperfTestFromDutBuilder(tpc_connection=tpc,
+                                                           dut_connection=dut,
+                                                           storage=storage).test
+        return tests
 
     def reset(self):
         """
