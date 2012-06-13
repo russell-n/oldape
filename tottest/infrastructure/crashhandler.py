@@ -32,7 +32,7 @@ class CrashHandler(BaseClass):
 
          - `error`: The error returned by the exception
         """
-        self.logger.error("The program has crashed. I weep for you.")
+        self.logger.error("The program has crashed with an unexpected exception.")
         self.logger.error(error)
         output = storageoutput.StorageOutput("CrashReports")
         #with open("crashreport.log", 'w') as f:

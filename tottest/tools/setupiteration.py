@@ -18,7 +18,7 @@ class SetupIteration(BaseClass):
         """
         :param:
 
-         - `device`: A device interface.
+         - `device`: Connection to the device to send log information to.
          - `affector`: An environmental affector
          - `time_to_recovery`: A device that waits until a device has recovered.
         """
@@ -49,8 +49,6 @@ class SetupIteration(BaseClass):
             raise ConfigurationError("Unable to recover from environmental affect")
 
         self.log("Time to recovery: {0}".format(recovery_time))
-        info = self.device.get_wifi_info()
-        self.log(info)
         self.sleep.run(parameters.recovery_time)
         return
 

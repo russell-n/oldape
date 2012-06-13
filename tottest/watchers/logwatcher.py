@@ -51,7 +51,9 @@ class LogWatcher(BaseClass):
         :rtype: Boolean
         :return: True if self.stop is set.
         """
-        return self.event.is_set()
+        if self.event is not None:
+            return self.event.is_set()
+        return False
     
     @property
     def connection(self):
@@ -114,9 +116,9 @@ class SafeLogWatcher(LogWatcher):
         Runs an infinite loop that reads the tail of the log.
         Writes the lines to self.output.write()
         """
-        self.logger.debug("Catting the file")
+        self.logger.debug("Catting the file: {0}".format(self.arguments))
         with self.lock:
-            output = self.connection.cat(self.arguments)
+            output, error = self.connection.cat(self.arguments)
         self.logger.debug("Out of the catting")
         for line in output:
             self.output.write(line)

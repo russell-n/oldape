@@ -142,7 +142,7 @@ class ConfigurationMap(BaseClass):
          - `section`: The [section] in the config file.
          - `option`: the option in the section
          - `delimiter`: the value separator
-         - `optional` if True, returns None instead of raising an error
+         - `optional`: if True, returns default instead of raising an error
         :return: list of strings stripped of whitespace
 
         :raises: ConfigurationError if not optional and not found.
@@ -168,18 +168,19 @@ class ConfigurationMap(BaseClass):
         times = self.get_list(section, option)
         return [self.time_in_seconds(time_with_units) for time_with_units in times]
 
-    def get_time(self, section, option):
+    def get_time(self, section, option, default=0):
         """
         :param:
 
          - `section`: A section in the config file (e.g. TEST)
          - `option`: An option in the section in the config file.
+         - `default`: A default value to return if the option isn't in the file
 
         :rtype: int or float
         :return: Value in the option (in seconds) or 0 if not present.
         """
         if not self.has_option(section, option):
-            return 0
+            return default
 
         value = self.get(section, option)
         return self.time_in_seconds(value)

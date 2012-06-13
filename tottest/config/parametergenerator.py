@@ -20,7 +20,7 @@ IperfDirection = enumerations.IperfDirection
 ConfigurationError = errors.ConfigurationError
 
 parameters = ("test_id repetition repetitions output_folder " +
-              " receiver sender recovery_time").split()
+              " receiver sender recovery_time affector").split()
 
 class TestParameter(namedtuple('TestParameter', parameters)):
     """
@@ -112,7 +112,8 @@ class ParameterGenerator(BaseClass):
                                     output_folder=self.parameters.output_folder,
                                     receiver=receiver_parameters,
                                     sender=sender_parameters,
-                                    recovery_time=5)
+                                    affector=None,
+                                    recovery_time=self.parameters.recovery_time)
         return
 
     def __iter__(self):

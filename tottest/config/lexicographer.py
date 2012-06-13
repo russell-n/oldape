@@ -21,6 +21,7 @@ from config_options import ConfigOptions
 IperfDirection = enumerations.IperfDirection
 
 static_parameters = ('config_file_name output_folder repetitions directions '
+                     ' recovery_time logwatcher_parameters logcatwatcher_parameters '
                      'tpc_parameters dut_parameters iperf_client_parameters '
                      'iperf_server_parameters').split()
 
@@ -28,6 +29,8 @@ iperf_client_parameters = 'window len parallel interval format time'.split()
 iperf_server_parameters = 'window'
 dut_parameters = "test_ip"
 tpc_parameters = "hostname test_ip username password".split()
+logwatcher_parameters = ["paths"]
+logcatwatcher_parameters = ["buffers"]
 
 class IperfClientParameters(namedtuple("IperfClientParameters", iperf_client_parameters)):
     """
@@ -78,7 +81,28 @@ class TpcParameters(namedtuple("TpcParameters", tpc_parameters)):
 
 # end TpcParameters
 
+class LogwatcherParameters(namedtuple("LogwatcherParameters", logwatcher_parameters)):
+    """
+    Parameters neeeded to configure the log-watcher(s)
+    """
+    __slots__ = ()
+    def __str__(self):
+        return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
+                         for f in self._fields))
+# end LogwatcherParameters    
 
+class LogcatwatcherParameters(namedtuple("LogcatwatcherParameters",
+                                         logcatwatcher_parameters)):
+    """
+    Parameters neeeded to configure the logcat-watcher
+    """
+    __slots__ = ()
+    def __str__(self):
+        return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
+                         for f in self._fields))
+# end LogcatwatcherParameters    
+
+    
 ANYTHING = '.'
 ZERO_OR_MORE = "*"
 EVERYTHING = ANYTHING + ZERO_OR_MORE
@@ -150,21 +174,30 @@ class Lexicographer(BaseClass):
             parser = self.get_parser(file_name)
 
             # start with the test section
-            output_folder_name, repetitions = self.test_section(parser)
-
+            output_folder_name, repetitions, recovery_time = self.test_section(parser)
+            
             # now the dut
             dut_parameters = self.dut_section(parser)
 
             # now the tpc
             tpc_parameters = self.tpc_section(parser)
 
+            # now the logwatcher
+            logwatcher_parameters = self.logwatcher_section(parser)
+
+            # now the logcatwatcher
+            logcatwatcher_parameters = self.logcatwatcher_section(parser)
+            
             # now the iperf section
             directions = self.get_directions(parser)
             client, server = self.iperf_section(parser)
             yield StaticParameters(config_file_name=file_name,
                                    output_folder=output_folder_name,
                                    repetitions=repetitions,
+                                   recovery_time=recovery_time,
                                    directions=directions,
+                                   logcatwatcher_parameters=logcatwatcher_parameters,
+                                   logwatcher_parameters=logwatcher_parameters,
                                    tpc_parameters=tpc_parameters,
                                    dut_parameters=dut_parameters,
                                    iperf_client_parameters=client,
@@ -308,17 +341,48 @@ class Lexicographer(BaseClass):
 
          - `parser`: A ConfigurationMap that's been opened
 
-        :return: output_folder_name, data_file_name, repetitions
+        :return: output_folder_name, repetitions, recovery_time
         """
         section = ConfigOptions.test_section
         self.logger.debug("Getting the {0} section".format(section))
         output_folder_name  = parser.get(section,
                                          ConfigOptions.output_folder_option)
+        recovery_time = parser.get_time(section,
+                                   ConfigOptions.recovery_time_option,
+                                   default=1)
+            
         #data_file_name = parser.get(section,
         #                            ConfigOptions.data_file_option)
         repetitions = parser.get_int(section,
                                  ConfigOptions.repetitions_option)
-        return output_folder_name, repetitions
+        return output_folder_name, repetitions, recovery_time
+
+    def logwatcher_section(self, parser):
+        """
+        :param:
+
+         - `parser`: A configuration map
+
+        :return: logwatcher parameters 
+        """
+        paths = parser.get_list(ConfigOptions.logwatcher_section,
+                                ConfigOptions.paths_option,
+                                optional=True)
+
+        return LogwatcherParameters(paths=paths)
+
+    def logcatwatcher_section(self, parser):
+        """
+        :param:
+
+         - `parser`: A configuration map
+
+        :return: logcatwatcher parameters 
+        """
+        buffers = parser.get_list(ConfigOptions.logcatwatcher_section,
+                                  ConfigOptions.buffers_option,
+                                  optional=True)
+        return LogcatwatcherParameters(buffers=buffers)
 # end class Lexicographer
 
 if __name__ == "__main__":

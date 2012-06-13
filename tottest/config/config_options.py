@@ -6,6 +6,7 @@ class ConfigOptions(object):
     output_folder_option = 'output_folder'
     data_file_option = "data_file"
     repetitions_option = "repeat"
+    recovery_time_option = "recovery_time"
     
     dut_section = 'DUT'
     traffic_pc_section = "TRAFFIC_PC"
@@ -13,6 +14,12 @@ class ConfigOptions(object):
     password_option = "password"
     control_ip_option = "control_ip_address"
     test_ip_option = "test_ip_address"
+
+    logwatcher_section = "LOGWATCHER"
+    paths_option = "paths"
+
+    logcatwatcher_section = "LOGCATWATCHER"
+    buffers_option = "buffers"
     
     iperf_section = "IPERF"
     directions_option = "directions"

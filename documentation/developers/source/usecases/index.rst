@@ -10,6 +10,8 @@ High-Level Use Cases
    Test Throughput To DUT <test_throughput_to_dut>
    Test Throughput From DUT <test_throughput_from_dut>
    Test Throughput To and From DUT <test_throughput_to_and_from_dut>
+   Test Throughput Using NAXXX <test_throughput_using_naxxx>
+
    
 Secondary-Level Use Cases
 -------------------------
@@ -31,8 +33,8 @@ Tertiary-Level Use Cases
    Run Traffic To DUT <run_to_dut>
    Run Traffic From DUT <run_from_dut>
    Run Traffic To and From
-
-   
+   Watch Logs <watch_logs>
+   Time to Recovery <time_to_recovery>   
 
 Indices and tables
 ------------------
