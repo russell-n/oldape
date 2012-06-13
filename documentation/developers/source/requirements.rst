@@ -14,5 +14,10 @@ A. Kernel Requirements
 #. |A8| 
 #. |A9| 
 #. |A10|
+#. |A11|
+#. |A12|
+#. |A13|
+#. |A14|
+#. |A15|
 
 .. include:: requirements_source.rst

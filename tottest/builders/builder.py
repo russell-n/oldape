@@ -5,9 +5,10 @@ a module to hold a builder of objects
 # python
 #import threading
 #import os
+from threading import RLock
 
 # third party
-from mock import Mock
+from mock import MagicMock as Mock
 
 # tottest
 from tottest.baseclass import BaseClass
@@ -31,7 +32,9 @@ from devicebuilder import AdbDeviceBuilder
 from connectionbuilder import AdbShellConnectionBuilder, SshConnectionBuilder
 from teardownbuilder import TearDownBuilder
 from testbuilder import IperfTestToDutBuilder, IperfTestFromDutBuilder
-
+from watchersbuilder import LogwatchersBuilder
+from timetorecoverybuilder import TimeToRecoveryBuilder
+from setupiterationbuilder import SetupIterationBuilder
 
 class Builder(BaseClass):
     """
@@ -49,10 +52,21 @@ class Builder(BaseClass):
         self._hortator = None
         self.dut_device = None
         self.dut_connection = None
+        self.dut_connection_threads = None
         self.tpc_connection = None
         self.storage = None
+        self._lock = None
         return
 
+    @property
+    def lock(self):
+        """
+        :return: A re-entrant lock
+        """
+        if self._lock is None:
+            self._lock = RLock()
+        return self._lock
+    
     @property
     def hortator(self):
         """
@@ -62,8 +76,6 @@ class Builder(BaseClass):
             self.logger.debug("Building the Hortator")
             self._hortator = hortator.Hortator(operators=self.operators)
         return self._hortator
-
-
 
     def get_teardown(self, configfilename, storage):
         """
@@ -96,10 +108,19 @@ class Builder(BaseClass):
             self.dut_connection = AdbShellConnectionBuilder().connection
         return self.dut_connection
 
+    def get_dut_connection_threads(self, parameters= None):
+        """
+        This returns the same connection repeatedly
+        It is intended only for use with objects that lock the connection calls.
+        :return: dut-connection intended for use in threads
+        """
+        if self.dut_connection_threads is None:
+            self.dut_connection_threads = AdbShellConnectionBuilder().connection
+        return self.dut_connection_threads
+    
     def get_tpc_connection(self, parameters):
         """
         This only creates a connection the first time.
-        If used in threads it needs a lock.
         
         :param:
 
@@ -121,11 +142,11 @@ class Builder(BaseClass):
             self.logger.debug("Building the TestParameters with StaticParameters - {0}".format(static_parameters))
 
             test_parameters = ParameterGenerator(static_parameters)
-            setup = Mock()
+            setup = self.get_setup_iteration(static_parameters)
             teardown = Mock()
             tests = self.get_tests(static_parameters)
             device = self.get_dut_connection(static_parameters.dut_parameters)
-            watchers = Mock()
+            watchers = self.get_watchers(static_parameters)
             cleanup = self.get_teardown(static_parameters.config_file_name,
                                         self.get_storage(static_parameters.output_folder))
             countdown_timer = countdowntimer.CountdownTimer(static_parameters.repetitions)
@@ -177,6 +198,52 @@ class Builder(BaseClass):
                                                            storage=storage).test
         return tests
 
+    def get_watchers(self, parameters):
+        """
+        :param:
+
+         - `parameters`: The lexicographer's static-parameters
+         
+        :return: Master logwatcher
+        """
+        paths = parameters.logwatcher_parameters.paths
+        buffers = parameters.logcatwatcher_parameters.buffers
+        connection = self.get_dut_connection_threads(parameters.dut_parameters)
+        storage = self.get_storage(parameters.output_folder)
+        watcher = LogwatchersBuilder(paths=paths,
+                                     buffers=buffers,
+                                     connection=connection,
+                                     output=storage)
+        return watcher.watcher
+
+    def get_setup_iteration(self, parameters):
+        """
+        :param:
+
+         - `parameters`: A lexicographer's static-parameters
+        """
+        time_to_recovery = self.get_ttr(parameters)
+        device = self.get_dut_connection(parameters.dut_parameters)
+        affector = Mock()
+        return SetupIterationBuilder(affector=affector,
+                                     time_to_recovery=time_to_recovery,
+                                     device=device).setup
+    
+    def get_ttr(self, parameters):
+        """
+        :param:
+
+         - `parameters`: static-parameters
+
+        :return: A time-to-recovery tester
+        """
+        target = parameters.tpc_parameters.test_ip
+        connection = self.get_dut_connection(parameters.dut_parameters)
+        os = operating_systems.android
+        builder = TimeToRecoveryBuilder(target=target, connection=connection,
+                                        operating_system=os)
+        return builder.ttr
+    
     def reset(self):
         """
         To be called when an operator has been built to reset the object.

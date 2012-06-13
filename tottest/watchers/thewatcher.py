@@ -22,6 +22,7 @@ class TheWatcher(BaseClass):
         self.threads = None
         return
 
+        
     def start(self):
         """
         Starts all the watchers.

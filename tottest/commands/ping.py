@@ -88,7 +88,8 @@ class PingCommand(BaseClass):
         else:
             self._arguments = None
             self.target = target
-        for line in self.connection.ping(self.arguments, timeout=1):
+        output, error = self.connection.ping(self.arguments, timeout=1)
+        for line in output:
             self.logger.debug(line)
             match = self.expression.search(line)
             if match:

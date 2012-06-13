@@ -26,6 +26,17 @@ class LogcatWatcher(LogWatcher):
         return
 
     @property
+    def logs(self):
+        """
+        :return: list of logcat buffer names
+        """
+        if self._logs is None:
+            output, error = self.connection.ls(self.path)
+            self._logs = [log for log in output]
+                
+        return self._logs
+    
+    @property
     def arguments(self):
         """
         :rtype: StringType
@@ -73,7 +84,7 @@ class SafeLogcatWatcher(LogcatWatcher):
         :yield: A list of the adb logs.
         """
         with self.lock:
-            output = self.connection.ls(self.path)
+            output, error = self.connection.ls(self.path)
 
         for line in output:
             yield line
@@ -84,9 +95,9 @@ class SafeLogcatWatcher(LogcatWatcher):
         Runs an infinite loop that reads the tail of the log.
         Writes the lines to self.output.write()
         """
-        self.logger.debug("starting the logcat")
+        self.logger.debug("starting the logcat with: {0}".format(self.arguments))
         with self.lock:
-            output = self.connection.logcat(self.arguments)
+            output, error = self.connection.logcat(self.arguments)
 
         self.logger.debug("Out of the lock")
         for line in output:
@@ -97,6 +108,7 @@ class SafeLogcatWatcher(LogcatWatcher):
         self.logger.debug("Exiting the logcat watcher")
         return
 # end class SafeLogcatWatcher
+    
 if __name__ == "__main__":
     import sys
     lw = LogcatWatcher(sys.stdout)

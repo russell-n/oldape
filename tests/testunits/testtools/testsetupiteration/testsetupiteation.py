@@ -32,7 +32,7 @@ class SetupIterationTest(TestCase):
         self.setupiteration.run(self.parameters)
         self.affector.run.assert_called_with(self.parameters.affector)
         self.time_to_recovery.run.assert_called_with()
-        calls = [call("Time to recovery: 10"), call(output)]
+        calls = [call("Time to recovery: 10")]
         self.assertEqual(self.device.log.mock_calls, calls)
         self.sleep.run.assert_called_with(5)
         return

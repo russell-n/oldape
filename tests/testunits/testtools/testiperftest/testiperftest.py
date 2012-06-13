@@ -23,9 +23,11 @@ class IperfTestTest(TestCase):
         return
 
     def test_run(self):
+        self.parameters.recovery_time.return_value = 5
         self.iperftest.run(self.parameters)
-        self.senderkill.run.assert_called_with()
-        self.receiverkill.run.assert_called_with()
+        
+        self.senderkill.run.assert_called_with(time_to_sleep=self.parameters.recovery_time)
+        self.receiverkill.run.assert_called_with(time_to_sleep=self.parameters.recovery_time)
         self.receiver.start.assert_called_with(self.parameters.receiver)
         self.sleep.run.assert_called_with(self.parameters.recovery_time)
         self.sender.run.assert_called_with(self.parameters.sender)

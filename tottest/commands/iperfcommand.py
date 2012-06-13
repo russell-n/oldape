@@ -45,7 +45,7 @@ class IperfCommand(BaseClass):
 
         :raise: IperfError if an error is detected
         """
-        self.logger.debug("Validating: " + line)
+        #self.logger.debug("Validating: " + line)
         if "No route to host" in line:
             self.logger.error(line)
             raise IperfError("Unable to connect to host")

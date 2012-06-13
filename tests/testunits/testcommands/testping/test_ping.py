@@ -18,7 +18,7 @@ class PingCommandTest(TestCase):
         self.connection = MagicMock()
 
     def testandroid(self):
-        self.connection.ping.return_value = StringIO(ping_android)
+        self.connection.ping.return_value = StringIO(ping_android), None
         pinger = ping.PingCommand(target=self.target,
                                   connection= self.connection,
                                   operating_system = enumerations.OperatingSystem.android)
@@ -30,7 +30,7 @@ class PingCommandTest(TestCase):
 
     def testlinux(self):
         self.connection = MagicMock()
-        self.connection.ping.return_value = StringIO(ping_linux)
+        self.connection.ping.return_value = StringIO(ping_linux), None
         pinger = ping.PingCommand(target=self.target,
                                   connection= self.connection,
                                   operating_system = enumerations.OperatingSystem.linux)
