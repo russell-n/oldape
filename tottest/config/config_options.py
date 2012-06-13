@@ -29,3 +29,7 @@ class ConfigOptions(object):
     interval_option = "interval"
     format_option = "format"
     time_option = "time"
+
+    naxxx_section = "NAXXX"
+    switches_option = "switches"
+    hostname_option = "hostname"

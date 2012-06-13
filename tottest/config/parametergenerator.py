@@ -96,25 +96,26 @@ class ParameterGenerator(BaseClass):
         """
         #for params in self.parameters:
         for rep in range(1, self.parameters.repetitions + 1):
-            for direction in self.parameters.directions:
-                if direction == IperfDirection.to_dut:
-                    sender = self.parameters.dut_parameters.test_ip
-                elif direction == IperfDirection.from_dut:
-                    sender = self.parameters.tpc_parameters.test_ip
-                else:
-                    raise ConfigurationError("Unknown Direction: {0}".format(direction))
-                receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
-                sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters, sender)
-            
-                yield TestParameter(test_id=direction,
-                                    repetition=rep,
-                                    repetitions=self.parameters.repetitions,
-                                    output_folder=self.parameters.output_folder,
-                                    receiver=receiver_parameters,
-                                    sender=sender_parameters,
-                                    affector=None,
-                                    recovery_time=self.parameters.recovery_time)
-        return
+            for value in self.parameters.affector_parameters.values:
+                for direction in self.parameters.directions:
+                    if direction == IperfDirection.to_dut:
+                        sender = self.parameters.dut_parameters.test_ip
+                    elif direction == IperfDirection.from_dut:
+                        sender = self.parameters.tpc_parameters.test_ip
+                    else:
+                        raise ConfigurationError("Unknown Direction: {0}".format(direction))
+                    receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
+                    sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters, sender)
+                
+                    yield TestParameter(test_id=direction,
+                                        repetition=rep,
+                                        repetitions=self.parameters.repetitions,
+                                        output_folder=self.parameters.output_folder,
+                                        receiver=receiver_parameters,
+                                        sender=sender_parameters,
+                                        affector=None,
+                                        recovery_time=self.parameters.recovery_time)
+            return
 
     def __iter__(self):
         """

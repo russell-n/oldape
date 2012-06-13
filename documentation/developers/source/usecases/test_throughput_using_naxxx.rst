@@ -5,15 +5,19 @@
 .. uml::
 
    left to right direction
-   APE --> ("Test Throughput Using Naxxx")
-   ("Test Throughput Using Naxxx") ..> ("Cleanup Session") : <<include>>
-   ("Test Throughput Using Naxxx") ..> ("Setup Session") : <<include>>
-   ("Test Throughput Using Naxxx") ..> ("Run Test") : <<include>>
-   ("Run Traffic From DUT") --|> ("Run Test")
-   ("Run Traffic To DUT") --|> ("Run Test")
-   ("Run Test") ..> ("Setup Iperf Test") : <<include>>
-   ("Setup Iperf Test") ..> ("Environmental Affector") : <<include>>
-   ("Naxxx") --|> ("Environmental Affector")
+   APE --> ("Test Throughput Using Multiple APs")
+   ("Test Throughput Using Multiple APs") ..> ("Cleanup Session") : <<include>>
+   ("Test Throughput Using Multiple APs") ..> ("Setup Session") : <<include>>
+   ("Test Throughput Using Multiple APs") ..> ("Run Test") : <<include>>
+   ("Run Test") ..> ("Measure Throughput") : <<include>>
+   ("Measure Throughput") <|-- ("Run Traffic From DUT") 
+   ("Measure Throughput") <|-- ("Run Traffic To DUT")
+   ("Measure Throughput") <|-- ("Run Traffic To and From DUT") 
+   ("Run Test") ..> ("Setup Iteration") : <<include>>
+   ("Setup Iteration") ..> ("Environmental Affector") : <<include>>
+   ("Setup Iteration") ..> ("Wait For Device") : <<include>>
+   ("Environmental Affector") <|-- ("Naxxx") 
+   ("Wait For Device") <|-- ("Time To Recovery") 
 
 Related Requirements
 --------------------
@@ -38,11 +42,60 @@ Preconditions
 Postconditions
 --------------
 
-#. Data from the iperf sessions has been stored to Files.
+#. Data from the iperf sessions has been stored to files.
 #. Configuration file and logs are saved to the data files.
 
 Main Path
 ---------
 
-#. The System converts the 
+#. (:include: `Setup Session`) The test components are set up.
+#. The naxxx enables the participating |AP|.
+#. The naxxx disables all non-participating APs.
+#. (:include: `Time To Recovery`) The system waits for the DUT to re-join the system.
+#. (:include: `Run Iperf Traffic to DUT`) If configured, measure throughput to DUT.
+#. (:include: `Run Iperf Traffic from DUT`) If configured, measure throughput from DUT.
+#. (:include: `Cleanup Session`) Log and configuration files are copied to the DUT.
 
+Alternative Paths
+-----------------
+
+2.1. The Naxxx raises a ConnnectionError.
+
+   2.1.1. The system emits an error
+
+   2.1.2. The system exits.
+
+2.2. The Naxxx raises a NaxxxError.
+
+   2.2.1. The system emits an error
+
+   2.2.2. The current test iteration is exited.
+
+.. uml::
+
+   (*) -right-> "Setup Session"
+   "Setup Session" -right-> "Start Test"
+   "Start Test" -right-> "Enable AP"
+   if "" then
+      -right-> "Disable Other APs"
+      if "" then
+         -right-> "Wait For Dut"
+         if "" then
+            -right-> "Measure Throughput"
+         else
+            --> [error] "Emit Error" as emit
+         endif
+      else
+         --> [error] emit
+      endif
+   else
+      --> [error] emit 
+      if "ConfigurationError" then
+         --> "Start Test"
+      else
+         --> [NaxxxError] (*)
+      endif
+   endif
+   "Measure Throughput" --> (*)
+   
+.. include:: ../requirements_source.rst

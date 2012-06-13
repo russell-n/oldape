@@ -18,9 +18,12 @@ from tottest.commons import enumerations
 from configurationmap import ConfigurationMap
 from config_options import ConfigOptions
 
+# sub-lexicographers
+from lexicographers import naxxxlexicographer
+
 IperfDirection = enumerations.IperfDirection
 
-static_parameters = ('config_file_name output_folder repetitions directions '
+static_parameters = ('config_file_name output_folder repetitions directions affector_parameters '
                      ' recovery_time logwatcher_parameters logcatwatcher_parameters '
                      'tpc_parameters dut_parameters iperf_client_parameters '
                      'iperf_server_parameters').split()
@@ -31,6 +34,7 @@ dut_parameters = "test_ip"
 tpc_parameters = "hostname test_ip username password".split()
 logwatcher_parameters = ["paths"]
 logcatwatcher_parameters = ["buffers"]
+naxxx_parameters = 'values hostname'.split()
 
 class IperfClientParameters(namedtuple("IperfClientParameters", iperf_client_parameters)):
     """
@@ -101,6 +105,16 @@ class LogcatwatcherParameters(namedtuple("LogcatwatcherParameters",
         return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
                          for f in self._fields))
 # end LogcatwatcherParameters    
+
+class NaxxxParameters(namedtuple("NaxxxParameters", naxxx_parameters)):
+    """
+    Parameters needed to configure the naxxx
+    """
+    __slots__ = ()
+    def __str__(self):
+        return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
+                         for f in self._fields))
+# end NaxxxParameters
 
     
 ANYTHING = '.'
@@ -187,15 +201,20 @@ class Lexicographer(BaseClass):
 
             # now the logcatwatcher
             logcatwatcher_parameters = self.logcatwatcher_section(parser)
+
+            # the Naxxx!
+            naxxx = self.naxxx_section(parser)
             
             # now the iperf section
             directions = self.get_directions(parser)
             client, server = self.iperf_section(parser)
+            
             yield StaticParameters(config_file_name=file_name,
                                    output_folder=output_folder_name,
                                    repetitions=repetitions,
                                    recovery_time=recovery_time,
                                    directions=directions,
+                                   affector_parameters=naxxx,
                                    logcatwatcher_parameters=logcatwatcher_parameters,
                                    logwatcher_parameters=logwatcher_parameters,
                                    tpc_parameters=tpc_parameters,
@@ -383,6 +402,20 @@ class Lexicographer(BaseClass):
                                   ConfigOptions.buffers_option,
                                   optional=True)
         return LogcatwatcherParameters(buffers=buffers)
+
+    def naxxx_section(self, parser):
+        """
+        :return: list of switches or None
+        """
+        lexicographer = naxxxlexicographer.NaxxxLexicographer(parser)
+        switches = lexicographer.switches
+        hostname = lexicographer.hostname
+        if hostname is None:
+            # make sure there is at least one iterable for the parameter generator
+            switches = [0]
+        return NaxxxParameters(values=switches,
+                               hostname=hostname)
+        
 # end class Lexicographer
 
 if __name__ == "__main__":
