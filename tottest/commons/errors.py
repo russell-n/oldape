@@ -44,3 +44,8 @@ class StorageError(Exception):
     pass
 # end class StorageError
     
+class AffectorError(Exception):
+    """
+    An Affector Error is raised for non-recoverable affector errors
+    """
+# end class AffectorError

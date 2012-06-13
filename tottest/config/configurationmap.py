@@ -2,12 +2,14 @@
 An extension of the ConfigParser to do conversions
 """
 #python
+import re
 import ConfigParser
 from string import whitespace
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
 from tottest.commons.errors import ConfigurationError
+from tottest.commons import expressions
 
 STRIP_LIST = "'\"" + whitespace
 EMPTY_STRING = ''
@@ -22,6 +24,15 @@ MINUTES = 60
 HOURS = 60 * MINUTES
 DAYS = 24 * HOURS
 
+INTEGER = expressions.INTEGER
+NAMED = expressions.NAMED
+SPACES_OPTIONAL = expressions.SPACES_OPTIONAL
+DASH = '-'
+
+START_GROUP = "start"
+END_GROUP = "end"
+RANGE = re.compile(NAMED.format(name=START_GROUP, pattern=INTEGER) + SPACES_OPTIONAL +
+                   DASH + SPACES_OPTIONAL + NAMED.format(name=END_GROUP, pattern=INTEGER))
 
 class ConfigurationMap(BaseClass):
     """
@@ -85,9 +96,8 @@ class ConfigurationMap(BaseClass):
         :raise: ConfigurationError if the section or option doesn't exist and no default
         """
         try:
-            value = self.parser.get(section, option)
-            return value.strip(STRIP_LIST)
-        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError, AttributeError) as error:
+            return self.get(section, option)
+        except (ConfigParser.NoSectionError, ConfigurationError, ConfigParser.NoOptionError, AttributeError) as error:
             self.logger.debug(error)
             return default
         
@@ -134,7 +144,31 @@ class ConfigurationMap(BaseClass):
         if value_string is None:
             return default
         return value_string
-        
+
+    def get_ranges(self, section, option, delimiter=COMMA, optional=False):
+        """
+        Converts a comma-delimited set of ranges (start-finish) to a list of integers.
+
+        :return: List of integers or None if optional is True and section not found.
+        """
+
+        values = self.get_list(section, option, delimiter, optional)
+        if values is None:
+            return values
+        values_list = []
+        for value in values:
+            match = RANGE.search(value)
+            if match:
+                start, end = match.group(START_GROUP), match.group(END_GROUP)
+                values_list += [x for x in range(int(start), int(end) + 1)]
+            else:
+                try:
+                    values_list.append(int(value))
+                except ValueError as error:
+                    self.logger.error(error)
+                    raise ConfigurationError("Unknown Value '{0}' in '{1}' from section: {2} option: {3}".format(value, values, section, option))
+        return values_list
+    
     def get_list(self, section, option, delimiter=COMMA, optional=False):
         """
         :param:
@@ -142,7 +176,7 @@ class ConfigurationMap(BaseClass):
          - `section`: The [section] in the config file.
          - `option`: the option in the section
          - `delimiter`: the value separator
-         - `optional`: if True, returns default instead of raising an error
+         - `optional`: if True, returns None instead of raising an error
         :return: list of strings stripped of whitespace
 
         :raises: ConfigurationError if not optional and not found.

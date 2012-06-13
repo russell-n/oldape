@@ -28,7 +28,7 @@ class nps (object):
 
     Error checking is done to ensure that devices do indeed turn on/off when desired.
     """
-    def __init__ (self, IP, clear = True, retry = 5):
+    def __init__ (self, IP, clear=True, retry=5):
         """
         Initializes an elexol24 object to talk to the NPS device.
      
