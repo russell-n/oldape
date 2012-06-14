@@ -96,8 +96,9 @@ class ConfigurationMap(BaseClass):
         :raise: ConfigurationError if the section or option doesn't exist and no default
         """
         try:
-            return self.get(section, option)
-        except (ConfigParser.NoSectionError, ConfigurationError, ConfigParser.NoOptionError, AttributeError) as error:
+            value = self.parser.get(section, option)
+            return value.strip(STRIP_LIST)
+        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError, AttributeError) as error:
             self.logger.debug(error)
             return default
         

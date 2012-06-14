@@ -28,7 +28,7 @@ class nps (object):
 
     Error checking is done to ensure that devices do indeed turn on/off when desired.
     """
-    def __init__ (self, IP, clear=True, retry=5):
+    def __init__ (self, IP, clear = True, retry = 5):
         """
         Initializes an elexol24 object to talk to the NPS device.
      
@@ -82,7 +82,7 @@ class nps (object):
         self.GetPortStatus()
         for port in self.ports:
             for idx in range(PINS_PER_PORT):
-                if self.port_status[port][idx]:
+                if self.port_status[port][idx] == True:
                     count = count + 1
         return count
 
@@ -96,7 +96,7 @@ class nps (object):
         :rtype: string, int
         :return: tuple (Port number, Pin number) matching AC device number requested.
         """
-        if self.CheckBounds(number):
+        if self.CheckBounds(number) == True:
             return None
         port_id = number / PINS_PER_PORT
         port = self.ports[port_id]
@@ -163,11 +163,11 @@ class nps (object):
         :param:
          - `number` : Device number to turn on   
         """
-        if self.CheckBounds(number):
+        if self.CheckBounds(number) == True:
             return
         self.GetPortStatus()
         port, pin = self.ToPortPin(number)
-        if self.port_status[port][pin]:
+        if self.port_status[port][pin] == True:
             return
         count = self.OnCnt()
         if count >= MAX_ON:
@@ -179,7 +179,7 @@ class nps (object):
             self.el.setpin24(number)
             time.sleep(TOGGLE_DELAY)
             self.GetPortStatus()
-            if self.port_status[port][pin]:
+            if self.port_status[port][pin] == True:
                 break
             try_num = try_num + 1
        
@@ -193,11 +193,11 @@ class nps (object):
         :param:
          - `number` : Device number to turn off
         """
-        if self.CheckBounds(number):
+        if self.CheckBounds(number) == True:
             return
         self.GetPortStatus()
         port, pin = self.ToPortPin(number)
-        if self.port_status[port][pin]:
+        if self.port_status[port][pin] == False:
             return
 
         try_num = 0
@@ -205,7 +205,7 @@ class nps (object):
             self.el.clearpin24(number)
             time.sleep(TOGGLE_DELAY)
             self.GetPortStatus()
-            if self.port_status[port][pin]:
+            if self.port_status[port][pin] == False:
                 break
             try_num = try_num + 1
  
