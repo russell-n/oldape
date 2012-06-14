@@ -88,7 +88,9 @@ class NaxxxOn(BaseClass):
                 self.naxxx.TurnOnList(identifiers, clear=True)
             except TypeError as error:
                 self.logger.error(error)
-                raise FaucetteError("Unable to turn on {0}".format(" ".join([str(_id) for _id in identifiers])))
+
+                raise FaucetteError("Unable to turn on {0}".format(identifiers))
+
             except timeout as error:
                 self.logger.error(error)
                 raise AffectorError("Connection to the Naxxx timed out - check your LAN connection.")
