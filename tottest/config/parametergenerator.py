@@ -113,7 +113,7 @@ class ParameterGenerator(BaseClass):
                                         output_folder=self.parameters.output_folder,
                                         receiver=receiver_parameters,
                                         sender=sender_parameters,
-                                        affector=None,
+                                        affector=value,
                                         recovery_time=self.parameters.recovery_time)
             return
 

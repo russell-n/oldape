@@ -81,18 +81,17 @@ class NaxxxOn(BaseClass):
                 identifiers = [int(identifiers)]
             except ValueError as error:
                 self.logger.error(error)
-                raise FaucetteError("Invalid Identifier: {0}".format(identifiers))
+                raise FaucetteError("Invalid Identifier(s): {0}".format(identifiers))
         else:
             try:
                 identifiers = [int(item) for item in identifiers]
-                self.naxxx.TurnOnList(identifiers, clear=True)
             except TypeError as error:
                 self.logger.error(error)
-
                 raise FaucetteError("Unable to turn on {0}".format(identifiers))
 
             except timeout as error:
                 self.logger.error(error)
                 raise AffectorError("Connection to the Naxxx timed out - check your LAN connection.")
+        self.naxxx.TurnOnList(identifiers, clear=True)
         return
 # end class NAXXX
