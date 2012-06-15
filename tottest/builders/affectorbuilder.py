@@ -23,6 +23,6 @@ class NaxxxAffectorBuilder(BaseClass):
         if self._affector is None:
             hostname = self.parameters.hostname
             if hostname is not None:
-                self._affector = naxxx.NaxxxOn(IP=hostname)
+                self._affector = naxxx.Naxxx(hostname=hostname)
         return self._affector
 # end AffectorBuilder

@@ -74,7 +74,6 @@ class Naxxx(BaseClass):
         else:
             try:
                 outlets = [int(outlet) for outlet in outlets]
-                self.naxxx.turn_on_list(outlets, turn_others_off=True)
             except TypeError as error:
                 self.logger.error(error)
                 raise FaucetteError("Unable to turn on {0}".format(outlets))
@@ -82,5 +81,6 @@ class Naxxx(BaseClass):
             except timeout as error:
                 self.logger.error(error)
                 raise AffectorError("Connection to the Naxxx timed out - check your LAN connection.")
+        self.naxxx.turn_on_switches(outlets, turn_others_off=True)
         return
 # end class NAXXX
