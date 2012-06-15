@@ -35,7 +35,7 @@ from testbuilder import IperfTestToDutBuilder, IperfTestFromDutBuilder
 from watchersbuilder import LogwatchersBuilder
 from timetorecoverybuilder import TimeToRecoveryBuilder
 from setupiterationbuilder import SetupIterationBuilder
-from affectorbuilder import AffectorBuilder
+from affectorbuilder import NaxxxAffectorBuilder
 
 class Builder(BaseClass):
     """
@@ -225,7 +225,7 @@ class Builder(BaseClass):
         """
         time_to_recovery = self.get_ttr(parameters)
         device = self.get_dut_connection(parameters.dut_parameters)
-        affector = AffectorBuilder(parameters.affector_parameters)
+        affector = NaxxxAffectorBuilder(parameters.affector_parameters).affector
         if affector is None:
             affector = Mock()
         return SetupIterationBuilder(affector=affector,
