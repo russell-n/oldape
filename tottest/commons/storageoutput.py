@@ -166,8 +166,9 @@ class StorageOutput(BaseClass):
         return
 
     def __del__(self):
-        self.output_file.flush()
-        os.fsync(self.output_file.fileno())
-        self.output_file.close()
+        if self.output_file is not None:
+            self.output_file.flush()
+            os.fsync(self.output_file.fileno())
+            self.output_file.close()
         return
 # end class StorageOutput

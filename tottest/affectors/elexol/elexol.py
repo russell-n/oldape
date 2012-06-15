@@ -18,37 +18,50 @@ class elexol24:
     UDP_PORT = 2424
     HOST = ''
     
-    def __init__(self, IP, clear = True, retry=5):
+    def __init__(self, IP, clear = True, retry=5, ports="ABC", pins=8):
     
         """
         Constructor - Establishes communication with the Elexol24 and by default sets all pins to output mode.
         
         :param:
             - 'IP' : a string containing the IP address of the Elexol24.  Connection is made on port 2424.
+            - `ports`: The Identifier for the serial port on the elexol
+            - `pins`: The number of pins per port
         """
         self.closed = False
         self.IP = IP
         self.MAX_RETRY = retry
+        self.ports = ports
+        self.pins = pins
+        self.clear = clear
+        self._socket = None
+        return
 
-        try:
+    @property
+    def socket(self):
+        """
+        :return: UPD socket
+        """
+        if self._socket is None:
+            try:
             # set up socket
-            self.s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             # bind to port
-            self.s.bind((self.HOST, self.UDP_PORT))
-            self.s.settimeout(0.5)
+                self._socket.bind((self.HOST, self.UDP_PORT))
+                self._socket.settimeout(0.5)
             
             # set port directions to output by default
-            self.setportdirection('A', 0)
-            self.setportdirection('B', 0)
-            self.setportdirection('C', 0)
+                for port in self.ports:
+                    self.setportdirection(port, 0)
             
             # set all output to zero
-            if clear:
-                self.clearall()
+                if self.clear:
+                    self.clearall()
 
-        except socket.error:
-            print "elexol24: ", socket.error
-
+            except socket.error:
+                print "elexol24: ", socket.error
+        return self._socket
+    
     def tryrecv(self, message):
         try_num = 0
         msg = None
@@ -56,7 +69,7 @@ class elexol24:
             self.trysend(message)
             try_num = try_num + 1
             try:
-                msg = self.s.recv(2)
+                msg = self.socket.recv(2)
                 break
             except socket.timeout:
                 print "elexol24.getport: socket timeout"
@@ -69,12 +82,12 @@ class elexol24:
         while (try_num < self.MAX_RETRY):
             try_num = try_num + 1
             try:
-                self.s.sendto(message, (self.IP, self.UDP_PORT))
+                self.socket.sendto(message, (self.IP, self.UDP_PORT))
                 break
             except socket.timeout:
-                print "elexol24.getport: socket timeout"
+                print "elexol24.trysend: socket timeout"
             except socket.error:
-                print "elexol24.getport: ", socket.error
+                print "elexol24.trysend: ", socket.error
                 
             
     # set port direction
@@ -127,8 +140,7 @@ class elexol24:
         :param:
             - 'port' : A string containing either 'A', 'B', or 'C'.
             
-        """
-        
+        """        
         self.setport(port, 0)
         
     
@@ -137,10 +149,9 @@ class elexol24:
         """ 
         Clears all pins on the device.
         """
-
-        self.clearport('A')
-        self.clearport('B')
-        self.clearport('C')
+        for port in self.ports:
+            self.clearport(port)
+        return
         
                         
     # set individual pin value, keeping existing values (logical OR)
@@ -151,8 +162,9 @@ class elexol24:
         :param:
             - 'port' : A string containing either 'A', 'B', or 'C'.
             - 'pin' : A zero-indexed value specifying the desired pin. Valid range is 0-7.
-        """
-        
+
+        :raise: AssertionError if pin is out of range.
+        """        
         assert(pin < 8 and pin >= 0), "elexol24.setpin: pin out of range"
         
         # get existing port status and OR the result
@@ -224,18 +236,10 @@ class elexol24:
         assert (pin < 24 and pin >= 0), "elexol24.setpin24: Pin input outside of range."
         
         # determine port
-        if pin < 8: 
-            port = 'A'
-            p = pin
-        elif pin < 16: 
-            port = 'B'
-            p = pin - 8
-        else: 
-            port = 'C'
-            p = pin - 16
-        
+        port, pin = self.ports[pin/self.pins], pin % self.pins
         # perform operation
-        self.setpin(port, p)
+        self.setpin(port, pin)
+        return
         
     
     # set one pin in entire 24 pin bank, keeping all else zero
@@ -244,25 +248,19 @@ class elexol24:
         Sets an individual pin across the entire device. All other pins are cleared.
         
         :param:
-            - 'pin' : A zero-indexed value specifying the desired pin. Valid range is 0-23.
-        """
-        
+            - `pin` : A zero-indexed value specifying the desired pin. Valid range is 0-23.
+
+        :raise: AssertionError if pin out of range.
+        """        
         assert (pin < 24 and pin >= 0), "elexol24.setxpin24: Pin input outside of range."
         
         # determine port
-        if pin < 8: 
-            port = 'A'
-            p = pin
-        elif pin < 16: 
-            port = 'B'
-            p = pin - 8
-        else: 
-            port = 'C'
-            p = pin - 16
+        port, pin = self.ports[pin/self.pins], pin % self.pins
         
         # perform operation
         self.clearall()
-        self.setpin(port, p)
+        self.setpin(port, pin)
+        return
 
     def getpin24(self, pin):
         """
@@ -272,25 +270,18 @@ class elexol24:
             - 'pin' : A zero-indexed value specifying the desired pin. Valid range is 0-23.
         
         :rtype: Boolean
-        :return: The value of the specified pin.\
-        
+        :return: The value of the specified pin.
+
+        :raise: AssertionError if ping out of range
         """
         
         assert (pin < 24 and pin >= 0), "elexol24.getpin24: Pin input outside of range."
         
         # determine port
-        if pin < 8:
-            port = 'A'
-            p = pin
-        elif pin < 16:
-            port = 'B'
-            p = pin - 8
-        else:
-            port = 'C'
-            p = pin - 16
+        port, pin = self.ports[pin/self.pins], pin % self.pins
             
         # perform operation
-        return(self.getpin(port, p))
+        return(self.getpin(port, pin))
         
         
     # clear one individual pin in entire 24 pin bank, keeping existing values
@@ -299,34 +290,26 @@ class elexol24:
         Clears an individual pin across the entire device, leaving all other untouched.
         
         :param:
-            - 'pin' : A zero-i
-ndexed value specifying the desired pin. Valid range is 0-23.
+            - `pin` : A zero-indexed value specifying the desired pin. Valid range is 0-23.
+
+        :raise: AssertionError if `pin` out of range.
         """
-        
         assert (pin < 24 and pin >= 0), "elexol24.clearpin24: Pin input outside of range."
         
         # determine port
-        if pin < 8:
-            port = 'A'
-            p = pin
-        elif pin < 16:
-            port = 'B'
-            p = pin - 8
-        else:
-            port = 'C'
-            p = pin - 16
+        port, pin = self.ports[pin/self.pins], pin % self.pins
             
         # perform operation
-        self.clearpin(port, p)
-        
-        
+        self.clearpin(port, pin)
+        return
+    
     # cleanup
     def close(self):
         """
         Closes open sockets. Automatically called by destructor.
         """
         if not self.closed:
-            self.s.close()
+            self.socket.close()
     
     # destructor
     def __del__(self):
