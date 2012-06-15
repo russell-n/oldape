@@ -1,0 +1,58 @@
+"""
+A module for an enforcer of barriers for threads.
+"""
+#tottest
+from semaphore import Semaphore
+from tottest.baseclass import BaseClass
+
+class Barrier(BaseClass):
+    """
+    A Barrier prevents threads from getting to the critical point at the same time.
+
+    This implements the pre-loaded turnstile from 'Little Book of Semaphores'
+    """
+    def __init__(self, n):
+        """
+        :param:
+
+         - `n`: The number of threads
+        """
+        super(Barrier, self).__init__()
+        self.n = n
+        self.count = 0
+        self.mutex = Semaphore(1)
+        self.turnstile_1 = Semaphore(0)
+        self.turnstile_2 = Semaphore(0)
+        return
+
+    def critical_point(self):
+        """
+        This will stop at the block to the critical point.
+        """
+        self.mutex.wait()
+        self.count += 1
+        if self.count == self.n:
+            self.logger.debug("Releasing the critical point.")
+            self.turnstile_1.signal(self.n)
+        self.mutex.signal()
+        self.turnstile_1.wait()
+        return
+
+    def rendezvous_point(self):
+        """
+        This stops at the rendezvous point.
+        """
+        self.mutex.wait()
+        self.count -= 1
+        if self.count == 0:
+            self.logger.debug("Releasing the rendezvous_point")
+            self.turnstile_2.signal(self.n)            
+        self.mutex.signal()
+        self.turnstile_2.wait()
+        return
+
+    def wait(self):
+        self.critical_point()
+        self.rendezvous_point()
+        return
+# end classs Barrier
