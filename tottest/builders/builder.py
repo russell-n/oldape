@@ -36,7 +36,7 @@ from watchersbuilder import LogwatchersBuilder
 from timetorecoverybuilder import TimeToRecoveryBuilder
 from setupiterationbuilder import SetupIterationBuilder
 from affectorbuilder import NaxxxAffectorBuilder
-from teardowniterationbuilder import TearDownIterationBuilder
+from teardowniterationbuilder import TeardownIterationBuilder
 
 class Builder(BaseClass):
     """
@@ -145,7 +145,7 @@ class Builder(BaseClass):
 
             test_parameters = ParameterGenerator(static_parameters)
             setup = self.get_setup_iteration(static_parameters)
-            teardown = TearDownIterationBuilder().teardowniteration
+            teardown = TeardownIterationBuilder().teardowniteration
             tests = self.get_tests(static_parameters)
             device = self.get_dut_connection(static_parameters.dut_parameters)
             watchers = self.get_watchers(static_parameters)

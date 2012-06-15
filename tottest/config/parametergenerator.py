@@ -119,10 +119,15 @@ class ParameterGenerator(BaseClass):
         receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
         sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters, sender)
 
-        filename = "switch_{s}_repetition_{r}".format(s=switch, r=repetition)
-        receiver_test_parameters = iperf_test_parameters.IperfTestParameters(filename=filename,
+        try:
+            receiver_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p=receiver_parameters.udp)
+            sender_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p=sender_parameters.udp)
+        except AttributeError:
+            receiver_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p="tcp")
+            sender_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p="tcp")
+        receiver_test_parameters = iperf_test_parameters.IperfTestParameters(filename=receiver_filename,
                                                                              iperf_parameters=receiver_parameters)
-        sender_test_parameters = iperf_test_parameters.IperfTestParameters(filename=filename,
+        sender_test_parameters = iperf_test_parameters.IperfTestParameters(filename=sender_filename,
                                                                            iperf_parameters=sender_parameters)
         return receiver_test_parameters, sender_test_parameters
                                                           
