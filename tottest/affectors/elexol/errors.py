@@ -1,6 +1,6 @@
 from tottest.commons import errors
 ConfigurationError = errors.ConfigurationError
-from networked_power_supply import MAX_PINS
+MAX_PINS = 24
 
 class FaucetteError(ConfigurationError):
     """
