@@ -15,6 +15,7 @@ from tottest.baseclass import BaseClass
 from tottest.commons import enumerations, errors
 from tottest.parameters import iperf_server_parameters
 from tottest.parameters import iperf_client_parameters
+from tottest.parameters import iperf_test_parameters
 
 IperfDirection = enumerations.IperfDirection
 ConfigurationError = errors.ConfigurationError
@@ -48,7 +49,19 @@ class ParameterGenerator(BaseClass):
         """
         super(ParameterGenerator, self).__init__(*args, **kwargs)
         self.parameters = parameters
+        self._receiver_hostname = None
         return
+
+    @property
+    def receiver_hostname(self):
+        """
+        :return: Dict of direction:hostname pairs
+        """
+        if self._receiver_hostname is None:
+            self._receiver_hostname = {}
+            self._receiver_hostname[IperfDirection.to_dut] = self.parameters.dut_parameters.test_ip
+            self._receiver_hostname[IperfDirection.from_dut] = self.parameters.tpc_parameters.test_ip
+        return self._receiver_hostname
 
     def get_values(self, source, target):
         """
@@ -86,7 +99,33 @@ class ParameterGenerator(BaseClass):
         sender =  self.get_values(parameters, sender_parameters)
         sender.client = target
         return sender
-        
+
+    def iperf_parameters(self, switch, direction, repetition):
+        """
+        :param:
+
+         - `switch`: The number of the current switch
+         - `direction`: The current direction of iperf traffic
+         - `repetition`: The current repetition
+        :rtype: tuple
+        :return: receiver test parameters, server test parameters
+        """
+        try:
+            sender = self.receiver_hostname[direction]
+        except KeyError as error:
+            self.logger.error(error)
+            raise ConfigurationError("Unknown Direction: {0}".format(direction))
+
+        receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
+        sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters, sender)
+
+        filename = "switch_{s}_repetition_{r}".format(s=switch, r=repetition)
+        receiver_test_parameters = iperf_test_parameters.IperfTestParameters(filename=filename,
+                                                                             iperf_parameters=receiver_parameters)
+        sender_test_parameters = iperf_test_parameters.IperfTestParameters(filename=filename,
+                                                                           iperf_parameters=sender_parameters)
+        return receiver_test_parameters, sender_test_parameters
+                                                          
         
     def forward(self):
         """
@@ -96,24 +135,16 @@ class ParameterGenerator(BaseClass):
         """
         #for params in self.parameters:
         for rep in range(1, self.parameters.repetitions + 1):
-            for value in self.parameters.affector_parameters.values:
+            for switch in self.parameters.affector_parameters.values:
                 for direction in self.parameters.directions:
-                    if direction == IperfDirection.to_dut:
-                        sender = self.parameters.dut_parameters.test_ip
-                    elif direction == IperfDirection.from_dut:
-                        sender = self.parameters.tpc_parameters.test_ip
-                    else:
-                        raise ConfigurationError("Unknown Direction: {0}".format(direction))
-                    receiver_parameters = self.receiver_parameters(self.parameters.iperf_server_parameters)
-                    sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters, sender)
-                
+                    receiver_parameters, sender_parameters = self.iperf_parameters(switch, direction, rep)
                     yield TestParameter(test_id=direction,
                                         repetition=rep,
                                         repetitions=self.parameters.repetitions,
                                         output_folder=self.parameters.output_folder,
                                         receiver=receiver_parameters,
                                         sender=sender_parameters,
-                                        affector=value,
+                                        affector=switch,
                                         recovery_time=self.parameters.recovery_time)
         return
 

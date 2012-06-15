@@ -57,6 +57,27 @@ class IperfCommand(BaseClass):
             raise IperfError("Another server is already running.")
         return
 
+    def filename(self, parameters):
+        """
+        If `parameters` has .filename attribute, uses that and adds role:
+          <filename>_<role>_{t}
+        Else creates a file name to use for output from iperf flags.
+           <parameters>_<role>_{t}
+           
+        :param:
+
+         - `parameters`: The parameters passed in to run.
+        """
+        try:
+            param_string = parameters.filename
+        except AttributeError:
+            param_string = str(parameters)
+            param_string = param_string.replace("-", "")
+            param_string = param_string.replace(" ", "_")
+        filename = "{param}_{role}_{{t}}".format(param=param_string,
+                                                 role=self.role)
+        return filename
+    
     def run(self, parameters=None):
         """
         Run the iperf command and send to the output
@@ -71,11 +92,7 @@ class IperfCommand(BaseClass):
         """
         if parameters is None:
             parameters = self.parameters
-        param_string = str(parameters)
-        param_string = param_string.replace("-", "")
-        param_string = param_string.replace(" ", "_")
-        filename = "{param}_{role}_{{t}}".format(param=param_string,
-                                                 role=self.role)
+        filename = self.filename(parameters)
         file_output = self.output.open(filename=filename,
                                        extension=".iperf")
         output, error = self.connection.iperf(str(parameters))
