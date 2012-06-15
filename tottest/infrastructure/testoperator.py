@@ -88,7 +88,7 @@ class TestOperator(BaseClass):
         self.logger.info("Running Test")
         test_result = test.run(parameter)
         self.log_message(TEST_RESULT.format(r=test_result))
-        serfl.logger.info("Running teardown")
+        self.logger.info("Running teardown")
         self.teardown.run(parameter)
         self.logger.info(TIME_REMAINING.format(t=self.countdown_timer.remaining_time))
         return
