@@ -115,7 +115,7 @@ class ParameterGenerator(BaseClass):
                                         sender=sender_parameters,
                                         affector=value,
                                         recovery_time=self.parameters.recovery_time)
-            return
+        return
 
     def __iter__(self):
         """
