@@ -65,7 +65,7 @@ class Naxxx(BaseClass):
 
         :postcondition: Only switches in identifiers are on.
         """
-        self.logger.info("Turning on Power Outlets: {0}".format(outlets))
+        self.logger.info("Turning on Power Outlet(s): {0}".format(outlets))
         if type(outlets) in (StringType, IntType):
             try:
                 outlets = [int(outlets)]
