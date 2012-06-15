@@ -51,7 +51,7 @@ class Naxxx(BaseClass):
     
     def run(self, outlets):
         """
-        for each id in outlest, turn on the given outlet
+        for each id in outlets, turn on the given outlet
         Turns off all outlets not in outlets.
 
         :param:
@@ -65,6 +65,7 @@ class Naxxx(BaseClass):
 
         :postcondition: Only switches in identifiers are on.
         """
+        self.logger.info("Turning on Power Outlets: {0}".format(outlets))
         if type(outlets) in (StringType, IntType):
             try:
                 outlets = [int(outlets)]
