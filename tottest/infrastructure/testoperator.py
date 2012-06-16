@@ -79,13 +79,16 @@ class TestOperator(BaseClass):
         #. Runs test
         #. Runs Teardown
         """
-        self.logger.debug("Running Parameters: {0}".format(parameter))
+        self.logger.info("Running Parameters: {0}".format(parameter))
         test = self.tests[parameter.test_id]
         self.log_message(TEST_PREAMBLE.format(r=parameter.repetition,
                                                t=parameter.repetitions))
+        self.logger.info("Running test setup")
         self.setup.run(parameter)
+        self.logger.info("Running Test")
         test_result = test.run(parameter)
         self.log_message(TEST_RESULT.format(r=test_result))
+        self.logger.info("Running teardown")
         self.teardown.run(parameter)
         self.logger.info(TIME_REMAINING.format(t=self.countdown_timer.remaining_time))
         return

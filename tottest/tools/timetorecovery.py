@@ -73,7 +73,9 @@ class TimeToRecovery(BaseClass):
         :return: time from start of run to first of successful pings (or None)
         """
         target, timeout, threshold = self._unpack_parameters(parameters)
-
+        self.logger.info(("{pinger}: Waiting for {target} to return {threshold} pings"
+                          " (up to {timeout} seconds)").format(target=target, threshold=threshold,
+                                                               timeout=timeout, pinger=self.pinger.connection))
         start = now()
         time_limit = start + timeout
         pings = 0
