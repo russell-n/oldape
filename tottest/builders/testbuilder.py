@@ -110,7 +110,7 @@ class IperfTestToDutBuilder(IperfTestBuilder):
             self._receiver = iperfcommand.IperfCommand(connection=self.dut_connection,
                                                        output=self.storage,
                                                        
-                                                       role="tcp_traffic_received_by_dut",
+                                                       role="traffic_received_by_dut",
                                                        name=DUT_NAME)
         return self._receiver
 

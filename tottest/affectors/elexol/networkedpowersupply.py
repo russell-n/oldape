@@ -67,7 +67,7 @@ class NetworkedPowerSupply (BaseClass):
         self._pins_per_port = None
 
         # method dictionaries
-        self._change_switch_state = None
+        self._check_switch_is = None
         self._turn_switch = None
         return
 
@@ -90,7 +90,7 @@ class NetworkedPowerSupply (BaseClass):
         if self._check_switch_is is None:
             self._check_switch_is = {}
             self._check_switch_is[ON] = self.switch_is_on
-            self._check_switch_is[OFF] = self.port_is_off
+            self._check_switch_is[OFF] = self.switch_is_off
         return self._check_switch_is
 
     @property

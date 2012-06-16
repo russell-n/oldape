@@ -51,7 +51,7 @@ class Naxxx(BaseClass):
     
     def run(self, outlets):
         """
-        for each id in outlest, turn on the given outlet
+        for each id in outlets, turn on the given outlet
         Turns off all outlets not in outlets.
 
         :param:
@@ -65,6 +65,7 @@ class Naxxx(BaseClass):
 
         :postcondition: Only switches in identifiers are on.
         """
+        self.logger.info("Turning on Power Outlet(s): {0}".format(outlets))
         if type(outlets) in (StringType, IntType):
             try:
                 outlets = [int(outlets)]
@@ -74,7 +75,6 @@ class Naxxx(BaseClass):
         else:
             try:
                 outlets = [int(outlet) for outlet in outlets]
-                self.naxxx.turn_on_list(outlets, turn_others_off=True)
             except TypeError as error:
                 self.logger.error(error)
                 raise FaucetteError("Unable to turn on {0}".format(outlets))
@@ -82,5 +82,6 @@ class Naxxx(BaseClass):
             except timeout as error:
                 self.logger.error(error)
                 raise AffectorError("Connection to the Naxxx timed out - check your LAN connection.")
+        self.naxxx.turn_on_switches(outlets, turn_others_off=True)
         return
 # end class NAXXX
