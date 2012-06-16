@@ -1,0 +1,17 @@
+The Fetched Files
+=================
+
+The two files that were fetched were the `ttr.ini` file and the `source_this_for_sl4a` files.
+
+source_this_for_sl4a
+--------------------
+
+This is a fairly crude file to enable SL4a and forward the ports. It assumes that there is no server currently running and grabs the first port that shows up in the output. To use it:
+
+   #. Make sure there isn't a currently running SL4a server on the DUT
+   #. Enable the ADB Server if it isn't already running
+   #. source this file:
+      `source source_this_for_sl4a`
+
+For those not familiar with the `source` command, Unix doesn't allow a running program to change the state of its parents variables, so if you want to change an environment variable (in this case `AP_PORT`, which android.py uses to find the SL4a server), you need to use the `source` command to get around this.
+
