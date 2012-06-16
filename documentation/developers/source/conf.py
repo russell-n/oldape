@@ -32,6 +32,7 @@ rst_epilog = """
 .. |TOT| replace:: *Throughput Over Time (TOT)*
 .. |ADB| replace:: *Android Debug Bridge (ADB)*
 .. |SSH| replace:: *Secure Shell (SSH)*
+.. |NAXXX| replace:: *Networked Power Switch (NAXXX)*
 """
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
