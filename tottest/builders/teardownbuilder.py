@@ -54,7 +54,7 @@ class TearDownBuilder(BaseClass):
         :return: A teardown object for the test-operator to run to cleanup
         """
         if self._teardown is None:
-            self._teardown = teardown.TearDown((self.configcopier,
-                                                self.logcopier))
+            self._teardown = teardown.TeardownSession((self.configcopier,
+                                                       self.logcopier))
         return self._teardown
 # End class TearDownBuilder

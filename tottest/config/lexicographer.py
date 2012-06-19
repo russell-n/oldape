@@ -34,7 +34,7 @@ dut_parameters = "test_ip"
 tpc_parameters = "hostname test_ip username password".split()
 logwatcher_parameters = ["paths"]
 logcatwatcher_parameters = ["buffers"]
-naxxx_parameters = 'values hostname'.split()
+naxxx_parameters = 'parameters hostname'.split()
 
 class IperfClientParameters(namedtuple("IperfClientParameters", iperf_client_parameters)):
     """
@@ -412,8 +412,8 @@ class Lexicographer(BaseClass):
         hostname = lexicographer.hostname
         if hostname is None:
             # make sure there is at least one iterable for the parameter generator
-            switches = [0]
-        return NaxxxParameters(values=switches,
+            switches = ["no_affector"]
+        return NaxxxParameters(parameters=switches,
                                hostname=hostname)
         
 # end class Lexicographer

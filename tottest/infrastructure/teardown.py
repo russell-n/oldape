@@ -5,9 +5,13 @@ A module to hold the TearDown
 from tottest.baseclass import BaseClass
 
 
-class TearDown(BaseClass):
+class TeardownSession(BaseClass):
     """
     The TearDown does whatever needs to be done after the test is completed.
+
+    It iterates over the `tools` passed in to the constructor.
+    Each tool's `run` method is called.
+    Choosing tools and ordering them defines the TeardownSession algorithm.
     """
     def __init__(self,tools, *args, **kwargs):
         """
@@ -15,15 +19,16 @@ class TearDown(BaseClass):
 
          - `tools`: a list of tools to run
         """
-        super(TearDown, self).__init__(*args, **kwargs)
+        super(TeardownSession, self).__init__(*args, **kwargs)
         self.tools = tools
         return
 
     def run(self):
         """
-        runs the tools given in the constructor.
+        Calls the run() method for each tool in `tools`
+
         """
         for tool in self.tools:
             tool.run()
         return
-# end TearDown
+# end TeardownSession

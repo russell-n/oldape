@@ -38,3 +38,12 @@ class IperfDirection(object):
     send = FROM_DUT
 # end class IperfDirection
     
+class AffectorTypes(object):
+    """
+    AffectorTypes hold the names of affectors.
+    """
+    __slots__ = ()
+    naxxx = "naxxx"
+    attenuator = "attenuator"
+    buttonpusher = "buttonpusher"
+# end class AffectorTypes
