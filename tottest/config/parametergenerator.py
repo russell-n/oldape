@@ -17,6 +17,8 @@ from tottest.parameters import iperf_server_parameters
 from tottest.parameters import iperf_client_parameters
 from tottest.parameters import iperf_test_parameters
 
+
+AffectorTypes = enumerations.AffectorTypes
 IperfDirection = enumerations.IperfDirection
 ConfigurationError = errors.ConfigurationError
 
@@ -120,11 +122,11 @@ class ParameterGenerator(BaseClass):
         sender_parameters = self.sender_parameters(self.parameters.iperf_client_parameters, sender)
 
         try:
-            receiver_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p=receiver_parameters.udp)
-            sender_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p=sender_parameters.udp)
+            receiver_filename = "{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p=receiver_parameters.udp)
+            sender_filename = "{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p=sender_parameters.udp)
         except AttributeError:
-            receiver_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p="tcp")
-            sender_filename = "switch_{s}_repetition_{r}_{p}".format(s=switch, r=repetition, p="tcp")
+            receiver_filename = "{s}_repetition_{r}_tcp".format(s=switch, r=repetition)
+            sender_filename = "{s}_repetition_{r}_tcp".format(s=switch, r=repetition)
         receiver_test_parameters = iperf_test_parameters.IperfTestParameters(filename=receiver_filename,
                                                                              iperf_parameters=receiver_parameters)
         sender_test_parameters = iperf_test_parameters.IperfTestParameters(filename=sender_filename,
@@ -140,7 +142,7 @@ class ParameterGenerator(BaseClass):
         """
         #for params in self.parameters:
         for rep in range(1, self.parameters.repetitions + 1):
-            for switch in self.parameters.affector_parameters.values:
+            for switch in self.parameters.affector_parameters.parameters:
                 for direction in self.parameters.directions:
                     receiver_parameters, sender_parameters = self.iperf_parameters(switch, direction, rep)
                     yield TestParameter(test_id=direction,

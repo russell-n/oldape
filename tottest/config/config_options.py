@@ -30,6 +30,7 @@ class ConfigOptions(object):
     format_option = "format"
     time_option = "time"
 
-    naxxx_section = "NAXXX"
+    affector_section = "AFFECTOR"
+    affector_type_option = "type"
     switches_option = "switches"
     hostname_option = "hostname"
