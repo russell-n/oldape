@@ -20,6 +20,7 @@ from config_options import ConfigOptions
 
 # sub-lexicographers
 from lexicographers import naxxxlexicographer
+from lexicographers import devicelexicographer
 
 IperfDirection = enumerations.IperfDirection
 
@@ -30,7 +31,7 @@ static_parameters = ('config_file_name output_folder repetitions directions affe
 
 iperf_client_parameters = 'window len parallel interval format time'.split()
 iperf_server_parameters = 'window'
-dut_parameters = "test_ip"
+
 tpc_parameters = "hostname test_ip username password".split()
 logwatcher_parameters = ["paths"]
 logcatwatcher_parameters = ["buffers"]
@@ -63,16 +64,6 @@ class StaticParameters(namedtuple("StaticParameters", static_parameters)):
         return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
                          for f in self._fields))
 # end StaticParameters
-
-class DutParameters(namedtuple("DutParameters", dut_parameters)):
-    """
-    Parameters needed to configure dut connections
-    """
-    __slots__ = ()
-    def __str__(self):
-        return ','.join(("{f}:{v}".format(f=f, v=getattr(self, f))
-                         for f in self._fields))
-# end DutParameters
 
 class TpcParameters(namedtuple("TpcParameters", tpc_parameters)):
     """
@@ -325,10 +316,12 @@ class Lexicographer(BaseClass):
         """
         if self.dut_parameters is None:
             section = ConfigOptions.dut_section
+            dl = devicelexicographer.DeviceLexicographer
+            lexicographer = dl(parser=parser,
+                               section=section)
+
             self.logger.debug("Getting the {0} section".format(section))
-            test = parser.get(section,
-                              ConfigOptions.test_ip_option)
-            self.dut_parameters = DutParameters(test_ip=test)
+            self.dut_parameters = lexicographer.device_parameters
         return self.dut_parameters
 
     def tpc_section(self, parser):
