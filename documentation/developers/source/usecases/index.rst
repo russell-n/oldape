@@ -7,6 +7,7 @@ High-Level Use Cases
 .. toctree::
    :maxdepth: 1
 
+   Measure Device Throughput <measure_device_throughput>
    Test Throughput To DUT <test_throughput_to_dut>
    Test Throughput From DUT <test_throughput_from_dut>
    Test Throughput To and From DUT <test_throughput_to_and_from_dut>

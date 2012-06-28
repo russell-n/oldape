@@ -9,6 +9,7 @@ class ConfigOptions(object):
     recovery_time_option = "recovery_time"
     
     dut_section = 'DUT'
+    connection_option = 'connection'
     traffic_pc_section = "TRAFFIC_PC"
     login_option = "login"
     password_option = "password"

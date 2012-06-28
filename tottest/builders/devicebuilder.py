@@ -10,7 +10,7 @@ from tottest.devices import adbdevice
 
 class AdbDeviceBuilder(BaseClass):
     """
-    A Device Builder builds DUT devices
+    A Device Builder builds ADB devices
     """
     def __init__(self, parameters=None):
         """
