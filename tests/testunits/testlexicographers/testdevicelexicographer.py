@@ -7,10 +7,10 @@ from mock import MagicMock
 #tottest
 from tottest.commons import enumerations
 ConnectionTypes = enumerations.ConnectionTypes
-from tottest.config.lexicographers import devicelexicographer
+from tottest.lexicographers.sublexicographers import devicelexicographer
 DeviceLexicographer = devicelexicographer.DeviceLexicographer
 
-from tottest.config import config_options
+from tottest.lexicographers import config_options
 ConfigOptions = config_options.ConfigOptions
 
 class TestDeviceLexicographer(TestCase):

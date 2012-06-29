@@ -5,7 +5,7 @@ A module to build tear-downs run at the end of a test set.
 from tottest.baseclass import BaseClass
 from tottest.tools import copyfiles
 from tottest.log_setter import LOGNAME
-from tottest.infrastructure import teardown
+from tottest.proletarians import teardown
 
 
 class TearDownBuilder(BaseClass):

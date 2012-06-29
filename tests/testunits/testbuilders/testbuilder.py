@@ -7,7 +7,7 @@ from mock import MagicMock
 
 #tottest
 from tottest.builders import builder
-from tottest.infrastructure import hortator
+from tottest.proletarians import hortator
 from tottest.commons import enumerations
 ConnectionTypes = enumerations.ConnectionTypes
 from tottest.connections import sshconnection

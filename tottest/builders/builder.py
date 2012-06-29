@@ -13,13 +13,13 @@ from mock import MagicMock as Mock
 # tottest
 from tottest.baseclass import BaseClass
 
-# infrastructure
-from tottest.infrastructure import hortator
-from tottest.infrastructure.testoperator import TestOperator
-from tottest.infrastructure import countdowntimer
+# proletarians
+from tottest.proletarians import hortator
+from tottest.proletarians.testoperator import TestOperator
+from tottest.proletarians import countdowntimer
 
 #config
-from tottest.config.parametergenerator import ParameterGenerator
+from tottest.lexicographers.parametergenerator import ParameterGenerator
 
 #commons
 from tottest.commons import storageoutput

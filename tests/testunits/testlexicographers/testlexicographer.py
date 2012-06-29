@@ -3,8 +3,8 @@ from ConfigParser import SafeConfigParser
 from StringIO import StringIO
 
 from mock import MagicMock
-from tottest.config import lexicographer
-from tottest.config import configurationmap
+from tottest.lexicographers import lexicographer
+from tottest.lexicographers import configurationmap
 from tottest.commons import errors
 
 ConfigurationError = errors.ConfigurationError
