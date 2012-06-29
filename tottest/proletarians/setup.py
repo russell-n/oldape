@@ -5,7 +5,7 @@ A module to hold the SetUp
 # tottest Libraries
 from tottest.baseclass import BaseClass
 from tottest.builders import builder
-from tottest.config.lexicographer import Lexicographer
+from tottest.lexicographers.lexicographer import Lexicographer
 
 class SetUp(BaseClass):
     """

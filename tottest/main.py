@@ -9,8 +9,8 @@ import sys
 import signal
 
 # testrunner Libraries
-from infrastructure.argumentparser import ArgumentParser
-from infrastructure.enabledebugging import enable_debugging
+from proletarians.argumentparser import ArgumentParser
+from proletarians.enabledebugging import enable_debugging
 from log_setter import set_logger
 
 

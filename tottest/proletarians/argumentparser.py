@@ -7,7 +7,7 @@ A module to handle parsing the command-line arguments for the test runner.
 import argparse
 
 # testrunner Libraries
-from timetorecovertest.baseclass import BaseClass
+from tottest.baseclass import BaseClass
 from strategerizer import Strategerizer
 
 ARGUMENTS = ('fetch', 'run', 'help', 'test')
