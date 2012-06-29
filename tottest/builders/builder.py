@@ -8,7 +8,6 @@ a module to hold a builder of objects
 from threading import RLock
 
 # third party
-from mock import MagicMock as Mock
 
 # tottest
 from tottest.baseclass import BaseClass
@@ -27,6 +26,9 @@ from tottest.commons import enumerations
 operating_systems = enumerations.OperatingSystem
 iperf_direction = enumerations.IperfDirection
 ConnectionTypes = enumerations.ConnectionTypes
+from tottest.commons import dummy
+NoOpDummy = dummy.NoOpDummy
+
 
 # builders
 from devicebuilder import AdbDeviceBuilder
@@ -233,7 +235,7 @@ class Builder(BaseClass):
         device = self.get_dut_connection(parameters.dut_parameters)
         affector = NaxxxAffectorBuilder(parameters.affector_parameters).affector
         if affector is None:
-            affector = Mock()
+            affector = NoOpDummy()
         return SetupIterationBuilder(affector=affector,
                                      time_to_recovery=time_to_recovery,
                                      device=device).setup

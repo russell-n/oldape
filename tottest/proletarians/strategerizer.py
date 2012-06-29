@@ -8,8 +8,8 @@ A module to hold a keeper of Strategies
 from setup import SetUp
 #from teardown import TearDown
 from crashhandler import CrashHandler
-from tottest.config.configfetcher import ConfigFetcher
-from tottest.info.helper import Helper
+from tottest.lexicographers.configfetcher import ConfigFetcher
+from tottest.informants.helper import Helper
 from tottest.baseclass import BaseClass
 
 # commons
