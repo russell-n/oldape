@@ -47,3 +47,16 @@ class AffectorTypes(object):
     attenuator = "attenuator"
     buttonpusher = "buttonpusher"
 # end class AffectorTypes
+
+
+class ConnectionTypes(object):
+    """
+    ConnectionTypes holds the connection names
+    """
+    __slots__ = ()
+    ssh = "ssh"
+    adblocal = "adblocal"
+    serial = "serial"
+    telnet = "telnet"
+
+# end class ConnectionTypes
