@@ -7,7 +7,7 @@ It defers the checking of parameters to the Builders who are assumed to know the
 from collections import namedtuple
 
 #tottest
-from tottest.config import config_options
+from tottest.lexicographers import config_options
 ConfigOptions = config_options.ConfigOptions
 from tottest.baseclass import BaseClass
 

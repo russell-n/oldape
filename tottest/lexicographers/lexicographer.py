@@ -19,8 +19,8 @@ from configurationmap import ConfigurationMap
 from config_options import ConfigOptions
 
 # sub-lexicographers
-from lexicographers import naxxxlexicographer
-from lexicographers import devicelexicographer
+from sublexicographers import naxxxlexicographer
+from sublexicographers import devicelexicographer
 
 IperfDirection = enumerations.IperfDirection
 

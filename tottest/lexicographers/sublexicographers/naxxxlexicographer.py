@@ -4,7 +4,7 @@ A sub-lexicographer for naxxx options
 from collections import namedtuple
 
 from tottest.baseclass import BaseClass
-from tottest.config import config_options
+from tottest.lexicographers import config_options
 from tottest.affectors.elexol import networkedpowersupply
 from tottest.commons import errors
 from tottest.commons import enumerations

@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.config import configurationmap
+from tottest.lexicographers import configurationmap
 
 ConfigurationMap = configurationmap.ConfigurationMap
 
