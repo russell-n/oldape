@@ -14,7 +14,6 @@ from tottest.connections import sshconnection
 from tottest.commons import errors
 
 
-
 class AdbShellConnectionBuilder(BaseClass):
     """
     Use this to get an adb shell connection
@@ -97,7 +96,7 @@ class SshConnectionBuilder(BaseClass):
          - `parameter`: the name of parameter to get
         """
         param = getattr(self.parameters, parameter)
-        if param is not StringType:
-            raise errors.ConfigurationError("`{0}` is a required option for section `{1}`".format(parameter, self.parameters.section))
+        if type(param) is not StringType:
+            raise errors.ConfigurationError("`{0}` is a required option for section `{1}` (got '{2}')".format(parameter, self.parameters.section, param))
         return param
 # end class SshConnectionBuilder

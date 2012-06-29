@@ -26,6 +26,7 @@ from tottest.commons import storageoutput
 from tottest.commons import enumerations
 operating_systems = enumerations.OperatingSystem
 iperf_direction = enumerations.IperfDirection
+ConnectionTypes = enumerations.ConnectionTypes
 
 # builders
 from devicebuilder import AdbDeviceBuilder
@@ -37,6 +38,9 @@ from timetorecoverybuilder import TimeToRecoveryBuilder
 from setupiterationbuilder import SetupIterationBuilder
 from affectorbuilder import NaxxxAffectorBuilder
 from teardowniterationbuilder import TeardownIterationBuilder
+
+connection_builders = {ConnectionTypes.ssh:SshConnectionBuilder,
+                   ConnectionTypes.adblocal:AdbShellConnectionBuilder}
 
 class Builder(BaseClass):
     """
@@ -68,7 +72,35 @@ class Builder(BaseClass):
         if self._lock is None:
             self._lock = RLock()
         return self._lock
-    
+
+    @property
+    def operators(self):
+        """
+        :yield: test operators
+        """
+        for static_parameters in self.parameters:
+            self.logger.debug("Building the TestParameters with StaticParameters - {0}".format(static_parameters))
+
+            test_parameters = ParameterGenerator(static_parameters)
+            setup = self.get_setup_iteration(static_parameters)
+            teardown = TeardownIterationBuilder().teardowniteration
+            tests = self.get_tests(static_parameters)
+            device = self.get_dut_connection(static_parameters.dut_parameters)
+            watchers = self.get_watchers(static_parameters)
+            cleanup = self.get_teardown(static_parameters.config_file_name,
+                                        self.get_storage(static_parameters.output_folder))
+            countdown_timer = countdowntimer.CountdownTimer(static_parameters.repetitions)
+            
+            yield TestOperator(test_parameters=test_parameters,
+                               setup=setup,
+                               teardown=teardown,
+                               tests=tests,
+                               device=device,
+                               watchers=watchers,
+                               cleanup=cleanup,
+                               countdown_timer=countdown_timer)
+        return
+
     @property
     def hortator(self):
         """
@@ -102,22 +134,23 @@ class Builder(BaseClass):
             self.device = AdbDeviceBuilder().device
         return self.device
 
-    def get_dut_connection(self, parameters=None):
+    def get_dut_connection(self, parameters):
         """
         :return: connection to the dut
         """
         if self.dut_connection is None:
-            self.dut_connection = AdbShellConnectionBuilder().connection
+            self.dut_connection = connection_builders[parameters.connection_type](parameters).connection
         return self.dut_connection
 
-    def get_dut_connection_threads(self, parameters= None):
+    def get_dut_connection_threads(self, parameters):
         """
         This returns the same connection repeatedly
         It is intended only for use with objects that lock the connection calls.
         :return: dut-connection intended for use in threads
         """
         if self.dut_connection_threads is None:
-            self.dut_connection_threads = AdbShellConnectionBuilder().connection
+            self.dut_connection_threads = connection_builders[parameters.connection_type](parameters)
+            self.dut_connection_threads = self.dut_connection_threads.connection
         return self.dut_connection_threads
     
     def get_tpc_connection(self, parameters):
@@ -131,38 +164,10 @@ class Builder(BaseClass):
         :return: Connection to the traffic pc
         """
         if self.tpc_connection is None:
-            self.tpc_builder = SshConnectionBuilder(parameters)
+            self.tpc_builder = connection_builders[parameters.connection_type](parameters)
             self.tpc_connection = self.tpc_builder.connection
         return self.tpc_connection
-        
-    @property
-    def operators(self):
-        """
-        :yield: test operators
-        """
-        for static_parameters in self.parameters:
-            self.logger.debug("Building the TestParameters with StaticParameters - {0}".format(static_parameters))
-
-            test_parameters = ParameterGenerator(static_parameters)
-            setup = self.get_setup_iteration(static_parameters)
-            teardown = TeardownIterationBuilder().teardowniteration
-            tests = self.get_tests(static_parameters)
-            device = self.get_dut_connection(static_parameters.dut_parameters)
-            watchers = self.get_watchers(static_parameters)
-            cleanup = self.get_teardown(static_parameters.config_file_name,
-                                        self.get_storage(static_parameters.output_folder))
-            countdown_timer = countdowntimer.CountdownTimer(static_parameters.repetitions)
             
-            yield TestOperator(test_parameters=test_parameters,
-                               setup=setup,
-                               teardown=teardown,
-                               tests=tests,
-                               device=device,
-                               watchers=watchers,
-                               cleanup=cleanup,
-                               countdown_timer=countdown_timer)
-        return
-    
     def get_storage(self, folder_name=None):
         """
         :param:

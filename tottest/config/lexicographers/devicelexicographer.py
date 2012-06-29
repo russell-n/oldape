@@ -50,6 +50,7 @@ class DeviceLexicographer(BaseClass):
     @property
     def connection_type(self):
         """
+        This is required to determine the correct builder
         :rtype: StringType
         :return: the connection type
         """
@@ -61,6 +62,8 @@ class DeviceLexicographer(BaseClass):
     @property
     def control_ip(self):
         """
+        This is optional since ADBLocal and Local don't need it
+        
         :rtype: StringType or NoneType
         :return: control ip in config
         """
@@ -72,17 +75,21 @@ class DeviceLexicographer(BaseClass):
     @property
     def test_ip(self):
         """
+        This is required because iperf needs it (for now)
+        
         :rtype: StringType
         :return: test ip address for the device
         """
         if self._test_ip is None:
-            self._test_ip = self.get(self.section,
+            self._test_ip = self.parser.get(self.section,
                                      ConfigOptions.test_ip_option)
         return self._test_ip
 
     @property
     def login(self):
         """
+        This is optional
+        
         :rtype: StringType or NoneType
         :return: configured login
         """
@@ -94,6 +101,8 @@ class DeviceLexicographer(BaseClass):
     @property
     def password(self):
         """
+        This is optional
+        
         :rtype: StringType or NoneType
         :return: configured password
         """
@@ -112,8 +121,9 @@ class DeviceLexicographer(BaseClass):
             self._device_parameters = DeviceParameters(connection_type=self.connection_type,
                                                        hostname=self.control_ip,
                                                        test_ip=self.test_ip,
-                                                       username=self._login,
+                                                       username=self.login,
                                                        password=self.password,
                                                        section=self.section)
+            self.logger.debug(str(self._device_parameters))
         return self._device_parameters
 # end class DeviceLexicographer

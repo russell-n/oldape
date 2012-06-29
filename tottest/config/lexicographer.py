@@ -334,18 +334,11 @@ class Lexicographer(BaseClass):
         """
         section = ConfigOptions.traffic_pc_section
         self.logger.debug("Getting the {0} section.".format(section))
-        control = parser.get(section,
-                             ConfigOptions.control_ip_option)
-        test = parser.get(section,
-                             ConfigOptions.test_ip_option)
-        login = parser.get(section,
-                           ConfigOptions.login_option)
-        password = parser.get_optional(section,
-                                       ConfigOptions.password_option)
-        return TpcParameters(hostname=control,
-                             test_ip=test,
-                             username=login,
-                             password=password)
+        dl = devicelexicographer.DeviceLexicographer
+        lexicographer = dl(parser=parser,
+                           section=section)
+
+        return lexicographer.device_parameters
     
     def test_section(self, parser):
         """
