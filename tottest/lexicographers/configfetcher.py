@@ -32,26 +32,11 @@ class ConfigFetcher(baseclass.BaseClass):
         """
         super(ConfigFetcher, self).__init__(*args, **kwargs)
         self.name = name
-        self._config_file_name = None
         self._folder_path = None
         self._config_folder_path = None
         self.config_folder_path = config_folder
         return
 
-    @property
-    def config_file_name(self):
-        """
-        :rtype: string
-        :return: The name of the config file
-        """
-        if self._config_file_name is None:
-            if self.name is None:
-                self.name = DEFAULT_CONFIG
-            self._config_file_name = self.name
-            if not self._config_file_name.endswith(INI_EXTENSION):
-                self._config_file_name = self._config_file_name + INI_EXTENSION
-        return self._config_file_name
-    
     @property
     def folder_path(self):
         """
@@ -106,6 +91,5 @@ class ConfigFetcher(baseclass.BaseClass):
             shutil.copy(os.path.join(self.config_folder_path,
                                      file_name), os.getcwd())
             
-        
         return
 # End class ConfigFetcher
