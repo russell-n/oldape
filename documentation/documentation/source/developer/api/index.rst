@@ -66,7 +66,7 @@ Config
 
 The **Config** is the primary user-interface for the test. It allows the APE to set parameters that need to change between tests. 
 
-.. currentmodule:: tottest.config
+.. currentmodule:: tottest.lexicographers
 
 .. autosummary::
    :toctree: config_api
@@ -132,7 +132,7 @@ Info
 
 **Info** is the primary help system for the APE. It is meant to be a reminder system to remind the user how to configure the test and run it.
 
-.. currentmodule:: tottest.info
+.. currentmodule:: tottest.informers
 
 .. autosummary::
    :toctree: info_api
@@ -145,7 +145,7 @@ Infrastructure
 
 The **Infrastructure** contains modules to help run the test. It corresponds to the workers (TACOs)  who would run a physical test. These are kernel modules that shouldn't change for different types of tests.
 
-.. currentmodule:: tottest.infrastructure
+.. currentmodule:: tottest.proletarians
 
 .. autosummary::
    :toctree: infrastructure_api

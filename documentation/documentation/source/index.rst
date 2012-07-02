@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Time-To-Recover (TTR) Test Documentation for Developers
-=======================================================
+APE Tools Documentation
+=======================
 
 Contents:
 
@@ -12,10 +12,7 @@ Contents:
    :maxdepth: 1
 
    Developer Documentation <developer/index>
-   Requirements <requirements>
-   Use Cases <usecases/index>
-   Activities <activities/index>
-   API <api/index>
+   User Documentation <user/index>
 
 Indices and tables
 ------------------
