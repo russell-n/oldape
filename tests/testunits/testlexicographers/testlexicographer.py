@@ -45,17 +45,20 @@ class LexicographerTest(TestCase):
 
     def test_naxxx_section(self):
         switches = '1 2 3 4 5'.split()
-        def side_effect(section, switch):
-            if switch in switches:
+        naxxx_ip = "192.168.12.60"
+        def side_effect(section, option):
+            if option in switches:
                 return switches.pop(0)
+            if option == "hostname":
+                return naxxx_ip
             raise ConfigurationError()
         
         lex = lexicographer.Lexicographer('tot.ini')
         parser = MagicMock()        
         parser.get_ranges.return_value = [1,2,3,4,5]
-        parser.get_optional.return_value = "192.168.12.60"
-        parser.get.side_effect=side_effect
+        parser.get_optional.return_value = naxxx_ip
+        parser.get_optional.side_effect=side_effect
         parameters = lex.naxxx_section(parser)
-        self.assertEqual('1 2 3 4 5'.split(), [parameter.switch for parameter in parameters.parameters])
-        self.assertEqual("192.168.12.60", parameters.hostname)
+        self.assertEqual([int(s) for s in '1 2 3 4 5'.split()], [parameter.switch for parameter in parameters.parameters])
+        self.assertEqual(naxxx_ip, parameters.hostname)
         return

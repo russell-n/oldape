@@ -70,14 +70,12 @@ class NaxxxLexicographer(BaseClass):
             self._switches_names = []
             
             for switch in SWITCHES:
-                try:
-                    name = self.parser.get(self.section,
-                                    switch)
+                name = self.parser.get_optional(self.section,
+                                                switch)
+                if name is not None:
                     self._switches_names.append(NaxxxParameters(type=self._type,
                                                                 name=name,
                                                                 switch=switch))
-                except ConfigurationError:
-                    pass
         return self._switches_names
 
     @property
