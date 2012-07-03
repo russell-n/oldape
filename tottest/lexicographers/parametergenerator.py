@@ -142,16 +142,16 @@ class ParameterGenerator(BaseClass):
         """
         #for params in self.parameters:
         for rep in range(1, self.parameters.repetitions + 1):
-            for switch in self.parameters.affector_parameters.parameters:
+            for affector_parameter in self.parameters.affector_parameters.parameters:
                 for direction in self.parameters.directions:
-                    receiver_parameters, sender_parameters = self.iperf_parameters(switch, direction, rep)
+                    receiver_parameters, sender_parameters = self.iperf_parameters(affector_parameter, direction, rep)
                     yield TestParameter(test_id=direction,
                                         repetition=rep,
                                         repetitions=self.parameters.repetitions,
                                         output_folder=self.parameters.output_folder,
                                         receiver=receiver_parameters,
                                         sender=sender_parameters,
-                                        affector=switch,
+                                        affector=affector_parameter,
                                         recovery_time=self.parameters.recovery_time)
         return
 
