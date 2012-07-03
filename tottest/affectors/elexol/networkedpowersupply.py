@@ -311,4 +311,9 @@ class NetworkedPowerSupply (BaseClass):
             if pin not in exceptions: 
                 self.turn_off(pin)
         return
+
+    def __str__(self):
+        return "NetworkedPowerSupply: IP={0} clear={1} retry={2} ports={3}".format(self.IP,
+                                                                                   self.clear,
+                                                                                   self.ports)
 # end class nps
