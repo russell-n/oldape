@@ -5,7 +5,12 @@ The dummy is meant to sit in when an object with a run method is called but not 
 from tottest.baseclass import BaseClass
 
 
+LOG_STRING = "{0}.run() called with parameters '{1}'"
+
 class NoOpDummy(BaseClass):
+    """
+    The NoOpDummy does nothing when asked to do something.
+    """
     def __init__(self, name="NoOpDummy"):
         super(NoOpDummy, self).__init__()
         self.name = name
@@ -19,7 +24,7 @@ class NoOpDummy(BaseClass):
 
         This is intended for the Test Operator so it doesn't need to know what it calls
         """
-        self.logger.debug("{0}.run() called with parameters '{1}'".format(str(parameters)))
+        self.logger.debug(LOG_STRING.format(self.name,
+                                            str(parameters)))
         return
-
 # end class NoOpDummy
