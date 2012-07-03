@@ -27,6 +27,9 @@ class NaxxxParameters(namedtuple("NaxxxParameters", "type switch name")):
             return self.name
         else:
             return "switch_{0}".format(self.switch)
+
+    def __int__(self):
+        return int(self.switch)
 # end class NaxxxParameters
 
 
