@@ -315,5 +315,6 @@ class NetworkedPowerSupply (BaseClass):
     def __str__(self):
         return "NetworkedPowerSupply: IP={0} clear={1} retry={2} ports={3}".format(self.IP,
                                                                                    self.clear,
+                                                                                   self.retry,
                                                                                    self.ports)
 # end class nps
