@@ -3,7 +3,7 @@ A module to run the NAXXX Network Power Supply
 """
 
 #python libraries
-from types import StringType, IntType
+from types import ListType, TupleType
 from socket import timeout
 
 # nps libraries
@@ -66,7 +66,7 @@ class Naxxx(BaseClass):
         :postcondition: Only switches in identifiers are on.
         """
         self.logger.info("Turning on Power Outlet(s): {0}".format(outlets))
-        if type(outlets) in (StringType, IntType):
+        if type(outlets) not in (ListType, TupleType):
             try:
                 outlets = [int(outlets)]
             except ValueError as error:
