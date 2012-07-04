@@ -11,10 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-
-   Requirements <requirements>
-   Use Cases <usecases/index>
-   Activities <activities/index>
+   Design <design/index>
    API <api/index>   
 
    Algorithms <algorithms/index>
