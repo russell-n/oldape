@@ -96,7 +96,7 @@ class Naxxx(BaseClass):
          - `NaxxxError`: If connection (socket) times-out.
          - `FaucetteError`: If there is a problem with the outlet identifiers.
 
-        :postcondition: Only switches in identifiers are on.
+        :postcondition: Only switches in `outlets` are on.
         """
         self.logger.info("Turning on Power Outlet(s): {0}".format(outlets))
         outlets = self._clean_outlets(outlets)

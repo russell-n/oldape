@@ -11,7 +11,7 @@ from tottest.lexicographers import config_options
 ConfigOptions = config_options.ConfigOptions
 from tottest.baseclass import BaseClass
 
-device_parameters = "connection_type test_ip hostname username password section".split()
+device_parameters = "connection_type test_ip hostname username password section paths".split()
 
 
 class DeviceParameters(namedtuple("DeviceParameters", device_parameters)):
@@ -44,6 +44,7 @@ class DeviceLexicographer(BaseClass):
         self._test_ip = None
         self._login = None
         self._password = None
+        self._paths = None
         self._device_parameters = None
         return
 
@@ -110,6 +111,17 @@ class DeviceLexicographer(BaseClass):
             self._password = self.parser.get_optional(self.section,
                                                       ConfigOptions.password_option)
         return self._password
+
+    @property
+    def paths(self):
+        """
+        :return: A list of paths or None if there were None
+        """
+        if self._paths is None:
+            self._paths = self.parser.get_list(self.section,
+                                                    ConfigOptions.paths_option,
+                                                    optional=True)
+        return self._paths
     
     @property
     def device_parameters(self):
@@ -123,7 +135,8 @@ class DeviceLexicographer(BaseClass):
                                                        test_ip=self.test_ip,
                                                        username=self.login,
                                                        password=self.password,
-                                                       section=self.section)
+                                                       section=self.section,
+                                                       paths=self.paths)
             self.logger.debug(str(self._device_parameters))
         return self._device_parameters
 # end class DeviceLexicographer

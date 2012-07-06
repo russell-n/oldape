@@ -125,7 +125,7 @@ html_theme_path = ['_templates']
 #html_title = None
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
-html_short_title = 'ttr documentation'
+html_short_title = 'tot documentation'
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
@@ -183,7 +183,8 @@ html_show_sphinx = True
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Time-To-RecoverTestdoc'
+basename = "Throughput-Over-Time"
+htmlhelp_basename = basename + 'doc'
 
 
 # -- Options for LaTeX output --------------------------------------------------
@@ -204,7 +205,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'Time-To-RecoverTest.tex', u'Time-To-Recover Test Documentation',
+  ('index', 'throughput_over_time.tex', basename + u' Test Documentation',
    u'russelln', 'manual'),
 ]
 
@@ -234,7 +235,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'time-to-recovertest', u'Time-To-Recover Test Documentation',
+    ('index', basename, basename + u' Test Documentation',
      [u'russelln'], 1)
 ]
 
@@ -248,8 +249,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'Time-To-RecoverTest', u'Time-To-Recover Test Documentation',
-   u'russelln', 'Time-To-RecoverTest', 'One line description of project.',
+  ('index', basename + 'Test', basename + u' Test Documentation',
+   u'russelln', basename + 'Test', basename + ' Tester.',
    'Miscellaneous'),
 ]
 
@@ -266,7 +267,7 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'Time-To-Recover Test'
+epub_title = basename + u' Test'
 epub_author = u'russelln'
 epub_publisher = u'russelln'
 epub_copyright = u'2012, russelln'

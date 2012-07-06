@@ -1,5 +1,5 @@
 """
-A module to hold connection exceptions
+A module to hold common exceptions
 """
 
 class ConnectionError(Exception):

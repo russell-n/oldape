@@ -21,7 +21,7 @@ IMPORT_PATH = "{f}.{t}"
 
 class Helper(BaseClass):
     """
-    A Helper provides help
+    A Helper provides online help
     """
     def __init__(self, *args, **kwargs):
         super(Helper, self).__init__(*args, **kwargs)
