@@ -7,7 +7,7 @@ from nose.tools import raises
 
 #tottest
 from tottest.connections import adbconnection, sshconnection
-from tottest.builders import connectionbuilder
+from tottest.builders.subbuilders import connectionbuilder
 from tottest.commons import errors
 ConfigurationError = errors.ConfigurationError
 

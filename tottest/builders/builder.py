@@ -31,15 +31,15 @@ NoOpDummy = dummy.NoOpDummy
 
 
 # builders
-from devicebuilder import AdbDeviceBuilder
-from connectionbuilder import AdbShellConnectionBuilder, SshConnectionBuilder
-from teardownbuilder import TearDownBuilder
-from testbuilder import IperfTestToDutBuilder, IperfTestFromDutBuilder
-from watchersbuilder import LogwatchersBuilder
-from timetorecoverybuilder import TimeToRecoveryBuilder
-from setupiterationbuilder import SetupIterationBuilder
-from affectorbuilder import NaxxxAffectorBuilder
-from teardowniterationbuilder import TeardownIterationBuilder
+from subbuilders.devicebuilder import AdbDeviceBuilder
+from subbuilders.connectionbuilder import AdbShellConnectionBuilder, SshConnectionBuilder
+from subbuilders.teardownbuilder import TearDownBuilder
+from subbuilders.testbuilder import IperfTestToDutBuilder, IperfTestFromDutBuilder
+from subbuilders.watchersbuilder import LogwatchersBuilder
+from subbuilders.timetorecoverybuilder import TimeToRecoveryBuilder
+from subbuilders.setupiterationbuilder import SetupIterationBuilder
+from subbuilders.affectorbuilder import NaxxxAffectorBuilder
+from subbuilders.teardowniterationbuilder import TeardownIterationBuilder
 
 connection_builders = {ConnectionTypes.ssh:SshConnectionBuilder,
                    ConnectionTypes.adblocal:AdbShellConnectionBuilder}
@@ -138,6 +138,8 @@ class Builder(BaseClass):
 
     def get_dut_connection(self, parameters):
         """
+        This returns the same connection repeatedly
+        
         :return: connection to the dut
         """
         if self.dut_connection is None:
@@ -148,6 +150,7 @@ class Builder(BaseClass):
         """
         This returns the same connection repeatedly
         It is intended only for use with objects that lock the connection calls.
+        
         :return: dut-connection intended for use in threads
         """
         if self.dut_connection_threads is None:

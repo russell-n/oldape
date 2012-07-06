@@ -1,7 +1,7 @@
 Auto-Generated API
 ==================
 
-The Sections correspond to sub-modules within the timetorecovertest package.
+The sections of the *API* correspond to sub-modules within the timetorecovertest package.
 
 .. currentmodule:: tottest
 
@@ -12,18 +12,59 @@ The Sections correspond to sub-modules within the timetorecovertest package.
    log_setter
    main
 
-Builders
---------
+Affectors
+---------
 
-The **Builders** build. They map the Lexicographer's parameters to objects.
+The *Affectors* affect the environment (as opposed to impelling devices to change themselves).
 
-.. currentmodule:: tottest.buiders
+
+Networked Power Supply
+~~~~~~~~~~~~~~~~~~~~~~
+
+.. currentmodule:: tottest.affectors.elexol
+
+.. autosummary::
+   :toctree: affectors_api
+   
+   elexol
+   errors
+   naxxx
+   networkedpowersupply
+
+
+Builder
+-------
+
+The **Builder** builds. It maps the Lexicographer's parameters to objects by calling sub-builders.
+
+.. currentmodule:: tottest.builders
 
 .. autosummary::
    :toctree: builders_api
    
    builder
    
+
+Sub-Builders
+~~~~~~~~~~~~
+
+*Sub-Builders* are experts in building their objects, allowing the *Builder* to delegate the burden of knowledge to them.
+
+.. currentmodule:: tottest.builders.subbuilders
+
+.. autosummary::
+   :toctree: sub_builders_api
+   
+   affectorbuilder
+   connectionbuilder
+   devicebuilder
+   setupiterationbuilder
+   teardownbuilder
+   teardowniterationbuilder
+   testbuilder
+   timetorecoverybuilder
+   watchersbuilder
+
 
 Commands
 --------
@@ -54,6 +95,7 @@ The **Commons** is a place to put things that the different sub-modules need to 
    :toctree: commons_api
 
    assertions
+   dummy
    enumerations
    errors
    expressions
@@ -61,37 +103,7 @@ The **Commons** is a place to put things that the different sub-modules need to 
    readoutput
    storageoutput
 
-Config
-------
-
-The **Config** is the primary user-interface for the test. It allows the APE to set parameters that need to change between tests. 
-
-.. currentmodule:: tottest.lexicographers
-
-.. autosummary::
-   :toctree: config_api
-
-   configfetcher
-   config_options
-   configurationmap
-   lexicographer
-   parametergenerator
    
-Adapters
---------
-
-The **Adapters** adapt external libraries for connections to provide a common interface (and are kept with their connections).
-
-.. currentmodule:: tottest.connections
-
-.. autosummary::
-   :toctree: adapters_api
-
-   serialadapter
-   sshadapter
-   telnetadapter
-
-
 Connections
 -----------
 
@@ -111,7 +123,22 @@ The **Connections** provide connectivity to devices. It is their responsibility 
 
    lineproducer
 
-* The `lineproducer` is a utility used to break up lines for connections that only have access to streams (not files). 
+* The `lineproducer` is a utility used to break up lines for connections that only have access to streams (as opposed to file-like objects). 
+
+Adapters
+~~~~~~~~
+
+The **Adapters** adapt external libraries for connections to provide a common interface (and are kept with their connections).
+
+.. currentmodule:: tottest.connections
+
+.. autosummary::
+   :toctree: adapters_api
+
+   serialadapter
+   sshadapter
+   telnetadapter
+
 
 Devices
 -------
@@ -127,12 +154,12 @@ The **Devices** provide a set of standardized method calls to the connections (t
    adbdevice
    sl4adevice
 
-Info
-----
+Informants
+----------
 
-**Info** is the primary help system for the APE. It is meant to be a reminder system to remind the user how to configure the test and run it.
+**Informants** provide command-line help system for the APE. It is meant to be a prompting system to remind the user how to configure the test and run it.
 
-.. currentmodule:: tottest.informers
+.. currentmodule:: tottest.informants
 
 .. autosummary::
    :toctree: info_api
@@ -140,15 +167,62 @@ Info
    helper
 
 
-Infrastructure
+Lexicographers
 --------------
 
-The **Infrastructure** contains modules to help run the test. It corresponds to the workers (TACOs)  who would run a physical test. These are kernel modules that shouldn't change for different types of tests.
+The *Config-file* is the primary user-interface for the test. It allows the APE to set parameters that need to change between tests. The **Lexicographer** translate config-files to parameters for the builder(s).
+
+.. currentmodule:: tottest.lexicographers
+
+.. autosummary::
+   :toctree: lexicographer_api
+
+   configfetcher
+   config_options
+   configurationmap
+   lexicographer
+   parametergenerator
+
+Sub-Lexicographers
+~~~~~~~~~~~~~~~~~~
+
+**Sub-Lexicographers** know how to translate specific sections of the config-file, alleviating the translational burden of the main *Lexicographer*.
+
+.. currentmodule:: tottest.lexicographers.sublexicographers
+
+.. autosummary::
+   :toctree: sub_lexicographer_api
+   
+   devicelexicographer
+   naxxxlexicographer
+
+
+Parameters
+----------
+
+**Parameters** hold complex parameters for complicated commands. Besides being holders of values, they check for errors in settings and allow the dynamic generation of values.
+
+.. currentmodule:: tottest.parameters
+
+.. autosummary:: 
+   :toctree: parameters_api
+
+   iperf_client_parameters
+   iperf_common_parameters
+   iperf_common_tcp_parameters
+   iperf_server_parameters
+
+Since the parameters define the behavior of commands, choosing them declares their behavior, much as the choice and ordering of the tools defines the behavior of the Test Operator. 
+
+Proletarians
+------------
+
+The **Proletarians** contains modules to run the test. They are the civil-servants of the system -- modules that shouldn't change for different types of tests.
 
 .. currentmodule:: tottest.proletarians
 
 .. autosummary::
-   :toctree: infrastructure_api
+   :toctree: proletarian_api
 
    argumentparser
    countdowntimer
@@ -162,27 +236,10 @@ The **Infrastructure** contains modules to help run the test. It corresponds to 
    teardown
    testoperator
 
-Parameters
-----------
-
-**Parameters** hold complex parameters for complicated commands. Besides being holders of values, they allow for errors in settings and dynamically generated values.
-
-.. currentmodule:: tottest.parameters
-
-.. autosummary:: 
-   :toctree: parameters_api
-
-   iperf_client_parameters
-   iperf_common_parameters
-   iperf_common_tcp_parameters
-   iperf_server_parameters
-
-Since the parameters define the behavior of commands, choosing them in many ways declares their behavior, much as the choice and ordering of the tools defines the behavior of the Test Operator. 
-
 Threads
 -------
 
-The **Threads** are used by the logwatchers and connections so they don't block execution.
+The **Threads** are used by the logwatchers and connections so they don't block execution (these aren't actually used at run-time, they're for debugging).
 
 .. currentmodule:: tottest.threads
 

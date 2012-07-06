@@ -37,6 +37,17 @@ class IperfDirection(object):
     tx = FROM_DUT
     send = FROM_DUT
 # end class IperfDirection
+
+class IperfDefaults(object):
+    __slots__ = ()
+    window = "256K"
+    length = "1470"
+    parallel = '4'
+    interval = '1'
+    format = 'm'
+    path = ""
+# end class IperfDefaults
+
     
 class AffectorTypes(object):
     """

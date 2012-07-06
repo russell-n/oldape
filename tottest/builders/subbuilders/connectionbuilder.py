@@ -22,7 +22,7 @@ class AdbShellConnectionBuilder(BaseClass):
         """
         :param:
 
-         - `parameters`: Not used, just here to keep the interface unifomr
+         - `parameters`: Not used, just here to keep the interface uniform
         """
         super(AdbShellConnectionBuilder, self).__init__()
         self._connection = None

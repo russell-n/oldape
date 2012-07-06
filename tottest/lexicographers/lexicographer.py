@@ -21,6 +21,7 @@ from config_options import ConfigOptions
 # sub-lexicographers
 from sublexicographers import naxxxlexicographer
 from sublexicographers import devicelexicographer
+from sublexicographers import iperflexicographer
 
 IperfDirection = enumerations.IperfDirection
 
@@ -29,31 +30,13 @@ static_parameters = ('config_file_name output_folder repetitions directions affe
                      'tpc_parameters dut_parameters iperf_client_parameters '
                      'iperf_server_parameters').split()
 
-iperf_client_parameters = 'window len parallel interval format time'.split()
-iperf_server_parameters = 'window'
 
 tpc_parameters = "hostname test_ip username password".split()
 logwatcher_parameters = ["paths"]
 logcatwatcher_parameters = ["buffers"]
 naxxx_parameters = 'parameters hostname'.split()
 
-class IperfClientParameters(namedtuple("IperfClientParameters", iperf_client_parameters)):
-    """
-    lexicographer.IperfClientParameters is a named tuple of raw parameters 
-    """
-    __slots__ = ()
-    def __str__(self):
-        return ','.join(("{f}_{v}".format(f=f, v=getattr(self, f))
-                         for f in self._fields))
-# end IperfClientParameters
 
-class IperfServerParameters(namedtuple("IperfServerParameters", iperf_server_parameters)):
-    __slots__ = ()
-    def __str__(self):
-        return ','.join(("{f}_{v}".format(f=f, v=getattr(self, f))
-                         for f in self._fields))
-# end IperfServerParameters
-    
 class StaticParameters(namedtuple("StaticParameters", static_parameters)):
     """
     A set of parameters for a single test.
@@ -198,7 +181,7 @@ class Lexicographer(BaseClass):
             
             # now the iperf section
             directions = self.get_directions(parser)
-            client, server = self.iperf_section(parser)
+            iperf = iperflexicographer.IperfLexicographer(parser)
             
             yield StaticParameters(config_file_name=file_name,
                                    output_folder=output_folder_name,
@@ -210,8 +193,8 @@ class Lexicographer(BaseClass):
                                    logwatcher_parameters=logwatcher_parameters,
                                    tpc_parameters=tpc_parameters,
                                    dut_parameters=dut_parameters,
-                                   iperf_client_parameters=client,
-                                   iperf_server_parameters=server)
+                                   iperf_client_parameters=iperf.client_parameters,
+                                   iperf_server_parameters=iperf.server_parameters)
         if not found:
             raise errors.ConfigurationError("Unable to find '{0}' in this directory.".format(self.glob))
         return
@@ -226,44 +209,6 @@ class Lexicographer(BaseClass):
         """        
         return ConfigurationMap(file_name)
     
-    def iperf_section(self, parser):
-        """
-        :param:
-
-         - `parser`: An open Configuration map
-
-        :rtype: Tuple
-        :return: IperfClientParameters, IperfServerParameters
-        """
-        section = ConfigOptions.iperf_section
-        self.logger.debug("Getting the {0} section".format(section))
-        
-        window = parser.get_optional(section,
-                                     ConfigOptions.window_option,
-                                     default="256K")
-        length = parser.get_optional(section,
-                                     ConfigOptions.length_option,
-                                     default="1470")
-        parallel = parser.get_optional(section,
-                                       ConfigOptions.parallel_option,
-                                       '4')
-        interval = parser.get_optional(section,
-                                       ConfigOptions.interval_option,
-                                       '1')
-        _format = parser.get_optional(section,
-                                      ConfigOptions.format_option,
-                                      default='megabits')[0]
-        time = parser.get_time(section,
-                               ConfigOptions.time_option)
-        iperf_client = IperfClientParameters(window=window,
-                                             len=length,
-                                             parallel=parallel,
-                                             interval=interval,
-                                             format=_format,
-                                             time=str(time))
-        iperf_server = IperfServerParameters(window=window)
-        return iperf_client, iperf_server
-
 
     def get_directions(self, parser):
         """
@@ -290,21 +235,6 @@ class Lexicographer(BaseClass):
                 else:
                     raise errors.ConfigurationError("Unkown traffic direction: {0}".format(value))
         return self.directions
-
-    def get_client(self, parser):
-        """
-        :param:
-
-         - `parser`: The configuration parser
-         
-        :return: client
-        """
-        direction = self.get_direction(parser)
-        if direction == IperfDirection.from_dut:
-            client = self.tpc_section(parser).test_ip
-        else:
-            client = self.dut_section(parser).test_ip
-        return client
     
     def dut_section(self, parser):
         """

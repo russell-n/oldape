@@ -71,12 +71,7 @@ class Strategerizer(BaseClass):
         try:
             self.logger.debug("Running the Setup")
             setup = SetUp(args)
-            self.logger.debug("Running the SL4a Tester")
             for parameters in setup.lexicographer.parameters:
-                # test sl4a
-                #test = testsl4a.TestSl4a(parameters)
-                #test.run()
-
                 #test the network
                 target = parameters.target
                 self.logger.info("Pinging " + target)
