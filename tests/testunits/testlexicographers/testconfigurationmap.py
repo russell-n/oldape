@@ -26,3 +26,16 @@ class ConfigurationMapTest(TestCase):
         ranges = self.map.get_ranges('NAXXX', 'switches')
         self.assertEqual(ranges, [2,3,4,5,10,3,4,5,6,7,8,9,10,11,12])
         return
+
+    def test_get_list(self):
+        value = "3,4,5"
+        self.map._parser.get.return_value = value
+        output = self.map.get_list("DUT", "ids")
+        self.assertEqual(value.split(','), output)
+        return
+
+    def test_get_list_optional(self):
+        value = None
+        self.map._parser.get.return_value = value
+        output = self.map.get_list("DUT", "paths", optional=True)
+        self.assertEqual(value, output)

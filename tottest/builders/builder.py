@@ -42,7 +42,7 @@ from subbuilders.affectorbuilder import NaxxxAffectorBuilder
 from subbuilders.teardowniterationbuilder import TeardownIterationBuilder
 
 connection_builders = {ConnectionTypes.ssh:SshConnectionBuilder,
-                   ConnectionTypes.adblocal:AdbShellConnectionBuilder}
+                       ConnectionTypes.adblocal:AdbShellConnectionBuilder}
 
 class Builder(BaseClass):
     """
@@ -144,6 +144,8 @@ class Builder(BaseClass):
         """
         if self.dut_connection is None:
             self.dut_connection = connection_builders[parameters.connection_type](parameters).connection
+            if parameters.paths is not None:
+                self.dut_connection.add_paths(parameters.paths)
         return self.dut_connection
 
     def get_dut_connection_threads(self, parameters):
@@ -171,6 +173,8 @@ class Builder(BaseClass):
         if self.tpc_connection is None:
             self.tpc_builder = connection_builders[parameters.connection_type](parameters)
             self.tpc_connection = self.tpc_builder.connection
+            if parameters.paths is not None:
+                self.tpc_connection.add_paths(parameters.paths)
         return self.tpc_connection
             
     def get_storage(self, folder_name=None):
