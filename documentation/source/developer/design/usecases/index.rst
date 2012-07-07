@@ -23,6 +23,7 @@ Secondary-Level Use Cases
    Set Up Session <setup_testing>
    Run Iperf Test <run_iperf_test>
    Cleanup Session <cleanup_session>
+   Add Directories To the DUT's PATH  <path_additions>
 
 Tertiary-Level Use Cases
 ------------------------

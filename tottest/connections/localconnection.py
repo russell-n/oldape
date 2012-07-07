@@ -24,6 +24,7 @@ import shlex
 from collections import namedtuple
 import Queue
 import threading
+import os
 
 # Third-party Libraries
 try:
@@ -59,6 +60,7 @@ class LocalConnection(BaseClass):
         self._logger = None
         self.command_prefix = command_prefix
         self._queue = None
+        self.exc_info = None
         return
 
     @property
@@ -89,6 +91,8 @@ class LocalConnection(BaseClass):
         """
         thread = self.start(command, arguments)
         try:
+            if self.exc_info:
+                raise self.exc_info[1], None, self.exc_info[2]
             return self.queue.get(timeout=timeout)
         except Queue.Empty as error:
             self.logger.debug(error)
@@ -115,8 +119,10 @@ class LocalConnection(BaseClass):
 
             self.queue.put(OutputError(process.stdout, process.stderr))
         except OSError as error:
+            import sys
+            self.exc_info = sys.exc_info()
             self.logger.error(error)
-            raise ConnectionError(UNKNOWN + command)
+            #raise ConnectionError(UNKNOWN + command)
         return
 
     def start(self, command, arguments):
@@ -130,6 +136,29 @@ class LocalConnection(BaseClass):
         t.daemon = True
         t.start()
         return t
+
+    def add_paths(self, paths):
+        """
+        :param:
+
+         - `paths`: A list of directories to add to the path
+
+        :postcondition: The command_prefix adds the paths to the PATH
+        """
+        output, error = self._main("echo", "'$PATH'", timeout=1)
+        if self.exc_info:
+            raise ConnectionError, self.exc_info[1], self.exc_info[2]
+        default = output.readline().rstrip()
+        self.logger.debug("Starting Path: {0}".format(default))
+        default_list = default.split(":")
+        paths = ":".join([path for path in paths if path not in default_list])
+        self.logger.debug("Adding paths: {0}".format(paths))
+        if len(self.command_prefix):
+            self.command_prefix += " PATH={0}:{1};".format(paths, default)
+        else:
+            self.command_prefix = "PATH={0}:{1};".format(paths, default)
+        self.logger.debug("Command Prefix set to {0}".format(self.command_prefix))
+        return
     
     def __getattr__(self, command):
         """

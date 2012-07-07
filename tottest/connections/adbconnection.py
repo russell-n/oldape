@@ -139,7 +139,6 @@ class ADBShellConnection(ADBConnection):
             self.logger.debug(match.group(COMMAND_GROUP))
             raise ConnectionError("Unknown ADB Shell Command: {0}".format(match.group(COMMAND_GROUP)))
         return
-        
 # end class ADBShellConnection
 
 

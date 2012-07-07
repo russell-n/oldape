@@ -9,6 +9,7 @@ from tottest.commons import enumerations
 ConnectionTypes = enumerations.ConnectionTypes
 from tottest.lexicographers.sublexicographers import devicelexicographer
 DeviceLexicographer = devicelexicographer.DeviceLexicographer
+DeviceParameters = devicelexicographer.DeviceParameters
 
 from tottest.lexicographers import config_options
 ConfigOptions = config_options.ConfigOptions
@@ -21,6 +22,7 @@ class TestDeviceLexicographer(TestCase):
         self.control_ip = "localhost"
         self.login = "joeblow"
         self.password = "passwurt"
+        self.paths = "/opt/wifi,/mnt/sdcard"
         return
     
     def test_connection_type(self):
@@ -95,6 +97,16 @@ class TestDeviceLexicographer(TestCase):
         self.assertEqual(self.password, password)
         return
 
+    def test_paths(self):
+        expected = self.paths.split(",")
+        parser = MagicMock()
+        parser.get_list.return_value = expected
+        lexer = DeviceLexicographer(parser, self.section)
+        paths = lexer.paths
+        parser.get_list.assert_called_with(self.section, ConfigOptions.paths_option, optional=True)
+        self.assertEqual(expected, paths)
+        return
+    
     def test_device_parameters(self):
         """
         """
@@ -110,17 +122,21 @@ class TestDeviceLexicographer(TestCase):
                      (s, ConfigOptions.password_option): self.password}
         def side_effect_optional(*args):
             return optionals[args]
-        
+
+        paths = self.paths.split(",")
         parser = MagicMock()
         parser.get.side_effect=side_effect
         parser.get_optional.side_effect = side_effect_optional
+        parser.get_list.return_value = paths
         lexer = DeviceLexicographer(parser, self.section)
         dp = lexer.device_parameters
-        self.assertEqual(self.connection_type, dp.connection_type)
-        self.assertEqual(self.test_ip, dp.test_ip)
-        self.assertEqual(self.control_ip, dp.hostname)
-        self.assertEqual(self.login, dp.username)
-        self.assertEqual(self.password, dp.password)
-        self.assertEqual(self.section, dp.section)
-        
+        expected = DeviceParameters(connection_type=self.connection_type,
+                                    test_ip=self.test_ip,
+                                    hostname=self.control_ip,
+                                    username=self.login,
+                                    password=self.password,
+                                    section=self.section,
+                                    paths=paths)
+        self.assertEqual(expected, dp)
+        return
 # end class TestDeviceLexicographer

@@ -92,9 +92,14 @@ class SSHConnection(LocalConnection):
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
-        stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
+        try:
+            stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
+        except:
+            #self.logger.error(error)
+            import sys
+            self.exc_info = sys.exc_info()
+            return
         line = None
-
         output_queue = Queue.Queue()
         output = StandardOutput(queue=output_queue)
         self.queue.put(OutputError(output, stderr))
@@ -106,7 +111,7 @@ class SSHConnection(LocalConnection):
                 self.logger.debug("stdout.readline() timed out")
         output_queue.put(line)
         return
-    
+
     def __str__(self):
         return "{0} ({1}): {2}@{3} ".format(self.__class__.__name__, self.operating_system, self.username, self.hostname)
 # end class SSHConnection

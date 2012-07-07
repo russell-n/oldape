@@ -52,6 +52,7 @@ class DeviceLexicographer(BaseClass):
     def connection_type(self):
         """
         This is required to determine the correct builder
+        
         :rtype: StringType
         :return: the connection type
         """
