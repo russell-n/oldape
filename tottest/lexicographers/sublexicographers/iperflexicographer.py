@@ -110,11 +110,12 @@ class IperfLexicographer(BaseClass):
     @property
     def time(self):
         """
+        :rtype: String Type
         :return: The length of time to run traffic
         """
         if self._time is None:
-            self._time = self.parser.get_time(self.section,
-                                              ConfigOptions.time_option)
+            self._time = str(self.parser.get_time(self.section,
+                                              ConfigOptions.time_option))
 
         return self._time
 
