@@ -8,7 +8,7 @@ import argparse
 
 # testrunner Libraries
 from tottest.baseclass import BaseClass
-form tottest.lexicographers.constants import DEFAULTS
+from tottest.lexicographers.constants import DEFAULTS
 from strategerizer import Strategerizer
 
 ARGUMENTS = ('fetch', 'run', 'help', 'test')
