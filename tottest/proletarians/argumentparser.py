@@ -107,7 +107,7 @@ class ArgumentParser(BaseClass):
         tester = self.subparsers.add_parser('test', help='Test your setup.')
         tester.add_argument("glob", help="A file glob to match config files (e.g. *.ini - default='%(default)s').",
                             metavar="<config-file glob>",
-                            default="*.ini",
+                            default="throughputovertime.ini",
                             nargs="?")
 
         tester.set_defaults(function=self.strategerizer.test)
