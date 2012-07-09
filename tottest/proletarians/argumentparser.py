@@ -8,9 +8,11 @@ import argparse
 
 # testrunner Libraries
 from tottest.baseclass import BaseClass
+form tottest.lexicographers.constants import DEFAULTS
 from strategerizer import Strategerizer
 
 ARGUMENTS = ('fetch', 'run', 'help', 'test')
+
 
 class ArgumentParser(BaseClass):
     """
@@ -97,7 +99,7 @@ class ArgumentParser(BaseClass):
         runner = self.subparsers.add_parser("run", help="Run a Test")
         runner.add_argument("glob", help="A file glob to match config files (e.g. *.ini - default='%(default)s').",
                             metavar="<config-file glob>",
-                            default="*.ini",
+                            default=DEFAULTS[0],
                             nargs="?")
         runner.set_defaults(function=self.strategerizer.run)
 
@@ -107,7 +109,7 @@ class ArgumentParser(BaseClass):
         tester = self.subparsers.add_parser('test', help='Test your setup.')
         tester.add_argument("glob", help="A file glob to match config files (e.g. *.ini - default='%(default)s').",
                             metavar="<config-file glob>",
-                            default="throughputovertime.ini",
+                            default=DEFAULTS[0],
                             nargs="?")
 
         tester.set_defaults(function=self.strategerizer.test)
