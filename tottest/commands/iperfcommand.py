@@ -2,6 +2,8 @@
 A module to hold a generic iperf command.
 """
 import threading
+from time import time as now
+from sys import maxint
 
 from tottest.baseclass import BaseClass
 from tottest.commons import errors
@@ -9,6 +11,7 @@ from tottest.commons import readoutput
 
 
 ConfigurationError = errors.ConfigurationError
+CommandError = errors.CommandError
 
 class IperfError(ConfigurationError):
     """
@@ -92,16 +95,27 @@ class IperfCommand(BaseClass):
         """
         if parameters is None:
             parameters = self.parameters
+
+        max_time = maxint
+        if hasattr(parameters.iperf_parameters, "time"):
+            max_time = 1.25 * float(parameters.iperf_parameters.time.split()[-1])
+        
         filename = self.filename(parameters)
         file_output = self.output.open(filename=filename,
-                                       extension=".iperf")
+                                       extension=".iperf",
+                                       subdir="raw_iperf")
         output, error = self.connection.iperf(str(parameters))
+        start_time = now()
+        abort_time = start_time + max_time
+
         for line in readoutput.ValidatingOutput(output, self.validate):
             if "SUM" in line:
                 self.logger.info(line.rstrip())
             else:
                 self.logger.debug(line)
             file_output.write(line)
+            if now() > abort_time:
+                raise CommandError("Expected runtime: {0} Actual: {1} (aborting)".format(parameters.iperf_parameters.time, now() - start_time))
 
         err = error.readline()
         

@@ -135,7 +135,7 @@ class Builder(BaseClass):
         if self.device is None:
             self.device = AdbDeviceBuilder().device
         return self.device
-
+    
     def get_dut_connection(self, parameters):
         """
         This returns the same connection repeatedly

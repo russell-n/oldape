@@ -13,7 +13,8 @@ class LogwatchersBuilder(BaseClass):
     """
     Logwatchers Builder builds a master logwatcher
     """
-    def __init__(self, paths, buffers, connection, output, lock=None):
+    def __init__(self, paths, buffers, connection, output, lock=None,
+                 extension=".log", subdir="logs"):
         """
         :param:
 
@@ -28,6 +29,8 @@ class LogwatchersBuilder(BaseClass):
         self.buffers = buffers
         self.connection = connection
         self.output = output
+        self.extension = extension
+        self.subdir = subdir
         self._watchers = None
         self._watcher = None
         self._lock = None
@@ -57,7 +60,8 @@ class LogwatchersBuilder(BaseClass):
                     name = path.strip("/")
                     name = name.replace("/", "_")
                     watchers.append(Watcher(lock=self.lock,
-                                            output=self.output.open(name, extension='.log'),
+                                            output=self.output.open(name, extension=self.extension,
+                                                                    subdir=self.subdir),
                                             connection=self.connection,
                                             path=path))
 
@@ -68,7 +72,8 @@ class LogwatchersBuilder(BaseClass):
                     logs = self.buffers
                 watchers.append(ADBWatcher(logs=logs,
                                            lock=self.lock,
-                                           output=self.output.open("logcatwatcher", extension=".log"),
+                                           output=self.output.open("logcatwatcher", extension=self.extension,
+                                                                   subdir=self.subdir),
                                            connection=self.connection))
             if len(watchers):
                 self._watchers = watchers

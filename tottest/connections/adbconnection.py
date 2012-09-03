@@ -119,6 +119,7 @@ class ADBShellConnection(ADBConnection):
         super(ADBShellConnection, self).__init__(*args, **kwargs)
         self.command_prefix += " shell"
         self._unknown_command = None
+        self._logger = None
         return
 
     @property
@@ -141,6 +142,13 @@ class ADBShellConnection(ADBConnection):
         return
 # end class ADBShellConnection
 
+class ADBShellBlockingConnection(ADBShellConnection):
+    def __init__(self, *args, **kwargs):
+        super(ADBShellBlockingConnection, self).__init__(*args, **kwargs)
+        self.command_prefix = "adb wait-for-device shell"
+        self._unknown_command = None
+        return
+        return
 
 if __name__ == "__main__":
     from tottest.main import watcher
