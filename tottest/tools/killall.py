@@ -112,8 +112,10 @@ class KillAll(BaseClass):
             match = self.expression.search(line)
             if match and match.group(expressions.PROCESS_NAME) == name:
                 self.logger.debug("matched: " + line)
-                self.logger.debug("killing: " + match.group(expressions.PID_NAME))                
-                self.connection.kill(match.group(expressions.PID_NAME))
+                self.logger.debug("killing: " + match.group(expressions.PID_NAME))
+                command = " -9 " + match.group(expressions.PID_NAME)
+                self.logger.debug("kill " + command)
+                self.connection.kill(command)
         err = error.read()
         if len(err):
             self.logger.error(err)

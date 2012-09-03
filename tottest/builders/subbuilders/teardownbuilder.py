@@ -12,7 +12,7 @@ class TearDownBuilder(BaseClass):
     """
     A basic tear-down builder that just copies log and config files.
     """
-    def __init__(self, configfilename, storage):
+    def __init__(self, configfilename, storage, subdir="logs"):
         """
         :param:
 
@@ -22,6 +22,7 @@ class TearDownBuilder(BaseClass):
         super(TearDownBuilder, self).__init__()
         self.configfilename = configfilename
         self.storage = storage
+        self.subdir = subdir
         self._configcopier = None
         self._logcopier = None
         self._teardown = None
@@ -34,7 +35,8 @@ class TearDownBuilder(BaseClass):
         """
         if self._configcopier is None:
             self._configcopier = copyfiles.CopyFiles((self.configfilename,),
-                                                     self.storage)
+                                                     self.storage,
+                                                     self.subdir)
 
         return self._configcopier
 
@@ -45,7 +47,8 @@ class TearDownBuilder(BaseClass):
         """
         if self._logcopier is None:
             self._logcopier = copyfiles.CopyFiles((LOGNAME,),
-                                                  self.storage)
+                                                  self.storage,
+                                                  self.subdir)
         return self._logcopier
     
     @property

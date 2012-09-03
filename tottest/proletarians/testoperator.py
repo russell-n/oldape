@@ -9,6 +9,9 @@ from tottest.baseclass import BaseClass
 from tottest.tools import sleep
 from tottest.commons import errors
 
+# another last minute hack for amazon
+from tottest.connections.adbconnection import ADBConnection, ADBShellBlockingConnection
+
 TIME_REMAINING = "Estimated time Remaining: {t}"
 
 OperatorStaticTestParameters = namedtuple("OperatorStaticTestParameters",
@@ -50,7 +53,21 @@ class TestOperator(BaseClass):
         self.cleanup = cleanup
         self.countdown_timer = countdown_timer
         self._sleep = sleep
+        self._adb_connection = None
+        self._adb_blocking_shell = None
         return
+
+    @property
+    def adb_connection(self):
+        if self._adb_connection is None:
+            self._adb_connection = ADBConnection()
+        return self._adb_connection
+
+    @property
+    def adb_blocking_shell(self):
+        if self._adb_blocking_shell is None:
+            self._adb_blocking_shell = ADBShellBlockingConnection()
+        return self._adb_blocking_shell
 
     @property
     def sleep(self):
@@ -67,6 +84,15 @@ class TestOperator(BaseClass):
         """
         self.logger.info(message)
         self.device.log(message)
+        return
+
+    def reboot(self):
+        self.adb_connection.reboot()
+        output, error = self.adb_blocking_shell.bugreport()
+        for line in output:
+            self.logger.info(line)
+        for line in error:
+            self.logger.error(line)
         return
 
     def one_repetition(self, parameter):
@@ -102,7 +128,12 @@ class TestOperator(BaseClass):
         
         try:
             for parameter in self.test_parameters:
-                self.one_repetition(parameter)
+                try:
+                    self.one_repetition(parameter)
+                except (errors.AffectorError, errors.CommandError) as error:
+                    self.logger.error(error)
+                    self.logger.error("Quitting this iteration")
+                    
             self.log_message(TEST_POSTAMBLE.format(t=self.countdown_timer.total_time))
             self.logger.info("Sleeping to let the logs finish recording the test-information")
             self.sleep.run()

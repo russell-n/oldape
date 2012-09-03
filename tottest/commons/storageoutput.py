@@ -57,19 +57,25 @@ class StorageOutput(BaseClass):
             self._path = self.output_folder
         return self._path
 
-    def open(self, filename, extension='.csv'):
+    def open(self, filename, extension='.csv', subdir=None):
         """
         :param:
 
-         - `filename`: The name of the file to open (minux extension)
+         - `filename`: The name of the file to open (minus extension)
          - `extension`: The extension to use.
+         - `subdir`: A subdirectory whithin the output folder to put the file in.
          
         :return: A clone of this object with a new file opened.
         """
+        directory = self.path
+        if subdir is not None:
+            directory = os.path.join(self.path, subdir)
+            if not os.path.isdir(directory):
+                os.makedirs(directory)
         filename = self._timestamp(filename)
         filename = self._fix_duplicate_names(filename, extension)
         filename += extension
-        self.filename = os.path.join(self.path, filename)
+        self.filename = os.path.join(directory, filename)
         #self.logger.debug("Opening File: {0}".format(self.filename))
         clone = copy.deepcopy(self)
         clone.output_file = open(self.filename, WRITEABLE)
@@ -137,31 +143,43 @@ class StorageOutput(BaseClass):
             self.write(line)
         return
 
-    def copy(self, source):
+    def copy(self, source, subdir=None):
         """
         :param:
 
          - `source`: The path to a file.
+         - `subdir`: subfolder in the output folder
 
         :postcondition: file in path is copied to output folder.
         """
+        directory = self.path
+        if subdir is not None:
+            directory = os.path.join(self.path, subdir)
+            if not os.path.isdir(directory):
+                os.makedirs(directory)
         filename = os.path.basename(source)
         root, ext = os.path.splitext(filename)
         filename = self._fix_duplicate_names(root, ext) + ext
-        target = os.path.join(self.path, filename)
+        target = os.path.join(directory, filename)
         shutil.copy(source, target)
         return
 
-    def move(self, source):
+    def move(self, source, subdir=None):
         """
         :param:
 
          - `source`: The path to a file or directory to move to the output folder.
+         - `subdir`: a subdirectory to make within the output folder.
         """
+        directory = self.path
+        if subdir is not None:
+            directory = os.path.join(self.path, subdir)
+            if not os.path.isdir(directory):
+                os.path.makedirs(directory)
         filename = os.path.basename(source)
         root, ext = os.path.splitext(filename)
         filename = self._fix_duplicate_names(root, ext) + ext
-        target = os.path.join(self.path, filename)
+        target = os.path.join(directory, filename)
         shutil.move(source, target)
         return
 
