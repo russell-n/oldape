@@ -1,4 +1,4 @@
-from timetorecovertest.info.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
+from tottest.info.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
 
 name = NAME_TEMPLATE.format(name="ttr fetch",
                             description="(fetch needed files)").center(80)

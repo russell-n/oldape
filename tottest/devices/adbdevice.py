@@ -1,89 +1,89 @@
 """
-An ADB Device
+An ADB device
 """
 
 from basedevice import BaseDevice
-from tottest.connections import adbconnection
+from tottest.connections.adbconnection import ADBShellConnection
+from tottest.commands.svc import Svc
 
 class AdbDevice(BaseDevice):
-    def __init__(self, connection=None, wifi_tool=None, interface=None, *args, **kwargs):
+    """
+    A class to bundle commands to control an adb device
+    """
+    def __init__(self, *args, **kwargs):
         """
         :param:
 
-         - `connection`: An adb device connection
-         - `wifi_command`: The wifi command to get 
+         - `connection`: An device connection
         """
-        self._connection = connection
-        self._logger = None
-        self._wifi_tool = wifi_tool
-        self._interface = interface
+        super(AdbDevice, self).__init__(*args, **kwargs)
+        self._wifi_control = None
         return
+
+    @property
+    def wifi_control(self):
+        """
+        """
+        if self._wifi_control is None:
+            self._wifi_control = Svc(connection=self.connection)
+        return self._wifi_control
 
     @property
     def connection(self):
         """
-        :return: A connection to the device. 
+        :return: connection passed in or ADBShellConnection if not given
         """
         if self._connection is None:
-            self._connection = adbconnection.ADBShellConnection()
+            self._connection = ADBShellConnection()
         return self._connection
-
-    @property
-    def wifi_tool(self):
-        """
-        """
-        return 
-
 
     def wake_screen(self):
         """
-        Acquire the wake lock.
+        Wake the screen
         """
-        raise NotImplementedError("AdbDevice.wake_screen not implemented")
+        raise NotImplementedError("Wake Screen not ready yet")
         return
 
-    
     def display(self, message):
         """
-        Display an image on the screen
+        Display a message on the screen
         """
-        raise NotImplementedError("AdbDevice.display not implemented")
+        raise NotImplementedError("Display <message> not done yet")
         return
 
-    
     def disable_wifi(self):
         """
-        Disable the WiFi Radio
+        :postcondition: WiFi radio disabled
         """
-        raise NotImplementedError("AdbDevice.disable_wifi not implemented (yet)")
+        self.wifi_control.disable_wifi()
         return
 
-    
     def enable_wifi(self):
         """
-        Enable the WiFi radio.
+        :postcondition: WiFi radio enabled
         """
-        raise NotImplementedError("AdbDevice.enable_wifi not implemented (yet).")
+        self.wifi_control.enable_wifi()
         return
-    
-    
+
     def get_wifi_info(self):
         """
         :rtype: StringType
         :return: The Wifi Info
         """
-        raise NotImplementedError("AdbDevice.get_wifi_info not implemented (yet).")
+        raise NotImplementedError("Get WiFi Info not done yet")
         return
-    
-    
+
     def log(self, message):
         """
-        Send a message to the device's log.
-
-        :param:
-
-         - `message`: A string to send to the device log.
+        :postcondition: message sent to the connection
         """
         self.connection.log(message)
+        return
+
+    def root(self):
+        """
+        :postcondition: `su` sent to the device
+        """
+        self.connection.su(timeout=1)
         return
 # end class AdbDevice

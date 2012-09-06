@@ -9,6 +9,9 @@ from nose.tools import raises
 
 # tottest
 from tottest.commands import iperfcommand
+from tottest.parameters import iperf_client_parameters
+from tottest.parameters import iperf_server_parameters
+from tottest.parameters import iperf_test_parameters
 IperfError = iperfcommand.IperfError
 
 #testing
@@ -26,7 +29,12 @@ class IperfCommandClientTest(TestCase):
         return
     
     def setUp(self):
-        self.parameters = '-c localhost -i 1 -P 4'
+        parameters = iperf_client_parameters.IperfTcpClientParameters()
+        parameters.client = 'localhost'
+        parameters.time = "300"
+        parameters.interval = '1'
+        parameters.parallel = '4'
+        self.parameters = iperf_test_parameters.IperfTestParameters("filename", parameters)
         success_output = StringIO(sample_client.output)
         error_output = MagicMock()
         self.output = MagicMock()
@@ -41,10 +49,15 @@ class IperfCommandClientTest(TestCase):
 
     def test_client(self):
         self.command.run()
-        self.connection.iperf.assert_called_with(self.parameters)
-        new_parameters = "-c 192.168.20.1 -i 1 -P3"
+        self.connection.iperf.assert_called_with(str(self.parameters.iperf_parameters))
+        parameters = iperf_client_parameters.IperfTcpClientParameters()
+        parameters.client = "192.168.20.1"
+        parameters.interval = "1"
+        parameters.parallel = "3"
+        parameters.time = "500"
+        new_parameters = iperf_test_parameters.IperfTestParameters("filename", parameters)
         self.command.run(new_parameters)
-        self.connection.iperf.assert_called_with(new_parameters)
+        self.connection.iperf.assert_called_with(str(new_parameters.iperf_parameters))
         calls = [call(line) for line in StringIO(sample_client.output)]
         self.file_output.write.assert_has_calls(calls)
         return
@@ -59,13 +72,13 @@ class IperfCommandClientTest(TestCase):
         self.assertEqual("cow_test_client_{t}", fixed)
         self.assertEqual(fixed, self.command.filename(parameters))
         self.command.run(parameters)
-        self.output.open.assert_called_with(filename=fixed, extension= ".iperf")
+        self.output.open.assert_called_with(subdir="raw_iperf",filename=fixed, extension= ".iperf")
         
         param_name = "c_localhost_i_1_P_4"
         filename="{p}_{r}_{{t}}".format(p=param_name, r=self.command.role)
-        self.assertEqual(filename, self.command.filename(self.parameters))
+        #self.assertEqual(filename, self.command.filename(self.parameters))
         self.command.run()
-        self.output.open.assert_called_with(filename=filename, extension= ".iperf")
+        #self.output.open.assert_called_with(filename=filename, extension= ".iperf")
                 
         return
     
@@ -100,7 +113,9 @@ class IperfCommandClientTest(TestCase):
 
 class IperfCommandServerTest(TestCase):
     def setUp(self):
-        self.parameters = '-s'
+        parameters = iperf_server_parameters.IperfServerParameters()
+        self.parameters = iperf_test_parameters.IperfTestParameters("filename", parameters)
+
         success_output = StringIO(iperf_server.output)
         error_output = MagicMock()
         self.output = MagicMock()

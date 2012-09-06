@@ -3,12 +3,11 @@ A module to hold the CrashHandler
 """
 # python
 import traceback
+from StringIO import StringIO
 
-# tot
+# ttr
 from tottest.baseclass import BaseClass
 from tottest.commons import storageoutput
-from tottest.log_setter import LOGNAME
-
 
 class CrashHandler(BaseClass):
     """
@@ -32,19 +31,24 @@ class CrashHandler(BaseClass):
 
          - `error`: The error returned by the exception
         """
-        self.logger.error("The program has crashed with an unexpected exception.")
+        self.logger.error("The program has crashed. I weep for you.")
         self.logger.error(error)
-        output = storageoutput.StorageOutput("CrashReports")
-        #with open("crashreport.log", 'w') as f:
-        #    traceback.print_exc(file=f)
-        f = output.open("crash_report_{t}", '.log')
-        traceback.print_exc(file=f)
+        output = storageoutput.StorageOutput("crash_reports")
+        f = output.open("crashreport.log")
+        temp = StringIO()
         separator = "*" * 20
         message = " Crash Report "
-        print separator + message + separator
-        traceback.print_exc()
-        print separator + separator + "*" * len(message)
+        header =  separator + message + separator
+        footer = separator + separator + "*" * len(message)
+        f.write(header + "\n")
+        
+        traceback.print_exc(file=temp)
+        for line in temp:
+            f.write(line)
+        f.write(footer + "\n")
 
-        f.copy(LOGNAME)
+        print header
+        traceback.print_exc()
+        print footer
         return
 # end CrashHandler

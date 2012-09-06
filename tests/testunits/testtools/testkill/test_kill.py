@@ -73,7 +73,7 @@ class KillAllLinuxTest(TestCase):
         killer = killall.KillAll(connection, self.process, enumerations.OperatingSystem.linux)
         killer.run(time_to_sleep=0)
         self.assertEqual(enumerations.OperatingSystem.linux, killer.operating_system)
-        expected_args = [mock.call(self.pid_1), mock.call(self.pid_2)]
+        expected_args = [mock.call(" -9 " + self.pid_1), mock.call(" -9 " + self.pid_2)]
         actual_args = connection.kill.call_args_list
         self.assertEqual(expected_args, actual_args)
         connection.ps.assert_called_with(self.arguments)
@@ -109,7 +109,7 @@ class KillAllAndroidTest(TestCase):
         connection.kill = MagicMock()
         killer = killall.KillAll(connection, self.process, enumerations.OperatingSystem.android)
         killer.run(time_to_sleep=0)
-        expected_args = [mock.call(self.pid_1), mock.call(self.pid_2)]
+        expected_args = [mock.call(" -9 " + self.pid_1), mock.call(" -9 " + self.pid_2)]
         actual_args = connection.kill.call_args_list
         self.assertEqual(expected_args, actual_args)
         connection.ps.assert_called_with(self.arguments)

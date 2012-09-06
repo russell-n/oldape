@@ -1,6 +1,6 @@
-from timetorecovertest.info.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
+from tottest.info.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
 
-name = NAME_TEMPLATE.format(name="timetorecovertest",
+name = NAME_TEMPLATE.format(name="tottest",
                             description="(nee' RFKill)").center(80)
 
 synopsis = """
@@ -8,7 +8,7 @@ The {bold}time-to-recover-test{reset} ({blue}ttr{reset}) characterizes the time 
 """.format(bold=BOLD, reset=RESET, blue=BLUE)
 
 description = """
-Although the {bold}timetorecovertest{reset} is a python library, it is intended to be used as a command-line tool ({blue}ttr{reset}). There are four main sub-commands:
+Although the {bold}tottest{reset} is a python library, it is intended to be used as a command-line tool ({blue}ttr{reset}). There are four main sub-commands:
 
     1. help (which is how you got here)
     2. fetch (which gathers userful files)
