@@ -11,6 +11,7 @@ from crashhandler import CrashHandler
 from tottest.lexicographers.configfetcher import ConfigFetcher
 from tottest.informants.helper import Helper
 from tottest.baseclass import BaseClass
+from tottest.tools import testdumpsyswifi
 
 # commons
 from tottest.commons import errors
@@ -69,9 +70,13 @@ class Strategerizer(BaseClass):
         Tests the setup
         """
         try:
-            self.logger.debug("Running the Setup")
+            self.logger.info("Testing the Setup")
             setup = SetUp(args)
             for parameters in setup.lexicographer.parameters:
+                # test the adb info
+                test = testdumpsyswifi.TestDumpsysWifi(parameters)
+                test()
+
                 #test the network
                 target = parameters.target
                 self.logger.info("Pinging " + target)

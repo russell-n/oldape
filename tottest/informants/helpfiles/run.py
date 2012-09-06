@@ -1,4 +1,4 @@
-from timetorecovertest.info.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
+from tottest.info.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
 
 name = NAME_TEMPLATE.format(name="ttr run",
                             description="(run the test)").center(80)
