@@ -8,6 +8,7 @@ from tottest.commons import errors
 
 # Android hack for sucky tates
 from tottest.commands import svc
+from tottest.commands import dumpsyswifi
 from sleep import Sleep
 
 ConfigurationError = errors.ConfigurationError
@@ -32,8 +33,15 @@ class SetupIteration(BaseClass):
         self._sleep = None
         self._enable_wifi = None
         self._disable_wifi = None
+        self._dumpsys = None
         return
 
+    @property
+    def dumpsys(self):
+        if self._dumpsys is None:
+            self._dumpsys = dumpsyswifi.DumpsysWifi()
+        return self._dumpsys
+        
     @property
     def enable_wifi(self):
         """
@@ -87,8 +95,7 @@ class SetupIteration(BaseClass):
 
         self.sleep.run(5)
         self.logger.warning("Another tate hack")
-        o,e = self.device.wl("rssi")
-        self.log("Rssi: {0} -dbm".format("".join([line.rstrip() for line in o])))
+        self.log("Signal Strength: {0}".format(self.dumpsys.rssi))
         return
 
     def log(self, message):
