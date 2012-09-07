@@ -205,7 +205,7 @@ class PopenFile(BaseClass):
         if timeout is not None:
             max_time = now() + timeout
             
-        while all(line != EOF, self.process.poll() is None,  now() < max_time):
+        while all((line != EOF, self.process.poll() is None,  now() < max_time)):
             try:
                 line = self.queue.get(block=False)
             except Queue.Empty:
