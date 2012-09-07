@@ -13,10 +13,4 @@ tottest.proletarians.errors
 
    
    
-   .. rubric:: Exceptions
-
-   .. autosummary::
-   
-      OperatorError
-   
    

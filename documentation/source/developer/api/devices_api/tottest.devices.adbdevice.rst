@@ -9,13 +9,6 @@ tottest.devices.adbdevice
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      AdbDevice
-      BaseDevice
-   
    
 
    

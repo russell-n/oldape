@@ -9,14 +9,6 @@ tottest.proletarians.setup
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      BaseClass
-      Lexicographer
-      SetUp
-   
    
 
    

@@ -77,11 +77,15 @@ The **Commands** bundle specific commands with device connections. It is their r
    :toctree: commands_api
 
    changeprompt
+   dumpsyswifi
    ifconfig
+   iperfbroadcast
    iperfcommand
    iwcommand
    netcfg
    ping
+   svc
+   wmic
    wpacli
 
 Commons
@@ -95,12 +99,18 @@ The **Commons** is a place to put things that the different sub-modules need to 
    :toctree: commons_api
 
    assertions
+   broadcaster
+   centraltendency
+   datacounter
    dummy
    enumerations
    errors
    expressions
+   filterer
    generators
    readoutput
+   reporter
+   storagebroadcaster
    storageoutput
 
    
@@ -116,14 +126,19 @@ The **Connections** provide connectivity to devices. It is their responsibility 
 
    adbconnection
    localconnection
+   producer
+   puppetconnection
    serialconnection
    sl4aconnection   
    sshconnection
    telnetconnection
+   threadedconnection
 
+   sharedcounter
    lineproducer
-
+   
 * The `lineproducer` is a utility used to break up lines for connections that only have access to streams (as opposed to file-like objects). 
+* `sharedcounter` was created to prevent the subprocess files from prematurely killing the process on deletion (it acts like a non-blocking semaphore)
 
 Adapters
 ~~~~~~~~
@@ -270,6 +285,7 @@ The **Tools** are bundled commands that the operator uses. By ordering the set o
    setupiteration
    sleep
    teardowniteration
+   testdumpsyswifi
    timetofailure
    timetorecovery
    timetorecoverytest

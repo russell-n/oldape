@@ -9,13 +9,6 @@ tottest.proletarians.crashhandler
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      BaseClass
-      CrashHandler
-   
    
 
    

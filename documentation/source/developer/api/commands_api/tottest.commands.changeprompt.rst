@@ -9,14 +9,6 @@ tottest.commands.changeprompt
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      BaseClass
-      ChangePrompt
-      repeat
-   
    
 
    
