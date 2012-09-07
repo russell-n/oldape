@@ -9,14 +9,6 @@ tottest.informants.helper
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      BaseClass
-      Helper
-      Popen
-   
    
 
    

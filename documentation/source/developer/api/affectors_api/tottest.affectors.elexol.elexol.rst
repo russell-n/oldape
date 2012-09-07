@@ -9,12 +9,6 @@ tottest.affectors.elexol.elexol
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      elexol24
-   
    
 
    

@@ -9,21 +9,8 @@ tottest.commands.wpacli
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      BaseClass
-      WpaCliCommand
-   
    
 
    
-   
-   .. rubric:: Exceptions
-
-   .. autosummary::
-   
-      CommandError
    
    

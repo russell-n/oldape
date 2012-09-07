@@ -18,13 +18,14 @@ prints the output of the `ls -l` command line command
 from collections import namedtuple
 import Queue
 import socket
+from StringIO import StringIO
 
 # tottest Libraries
 from tottest.commons.readoutput import StandardOutput
 from tottest.commons import enumerations
 
 # connections
-from localconnection import LocalConnection
+from threadedconnection import ThreadedConnection
 from sshadapter import SimpleClient
 
 SPACER = '{0} {1} '
@@ -34,7 +35,7 @@ EOF = ''
 OutputError = namedtuple("OutputError", 'output error')
 
 
-class SSHConnection(LocalConnection):
+class SSHConnection(ThreadedConnection):
     """
     An SSHConnection executes commands over an SSHConnection
 
@@ -111,40 +112,46 @@ class SSHConnection(LocalConnection):
                 self.logger.debug("stdout.readline() timed out")
         output_queue.put(line)
         return
-
+    
     def __str__(self):
         return "{0} ({1}): {2}@{3} ".format(self.__class__.__name__, self.operating_system, self.username, self.hostname)
 # end class SSHConnection
     
+#if __name__ == "__main__":
+#    arguments = "-l"
+#    sc = SSHConnection("192.168.10.61", "root", 'root')
+#
+#    print "Testing 'ls -l'"
+#    output = sc.ls(arguments='-l')
+#    print output.output.read()
+#
+#    print "Testing ping"
+#    output = sc.ping(arguments="-c 10 192.168.10.1", timeout=1)
+#    for x in output.output:
+#        print x
+#
+#    print "Reading the error"
+#    # the error blocks until both standard out and standard error are finished
+#    # so if you check the error first, you will probably get a socket timeout unless
+#    # it goes straight to standard error (see the iperf -v example below)
+#
+#    print output.error.read()
+#    print "Testing iperf"
+#    sc.bash("PATH=$PATH:/opt/wifi")
+#    output = sc.iperf(' -i 1 -c 192.168.10.51')
+#    for line in output.output:
+#        print line
+#    print "Checking the error"
+#    print "Error: " + output.error.read()
+#
+#    print "Checking iperf version"
+#    output = sc.iperf('-v')
+#
+#    print output.output.read()
+#    print output.error.read()    
+
 if __name__ == "__main__":
-    arguments = "-l"
-    sc = SSHConnection("192.168.10.61", "root", 'root')
-
-    print "Testing 'ls -l'"
-    output = sc.ls(arguments='-l')
-    print output.output.read()
-
-    print "Testing ping"
-    output = sc.ping(arguments="-c 10 192.168.10.1", timeout=1)
-    for x in output.output:
-        print x
-
-    print "Reading the error"
-    # the error blocks until both standard out and standard error are finished
-    # so if you check the error first, you will probably get a socket timeout unless
-    # it goes straight to standard error (see the iperf -v example below)
-
-    print output.error.read()
-    print "Testing iperf"
-    sc.bash("PATH=$PATH:/opt/wifi")
-    output = sc.iperf(' -i 1 -c 192.168.10.51')
-    for line in output.output:
-        print line
-    print "Checking the error"
-    print "Error: " + output.error.read()
-
-    print "Checking iperf version"
-    output = sc.iperf('-v')
-
-    print output.output.read()
-    print output.error.read()    
+    c = SSHConnection('igor', 'developer')
+    o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless Network Connection\'" call enable')
+    for index, line in enumerate(o.output):
+        print index, line

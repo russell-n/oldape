@@ -9,13 +9,6 @@ tottest.builders.subbuilders.affectorbuilder
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      BaseClass
-      NaxxxAffectorBuilder
-   
    
 
    

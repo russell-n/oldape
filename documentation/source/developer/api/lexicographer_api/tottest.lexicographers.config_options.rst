@@ -9,12 +9,6 @@ tottest.lexicographers.config_options
 
    
    
-   .. rubric:: Classes
-
-   .. autosummary::
-   
-      ConfigOptions
-   
    
 
    
