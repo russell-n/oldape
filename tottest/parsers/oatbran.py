@@ -19,6 +19,11 @@ def CLASS(e):
 def NOT(e):
     return "[^{e}]+".format(e=e)
 
+def NOT_FOLLOWED_BY(e):
+    return "(?!{e})".format(e=e)
+
+def NOT_PRECEDED_BY(e):
+    return "(?<!{e})".format(e=e)
 
 # cardinality
 ONE_OR_MORE = "+"
@@ -56,6 +61,20 @@ OR = "|"
 def WORD_BOUNDARY(e):
     return r"\b{e}\b".format(e=e)
 
+def STRING_BOUNDARY(e):
+    """
+    :return: expr that matches an entire line
+    """
+    return r"^{e}$".format(e=e)
+
+# string help
+STRING_START = "^"
+STRING_END = "$"
+ALPHA_NUMS = r"\w"
+
+#anything and everything
+ANYTHING = r"."
+EVERYTHING = ANYTHING + ZERO_OR_MORE
 
 # numbers
 DIGIT = r"\d"
@@ -64,19 +83,24 @@ NON_ZERO = CLASS("1-9")
 SINGLE_DIGIT = WORD_BOUNDARY(DIGIT)
 TWO_DIGITS = WORD_BOUNDARY(NON_ZERO + DIGIT)
 ONE_HUNDREDS = WORD_BOUNDARY("1" + DIGIT + DIGIT)
-INTEGER = DIGIT + ONE_OR_MORE
+NATURAL = DIGIT + ONE_OR_MORE
 
-FLOAT = INTEGER + DECIMAL_POINT + INTEGER
+INTEGER = NOT_PRECEDED_BY(DECIMAL_POINT) +  "-" + ZERO_OR_ONE + NATURAL + NOT_FOLLOWED_BY(DECIMAL_POINT)
+
+FLOAT = "-" + ZERO_OR_ONE + NATURAL + DECIMAL_POINT + NATURAL
 REAL = GROUP(FLOAT + OR + INTEGER)
 
 SPACE = r"\s"
 SPACES = SPACE + ONE_OR_MORE
 OPTIONAL_SPACES = SPACE + ZERO_OR_MORE
 
+ANYTHING_BOUNDED_BY_SPACES = WORD_BOUNDARY(EVERYTHING)
 # common constants
 DASH = "-"
+COLON = ":"
 LETTER = CLASS(e=string.ascii_letters)
 LETTERS = LETTER + ONE_OR_MORE
+OPTIONAL_LETTERS = LETTER + ZERO_OR_MORE
 
 # SPECIAL CASES
 # NETWORKING
@@ -85,3 +109,5 @@ OCTET = GROUP(e=OR.join([SINGLE_DIGIT, TWO_DIGITS, ONE_HUNDREDS,
                          WORD_BOUNDARY("2[0-4][0-9]"), WORD_BOUNDARY("25[0-5]")]))
 
 IP_ADDRESS = DOT.join([OCTET] * 4)
+HEX_PAIR = CLASS(e=string.hexdigits) * 2
+MAC_ADDRESS = COLON.join([HEX_PAIR] * 6)

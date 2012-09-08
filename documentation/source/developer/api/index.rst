@@ -229,6 +229,20 @@ Parameters
 
 Since the parameters define the behavior of commands, choosing them declares their behavior, much as the choice and ordering of the tools defines the behavior of the Test Operator. 
 
+Parsers
+-------
+
+.. currentmodule:: tottest.parsers
+
+.. autosummary::
+   :toctree: parsers_api
+
+   iperfexpressions
+   iperfparser
+   oatbran
+   sumparser
+   unitconverter
+
 Proletarians
 ------------
 
