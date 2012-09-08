@@ -253,7 +253,7 @@ class DumpsysWifi(BaseClass):
          - `expression`: compiled expression to match field
         :return: the matching field in the output
         """
-        for line in self.connection.dumpsys(self.service):
+        for line in self.connection.dumpsys(self.service).output:
             self.logger.debug(line)
             match = expression.search(line)
             if match:
