@@ -19,12 +19,9 @@ In most cases it's better to use the LocalNixConnection instead which uses Pexpe
 """
 
 #python Libraries
-from subprocess import PIPE, Popen
 from StringIO import StringIO
-import shlex
 from collections import namedtuple
 import Queue
-import threading
 
 # Third-party Libraries
 try:
@@ -103,7 +100,7 @@ class LocalConnection(BaseClass):
             self.logger.error(error)
             raise ConnectionError("Unable to execute '{0}'".format(SPACE.join((command, arguments))))
     
-    def __getattr__(self):
+    def __getattr__(self, command):
         """
         :param:
 
@@ -112,7 +109,7 @@ class LocalConnection(BaseClass):
         :return: The _procedure_call method
         """
         def procedure_call(*args, **kwargs):
-            return self._procedure_call(*args, **kwargs)
+            return self._procedure_call(command, *args, **kwargs)
         return procedure_call
 
 # end class LocalConnection

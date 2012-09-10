@@ -122,8 +122,14 @@ class KillAll(BaseClass):
         self.sleep(time_to_sleep)
         output, error = self.connection.ps(self.arguments)
         for process in output:
+            if name in line:
+                self.logger.debug(line)
+
             match = self.expression.search(process)
             if match and match.group(expressions.PROCESS_NAME) == name:
+                err = error.read()
+                if len(err):
+                    self.logger.error(err)
                 raise KillAllError("Unable to kill {0}".format(name))
         err = error.read()
         if len(err):
