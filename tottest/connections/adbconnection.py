@@ -13,6 +13,7 @@ from localconnection import EOF
 from tottest.commons import errors 
 from tottest.commons import readoutput 
 from tottest.commons import enumerations
+from tottest.tools import killall
 
 ConnectionError = errors.ConnectionError
 ConnectionWarning = errors.ConnectionWarning
@@ -140,6 +141,17 @@ class ADBShellConnection(ADBConnection):
             self.logger.debug(match.group(COMMAND_GROUP))
             raise ConnectionError("Unknown ADB Shell Command: {0}".format(match.group(COMMAND_GROUP)))
         return
+
+    #def __del__(self):
+    #    """
+    #    :postcondition: kill called on all adb shell processes
+    #    """
+    #    kill = killall.KillAll(self, name=self.command_prefix,
+    #                             operating_system=enumerations.OperatingSystem.android)
+    #    kill()
+    #    return
+        
+        
 # end class ADBShellConnection
 
 class ADBShellBlockingConnection(ADBShellConnection):

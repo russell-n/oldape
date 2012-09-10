@@ -115,7 +115,11 @@ class KillAll(BaseClass):
                 self.logger.debug("killing: " + match.group(expressions.PID_NAME))
                 command = " -9 " + match.group(expressions.PID_NAME)
                 self.logger.debug("kill " + command)
-                self.connection.kill(command)
+                k_output, k_error = self.connection.kill(command)
+                for k_line in k_output:
+                    self.logger.debug(k_line)
+                for k_line in k_error:
+                    self.logger.error(k_line)
         err = error.read()
         if len(err):
             self.logger.error(err)
@@ -123,7 +127,7 @@ class KillAll(BaseClass):
         output, error = self.connection.ps(self.arguments)
         for process in output:
             if name in line:
-                self.logger.debug(line)
+                self.logger.error(line)
 
             match = self.expression.search(process)
             if match and match.group(expressions.PROCESS_NAME) == name:
@@ -136,6 +140,10 @@ class KillAll(BaseClass):
             self.logger.error(err)
         return
 
+    def __call__(self, name=None, time_to_sleep=None):
+        self.run(name, time_to_sleep)
+    
+    
     def __str__(self):
         return "{0} ({2}):{1}".format(self.__class__.__name__, self.name, self.connection)
 # class KillAll
