@@ -73,7 +73,7 @@ class LocalConnection(BaseClass):
             self._queue = Queue.Queue()
         return self._queue
 
-    def _local_call(self, command, arguments='', timeout=None):
+    def _procedure_call(self, command, arguments='', timeout=None):
         """
         This is provided so it can be overriden by subclasses.
 
@@ -103,16 +103,16 @@ class LocalConnection(BaseClass):
             self.logger.error(error)
             raise ConnectionError("Unable to execute '{0}'".format(SPACE.join((command, arguments))))
     
-    def __getattr__(self, command):
+    def __getattr__(self):
         """
         :param:
 
          - `command`: The command to call.
 
-        :return: The local_call method
+        :return: The _procedure_call method
         """
         def procedure_call(*args, **kwargs):
-            return self._local_call(command, *args, **kwargs)
+            return self._procedure_call(*args, **kwargs)
         return procedure_call
 
 # end class LocalConnection
