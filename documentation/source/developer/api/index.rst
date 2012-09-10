@@ -126,13 +126,13 @@ The **Connections** provide connectivity to devices. It is their responsibility 
 
    adbconnection
    localconnection
+   nonlocalconnection
    producer
    puppetconnection
    serialconnection
    sl4aconnection   
    sshconnection
    telnetconnection
-   threadedconnection
 
    sharedcounter
    lineproducer

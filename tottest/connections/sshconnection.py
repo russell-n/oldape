@@ -25,7 +25,7 @@ from tottest.commons.readoutput import StandardOutput
 from tottest.commons import enumerations
 
 # connections
-from threadedconnection import ThreadedConnection
+from nonlocalconnection import NonLocalConnection
 from sshadapter import SimpleClient
 
 SPACER = '{0} {1} '
@@ -35,7 +35,7 @@ EOF = ''
 OutputError = namedtuple("OutputError", 'output error')
 
 
-class SSHConnection(ThreadedConnection):
+class SSHConnection(NonLocalConnection):
     """
     An SSHConnection executes commands over an SSHConnection
 

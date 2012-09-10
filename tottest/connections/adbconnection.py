@@ -148,7 +148,6 @@ class ADBShellBlockingConnection(ADBShellConnection):
         self.command_prefix = "adb wait-for-device shell"
         self._unknown_command = None
         return
-        return
 
 if __name__ == "__main__":
     from tottest.main import watcher

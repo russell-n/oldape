@@ -4,7 +4,7 @@ from mock import MagicMock
 
 from tottest.commands import wmic
 from tottest.commons import errors
-from tottest.connections.threadedconnection import OutputError
+from tottest.connections.nonlocalconnection import OutputError
 
 PASS = """
 Executing (\\IGOR\root\cimv2:Win32_NetworkAdapter.DeviceID="11")->enable()

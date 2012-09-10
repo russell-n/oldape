@@ -1,20 +1,14 @@
 """
-a module to hold a threaded connection.
+a module to hold a non-local connection.
 
-The LocalConnection takes the command-line command as a property and
+The NonLocalConnection takes the command-line command as a property and
 the arguments to the command as parameters.
 
-e.g.
+The main difference is that the Local Connection uses forked sub-processes
+while the NonLocalConnection is using threads.
 
-    `lc = LocalConnection()`
-    `output = lc.ls('-l')`
-    `print output.output`
-
-prints the output of the `ls -l` command line command
-
-The localConnection uses Subprocess, while the LocalNixConnection uses
-pexepect. If the LocalConnection is hanging because the output is being
-buffered, use the LocalNixConnection instead.
+The Local Connection has the possibility of more efficiency, but can overload weaker systems
+and is generally less robust.
 """
 
 #python Libraries
@@ -33,9 +27,9 @@ EOF = ''
 
 OutputError = namedtuple("OutputError", 'output error')
 
-class ThreadedConnection(BaseClass):
+class NonLocalConnection(BaseClass):
     """
-    A threaded connection is the base for non-local connections
+    A non-local connection is the base for non-local connections
 
     """
     def __init__(self, command_prefix='', *args, **kwargs):
@@ -44,7 +38,7 @@ class ThreadedConnection(BaseClass):
 
          - `command_prefix`: A prefix to prepend to commands (e.g. 'adb shell')
         """
-        super(ThreadedConnection, self).__init__(*args, **kwargs)
+        super(NonLocalConnection, self).__init__(*args, **kwargs)
         # logger is defined in BaseClass but declared here for child-classes
         self._logger = None
         self.command_prefix = command_prefix
@@ -77,6 +71,8 @@ class ThreadedConnection(BaseClass):
 
          - `command`: the command string to execute
          - `arguments`: The arguments for the command
+
+        :return: OutputError named tuple
         """
         thread = self.start(command, arguments)
         try:
@@ -116,14 +112,20 @@ class ThreadedConnection(BaseClass):
         self.logger.debug(",".join([t.name for t in threading.enumerate() if t.name != "MainThread"]))
         return t
 
-    def __getattr__(self, command):
+    def __getattr__(self):
         """
+        The parameters are the same as _procedure_call()
+        
         :param:
 
          - `command`: The command to call.
+         - `arguments`: arguments to pass to the command
+         - `timeout`: amount of time to wait for the command to return the stdout and stderr files.
+
+        :return: _procedure_call method called with passed-in args and kwargs
         """
         def procedure_call(*args, **kwargs):
-            return self._procedure_call(command, *args, **kwargs)
+            return self._procedure_call(*args, **kwargs)
         return procedure_call
 
     def __str__(self):

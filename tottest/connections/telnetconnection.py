@@ -25,7 +25,7 @@ from tottest.commons.readoutput import StandardOutput
 from tottest.commands import changeprompt
 
 # connections
-from threadedconnection import ThreadedConnection
+from nonlocalconnection import NonLocalConnection
 from telnetadapter import TelnetAdapter
 
 SPACER = '{0} {1} '
@@ -35,7 +35,7 @@ EOF = ''
 OutputError = namedtuple("OutputError", 'output error')
 
 
-class TelnetConnection(ThreadedConnection):
+class TelnetConnection(NonLocalConnection):
     """
     A TelnetConnection executes commands over a Telnet Connection
 
@@ -106,7 +106,7 @@ class TelnetConnection(ThreadedConnection):
             line = stdout.readline()
             output_queue.put(line)
         output_queue.put(line)
-# end class LocalNixConnection        
+# end class TelnetConnection
     
 if __name__ == "__main__":
     import curses.ascii
