@@ -133,6 +133,7 @@ class PopenFile(BaseClass):
         self.counter = counter
         self._queue = queue
         self.started = False
+        self.closed = False
         self.stop = False
         self.process = process
         self.lock = lock
@@ -154,7 +155,16 @@ class PopenFile(BaseClass):
         self.logger.debug("Starting to feed the queue")
         line = None
         while line != EOF:
-            line = self.file_object.readline()
+            with self.lock:
+                try:
+                    line = self.file_object.readline()
+                except AttributeError as error:
+                    self.logger.debug(error)
+                    line = EOF
+                    if self.closed:
+                        self.logger.debug("The file_object was already deleted by the close() method")
+                    else:
+                        self.logger.debug("The file_object was deleted by someone else.")
             self.queue.put(line)
             if self.stop:
                 self.queue.put(EOF)
@@ -215,15 +225,15 @@ class PopenFile(BaseClass):
 
     def close(self):
         """
-        :postcondition: file_object has been closed
+        :postcondition: file_object has been closed and self.closed is True
         """
         if self.file_object is not None:
             self.logger.debug("Closing the file")
-            self.lock.acquire()
-            self.logger.debug("Killing process (PID: {0})".format(self.process.pid))
-            self.process.kill()
-            self.file_object.close()
-            self.lock.release()
+            with self.lock:
+                self.logger.debug("Killing process (PID: {0})".format(self.process.pid))
+                self.process.kill()
+                self.file_object.close()
+                self.closed = True
             self.logger.debug("File Closed")
         return
         

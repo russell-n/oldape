@@ -45,7 +45,7 @@ class SetupIteration(BaseClass):
     @property
     def enable_wifi(self):
         """
-        An Android radio enabler to try and keep the Tate's alive
+        An Android radio enabler to try and keep the radio
         """
         if self._enable_wifi is None:
             self._enable_wifi = svc.EnableWifi(connection=self.device)
@@ -74,7 +74,6 @@ class SetupIteration(BaseClass):
 
          - `parameters`: An object with the parameters for ttf and sleep.
         """
-        self.logger.warning("Tate-based hacks coming up")
         self.log("Disabling the radio")
         self.disable_wifi()
         self.sleep.run(5)
@@ -84,17 +83,11 @@ class SetupIteration(BaseClass):
         self.affector.run(parameters.affector)
         recovery_time = self.time_to_recovery.run()
         if not recovery_time:
-            try:
-                o,e = self.device.wl("rssi")
-                self.log("rssi: {0} -dbm".format("".join([line.rstrip() for line in o])))
-            except Exception as error:
-                self.logger.error(error)
             raise AffectorError("Unable to recover from environmental affect")
 
         self.log("Time to recovery: {0}".format(recovery_time))
 
         self.sleep.run(5)
-        self.logger.warning("Another tate hack")
         self.log("Signal Strength: {0}".format(self.dumpsys.rssi))
         return
 

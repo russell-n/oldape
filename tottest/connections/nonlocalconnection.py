@@ -112,7 +112,7 @@ class NonLocalConnection(BaseClass):
         self.logger.debug(",".join([t.name for t in threading.enumerate() if t.name != "MainThread"]))
         return t
 
-    def __getattr__(self):
+    def __getattr__(self, command):
         """
         The parameters are the same as _procedure_call()
         
@@ -125,7 +125,7 @@ class NonLocalConnection(BaseClass):
         :return: _procedure_call method called with passed-in args and kwargs
         """
         def procedure_call(*args, **kwargs):
-            return self._procedure_call(*args, **kwargs)
+            return self._procedure_call(command, *args, **kwargs)
         return procedure_call
 
     def __str__(self):

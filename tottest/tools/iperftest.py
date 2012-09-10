@@ -4,7 +4,11 @@ A module to hold an iperf test tool
 
 # tottest
 from tottest.baseclass import BaseClass
+
+#this folder
 from sleep import Sleep 
+from killall import KillAllError 
+
 
 class IperfTest(BaseClass):
     """
@@ -41,7 +45,11 @@ class IperfTest(BaseClass):
         """
         for killer in self.killers:
             self.logger.info(str(killer))
-            killer.run(time_to_sleep=parameters.recovery_time)
+            try:
+                killer.run(time_to_sleep=parameters.recovery_time)
+            except KillAllError as error:
+                # Try to run the test anyway, it might not be a bad thing
+                self.logger.warning(error)
         self.logger.debug("Parameters: {0}".format(parameters))
         self.logger.info("Running Iperf: {0} -> {1}".format(self.sender, self.receiver))
         self.logger.info("Starting the iperf server (receiver)")
