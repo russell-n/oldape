@@ -98,7 +98,7 @@ class IperfCommand(BaseClass):
 
         max_time = maxint
         if hasattr(parameters.iperf_parameters, "time"):
-            max_time = 1.25 * float(parameters.iperf_parameters.time.split()[-1])
+            max_time = max(120, 1.2 * float(parameters.iperf_parameters.time.split()[-1]))
         
         filename = self.filename(parameters)
         file_output = self.output.open(filename=filename,
