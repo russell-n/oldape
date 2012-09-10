@@ -107,9 +107,12 @@ class PopenProducer(BaseClass):
         """
         if self.counter.decrement() == 0:
             self.logger.debug("Killing process `{0}` (PID: {1})".format(self.command, self.process.pid))
-            self.lock.acquire()
-            self.process.kill()
-            self.lock.release()
+            with self.lock:
+                if self.process.poll() is None:
+                    try:
+                        self.process.kill()
+                    except OSError as error:
+                        self.logger.debug(error)
         return
 # end class PopenProducer
     
@@ -227,12 +230,17 @@ class PopenFile(BaseClass):
         """
         :postcondition: file_object has been closed and self.closed is True
         """
-        if self.file_object is not None:
-            self.logger.debug("Closing the file")
-            with self.lock:
-                self.logger.debug("Killing process (PID: {0})".format(self.process.pid))
-                self.process.kill()
+        with self.lock:
+            if self.file_object is not None:
+                self.logger.debug("Closing the file")
                 self.file_object.close()
+                if self.process.poll() is None:
+                    self.logger.debug("Killing process (PID: {0})".format(self.process.pid))
+                    try:
+                        self.process.kill()
+                    except OSError as error:
+                        # to avoid race-condition exception between end of command and this call
+                        self.logger.debug(error)
                 self.closed = True
             self.logger.debug("File Closed")
         return
@@ -255,7 +263,7 @@ class PopenFile(BaseClass):
 
     def __del__(self):
         """
-        :postcondition: if process was given, process is killed, file is closed
+        :postcondition: if process was given, self.close called
         """
         self.stop = True
         if self.process is not None:

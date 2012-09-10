@@ -56,8 +56,8 @@ class IperfCommand(BaseClass):
             self.logger.error(line)
             raise IperfError("Iperf server not running on remote host")
         elif "Address already in use" in line:
-            self.logger.error(line)
-            raise IperfError("Another server is already running.")
+            self.logger.warning(line)
+            #raise IperfError("Another server is already running.")
         return
 
     def filename(self, parameters):
