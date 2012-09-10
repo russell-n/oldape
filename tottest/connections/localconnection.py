@@ -81,18 +81,20 @@ class LocalConnection(BaseClass):
         """
         return self._main(command, arguments, timeout)
     
-    def _main(self, command, arguments='', block=True, timeout=None):
+    def _main(self, command, arguments='', timeout=None):
         """
         :param:
 
          - `command`: the command string to execute
          - `arguments`: The arguments for the command
-         - `block`: tells the queue to block until output is available
          - `timeout`: if `block`, wait until timeout for output
+
+        :return: OutputError named tuple
         """
         try:
             self.logger.debug("Creating PopenProducer")
-            process = PopenProducer(SPACE.join((self.command_prefix, command, arguments)))
+            process = PopenProducer(SPACE.join((self.command_prefix, command, arguments)),
+                                    timeout=timeout)
             oe = OutputError(process.stdout, process.stderr)
             self.logger.debug("returning Output Error")
             

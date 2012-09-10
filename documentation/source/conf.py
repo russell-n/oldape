@@ -312,6 +312,7 @@ intersphinx_mapping = {'http://docs.python.org/': None}
 
 autosummary_generate = True
 
-autodoc_default_flags = ['members', 'undoc_members', 'inherited_members', 'show_inheritance']
+autodoc_default_flags = ['members', 'inherited-members', 'show_inheritance',
+                         'private-members', 'special-members']
 autoclass_content = 'both'
 autodoc_member_order = 'groupwise'
