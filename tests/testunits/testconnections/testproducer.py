@@ -45,6 +45,7 @@ class TestPopenProducer(TestCase):
         popen.return_value = process
         
         pr = producer.PopenProducer("")
+        process.poll.return_value = None
         with patch("subprocess.Popen", popen):
             with patch("subprocess.PIPE", pipe):
                 o = pr.stdout

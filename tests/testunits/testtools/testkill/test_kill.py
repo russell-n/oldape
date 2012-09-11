@@ -6,6 +6,7 @@ from StringIO import StringIO
 from mock import MagicMock
 import mock
 import nose
+from nose.tools import raises
 
 from tottest.tools import killall
 from tottest.commons import enumerations, expressions, errors
@@ -38,7 +39,7 @@ class KillAllLinuxTest(TestCase):
                          'kworker/3:0')
         return
 
-    @nose.tools.raises(errors.CommandError)
+    @raises(errors.CommandError)
     def test_kill_failure(self):
         """
         :description: if the process remains on the second ps check, an exception is raised
@@ -49,6 +50,7 @@ class KillAllLinuxTest(TestCase):
         connection = MagicMock()
         connection.ps.return_value = self.pre_kill_output, StringIO("")
         connection.kill = MagicMock()
+        connection.kill.return_value = ("aoeu", "aoeu")
         killer = killall.KillAll(connection, self.process)
         killer.run(time_to_sleep=0)
         return
@@ -69,6 +71,7 @@ class KillAllLinuxTest(TestCase):
         connection = MagicMock()
         connection.ps.side_effect = outputs
         connection.kill = MagicMock()
+        connection.kill.return_value = ("aoeu", "aoeu")
         connection.operating_system = enumerations.OperatingSystem.linux
         killer = killall.KillAll(connection, self.process, enumerations.OperatingSystem.linux)
         killer.run(time_to_sleep=0)
@@ -107,7 +110,9 @@ class KillAllAndroidTest(TestCase):
         connection = MagicMock()
         connection.ps.side_effect = outputs
         connection.kill = MagicMock()
+        connection.kill.return_value = "",""
         killer = killall.KillAll(connection, self.process, enumerations.OperatingSystem.android)
+        
         killer.run(time_to_sleep=0)
         expected_args = [mock.call(" -9 " + self.pid_1), mock.call(" -9 " + self.pid_2)]
         actual_args = connection.kill.call_args_list
@@ -136,6 +141,7 @@ class KillAllAndroidTest(TestCase):
         connection = MagicMock()
         connection.ps.return_value = self.pre_kill_output, StringIO("")
         connection.kill = MagicMock()
+        connection.kill.return_value = ("", "")
         killer = killall.KillAll(connection, self.process, enumerations.OperatingSystem.android)
         killer.run(time_to_sleep=0)
         return

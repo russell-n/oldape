@@ -116,8 +116,6 @@ class KillAll(BaseClass):
                 command = " -9 " + match.group(expressions.PID_NAME)
                 self.logger.debug("kill " + command)
                 k_output, k_error = self.connection.kill(command)
-                for k_line in k_output:
-                    self.logger.debug(k_line)
                 for k_line in k_error:
                     self.logger.error(k_line)
         err = error.read()
