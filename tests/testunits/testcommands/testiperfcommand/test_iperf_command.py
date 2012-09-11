@@ -136,7 +136,7 @@ class IperfCommandServerTest(TestCase):
         self.file_output.write.assert_has_calls(calls)
         return
 
-    @raises(IperfError)
+    
     def test_duplicate_server(self):
         output = StringIO(iperf_server_failure.output)
         self.connection.iperf.return_value = '', output
@@ -144,10 +144,10 @@ class IperfCommandServerTest(TestCase):
         return
 
 
-    @raises(IperfError)
+    
     def test_duplicate_server_over_serial(self):
         output = StringIO(iperf_server_failure.output)
-        self.connection.iperf.return_value = output, ''
+        self.connection.iperf.return_value = output, StringIO('')
         self.command.run()
         return
 # end class IperfCommandServerTest
