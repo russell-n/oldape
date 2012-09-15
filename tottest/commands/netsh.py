@@ -208,7 +208,20 @@ class NetshWlan(BaseClass):
         self.not_available = not_available
         self._output = None
         self._expressions = None
+        self._signal = None
         return
+
+    @property
+    def signal(self):
+        """
+        :return: signal %
+        """
+        output, error = self.connection.netsh("wlan show interface")
+        for line in output:
+            match =  self.expressions.signal.search(line)
+            if match:
+                return match.groupdict()[NetshWlanKeys.signal]
+        return self.not_available
 
     @property
     def output(self):
@@ -217,7 +230,7 @@ class NetshWlan(BaseClass):
         """
         if self._output is None:
             output = self.connection.netsh("wlan show interface")
-            self._output = output.output.readlines()
+            self._output = output.output
             self.check_errors(output.error)
         return self._output
         
@@ -234,11 +247,13 @@ class NetshWlan(BaseClass):
         """
         :return: the value from netsh's output that matches the key
         """
-        for line in self.output:
+        output = self.connection.netsh("wlan show interface")
+
+        for line in output.output:
             match =  expression.search(line)
             if match:
-                print line
                 return match.groupdict()[key]
+        self.check_errors(output.error)
         return self.not_available
 
     def check_errors(self, stderr):

@@ -17,10 +17,12 @@ class BaseDevice(BaseClass):
          - `connection`: An device connection
         """
         self._connection = connection
+        self._rssi = None
+        self._wifi_info = None
         self._logger = None
         return
 
-    @abstractproperty
+    @property
     def connection(self):
         """
         :return: A connection to the device. 
@@ -57,8 +59,8 @@ class BaseDevice(BaseClass):
         """
         return
     
-    @abstractmethod
-    def get_wifi_info(self):
+    @abstractproperty
+    def wifi_info(self):
         """
         :rtype: StringType
         :return: The Wifi Info

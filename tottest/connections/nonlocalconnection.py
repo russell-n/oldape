@@ -13,19 +13,18 @@ and is generally less robust.
 
 #python Libraries
 from StringIO import StringIO
-from collections import namedtuple
 import Queue
 import threading
 
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
+from localconnection import OutputError 
 
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
 EOF = ''
 
-OutputError = namedtuple("OutputError", 'output error')
 
 class NonLocalConnection(BaseClass):
     """

@@ -83,10 +83,12 @@ The **Commands** bundle specific commands with device connections. It is their r
    iperfcommand
    iwcommand
    netcfg
+   netsh
    ping
    svc
    wmic
    wpacli
+   winrssi
 
 Commons
 -------
