@@ -1,6 +1,11 @@
-"""
-The IperfParser parses 
-"""
+# Copyright (c) 2012 Russell Nakamura
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 # python libraries
 from collections import defaultdict
 
@@ -9,31 +14,35 @@ from tottest.baseclass import BaseClass
 from iperfexpressions import HumanExpression, ParserKeys
 from iperfexpressions import CsvExpression
 from unitconverter import UnitConverter
+from coroutine import coroutine
 
 
 class IperfParser(BaseClass):
     """
     The Iperf Parser extracts bandwidth and other information from the output
     """
-    def __init__(self, expected_interval=1, interval_tolerance=0.1, units="Mbits"):
+    def __init__(self, expected_interval=1, interval_tolerance=0.1, units="Mbits", threads=4):
         """
         :param:
 
          - `expected_interval`: the seconds between sample reports
          - `interval_tolerance`: upper bound of difference between actual and expected
          - `units`: desired output units (must match iperf output case - e.g. MBytes)
+         - `threads`: (number of threads) needed for coroutine and pipe
         """
         super(IperfParser, self).__init__()
         self._logger = None
         self.expected_interval = expected_interval
         self.interval_tolerance = interval_tolerance
         self.units = units
+        self.threads = threads
         self._regex = None
         self._human_regex = None
         self._csv_regex = None
         self._combined_regex = None
         self._conversion = None
         self._intervals = None
+        self._threads = None
         self.format = None
         self._bandwidths = None
         return
@@ -105,45 +114,34 @@ class IperfParser(BaseClass):
             units = 'bits'
         return self.conversion[units][self.units] * bandwidth
 
-    def __call__(self, line):
+    def add(self, line):
         """
         :param:
 
          - `line`: a line of iperf output
-
-        :postcondition: if line matches, the bandwidth is added to intervals
         """
-        self.logger.debug("Checking: {0}".format(line))
-        match = self.match(line)
+        match = self(line)
         if match is not None and self.valid(match):
-            self.logger.debug("Setting interval")
             self.intervals[float(match[ParserKeys.start])] += self.bandwidth(match)
         return
-
-    def add(self, line):
-        """
-        An alias for __call__ to remain backwards-compatible.
-        """
-        self(line)
-        return
     
-    def match(self, line):
+    def __call__(self, line):
         """
         :param:
 
          - `line`: a string of iperf output
-
         :return: match dict or None
         """
         try:
             return self.regex[self.format].search(line).groupdict()
         except KeyError:
-            self.logger.debug("'{0}' passed on, format not set".format(line))
+            self.logger.debug("{0} passed on, format not set".format(line))
         except AttributeError:
             pass
 
         try:
             match = self.regex[ParserKeys.human].search(line).groupdict()
+            self.logger.debug("Matched: {0}".format(line))            
             self.format = ParserKeys.human
             self.logger.debug("Setting format to {0}".format(self.format))
             return match
@@ -152,6 +150,7 @@ class IperfParser(BaseClass):
 
         try:
             match = self.regex[ParserKeys.csv].search(line).groupdict()
+            self.logger.debug("Matched: {0}".format(line))
             self.format = ParserKeys.csv
             self.logger.debug("Setting format to {0}".format(self.format))
             return match
@@ -159,11 +158,46 @@ class IperfParser(BaseClass):
             pass
         return
 
+    @coroutine
+    def pipe(self, target):
+        """
+        
+        :warnings:
+
+         - For bad connections with threads this might break (as the threads die)
+         - Use for good connections or live data only (use `bandwidths` and completed data for greater fidelity)
+         
+        :parameters:
+
+         - `target`: a target to send matched output to
+
+        :send:
+
+         - bandwidth converted to self.units as a float
+        """
+        threads = defaultdict(lambda:[0,0])
+        thread_count = 0
+        bandwidth = 1
+        while True:
+            line = (yield)
+            match = self(line)
+            if match is not None and self.valid(match):
+                # threads is a dict of interval:(thread_count, bandwidths)
+                interval = match[ParserKeys.start]
+                threads[interval][thread_count] += 1
+                threads[interval][bandwidth] += self.bandwidth(match)
+                for key in threads:
+                    if key == min(threads) and threads[interval][thread_count]==self.threads:
+                        target.send(threads[interval][bandwidth])
+        return
+    
     def reset(self):
         """
         Resets the attributes set during parsing
         """
         self.format = None
         self._interval_threads = None
+        self._thread_count = None
+        self._threads = None
         return
 # end class IperfParser

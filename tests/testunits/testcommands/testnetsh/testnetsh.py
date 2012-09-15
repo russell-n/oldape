@@ -40,6 +40,11 @@ class TestNetsh(TestCase):
         self.netsh = netsh.NetshWlan(connection=self.connection)
         return
 
+    def test_output(self):
+        for line in self.netsh.output:
+            self.assertIn(line, OUTPUT)            
+        return
+    
     def test_authentication(self):
         expected = "WPA2-Personal"
         actual = self.netsh.authentication
