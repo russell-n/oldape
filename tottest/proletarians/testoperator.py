@@ -105,6 +105,7 @@ class TestOperator(BaseClass):
         #. Runs test
         #. Runs Teardown
         """
+        import pudb; pudb.set_trace()
         self.logger.info("Running Parameters: {0}".format(parameter))
         test = self.tests[parameter.test_id]
         self.log_message(TEST_PREAMBLE.format(r=parameter.repetition,
@@ -125,7 +126,6 @@ class TestOperator(BaseClass):
         """
         self.watchers.start()
         self.countdown_timer.start_timer()
-        
         try:
             for parameter in self.test_parameters:
                 try:

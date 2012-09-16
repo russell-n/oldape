@@ -182,7 +182,7 @@ class Lexicographer(BaseClass):
             # now the iperf section
             directions = self.get_directions(parser)
             iperf = iperflexicographer.IperfLexicographer(parser)
-            
+
             yield StaticParameters(config_file_name=file_name,
                                    output_folder=output_folder_name,
                                    repetitions=repetitions,
@@ -245,6 +245,7 @@ class Lexicographer(BaseClass):
         :return: DutParameters populated with the dut's values
         """
         if self.dut_parameters is None:
+
             section = ConfigOptions.dut_section
             dl = devicelexicographer.DeviceLexicographer
             lexicographer = dl(parser=parser,

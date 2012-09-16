@@ -8,13 +8,15 @@ class ConfigOptions(object):
     repetitions_option = "repeat"
     recovery_time_option = "recovery_time"
     
-    dut_section = 'DUT'
+    dut_section = 'NODE1'
+    test_interface_option = "test_interface"
+    operating_system_option = "operating_system"
+    control_ip_option = "hostname"
+    test_ip_option = "test_ip"
     connection_option = 'connection'
     traffic_pc_section = "TRAFFIC_PC"
     login_option = "login"
     password_option = "password"
-    control_ip_option = "control_ip_address"
-    test_ip_option = "test_ip_address"
 
     logwatcher_section = "LOGWATCHER"
     paths_option = "paths"

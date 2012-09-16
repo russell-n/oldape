@@ -6,10 +6,11 @@ import re
 import ConfigParser
 from string import whitespace
 
-# tottest Libraries
+# apetools Libraries
 from tottest.baseclass import BaseClass
 from tottest.commons.errors import ConfigurationError
 from tottest.commons import expressions
+from timeconverter import TimeConverter
 
 STRIP_LIST = "'\"" + whitespace
 EMPTY_STRING = ''
@@ -19,6 +20,7 @@ HOUR_STRING = 'h'
 SECOND_STRING = 'second'
 COMMA = ','
 FORWARD_SLASH = '/'
+SEMICOLON = ";"
 
 MINUTES = 60
 HOURS = 60 * MINUTES
@@ -34,6 +36,16 @@ END_GROUP = "end"
 RANGE = re.compile(NAMED.format(name=START_GROUP, pattern=INTEGER) + SPACES_OPTIONAL +
                    DASH + SPACES_OPTIONAL + NAMED.format(name=END_GROUP, pattern=INTEGER))
 
+class BooleanValues(object):
+    """
+    A class to hold the valid booleans.
+    """
+    __slots__ = ()
+    true = "y yes 1 true t on".split()
+    false = "n no 0 false f off".split()
+    map = dict([(t, True) for t in true] + [(f, False) for f in false])
+# end class Booleans
+    
 class ConfigurationMap(BaseClass):
     """
     The ConfigurationMap is a variant of SafeConfigParser that adds some extra methods
@@ -47,7 +59,28 @@ class ConfigurationMap(BaseClass):
         super(ConfigurationMap, self).__init__(*args, **kwargs)
         self.filename = filename
         self._parser = None
+        self._sections = None
+        self._time_converter = None
         return
+
+    @property
+    def time_converter(self):
+        """
+        :return: Converter for space-separated time stream
+        """
+        if self._time_converter is None:
+            self._time_converter = TimeConverter()
+        return self._time_converter
+    
+    @property
+    def sections(self):
+        """
+        :rtype: List
+        :return: sections headings
+        """
+        if self._sections is None:
+            self._sections = self.parser.sections()
+        return self._sections
 
     @property
     def parser(self):
@@ -62,8 +95,15 @@ class ConfigurationMap(BaseClass):
     def raise_error(self, error):
         self.logger.error(error)
         raise ConfigurationError(error)
+
+
+    def get(self, section, option, default=None, optional=False):
+        """
+        Eventually this will be a type-discovering method, but for now is a pass-through to _get
+        """
+        return self._get(section, option, default, optional)
     
-    def get(self, section, option, default=None):
+    def _get(self, section, option, default=None, optional=False):
         """
         Convenience function:strip off extra quotes and whitespace after 'get'.
 
@@ -72,126 +112,299 @@ class ConfigurationMap(BaseClass):
          - `section`: The [section] name
          - `option`: the option in the section
          - `default`: returns default on error
+         - `optional`: If True, return default if option not found
 
-        :raise: ConfigurationError if the section or option doesn't exist and no default
+        :raise: ConfigurationError if the section or option doesn't exist and not optional
         """
         try:
             value = self.parser.get(section, option)
             return value.strip(STRIP_LIST)
-        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError, AttributeError) as error:
-            if default is not None:
+        except (ConfigParser.Error, AttributeError) as error:
+            print error
+            if optional:
                 return default
             self.raise_error(error)
-
-    def get_optional(self, section, option, default=None):
+        return
+    
+    def get_boolean(self, section, option, default="", optional=False):
         """
-        Convenience function:strip off extra quotes and whitespace after 'get'.
+        True = t, true, 1, y, yes, or on
+        False = f, false, 0, n, no, or off
 
-        :param:
-
-         - `section`: The [section] name
-         - `option`: the option in the section
-         - `default`: returns default on error
-
-        :raise: ConfigurationError if the section or option doesn't exist and no default
-        """
-        try:
-            value = self.parser.get(section, option)
-            return value.strip(STRIP_LIST)
-        except (ConfigParser.NoSectionError, ConfigParser.NoOptionError, AttributeError) as error:
-            self.logger.debug(error)
-            return default
+        Case-insensitive
         
-    def get_boolean(self, section, option, default=None):
+        :raise: ConfigurationError if ConfigParser raises error or can't be coerced to boolean and not optional
+        :return: section:option value cast to an boolean or default
+
         """
-        :raise: ConfigurationError if default not given on error
-        """
+        value = self.get(section, option, default, optional)
+        value = value.lower()
         try:
-            return self.parser.getboolean(section, option)
-        except (ConfigParser.NoOptionError,ValueError) as error:
-            if default is not None:
-                return default
-            self.raise_error(error)
+            return BooleanValues.map[value]
+        except KeyError as error:
+            self.logger.error(error)
+            self.raise_error("Unknown Boolean: {0}".format(value))
+        return
 
-
-    def get_int(self, section, option, default=None):
+    def get_booleans(self, section, option, default="", optional=False, delimiter=COMMA):
         """
-        :raise: ConfigurationError if default not given on error
+        True = t, true, 1, y, yes, or on
+        False = f, false, 0, n, no, or off
+
+        Case-insensitive
+        
+        :raise: ConfigurationError if ConfigParser raises error or can't be coerced to boolean and not optional
+        :return: section:option value cast to an boolean or default
+        """
+        values = self.get_list(section=section, option=option, default=default, optional=optional, delimiter=delimiter)
+
+        try:
+            return [BooleanValues.map[value.lower()] for value in values]
+        except KeyError as error:
+            self.logger.error(error)
+            self.raise_error("Unknown Boolean in: {0}".format(values))
+        return
+
+    def get_int(self, section, option, default=None, optional=False):
+        """
+        :raise: ConfigurationError if ConfigParser raises error or can't be coerced to int and not optional
+        :return: section:option value cast to an int or default
         """
         try:
             return self.parser.getint(section, option)
-        except (ValueError, ConfigParser.NoOptionError) as error:
-            if default is not None:
+        except (ValueError, ConfigParser.Error) as error:
+            if optional:
                 return default
             self.raise_error(error)
 
-        
-    def get_float(self, section, option, default=None):
+    def get_ints(self, section, option, default=None, optional=False, delimiter=COMMA):
         """
-        :raise: ConfigurationError if option not found or can't be coerced to float.
+        :param:
+
+         - `section`: the config file section name
+         - `option` : the section-option name
+         - `default`: value to return if not found and optional
+         - `optional`: if True and not found, return default
+         - `delimiter`: the separator for the integer values
+         
+        :raise: ConfigurationError if ConfigParser raises error or can't be coerced to int and not optional
+        :return: List of section:option values cast to integers or default
+        """
+        try:
+            return self.get_list(section=section, option=option, default=default, optional=optional, delimiter=delimiter,
+                                    converter=int)
+            
+        except ValueError as error:
+            values = self.get(section=section, option=option, default=default, optional=optional)
+            self.logger.error(error)
+            raise ConfigurationError("Unable to cast '{0}' to integers".format(values))
+        return
+    
+    def get_float(self, section, option, default=None, optional=False):
+        """
+        :raise: ConfigurationError if ConfigParser raises error or can't be coerced to float and not optional        
+        :return: section:option value cast to a float or default
         """
         try:
             return self.parser.getfloat(section, option)
-        except (ValueError, ConfigParser.NoOptionError) as error:
-            if default is not None:
+        except (ValueError, ConfigParser.Error) as error:
+            if optional:
                 return default
             self.raise_error(error)
 
-    def get_string(self, section, option, default=EMPTY_STRING):
+    def get_floats(self, section, option, default=None, optional=False, delimiter=COMMA):
         """
+        :param:
+
+         - `section`: the config file section name
+         - `option` : the section-option name
+         - `default`: value to return if not found and optional
+         - `optional`: if True and not found, return default
+         - `delimiter`: the separator for the integer values
+         
+        :raise: ConfigurationError if ConfigParser raises error or can't be coerced to float and not optional
+        :return: List of section:option values cast to floats or default
+        """
+        try:
+            return self.get_list(section=section, option=option, default=default, optional=optional, delimiter=delimiter,
+                                    converter=float)
+        except ValueError as error:
+            values = self.get(section=section, option=option, default=default, optional=optional)
+            self.logger.error(error)
+            raise ConfigurationError("Unable to cast '{0}' to floats".format(values))
+        return
+
+    def get_string(self, section, option, default=EMPTY_STRING, optional=False):
+        """
+        This returns what a ConfigParser.get returns
+        
         :return: value string or default
         """
-        value_string = self.get(section, option)
-        if value_string is None:
-            return default
-        return value_string
+        return self._get(section, option, default, optional)
 
-    def get_ranges(self, section, option, delimiter=COMMA, optional=False):
+    def get_strings(self, section, option, default=None, optional=False, delimiter=COMMA):
         """
-        Converts a comma-delimited set of ranges (start-finish) to a list of integers.
-
-        :return: List of integers or None if optional is True and section not found.
+        This is the same thing as get_list
+        
+        :return: list of strings
         """
-
-        values = self.get_list(section, option, delimiter, optional)
-        if values is None:
-            return values
-        values_list = []
-        for value in values:
-            match = RANGE.search(value)
-            if match:
-                start, end = match.group(START_GROUP), match.group(END_GROUP)
-                values_list += [x for x in range(int(start), int(end) + 1)]
-            else:
-                try:
-                    values_list.append(int(value))
-                except ValueError as error:
-                    self.logger.error(error)
-                    raise ConfigurationError("Unknown Value '{0}' in '{1}' from section: {2} option: {3}".format(value, values, section, option))
-        return values_list
+        return self.get_list(section=section, option=option, default=default, optional=optional, delimiter=delimiter)
     
-    def get_list(self, section, option, delimiter=COMMA, optional=False):
+    def get_list(self, section, option, default=None, optional=False, delimiter=COMMA, converter=str):
         """
         :param:
 
          - `section`: The [section] in the config file.
          - `option`: the option in the section
          - `delimiter`: the value separator
-         - `optional`: if True, returns None instead of raising an error
+         - `optional`: if True, returns default instead of raising an error
         :return: list of strings stripped of whitespace
 
         :raises: ConfigurationError if not optional and not found.
         """
-        if not optional:
-            values = self.get(section, option)
-            return [value.strip(STRIP_LIST) for value in values.split(delimiter)]
-        else:
-            try:
-                values = self.get_optional(section, option)
-                return [value.strip(STRIP_LIST) for value in values.split(delimiter)]
-            except AttributeError:
-                return None
+        values = self._get(section, option, default, optional)
+        self.logger.debug("get_list converting: {0}".format(values))
+        try:
+            return [converter(value.strip()) for value in values.split(delimiter)]
+        except AttributeError as error:
+            self.logger.debug(error)
+            if not optional:
+                raise
+            else:
+                return default
+        return
+        
 
+    def get_lists(self, section, option, default=None, optional=False, delimiter=COMMA, converter=str,
+                  list_separator=SEMICOLON):
+        """
+        Don't make the delimiter and separator the same or you'll end up with each item in its own list
+        :param:
+
+         - `section`: The [section] in the config file.
+         - `option`: the option in the section
+         - `default`: value to return if optional and no value found
+         - `optional`: if True, returns default instead of raising an error
+         - `delimiter`: the value separator
+         - `converter`: function to apply to the values
+         - `separator`: delimiter between lists
+
+        :return: list of list of strings stripped of whitespace (converted if `converter` supplied)
+
+        :raises: ConfigurationError if not optional and not found.
+        """
+        values = self._get(section, option, default, optional)
+        self.logger.debug("get_list converting: {0}".format(values))
+        return [[converter(subvalue.strip()) for subvalue in value.split(delimiter)] for value in values.split(list_separator)]
+    
+    def get_dictionary(self, section, option, default=None, optional=False, delimiter=COMMA, converter=str,
+                       key_value_separator=":"):
+        """
+        This expects a format of `{key:value, key:value}`
+
+        The "{}" brackets are optional.
+        
+        :param:
+
+         - `section`: The [section] in the config file.
+         - `option`: the option in the section
+         - `default`: what to return if fails and optional
+         - `optional`: if True, returns defauln instead of raising an error
+         - `delimiter`: what separates the different key:value pairs
+         - `converter`: a function to apply to the value
+         - `key_value_separator`: Token to separate key-value pairs
+         
+        :return: dictionary of key:value pairings
+
+        :raises: ConfigurationError if not optional and not found.
+        """
+        values = self.get_list(section, option, default, optional)
+        self.logger.debug("get_dictionary converting: {0}".format(values))
+        values[0] = values[0].lstrip("{")
+        values[-1] = values[-1].rstrip("}")
+        values = [value.split(":") for value in values]
+        values = [(pair[0], converter(pair[-1])) for pair in values]
+        return dict(values)
+
+    def get_dictionaries(self, section, option, default=None, optional=False, delimiter=COMMA, converter=str,
+                         key_value_separator=":", dictionary_separator=SEMICOLON):
+        """
+        This expects a format of `{key:value, key:value}`
+
+        For clarity dictionaries can be enclosed in braces ({}) but only the dictionary_separator is used
+        
+        :param:
+
+         - `section`: The [section] in the config file.
+         - `option`: the option in the section
+         - `default`: what to return if fails and optional
+         - `optional`: if True, returns defauln instead of raising an error
+         - `delimiter`: what separates the different key:value pairs
+         - `converter`: a function to apply to the value
+         - `key_value_separator`: Token to separate key-value pairs
+         - `dictionary_separator`: what separates the different dictionaries
+         
+        :return: list of dictionaries of key:value pairings
+
+        :raises: ConfigurationError if not optional and not found.
+        """
+        values = self.get_lists(section, option, default, optional, delimiter=delimiter, list_separator=dictionary_separator)
+        self.logger.debug("get_dictionary converting: {0}".format(values))
+        dictionaries = []
+        for line in values:
+            line[0] = line[0].lstrip("{")
+            line[-1] = line[-1].rstrip("}")
+            line = [value.split(":") for value in line]
+            line = [(pair[0], converter(pair[-1])) for pair in line]
+            dictionaries.append(dict(line))
+        return dictionaries
+
+    
+    def get_range(self, section, option, default=None, optional=False, delimiter=DASH):
+        """
+        Converts values from `start - end` to [start...end] (expects integers)
+        :param:
+
+         - `section`: The [section] in the config file.
+         - `option`: the option in the section
+         - `delimiter`: the value separator
+         - `optional`: if True, returns default instead of raising an error
+
+        :return: list of values
+
+        :raises: ConfigurationError if not optional and not found.
+        """
+        values = self._get(section, option, default, optional)
+        start_end = values.split(delimiter)
+        start, end = int(start_end[0]), int(start_end[-1])
+        return [i for i in range(start, end + 1)]
+
+    def get_ranges(self, section, option, delimiter=COMMA, optional=False, start_end_delimiter=DASH):
+        """
+        Converts a comma-delimited set of ranges (start-finish) to a list of integers.
+
+        :param:
+
+         - `section`: The [section] in the config file.
+         - `option`: the option in the section
+         - `delimiter`: the value separator
+         - `optional`: if True, returns default instead of raising an error
+         - `start_end_delimiter`: the token to separate the start and end of each range
+        :return: list of values
+
+        :raises: ConfigurationError if not optional and not found.
+
+        :return: List of integers or None if optional is True and section not found.
+        """
+        values = self.get_list(section, option, delimiter, optional)
+        if values is None:
+            return values
+        values_list = []
+        for value in values:
+            start_end = value.split(start_end_delimiter)
+            start, end = int(start_end[0]), int(start_end[1])
+            values_list += [i for i in range(start, end + 1)]
+        return values_list
 
     def has_option(self, section, option):
         return self.parser.has_option(section, option)
@@ -201,24 +414,24 @@ class ConfigurationMap(BaseClass):
         Gets a list then converts the values to times.
         """
         times = self.get_list(section, option)
-        return [self.time_in_seconds(time_with_units) for time_with_units in times]
+        return [self.time_converter(time_with_units) for time_with_units in times]
 
-    def get_time(self, section, option, default=0):
+    def get_time(self, section, option, default=0, optional=False):
         """
         :param:
 
          - `section`: A section in the config file (e.g. TEST)
          - `option`: An option in the section in the config file.
          - `default`: A default value to return if the option isn't in the file
+         - `optional`: if True and time not found, return default
 
         :rtype: int or float
         :return: Value in the option (in seconds) or 0 if not present.
         """
-        if not self.has_option(section, option):
-            return default
-
-        value = self.get(section, option)
-        return self.time_in_seconds(value)
+        source = self._get(section, option, default, optional)
+        if source == 0:
+            return source
+        return self.time_converter(source)
     
     def time_in_seconds(self, time_with_units):
         """
