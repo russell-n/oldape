@@ -141,6 +141,7 @@ class ParameterGenerator(BaseClass):
         :yield: The next parameter
         """
         #for params in self.parameters:
+
         for rep in range(1, self.parameters.repetitions + 1):
             for affector_parameter in self.parameters.affector_parameters.parameters:
                 for direction in self.parameters.directions:

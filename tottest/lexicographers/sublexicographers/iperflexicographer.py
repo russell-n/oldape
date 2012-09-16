@@ -56,9 +56,10 @@ class IperfLexicographer(BaseClass):
         :return: The window size
         """
         if self._window is None:
-            self._window = self.parser.get_optional(self.section,
-                                                    ConfigOptions.window_option,
-                                                    default=IperfDefaults.window)
+            self._window = self.parser.get_string(self.section,
+                                                  ConfigOptions.window_option,
+                                                  default=IperfDefaults.window,
+                                                  optional=True)
         return self._window
 
     @property
@@ -68,9 +69,10 @@ class IperfLexicographer(BaseClass):
         :return: The read/write buffer length
         """
         if self._length is None:
-            self._length = self.parser.get_optional(self.section,
-                                                    ConfigOptions.length_option,
-                                                    default=IperfDefaults.length)
+            self._length = self.parser.get_string(self.section,
+                                                  ConfigOptions.length_option,
+                                                  default=IperfDefaults.length,
+                                                  optional=True)
         return self._length
 
     @property
@@ -79,9 +81,10 @@ class IperfLexicographer(BaseClass):
         :return: The number of parallel threads to use
         """
         if self._parallel is None:
-            self._parallel = self.parser.get_optional(self.section,
-                                                      ConfigOptions.parallel_option,
-                                                      default=IperfDefaults.parallel)
+            self._parallel = self.parser.get_string(self.section,
+                                                    ConfigOptions.parallel_option,
+                                                    default=IperfDefaults.parallel,
+                                                    optional=True)
         return self._parallel
 
     @property
@@ -90,9 +93,10 @@ class IperfLexicographer(BaseClass):
         :return: The seconds between data reports
         """
         if self._interval is None:
-            self._interval = self.parser.get_optional(self.section,
-                                                      ConfigOptions.interval_option,
-                                                      default=IperfDefaults.interval)
+            self._interval = self.parser.get_string(self.section,
+                                                    ConfigOptions.interval_option,
+                                                    default=IperfDefaults.interval,
+                                                    optional=True)
         return self._interval
 
     @property
@@ -101,10 +105,10 @@ class IperfLexicographer(BaseClass):
         :return: The output units
         """
         if self._format is None:
-            self._format = self.parser.get_optional(self.section,
-                                                    ConfigOptions.format_option,
-                                                    default=IperfDefaults.format)[0]
-
+            self._format = self.parser.get_string(self.section,
+                                                  ConfigOptions.format_option,
+                                                  default=IperfDefaults.format,
+                                                  optional=True)[0]
         return self._format
 
     @property
@@ -116,7 +120,6 @@ class IperfLexicographer(BaseClass):
         if self._time is None:
             self._time = str(self.parser.get_time(self.section,
                                               ConfigOptions.time_option))
-
         return self._time
 
     

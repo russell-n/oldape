@@ -70,8 +70,9 @@ class NaxxxLexicographer(BaseClass):
             self._switches_names = []
             
             for switch in SWITCHES:
-                name = self.parser.get_optional(self.section,
-                                                switch)
+                name = self.parser.get_string(self.section,
+                                              switch,
+                                              optional=True)
                 if name is not None:
                     self._switches_names.append(NaxxxParameters(type=self._type,
                                                                 name=name,
@@ -105,7 +106,8 @@ class NaxxxLexicographer(BaseClass):
         """
         if self._hostname is None:
             option = ConfigOptions.hostname_option
-            self._hostname = self.parser.get_optional(self.section,
-                                                      option)
+            self._hostname = self.parser.get_string(self.section,
+                                                    option,
+                                                    optional=True)
         return self._hostname
 # end class NaxxxLexicographer

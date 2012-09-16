@@ -29,7 +29,8 @@ class TheWatcher(BaseClass):
 
         :postcondition: self.threads is a list of started threads
         """
-        self.threads = [watcher.start() for watcher in self.watchers]
+        if self.watchers is not None:
+            self.threads = [watcher.start() for watcher in self.watchers]
         return
 
     def stop(self):
