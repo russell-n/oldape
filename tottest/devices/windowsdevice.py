@@ -6,6 +6,7 @@ from basedevice import BaseDevice
 from tottest.commands.wmic import WmicWin32NetworkAdapter
 from tottest.commands.netsh import NetshWlan
 from tottest.commands.winrssi import WinRssi
+from tottest.commands.ipconfig import Ipconfig
 
 class WindowsDevice(BaseDevice):
     """
@@ -17,7 +18,18 @@ class WindowsDevice(BaseDevice):
         self._wifi_control = None
         self._wifi_query = None
         self._rssi_query = None
+        self._ipconfig = None
+        self._address = None
         return
+
+    @property
+    def ipconfig(self):
+        """
+        :return: the Ipconfig
+        """
+        if self._ipconfig is None:
+            self._ipconfig = Ipconfig(self.connection)
+        return self._ipconfig
 
     @property
     def wifi_control(self):
@@ -60,6 +72,13 @@ class WindowsDevice(BaseDevice):
         if self._wifi_query is None:
             self._wifi_query = NetshWlan(self.connection)
         return self._wifi_query
+
+    @property
+    def address(self):
+        """
+        :return: the IP Address of the wireless interface
+        """
+        return self.ipconfig.address
     
     def enable_wifi(self):
         """

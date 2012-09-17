@@ -170,6 +170,7 @@ The **Devices** provide a set of standardized method calls to the connections (t
    basedevice
    adbdevice
    sl4adevice
+   windowsdevice
 
 Informants
 ----------

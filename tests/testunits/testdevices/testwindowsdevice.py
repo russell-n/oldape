@@ -1,8 +1,11 @@
 from unittest import TestCase
+from StringIO import StringIO
+
 
 from mock import MagicMock
 
 from tottest.devices import windowsdevice
+from tottest.connections.localconnection import OutputError
 
 OUTPUT = """
 There is 1 interface on the system:
@@ -33,6 +36,7 @@ class TestWindowsDevice(TestCase):
         self.wmic = MagicMock()
         self.netsh = MagicMock()
         self.rssi = MagicMock()
+        self.ipconfig = MagicMock()
         self.connection = MagicMock()
         self.device = windowsdevice.WindowsDevice(connection=self.connection)
         self.device._wifi_control = self.wmic
@@ -68,5 +72,21 @@ class TestWindowsDevice(TestCase):
         self.rssi.assert_called_with()
         expected = OUTPUT  + "\nrssi: {0} dbm".format(rssi)
         self.assertEqual(expected, actual)
+        return
+
+    def test_ip(self):
+        output = """
+Wireless LAN adapter Wireless Network Connection:
+
+   Connection-specific DNS Suffix  . : testnetwork.local
+   Link-local IPv6 Address . . . . . : fe80::3988:30da:5414:8180%12
+   IPv4 Address. . . . . . . . . . . : 192.168.20.99
+   Subnet Mask . . . . . . . . . . . : 255.255.255.0
+   Default Gateway . . . . . . . . . : fe80::226:5aff:feff:4294%12
+                                       192.168.20.1
+"""
+        self.connection.ipconfig.return_value = OutputError(StringIO(output), "")
+        address = self.device.address
+        self.assertEqual("192.168.20.99", address)
         return
 #  class TestWindowsDevice

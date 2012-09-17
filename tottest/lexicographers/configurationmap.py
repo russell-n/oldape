@@ -402,7 +402,10 @@ class ConfigurationMap(BaseClass):
         values_list = []
         for value in values:
             start_end = value.split(start_end_delimiter)
-            start, end = int(start_end[0]), int(start_end[1])
+            try:            
+                start, end = int(start_end[0]), int(start_end[1])
+            except IndexError:
+                start = end = int(start_end[0])
             values_list += [i for i in range(start, end + 1)]
         return values_list
 
