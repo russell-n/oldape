@@ -20,7 +20,7 @@ class ConfigurationMapTest(TestCase):
         ranges = self.map.get_ranges("NAXXX", "switches")
         self.assertEqual(ranges, [1,2,3])
         self.map.get_list.return_value = None
-        ranges = self.map.get_ranges("NAXXX", 's')
+        ranges = self.map.get_ranges("NAXXX", 's', optional=True)
         self.assertEqual(ranges, None)
         self.map.get_list.return_value = ['2-5', '10', '3-12']
         ranges = self.map.get_ranges('NAXXX', 'switches')
@@ -39,3 +39,19 @@ class ConfigurationMapTest(TestCase):
         self.map._parser.get.return_value = value
         output = self.map.get_list("DUT", "paths", optional=True)
         self.assertEqual(value, output)
+
+if __name__ == "__main__":
+    import pudb
+    pudb.set_trace()
+    _map = ConfigurationMap("name")
+    _map.get_list = MagicMock()
+    _map.get_list.return_value = ['1-3']
+    ranges = _map.get_ranges("NAXXX", "switches")
+    assert ranges == [1,2,3]
+    _map.get_list.return_value = None
+    ranges = _map.get_ranges("NAXXX", 's', optional=True)
+    assert ranges == None
+    _map.get_list.return_value = ['2-5', '10', '3-12']
+    ranges = _map.get_ranges('NAXXX', 'switches')
+    assert ranges == [2,3,4,5,10,3,4,5,6,7,8,9,10,11,12]
+    

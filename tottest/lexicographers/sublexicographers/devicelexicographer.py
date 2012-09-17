@@ -53,7 +53,7 @@ class DeviceLexicographer(BaseClass):
     @property
     def operating_system(self):
         """
-        The OS on the device
+        The OS on the device (this is a required parameter).
         
         :rtype: StringType
         :return: the operating system
@@ -81,15 +81,20 @@ class DeviceLexicographer(BaseClass):
     @property
     def test_interface(self):
         """
-        This is required because iperf needs it
+        This is optional if the ip is given
         
         :rtype: StringType
         :return: test interface name
         """
         if self._test_interface is None:
-            self._test_interface = self.parser.get(self.section,
-                                                   ConfigOptions.test_interface_option,
-                                                   optional=True)
+            if self.test_ip is not None:
+                self._test_interface = self.parser.get(self.section,
+                                                       ConfigOptions.test_interface_option,
+                                                       optional=True)
+            else:
+                self._test_interface = self.parser.get(self.section,
+                                                       ConfigOptions.test_interface_option)
+
         return self._test_interface
 
     @property
@@ -101,51 +106,51 @@ class DeviceLexicographer(BaseClass):
         :return: test ip address
         """
         if self._test_ip is None:
-            self._test_ip = self.parser.get_string(self.section,
-                                                   ConfigOptions.test_ip_option,
-                                                   optional=True)
+            self._test_ip = self.parser.get(self.section,                                                       
+                                            ConfigOptions.test_ip_option,
+                                            optional=True)
         return self._test_ip
     
     @property
     def control_ip(self):
         """
-        The preferred parameter is the control interface but if for some reason that doesn't work, use this
+        This is an optional parameter
 
         :rtype: String
         :return: control ip address
         """
         if self._control_ip is None:
-            self._control_ip = self.parser.get_string(self.section,
-                                                   ConfigOptions.control_ip_option,
-                                                   optional=True)
+            self._control_ip = self.parser.get(self.section,
+                                               ConfigOptions.control_ip_option,
+                                               optional=True)
         return self._control_ip
 
     @property
     def login(self):
         """
-        This is optional
+        This is optional (depending on the connection type)
         
         :rtype: StringType or NoneType
         :return: configured login
         """
         if self._login is None:
-            self._login = self.parser.get_string(self.section,
-                                                 ConfigOptions.login_option,
-                                                 optional=True)
+            self._login = self.parser.get(self.section,
+                                          ConfigOptions.login_option,
+                                          optional=True)
         return self._login
 
     @property
     def password(self):
         """
-        This is optional
+        This is optional (depending on how the connection is set up)
         
         :rtype: StringType or NoneType
         :return: configured password
         """
         if self._password is None:
-            self._password = self.parser.get_string(self.section,
-                                                    ConfigOptions.password_option,
-                                                    optional=True)
+            self._password = self.parser.get(self.section,
+                                             ConfigOptions.password_option,
+                                             optional=True)
         return self._password
 
     @property
