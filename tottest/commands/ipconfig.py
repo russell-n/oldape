@@ -14,14 +14,17 @@ class Ipconfig(object):
     """
     A class to interpret the `ipconfig` output
     """
-    def __init__(self, connection, interface="Wireless LAN adapter"):
+    def __init__(self, connection, interface="Wireless LAN adapter", not_available="NA"):
         """
         :param:
 
          - `connection`: a connection to the device
+         - `interface`: The name of the interface to check
+         - `not_available`: The token to use if the information isn't found
         """
         self.connection = connection
         self.interface = interface
+        self.not_available = not_available
         self._ip_expression = None
         self._address = None
         return
@@ -52,5 +55,5 @@ class Ipconfig(object):
                 match = self.ip_expression.search(line)
                 if match:
                     return match.groupdict()[IpconfigEnum.address]
-        return
+        return self.not_available
 # end class Ipconfig

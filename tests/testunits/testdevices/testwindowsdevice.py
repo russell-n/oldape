@@ -62,7 +62,7 @@ class TestWindowsDevice(TestCase):
         self.assertEqual(expected, actual)        
         return
 
-    def test_get_wifi_info(self):
+    def test_wifi_info(self):
         rssi = "-89"
         self.rssi.return_value = rssi
         self.netsh.output = OUTPUT.split("\n")
@@ -89,4 +89,9 @@ Wireless LAN adapter Wireless Network Connection:
         address = self.device.address
         self.assertEqual("192.168.20.99", address)
         return
+
+    def test_log(self):
+        message = "not implemented"
+        self.device.log(message)
+        self.connection.eventcreate.assert_called_with('/l System /id 999 /d "{0}" /t Information /so Private'.format(message))
 #  class TestWindowsDevice

@@ -31,6 +31,7 @@ class IfconfigCommand(BaseClass):
         self._ip_address = None
         self._mac_address = None
         self._output = None
+        self._ip_expression = None
         return
 
     @property
@@ -47,15 +48,22 @@ class IfconfigCommand(BaseClass):
         """
         :return: The IP Address of the interface
         """
-        if self._ip_address is None:
+        return self._match(self.ip_expression,
+                           expressions.IP_ADDRESS_NAME)
+
+    @property
+    def ip_expression(self):
+        """
+        :return: a compiled expression to get the ip address
+        """
+        if self._ip_expression is None:
             if self.operating_system == enumerations.OperatingSystem.linux:
                 expression = expressions.LINUX_IP
             elif self.operating_system == enumerations.OperatingSystem.android:
                 expression = expressions.ANDROID_IP
-            self._ip_address = self._match(expression,
-                                           expressions.IP_ADDRESS_NAME)
-        return self._ip_address
-
+            self._ip_expression = re.compile(expression)
+        return self._ip_expression
+    
     @property
     def mac_address(self):
         """
@@ -67,23 +75,16 @@ class IfconfigCommand(BaseClass):
             elif self.operating_system == enumerations.OperatingSystem.android:
                 self._mac_address =  MAC_UNAVAILABLE
                 return self._mac_address
-            self._mac_address = self._match(expression,
+            self._mac_address = self._match(re.compile(expression),
                                             expressions.MAC_ADDRESS_NAME)
         return self._mac_address
     
     @property
     def output(self):
         """
-        This stores the value so it won't reflect updated changes.
-        Does a tee so that it can be used by more than one attribute
-                
         :return: The output of the ifconfig command on the device
         """
-        if self._output is None:
-            self._output, output = tee(self.connection.ifconfig(self.interface))
-        else:
-            self._output, output = tee(self._output)
-        return output
+        return  self.connection.ifconfig(self.interface)
 
     def _match(self, expression, name):
         """
@@ -94,8 +95,7 @@ class IfconfigCommand(BaseClass):
          
         :return: The named-group that matched or None
         """
-        expression = re.compile(expression)
-        for line in self.output:
+        for line in self.output.output:
             match = expression.search(line)
             if match:
                 return match.group(name)
