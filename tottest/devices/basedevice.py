@@ -10,16 +10,21 @@ from tottest.baseclass import BaseClass
 
 class BaseDevice(BaseClass):
     __metaclass__ = ABCMeta
-    def __init__(self, connection=None, *args, **kwargs):
+    def __init__(self, connection=None, interface=None, address=None, *args, **kwargs):
         """
         :param:
 
          - `connection`: An device connection
+         - `interface`: The test-interface name to try and get the address
+         - `address` The Test-interface IP to use if the interface name isn't given
         """
         self._connection = connection
+        self.interface = interface
+        self._address = address
         self._rssi = None
         self._wifi_info = None
         self._logger = None
+        self._address = None
         return
 
     @property
@@ -30,20 +35,6 @@ class BaseDevice(BaseClass):
         if self._connection is None:
             self._connection = None
         return self._connection
-
-    @abstractmethod
-    def wake_screen(self):
-        """
-        Acquire the wake lock.
-        """
-        return
-
-    @abstractmethod
-    def display(self, message):
-        """
-        Display an image on the screen
-        """
-        return
 
     @abstractmethod
     def disable_wifi(self):
@@ -66,7 +57,15 @@ class BaseDevice(BaseClass):
         :return: The Wifi Info
         """
         return
-    
+
+    @abstractproperty
+    def address(self):
+        """
+        :rtype: String
+        :return: the address (presumably) IP for the test-interface for the device
+        """
+        return
+
     @abstractmethod
     def log(self, message):
         """
@@ -77,4 +76,7 @@ class BaseDevice(BaseClass):
          - `message`: A string to send to the device log.
         """
         return
+
+    def __str__(self):
+        return self.wifi_info
 # end class BaseDevice

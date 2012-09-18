@@ -73,6 +73,7 @@ class WindowsDevice(BaseDevice):
             self._wifi_query = NetshWlan(self.connection)
         return self._wifi_query
 
+    
     @property
     def address(self):
         """
@@ -95,15 +96,30 @@ class WindowsDevice(BaseDevice):
         return
 
     def display(self, message):
-        raise NotImplementedError()    
+        self.logger.warning("Display not implemented")
         return
 
     def log(self, message):
-        raise NotImplementedError()
+        self.connection.eventcreate('/l System /id 999 /d "{0}" /t Information /so Private'.format(message))
         return
 
     def wake_screen(self):
-        raise NotImplementedError()
+        self.logger.warning("Wake-Screen Not Implemented")
         return
 
+    def connect(self, ssid):
+        """
+        :param:
+
+         - `ssid`: The SSID and Profile name to connect to
+        """
+        self.netsh('netsh wlan connect name="{0}" ssid="{0}"'.format(ssid))
+        return
+
+    def disconnect(self):
+        """
+        :postcondition: the device is disconnected from the AP but no disabled
+        """
+        self.connection.netsh("wlan disconnect")
+        return
 # end class WindowsDevice

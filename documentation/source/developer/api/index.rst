@@ -24,13 +24,23 @@ Networked Power Supply
 .. currentmodule:: tottest.affectors.elexol
 
 .. autosummary::
-   :toctree: affectors_api
+   :toctree: naxxx_api
    
    elexol
    errors
    naxxx
    networkedpowersupply
 
+
+The NeRS
+~~~~~~~~
+
+.. currentmodule:: tottest.affectors
+
+.. autosummary::
+   :toctree: ners_api
+
+   ners
 
 Builder
 -------
@@ -79,6 +89,7 @@ The **Commands** bundle specific commands with device connections. It is their r
    changeprompt
    dumpsyswifi
    ifconfig
+   ipconfig
    iperfbroadcast
    iperfcommand
    iwcommand
@@ -115,7 +126,6 @@ The **Commons** is a place to put things that the different sub-modules need to 
    storagebroadcaster
    storageoutput
 
-   
 Connections
 -----------
 
@@ -169,6 +179,7 @@ The **Devices** provide a set of standardized method calls to the connections (t
 
    basedevice
    adbdevice
+   linuxdevice
    sl4adevice
    windowsdevice
 
@@ -200,6 +211,7 @@ The *Config-file* is the primary user-interface for the test. It allows the APE 
    configurationmap
    lexicographer
    parametergenerator
+   timeconverter
 
 Sub-Lexicographers
 ~~~~~~~~~~~~~~~~~~
@@ -212,6 +224,7 @@ Sub-Lexicographers
    :toctree: sub_lexicographer_api
    
    devicelexicographer
+   iperflexicofragher
    naxxxlexicographer
 
 
