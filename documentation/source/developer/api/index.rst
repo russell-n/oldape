@@ -211,6 +211,7 @@ The *Config-file* is the primary user-interface for the test. It allows the APE 
    configurationmap
    lexicographer
    parametergenerator
+   parametertree
    timeconverter
 
 Sub-Lexicographers
@@ -224,7 +225,7 @@ Sub-Lexicographers
    :toctree: sub_lexicographer_api
    
    devicelexicographer
-   iperflexicofragher
+   iperflexicographer
    naxxxlexicographer
 
 

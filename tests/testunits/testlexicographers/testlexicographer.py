@@ -1,64 +1,86 @@
+from random import choice, randint
 from unittest import TestCase
-from ConfigParser import SafeConfigParser
+from string import letters
 from StringIO import StringIO
 
-from mock import MagicMock
+from nose.tools import raises
+from mock import MagicMock, patch
+
 from tottest.lexicographers import lexicographer
-from tottest.lexicographers import configurationmap
+from tottest.lexicographers.configurationmap import ConfigurationMap
+
 from tottest.commons import errors
 
 ConfigurationError = errors.ConfigurationError
+ArgumentError = errors.ArgumentError
 import tot
 
+def get_string():
+    return "".join([choice(letters) for i in range(randint(1, 10))])
 
-class LexicographerTest(TestCase):
+listdir = MagicMock()
+
+class TestNewLexicographer(TestCase):
     def setUp(self):
-        parser = configurationmap.ConfigurationMap("tot.ini")
-        parser._parser = SafeConfigParser()
-        parser._parser.readfp(StringIO(tot.output))
-        self.lexicographer = lexicographer.Lexicographer("tot.ini")
-        get_parser = MagicMock()
-        get_parser.return_value = parser
+        # the Configuration map will try to open the filename it's given
+        handle = MagicMock(spec=file)
+        handle.read.return_value = StringIO(tot.output)
+        self.open_mock = MagicMock(return_value = handle)
 
-        filename_generator = MagicMock()
-        filename_generator.return_value = ['tot.ini']
-        self.lexicographer.get_parser = get_parser
-        self.lexicographer.filenames = filename_generator
-        
+        # fake the names found
+        self.filenames = [get_string() for i in range(randint(1,10))]
+        self.glob = 'tot.ini'
+        self.lex = lexicographer.Lexicographer(self.glob)
+        self.shallow_find = MagicMock(return_value=self.filenames)
+        self.lex._finder = self.shallow_find
         return
 
-    #def test_test_section(self):
-    #    for parameters in self.lexicographer.parameters:
-    #        self.assertEqual(tot.output_folder, parameters.output_folder)
-            #self.assertEqual('tot.ini', parameters.config_file_name)
-            #self.assertEqual(tot.dut_test_ip_address, parameters.dut_parameters.test_ip)
-            #self.assertEqual(tot.tpc_control_ip_address, parameters.tpc_parameters.hostname)
-            #self.assertEqual(tot.tpc_test_ip_address, parameters.tpc_parameters.test_ip)
-            #self.assertEqual(tot.tcp_window_size , parameters.iperf_client_parameters.window)
-            #self.assertEqual(tot.tcp_window_size, parameters.iperf_server_parameters.window)
-            #self.assertEqual(tot.buffer_length, parameters.iperf_client_parameters.len)
-            #self.assertEqual(tot.parallel_threads, parameters.iperf_client_parameters.parallel)
-            #self.assertEqual(tot.data_intervals, parameters.iperf_client_parameters.interval)
-            #self.assertEqual(tot.data_units, parameters.iperf_client_parameters.format)
-            #self.assertEqual(str(float(tot.test_duration)), parameters.iperf_client_parameters.time)
-     #   return
+    def test_filenames(self):
+        """
+        the filenames property yields what the shallow_find function finds
+        """
+        self.lex._finder = self.filenames
 
-    def test_naxxx_section(self):
-        switches = '1 2 3 4 5'.split()
-        naxxx_ip = "192.168.12.60"
-        def side_effect(section, option):
-            if option in switches:
-                return switches.pop(0)
-            if option == "hostname":
-                return naxxx_ip
-            raise ConfigurationError()
-        
-        lex = lexicographer.Lexicographer('tot.ini')
-        parser = MagicMock()        
-        parser.get_ranges.return_value = [1,2,3,4,5]
-        parser.get_optional.return_value = naxxx_ip
-        parser.get_optional.side_effect=side_effect
-        parameters = lex.naxxx_section(parser)
-        self.assertEqual([int(s) for s in '1 2 3 4 5'.split()], [parameter.switch for parameter in parameters.parameters])
-        self.assertEqual(naxxx_ip, parameters.hostname)
+        actual = [name for name in self.lex.filenames]
+        self.assertEqual(self.filenames, actual)
         return
+
+    @raises(ArgumentError)
+    def test_no_filenames(self):
+        """
+        If no files match the glob an ArgumentError is raised
+        """
+        self.lex._finder = MagicMock(return_value = [])
+        for name in self.lex.filenames:
+            pass
+        self.lex._finder = None
+        return
+    
+    def test_iteration(self):
+        """
+        The Lexicographer yields configuration maps for each file
+        """
+        self.lex._finder = self.shallow_find.return_value
+        
+        with patch('__main__.open', self.open_mock, create=True):
+            lexes = [l for l in self.lex]
+        expected = len(self.filenames)
+        actual = len(lexes)
+        self.assertEqual(expected,actual)
+        for l in lexes:
+            self.assertIsInstance(l, ConfigurationMap)
+        return
+# end class TestNewLexicographer
+
+if __name__ == "__main__":
+    import pudb
+    pudb.set_trace()
+
+    filenames = "a b c".split()
+    shallow_find = MagicMock(return_value=filenames)
+    lexicographer.shallow_find = shallow_find
+    glob = 'tot.ini'
+    lex = lexicographer.Lexicographer(glob)
+    
+    actual = [name for name in lex.filenames]
+    

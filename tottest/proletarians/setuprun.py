@@ -44,14 +44,14 @@ class SetUp(BaseClass):
             l = self.lexicographer
             message = "Building builder with Lexicographer '{0}'".format(str(l))
             self.logger.debug(message)
-            self._builder = builder.Builder(l.parameters)
+            self._builder = builder.Builder(l)
         return self._builder
         
-    def run(self):
+    def __call__(self):
         """
         Runs the builder.hortator's `run` method    
         """
         self.logger.debug("Calling the hortator's run.")
-        self.builder.hortator.run()
+        self.builder.hortator()
         return            
 # end SetUp

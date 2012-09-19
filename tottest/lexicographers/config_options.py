@@ -23,6 +23,8 @@ class ConfigOptions(object):
 
     logcatwatcher_section = "LOGCATWATCHER"
     buffers_option = "buffers"
+
+    nodes_section = "NODES"
     
     iperf_section = "IPERF"
     directions_option = "directions"

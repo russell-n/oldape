@@ -8,12 +8,8 @@ from mock import MagicMock
 #tottest
 from tottest.builders import builder
 from tottest.proletarians import hortator
-from tottest.commons import enumerations
-ConnectionTypes = enumerations.ConnectionTypes
-from tottest.connections import sshconnection
-SSHConnection = sshconnection.SSHConnection
-from tottest.connections import adbconnection
-ADBShellConnection = adbconnection.ADBShellConnection
+
+
 
 class TestBuilder(TestCase):
     def setUp(self):
@@ -31,18 +27,3 @@ class TestBuilder(TestCase):
         self.assertIs(hortator.Hortator, type(h))
         return
 
-    def test_tpc_connection(self):
-        self.parameters.connection_type = ConnectionTypes.ssh
-        self.parameters.hostname = "cw"
-        self.parameters.username = "root"
-        self.parameters.paths = None
-        #self.parameters.paths = ["/opt/wifi"]
-        connection = self.builder.get_tpc_connection(self.parameters)
-        self.assertIs(SSHConnection, type(connection))
-        self.parameters.connection_type = ConnectionTypes.adblocal
-        self.builder.tpc_connection = None
-        connection = self.builder.get_tpc_connection(self.parameters)
-        self.assertIs(ADBShellConnection, type(connection))
-        return
-
-    
