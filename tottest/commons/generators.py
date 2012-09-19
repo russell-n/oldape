@@ -27,6 +27,57 @@ def find(glob, start=None):
             yield os.path.join(path, name)
     return
 
+class ShallowFind(object):
+    """
+    A finder of files that doesn't traverse directories
+    """
+    def __init__(self, glob, path=None):
+        """
+        :param:
+
+         - `glob`: a file glob to match
+         - `path`: an alternate to the current directory
+        """
+        self.glob = glob
+        self._path = path
+        self._filenames = None
+        return
+
+    @property
+    def path(self):
+        """
+        :return: the path to the directory to search
+        """
+        if self._path is None:
+            self._path = os.getcwd()
+        return self._path
+
+    @property
+    def filenames(self):
+        """
+        :return: all files found in the path
+        """
+        if self._filenames is None:
+            self._filenames = os.listdir(self.path)
+        return self._filenames
+
+    def reset(self):
+        """
+        Sets all properties to None
+        """
+        self._filenames = None
+        self._path = None
+        return
+
+    def __iter__(self):
+        """
+        :yield: the matching filenames
+        """
+        for name in fnmatch.filter(self.filenames, self.glob):
+            yield name    
+        return 
+# end class ShallowFind
+    
 def shallow_find(glob, start = None):
     """
     Matches only in one directory

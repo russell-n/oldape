@@ -31,41 +31,40 @@ NoOpDummy = dummy.NoOpDummy
 
 
 # builders
-from subbuilders.devicebuilder import AdbDeviceBuilder
-from subbuilders.connectionbuilder import AdbShellConnectionBuilder, SshConnectionBuilder
-from subbuilders.teardownbuilder import TearDownBuilder
-from subbuilders.testbuilder import IperfTestToDutBuilder, IperfTestFromDutBuilder
-from subbuilders.watchersbuilder import LogwatchersBuilder
-from subbuilders.timetorecoverybuilder import TimeToRecoveryBuilder
-from subbuilders.setupiterationbuilder import SetupIterationBuilder
-from subbuilders.affectorbuilder import NaxxxAffectorBuilder
-from subbuilders.teardowniterationbuilder import TeardownIterationBuilder
-
-connection_builders = {ConnectionTypes.ssh:SshConnectionBuilder,
-                       ConnectionTypes.adblocal:AdbShellConnectionBuilder}
+from subbuilders.nodesbuilder import NodesBuilder
 
 class Builder(BaseClass):
     """
     A builder builds objects
     """
-    def __init__(self, parameters, *args, **kwargs):
+    def __init__(self, maps, *args, **kwargs):
         """
         :param:
 
-         - `parameters`: A generator of OperatorParameters
+         - `maps`: A generator of ConfigurationMaps
         """
         super(Builder, self).__init__(*args, **kwargs)
-        self.parameters = parameters
+        self.maps = maps
         self._operators = None
         self._hortator = None
-        self.dut_device = None
-        self.dut_connection = None
-        self.dut_connection_threads = None
         self.tpc_connection = None
         self.storage = None
         self._lock = None
+        self._nodes = None
         return
 
+    def nodes(self, config_map):
+        """
+        :param:
+
+         - `config_map`: a configuration map with enough information for a node-builder
+
+        :return: dictionary of id:node-device pairs
+        """
+        if self._nodes is None:
+            self._nodes = NodesBuilder(config_map).nodes
+        return self._nodes
+    
     @property
     def lock(self):
         """
@@ -79,28 +78,10 @@ class Builder(BaseClass):
     def operators(self):
         """
         :yield: test operators
-        """
-        for static_parameters in self.parameters:
-            self.logger.debug("Building the TestParameters with StaticParameters - {0}".format(static_parameters))
+        """ 
+        for config_map in self.maps:
+            self.logger.debug("Building the TestParameters with configmap - {0}".format(config_map))
 
-            test_parameters = ParameterGenerator(static_parameters)
-            setup = self.get_setup_iteration(static_parameters)
-            teardown = TeardownIterationBuilder().teardowniteration
-            tests = self.get_tests(static_parameters)
-            device = self.get_dut_connection(static_parameters.dut_parameters)
-            watchers = self.get_watchers(static_parameters)
-            cleanup = self.get_teardown(static_parameters.config_file_name,
-                                        self.get_storage(static_parameters.output_folder))
-            countdown_timer = countdowntimer.CountdownTimer(static_parameters.repetitions)
-            
-            yield TestOperator(test_parameters=test_parameters,
-                               setup=setup,
-                               teardown=teardown,
-                               tests=tests,
-                               device=device,
-                               watchers=watchers,
-                               cleanup=cleanup,
-                               countdown_timer=countdown_timer)
         return
 
     @property
@@ -112,53 +93,6 @@ class Builder(BaseClass):
             self.logger.debug("Building the Hortator")
             self._hortator = hortator.Hortator(operators=self.operators)
         return self._hortator
-
-    def get_teardown(self, configfilename, storage):
-        """
-        :param:
-
-         - `configfilename`: The name of the config-file to copy.
-        :return: A Teardown for the TestOperator's cleanup
-        """
-        return TearDownBuilder(configfilename, storage).teardown
-    
-    def get_dut_device(self, parameters=None):
-        """
-        :param:
-
-         - `parameters`: Nothing for the current ADB connection, meant to be used when generalized
-        
-        :warning: This returns the same connection repeatedly - don't use in threads.
-
-        :return: device
-        """
-        if self.device is None:
-            self.device = AdbDeviceBuilder().device
-        return self.device
-    
-    def get_dut_connection(self, parameters):
-        """
-        This returns the same connection repeatedly
-        
-        :return: connection to the dut
-        """
-        if self.dut_connection is None:
-            self.dut_connection = connection_builders[parameters.connection_type](parameters).connection
-            if parameters.paths is not None:
-                self.dut_connection.add_paths(parameters.paths)
-        return self.dut_connection
-
-    def get_dut_connection_threads(self, parameters):
-        """
-        This returns the same connection repeatedly
-        It is intended only for use with objects that lock the connection calls.
-        
-        :return: dut-connection intended for use in threads
-        """
-        if self.dut_connection_threads is None:
-            self.dut_connection_threads = connection_builders[parameters.connection_type](parameters)
-            self.dut_connection_threads = self.dut_connection_threads.connection
-        return self.dut_connection_threads
     
     def get_tpc_connection(self, parameters):
         """
@@ -189,87 +123,5 @@ class Builder(BaseClass):
             self.logger.debug("Builing the Storage with folder: {0}".format(folder_name))
             self.storage = storageoutput.StorageOutput(folder_name)
         return self.storage
-
-
-    def get_tests(self, parameters):
-        """
-        :param:
-
-         - `parameters` : named tuple with output_file and data_file names.
-         
-        :return: dictionary of direction:TimeToRecoveryTest 
-        """
-        storage = self.get_storage(parameters.output_folder)
-        tpc = self.get_tpc_connection(parameters.tpc_parameters)
-        dut = self.get_dut_connection(parameters.dut_parameters)
-        tests = {}
-        for direction in parameters.directions:
-            if direction == iperf_direction.to_dut:
-                tests[direction] = IperfTestToDutBuilder(tpc_connection=tpc,
-                                                         dut_connection=dut,
-                                                         storage=storage).test
-            elif direction == iperf_direction.from_dut:
-                tests[direction] = IperfTestFromDutBuilder(tpc_connection=tpc,
-                                                           dut_connection=dut,
-                                                           storage=storage).test
-        return tests
-
-    def get_watchers(self, parameters):
-        """
-        :param:
-
-         - `parameters`: The lexicographer's static-parameters
-         
-        :return: Master logwatcher
-        """
-        paths = parameters.logwatcher_parameters.paths
-        buffers = parameters.logcatwatcher_parameters.buffers
-        connection = self.get_dut_connection_threads(parameters.dut_parameters)
-        storage = self.get_storage(parameters.output_folder)
-        watcher = LogwatchersBuilder(paths=paths,
-                                     buffers=buffers,
-                                     connection=connection,
-                                     output=storage)
-        return watcher.watcher
-
-    def get_setup_iteration(self, parameters):
-        """
-        :param:
-
-         - `parameters`: A lexicographer's static-parameters
-        """
-        time_to_recovery = self.get_ttr(parameters)
-        device = self.get_dut_connection(parameters.dut_parameters)
-        affector = NaxxxAffectorBuilder(parameters.affector_parameters).affector
-        if affector is None:
-            affector = NoOpDummy()
-        return SetupIterationBuilder(affector=affector,
-                                     time_to_recovery=time_to_recovery,
-                                     device=device).setup
-    
-    def get_ttr(self, parameters):
-        """
-        :param:
-
-         - `parameters`: static-parameters
-
-        :return: A time-to-recovery tester
-        """
-        target = parameters.tpc_parameters.test_ip
-        connection = self.get_dut_connection(parameters.dut_parameters)
-        os = operating_systems.android
-        builder = TimeToRecoveryBuilder(target=target, connection=connection,
-                                        operating_system=os)
-        return builder.ttr
-    
-    def reset(self):
-        """
-        To be called when an operator has been built to reset the object.
-        """
-        self.dut_device = None
-        self.dut_connection = None
-        self.tpc_connection = None
-        self.storage = None
-        return
 # end Builder
     

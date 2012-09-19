@@ -9,8 +9,6 @@ from tottest.baseclass import BaseClass
 from tottest.tools import sleep
 from tottest.commons import errors
 
-# another last minute hack for amazon
-from tottest.connections.adbconnection import ADBConnection, ADBShellBlockingConnection
 
 TIME_REMAINING = "Estimated time Remaining: {t}"
 
@@ -28,46 +26,31 @@ class TestOperator(BaseClass):
     """
     An operator runs the sequence of operations.
     """
-    def __init__(self, test_parameters, setup, teardown, tests, device, watchers,
+    def __init__(self, test_parameters, operation_setup, operation_teardown,
+                 test_setup, tests, test_teardown,
                  cleanup, countdown_timer, sleep=None):
         """
         :params:
 
          - `test_parameters`: A generator of test parameters
-         - `setup`: A SetUp to run for each repetition
-         - `teardown`: A TearDown to run for each repetition
-         - `tests`: A dictionary of test_id:test where tests are to be run
-         - `device`: A device to send log messages to
-         - `watcher`: threaded watchers to start
-         - `cleanup`: A CleanUp to run after all the tests are done
+         - `operation_setup`: A set up to run before (all) the tests
+         - `operation_teardown`: A TearDown to run after (all) the tests
+         - `test_setup`: A set up to run before each test
+         - `tests`: The tests to be run with each parameter subset
+         - `test_teardown`: A tear down to run after each test is run
          - `countdown_timer`: An estimator of remaining time
          - `sleep`: A sleep for recovery times
         """
         super(TestOperator, self).__init__()
         self.test_parameters = test_parameters
-        self.setup = setup
-        self.teardown = teardown
+        self.operation_setup = operation_setup
+        self.operation_teardown = operation_teardown
+        self.test_setup = test_setup
         self.tests = tests
-        self.device = device
-        self.watchers = watchers
-        self.cleanup = cleanup
+        self.test_teardown = test_teardown
         self.countdown_timer = countdown_timer
         self._sleep = sleep
-        self._adb_connection = None
-        self._adb_blocking_shell = None
         return
-
-    @property
-    def adb_connection(self):
-        if self._adb_connection is None:
-            self._adb_connection = ADBConnection()
-        return self._adb_connection
-
-    @property
-    def adb_blocking_shell(self):
-        if self._adb_blocking_shell is None:
-            self._adb_blocking_shell = ADBShellBlockingConnection()
-        return self._adb_blocking_shell
 
     @property
     def sleep(self):
@@ -78,23 +61,6 @@ class TestOperator(BaseClass):
             self._sleep = sleep.Sleep()
         return self._sleep
         
-    def log_message(self, message):
-        """
-        Send message to running-code log and device log.
-        """
-        self.logger.info(message)
-        self.device.log(message)
-        return
-
-    def reboot(self):
-        self.adb_connection.reboot()
-        output, error = self.adb_blocking_shell.bugreport()
-        for line in output:
-            self.logger.info(line)
-        for line in error:
-            self.logger.error(line)
-        return
-
     def one_repetition(self, parameter):
         """
         Holds the test algorithm for one repetition.
@@ -105,18 +71,16 @@ class TestOperator(BaseClass):
         #. Runs test
         #. Runs Teardown
         """
-        import pudb; pudb.set_trace()
         self.logger.info("Running Parameters: {0}".format(parameter))
-        test = self.tests[parameter.test_id]
         self.log_message(TEST_PREAMBLE.format(r=parameter.repetition,
                                                t=parameter.repetitions))
         self.logger.info("Running test setup")
-        self.setup.run(parameter)
+        self.test_setup.run(parameter)
         self.logger.info("Running Test")
-        test_result = test.run(parameter)
-        self.log_message(TEST_RESULT.format(r=test_result))
+        test_result = self.tests.run(parameter)
+        self.logger.info(TEST_RESULT.format(r=test_result))
         self.logger.info("Running teardown")
-        self.teardown.run(parameter)
+        self.test_teardown.run(parameter)
         self.logger.info(TIME_REMAINING.format(t=self.countdown_timer.remaining_time))
         return
     
@@ -124,7 +88,7 @@ class TestOperator(BaseClass):
         """
         This is the main operation method.
         """
-        self.watchers.start()
+        self.operation_setup()
         self.countdown_timer.start_timer()
         try:
             for parameter in self.test_parameters:
@@ -136,11 +100,10 @@ class TestOperator(BaseClass):
                     
             self.log_message(TEST_POSTAMBLE.format(t=self.countdown_timer.total_time))
             self.logger.info("Sleeping to let the logs finish recording the test-information")
-            self.sleep.run()
+            self.sleep()
         except (errors.ConnectionError, errors.CommandError, errors.ConfigurationError) as error:
             self.logger.error(error)
         finally:
-            self.watchers.stop()
-            self.cleanup.run()
+            self.operation_teardown()
         return
 # end TestOperator

@@ -82,6 +82,22 @@ class ConfigurationMap(BaseClass):
             self._sections = self.parser.sections()
         return self._sections
 
+    def options(self, section, default=None, optional=True):
+        """
+        :param:
+
+         - `section`: the section in the config file to check
+         - `optional`: if True, returns default instead of raising an error
+         - `default`: value to return if section doesn't exist and is optional
+        """
+        try:
+            return self.parser.options(section)
+        except ConfigParser.NoSectionError as error:
+            self.logger.debug(error)
+            if optional:
+                return default
+            raise ConfigurationError("Unknown Section: {0}".format(section))
+    
     @property
     def parser(self):
         """

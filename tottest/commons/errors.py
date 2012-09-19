@@ -4,7 +4,7 @@ A module to hold common exceptions
 
 class ConnectionError(Exception):
     """
-    A ConnectionError is raised by connections to indicate a problem.
+    A ConnectionError is raised by connectinos to indicate a problem.
     """
     pass
 # end class ConnectionError
@@ -50,3 +50,8 @@ class AffectorError(Exception):
     """
 # end class AffectorError
 
+class ArgumentError(Exception):
+    """
+    raised if command-line arguments don't produce valid output
+    """
+# end class InvocationError

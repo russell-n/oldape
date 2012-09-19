@@ -5,7 +5,7 @@ A module to hold a keeper of Strategies
 #python Libraries
 
 # testrunner Libraries
-from setup import SetUp
+from setuprun import SetUp
 #from teardown import TearDown
 from crashhandler import CrashHandler
 from tottest.lexicographers.configfetcher import ConfigFetcher
@@ -34,9 +34,9 @@ class Strategerizer(BaseClass):
         """
         try:
             self.logger.debug("Building the SetUp")
-            setup = SetUp(args)
+            run = SetUp(args)
             self.logger.debug("Running the test setup")
-            setup.run()
+            run()
         except Exception as error:
             self.logger.error("Running the crash handler")
             crash_handler = CrashHandler(args)

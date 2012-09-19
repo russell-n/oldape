@@ -38,7 +38,7 @@ class Hortator(BaseClass):
         self.operators = operators
         return
 
-    def run(self):
+    def __call__(self):
         """
         Runs the operators
         """
