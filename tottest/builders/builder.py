@@ -17,6 +17,7 @@ from tottest.proletarians import hortator
 from tottest.proletarians.testoperator import TestOperator
 from tottest.proletarians import countdowntimer
 
+
 #config
 from tottest.lexicographers.parametergenerator import ParameterGenerator
 
@@ -32,6 +33,11 @@ NoOpDummy = dummy.NoOpDummy
 
 # builders
 from subbuilders.nodesbuilder import NodesBuilder
+from subbuilders.operationsetupbuilder import OperationSetupBuilder
+from subbuilders.operationteardownbuilder import OperationTeardownBuilder
+from subbuilders.setuptestbuilder import SetupTestBuilder
+from subbuilders.executetestbuilder import ExecuteTestBuilder
+from subbuilders.teardowntestbuilder import TeardownTestBuilder
 
 class Builder(BaseClass):
     """
@@ -81,7 +87,18 @@ class Builder(BaseClass):
         """ 
         for config_map in self.maps:
             self.logger.debug("Building the TestParameters with configmap - {0}".format(config_map))
-
+            operation_setup = OperationSetupBuilder(config_map).operation_setup
+            operation_teardown = OperationTeardownBuilder(config_map).operation_teardown
+            test_setup = SetupTestBuilder(config_map).test_setup
+            test = ExecuteTestBuilder(config_map).execute_test
+            test_teardown = TeardownTestBuilder(config_map).teardown_test
+            yield TestOperator([],
+                               operation_setup=operation_setup,
+                               operation_teardown=operation_teardown,
+                               test_setup=test_setup,
+                               tests=test,
+                               test_teardown=test_teardown,
+                               countdown_timer=NoOpDummy())
         return
 
     @property

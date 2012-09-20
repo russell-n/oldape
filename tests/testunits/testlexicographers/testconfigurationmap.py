@@ -1,8 +1,10 @@
 from unittest import TestCase
+from collections import namedtuple
 
 from mock import MagicMock
 
 from tottest.lexicographers import configurationmap
+
 
 ConfigurationMap = configurationmap.ConfigurationMap
 
@@ -39,6 +41,18 @@ class ConfigurationMapTest(TestCase):
         self.map._parser.get.return_value = value
         output = self.map.get_list("DUT", "paths", optional=True)
         self.assertEqual(value, output)
+        return
+
+    def test_get_named_tuple(self):
+        self.map._parser.get.return_value = "cow:boy,hot:dog, pig:face"
+        section = "SECTION"
+        option = "notanoption"
+        t = namedtuple(option, "cow hot pig".split())
+        expected = t("boy", "dog",  "face")
+        actual = self.map.get_namedtuple(section, option)
+        for field in actual._fields:
+            self.assertEqual(getattr(expected, field), getattr(actual, field))
+        return
 
 if __name__ == "__main__":
     import pudb

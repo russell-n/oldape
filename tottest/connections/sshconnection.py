@@ -15,10 +15,8 @@ prints the output of the `ls -l` command line command
 """
 
 #python Libraries
-from collections import namedtuple
 import Queue
 import socket
-from StringIO import StringIO
 
 # tottest Libraries
 from tottest.commons.readoutput import StandardOutput
@@ -26,13 +24,12 @@ from tottest.commons import enumerations
 
 # connections
 from nonlocalconnection import NonLocalConnection
+from localconnection import OutputError
 from sshadapter import SimpleClient
 
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
 EOF = ''
-
-OutputError = namedtuple("OutputError", 'output error')
 
 
 class SSHConnection(NonLocalConnection):

@@ -3,12 +3,15 @@ class ConfigOptions(object):
     An enumeration of sorts to hold the section and option names for the config file.
     """
     test_section = 'TEST'
+    operation_setup_option = "operation_setup"
+    operation_teardown_option = "operation_teardown"
+    test_setup_option = "test_setup_option"
+    
     output_folder_option = 'output_folder'
     data_file_option = "data_file"
     repetitions_option = "repeat"
     recovery_time_option = "recovery_time"
     
-    dut_section = 'NODE1'
     test_interface_option = "test_interface"
     operating_system_option = "operating_system"
     control_ip_option = "hostname"
