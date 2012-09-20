@@ -10,13 +10,15 @@ class WindowsNodeBuilder(BaseClass):
     """
     A class to build a Windows device
     """
-    def __init__(self, parameters):
+    def __init__(self, parameters, lock=None):
         """
         :param:
 
          - `parameters`: object with attributes needed for device & connection
+         - `lock`: A re-entrant lock to pass to the Connection if it will be used in threads
         """
         self.parameters = parameters
+        self.lock = lock
         self._connection = None
         self._node = None
         return
@@ -27,7 +29,7 @@ class WindowsNodeBuilder(BaseClass):
         :return: connection built to match parameter.connection
         """
         if self._connection is None:
-            self._connection = connection_builders[self.parameters.connection](self.parameters).connection
+            self._connection = connection_builders[self.parameters.connection](self.parameters, self.lock).connection
         return self._connection
 
     @property

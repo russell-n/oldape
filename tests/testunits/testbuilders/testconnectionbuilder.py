@@ -34,18 +34,19 @@ class TestSSHConnectionBuilder(TestCase):
         self.password = "iamthelaw"
         self.operating_system = "windows"
         self.parameters = MagicMock()
+        self.lock = MagicMock()
         self.parameters.section = self.section
         self.parameters.hostname = self.hostname
         self.parameters.username = self.username
         self.parameters.password = self.password
         self.parameters.operating_system = self.operating_system
-        self.builder = connectionbuilder.SSHConnectionBuilder(self.parameters)
+        self.builder = connectionbuilder.SSHConnectionBuilder(self.parameters, self.lock)
         return
 
     @raises(ConfigurationError)
     def test_hostname_failure(self):
         parameters = test_no_attr
-        builder = connectionbuilder.SSHConnectionBuilder(parameters)
+        builder = connectionbuilder.SSHConnectionBuilder(parameters, self.lock)
         hostname = builder.hostname
         return
 
@@ -62,7 +63,7 @@ class TestSSHConnectionBuilder(TestCase):
     @raises(ConfigurationError)
     def test_username_fail(self):
         parameters = test_no_attr
-        builder = connectionbuilder.SSHConnectionBuilder(parameters)
+        builder = connectionbuilder.SSHConnectionBuilder(parameters, self.lock)
         username = builder.username
         return
 

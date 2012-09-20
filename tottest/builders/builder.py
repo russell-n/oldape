@@ -68,7 +68,7 @@ class Builder(BaseClass):
         :return: dictionary of id:node-device pairs
         """
         if self._nodes is None:
-            self._nodes = NodesBuilder(config_map).nodes
+            self._nodes = NodesBuilder(self, config_map).nodes
         return self._nodes
     
     @property

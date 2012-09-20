@@ -91,12 +91,17 @@ class SSHConnection(NonLocalConnection):
             command = SPACER.format(self.command_prefix,
                                     command)
         try:
-            stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
+            self.logger.debug("Acquiring the lock to exec_command")
+            with self.lock:                
+                stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
+        except AttributeError as error:
+            self.logger.debug(error)
+            stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)            
         except:
-            #self.logger.error(error)
             import sys
             self.exc_info = sys.exc_info()
             return
+        self.logger.debug("Completed exec_command of: {0} {1}".format(command, arguments))
         line = None
         output_queue = Queue.Queue()
         output = StandardOutput(queue=output_queue)
