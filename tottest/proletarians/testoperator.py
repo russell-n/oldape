@@ -28,7 +28,7 @@ class TestOperator(BaseClass):
     """
     def __init__(self, test_parameters, operation_setup, operation_teardown,
                  test_setup, tests, test_teardown,
-                 cleanup, countdown_timer, sleep=None):
+                 countdown_timer, sleep=None):
         """
         :params:
 

@@ -6,7 +6,32 @@ This is a module to hold device builders.
 """
 
 from tottest.baseclass import BaseClass
-from tottest.devices import adbdevice
+from tottest.devices import adbdevice, windowsdevice
+
+class WindowsDeviceBuilder(BaseClass):
+    """
+    A Device Builder for Windows Devices
+    """
+    def __init__(self, connection):
+        """
+        :param:
+
+         - `connection`: a connection to the device
+        """
+        super(WindowsDeviceBuilder, self).__init__()
+        self.connection = connection
+        self._device = None
+        return
+
+    @property
+    def device(self):
+        """
+        :return: A Windows Device
+        """
+        if self._device is None:
+            self._device = windowsdevice.WindowsDevice(self.connection)
+        return self._device
+# end class WindowsDeviceBuilder
 
 class AdbDeviceBuilder(BaseClass):
     """
@@ -33,3 +58,10 @@ class AdbDeviceBuilder(BaseClass):
             self._device = adbdevice.AdbDevice()
         return self._device
 # end class DutDeviceBuilder
+
+class DeviceBuilderTypes(object):
+    __slots__ = ()
+    windows = "windows"
+# end class DeviceBuilderTypes
+
+device_builders = {DeviceBuilderTypes.windows:WindowsDeviceBuilder}

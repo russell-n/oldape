@@ -5,6 +5,7 @@ An extension of the ConfigParser to do conversions
 import re
 import ConfigParser
 from string import whitespace
+from collections import namedtuple
 
 # apetools Libraries
 from tottest.baseclass import BaseClass
@@ -136,7 +137,6 @@ class ConfigurationMap(BaseClass):
             value = self.parser.get(section, option)
             return value.strip(STRIP_LIST)
         except (ConfigParser.Error, AttributeError) as error:
-            print error
             if optional:
                 return default
             self.raise_error(error)
@@ -375,7 +375,35 @@ class ConfigurationMap(BaseClass):
             dictionaries.append(dict(line))
         return dictionaries
 
+
+    def get_namedtuple(self, section, option, default=None, delimiter=COMMA, converter=str,
+                       key_value_separator=":"):
+        """
+        This expects a format of `{key:value, key:value}`
+
+        For clarity named-tuples can be enclosed in braces ({}) but only the dictionary_separator is used
+        
+        :param:
+
+         - `section`: The [section] in the config file.
+         - `option`: the option in the section
+         - `default`: what to return if fails and optional
+         - `optional`: if True, returns defauln instead of raising an error
+         - `delimiter`: what separates the different key:value pairs
+         - `converter`: a function to apply to the value
+         - `key_value_separator`: Token to separate key-value pairs
+         - `dictionary_separator`: what separates the different dictionaries
+         
+        :return: namedtuple with keys as properties and values as matching values
+
+        :raises: ConfigurationError if not optional and not found.
     
+        """
+        source = self.get_dictionary(section=section, option=option, default=default, delimiter=delimiter,
+                                     converter=converter, key_value_separator=key_value_separator)
+        tuple_constructor = namedtuple(option, source.keys())
+        return tuple_constructor(**source)
+                       
     def get_range(self, section, option, default=None, optional=False, delimiter=DASH):
         """
         Converts values from `start - end` to [start...end] (expects integers)
