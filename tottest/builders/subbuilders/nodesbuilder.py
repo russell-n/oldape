@@ -46,7 +46,7 @@ class NodesBuilder(BaseClass):
                                for node in nodes]
                 node_tuples = dict(zip(nodes, config_tuples))
                 for node, parameters in node_tuples.items():
-                    self._nodes[node] = node_builders[parameters.operating_system](parameters).node
+                    self._nodes[node] = node_builders[parameters.operating_system](parameters, self.builder.lock).node
             except TypeError as error:
                 self.logger.debug(error)
                 self._nodes[NodeTypes.dummy] = DummyDevice()        

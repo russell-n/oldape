@@ -31,16 +31,18 @@ class NonLocalConnection(BaseClass):
     A non-local connection is the base for non-local connections
 
     """
-    def __init__(self, command_prefix='', *args, **kwargs):
+    def __init__(self, command_prefix='', lock=None, *args, **kwargs):
         """
         :param:
 
          - `command_prefix`: A prefix to prepend to commands (e.g. 'adb shell')
+         - `lock` : A lock to acquire before calls
         """
         super(NonLocalConnection, self).__init__(*args, **kwargs)
         # logger is defined in BaseClass but declared here for child-classes
         self._logger = None
         self.command_prefix = command_prefix
+        self.lock = None
         self._queue = None
         self.exc_info = None
         return
