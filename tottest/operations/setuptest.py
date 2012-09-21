@@ -15,3 +15,15 @@ class DummySetupTest(BaseClass):
     def __call__(self, parameters):
         return
 # end class DummyTestSetup
+
+class SetupTest(BaseClass):
+    def __init__(self, products):
+        """
+        :param:
+
+         - `products`: list of products
+        """
+        super(SetupTest, self).__init__()
+        self.products = products
+        return
+# end class SetupTest

@@ -2,6 +2,8 @@
 A module to tranform lists of namedtuple parameters into lists of dictionaries.
 """
 
+from collections import namedtuple
+
 class TreeNode(object):
     """
     A Class to represent a node in a tree with arbitrary number of children
@@ -58,13 +60,18 @@ class ParameterTree(object):
     @property
     def paths(self):
         """
-        :return: List of name:parameter dicts (paths from roots to leaves)
+        This is relying on a side-effect.
+        
+        :return: namedtuple of name:parameter dicts (paths from roots to leaves)
         """
         if self._paths is None:
             self._paths = []
             for limb in self.tree:
                 path = {}
                 self.traverse(limb, path)
+
+            Paths = namedtuple("Paths", self._paths.keys())
+            self._paths = Paths(*[self._paths[f] for f in Paths._fields])
         return self._paths
     
     def traverse(self, tree, path):
