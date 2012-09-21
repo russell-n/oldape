@@ -9,6 +9,12 @@ tottest.connections.serialadapter
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SerialAdapter
+   
    
 
    

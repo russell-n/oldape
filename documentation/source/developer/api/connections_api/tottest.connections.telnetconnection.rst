@@ -5,9 +5,26 @@ tottest.connections.telnetconnection
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      namedtuple
+   
    
 
    
+   
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      NonLocalConnection
+      OutputError
+      StandardOutput
+      StringIO
+      TelnetAdapter
+      TelnetConnection
    
    
 

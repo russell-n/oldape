@@ -1,7 +1,7 @@
-tottest.commands.wmic
-=====================
+tottest.commands.iwconfig
+=========================
 
-.. automodule:: tottest.commands.wmic
+.. automodule:: tottest.commands.iwconfig
 
    
    
@@ -13,9 +13,8 @@ tottest.commands.wmic
 
    .. autosummary::
    
-      BaseClass
-      WmicEnumeration
-      WmicWin32NetworkAdapter
+      Iwconfig
+      IwconfigEnums
    
    
 

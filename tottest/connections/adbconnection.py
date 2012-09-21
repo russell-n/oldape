@@ -161,11 +161,11 @@ class ADBShellBlockingConnection(ADBShellConnection):
         self._unknown_command = None
         return
 
-if __name__ == "__main__":
-    from tottest.main import watcher
-    import sys
-    watcher()
-    adb = ADBShellConnection()
-    for line in adb.logcat('-v time', timeout=1):
-        sys.stdout.write(line)
+#if __name__ == "__main__":
+#    from tottest.main import watcher
+#    import sys
+#    watcher()
+#    adb = ADBShellConnection()
+#    for line in adb.logcat('-v time', timeout=1):
+#        sys.stdout.write(line)
     

@@ -9,6 +9,12 @@ tottest.baseclass
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BaseClass
+   
    
 
    

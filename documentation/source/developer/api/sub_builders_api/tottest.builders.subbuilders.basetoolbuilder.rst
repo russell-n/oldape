@@ -1,7 +1,7 @@
-tottest.builders.subbuilders.teardownbuilder
+tottest.builders.subbuilders.basetoolbuilder
 ============================================
 
-.. automodule:: tottest.builders.subbuilders.teardownbuilder
+.. automodule:: tottest.builders.subbuilders.basetoolbuilder
 
    
    
@@ -13,8 +13,9 @@ tottest.builders.subbuilders.teardownbuilder
 
    .. autosummary::
    
+      ABCMeta
       BaseClass
-      TearDownBuilder
+      BaseToolBuilder
    
    
 

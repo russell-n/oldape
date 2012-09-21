@@ -9,6 +9,13 @@ tottest.commons.dummy
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BaseClass
+      NoOpDummy
+   
    
 
    

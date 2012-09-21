@@ -13,9 +13,10 @@ tottest.builders.subbuilders.setuptestbuilder
 
    .. autosummary::
    
-      BaseClass
+      BaseToolBuilder
       ConfigOptions
       DummySetupTest
+      SetupTest
       SetupTestBuilder
    
    

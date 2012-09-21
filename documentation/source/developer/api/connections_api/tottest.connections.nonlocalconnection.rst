@@ -5,12 +5,6 @@ tottest.connections.nonlocalconnection
 
    
    
-   .. rubric:: Functions
-
-   .. autosummary::
-   
-      namedtuple
-   
    
 
    

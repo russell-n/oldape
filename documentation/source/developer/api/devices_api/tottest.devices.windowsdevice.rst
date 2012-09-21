@@ -14,6 +14,7 @@ tottest.devices.windowsdevice
    .. autosummary::
    
       BaseDevice
+      Ipconfig
       NetshWlan
       WinRssi
       WindowsDevice

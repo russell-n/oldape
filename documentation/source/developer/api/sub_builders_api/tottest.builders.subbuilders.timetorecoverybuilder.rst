@@ -9,6 +9,12 @@ tottest.builders.subbuilders.timetorecoverybuilder
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      TimeToRecoveryBuilder
+   
    
 
    

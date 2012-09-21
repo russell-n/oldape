@@ -5,6 +5,12 @@ tottest.parsers.iperfparser
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      coroutine
+   
    
 
    

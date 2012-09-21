@@ -13,7 +13,11 @@ tottest.devices.linuxdevice
 
    .. autosummary::
    
+      BaseDevice
+      IfconfigCommand
+      Iwconfig
       LinuxDevice
+      OperatingSystem
    
    
 

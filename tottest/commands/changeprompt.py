@@ -73,8 +73,8 @@ class ChangePrompt(BaseClass):
         
 # end class ChangePrompt
 
-if __name__ == "__main__":
-    from tottest.connections import telnetadapter 
-    t = telnetadapter.TelnetAdapter("192.168.10.172")
-    c = ChangePrompt(t)
-    print c.run()
+#if __name__ == "__main__":
+#    from tottest.connections import telnetadapter 
+#    t = telnetadapter.TelnetAdapter("192.168.10.172")
+#    c = ChangePrompt(t)
+#    print c.run()

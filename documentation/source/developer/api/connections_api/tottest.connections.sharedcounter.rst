@@ -9,6 +9,12 @@ tottest.connections.sharedcounter
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      SharedCounter
+   
    
 
    

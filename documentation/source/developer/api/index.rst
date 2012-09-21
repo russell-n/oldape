@@ -66,10 +66,12 @@ Sub-Builders
    :toctree: sub_builders_api
    
    affectorbuilder
+   basetoolbuilder
    connectionbuilder
    devicebuilder
    executetestbuilder
    iperftestbuilder
+   nersbuilder
    nodebuilder
    nodesbuilder
    operationsetupbuilder
@@ -81,6 +83,7 @@ Sub-Builders
    teardowniterationbuilder
    teardowntestbuilder
    timetorecoverybuilder
+   toolbuilder
    watchersbuilder
 
 
@@ -101,6 +104,7 @@ The **Commands** bundle specific commands with device connections. It is their r
    iperfbroadcast
    iperfcommand
    iwcommand
+   iwconfig
    netcfg
    netsh
    ping
@@ -236,6 +240,18 @@ Sub-Lexicographers
    iperflexicographer
    naxxxlexicographer
 
+Operations
+----------
+
+.. currentmodule:: tottest.operations
+
+.. autosummary::
+
+   executetest
+   operationsetup
+   operationteardown
+   setuptest
+   teardowntest
 
 Parameters
 ----------
@@ -285,7 +301,8 @@ The **Proletarians** contains modules to run the test. They are the civil-servan
    enabledebugging
    errors
    hortator
-   setup
+   liststrategy
+   setuprun
    strategerizer
    teardown
    testoperator
