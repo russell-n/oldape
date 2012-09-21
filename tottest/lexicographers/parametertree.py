@@ -60,7 +60,7 @@ class ParameterTree(object):
     @property
     def paths(self):
         """
-        This is relying on a side-effect.
+        This is relying on a side-effect to self._paths in traverse
         
         :return: namedtuple of name:parameter dicts (paths from roots to leaves)
         """
@@ -70,8 +70,11 @@ class ParameterTree(object):
                 path = {}
                 self.traverse(limb, path)
 
-            Paths = namedtuple("Paths", self._paths.keys())
-            self._paths = Paths(*[self._paths[f] for f in Paths._fields])
+            paths = []
+            for path in self._paths:
+                Paths = namedtuple("Paths", path.keys())
+                paths.append(Paths(*[path[f] for f in Paths._fields]))
+            self._paths = paths
         return self._paths
     
     def traverse(self, tree, path):

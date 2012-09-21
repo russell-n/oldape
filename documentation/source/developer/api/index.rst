@@ -68,10 +68,18 @@ Sub-Builders
    affectorbuilder
    connectionbuilder
    devicebuilder
+   executetestbuilder
+   iperftestbuilder
+   nodebuilder
+   nodesbuilder
+   operationsetupbuilder
+   operationteardownbuilder
+   reportbuilder
    setupiterationbuilder
+   setuptestbuilder
    teardownbuilder
    teardowniterationbuilder
-   testbuilder
+   teardowntestbuilder
    timetorecoverybuilder
    watchersbuilder
 
@@ -97,9 +105,9 @@ The **Commands** bundle specific commands with device connections. It is their r
    netsh
    ping
    svc
+   winrssi
    wmic
    wpacli
-   winrssi
 
 Commons
 -------
