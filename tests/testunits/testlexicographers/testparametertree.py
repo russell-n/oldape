@@ -25,6 +25,7 @@ class TestParameterTree(TestCase):
 
     def test_paths(self):
         for index,path in enumerate(self.tree.paths):
-            self.assertEqual(paths[index], path)
+            for key in path._fields:
+                self.assertEqual(paths[index][key], getattr(path, key))
         return
 # end class TestParameterTree

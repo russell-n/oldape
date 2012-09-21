@@ -89,7 +89,7 @@ class Builder(BaseClass):
             self.logger.debug("Building the TestParameters with configmap - {0}".format(config_map))
             operation_setup = OperationSetupBuilder(config_map).operation_setup
             operation_teardown = OperationTeardownBuilder(config_map).operation_teardown
-            test_setup = SetupTestBuilder(config_map).test_setup
+            test_setup = SetupTestBuilder(self, config_map).product
             test = ExecuteTestBuilder(config_map).execute_test
             test_teardown = TeardownTestBuilder(config_map).teardown_test
             yield TestOperator([],
