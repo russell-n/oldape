@@ -60,16 +60,16 @@ class ParameterTree(object):
     @property
     def paths(self):
         """
-        This is relying on a side-effect to self._paths in traverse
-        
-        :return: namedtuple of name:parameter dicts (paths from roots to leaves)
+        :return: list of namedtuples
         """
         if self._paths is None:
+            # create the paths with a series of tree-traversals
             self._paths = []
             for limb in self.tree:
                 path = {}
-                self.traverse(limb, path)
+                self.traverse(limb, path, self._paths)
 
+            # convert self._paths from dicts to namedtuples
             paths = []
             for path in self._paths:
                 Paths = namedtuple("Paths", path.keys())
@@ -77,12 +77,15 @@ class ParameterTree(object):
             self._paths = paths
         return self._paths
     
-    def traverse(self, tree, path):
+    def traverse(self, tree, path, paths):
         """
+        A depth-first traversal
+        
         :param:
         
          - `tree`: A Tree object to traverse
-         - `path`: a name:parametr dict to contain a particular path
+         - `path`: a name:parameter dict to contain a particular path
+         - `paths`: The list to store all the paths
          
         :postcondition:
 
@@ -96,8 +99,8 @@ class ParameterTree(object):
             return path
         for child in tree.children:
             new_path = path.copy()
-            output = self.traverse(child, new_path)
+            output = self.traverse(child, new_path, paths)
             if output is not None:
-                self._paths.append(output)
+                paths.append(output)
         return
 # end class Parameter_Tree

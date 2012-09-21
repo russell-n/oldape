@@ -9,6 +9,14 @@ tottest.commons.filterer
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BaseClass
+      DummyEvent
+      Filterer
+   
    
 
    

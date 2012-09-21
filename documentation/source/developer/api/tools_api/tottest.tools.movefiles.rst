@@ -9,6 +9,13 @@ tottest.tools.movefiles
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BaseClass
+      MoveFiles
+   
    
 
    

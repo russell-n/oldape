@@ -5,6 +5,12 @@ tottest.proletarians.enabledebugging
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      enable_debugging
+   
    
 
    

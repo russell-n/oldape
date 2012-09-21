@@ -9,6 +9,16 @@ tottest.builders.subbuilders.connectionbuilder
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      AdbShellConnectionBuilder
+      BaseClass
+      ConnectionBuilderTypes
+      SSHConnectionBuilder
+      StringType
+   
    
 
    

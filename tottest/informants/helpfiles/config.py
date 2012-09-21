@@ -1,4 +1,4 @@
-from tottest.info.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
+from tottest.informants.constants import TEMPLATE, BOLD, RESET, NAME_TEMPLATE, BLUE
 
 name = NAME_TEMPLATE.format(name="The config file",
                             description="(Configuring the ttr)").center(80)

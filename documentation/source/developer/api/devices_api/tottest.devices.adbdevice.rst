@@ -9,6 +9,15 @@ tottest.devices.adbdevice
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      ADBShellConnection
+      AdbDevice
+      BaseDevice
+      Svc
+   
    
 
    

@@ -9,6 +9,14 @@ tottest.watchers.logcatwatcher
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      LogWatcher
+      LogcatWatcher
+      SafeLogcatWatcher
+   
    
 
    

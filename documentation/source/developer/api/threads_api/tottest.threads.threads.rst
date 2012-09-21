@@ -9,6 +9,12 @@ tottest.threads.threads
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      Thread
+   
    
 
    

@@ -5,6 +5,12 @@ tottest.lexicographers.parametertree
 
    
    
+   .. rubric:: Functions
+
+   .. autosummary::
+   
+      namedtuple
+   
    
 
    

@@ -9,6 +9,13 @@ tottest.tools.getipaddress
 
    
    
+   .. rubric:: Classes
+
+   .. autosummary::
+   
+      BaseClass
+      GetIp
+   
    
 
    
