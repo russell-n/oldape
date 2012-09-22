@@ -54,10 +54,57 @@ class Builder(BaseClass):
         self._operators = None
         self._hortator = None
         self.tpc_connection = None
-        self.storage = None
+        self._storage = None
         self._lock = None
         self._nodes = None
+
+        self._operation_setup_builder = None
+        self._operation_teardown_builder = None
+        self._setup_test_builder = None
+        self._execute_test_builder = None
+        self._teardown_test_builder = None        
         return
+
+    def operation_setup_builder(self, config_map):
+        """
+        :return: builder for the operation
+        """
+        if self._operation_setup_builder is None:
+            self._operation_setup_builder = OperationSetupBuilder(self, config_map)
+        return self._operation_setup_builder
+
+    def operation_teardown_builder(self, config_map):
+        """
+        :return: builder for the operation teardown
+        """
+        if self._operation_teardown_builder is None:
+            self._operation_teardown_builder = OperationTeardownBuilder(self, config_map)
+        return self._operation_teardown_builder
+
+    def setup_test_builder(self, config_map):
+        """
+        :return: builder for the test setup
+        """
+        if self._setup_test_builder is None:
+            self._setup_test_builder = SetupTestBuilder(self, config_map)
+        return self._setup_test_builder
+
+    def execute_test_builder(self, config_map):
+        """
+        :return: builder for the test executor
+        """
+        if self._execute_test_builder is None:
+            self._execute_test_builder = ExecuteTestBuilder(self, config_map)
+        return self._execute_test_builder
+
+    def teardown_test_builder(self, config_map):
+        """
+        :return: builder for the test teardown
+        """
+        if self._teardown_test_builder is None:
+            self._teardown_test_builder = TeardownTestBuilder(self, config_map)
+        return self._teardown_test_builder
+    
 
     def nodes(self, config_map):
         """
@@ -86,12 +133,16 @@ class Builder(BaseClass):
         :yield: test operators
         """ 
         for config_map in self.maps:
+            self.reset()
+            self.current_config = config_map
             self.logger.debug("Building the TestParameters with configmap - {0}".format(config_map))
-            operation_setup = OperationSetupBuilder(config_map).operation_setup
-            operation_teardown = OperationTeardownBuilder(config_map).operation_teardown
-            test_setup = SetupTestBuilder(self, config_map).product
-            test = ExecuteTestBuilder(config_map).execute_test
-            test_teardown = TeardownTestBuilder(config_map).teardown_test
+            operation_setup = self.operation_setup_builder(config_map).product
+            
+            operation_teardown = self.operation_teardown_builder(config_map).product
+            test_setup = self.setup_test_builder(config_map).product
+            
+            test = self.execute_test_builder(config_map).product
+            test_teardown = self.teardown_test_builder(config_map).product
             yield TestOperator([],
                                operation_setup=operation_setup,
                                operation_teardown=operation_teardown,
@@ -128,7 +179,7 @@ class Builder(BaseClass):
                 self.tpc_connection.add_paths(parameters.paths)
         return self.tpc_connection
             
-    def get_storage(self, folder_name=None):
+    def storage(self, folder_name=None):
         """
         :param:
 
@@ -136,9 +187,15 @@ class Builder(BaseClass):
 
         :return: StorageOutput for the folder.
         """
-        if self.storage is None:
+        if self._storage is None:
             self.logger.debug("Builing the Storage with folder: {0}".format(folder_name))
-            self.storage = storageoutput.StorageOutput(folder_name)
-        return self.storage
+            self._storage = storageoutput.StorageOutput(folder_name)
+        return self._storage
+
+    def reset(self):
+        """
+        :postcondition: parameters reset to None
+        """
+        return
 # end Builder
     

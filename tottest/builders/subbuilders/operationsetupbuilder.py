@@ -1,34 +1,35 @@
 """
 A module to build operation setups
 """
-
-from tottest.baseclass import BaseClass
+from basetoolbuilder import BaseToolBuilder
 from tottest.lexicographers.config_options import ConfigOptions
 from tottest.operations.operationsetup import DummySetupOperation
 from tottest.commons.errors import ConfigurationError
 
-class OperationSetupBuilder(BaseClass):
+class OperationSetupBuilder(BaseToolBuilder):
     """
     A class to build Setup Operations
     """
-    def __init__(self, config_map):
-        super(OperationSetupBuilder, self).__init__()
-        self.config_map = config_map
-        self._operation_setup = None
+    def __init__(self, *args, **kwargs):
+        super(OperationSetupBuilder, self).__init__(*args, **kwargs)
         return
 
     @property
-    def operation_setup(self):
+    def product(self):
         """
         :return: Operation Setup object
         
         """
-        if self._operation_setup is None:
+        if self._product is None:
             try:
                 tools = self.config_map.get_list(ConfigOptions.test_section,
                                                  ConfigOptions.operation_setup_option,)
             except ConfigurationError as error:
                 self.logger.debug(error)                
-                self._operation_setup = DummySetupOperation()
-        return self._operation_setup
+                self._product = DummySetupOperation()
+        return self._product
+
+    @property
+    def parameters(self):
+        return self._parameters
 # end class SetupOperationBuilder
