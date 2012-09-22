@@ -44,6 +44,7 @@ class ParameterTree(object):
     def tree(self):
         """
         builds the tree bottoms-up from the parameters
+        
         :return: list of trees (highest nodes are parameters[0], leaves are parameters[-1])
         """
         if self._tree is None:
@@ -67,7 +68,7 @@ class ParameterTree(object):
             self._paths = []
             for limb in self.tree:
                 path = {}
-                self.traverse(limb, path, self._paths)
+                self._traverse(limb, path, self._paths)
 
             # convert self._paths from dicts to namedtuples
             paths = []
@@ -77,7 +78,7 @@ class ParameterTree(object):
             self._paths = paths
         return self._paths
     
-    def traverse(self, tree, path, paths):
+    def _traverse(self, tree, path, paths):
         """
         A depth-first traversal
         
@@ -99,7 +100,7 @@ class ParameterTree(object):
             return path
         for child in tree.children:
             new_path = path.copy()
-            output = self.traverse(child, new_path, paths)
+            output = self._traverse(child, new_path, paths)
             if output is not None:
                 paths.append(output)
         return
