@@ -65,7 +65,7 @@ class Builder(BaseClass):
         self._teardown_test_builder = None        
         return
 
-    def operation_setup_builder(self, config_map):
+    def operation_setup_builder(self, config_map=None):
         """
         :return: builder for the operation
         """
@@ -73,7 +73,7 @@ class Builder(BaseClass):
             self._operation_setup_builder = OperationSetupBuilder(self, config_map)
         return self._operation_setup_builder
 
-    def operation_teardown_builder(self, config_map):
+    def operation_teardown_builder(self, config_map=None):
         """
         :return: builder for the operation teardown
         """
@@ -81,7 +81,7 @@ class Builder(BaseClass):
             self._operation_teardown_builder = OperationTeardownBuilder(self, config_map)
         return self._operation_teardown_builder
 
-    def setup_test_builder(self, config_map):
+    def setup_test_builder(self, config_map=None):
         """
         :return: builder for the test setup
         """
@@ -89,7 +89,7 @@ class Builder(BaseClass):
             self._setup_test_builder = SetupTestBuilder(self, config_map)
         return self._setup_test_builder
 
-    def execute_test_builder(self, config_map):
+    def execute_test_builder(self, config_map=None):
         """
         :return: builder for the test executor
         """
@@ -97,7 +97,7 @@ class Builder(BaseClass):
             self._execute_test_builder = ExecuteTestBuilder(self, config_map)
         return self._execute_test_builder
 
-    def teardown_test_builder(self, config_map):
+    def teardown_test_builder(self, config_map=None):
         """
         :return: builder for the test teardown
         """
@@ -106,16 +106,13 @@ class Builder(BaseClass):
         return self._teardown_test_builder
     
 
-    def nodes(self, config_map):
+    @property
+    def nodes(self):
         """
-        :param:
-
-         - `config_map`: a configuration map with enough information for a node-builder
-
         :return: dictionary of id:node-device pairs
         """
         if self._nodes is None:
-            self._nodes = NodesBuilder(self, config_map).nodes
+            self._nodes = NodesBuilder(self, self.current_config).nodes
         return self._nodes
     
     @property
@@ -137,13 +134,21 @@ class Builder(BaseClass):
             self.current_config = config_map
             self.logger.debug("Building the TestParameters with configmap - {0}".format(config_map))
             operation_setup = self.operation_setup_builder(config_map).product
+            operation_setup_parameters = self.operation_setup_builder(config_map).parameters
             
             operation_teardown = self.operation_teardown_builder(config_map).product
+            operation_teardown_parameters = self.operation_teardown_builder(config_map).parameters
+            
             test_setup = self.setup_test_builder(config_map).product
+            test_setup_parameters = self.setup_test_builder(config_map).parameters
             
             test = self.execute_test_builder(config_map).product
+            test_parameters = self.execute_test_builder(config_map).parameters
+            
             test_teardown = self.teardown_test_builder(config_map).product
-            yield TestOperator([],
+            test_teardown_parameters = self.teardown_test_builder(config_map).parameters
+            
+            yield TestOperator(ParameterGenerator(test_setup_parameters),
                                operation_setup=operation_setup,
                                operation_teardown=operation_teardown,
                                test_setup=test_setup,
@@ -188,7 +193,7 @@ class Builder(BaseClass):
         :return: StorageOutput for the folder.
         """
         if self._storage is None:
-            self.logger.debug("Builing the Storage with folder: {0}".format(folder_name))
+            self.logger.debug("Buidling the Storage with folder: {0}".format(folder_name))
             self._storage = storageoutput.StorageOutput(folder_name)
         return self._storage
 
@@ -196,6 +201,14 @@ class Builder(BaseClass):
         """
         :postcondition: parameters reset to None
         """
+        self._operation_setup_builder = None
+        self._operation_teardown_builder = None
+        self._setup_test_builder = None
+        self._execute_test_builder = None
+        self._teardown_test_builder = None
+        self._storage = None
+        self._nodes = None
+        self._lock = None
         return
 # end Builder
     

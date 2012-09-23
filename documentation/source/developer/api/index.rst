@@ -66,12 +66,10 @@ Sub-Builders
    :toctree: sub_builders_api
    
    affectorbuilder
-   basetoolbuilder
    connectionbuilder
    devicebuilder
    executetestbuilder
    iperftestbuilder
-   nersbuilder
    nodebuilder
    nodesbuilder
    operationsetupbuilder
@@ -83,7 +81,6 @@ Sub-Builders
    teardowniterationbuilder
    teardowntestbuilder
    timetorecoverybuilder
-   toolbuilder
    watchersbuilder
 
 
@@ -191,6 +188,7 @@ The **Devices** provide a set of standardized method calls to the connections (t
 
    basedevice
    adbdevice
+   dummydevice
    linuxdevice
    sl4adevice
    windowsdevice
@@ -240,12 +238,16 @@ Sub-Lexicographers
    iperflexicographer
    naxxxlexicographer
 
+
 Operations
 ----------
+
+`operations` are tool bundlers for the TestOperator.
 
 .. currentmodule:: tottest.operations
 
 .. autosummary::
+   :toctree: operations_API
 
    executetest
    operationsetup
@@ -302,6 +304,7 @@ The **Proletarians** contains modules to run the test. They are the civil-servan
    errors
    hortator
    liststrategy
+   setupoperation
    setuprun
    strategerizer
    teardown
