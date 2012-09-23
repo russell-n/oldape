@@ -75,6 +75,10 @@ class SetupTestBuilder(BaseToolBuilder):
         :return: list of named-tuple parameters for the products
         """
         if self._parameters is None:
-            self._parameters = [builder.parameters for builder in self.builders]
+            try:
+                self._parameters = [builder.parameters for builder in self.builders]
+            except ConfigurationError as error:
+                self.logger.debug(error)
+                self._parameters = []
         return self._parameters
 # end class SetupTestBuilder

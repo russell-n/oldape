@@ -5,7 +5,7 @@ class ConfigOptions(object):
     test_section = 'TEST'
     operation_setup_option = "operation_setup"
     operation_teardown_option = "operation_teardown"
-    test_setup_option = "test_setup_option"
+    test_setup_option = "test_setup"
     
     output_folder_option = 'output_folder'
     data_file_option = "data_file"

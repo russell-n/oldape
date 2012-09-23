@@ -33,6 +33,9 @@ class ExecuteTestBuilder(BaseToolBuilder):
     @property
     def parameters(self):
         """
+        :return:
         """
+        if self._parameters is None:
+            self._parameters = []
         return self._parameters
 # end class ExecuteTestBuilder
