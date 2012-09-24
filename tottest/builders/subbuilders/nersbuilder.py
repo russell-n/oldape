@@ -38,6 +38,7 @@ class NersBuilder(BaseToolBuilder):
         """
         if self._parameters is None:            
             self._parameters = Parameters(name=NersBuilderEnum.name,
-                                          parameters=self.master.nodes.keys())
+                                          parameters=[Parameters(name=NersBuilderEnum.name,
+                                                                 parameters=[key]) for key in self.master.nodes])
         return self._parameters
 # end class NersBuilder

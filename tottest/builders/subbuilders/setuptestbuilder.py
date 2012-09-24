@@ -34,7 +34,7 @@ class SetupTestBuilder(BaseToolBuilder):
         """
         if self._plans is None:
             self._plans = self.config_map.get_list(ConfigOptions.test_section,
-                                                   ConfigOptions.test_setup_option,)
+                                                   ConfigOptions.test_setup_option)
         return self._plans
 
     @property

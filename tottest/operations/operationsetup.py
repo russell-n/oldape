@@ -12,6 +12,6 @@ class DummySetupOperation(BaseClass):
         super(DummySetupOperation, self).__init__()
         return
 
-    def __call__(self, parameters):
+    def __call__(self):
         return
 # end class DummyOperationSetup

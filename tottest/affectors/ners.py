@@ -19,18 +19,19 @@ class NeRS(BaseClass):
         self.nodes = nodes        
         return
 
-    def __call__(self, addresses=None):
+    def __call__(self, parameters=None):
         """
         :param:
 
-         - `addresses`: List of adderesses (node-keys) to turn on.
+         - `parameters`: namedtuple with `.ners.parameters` List of addresses (node-keys) to turn on.
 
         :postconditions:
 
          - `enable_wifi` called on all nodes with address in addresses
          - `disable_wifi` called on all nodes with an address not in addresses
         """
-        if addresses is not None:
+        if parameters is not None:
+            addresses = parameters.ners.parameters
             for address in addresses:
                 self.nodes[address].enable_wifi()
 

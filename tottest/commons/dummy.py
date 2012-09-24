@@ -27,4 +27,7 @@ class NoOpDummy(BaseClass):
         self.logger.debug(LOG_STRING.format(self.name,
                                             str(parameters)))
         return
+
+    def __call__(self, parameters=None):
+        self.run(parameters)
 # end class NoOpDummy
