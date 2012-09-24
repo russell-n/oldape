@@ -8,6 +8,7 @@ a module to hold a builder of objects
 from threading import RLock
 
 # third party
+from mock import MagicMock
 
 # tottest
 from tottest.baseclass import BaseClass
@@ -154,7 +155,7 @@ class Builder(BaseClass):
                                test_setup=test_setup,
                                tests=test,
                                test_teardown=test_teardown,
-                               countdown_timer=NoOpDummy())
+                               countdown_timer=MagicMock())
         return
 
     @property

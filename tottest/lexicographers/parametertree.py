@@ -51,9 +51,9 @@ class ParameterTree(object):
             parameters = self.parameters[:]
             leaves = parameters.pop()
             parameters.reverse()
-            tree = [TreeNode(leaf) for leaf in leaves]
+            tree = [TreeNode(leaf) for leaf in leaves.parameters]
             for siblings in parameters:
-                new_tree = [TreeNode(sibling, tree) for sibling in siblings]
+                new_tree = [TreeNode(sibling, tree) for sibling in siblings.parameters]
                 tree = new_tree
             self._tree = tree
         return self._tree
@@ -73,8 +73,8 @@ class ParameterTree(object):
             # convert self._paths from dicts to namedtuples
             paths = []
             for path in self._paths:
-                Paths = namedtuple("Paths", path.keys())
-                paths.append(Paths(*[path[f] for f in Paths._fields]))
+                Paths = namedtuple("Paths", ["count"] + path.keys())
+                paths.append(Paths(len(self._paths), *[path[f] for f in Paths._fields if f != "count"]))
             self._paths = paths
         return self._paths
     
@@ -97,11 +97,10 @@ class ParameterTree(object):
         """
         path[tree.cargo.name] = tree.cargo
         if tree.children is None:
-            return path
+            paths.append(path)
+            return 
         for child in tree.children:
             new_path = path.copy()
-            output = self._traverse(child, new_path, paths)
-            if output is not None:
-                paths.append(output)
+            self._traverse(child, new_path, paths)
         return
 # end class Parameter_Tree

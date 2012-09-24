@@ -16,7 +16,7 @@ test_directions = "far gumbo".split()
 f, g = test_directions
 tests = [Parameter(name, parameter) for parameter,name in enumerate(test_directions)]
 
-parameters = [nodes, aps, tests]
+parameters = [Parameter("nodes", nodes), Parameter("aps", aps), Parameter("tests", tests)]
 
 names = [[a,c,f], [a,c,g],
          [a,d,f], [a,d,g],

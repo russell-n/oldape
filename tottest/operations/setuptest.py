@@ -26,4 +26,12 @@ class SetupTest(BaseClass):
         super(SetupTest, self).__init__()
         self.products = products
         return
+
+    def __call__(self, parameters):
+        """
+        :parameters: namedtuple that has the parameters to run the setup
+        """
+        for product in self.products:
+            product(parameters)
+        return
 # end class SetupTest

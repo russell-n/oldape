@@ -75,7 +75,6 @@ Sub-Builders
    operationsetupbuilder
    operationteardownbuilder
    reportbuilder
-   setupiterationbuilder
    setuptestbuilder
    teardownbuilder
    teardowniterationbuilder
@@ -304,7 +303,6 @@ The **Proletarians** contains modules to run the test. They are the civil-servan
    errors
    hortator
    liststrategy
-   setupoperation
    setuprun
    strategerizer
    teardown

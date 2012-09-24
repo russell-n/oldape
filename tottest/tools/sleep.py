@@ -39,5 +39,16 @@ class Sleep(BaseClass):
             print("Wake up in {0} seconds.".format(sleep_time - t))
             time.sleep(1)
         return
+
+    def __call__(self, sleep_time=None):
+        """
+        An alias for run to make it compatible with the newer interface
+
+        :param:
+
+         - `sleep_time`: The total amount of time to sleep.
+
+        """
+        self.run(sleep_time)
 # end class Sleep
         
