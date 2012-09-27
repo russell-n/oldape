@@ -12,7 +12,7 @@ Parameters = namedtuple("Parameters", "name parameters".split())
 
 class NersBuilderEnum(object):
     __slots__ = ()
-    name = "ners"
+    name = "nodes"
 
 class NersBuilder(BaseToolBuilder):
     """
@@ -34,11 +34,13 @@ class NersBuilder(BaseToolBuilder):
     @property
     def parameters(self):
         """
-        :return: namedtuple with `name` and `parameters` attribute
+        :return: list of namedtuples with `name` and `parameters` attribute
         """
-        if self._parameters is None:            
-            self._parameters = Parameters(name=NersBuilderEnum.name,
-                                          parameters=[Parameters(name=NersBuilderEnum.name,
-                                                                 parameters=[key]) for key in self.master.nodes])
+        if self._parameters is None:
+            # needs to add `nodes` to the `previous_parameters`
+            if not any([p.name == NersBuilderEnum.name for p in self.previous_parameters]):
+                self.previous_parameters.append(Parameters(name=NersBuilderEnum.name,
+                                                           parameters=self.master.nodes.keys()))
+            self._parameters = self.previous_parameters
         return self._parameters
 # end class NersBuilder

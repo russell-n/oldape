@@ -12,16 +12,18 @@ class BaseToolBuilder(BaseClass):
     A Base class to build tool-builders around.
     """
     __metaclass__ =  ABCMeta
-    def __init__(self, master, config_map):
+    def __init__(self, master, config_map, previous_parameters):
         """
         :param:
 
          - `master`: The master Builder (builder.py)
          - `config_map`: A populated configuration map
+         - `previous_parameters`: A list of the parameters created by previous builders
         """
         super(BaseToolBuilder, self).__init__()
         self.master = master
         self.config_map = config_map
+        self.previous_parameters = previous_parameters
         self._product = None
         self._parameters = None
         return

@@ -13,7 +13,7 @@ class TestTeardownTestBuilder(TestCase):
         self.parser = MagicMock()
         self.master = MagicMock()
         config_map._parser = self.parser
-        self.builder = TeardownTestBuilder(self.master, config_map)
+        self.builder = TeardownTestBuilder(self.master, config_map, [])
         return
 
     def test_dummy(self):

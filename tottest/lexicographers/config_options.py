@@ -21,6 +21,8 @@ class ConfigOptions(object):
     login_option = "login"
     password_option = "password"
 
+    apconnect_section = "APCONNECT"
+    ssids_option = "ssids"
     logwatcher_section = "LOGWATCHER"
     paths_option = "paths"
 

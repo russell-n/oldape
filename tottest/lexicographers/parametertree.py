@@ -3,6 +3,7 @@ A module to tranform lists of namedtuple parameters into lists of dictionaries.
 """
 
 from collections import namedtuple
+Parameters = namedtuple("Parameters", "name parameters".split())
 
 class TreeNode(object):
     """
@@ -48,12 +49,14 @@ class ParameterTree(object):
         :return: list of trees (highest nodes are parameters[0], leaves are parameters[-1])
         """
         if self._tree is None:
+            # parameters is a list of Parameter(name,parameters) namedtuples
             parameters = self.parameters[:]
             leaves = parameters.pop()
             parameters.reverse()
-            tree = [TreeNode(leaf) for leaf in leaves.parameters]
-            for siblings in parameters:
-                new_tree = [TreeNode(sibling, tree) for sibling in siblings.parameters]
+            tree = [TreeNode(Parameters(leaves.name, leaf)) for leaf in leaves.parameters]
+            for level in parameters:
+                # level is a Parameters(name, parameters) namedtuple
+                new_tree = [TreeNode(Parameters(name=level.name, parameters=sibling), tree) for sibling in level.parameters]
                 tree = new_tree
             self._tree = tree
         return self._tree
@@ -73,8 +76,10 @@ class ParameterTree(object):
             # convert self._paths from dicts to namedtuples
             paths = []
             for path in self._paths:
-                Paths = namedtuple("Paths", ["count"] + path.keys())
-                paths.append(Paths(len(self._paths), *[path[f] for f in Paths._fields if f != "count"]))
+                Paths = namedtuple("Paths", ["total_count"] + path.keys())
+                fields = dict([(f,path[f]) for f in Paths._fields if f != "total_count"])
+                fields["total_count"] = len(self._paths)
+                paths.append(Paths(**fields))
             self._paths = paths
         return self._paths
     

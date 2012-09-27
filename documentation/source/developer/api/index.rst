@@ -32,15 +32,16 @@ Networked Power Supply
    networkedpowersupply
 
 
-The NeRS
+The Rest
 ~~~~~~~~
 
 .. currentmodule:: tottest.affectors
 
 .. autosummary::
-   :toctree: ners_api
+   :toctree: other_affectors_api
 
    ners
+   apconnect
 
 Builder
 -------
@@ -66,20 +67,25 @@ Sub-Builders
    :toctree: sub_builders_api
    
    affectorbuilder
+   apconnectbuilder
+   basetoolbuilder
    connectionbuilder
    devicebuilder
    executetestbuilder
    iperftestbuilder
+   nersbuilder
    nodebuilder
    nodesbuilder
    operationsetupbuilder
    operationteardownbuilder
    reportbuilder
+   setupiterationbuilder
    setuptestbuilder
    teardownbuilder
    teardowniterationbuilder
    teardowntestbuilder
    timetorecoverybuilder
+   toolbuilder
    watchersbuilder
 
 
