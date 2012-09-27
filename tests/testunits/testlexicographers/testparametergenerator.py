@@ -18,7 +18,8 @@ tests = [Parameter(name, parameter) for parameter,name in enumerate(test_directi
 
 parameters = [Parameter("nodes", nodes), Parameter("aps", aps), Parameter("tests", tests)]
 
-names = [[a,c,f], [a,c,g],
+names = ("nodes", "aps", "tests")
+parameter_values = [[a,c,f], [a,c,g],
          [a,d,f], [a,d,g],
          [a,e,f], [a,e,g],
          [b,c,f], [b,c,g],
@@ -34,7 +35,8 @@ class TestParameterGenerator(TestCase):
         for i, parameter in enumerate(self.parameters):
             for p in parameter:
                 print parameter
-                self.assertIn(p.name, names[i])
+                if hasattr(p, "name"):
+                    self.assertIn(p.name, names)
         return
 # end class TestParameterGenerator
 

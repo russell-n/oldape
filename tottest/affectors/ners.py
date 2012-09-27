@@ -1,6 +1,7 @@
 """
 A Networked Radio Switch based on the Naxxx interface.
 """
+from types import StringType
 
 from tottest.baseclass import BaseClass
 
@@ -31,14 +32,18 @@ class NeRS(BaseClass):
          - `disable_wifi` called on all nodes with an address not in addresses
         """
         if parameters is not None:
-            addresses = parameters.ners.parameters
+            addresses = parameters.nodes.parameters
+            if type(addresses) is StringType:
+                addresses = [addresses]
             for address in addresses:
+                self.logger.info("Enabling: '{0}'".format(address))
                 self.nodes[address].enable_wifi()
 
                 kill_addresses = [address for address in self.nodes if address not in addresses]
         else:
             kill_addresses = self.nodes.keys()
         for address in kill_addresses:
+            self.logger.info("Disabling: '{0}'".format(address))
             self.nodes[address].disable_wifi()
         return
 # end class NeRS

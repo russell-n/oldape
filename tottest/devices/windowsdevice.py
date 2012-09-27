@@ -7,6 +7,7 @@ from tottest.commands.wmic import WmicWin32NetworkAdapter
 from tottest.commands.netsh import NetshWlan
 from tottest.commands.winrssi import WinRssi
 from tottest.commands.ipconfig import Ipconfig
+from tottest.commands.windowsssidconnect import WindowsSSIDConnect
 
 class WindowsDevice(BaseDevice):
     """
@@ -19,8 +20,18 @@ class WindowsDevice(BaseDevice):
         self._wifi_query = None
         self._rssi_query = None
         self._ipconfig = None
+        self._ssid_connect = None
         self._address = None
         return
+
+    @property
+    def ssid_connect(self):
+        """
+        :return: a Windows SSID Connect command
+        """
+        if self._ssid_connect is None:
+            self._ssid_connect = WindowsSSIDConnect(self.connection)
+        return self._ssid_connect
 
     @property
     def ipconfig(self):
@@ -113,7 +124,7 @@ class WindowsDevice(BaseDevice):
 
          - `ssid`: The SSID and Profile name to connect to
         """
-        self.netsh('netsh wlan connect name="{0}" ssid="{0}"'.format(ssid))
+        self.ssid_connect(ssid)
         return
 
     def disconnect(self):

@@ -26,10 +26,11 @@ class TestParameterTree(TestCase):
     def test_paths(self):
         for index,path in enumerate(self.tree.paths):
             for key in path._fields:
-                self.assertEqual(paths[index][key], getattr(path, key))
+                if key != "total_count":
+                    self.assertEqual(paths[index][key], getattr(getattr(path, key), "parameters"))
         return
 # end class TestParameterTree
-
+    
 if __name__ == "__main__":
     import pudb; pudb.set_trace()
     t = ParameterTree(parameters)

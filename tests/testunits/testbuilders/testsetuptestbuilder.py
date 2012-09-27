@@ -14,7 +14,8 @@ class TestSetupTestBuilder(TestCase):
         self.config_map = ConfigurationMap("")
         self.config_map._parser = self.parser
         self.builder = SetupTestBuilder(master=self.master,
-                                        config_map=self.config_map)
+                                        config_map=self.config_map,
+                                        previous_parameters=[])
         return
 
     def test_plans(self):
@@ -35,7 +36,7 @@ class TestSetupTestBuilder(TestCase):
         self.master.nodes = {"a":1, "b":2, "c":3}
         parameters = self.builder.parameters
         for parameter in parameters:
-            self.assertEqual("ners", parameter.name)
+            self.assertEqual("nodes", parameter.name)
         return
 
     def test_dummy(self):
@@ -44,3 +45,20 @@ class TestSetupTestBuilder(TestCase):
         self.assertIsInstance(actual, DummySetupTest)
         return
 # end class TestSetupTestBuilder
+
+if __name__ == "__main__":
+    import pudb
+    pudb.set_trace()
+    master = MagicMock()
+    parser = MagicMock()
+    config_map = ConfigurationMap("")
+    config_map._parser = parser
+    builder = SetupTestBuilder(master=master,
+                               config_map=config_map,
+                               previous_parameters=[])
+    parser.get.return_value = "ners"
+    master.nodes = {"a":1, "b":2, "c":3}
+    parameters = builder.parameters
+    for parameter in parameters:
+        assert "nodes" ==  parameter.name
+

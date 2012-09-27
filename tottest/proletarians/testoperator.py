@@ -73,7 +73,7 @@ class TestOperator(BaseClass):
         """
         self.logger.info("Running Parameters: {0}".format(parameter))
         self.logger.info(TEST_PREAMBLE.format(r=count,
-                                              t=parameter.count))
+                                              t=parameter.total_count))
         self.logger.info("Running test setup")
         self.test_setup(parameter)
         self.logger.info("Running Test")

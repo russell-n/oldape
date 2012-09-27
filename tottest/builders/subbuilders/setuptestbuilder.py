@@ -6,9 +6,9 @@ from tottest.lexicographers.config_options import ConfigOptions
 from tottest.operations.setuptest import DummySetupTest
 from tottest.commons.errors import ConfigurationError
 from basetoolbuilder import BaseToolBuilder
-from toolbuilder import tool_builders
 from tottest.operations.setuptest import SetupTest
 
+from toolbuilder import tool_builders
 
 class SetupTestBuilder(BaseToolBuilder):
     """
@@ -43,7 +43,13 @@ class SetupTestBuilder(BaseToolBuilder):
         :return: list of builders made from plans
         """
         if self._builders is None:
-            self._builders = [tool_builders[plan](self.master, self.config_map) for plan in self.plans]
+            if self.previous_parameters is None:
+                self.previous_parameters = []
+            self._builders = []
+            for plan in self.plans:
+                builder = tool_builders[plan](self.master, self.config_map, self.previous_parameters)
+                self.previous_parameters = builder.parameters
+                self._builders.append(builder)
         return self._builders
 
     @property
@@ -76,8 +82,8 @@ class SetupTestBuilder(BaseToolBuilder):
         """
         if self._parameters is None:
             try:
-                self._parameters = [builder.parameters for builder in self.builders]
-            except ConfigurationError as error:
+                self._parameters = self.builders[-1].parameters
+            except (ConfigurationError, IndexError) as error:
                 self.logger.debug(error)
                 self._parameters = []
         return self._parameters

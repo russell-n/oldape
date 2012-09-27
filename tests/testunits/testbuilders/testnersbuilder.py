@@ -9,7 +9,7 @@ class TestNersBuilder(TestCase):
     def setUp(self):
         self.master = MagicMock()
         self.config_map = MagicMock()
-        self.builder = NersBuilder(self.master, self.config_map)
+        self.builder = NersBuilder(self.master, self.config_map, [])
         return
 
     def test_product(self):
@@ -21,6 +21,7 @@ class TestNersBuilder(TestCase):
         nodes = {"a":1, "b":2}
         self.master.nodes = nodes
         parameters = self.builder.parameters
-        self.assertEqual("ners", parameters.name)
+        for parameter in parameters:
+            self.assertEqual("nodes", parameter.name)
 # end class TestNersBuilder
              
