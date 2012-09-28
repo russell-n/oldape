@@ -1,6 +1,8 @@
 """
 A module to build nodes (devices) based on Operating System and connection type
 """
+# python
+from threading import RLock
 
 from tottest.baseclass import BaseClass
 from connectionbuilder import connection_builders
@@ -10,16 +12,14 @@ class NodeBuilder(BaseClass):
     """
     A class to build a device (node)
     """
-    def __init__(self, parameters, lock=None):
+    def __init__(self, parameters):
         """
         :param:
 
          - `parameters`: object with attributes needed for device & connection
-         - `lock`: A re-entrant lock to pass to the Connection if it will be used in threads
         """
         super(NodeBuilder, self).__init__()
-        self.parameters = parameters
-        self.lock = lock
+        self.parameters = parameters        
         self._connection = None
         self._interface = None
         self._node = None
@@ -44,7 +44,7 @@ class NodeBuilder(BaseClass):
         :return: connection built to match parameter.connection
         """
         if self._connection is None:
-            self._connection = connection_builders[self.parameters.connection](self.parameters, self.lock).connection
+            self._connection = connection_builders[self.parameters.connection](self.parameters).connection
         return self._connection
 
     @property

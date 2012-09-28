@@ -78,5 +78,8 @@ class BaseDevice(BaseClass):
         return
 
     def __str__(self):
-        return self.wifi_info
+        return "Connection: {0}\nAddress: {1}\nWiFi Info: {2}\n".format(self.connection,
+                                                                          self.address,
+                                                                          self.wifi_info)
+        
 # end class BaseDevice
