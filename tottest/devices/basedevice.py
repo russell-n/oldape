@@ -24,7 +24,7 @@ class BaseDevice(BaseClass):
         self._rssi = None
         self._wifi_info = None
         self._logger = None
-        self._address = None
+        self._address = address
         return
 
     @property

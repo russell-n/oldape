@@ -2,16 +2,12 @@
 A builder of AP Connectors
 """
 
-#python
-from collections import namedtuple
-
 from tottest.affectors.apconnect import APConnect
 from tottest.lexicographers.config_options import ConfigOptions
 
-from basetoolbuilder import BaseToolBuilder
+from basetoolbuilder import BaseToolBuilder, Parameters
 
 
-Parameters = namedtuple("Parameters", "name parameters".split())
 
 class APConnectBuilderEnum(object):
     __slots__ = ()
@@ -63,4 +59,4 @@ class APConnectBuilder(BaseToolBuilder):
 
             self._parameters = self.previous_parameters
         return self._parameters
-# end class NersBuilder
+# end class APConnectBuilder

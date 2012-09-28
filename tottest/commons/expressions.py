@@ -72,10 +72,9 @@ NETCFG_INTERFACE = INTERFACE + NETCFG_IP
 #ping expressions
 RTT = NAMED.format(name="rtt", pattern=REAL)
 
-PING = SPACES.join([INTEGER, "bytes", "from", IP_ADDRESS + ":",
-                    "icmp_[rs]eq=" + INTEGER,
-                        "ttl=" + INTEGER,
-                        "time=" + RTT])
+PING = SPACES.join([EVERYTHING + IP_ADDRESS + ":"
+                    + EVERYTHING + 
+                    "time" + SPACES_OPTIONAL + "(=|<)" + SPACES_OPTIONAL + RTT])
 
 
 # ps expressions

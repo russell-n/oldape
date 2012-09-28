@@ -23,7 +23,7 @@ class PingCommandTest(TestCase):
                                   connection= self.connection,
                                   operating_system = enumerations.OperatingSystem.android)
 
-        result = pinger.run()
+        result = pinger(connection=self.connection)
         self.assertEqual("98.4", result.rtt)
         self.assertEqual(self.target, result.target)
         return
@@ -34,7 +34,7 @@ class PingCommandTest(TestCase):
         pinger = ping.PingCommand(target=self.target,
                                   connection= self.connection,
                                   operating_system = enumerations.OperatingSystem.linux)
-        result = pinger.run()
+        result = pinger(connection=self.connection)
         self.assertEqual("0.196", result.rtt)
         self.assertEqual(self.target, result.target)
         return

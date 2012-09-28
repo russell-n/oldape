@@ -22,6 +22,7 @@ from tottest.proletarians import countdowntimer
 #config
 from tottest.lexicographers.parametergenerator import ParameterGenerator
 
+
 #commons
 from tottest.commons import storageoutput
 from tottest.commons import enumerations
@@ -39,6 +40,7 @@ from subbuilders.operationteardownbuilder import OperationTeardownBuilder
 from subbuilders.setuptestbuilder import SetupTestBuilder
 from subbuilders.executetestbuilder import ExecuteTestBuilder
 from subbuilders.teardowntestbuilder import TeardownTestBuilder
+from subbuilders.tpcdevicebuilder import TpcDeviceBuilder
 
 class Builder(BaseClass):
     """
@@ -54,7 +56,7 @@ class Builder(BaseClass):
         self.maps = maps
         self._operators = None
         self._hortator = None
-        self.tpc_connection = None
+        self._tpc_device = None
         self._storage = None
         self._lock = None
         self._nodes = None
@@ -177,23 +179,17 @@ class Builder(BaseClass):
             self.logger.debug("Building the Hortator")
             self._hortator = hortator.Hortator(operators=self.operators)
         return self._hortator
-    
-    def get_tpc_connection(self, parameters):
-        """
-        This only creates a connection the first time.
-        
-        :param:
 
-         - `parameters`: TpcConnection parameters
-        
-        :return: Connection to the traffic pc
+    @property
+    def tpc_device(self):
         """
-        if self.tpc_connection is None:
-            self.tpc_builder = connection_builders[parameters.connection_type](parameters)
-            self.tpc_connection = self.tpc_builder.connection
-            if parameters.paths is not None:
-                self.tpc_connection.add_paths(parameters.paths)
-        return self.tpc_connection
+        This only creates a new device the first time.
+        
+        :return: device for the traffic pc
+        """
+        if self._tpc_device is None:
+            self._tpc_device = TpcDeviceBuilder(self.current_config).device
+        return self._tpc_device
             
     def storage(self, folder_name=None):
         """
