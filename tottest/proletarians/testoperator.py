@@ -3,6 +3,7 @@ An operator operates tests.
 """
 #python Libraries
 from collections import namedtuple
+from Queue import Queue
 
 # tottest Libraries
 from tottest.baseclass import BaseClass
@@ -50,6 +51,7 @@ class TestOperator(BaseClass):
         self.test_teardown = test_teardown
         self.countdown_timer = countdown_timer
         self._sleep = sleep
+        self.parameter_queue = Queue()
         return
 
     @property
@@ -99,6 +101,19 @@ class TestOperator(BaseClass):
                 except (errors.AffectorError, errors.CommandError) as error:
                     self.logger.error(error)
                     self.logger.error("Quitting this iteration")
+                    self.parameter_queue.put(parameter)
+                    count -= 1
+                    
+            while not self.parameter_queue.empty():
+                parameter = self.parameter_queue.get()
+                self.logger.info("Re-trying: {0}".format(parameter))
+                count += 1
+                try:
+                    self.one_repetition(parameter, count)
+                except (errors.AffectorError, errors.CommandError) as error:
+                    self.logger.error(error)
+                    self.logger.error("Quitting this iteration")
+                
             self.logger.info(TEST_POSTAMBLE.format(t=self.countdown_timer.total_time))
             self.logger.info("Sleeping to let the logs finish recording the test-information")
             self.sleep()

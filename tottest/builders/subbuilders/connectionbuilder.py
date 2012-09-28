@@ -43,7 +43,7 @@ class SSHConnectionBuilder(BaseClass):
     """
     Use this to get an ssh connection
     """
-    def __init__(self, parameters, lock):
+    def __init__(self, parameters, lock=None):
         """
         :param:
 

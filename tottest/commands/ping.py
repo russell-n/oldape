@@ -27,14 +27,15 @@ class PingArguments(object):
     PingArguments is a holder of ping arguments
     """
     android = ' -c 1 -w 1 '
-
-    
+    linux = " -c 1 -w 1 "
+    windows = "-n 1 -w 1000 "
+# end class PingArguments
     
 class PingCommand(BaseClass):
     """
     A ping is a simple ping-command.
     """
-    def __init__(self, target, connection, operating_system):
+    def __init__(self, target=None, connection=None, operating_system=None):
         """
         :param:
 
@@ -55,9 +56,10 @@ class PingCommand(BaseClass):
         """
         :return: The ping arguments to use
         """
-        if self._arguments is None:
-            if self.operating_system == enumerations.OperatingSystem.android:
-                self._arguments = "-c 1 -w 1 {target}".format(target=self.target)
+        if self.operating_system in (enumerations.OperatingSystem.android, enumerations.OperatingSystem.linux):
+            self._arguments = PingArguments.linux +  self.target
+        elif self.operating_system == enumerations.OperatingSystem.windows:
+            self._arguments = PingArguments.windows + self.target
         return self._arguments
 
     @property
@@ -66,9 +68,7 @@ class PingCommand(BaseClass):
         :return: compiled regular expression matching a successful ping.
         """
         if self._expression is None:
-            if self.operating_system in (enumerations.OperatingSystem.android,
-                                         enumerations.OperatingSystem.linux):
-                expression = expressions.PING
+            expression = expressions.PING
             self._expression = re.compile(expression)
         return self._expression
     
@@ -97,6 +97,32 @@ class PingCommand(BaseClass):
             if UNKNOWN_HOST in line:
                 raise ConfigurationError("Unknown Host: {0}".format(target))
         return
+
+    def __call__(self, target, connection):
+        """
+        Executes a single ping, checks for a success, returns ping data if it succeeds.
+
+        :param:
+
+         - `target`: Address to ping
+         - `connection`: the connection to the originator of the ping
+        
+        :return: PingData or None
+        :raise: ConfigurationError if the target is unknown
+        """
+        self.operating_system = connection.operating_system
+        self.target = target
+        output, error = connection.ping(self.arguments, timeout=1)
+        for line in output:
+            self.logger.debug(line)
+            match = self.expression.search(line)
+            if match:
+                return PingData(match.group("ip_address"), match.group('rtt'))
+            if UNKNOWN_HOST in line:
+                raise ConfigurationError("Unknown Host: {0}".format(self.target))
+        return
+
+    
 # end class Ping
 
 if __name__ == "__main__":

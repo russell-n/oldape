@@ -9,7 +9,7 @@ from collections import namedtuple
 
 # tottest libraries
 from tottest.baseclass import BaseClass
-
+from tottest.commons.errors import CommandError
 from tottest.commands import ping
 
 class TTRData(namedtuple("TTRData", "ttr rtt")):
@@ -26,17 +26,19 @@ class TimeToRecovery(BaseClass):
     """
     A TimeToRecovery pings a target until the pings succeeed.
     """
-    def __init__(self, pinger=None, target=None, timeout=300,
+    def __init__(self, nodes, pinger=None, target=None, timeout=300,
                  threshold=5):
         """
         :param:
 
+         - `nodes`: A dictionary of id:device pairs
          - `pinger`: An object to ping a target.
          - `target`: The target address to ping
          - `timeout`: The length of time to try in seconds.
          - `threshold`: The number of consecutive pings to make a recovery
         """
         super(TimeToRecovery, self).__init__()
+        self.nodes = nodes
         self._pinger = pinger
         self.target = target
         self.target = target
@@ -50,16 +52,25 @@ class TimeToRecovery(BaseClass):
         :return: A pinger object
         """
         if self._pinger is None:
-            self._pinger = ping.ADBPing()
+            self._pinger = ping.PingCommand()
         return self._pinger
 
     def _unpack_parameters(self, parameters):
-        if parameters is None:
-            return self.target, self.timeout, self.threshold
-        else:
-            return parameters.target, parameters.timeout, parameters.threshold
+        try:
+            target = parameters.target.parameters
+        except AttributeError:
+            target = self.target
+        try:
+            timeout = parameters.timeout.parameters
+        except AttributeError:
+            timeout = self.timeout
+        try:
+            threshold = parameters.threshold.parameters
+        except AttributeError:
+            threshold = self.threshold
+        return target, timeout, threshold
         
-    def run(self, parameters=None):
+    def run(self, parameters=None, connection=None):
         """
         Pings until failure or timeout.
 
@@ -68,6 +79,7 @@ class TimeToRecovery(BaseClass):
          - `parameters.target`: The address to ping.
          - `parameters.timeout`: The length of time to try (in seconds)
          - `parameters.threshold`: The number of consecutive pings needed to be a success.
+         - `connection`: The connection to the source of the ping
 
         :rtype: FloatType or NoneType
         :return: time from start of run to first of successful pings (or None)
@@ -75,14 +87,14 @@ class TimeToRecovery(BaseClass):
         target, timeout, threshold = self._unpack_parameters(parameters)
         self.logger.info(("{pinger}: Waiting for {target} to return {threshold} pings"
                           " (up to {timeout} seconds)").format(target=target, threshold=threshold,
-                                                               timeout=timeout, pinger=self.pinger.connection))
+                                                               timeout=timeout, pinger=connection))
         start = now()
         time_limit = start + timeout
         pings = 0
         first = None
 
         while pings < threshold and now() < time_limit:
-            result = self.pinger.run(target)
+            result = self.pinger(target, connection)
             if result is not None:
                 pings += 1
                 if pings == 1:
@@ -96,8 +108,22 @@ class TimeToRecovery(BaseClass):
         if pings == threshold:
             return TTRData(ttr=first - start, rtt=first_result.rtt)
         return
-                 
-# end TimeToFailure
+
+    def __call__(self, parameters):
+        """
+        :param:
+
+         - `parameters`: namedtuple with nodes and targets attribute
+
+        :return: TTRData
+        :raises: CommandError if unable to recover
+        """
+        ttr =  self.run(parameters, self.nodes[parameters.nodes.parameters].connection)
+        self.logger.info("TTR: {0}".format(ttr))
+        if ttr is None:
+            raise CommandError("Unable to ping {0}".format(parameters.target.parameters))
+        return ttr
+# end TimeToRecovery
 
 if __name__ == "__main__":
     ttr = TimeToRecovery()

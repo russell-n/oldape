@@ -40,6 +40,9 @@ class ConfigOptions(object):
     format_option = "format"
     time_option = "time"
 
+    time_to_recovery_section="TIMETORECOVERY"
+    threshold_option = "threshold"
+    timeout_option = "timeout"
     affector_section = "AFFECTOR"
     affector_type_option = "type"
     switches_option = "switches"

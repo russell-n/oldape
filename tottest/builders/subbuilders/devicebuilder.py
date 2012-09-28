@@ -6,13 +6,14 @@ This is a module to hold device builders.
 """
 
 from tottest.baseclass import BaseClass
-from tottest.devices import adbdevice, windowsdevice
+from tottest.devices import adbdevice, windowsdevice, linuxdevice
+
 
 class WindowsDeviceBuilder(BaseClass):
     """
     A Device Builder for Windows Devices
     """
-    def __init__(self, connection):
+    def __init__(self, connection, interface=None, address=None):
         """
         :param:
 
@@ -20,6 +21,8 @@ class WindowsDeviceBuilder(BaseClass):
         """
         super(WindowsDeviceBuilder, self).__init__()
         self.connection = connection
+        self.interface = interface
+        self.address = address
         self._device = None
         return
 
@@ -33,6 +36,36 @@ class WindowsDeviceBuilder(BaseClass):
         return self._device
 # end class WindowsDeviceBuilder
 
+class LinuxDeviceBuilder(BaseClass):
+    """
+    A Device Builder for Linux Devices
+    """
+    def __init__(self, connection, interface=None, address=None):
+        """
+        :param:
+
+         - `connection`: a connection to the device
+         - `interface`: The name of the wireless interface
+         - `address`: the test address (if needed)
+        """
+        super(LinuxDeviceBuilder, self).__init__()
+        self.connection = connection
+        self.interface = interface
+        self.address = address
+        self._device = None
+        return
+
+    @property
+    def device(self):
+        """
+        :return: A Linux Device
+        """
+        if self._device is None:
+            self._device = linuxdevice.LinuxDevice(self.connection, self.interface, self.address)
+        return self._device
+# end class LinuxDeviceBuilder
+
+    
 class AdbDeviceBuilder(BaseClass):
     """
     A Device Builder builds ADB devices
@@ -62,6 +95,8 @@ class AdbDeviceBuilder(BaseClass):
 class DeviceBuilderTypes(object):
     __slots__ = ()
     windows = "windows"
+    linux = "linux"
 # end class DeviceBuilderTypes
 
-device_builders = {DeviceBuilderTypes.windows:WindowsDeviceBuilder}
+device_builders = {DeviceBuilderTypes.windows:WindowsDeviceBuilder,
+                   DeviceBuilderTypes.linux:LinuxDeviceBuilder}

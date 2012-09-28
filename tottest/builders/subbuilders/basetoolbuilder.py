@@ -3,9 +3,13 @@ A base-class for tool-builders
 """
 # python
 from abc import ABCMeta, abstractproperty
+from collections import namedtuple
 
 # tottest
 from tottest.baseclass import BaseClass
+
+Parameters = namedtuple("Parameters", "name parameters".split())
+
 
 class BaseToolBuilder(BaseClass):
     """

@@ -2,53 +2,111 @@
 A module to build time-to-recovery tools
 """
 
-from tottest.commands import ping
-from tottest.tools import timetorecovery
+from basetoolbuilder import BaseToolBuilder, Parameters
+from tottest.tools.timetorecovery import TimeToRecovery
+from tottest.lexicographers.config_options import ConfigOptions
 
-class TimeToRecoveryBuilder(object):
+class TimeToRecoveryBuilderEnum(object):
+    __slots__ = ()
+    nodes = 'nodes'
+    target = 'target'
+    timeout = "timeout"
+    threshold = "threshold"
+# end class TimeToRecoveryBuilderEnum
+
+
+class TimeToRecoveryBuilder(BaseToolBuilder):
     """
     A builder of TTR Objects
     """
-    def __init__(self, target, connection, operating_system=None, timeout=500,
-                 threshold=5):
-        """
-        :param:
-
-         - `target`: The IP address or hostname to ping
-         - `connection`: A connection to the device that pings
-         - `operating_system`: The operating system of the device that pings
-         - `timeout`: The number of seconds to try and ping
-         - `threshold`: The number of consecutive pings to qualify as 'success'
-        """
-        self.target = target
-        self.connection = connection
-        self.operating_system = operating_system
-        self.timeout = timeout
-        self.threshold = threshold
-        self._pinger = None
+    def __init__(self, *args, **kwargs):
+        super(TimeToRecoveryBuilder, self).__init__(*args, **kwargs)
+        self._target = None
         self._ttr = None
+        self._timeout = None
+        self._threshold = None
         return
 
     @property
-    def pinger(self):
+    def timeout(self):
         """
-        :return: A Ping Command
+        :return: the total time to try and ping
         """
-        if self._pinger is None:
-            self._pinger = ping.PingCommand(target=self.target,
-                                            connection=self.connection,                                            
-                                            operating_system=self.operating_system)
-        return self._pinger
+        if self._timeout is None:
+            self._timeout = self.config_map.get_int(ConfigOptions.time_to_recovery_section,
+                                                    ConfigOptions.timeout_option,
+                                                    optional=True,
+                                                    default=300)
+        return self._timeout
 
+    @property
+    def threshold(self):
+        """
+        :return: the number of consecutive pings to count as a recovery sign
+        """
+        if self._threshold is None:
+            self._threshold = self.config_map.get_int(ConfigOptions.time_to_recovery_section,
+                                                      ConfigOptions.threshold_option,
+                                                      optional=True,
+                                                      default=5)
+        return self._threshold
+    
+
+    @property
+    def target(self):
+        """
+        :return: target from the config file
+        """
+        if self._target is None:
+            self._target = self.master.tpc_device.address
+        return self._target
+    
     @property
     def ttr(self):
         """
         :return: A time to recovery object
         """
         if self._ttr is None:
-            self._ttr = timetorecovery.TimeToRecovery(pinger=self.pinger,
-                                                      target=self.target,
-                                                      timeout=self.timeout,
-                                                      threshold=self.threshold)
+            self._ttr = TimeToRecovery(nodes=self.master.nodes)
         return self._ttr
+
+    @property
+    def product(self):
+        """
+        :return: a TTR
+        """
+        if self._product is None:
+            self._product = TimeToRecovery(self.master.nodes)
+        return self._product
+
+    @property
+    def parameters(self):
+        """
+        :return: namedtuple with `name` and `parameters` attribute
+        """
+        if self._parameters is None:
+            self.add_parameter(TimeToRecoveryBuilderEnum.nodes,
+                               self.master.nodes.keys())
+
+            self.add_parameter(TimeToRecoveryBuilderEnum.target,
+                               [self.target])
+            self.add_parameter(TimeToRecoveryBuilderEnum.threshold,
+                               [self.threshold])
+            self.add_parameter(TimeToRecoveryBuilderEnum.timeout,
+                               [self.timeout])
+            self._parameters = self.previous_parameters
+        return self._parameters
+
+    def add_parameter(self, name, value):
+        """
+        :param:
+
+         - `name`: the name of the parameter to add
+         - `value`: the value of the parameter to add
+
+        :postcondition: Parameters(name, value) in self.previous_parameters
+        """
+        if not any([p.name == name for p in self.previous_parameters]):
+            self.previous_parameters.append(Parameters(name=name, parameters=value))
+        return
 # end TimeToRecoveryBuilder
