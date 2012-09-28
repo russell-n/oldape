@@ -42,11 +42,18 @@ class NonLocalConnection(BaseClass):
         # logger is defined in BaseClass but declared here for child-classes
         self._logger = None
         self.command_prefix = command_prefix
-        self.lock = None
+        self._lock = lock
         self._queue = None
         self.exc_info = None
         return
 
+    @property
+    def lock(self):
+        """
+        :return: a re-entrant lock
+        """
+        return self._lock
+    
     @property
     def queue(self):
         """

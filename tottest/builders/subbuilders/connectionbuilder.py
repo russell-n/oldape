@@ -43,16 +43,14 @@ class SSHConnectionBuilder(BaseClass):
     """
     Use this to get an ssh connection
     """
-    def __init__(self, parameters, lock=None):
+    def __init__(self, parameters):
         """
         :param:
 
          - `parameters`: An object with `hostname`, `username`, and `password` attributes
-         - `lock`: A lock to acquire before using the connection
         """
         super(SSHConnectionBuilder, self).__init__()
         self.parameters = parameters
-        self.lock = lock
         self._hostname = None
         self._username = None
         self._password = None
@@ -131,8 +129,7 @@ class SSHConnectionBuilder(BaseClass):
             self._connection = sshconnection.SSHConnection(hostname=self.hostname,
                                                            username=self.username,
                                                            password=self.password,
-                                                           operating_system=self.operating_system,
-                                                           lock=self.lock)
+                                                           operating_system=self.operating_system)
         return self._connection
 # end class SshConnectionBuilder
 

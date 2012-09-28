@@ -125,6 +125,7 @@ class Builder(BaseClass):
         :return: dictionary of id:node-device pairs
         """
         if self._nodes is None:
+            #import pudb; pudb.set_trace()
             self._nodes = NodesBuilder(self, self.current_config).nodes
         return self._nodes
     

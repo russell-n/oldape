@@ -92,6 +92,7 @@ class SSHConnection(NonLocalConnection):
                                     command)
         try:
             self.logger.debug("Acquiring the lock to exec_command")
+
             with self.lock:                
                 stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
         except AttributeError as error:

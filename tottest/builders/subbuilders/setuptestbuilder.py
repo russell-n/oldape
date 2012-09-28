@@ -8,7 +8,7 @@ from tottest.commons.errors import ConfigurationError
 from basetoolbuilder import BaseToolBuilder
 from tottest.operations.setuptest import SetupTest
 
-from toolbuilder import tool_builders
+from toolbuilder import ToolBuilder
 
 class SetupTestBuilder(BaseToolBuilder):
     """
@@ -24,8 +24,18 @@ class SetupTestBuilder(BaseToolBuilder):
         super(SetupTestBuilder, self).__init__(*args, **kwargs)
         self._plans = None
         self._builders = None
-        self._products = None        
+        self._products = None
+        self._tool_builder = None
         return
+
+    @property
+    def tool_builder(self):
+        """
+        :return: ToolBuilder aggregator
+        """
+        if self._tool_builder is None:
+            self._tool_builder = ToolBuilder()
+        return self._tool_builder
 
     @property
     def plans(self):
@@ -47,7 +57,9 @@ class SetupTestBuilder(BaseToolBuilder):
                 self.previous_parameters = []
             self._builders = []
             for plan in self.plans:
-                builder = tool_builders[plan](self.master, self.config_map, self.previous_parameters)
+                builder = getattr(self.tool_builder, plan)(master=self.master,
+                                                           config_map=self.config_map,
+                                                           previous_parameters=self.previous_parameters)
                 self.previous_parameters = builder.parameters
                 self._builders.append(builder)
         return self._builders
