@@ -6,6 +6,7 @@ from time import time as now
 from sys import maxint
 
 from tottest.baseclass import BaseClass
+from tottest.devices.basedevice import BaseDeviceEnum
 from tottest.commons import errors
 from tottest.commons import readoutput
 
@@ -13,33 +14,78 @@ from tottest.commons import readoutput
 ConfigurationError = errors.ConfigurationError
 CommandError = errors.CommandError
 
-class IperfError(ConfigurationError):
+
+class IperfError(CommandError):
     """
     An IperfError indicates a connection problem.
     """
+class IperfCommandError(ConfigurationError):
+    """
+    an error to raise if the settings are unknown
+    """
     
+class IperfCommandEnum(object):
+    __slots__ = ()
+    client = "client"
+    server = "server"
+     
 class IperfCommand(BaseClass):
     """
     An Iperf Command executes iperf commands
     """
-    def __init__(self, connection, output, role, name, parameters=None):
+    def __init__(self, parameters, output, role):
         """
         :param:
 
-         - `connection`: a connection to the device
          - `output`: an output to get writeable files from
-         - `parameters`: An IperfParameter to use if none passed to run()
-         - `role`: a string to add to the output file to identify it
-         - `name` : DUT or TPC
+         - `parameters`: An IperfParameter to use 
+         - `role`: client or server
         """
         super(IperfCommand, self).__init__()
-        self.connection = connection
         self.output = output
         self.parameters = parameters
         self.role = role
-        self.name = name
+        self._max_time = None
         return
 
+    def filename(self, filename, node_type):
+        """
+        :param:
+
+         - `filename`: base filename to add prefix to
+         - `node_type`: the device.role
+         
+        :return: a prefix to add to the filename given
+        :raise: ConfigurationError if self.role or node_type are unknown
+        """
+        if self.role == IperfCommandEnum.client:
+            if node_type == BaseDeviceEnum.node:
+                return "sent_from_node_" + filename
+            elif node_type == BaseDeviceEnum.tpc:
+                return "sent_to_node_" + filename
+            else:
+                raise IperfCommandError("Unknown device.role: '{0}'".format(node_type))
+        elif self.role == IperfCommandEnum.server:
+            if node_type == BaseDeviceEnum.node:
+                return "received_by_node_" + filename
+            elif node_type == BaseDeviceEnum.tpc:
+                return "received_by_tpc_" + filename
+            else:
+                raise IperfCommandError("Unknown device.role: '{0}'".format(node_type))
+        raise IperfCommandError("Unknown Iperf Role: '{0}'".format(self.role))
+        return 
+
+    @property
+    def max_time(self):
+        """
+        :return: the maximum amount of time to run
+        """
+        if self._max_time is None:
+            self._max_time = maxint
+            if hasattr(self.parameters, "time"):
+                self._max_time = max(120, 1.2 * float(self.parameters.time.split()[-1]))
+        return self._max_time
+    
     def validate(self, line):
         """
         :param:
@@ -59,63 +105,31 @@ class IperfCommand(BaseClass):
             self.logger.warning(line)
             #raise IperfError("Another server is already running.")
         return
-
-    def filename(self, parameters):
-        """
-        If `parameters` has .filename attribute, uses that and adds role:
-          <filename>_<role>_{t}
-        Else creates a file name to use for output from iperf flags.
-           <parameters>_<role>_{t}
-           
-        :param:
-
-         - `parameters`: The parameters passed in to run.
-        """
-        try:
-            param_string = parameters.filename
-        except AttributeError:
-            param_string = str(parameters)
-            param_string = param_string.replace("-", "")
-            param_string = param_string.replace(" ", "_")
-        filename = "{param}_{role}_{{t}}".format(param=param_string,
-                                                 role=self.role)
-        return filename
     
-    def run(self, parameters=None):
+    def run(self, device, filename):
         """
         Run the iperf command and send to the output
 
         :param:
 
-         - `parameters`: A string or IperfParameters to override self.parameters
-
-        :postcondition:
-
-         - `Data sent to a file formatted {parameters}_{role}_{timestamp}.iperf
+         - `device`: A device to issue the command on
+         - `filename`: a base-name to use for the output file.
         """
-        if parameters is None:
-            parameters = self.parameters
-
-        max_time = maxint
-        if hasattr(parameters.iperf_parameters, "time"):
-            max_time = max(120, 1.2 * float(parameters.iperf_parameters.time.split()[-1]))
-        
-        filename = self.filename(parameters)
-        file_output = self.output.open(filename=filename,
-                                       extension=".iperf",
+        filename = self.filename(filename)
+        file_output = self.output.open(filename=filename,                                       
                                        subdir="raw_iperf")
-        output, error = self.connection.iperf(str(parameters))
+        output, error = self.connection.iperf(str(self.parameters))
         start_time = now()
-        abort_time = start_time + max_time
+        abort_time = start_time + self.max_time
 
         for line in readoutput.ValidatingOutput(output, self.validate):
-            if "SUM" in line:
+            if "SUM" in line or "-1" in line:
                 self.logger.info(line.rstrip())
             else:
                 self.logger.debug(line)
             file_output.write(line)
             if now() > abort_time:
-                raise CommandError("Expected runtime: {0} Actual: {1} (aborting)".format(parameters.iperf_parameters.time, now() - start_time))
+                raise IperfError("Expected runtime: {0} Actual: {1} (aborting)".format(self.parameters.time, now() - start_time))
 
         err = error.readline()
         
@@ -126,15 +140,17 @@ class IperfCommand(BaseClass):
                 self.validate(line)
         return
 
-    def start(self, parameters=None):
+    def start(self, device, filename):
         """
         :param:
 
-         - `parameters`: A parameters string or object to send to iperf
+         - `device`: device to issue the iperf command
+         - `filename`: base filename to use for output file
+
+        :postcondition: iperf command started in thread
         """
-        
         self.thread = threading.Thread(target=self.run, name='IperfCommand',
-                                     args=(parameters,))
+                                     args=(device, filename))
         self.thread.daemon = True
         self.thread.start()
         return

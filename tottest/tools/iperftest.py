@@ -7,28 +7,36 @@ from tottest.baseclass import BaseClass
 
 #this folder
 from sleep import Sleep 
-from killall import KillAllError 
+from killall import KillAll
 
 
 class IperfTest(BaseClass):
     """
     The Iperf Test runs a single iperf test.
     """
-    def __init__(self, sender, receiver, killers, sleep=None):
+    def __init__(self, sender_command, receiver_command, sleep=None):
         """
         :param:
 
-         - `sender`: IperfCommand configured as sender
-         - `receiver`: IperfCommand configured as receiver
-         - `killers`: An iterable of Iperf Killers
+         - `sender_command`: an IperfCommand bundled with client parameters
+         - `receiver_command`: IperfCommand bundled with server parameters
          - `sleep`: A Sleep object with the sleep time preset
         """
         super(IperfTest, self).__init__()
-        self.sender = sender
-        self.receiver = receiver
-        self.killers = killers
+        self.sender_command = sender_command
+        self.receiver_command = receiver_command        
         self._sleep = sleep
+        self._killer = None
         return
+
+    @property
+    def killer(self):
+        """
+        :return: iperf process killer
+        """
+        if self._killer is None:
+            self._killer = KillAll(name="iperf")
+        return self._killer
 
     @property
     def sleep(self):
@@ -39,24 +47,24 @@ class IperfTest(BaseClass):
             self._sleep = Sleep()
         return self._sleep
     
-    def run(self, parameters):
+    def run(self, sender, receiver, filename):
         """
         Runs the test.
+
+        :param:
+
+         - `sender`: a device to originate traffic
+         - `receiver`: A device to receive traffic
+         - `filename`: a filename to use for output
         """
-        for killer in self.killers:
-            self.logger.info(str(killer))
-            try:
-                killer.run(time_to_sleep=parameters.recovery_time)
-            except KillAllError as error:
-                # Try to run the test anyway, it might not be a bad thing
-                self.logger.warning(error)
-        self.logger.debug("Parameters: {0}".format(parameters))
-        self.logger.info("Running Iperf: {0} -> {1}".format(self.sender, self.receiver))
+        self.killer(sender.connection)
+        self.killer(receiver.connection)
+        self.logger.info("Running Iperf: {0} -> {1}".format(self.sender.address, self.receiver.address))
         self.logger.info("Starting the iperf server (receiver)")
-        self.receiver.start(parameters.receiver)
+        self.receiver_command.start(receiver, filename)
         self.logger.info("Sleeping to let the server start.")
-        self.sleep.run(parameters.recovery_time)
+        self.sleep()
         self.logger.info("Running the client (sender)")
-        self.sender.run(parameters.sender)
+        self.sender_command.run(sender, filename)
         return
 # end class IperfTest

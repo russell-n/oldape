@@ -1,31 +1,42 @@
 """
 A module to build nodes (devices) based on Operating System and connection type
 """
-# python
-from threading import RLock
 
 from tottest.baseclass import BaseClass
+from tottest.devices.basedevice import BaseDeviceEnum
 from connectionbuilder import connection_builders
 from devicebuilder import device_builders
+
 
 class NodeBuilder(BaseClass):
     """
     A class to build a device (node)
     """
-    def __init__(self, parameters):
+    def __init__(self, parameters, role=None):
         """
         :param:
 
          - `parameters`: object with attributes needed for device & connection
+         - `role`: tpc or node
         """
         super(NodeBuilder, self).__init__()
-        self.parameters = parameters        
+        self.parameters = parameters
+        self._role = role
         self._connection = None
         self._interface = None
         self._node = None
         self._address = None
         return
 
+    @property
+    def role(self):
+        """
+        :return: the device role
+        """
+        if self._role is None:
+            self._role = BaseDeviceEnum.node
+        return self._role
+    
     @property
     def address(self):
         """
@@ -65,9 +76,10 @@ class NodeBuilder(BaseClass):
         :return: device built to match parameter.operating_system
         """
         if self._node is None:
-            self._node = device_builders[self.parameters.operating_system](self.connection,
-                                                                           self.interface,
-                                                                           self.address).device
+            self._node = device_builders[self.parameters.operating_system](connection=self.connection,
+                                                                           interface=self.interface,
+                                                                           address=self.address,
+                                                                           role=self.role).device
         return self._node
 # end class NodeBuilder
 
