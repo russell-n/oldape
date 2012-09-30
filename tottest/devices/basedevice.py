@@ -7,19 +7,30 @@ from abc import ABCMeta, abstractproperty, abstractmethod
 #local
 from tottest.baseclass import BaseClass
 
+class BaseDeviceEnum(object):
+    __slots__ = ()
+    tpc = "tpc"
+    node = "node"
+# end class BaseDeviceEnum
+    
+
 
 class BaseDevice(BaseClass):
     __metaclass__ = ABCMeta
-    def __init__(self, connection=None, interface=None, address=None, *args, **kwargs):
+    def __init__(self, connection=None, interface=None,
+                 address=None, role=None,
+                 *args, **kwargs):
         """
         :param:
 
          - `connection`: An device connection
          - `interface`: The test-interface name to try and get the address
          - `address` The Test-interface IP to use if the interface name isn't given
+         - `role`: an identifier to help with building file-names
         """
         self._connection = connection
         self.interface = interface
+        self.role = role
         self._address = address
         self._rssi = None
         self._wifi_info = None
@@ -78,8 +89,9 @@ class BaseDevice(BaseClass):
         return
 
     def __str__(self):
-        return "Connection: {0}\nAddress: {1}\nWiFi Info: {2}\n".format(self.connection,
-                                                                          self.address,
-                                                                          self.wifi_info)
+        return "Role: {3}\nConnection: {0}\nAddress: {1}\nWiFi Info: {2}\n".format(self.connection,
+                                                                                   self.address,
+                                                                                   self.wifi_info,
+                                                                                   self.role)
         
 # end class BaseDevice

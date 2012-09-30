@@ -9,6 +9,9 @@ import re
 from tottest.baseclass import BaseClass
 from tottest.tools import sleep
 from tottest.commons import enumerations, expressions, errors
+from tottest.parsers.oatbran import NAMED, STRING_START,SPACES, INTEGER
+
+CYGWIN = STRING_START + SPACES + NAMED(n=expressions.PID_NAME,e=INTEGER)
 
 operating_systems = enumerations.OperatingSystem
 
@@ -21,20 +24,16 @@ class KillAll(BaseClass):
     """
     A killall kills processes. The default operating system is linux
     """
-    def __init__(self, connection, name=None, operating_system=None, sleep=5):
+    def __init__(self, name=None, sleep=5):
         """
         :param:
 
-         - `connection`: a device connection
          - `name`: The name of a process to kill
-         - `operating_system`: The OS whose `ps` will be used
          - `sleep`: The number of seconds to wait for a process to die.
         """
         super(BaseClass, self).__init__()
         self._logger = None
-        self.connection = connection
         self.name = name
-        self._operating_system = operating_system
         self._expression = None
         self._arguments = None
         self.time_to_sleep = sleep
@@ -44,6 +43,8 @@ class KillAll(BaseClass):
     @property
     def operating_system(self):
         """
+        :precondition: self.connection has the connection to the device
+        
         :return: The operating system that issues the commands.
         """
         if self._operating_system is None:
@@ -58,28 +59,24 @@ class KillAll(BaseClass):
         """
         :return: The regular expression for the ps command
         """
-        if self._expression is None:
-            if self.operating_system == operating_systems.android:
-                self.logger.debug("Using Android Expression")
-                self._expression = re.compile(expressions.PS_ANDROID)
-            else:
-                self.logger.debug("Using linux expression")
-                self._expression = re.compile(expressions.PSE_LINUX)
+        if self.operating_system == operating_systems.android:
+            self.logger.debug("Using Android Expression")
+            return re.compile(expressions.PS_ANDROID)
+        if self.operating_system == operating_systems.windows:
+            self.logger.debug("Using Cygwin Expression")
+            return re.compile(CYGWIN)
 
-        return self._expression
+        self.logger.debug("Using linux expression")
+        return re.compile(expressions.PSE_LINUX)
 
     @property
     def arguments(self):
         """
         :return: The arguments to the `ps` call        
         """
-        if self._arguments is None:
-            if self.operating_system == operating_systems.android:
-                self._arguments = ''
-            else:
-                self._arguments = "-e"
-            
-        return self._arguments
+        if self.operating_system == operating_systems.android:
+            return ''
+        return "-e"
 
     @property
     def sleep(self):
@@ -90,15 +87,19 @@ class KillAll(BaseClass):
             self._sleep = sleep.Sleep().run
         return self._sleep
     
-    def run(self, name=None, time_to_sleep=None):
+    def run(self, connection, name=None, time_to_sleep=None):
         """
-        :name: The process to kill
+        :param:
+
+         - `connection`: the connection to the device
+         - `name`: The process to kill
 
         :raise: KillAllError if the process is still alive at the end
         """
+        self.connection = connection
         if name is None:
             name = self.name
-
+        
         if time_to_sleep is None:
             time_to_sleep = self.time_to_sleep
 
@@ -122,6 +123,8 @@ class KillAll(BaseClass):
         if len(err):
             self.logger.error(err)
         self.sleep(time_to_sleep)
+
+        # double-check to see if the process is dead
         output, error = self.connection.ps(self.arguments)
         for process in output:
             if name in line:
@@ -138,9 +141,15 @@ class KillAll(BaseClass):
             self.logger.error(err)
         return
 
-    def __call__(self, name=None, time_to_sleep=None):
+    def __call__(self, connection, name=None, time_to_sleep=None):
+        """
+        This is an alias to run to match the newer-style
+        :param:
+
+         - `connection`: connection to the device
+        """
         self.run(name, time_to_sleep)
-    
+        return
     
     def __str__(self):
         return "{0} ({2}):{1}".format(self.__class__.__name__, self.name, self.connection)

@@ -4,6 +4,7 @@ A module to build a traffic PC device
 
 from tottest.lexicographers.config_options import ConfigOptions
 from tottest.builders.subbuilders.connectionbuilder import connection_builders
+from tottest.devices.basedevice import BaseDeviceEnum
 from nodebuilder import NodeBuilder
 
 
@@ -49,6 +50,7 @@ class TpcDeviceBuilder(object):
         :return: device for the TPC
         """
         if self._device is None:
-            self._device = NodeBuilder(self.parameters).node
+            self._device = NodeBuilder(parameters=self.parameters,
+                                       role=BaseDeviceEnum.tpc).node
         return self._device
 # end class TpcDeviceBuilder
