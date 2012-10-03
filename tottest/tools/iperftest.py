@@ -14,7 +14,7 @@ class IperfTest(BaseClass):
     """
     The Iperf Test runs a single iperf test.
     """
-    def __init__(self, sender_command, receiver_command, sleep=None):
+    def __init__(self, sender_command=None, receiver_command=None, sleep=None):
         """
         :param:
 
@@ -26,17 +26,17 @@ class IperfTest(BaseClass):
         self.sender_command = sender_command
         self.receiver_command = receiver_command        
         self._sleep = sleep
-        self._killer = None
+        self._kill = None
         return
 
     @property
-    def killer(self):
+    def kill(self):
         """
         :return: iperf process killer
         """
-        if self._killer is None:
-            self._killer = KillAll(name="iperf")
-        return self._killer
+        if self._kill is None:
+            self._kill = KillAll(name="iperf")
+        return self._kill
 
     @property
     def sleep(self):
@@ -57,8 +57,8 @@ class IperfTest(BaseClass):
          - `receiver`: A device to receive traffic
          - `filename`: a filename to use for output
         """
-        self.killer(sender.connection)
-        self.killer(receiver.connection)
+        self.kill(sender.connection)
+        self.kill(receiver.connection)
         self.logger.info("Running Iperf: {0} -> {1}".format(self.sender.address, self.receiver.address))
         self.logger.info("Starting the iperf server (receiver)")
         self.receiver_command.start(receiver, filename)

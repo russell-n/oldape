@@ -130,15 +130,6 @@ class Builder(BaseClass):
         return self._nodes
     
     @property
-    def lock(self):
-        """
-        :return: A re-entrant lock
-        """
-        if self._lock is None:
-            self._lock = RLock()
-        return self._lock
-
-    @property
     def operators(self):
         """
         :yield: test operators
