@@ -18,7 +18,7 @@ from errors import StorageError
 WRITEABLE = 'w'
 NEWLINE_ADD = '{l}\n'
 TIMESTAMP_FLAG = "{t}"
-
+NEWLINE = "\n"
 
 class StorageOutput(BaseClass):
     """
@@ -57,16 +57,33 @@ class StorageOutput(BaseClass):
             self._path = self.output_folder
         return self._path
 
-    def open(self, filename, extension='.csv', subdir=None):
+    def extend_path(self, subdirectory):
         """
         :param:
 
-         - `filename`: The name of the file to open (minus extension)
-         - `extension`: The extension to use.
+         - `subdirectory`: a path to add to the current path
+
+        :postcondition:
+
+         -`self.output_folder` extended with subdirectory
+         - `self._path` is None
+        """
+        self._path = None
+        self.output_folder = os.path.join(self.output_folder, subdirectory)
+        return
+        
+        
+
+    def open(self, filename, subdir=None):
+        """
+        :param:
+
+         - `filename`: The name of the file to open 
          - `subdir`: A subdirectory whithin the output folder to put the file in.
          
         :return: A clone of this object with a new file opened.
         """
+        filename, extension = os.path.splitext(filename)
         directory = self.path
         if subdir is not None:
             directory = os.path.join(self.path, subdir)
@@ -128,9 +145,11 @@ class StorageOutput(BaseClass):
         
         :param:
 
-         - `line`: A string to add a newline before sending to the output file.
+         - `line`: string to add to (if it doesn't have one) then send to output 
         """
-        self.write(NEWLINE_ADD.format(l=line))
+        if not line.endswith(NEWLINE):
+            line = NEWLINE_ADD.format(l=line)
+        self.write(line)
         return
 
     def writelines(self, lines):
@@ -183,10 +202,23 @@ class StorageOutput(BaseClass):
         shutil.move(source, target)
         return
 
-    def __del__(self):
+    def close(self):
+        """
+        :postcondition:
+
+         - self.output_file is flushed
+         - self.output_file is closed
+        """
         if self.output_file is not None:
             self.output_file.flush()
             os.fsync(self.output_file.fileno())
             self.output_file.close()
+        return
+
+    def __del__(self):
+        """
+        :postcondition: self.close called
+        """
+        self.close()
         return
 # end class StorageOutput

@@ -2,8 +2,7 @@
 A module to hold a generic iperf command.
 """
 import threading
-from time import time as now
-from sys import maxint
+import time
 
 from tottest.baseclass import BaseClass
 from tottest.devices.basedevice import BaseDeviceEnum
@@ -14,6 +13,7 @@ from tottest.commons import readoutput
 ConfigurationError = errors.ConfigurationError
 CommandError = errors.CommandError
 
+EOF = ""
 
 class IperfError(CommandError):
     """
@@ -33,20 +33,37 @@ class IperfCommand(BaseClass):
     """
     An Iperf Command executes iperf commands
     """
-    def __init__(self, parameters, output, role):
+    def __init__(self, parameters, output, role, base_filename="", subdirectory="raw_iperf"):
         """
         :param:
 
-         - `output`: an output to get writeable files from
-         - `parameters`: An IperfParameter to use 
+         - `parameters`: An IperfParameter to use
+         - `output`: A Storage Pipe
          - `role`: client or server
+         - `base_filename`: string to add to all filenames
+         - `subdirectory`: A folder to put the iperf files intn
         """
         super(IperfCommand, self).__init__()
         self.output = output
+        self.base_filename = base_filename
+        self.output.extend_path(subdirectory) 
         self.parameters = parameters
         self.role = role
         self._max_time = None
+        self._now = None
         return
+
+    @property
+    def now(self):
+        """
+        :return: time-function to check for timeouts
+        """
+        if self._now is None:
+            if hasattr(self.parameters, time):
+                self._now = time.time
+            else:
+                self._now = lambda: 0
+        return self._now
 
     def filename(self, filename, node_type):
         """
@@ -59,6 +76,7 @@ class IperfCommand(BaseClass):
         :raise: ConfigurationError if self.role or node_type are unknown
         """
         if self.role == IperfCommandEnum.client:
+            filename = self.base_filename
             if node_type == BaseDeviceEnum.node:
                 return "sent_from_node_" + filename
             elif node_type == BaseDeviceEnum.tpc:
@@ -81,7 +99,7 @@ class IperfCommand(BaseClass):
         :return: the maximum amount of time to run
         """
         if self._max_time is None:
-            self._max_time = maxint
+            self._max_time = 0
             if hasattr(self.parameters, "time"):
                 self._max_time = max(120, 1.2 * float(self.parameters.time.split()[-1]))
         return self._max_time
@@ -114,22 +132,23 @@ class IperfCommand(BaseClass):
 
          - `device`: A device to issue the command on
          - `filename`: a base-name to use for the output file.
+
+        :raise: IperfError if runtime is greater than self.parameters.time
         """
         filename = self.filename(filename)
-        file_output = self.output.open(filename=filename,                                       
-                                       subdir="raw_iperf")
+        file_output = self.output.open(filename=filename)
         output, error = self.connection.iperf(str(self.parameters))
-        start_time = now()
+        
+        start_time = time.time()
         abort_time = start_time + self.max_time
-
+        
         for line in readoutput.ValidatingOutput(output, self.validate):
-            if "SUM" in line or "-1" in line:
-                self.logger.info(line.rstrip())
-            else:
-                self.logger.debug(line)
-            file_output.write(line)
-            if now() > abort_time:
-                raise IperfError("Expected runtime: {0} Actual: {1} (aborting)".format(self.parameters.time, now() - start_time))
+            self.logger.debug(line)
+            file_output.send(line)
+            if self.now() > abort_time:
+                file_output.send(EOF)
+                raise IperfError("Expected runtime: {0} Actual: {1} (aborting)".format(self.parameters.time,
+                                                                                       self.now() - start_time))
 
         err = error.readline()
         

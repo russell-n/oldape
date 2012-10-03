@@ -8,6 +8,7 @@ class ToolBuilderEnum(object):
     apconnect = "apconnect"
     timetorecovery = "timetorecovery"
     dumpdevicestatebuilder = "dumpdevicestatebuilder"
+    iperf = "iperf"
 # end class ToolBuilderEnum
 
 class ToolBuilder(object):
@@ -19,6 +20,7 @@ class ToolBuilder(object):
         self._apconnect = None
         self._timetorecovery = None
         self._dumpdevicestate = None
+        self._iperf = None
         return
 
     @property
@@ -40,6 +42,11 @@ class ToolBuilder(object):
     def dumpdevicestate(self):
         from dumpdevicestatebuilder import DumpDeviceStateBuilder
         return DumpDeviceStateBuilder
+
+    @property
+    def iperf(self):
+        from iperfsessionbuilder import IperfSessionBuilder
+        return IperfSessionBuilder
 # end class ToolBuilder
         
 #tool_builders = {ToolBuilderEnum.ners:NersBuilder,

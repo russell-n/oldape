@@ -17,18 +17,19 @@ class IperfConfigurationError(ConfigurationError):
 
 class IperfSession(BaseClass):
     """
-    A bundler of nodes and the iperfcommand.
+    A bundler of nodes and the iperftest
     """
-    def __init__(self, iperf_command, nodes, tpc):
+    def __init__(self, iperf_test, nodes, tpc, filname_base=None):
       """
       :param:
 
-       - `iperf_command`: a bundle of parameters and storage
+       - `iperf_test`: a bundle of parameters and storage
        - `nodes`: id:device pairs
        - `tpc`: traffic PC device
+       - `filename_base`: An optional string to add to the filename
       """
       super(IperfSession, self).__init__()
-      self.iperf_command = iperf_command
+      self.iperf_test = iperf_test
       self.nodes = nodes
       self.tpc = tpc
       self._to_node_expression = None
@@ -90,6 +91,8 @@ class IperfSession(BaseClass):
             name.append(parameters.ssids.parameters)
         except AttributeError as error:
             self.logger.debug(error)
+        if self.filename_base is None:
+            name.append(self.filename_base)                    
         return "_".join(name) + ".iperf"
     
     def __call__(self, parameters):
@@ -100,9 +103,9 @@ class IperfSession(BaseClass):
         """
         sender_receiver = self.particpants(parameters)
         filename = self.filename(parameters)
-        self.poll = self.iperf_command(sender=sender_receiver.sender,
-                                       receiver=sender_receiver.receiver,
-                                       filename=filename)
+        self.poll = self.iperf_test(sender=sender_receiver.sender,
+                                    receiver=sender_receiver.receiver,
+                                    filename=filename)
         return
 # end class IperfSession
     

@@ -2,11 +2,7 @@
 A module to build tests
 """
 
-from basetoolbuilder import BaseToolBuilder
 from tottest.lexicographers.config_options import ConfigOptions
-from tottest.operations.executetest import DummyExecuteTest
-from tottest.commons.errors import ConfigurationError
-from toolbuilder import ToolBuilder
 from tottest.operations.executetest import ExecuteTest 
 
 from baseoperationbuilder import BaseOperationBuilder

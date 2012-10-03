@@ -6,6 +6,7 @@ class ConfigOptions(object):
     operation_setup_option = "operation_setup"
     operation_teardown_option = "operation_teardown"
     test_setup_option = "test_setup"
+    execute_test_option = "execute_test"
     
     output_folder_option = 'output_folder'
     data_file_option = "data_file"
@@ -39,6 +40,7 @@ class ConfigOptions(object):
     interval_option = "interval"
     format_option = "format"
     time_option = "time"
+    protocol_option = "protocol"
 
     time_to_recovery_section="TIMETORECOVERY"
     threshold_option = "threshold"
