@@ -9,7 +9,7 @@ import re
 # tottest
 from iperf_common_tcp_parameters import IperfCommonTcpParameters
 from iperf_common_parameters import VALID_BUFFER_LENGTHS as VALID_BYTES
-from iperf_common_parameters import MAXIMUM_PORT, MINIMUM_PORT, LOWEST_PORT
+from iperf_common_parameters import MAXIMUM_PORT, MINIMUM_PORT, LOWEST_PORT, IperfParameterEnum
 
 from tottest.commons import errors, expressions
 
@@ -25,7 +25,7 @@ VALID_TIME_FLOAT = re.compile(expressions.FLOAT + expressions.WORD_ENDING +
 VALID_BANDWIDTHS = VALID_BYTES
 
 SPACE = ' '
-
+    
 
 class IperfTcpClientParameters(IperfCommonTcpParameters):
     """
@@ -272,3 +272,6 @@ class IperfUdpClientParameters(IperfTcpClientParameters):
         self._bandwidth = "--bandwidth {0}".format(new_bandwidth)
         return
 # end class IperfUdpClientParameters
+
+client_parameters = {IperfParametersEnum.tcp: IperfTcpClientParameters,
+                     IperfParametersEnum.udp: IperfUdpClientParameters}

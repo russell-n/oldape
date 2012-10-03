@@ -291,6 +291,16 @@ Parsers
    sumparser
    unitconverter
 
+Pipes
+-----
+
+.. currentmodule:: tottest.pipes
+
+.. autosummary::
+   :toctree: pipes_api
+
+   storagepipe
+
 Proletarians
 ------------
 
@@ -342,6 +352,7 @@ The **Tools** are bundled commands that the operator uses. By ordering the set o
    copyfiles
    getipaddress
    iperftest
+   iperfsession
    killall
    movefiles
    networktester

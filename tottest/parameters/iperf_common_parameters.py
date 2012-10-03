@@ -17,6 +17,7 @@ from tottest.commons import errors
 from tottest.commons import expressions
 
 
+
 ConfigurationError = errors.ConfigurationError
 
 SPACE = ' '
@@ -30,6 +31,15 @@ LOWEST_PORT = 1024
 VALID_OUTPUT = expressions.NOT_SPACE + expressions.ONE_OR_MORE + expressions.WORD_ENDING
 VALID_EXCLUDES = expressions.CLASS.format("CDMSV") + expressions.ONE_OR_MORE + expressions.WORD_ENDING
 VALID_REPORT_STYLES = "cC"
+
+class IperfParametersEnum(object):
+    """
+    A holder for Iperf Parameter Constants
+    """
+    __slots__ = ()
+    udp = "udp"
+    tcp = "tcp"
+# end class IperfParametersEnum
 
 class IperfCommonParameters(BaseClass):
     """
@@ -49,6 +59,7 @@ class IperfCommonParameters(BaseClass):
         self._ipv6version = None
         self._reportexclude = None
         self._reportstyle = None
+        self._parameter_names = None
         self._block_attributes = True
         return
 
@@ -261,6 +272,15 @@ class IperfCommonParameters(BaseClass):
         if csv_flag not in VALID_REPORT_STYLES:
             raise ConfigurationError("Invalid report-style: {0} (should be 'c' or 'C')".format(csv_flag))
         self._reportstyle = "--reportstyle {0}".format(csv_flag)
+
+    @property
+    def parameter_names(self):
+        """
+        :return: a list of valid parameter names
+        """
+        if self._parameter_names is None:
+            self._parameter_names = [field for field in dir(self) if not field.startswith("_") and field not in ("parameter_names","logger")]
+        return self._parameter_names
 
     def __str__(self):
         """

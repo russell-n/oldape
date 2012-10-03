@@ -6,6 +6,7 @@ from types import BooleanType
 
 #tottest
 from iperf_common_tcp_parameters import IperfCommonTcpParameters
+from iperf_common_parameters import IperfParametersEnum
 from tottest.commons import errors
 
 ConfigurationError = errors.ConfigurationError
@@ -77,3 +78,6 @@ class IperfUdpServerParameters(IperfServerParameters):
         return
     
 # end IperfUdpServerParameters
+
+server_parameters = {IperfParametersEnum.tcp:IperfTcpServerParameters,
+                     IperfParameterEnum.udp: IperfUdpServerParameters}
