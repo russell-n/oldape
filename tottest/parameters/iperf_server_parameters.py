@@ -79,5 +79,5 @@ class IperfUdpServerParameters(IperfServerParameters):
     
 # end IperfUdpServerParameters
 
-server_parameters = {IperfParametersEnum.tcp:IperfTcpServerParameters,
-                     IperfParameterEnum.udp: IperfUdpServerParameters}
+server_parameters = {IperfParametersEnum.tcp:IperfServerParameters,
+                     IperfParametersEnum.udp: IperfUdpServerParameters}

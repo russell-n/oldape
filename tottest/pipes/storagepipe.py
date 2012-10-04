@@ -165,4 +165,14 @@ class StoragePipe(BaseClass):
         target = self.target.open(filename)
         return self.pipe(target, filename)
 
+    def extend_path(self, subdirectory):
+        """
+        A pass-through to the storage's command
+        
+        :param:
+
+         - `subdirectory`: A sub-directory within the output folder
+        """
+        self.storage.extend_path(subdirectory)
+        return
 # end class StoragePipe

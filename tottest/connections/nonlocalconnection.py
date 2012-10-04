@@ -52,6 +52,8 @@ class NonLocalConnection(BaseClass):
         """
         :return: a re-entrant lock
         """
+        if self._lock is None:
+            self._lock = threading.RLock()
         return self._lock
     
     @property

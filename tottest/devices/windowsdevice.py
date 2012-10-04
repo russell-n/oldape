@@ -13,9 +13,8 @@ class WindowsDevice(BaseDevice):
     """
     A class to control and query windows devices
     """
-    def __init__(self, connection):
-        super(WindowsDevice, self).__init__()
-        self._connection = connection
+    def __init__(self, *args, **kwargs):
+        super(WindowsDevice, self).__init__(*args, **kwargs)
         self._wifi_control = None
         self._wifi_query = None
         self._rssi_query = None

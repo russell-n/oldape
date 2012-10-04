@@ -14,6 +14,10 @@ class DummyOperation(BaseClass):
 
     def __call__(self, parameters):
         return
+
+    def __getattr__(self, name):
+        self.logger.info("{0} called".format(name))
+        return
 # end class DummyOperation
 
 
