@@ -143,10 +143,11 @@ class Builder(BaseClass):
             
             operation_teardown = self.operation_teardown_builder(config_map, operation_setup_parameters).product
             operation_teardown_parameters = self.operation_teardown_builder(config_map, operation_setup_parameters).parameters
+
             
             test_setup = self.setup_test_builder(config_map, operation_teardown_parameters).product
             test_setup_parameters = self.setup_test_builder(config_map, operation_teardown_parameters).parameters
-            
+
             test = self.execute_test_builder(config_map, test_setup_parameters).product
             test_parameters = self.execute_test_builder(config_map, test_setup_parameters).parameters
             

@@ -19,7 +19,7 @@ class IperfSession(BaseClass):
     """
     A bundler of nodes and the iperftest
     """
-    def __init__(self, iperf_test, nodes, tpc, filname_base=None):
+    def __init__(self, iperf_test, nodes, tpc, filename_base=None):
       """
       :param:
 
@@ -31,6 +31,7 @@ class IperfSession(BaseClass):
       super(IperfSession, self).__init__()
       self.iperf_test = iperf_test
       self.nodes = nodes
+      self.filename_base = filename_base
       self.tpc = tpc
       self._to_node_expression = None
       self._from_node_expression = None
@@ -44,7 +45,7 @@ class IperfSession(BaseClass):
         
         :return: compiled regex to match TPC <-- Node        
         """
-        if self._from_node_expression:
+        if self._from_node_expression is None:
             self._from_node_expression = re.compile("f.*|s.*|t[rx].*|u.*")
         return self._from_node_expression
 
@@ -55,9 +56,9 @@ class IperfSession(BaseClass):
         
         :return: compiled regex to match direction of traffic TPC --> Node
         """
-        if self._expression is None:
-            self._expression = re.compile("to.*|d.*|r.*")
-        return self._expression
+        if self._to_node_expression is None:
+            self._to_node_expression = re.compile("to.*|d.*|r.*")
+        return self._to_node_expression
 
     def particpants(self, parameters):
         """
@@ -68,10 +69,10 @@ class IperfSession(BaseClass):
         :return: 
         """
         node = self.nodes[parameters.nodes.parameters]
-        direction = parameters.directions.parameters
-        if self.to_dut_expression.match(direction):
+        direction = parameters.iperf_directions.parameters
+        if self.to_node_expression.match(direction):
             return SenderReceiver(sender=self.tpc, receiver=node)
-        elif self.from_dut_expression.match(direction):
+        elif self.from_node_expression.match(direction):
             return SenderReceiver(sender=node, receiver=self.tpc)
         raise IperfConfigurationError("Unknown traffic direction: '{0}'".format(direction))
         return
@@ -86,12 +87,12 @@ class IperfSession(BaseClass):
         """
         name = []
         name.append(parameters.nodes.parameters)
-        name.append(parameters.directions.parameters)
+        name.append(parameters.iperf_directions.parameters)
         try:
             name.append(parameters.ssids.parameters)
         except AttributeError as error:
             self.logger.debug(error)
-        if self.filename_base is None:
+        if self.filename_base is not None:
             name.append(self.filename_base)                    
         return "_".join(name) + ".iperf"
     

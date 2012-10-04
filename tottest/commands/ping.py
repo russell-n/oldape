@@ -112,6 +112,7 @@ class PingCommand(BaseClass):
         """
         self.operating_system = connection.operating_system
         self.target = target
+        #import pudb; pudb.set_trace()
         output, error = connection.ping(self.arguments, timeout=1)
         for line in output:
             self.logger.debug(line)
@@ -121,8 +122,6 @@ class PingCommand(BaseClass):
             if UNKNOWN_HOST in line:
                 raise ConfigurationError("Unknown Host: {0}".format(self.target))
         return
-
-    
 # end class Ping
 
 if __name__ == "__main__":

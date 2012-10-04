@@ -9,7 +9,7 @@ import re
 # tottest
 from iperf_common_tcp_parameters import IperfCommonTcpParameters
 from iperf_common_parameters import VALID_BUFFER_LENGTHS as VALID_BYTES
-from iperf_common_parameters import MAXIMUM_PORT, MINIMUM_PORT, LOWEST_PORT, IperfParameterEnum
+from iperf_common_parameters import MAXIMUM_PORT, MINIMUM_PORT, LOWEST_PORT, IperfParametersEnum
 
 from tottest.commons import errors, expressions
 
@@ -189,6 +189,7 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
 
          - `new_time`: time in seconds (floats are rounded to 1 decimal place)
         """
+        new_time = str(new_time)
         if VALID_TIME_INTEGER.match(new_time):
             self._time = "--time {0}".format(new_time)
         elif VALID_TIME_FLOAT.match(new_time):

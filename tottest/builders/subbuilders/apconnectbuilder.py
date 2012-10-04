@@ -6,13 +6,9 @@ from tottest.affectors.apconnect import APConnect
 from tottest.lexicographers.config_options import ConfigOptions
 
 from basetoolbuilder import BaseToolBuilder, Parameters
+from builderenums import BuilderParameterEnums
 
 
-
-class APConnectBuilderEnum(object):
-    __slots__ = ()
-    nodes = "nodes"
-    ssids = "ssids"
 
 class APConnectBuilder(BaseToolBuilder):
     """
@@ -49,12 +45,12 @@ class APConnectBuilder(BaseToolBuilder):
         """
         if self._parameters is None:
 
-            if not any([p.name == APConnectBuilderEnum.nodes for p in self.previous_parameters]):
-                self.previous_parameters.append(Parameters(name=APConnectBuilderEnum.nodes,
+            if not any([p.name == BuilderParameterEnums.nodes for p in self.previous_parameters]):
+                self.previous_parameters.append(Parameters(name=BuilderParameterEnums.nodes,
                                                            parameters=self.master.nodes.keys()))
 
-            if not any([p.name == APConnectBuilderEnum.ssids for p in self.previous_parameters]):
-                self.previous_parameters.append(Parameters(name=APConnectBuilderEnum.ssids,
+            if not any([p.name == BuilderParameterEnums.ssids for p in self.previous_parameters]):
+                self.previous_parameters.append(Parameters(name=BuilderParameterEnums.ssids,
                                                            parameters=self.ssids))
 
             self._parameters = self.previous_parameters

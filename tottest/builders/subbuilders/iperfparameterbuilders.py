@@ -64,7 +64,10 @@ class IperfParametersBuilder(object):
         if self._client_parameters is None:
             self._client_parameters = client_parameters[self.protocol]()
             for option in self.options:
-                if option in self._client_parameters.parameter_names:
+                if option == "time":
+                    self._client_parameters.time = self.config_map.get_time(ConfigOptions.iperf_section,
+                                                                            option)
+                elif option in self._client_parameters.parameter_names:
                     setattr(self._client_parameters, option, self.config_map.get(ConfigOptions.iperf_section,
                                                                          option))
         return self._client_parameters

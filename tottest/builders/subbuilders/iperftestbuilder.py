@@ -28,6 +28,7 @@ class IperfTestBuilder(BaseClass):
 
          - `config_map`: a pre-loaded configuration map
         """
+        self.config_map = config_map
         self._test = None
         self._commands = None
         return

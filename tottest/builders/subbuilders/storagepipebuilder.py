@@ -34,8 +34,10 @@ class StoragePipeBuilder(object):
         :return: the folder to send output to
         """
         if self._path is None:
-            self._path = self.config_map(ConfigOptions.test_section,
-                                         ConfigOptions.output_folder_option)
+            self._path = self.config_map.get(ConfigOptions.test_section,
+                                             ConfigOptions.output_folder_option,
+                                             default="",
+                                             optional=True)
         return self._path
 
     @property

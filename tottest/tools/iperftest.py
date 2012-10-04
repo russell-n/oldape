@@ -47,7 +47,7 @@ class IperfTest(BaseClass):
             self._sleep = Sleep()
         return self._sleep
     
-    def run(self, sender, receiver, filename):
+    def __call__(self, sender, receiver, filename):
         """
         Runs the test.
 
@@ -59,7 +59,8 @@ class IperfTest(BaseClass):
         """
         self.kill(sender.connection)
         self.kill(receiver.connection)
-        self.logger.info("Running Iperf: {0} -> {1}".format(self.sender.address, self.receiver.address))
+        self.logger.info("Running Iperf: {2} ({0}) -> {3} ({1})".format(sender.address, receiver.address,
+                                                                        sender.role, receiver.role))
         self.logger.info("Starting the iperf server (receiver)")
         self.receiver_command.start(receiver, filename)
         self.logger.info("Sleeping to let the server start.")

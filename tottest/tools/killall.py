@@ -41,28 +41,14 @@ class KillAll(BaseClass):
         return
 
     @property
-    def operating_system(self):
-        """
-        :precondition: self.connection has the connection to the device
-        
-        :return: The operating system that issues the commands.
-        """
-        if self._operating_system is None:
-            self._operating_system = self.connection.operating_system
-            if self._operating_system is None:
-                self._operating_system = operating_systems.linux
-            self.logger.debug("KillAll Operating sytem: {0}".format(self._operating_system))
-        return self._operating_system
-
-    @property
     def expression(self):
         """
         :return: The regular expression for the ps command
         """
-        if self.operating_system == operating_systems.android:
+        if self.connection.operating_system == operating_systems.android:
             self.logger.debug("Using Android Expression")
             return re.compile(expressions.PS_ANDROID)
-        if self.operating_system == operating_systems.windows:
+        if self.connection.operating_system == operating_systems.windows:
             self.logger.debug("Using Cygwin Expression")
             return re.compile(CYGWIN)
 
@@ -74,7 +60,7 @@ class KillAll(BaseClass):
         """
         :return: The arguments to the `ps` call        
         """
-        if self.operating_system == operating_systems.android:
+        if self.connection.operating_system == operating_systems.android:
             return ''
         return "-e"
 
@@ -148,7 +134,7 @@ class KillAll(BaseClass):
 
          - `connection`: connection to the device
         """
-        self.run(name, time_to_sleep)
+        self.run(connection=connection, name=name, time_to_sleep=time_to_sleep)
         return
     
     def __str__(self):
