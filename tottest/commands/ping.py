@@ -14,6 +14,8 @@ from tottest.commons import errors
 ConfigurationError = errors.ConfigurationError
 
 UNKNOWN_HOST = 'unknown host'
+NEWLINE = "\n"
+
 
 class PingData(namedtuple("PingData", ["target", "rtt"])):
     __slots__ = ()
@@ -90,7 +92,7 @@ class PingCommand(BaseClass):
             self.target = target
         output, error = self.connection.ping(self.arguments, timeout=1)
         for line in output:
-            self.logger.debug(line)
+            self.logger.debug(line.rstrip(NEWLINE))
             match = self.expression.search(line)
             if match:
                 return PingData(match.group("ip_address"), match.group('rtt'))
@@ -113,9 +115,9 @@ class PingCommand(BaseClass):
         self.operating_system = connection.operating_system
         self.target = target
         #import pudb; pudb.set_trace()
-        output, error = connection.ping(self.arguments, timeout=1)
+        output, error = connection.ping(self.arguments, timeout=5)
         for line in output:
-            self.logger.debug(line)
+            self.logger.debug(line.rstrip(NEWLINE))
             match = self.expression.search(line)
             if match:
                 return PingData(match.group("ip_address"), match.group('rtt'))

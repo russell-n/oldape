@@ -17,6 +17,7 @@ prints the output of the `ls -l` command line command
 #python Libraries
 import Queue
 import socket
+from time import time 
 
 # tottest Libraries
 from tottest.commons.readoutput import StandardOutput
@@ -60,6 +61,7 @@ class SSHConnection(NonLocalConnection):
         self.timeout = timeout
         self._logger = None
         self._client = None
+        self.stop = False
         return
 
     @property
@@ -72,8 +74,15 @@ class SSHConnection(NonLocalConnection):
                                         password=self.password, port=self.port,
                                         timeout=self.timeout)
         return self._client
+
+    def abort(self):
+        """
+        :postcondition: self.stop is True
+        """
+        self.stop = True
+        return
     
-    def run(self, command, arguments):
+    def run(self, command, arguments, max_time=None):
         """
         Despite its name, this isn't intended to be run.
         The . notation is the expected interface.
@@ -87,6 +96,10 @@ class SSHConnection(NonLocalConnection):
 
         :postcondition: OutputError with output and error file-like objects
         """
+        self.stop = False
+        self.logger.debug("command: {0}, arguments: {1}, max_time: {2}".format(command,
+                                                                               arguments,                                                                               
+                                                                               max_time))
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
@@ -94,26 +107,40 @@ class SSHConnection(NonLocalConnection):
             self.logger.debug("Acquiring the lock to exec_command")
 
             with self.lock:                
-                stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
-        except AttributeError as error:
-            self.logger.debug(error)
-            stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=1)            
+                stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=10)
         except:
+            # the _main should check self.exc_info for an exception
+            # this is to maintain a better trace (closer to the source of the exception
             import sys
             self.exc_info = sys.exc_info()
             return
         self.logger.debug("Completed exec_command of: {0} {1}".format(command, arguments))
         line = None
-        output_queue = Queue.Queue()
-        output = StandardOutput(queue=output_queue)
-        self.queue.put(OutputError(output, stderr))
-        while line != EOF:
-            try:
-                line = stdout.readline()
-                output_queue.put(line)
-            except socket.timeout:
-                self.logger.debug("stdout.readline() timed out")
-        output_queue.put(line)
+
+        #output = StandardOutput(stdout)
+        self.queue.put(OutputError(stdout, stderr))
+
+        #if max_time is not None:
+        #    now = time
+        #    abort_time = now() + max_time
+        #else:
+        #    now = lambda:0
+        #    abort_time = 1
+        #
+        #self.logger.debug("max_time: {0}, abort_time: {1}".format(max_time, abort_time))
+        #while line != EOF and not self.stop:
+        #    try:
+        #        line = stdout.readline()
+        #        output_queue.put(line)
+        #    except socket.timeout:
+        #        self.logger.debug("{0} {1}: socket.timeout: stdout.readline() timed out".format(command, arguments))
+        #        self.logger.debug("{0} seconds out of {1} max allowed seconds".format(abort_time-now(), max_time))
+        #    if now() > abort_time:
+        #        self.logger.error("Aborting, {0} seconds exceeded.".format(max_time))
+        #        line = EOF
+        #output_queue.put(line)
+        #if line != EOF:
+        #    output_queue.put(EOF)
         return
     
     def __str__(self):

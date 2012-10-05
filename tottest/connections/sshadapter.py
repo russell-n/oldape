@@ -139,6 +139,7 @@ class SimpleClient(BaseClass):
             return self.client.exec_command(command, timeout)
 
         except paramiko.SSHException as error:
+            self._client = None
             self.logger.error(error)
             raise ConnectionError("There is a problem with the ssh-connection to:\n {0}".format(self))
         except paramiko.PasswordRequiredException as error:

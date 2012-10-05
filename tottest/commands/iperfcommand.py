@@ -3,6 +3,7 @@ A module to hold a generic iperf command.
 """
 import threading
 import time
+import socket
 
 from tottest.baseclass import BaseClass
 from tottest.devices.basedevice import BaseDeviceEnum
@@ -14,6 +15,8 @@ ConfigurationError = errors.ConfigurationError
 CommandError = errors.CommandError
 
 EOF = ""
+NEWLINE = "\n"
+
 
 class IperfError(CommandError):
     """
@@ -51,6 +54,9 @@ class IperfCommand(BaseClass):
         self.role = role
         self._max_time = None
         self._now = None
+
+        self.running = False
+        self.stop = False
         return
 
     @property
@@ -59,7 +65,7 @@ class IperfCommand(BaseClass):
         :return: time-function to check for timeouts
         """
         if self._now is None:
-            if hasattr(self.parameters, time):
+            if hasattr(self.parameters, "time"):
                 self._now = time.time
             else:
                 self._now = lambda: 0
@@ -101,6 +107,7 @@ class IperfCommand(BaseClass):
         if self._max_time is None:
             self._max_time = 0
             if hasattr(self.parameters, "time"):
+
                 self._max_time = max(120, 1.2 * float(self.parameters.time.split()[-1]))
         return self._max_time
     
@@ -123,6 +130,13 @@ class IperfCommand(BaseClass):
             self.logger.warning(line)
             #raise IperfError("Another server is already running.")
         return
+
+    def abort(self):
+        """
+        :postcondition: self.stop is True      
+        """
+        self.stop = True
+        return
     
     def run(self, device, filename):
         """
@@ -135,28 +149,53 @@ class IperfCommand(BaseClass):
 
         :raise: IperfError if runtime is greater than self.parameters.time
         """
-        filename = self.filename(filename)
+        filename = self.filename(filename, device.role)
         file_output = self.output.open(filename=filename)
-        output, error = self.connection.iperf(str(self.parameters))
+
+        self.logger.debug("Executing parameters: {0}".format(self.parameters))
+        output, error = device.connection.iperf(str(self.parameters))
         
         start_time = time.time()
         abort_time = start_time + self.max_time
-        
+        self.running = True 
         for line in readoutput.ValidatingOutput(output, self.validate):
-            self.logger.debug(line)
-            file_output.send(line)
+            self.logger.debug(line.rstrip(NEWLINE))
+            try:
+                file_output.send(line)
+            except StopIteration:
+                self.logger.debug("End Of File Reached")
+                break
             if self.now() > abort_time:
-                file_output.send(EOF)
+                try:
+                    file
+                    output.send(EOF)
+                except StopIteration:
+                    pass
+                self.abort = False
+                self.running = False
                 raise IperfError("Expected runtime: {0} Actual: {1} (aborting)".format(self.parameters.time,
                                                                                        self.now() - start_time))
+            if self.stop:
+                try:
+                    file_output.send(EOF)
+                except StopIteration:
+                    pass
+                self.stop = False
+                self.logger.debug("Aborting")
+                break
 
-        err = error.readline()
+        self.running = False
+
+        try:
+            err = error.readline()
         
-        if len(err):
-            self.validate(err)
-            for line in error:
-                self.logger.error(line)
-                self.validate(line)
+            if len(err):
+                self.validate(err)
+                for line in error:
+                    self.logger.error(line)
+                    self.validate(line)
+        except socket.timeout:
+            self.logger.debug("stderr -- socket.timeout")
         return
 
     def start(self, device, filename):

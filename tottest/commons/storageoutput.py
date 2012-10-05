@@ -210,9 +210,12 @@ class StorageOutput(BaseClass):
          - self.output_file is closed
         """
         if self.output_file is not None:
-            self.output_file.flush()
-            os.fsync(self.output_file.fileno())
-            self.output_file.close()
+            try:
+                self.output_file.flush()
+                os.fsync(self.output_file.fileno())
+                self.output_file.close()
+            except ValueError as error:
+                self.logger.debug("File already closed?: {0}".format(error))
         return
 
     def __del__(self):

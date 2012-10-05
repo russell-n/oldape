@@ -57,6 +57,9 @@ class IperfTest(BaseClass):
          - `receiver`: A device to receive traffic
          - `filename`: a filename to use for output
         """
+        # set the target address in the iperf command to the receiver (server)
+        self.sender_command.parameters.client = receiver.address
+        
         self.kill(sender.connection)
         self.kill(receiver.connection)
         self.logger.info("Running Iperf: {2} ({0}) -> {3} ({1})".format(sender.address, receiver.address,
@@ -67,5 +70,7 @@ class IperfTest(BaseClass):
         self.sleep()
         self.logger.info("Running the client (sender)")
         self.sender_command.run(sender, filename)
+        if self.receiver_command.running:
+            self.receiver_command.abort()
         return
 # end class IperfTest

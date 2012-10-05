@@ -4,6 +4,7 @@ A module to hold a file-like object for output.
 
 # python Libraries
 import Queue
+import socket
 from tottest.threads import threads
 
 #time to recover Libraries
@@ -19,14 +20,14 @@ class StandardOutput(BaseClass):
     """
     A class to act as a file (read-only)
     """
-    def __init__(self, queue, *args, **kwargs):
+    def __init__(self, stdout, max_time,  *args, **kwargs):
         """
         :param:
 
-         - `queue`: A queue to check for output lines.x
+         - `queue`: A queue to check for output lines.
         """
         super(StandardOutput, self).__init__(*args, **kwargs)
-        self.queue = queue
+        self.stdout = stdout
         self._iterator = None
         self.end_of_file = False
         return
@@ -40,7 +41,10 @@ class StandardOutput(BaseClass):
         """
         line = None
         while line != EOF:
-            line = self.queue.get()
+            try:
+                line = self.stdout.readline()
+            except socket.timeout:
+                self.logger.debug("socket.timeout")                
             yield line
         self.end_of_file = True
         yield line
@@ -52,7 +56,7 @@ class StandardOutput(BaseClass):
         """
         return self.iterator
 
-    def readline(self, timeout=1):
+    def readline(self, timeout=10):
         """
         :param:
 
@@ -119,10 +123,15 @@ class ValidatingOutput(BaseClass):
         """
         :yield: validated line
         """
-        for line in self.lines:
+        line = None
+        while line != EOF:
+            try:
+                line = self.lines.readline()
+            except socket.timeout:
+                self.logger.debug("socket.timeout")
             self.validate(line)
             yield line
-        yield EOF
+        #yield EOF
         return
 
     def __iter__(self):

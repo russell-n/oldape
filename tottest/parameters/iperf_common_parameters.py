@@ -286,7 +286,7 @@ class IperfCommonParameters(BaseClass):
         """
         :return: string of set flags in alphabetical order (of the flags, not the values)
         """
-        non_parameters = ("_block_attributes" , "_logger")
+        non_parameters = ("_block_attributes" , "_logger", "_parameter_names")
         keys = (key for key in sorted(self.__dict__.keys()) if key not in non_parameters)
         values = (getattr(self, key.lstrip(UNDERSCORE)) for key in keys)
         filtered_values = (value for value in values if value is not None)

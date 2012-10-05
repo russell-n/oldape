@@ -79,6 +79,8 @@ class TestOperator(BaseClass):
         self.logger.info("Running test setup")
         #import pudb; pudb.set_trace()
         self.test_setup(parameter)
+        self.sleep()
+        
         self.logger.info("Running Test")
         test_result = self.tests(parameter)
         self.logger.info(TEST_RESULT.format(r=test_result))
@@ -95,7 +97,7 @@ class TestOperator(BaseClass):
         self.countdown_timer()
         try:
             count = 0
-            import pudb; pudb.set_trace()
+        
             for parameter in self.test_parameters:
                 count += 1
                 try:
