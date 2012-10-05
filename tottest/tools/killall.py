@@ -91,13 +91,14 @@ class KillAll(BaseClass):
 
         self.logger.debug("name = " + name)
         output, error = self.connection.ps(self.arguments)
-        
+
+        kill_count = 0
         for line in output:
             # line is the next line returned from stdout
             if name in line:
                 self.logger.debug(line)
             match = self.expression.search(line)
-            if match and match.group(expressions.PROCESS_NAME) == name:
+            if name in line and match:
                 self.logger.debug("matched: " + line)
                 self.logger.debug("killing: " + match.group(expressions.PID_NAME))
                 command = " -9 " + match.group(expressions.PID_NAME)
@@ -108,6 +109,10 @@ class KillAll(BaseClass):
         err = error.read()
         if len(err):
             self.logger.error(err)
+        if not kill_count:
+            self.logger.info("No iperf sessions found on {0}".format(self.connection.hostname))
+            return
+
         self.sleep(time_to_sleep)
 
         # double-check to see if the process is dead

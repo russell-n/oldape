@@ -62,6 +62,7 @@ class IperfParametersBuilder(object):
         :return: Iperf Client Parameters based on the config_map
         """
         if self._client_parameters is None:
+
             self._client_parameters = client_parameters[self.protocol]()
             for option in self.options:
                 if option == "time":

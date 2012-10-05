@@ -247,7 +247,8 @@ class NetshWlan(BaseClass):
         """
         :return: the value from netsh's output that matches the key
         """
-        output = self.connection.netsh("wlan show interface")
+        self.logger.debug("expression: {0}, key: {1}".format(expression, key))
+        output = self.connection.netsh("wlan show interface", max_time=30)
 
         for line in output.output:
             match =  expression.search(line)

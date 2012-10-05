@@ -7,6 +7,8 @@ from tottest.baseclass import BaseClass
 from tottest.commons.errors import CommandError
 from tottest.parsers import oatbran
 
+NEWLINE = "\n"
+
 class WmicEnumeration(object):
     __slots__ = ()
     code = "code"
@@ -102,7 +104,7 @@ class WmicWin32NetworkAdapter(BaseClass):
             elif "ReturnValue = 0;" in line:
                 self.logger.info("WMIC command succesful.")
                 return
-            self.logger.debug(line)
+            self.logger.debug(line.rstrip(NEWLINE))
             
         return
 # end class WmicWin32NetworkAdapter
