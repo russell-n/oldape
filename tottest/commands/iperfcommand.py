@@ -167,7 +167,6 @@ class IperfCommand(BaseClass):
                 break
             if self.now() > abort_time:
                 try:
-                    file
                     output.send(EOF)
                 except StopIteration:
                     pass
@@ -186,16 +185,14 @@ class IperfCommand(BaseClass):
 
         self.running = False
 
-        try:
-            err = error.readline()
         
-            if len(err):
-                self.validate(err)
-                for line in error:
-                    self.logger.error(line)
-                    self.validate(line)
-        except socket.timeout:
-            self.logger.debug("stderr -- socket.timeout")
+        err = error.readline()
+        
+        if len(err):
+            self.validate(err)
+            for line in error:
+                self.logger.error(line)
+                self.validate(line)
         return
 
     def start(self, device, filename):

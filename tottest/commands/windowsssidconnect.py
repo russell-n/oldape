@@ -5,6 +5,8 @@ A re-associator between a device and a SSID/profile
 from tottest.baseclass import BaseClass
 from tottest.commons.errors import CommandError
 
+NEWLINE = "\n"
+
 class WindowsSSIDConnect(BaseClass):
     """
     A class to associate a windows device with a known wifi profile
@@ -21,11 +23,11 @@ class WindowsSSIDConnect(BaseClass):
          - `output`: iterator over output from the netsh connect command
         """
         for line in output:
-            self.logger.debug(line)
+            self.logger.debug(line.rstrip(NEWLINE))
             if line.startswith("There is no profile ") or line.startswith("There is no wireless interface"):
                 raise CommandError(line)
             if line.startswith("Connection request was completed successfully."):
-                self.logger.info(line)
+                self.logger.info(line.rstrip(NEWLINE))
                 break
         return
 

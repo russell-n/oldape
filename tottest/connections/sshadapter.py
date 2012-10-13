@@ -56,7 +56,7 @@ class SSHClient(paramiko.SSHClient):
          - `bufsize`: Interpreted same way as python `file`.
 
         :rtype: tuple
-        :return: stdin, stdout, stderr, channel
+        :return: stdin, stdout, stderr
         """
         channel = self._transport.open_session()
         channel.settimeout(timeout)
@@ -65,7 +65,7 @@ class SSHClient(paramiko.SSHClient):
         stdin = channel.makefile('wb', bufsize)
         stdout = channel.makefile('rb', bufsize)
         stderr = channel.makefile_stderr('rb', bufsize)
-        return stdin, stdout, stderr, channel
+        return stdin, stdout, stderr
 
     def invoke_shell_rw(self, term='vt100', width=80, height=24, timeout=None, bufsize=-1):
         """
@@ -78,7 +78,7 @@ class SSHClient(paramiko.SSHClient):
          - `bufsize`: Interpreted same way as python `file`.
 
         :rtype: tuple
-        :return: i/o, channel
+        :return: i/o
         """
         channel = self._transport.open_session()
         channel.settimeout(timeout)
@@ -88,7 +88,7 @@ class SSHClient(paramiko.SSHClient):
 
         shell = channel.makefile('r+b', bufsize)
 
-        return shell, channel
+        return shell
 
 #end class SSHClient
 
@@ -126,10 +126,9 @@ class SimpleClient(BaseClass):
 
          - `command`: A string to send to the client.
          - `timeout`: Set non-blocking timeout.
-         - `bufsize`: Interpreted same way as python `file`.
 
         :rtype: tuple
-        :return: stdin, stdout, stderr, channel
+        :return: stdin, stdout, stderr
 
         :raise: ConnectionError for paramiko or socket exceptions
         """

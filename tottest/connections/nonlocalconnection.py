@@ -66,16 +66,16 @@ class NonLocalConnection(BaseClass):
             self._queue = Queue.Queue()
         return self._queue
 
-    def _procedure_call(self, command, arguments='', timeout=None, max_time=None):
+    def _procedure_call(self, command, arguments='', timeout=None):
         """
         This is provided so it can be overriden by subclasses.
         It is what's called directly by __getattr__ to support LocalConnection.command() calls
 
         Otherwise it just returns _main()
         """
-        return self._main(command, arguments, timeout, max_time)
+        return self._main(command, arguments, timeout)
     
-    def _main(self, command, arguments='', timeout=None, max_time=None):
+    def _main(self, command, arguments='', timeout=None):
         """
         :param:
 
@@ -87,9 +87,8 @@ class NonLocalConnection(BaseClass):
         """
         self.logger.debug("command: '{0}', arguments: '{1}', timeout: '{2}', max_time: '{3}'".format(command,
                                                                                                      arguments,
-                                                                                                     timeout,
-                                                                                                     max_time))
-        thread = self.start(command, arguments, max_time=max_time)
+                                                                                                     timeout))
+        thread = self.start(command, arguments)
         try:
             if self.exc_info:
                 raise self.exc_info[1], None, self.exc_info[2]
@@ -100,7 +99,7 @@ class NonLocalConnection(BaseClass):
                 del(thread)
         return OutputError(StringIO(''),StringIO( "'{0} {1}' timed out".format(command, arguments)))
 
-    def run(self, command, arguments, max_time):
+    def run(self, command, arguments):
         """
         Runs the command in a subprocess and puts the output and error on the queue
 
@@ -114,13 +113,13 @@ class NonLocalConnection(BaseClass):
         raise NotImplementedError("ThreadedConnection is a base class, not a useable class")
         return
 
-    def start(self, command, arguments, max_time):
+    def start(self, command, arguments):
         """
         starts run in a thread
 
         :return: the thread object
         """
-        t = threading.Thread(target=self.run, args=((command,arguments, max_time)),
+        t = threading.Thread(target=self.run, args=((command,arguments)),
                              name=self.__class__.__name__)
         t.daemon = True
         t.start()

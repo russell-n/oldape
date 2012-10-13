@@ -65,7 +65,7 @@ class Ipconfig(BaseClass):
         """
         :return: the address of the interface
         """
-        output =  self.connection.ipconfig(max_time=30)
+        output =  self.connection.ipconfig()
         in_section = False
 
         max_time = now() + self.timeout
