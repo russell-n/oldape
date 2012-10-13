@@ -15,13 +15,13 @@ prints the output of the `ls -l` command line command
 """
 
 #python Libraries
-import Queue
 import socket
-from time import time 
+
 
 # tottest Libraries
 from tottest.commons.readoutput import StandardOutput
 from tottest.commons import enumerations
+
 
 # connections
 from nonlocalconnection import NonLocalConnection
@@ -61,7 +61,6 @@ class SSHConnection(NonLocalConnection):
         self.timeout = timeout
         self._logger = None
         self._client = None
-        self.stop = False
         return
 
     @property
@@ -74,78 +73,67 @@ class SSHConnection(NonLocalConnection):
                                         password=self.password, port=self.port,
                                         timeout=self.timeout)
         return self._client
-
-    def abort(self):
-        """
-        :postcondition: self.stop is True
-        """
-        self.stop = True
-        return
     
-    def run(self, command, arguments, max_time=None):
+    def _procedure_call(self, command, arguments="", timeout=10):
         """
-        Despite its name, this isn't intended to be run.
+        this isn't intended to be run.
         The . notation is the expected interface.
         
-        runs the SimpleClient exec_command and puts lines of output on the Queue
+        runs the SimpleClient exec_command
 
         :param:
 
          - `command`: The shell command.
          - `arguments`: A string of command arguments.
-
-        :postcondition: OutputError with output and error file-like objects
+         - `timeout`: readline timeout for the SSHConnection
+        :return: OutputError with output and error file-like objects
         """
-        self.stop = False
-        self.logger.debug("command: {0}, arguments: {1}, max_time: {2}".format(command,
-                                                                               arguments,                                                                               
-                                                                               max_time))
+        self.logger.debug("command: {0}, arguments: {1}".format(command,
+                                                                               arguments))
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
-        try:
-            self.logger.debug("Acquiring the lock to exec_command")
-
-            with self.lock:                
-                stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=10)
-        except:
-            # the _main should check self.exc_info for an exception
-            # this is to maintain a better trace (closer to the source of the exception
-            import sys
-            self.exc_info = sys.exc_info()
-            return
+        
+        self.logger.debug("calling client.exec_command")
+            
+        stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=timeout)
+        
         self.logger.debug("Completed exec_command of: {0} {1}".format(command, arguments))
-        line = None
 
-        #output = StandardOutput(stdout)
-        self.queue.put(OutputError(stdout, stderr))
+        return OutputError(OutputFile(stdout), OutputFile(stderr))
 
-        #if max_time is not None:
-        #    now = time
-        #    abort_time = now() + max_time
-        #else:
-        #    now = lambda:0
-        #    abort_time = 1
-        #
-        #self.logger.debug("max_time: {0}, abort_time: {1}".format(max_time, abort_time))
-        #while line != EOF and not self.stop:
-        #    try:
-        #        line = stdout.readline()
-        #        output_queue.put(line)
-        #    except socket.timeout:
-        #        self.logger.debug("{0} {1}: socket.timeout: stdout.readline() timed out".format(command, arguments))
-        #        self.logger.debug("{0} seconds out of {1} max allowed seconds".format(abort_time-now(), max_time))
-        #    if now() > abort_time:
-        #        self.logger.error("Aborting, {0} seconds exceeded.".format(max_time))
-        #        line = EOF
-        #output_queue.put(line)
-        #if line != EOF:
-        #    output_queue.put(EOF)
-        return
     
     def __str__(self):
         return "{0} ({1}): {2}@{3} ".format(self.__class__.__name__, self.operating_system, self.username, self.hostname)
 # end class SSHConnection
+
+class OutputFile(StandardOutput):
+    """
+    A class to handle the ssh output files
+
+    This traps socket timeouts.
+    """
+    def __init__(self, *args, **kwargs):
+        super(OutputFile, self).__init__(*args, **kwargs)
+        return
+
+    def readline(self, timeout=10):
+        """
+        :param:
+
+         - `timeout`: The length of time to wait for output
+        """
+        if not self.end_of_file:
+            try:
+                line = self.source.readline()
+                if line == EOF:
+                    self.end_of_file = True
+                return line
+            except socket.timeout:
+                self.logger.debug("socket.timeout")
+        return EOF
+# end class OutputFile
+
     
 #if __name__ == "__main__":
 #    arguments = "-l"

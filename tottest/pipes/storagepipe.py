@@ -30,7 +30,7 @@ class StoragePipe(BaseClass):
     A class to add a pipe interface to the Storage Output
     """
     def __init__(self, path, role=StoragePipeEnum.pipe,
-                 target=None, header_token=None):
+                 target=None, header_token=None, transform=None):
         """
         :param:
 
@@ -38,11 +38,13 @@ class StoragePipe(BaseClass):
          - `role`: start, pipe, or sink to identify what kind of pipe to open
          - `target`: the target to send lines to
          - `header_token`: the token to use for a header before the data
+         - `transform`: callable function to transform sent lines
         """
         self.path = path
         self.role = role        
         self.target = target
         self.header_token = header_token
+        self.transform = transform
         self._storage = None
         return
 
@@ -67,6 +69,8 @@ class StoragePipe(BaseClass):
 
         :postcondition: pipe_start is an opened coroutine
         """
+        if self.transform is not None:
+            filename = self.transform.filename(filename)
         output = self.storage.open(filename)
         line = None
         if self.header_token is not None:
@@ -75,6 +79,10 @@ class StoragePipe(BaseClass):
 
         while line !=  EOF:
             line = (yield)
+            if self.transform is not None:
+                line = self.transform(line)
+                if line is None:
+                    continue
             output.writeline(line)
             target.send(line)
         output.close()
@@ -91,6 +99,8 @@ class StoragePipe(BaseClass):
 
         :postcondition: pipe is an opened coroutine
         """
+        if self.transform is not None:
+            filename = self.transform.filename(filename)
         output = self.storage.open(filename)
         line = None
         if self.header_token is not None:
@@ -98,10 +108,16 @@ class StoragePipe(BaseClass):
             output.writeline("{0},{1}".format(line, self.header_token))
         while line !=  EOF:
             line = (yield)
+            if self.transform is not None:
+                line = self.transform(line)
+                if line is None:
+                    continue
+
             output.writeline(line)
         output.close()
         return
 
+    
 
     @coroutine
     def pipe(self, target, filename):
@@ -115,6 +131,8 @@ class StoragePipe(BaseClass):
 
         :postcondition: pipe is an opened coroutine
         """
+        if self.transform is not None:
+            filename = self.transform.filename
         output = self.storage.open(filename)
         line = None
         if self.header_token is not None:
@@ -123,6 +141,13 @@ class StoragePipe(BaseClass):
 
         while line !=  EOF:
             line = (yield)
+
+            # transform the data if needed before passing down the pipe
+            if self.transform is not None:
+                line = self.transform(line)
+                if line is None:
+                    continue
+
             output.write(line)
             target.send(line)
         output.close()
@@ -158,6 +183,7 @@ class StoragePipe(BaseClass):
 
         :return: coroutine to send lines to
         """
+        self.transform.reset()
         if self.role == StoragePipeEnum.start:
             return self.open_start(filename)
         elif self.role == StoragePipeEnum.sink:

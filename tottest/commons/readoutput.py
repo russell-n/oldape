@@ -20,41 +20,29 @@ class StandardOutput(BaseClass):
     """
     A class to act as a file (read-only)
     """
-    def __init__(self, stdout, max_time,  *args, **kwargs):
+    def __init__(self, source,  *args, **kwargs):
         """
         :param:
 
-         - `queue`: A queue to check for output lines.
+         - `source`: the source file
         """
         super(StandardOutput, self).__init__(*args, **kwargs)
-        self.stdout = stdout
-        self._iterator = None
+        self._logger = None
+        self.source = source
         self.end_of_file = False
-        return
-
-    @property
-    def iterator(self):
-        """
-        Traverses queue until EOF is encountered.
-
-        :yield: lines from queue
-        """
-        line = None
-        while line != EOF:
-            try:
-                line = self.stdout.readline()
-            except socket.timeout:
-                self.logger.debug("socket.timeout")                
-            yield line
-        self.end_of_file = True
-        yield line
         return
 
     def __iter__(self):
         """
         Implemented to make this class recognize the 'in' operator
         """
-        return self.iterator
+        line = None
+        while line != EOF:
+            line = self.readline()
+            yield line
+        self.end_of_file = True
+        yield line
+        return
 
     def readline(self, timeout=10):
         """
@@ -104,22 +92,10 @@ class ValidatingOutput(BaseClass):
         super(ValidatingOutput, self).__init__(*args, **kwargs)
         self.lines = lines
         self.validate = validate
-        self._queue = None
-        self._iterator = None
         self.empty = False
         return
 
-    @property
-    def queue(self):
-        """
-        :return: A queue object
-        """
-        if self._queue is None:
-            self._queue = Queue.Queue()
-        return self._queue
-
-    @property
-    def iterator(self):
+    def __iter__(self):
         """
         :yield: validated line
         """
@@ -132,18 +108,6 @@ class ValidatingOutput(BaseClass):
             self.validate(line)
             yield line
         #yield EOF
-        return
-
-    def __iter__(self):
-        return self.iterator
-
-    def _read_one_line(self):
-        """
-        Puts next iterator item on the queue.
-
-        This is meant for threaded calls.
-        """
-        self.queue.put(self.iterator.next())
         return
 
     def readline(self, timeout=1):
