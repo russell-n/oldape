@@ -15,8 +15,7 @@ prints the output of the `ls -l` command line command
 """
 
 #python Libraries
-from collections import namedtuple
-import Queue
+
 from StringIO import StringIO
 
 # tottest Libraries
@@ -25,14 +24,15 @@ from tottest.commons.readoutput import StandardOutput
 from tottest.commands import changeprompt
 
 # connections
+from sshconnection import OutputFile
 from nonlocalconnection import NonLocalConnection
+from localconnection import OutputError
 from telnetadapter import TelnetAdapter
 
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
 EOF = ''
 
-OutputError = namedtuple("OutputError", 'output error')
 
 
 class TelnetConnection(NonLocalConnection):
@@ -78,7 +78,7 @@ class TelnetConnection(NonLocalConnection):
             self.logger.debug(changer.run())
         return self._client
     
-    def run(self, command, arguments):
+    def _procedure_call(self, command, arguments, timeout=10):
         """
         Despite its name, this isn't intended to be run.
         The . notation is the expected interface.
@@ -89,23 +89,24 @@ class TelnetConnection(NonLocalConnection):
 
          - `command`: The shell command.
          - `arguments`: A string of command arguments.
+         - `timeout`: readline timeout
 
         :postcondition: OutputError with output and error file-like objects
         """
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
-        stdout = self.client.exec_command(SPACER.format(command, arguments), timeout=1)
-        line = None
 
-        output_queue = Queue.Queue()
-        output = StandardOutput(queue=output_queue)
+        self.logger.debug("calling 'client.exec_command({0})'".format(command))
+        stdout = self.client.exec_command(SPACER.format(command, arguments),
+                                          timeout=timeout)
+        self.logger.debug("Completed 'client.exec_command({0})'".format(command))
+
+        
+
         stderr = StringIO("")
-        self.queue.put(OutputError(output, stderr))
-        while line != EOF:
-            line = stdout.readline()
-            output_queue.put(line)
-        output_queue.put(line)
+
+        return OutputError(OutputFile(stdout), stderr)
 # end class TelnetConnection
     
 if __name__ == "__main__":

@@ -81,10 +81,16 @@ class ArgumentParser(BaseClass):
                                  action="store_true",
                                  default=False, dest="debug")
     
-        self.parser.add_argument("--pdb",
-                                 help="Enable interactive debugging.",
+        self.parser.add_argument("--pudb",
+                                 help="Enable pudb interactive debugging.",
                                  action="store_true",
-                                 default=False, dest='enable_debugging')
+                                 default=False, dest='pudb')
+
+        self.parser.add_argument("--pdb",
+                                 help="Enable python's debugger",
+                                 action="store_true",
+                                 default=False, dest='pdb')
+                                 
 
         self.parser.add_argument("-s", "--silent",
                                  help="Turn off screen output.",

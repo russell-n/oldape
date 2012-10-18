@@ -87,7 +87,7 @@ class HumanExpression(ExpressionBase):
 
 class CsvExpression(ExpressionBase):
     """
-    The Csv Expression holds the expression to match iperf's csz format
+    The Csv Expression holds the expression to match iperf's csv format
     """
     def __init__(self):
         super(CsvExpression, self).__init__()
@@ -100,7 +100,7 @@ class CsvExpression(ExpressionBase):
         :return: the expression to match the thread id
         """
         if self._thread_column is None:
-            self._thread_column = bran.NAMED(ParserKeys.thread, bran.INTEGER)
+            self._thread_column = bran.NAMED(ParserKeys.thread, bran.NATURAL)
         return self._thread_column
     
     @property

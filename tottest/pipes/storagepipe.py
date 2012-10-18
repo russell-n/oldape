@@ -29,7 +29,7 @@ class StoragePipe(BaseClass):
     """
     A class to add a pipe interface to the Storage Output
     """
-    def __init__(self, path, role=StoragePipeEnum.pipe,
+    def __init__(self, path='', role=StoragePipeEnum.pipe,
                  target=None, header_token=None, transform=None):
         """
         :param:
@@ -83,7 +83,7 @@ class StoragePipe(BaseClass):
                 line = self.transform(line)
                 if line is None:
                     continue
-            output.writeline(line)
+            output.writeline(str(line))
             target.send(line)
         output.close()
         return
@@ -95,7 +95,7 @@ class StoragePipe(BaseClass):
         
         :param:
 
-         - `filename`: the name of te file to open
+         - `filename`: the name of the file to open
 
         :postcondition: pipe is an opened coroutine
         """
@@ -113,7 +113,7 @@ class StoragePipe(BaseClass):
                 if line is None:
                     continue
 
-            output.writeline(line)
+            output.writeline(str(line))
         output.close()
         return
 
@@ -148,7 +148,7 @@ class StoragePipe(BaseClass):
                 if line is None:
                     continue
 
-            output.write(line)
+            output.writeline(str(line))
             target.send(line)
         output.close()
         return
@@ -183,7 +183,8 @@ class StoragePipe(BaseClass):
 
         :return: coroutine to send lines to
         """
-        self.transform.reset()
+        if self.transform is not None:
+            self.transform.reset()
         if self.role == StoragePipeEnum.start:
             return self.open_start(filename)
         elif self.role == StoragePipeEnum.sink:

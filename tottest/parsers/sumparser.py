@@ -18,8 +18,17 @@ from coroutine import coroutine
 BITS = 'bits'
 
 class HumanExpressionSum(HumanExpression):
-    def __init__(self):
+    """
+    Changes the thread-column regular expression to match SUMS if needed
+    """
+    def __init__(self, threads=4):
+        """
+        :param:
+
+         - `threads`: number of parallel threads
+        """
         super(HumanExpressionSum, self).__init__()
+        self.threads = threads
         return
 
     @property
@@ -28,13 +37,26 @@ class HumanExpressionSum(HumanExpression):
         :return: expression to match the thread (sum) column
         """
         if self._thread_column is None:
-            self._thread_column = bran.L_BRACKET + "SUM" + bran.R_BRACKET
+            if self.threads > 1:
+                thread = "SUM"
+            else:
+                thread = bran.OPTIONAL_SPACES + bran.INTEGER
+            self._thread_column = bran.L_BRACKET + thread + bran.R_BRACKET
         return self._thread_column
 # end class HumanExpressionSum
 
 class CsvExpressionSum(CsvExpression):
-    def __init__(self):
+    """
+    Changes the thread column to look for -1 if needed
+    """
+    def __init__(self, threads=4):
+        """
+        :param:
+
+         - `threads`: the number of parallel threads
+        """
         super(CsvExpressionSum, self).__init__()
+        self.threads = threads
         return
 
     @property
@@ -43,7 +65,11 @@ class CsvExpressionSum(CsvExpression):
         :return: the expression to match the thread (sum) column
         """
         if self._thread_column is None:
-            self._thread_column = bran.NAMED(ParserKeys.thread, "-1")
+            if self.threads > 1:
+                thread = "-1"
+            else:
+                thread = bran.INTEGER
+            self._thread_column = bran.NAMED(ParserKeys.thread, thread)
         return self._thread_column
 
     
@@ -62,24 +88,29 @@ class SumParser(IperfParser):
         :return: a dictionary of compiled regular expressions
         """
         if self._regex is None:
-            self._regex = {ParserKeys.human:HumanExpressionSum().regex,
-                           ParserKeys.csv:CsvExpressionSum().regex}
+            self._regex = {ParserKeys.human:HumanExpressionSum(threads=self.threads).regex,
+                           ParserKeys.csv:CsvExpressionSum(threads=self.threads).regex}
         return self._regex
 
-    def add(self, line):
+    def __call__(self, line):
         """
         :param:
 
          - `line`: a line of iperf output
+
+        :return: bandwidth or None
         """
-        match = self(line)
+        match = self.search(line)
+        assert type(match) == dict or match is None, "match: {0}".format(type(match)) 
+        bandwidth = None
         if match is not None and self.valid(match):
+            
             bandwidth = self.bandwidth(match)
             self.intervals[float(match[ParserKeys.start])] = bandwidth
             self.logger.info(self.log_format.format(match[ParserKeys.start],
                                                     bandwidth,
                                                     self.units))
-        return
+        return bandwidth
 
     @coroutine
     def pipe(self, target):
@@ -100,7 +131,7 @@ class SumParser(IperfParser):
         """
         while True:
             line = (yield)
-            match = self(line)
+            match = self.search(line)
             if match is not None and self.valid(match):
                 # threads is a dict of interval:(thread_count, bandwidths)
                 target.send(self.bandwidth(match))

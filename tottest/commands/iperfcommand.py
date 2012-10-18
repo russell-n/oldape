@@ -3,14 +3,13 @@ A module to hold a generic iperf command.
 """
 import threading
 import time
-import socket
 
 from tottest.baseclass import BaseClass
 from tottest.devices.basedevice import BaseDeviceEnum
 from tottest.commons import errors
 from tottest.commons import readoutput
-
-
+from tottest.pipes.storagepipe import StoragePipe, StoragePipeEnum
+from tottest.parsers.sumparser import SumParser
 ConfigurationError = errors.ConfigurationError
 CommandError = errors.CommandError
 
@@ -22,6 +21,8 @@ class IperfError(CommandError):
     """
     An IperfError indicates a connection problem.
     """
+# end class IperfError
+    
 class IperfCommandError(ConfigurationError):
     """
     an error to raise if the settings are unknown
@@ -47,16 +48,54 @@ class IperfCommand(BaseClass):
          - `subdirectory`: A folder to put the iperf files intn
         """
         super(IperfCommand, self).__init__()
+        self.parameters = parameters
+        self._parser  = None
+        self._output = None
         self.output = output
         self.base_filename = base_filename
         self.output.extend_path(subdirectory) 
-        self.parameters = parameters
+
         self.role = role
         self._max_time = None
         self._now = None
 
         self.running = False
         self.stop = False
+        return
+
+    @property
+    def parser(self):
+        """
+        :return: SumParser pipeline (if this is the client)
+        """
+        if self._parser is None and hasattr(self.parameters, "time"):
+            threads = None
+            if self.parameters.parallel is not None:
+                threads = int(self.parameters.parallel.split()[-1])
+            parser = SumParser(threads=threads)
+            self._parser = StoragePipe(role=StoragePipeEnum.sink,
+                                       transform=parser)            
+        return self._parser
+    @property
+    def output(self):
+        """
+        :return: the storage pipeline for raw iperf output
+        """        
+        return self._output
+
+    @output.setter
+    def output(self, out):
+        """
+        :param:
+
+         - `out`: an output pipeline object
+        """
+        if self.parser is not None:
+            self.parser.path = out.path
+            self.parser.extend_path("parsed")
+            out.target = self.parser
+            out.role = StoragePipeEnum.start
+        self._output = out
         return
 
     @property
@@ -107,8 +146,7 @@ class IperfCommand(BaseClass):
         if self._max_time is None:
             self._max_time = 0
             if hasattr(self.parameters, "time"):
-
-                self._max_time = max(120, 1.2 * float(self.parameters.time.split()[-1]))
+                self._max_time = max(120, 1.5 * float(self.parameters.time.split()[-1]))
         return self._max_time
     
     def validate(self, line):
@@ -161,6 +199,8 @@ class IperfCommand(BaseClass):
         for line in readoutput.ValidatingOutput(output, self.validate):
             self.logger.debug(line.rstrip(NEWLINE))
             try:
+                #if "SUM" in line:
+                 #   import pudb; pudb.set_trace()
                 file_output.send(line)
             except StopIteration:
                 self.logger.debug("End Of File Reached")

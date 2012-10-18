@@ -30,7 +30,7 @@ def main():
         raise Exception("Something's wrong with the ArgumentParser")
         return
     set_logger(args)
-    enable_debugging(args.enable_debugging)
+    enable_debugging(args)
 
     watcher()
     args.function(args)

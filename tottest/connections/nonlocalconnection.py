@@ -85,9 +85,9 @@ class NonLocalConnection(BaseClass):
 
         :return: OutputError named tuple
         """
-        self.logger.debug("command: '{0}', arguments: '{1}', timeout: '{2}', max_time: '{3}'".format(command,
-                                                                                                     arguments,
-                                                                                                     timeout))
+        self.logger.debug("command: '{0}', arguments: '{1}', timeout: '{2}'".format(command,
+                                                                                    arguments,
+                                                                                    timeout))
         thread = self.start(command, arguments)
         try:
             if self.exc_info:

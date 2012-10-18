@@ -2,7 +2,7 @@
 A place to hold tools for the infrastructure.
 """
 
-def enable_debugging(debug):
+def enable_debugging(args):
     """
     if debug is True, enables interactive debugging.
 
@@ -12,14 +12,15 @@ def enable_debugging(debug):
 
      - `debug`: Boolean to enable debugging.
     """
-    if not debug:
-        return
-    try:
-        import pudb
-        pudb.set_trace()
-        return
-    except ImportError:
+    if args.pudb:
+        try:
+            import pudb
+            pudb.set_trace()
+            return
+        except ImportError:
+            print "Unable to import pudb"
+    if args.pdb:
         import pdb
-    pdb.set_trace()
+        pdb.set_trace()
     return
 

@@ -8,6 +8,7 @@
 
 # python libraries
 from collections import defaultdict
+import os
 
 from tottest.baseclass import BaseClass
 
@@ -45,6 +46,9 @@ class IperfParser(BaseClass):
         self._threads = None
         self.format = None
         self._bandwidths = None
+
+        self.thread_count = 0
+        self.current_thread = None
         return
 
     @property
@@ -114,18 +118,25 @@ class IperfParser(BaseClass):
             units = 'bits'
         return self.conversion[units][self.units] * bandwidth
 
-    def add(self, line):
+    def __call__(self, line):
         """
         :param:
 
          - `line`: a line of iperf output
+
+        :return: bandwidth or None
         """
-        match = self(line)
+        match = self.search(line)
+        bandwidth = None
         if match is not None and self.valid(match):
+            self.thread_count = (self.thread_count + 1) % self.threads
+            if self.thread_count == 0:
+                self.current_thread = float(match[ParserKeys.start])
+                bandwidth = self.bandwidth(match)
             self.intervals[float(match[ParserKeys.start])] += self.bandwidth(match)
-        return
+        return bandwidth
     
-    def __call__(self, line):
+    def search(self, line):
         """
         :param:
 
@@ -135,7 +146,7 @@ class IperfParser(BaseClass):
         try:
             return self.regex[self.format].search(line).groupdict()
         except KeyError:
-            self.logger.debug("{0} passed on, format not set".format(line))
+            self.logger.debug("{0} skipped, format not set".format(line))
         except AttributeError:
             pass
 
@@ -180,7 +191,7 @@ class IperfParser(BaseClass):
         bandwidth = 1
         while True:
             line = (yield)
-            match = self(line)
+            match = self.search(line)
             if match is not None and self.valid(match):
                 # threads is a dict of interval:(thread_count, bandwidths)
                 interval = match[ParserKeys.start]
@@ -200,4 +211,15 @@ class IperfParser(BaseClass):
         self._thread_count = None
         self._threads = None
         return
+
+    def filename(self, basename):
+        """
+        :param:
+
+         - `basename`: a the raw-iperf filename (without path)
+
+        :return: the filename with the extension changed to .csv
+        """
+        base, ext = os.path.splitext(basename)
+        return "{0}.csv".format(base)
 # end class IperfParser
