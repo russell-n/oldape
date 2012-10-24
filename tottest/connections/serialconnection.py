@@ -16,11 +16,12 @@ prints the output of the `ls -l` command line command
 
 #python Libraries
 from collections import namedtuple
-import Queue
 from StringIO import StringIO
+import os
 
 # tottest Libraries
-from tottest.commons.readoutput import StandardOutput
+from localconnection import OutputError
+from sshconnection import OutputFile
 
 # connections
 from localconnection import LocalConnection
@@ -29,9 +30,6 @@ from serialadapter import SerialAdapter
 SPACER = '{0} {1} '
 UNKNOWN = "command not found "
 EOF = ''
-
-
-OutputError = namedtuple("OutputError", 'output error')
 
 
 class SerialConnection(LocalConnection):
@@ -84,7 +82,8 @@ class SerialConnection(LocalConnection):
         self.client.timeout = new_timeout
         return
     
-    def run(self, command, arguments):
+    def _procedure_call(self, command, arguments="",
+                        path="", timeout=10):
         """
         Despite its name, this isn't intended to be run.
         The . notation is the expected interface.
@@ -95,23 +94,20 @@ class SerialConnection(LocalConnection):
 
          - `command`: The shell command.
          - `arguments`: A string of command arguments.
+         - `path`: path to prepend to the command
 
         :postcondition: OutputError with output and error file-like objects
         """
+        command = os.path(path, command)
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
-        stdout = self.client.exec_command(SPACER.format(command, arguments))
-        line = None
+        stdout = self.client.exec_command(SPACER.format(command, arguments),
+                                          timeout=timeout)
+        self.logger.debug("Completed 'client.exec_command({0})'".format(command))
+        stderr = StringIO("")
+        return OutputError(OutputFile(stdout), stderr)
 
-        output_queue = Queue.Queue()
-        output = StandardOutput(queue=output_queue)
-        self.queue.put(OutputError(output, StringIO("")))
-        while line != EOF:
-            line = stdout.readline()
-            output_queue.put(line)
-            
-        output_queue.put(line)
 # end class SerialConnection        
     
 if __name__ == "__main__":

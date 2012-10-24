@@ -17,9 +17,9 @@ prints the output of the `ls -l` command line command
 #python Libraries
 
 from StringIO import StringIO
+import os.path
 
 # tottest Libraries
-from tottest.commons.readoutput import StandardOutput
 #commands
 from tottest.commands import changeprompt
 
@@ -29,7 +29,7 @@ from nonlocalconnection import NonLocalConnection
 from localconnection import OutputError
 from telnetadapter import TelnetAdapter
 
-SPACER = '{0} {1} '
+SPACER = '{0} {1}'
 UNKNOWN = "Unknown command: "
 EOF = ''
 
@@ -78,7 +78,8 @@ class TelnetConnection(NonLocalConnection):
             self.logger.debug(changer.run())
         return self._client
     
-    def _procedure_call(self, command, arguments, timeout=10):
+    def _procedure_call(self, command, arguments="",
+                        path='', timeout=10):
         """
         Despite its name, this isn't intended to be run.
         The . notation is the expected interface.
@@ -89,10 +90,12 @@ class TelnetConnection(NonLocalConnection):
 
          - `command`: The shell command.
          - `arguments`: A string of command arguments.
+         - `path`: an optional path to add to the command
          - `timeout`: readline timeout
 
         :postcondition: OutputError with output and error file-like objects
         """
+        command = os.path.join(path, command)
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
