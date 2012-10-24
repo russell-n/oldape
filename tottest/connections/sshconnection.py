@@ -32,6 +32,7 @@ from sshadapter import SimpleClient
 SPACER = '{0} {1}'
 UNKNOWN = "Unknown command: "
 EOF = ''
+SPACE = ' '
 
 
 class SSHConnection(NonLocalConnection):
@@ -127,6 +128,8 @@ class OutputFile(StandardOutput):
         :param:
 
          - `timeout`: The length of time to wait for output
+
+        :return: line from readline, EOF or None (in event of timeout)
         """
         if not self.end_of_file:
             try:
@@ -136,6 +139,7 @@ class OutputFile(StandardOutput):
                 return line
             except socket.timeout:
                 self.logger.debug("socket.timeout")
+                return SPACE
         return EOF
 # end class OutputFile
 
