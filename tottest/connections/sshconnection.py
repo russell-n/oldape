@@ -16,6 +16,7 @@ prints the output of the `ls -l` command line command
 
 #python Libraries
 import socket
+import os
 
 
 # tottest Libraries
@@ -28,7 +29,7 @@ from nonlocalconnection import NonLocalConnection
 from localconnection import OutputError
 from sshadapter import SimpleClient
 
-SPACER = '{0} {1} '
+SPACER = '{0} {1}'
 UNKNOWN = "Unknown command: "
 EOF = ''
 
@@ -74,7 +75,8 @@ class SSHConnection(NonLocalConnection):
                                         timeout=self.timeout)
         return self._client
     
-    def _procedure_call(self, command, arguments="", timeout=10):
+    def _procedure_call(self, command, arguments="",
+                        path='', timeout=10):
         """
         this isn't intended to be run.
         The . notation is the expected interface.
@@ -85,11 +87,14 @@ class SSHConnection(NonLocalConnection):
 
          - `command`: The shell command.
          - `arguments`: A string of command arguments.
+         - `path`: An optional path to prepend to the command
          - `timeout`: readline timeout for the SSHConnection
         :return: OutputError with output and error file-like objects
         """
         self.logger.debug("command: {0}, arguments: {1}".format(command,
-                                                                               arguments))
+                                                                arguments))
+
+        command = os.path.join(path, command)
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)

@@ -22,6 +22,7 @@ In most cases it's better to use the LocalNixConnection instead which uses Pexpe
 from StringIO import StringIO
 from collections import namedtuple
 import Queue
+import os
 
 # Third-party Libraries
 try:
@@ -70,15 +71,17 @@ class LocalConnection(BaseClass):
             self._queue = Queue.Queue()
         return self._queue
 
-    def _procedure_call(self, command, arguments='', timeout=None):
+    def _procedure_call(self, command, arguments='',
+                        path="", timeout=None):
         """
         This is provided so it can be overriden by subclasses.
 
         Otherwise it just returns _main()
         """
-        return self._main(command, arguments, timeout)
+        return self._main(command, arguments, path, timeout)
     
-    def _main(self, command, arguments='', timeout=None):
+    def _main(self, command, arguments='', path="",
+              timeout=None):
         """
         :param:
 
@@ -89,6 +92,7 @@ class LocalConnection(BaseClass):
         :return: OutputError named tuple
         """
         try:
+            command = os.path.join(path, command)
             self.logger.debug("Creating PopenProducer")
             process = PopenProducer(SPACE.join((self.command_prefix, command, arguments)),
                                     timeout=timeout)
