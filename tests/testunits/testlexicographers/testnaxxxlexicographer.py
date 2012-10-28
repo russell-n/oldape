@@ -1,0 +1,3 @@
+from unittest import TestCase
+
+from tottest.lexicographers.sublexicographers.naxxxlexicographer import NaxxxLexicographer
