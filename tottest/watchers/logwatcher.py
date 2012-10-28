@@ -14,20 +14,22 @@ class LogWatcher(BaseClass):
     In this case it assumes the log is a file that can be 'catted'
     """
     def __init__(self, output, event=None, connection=None, path="/proc/kmsg",
-                 *args, **kwargs):
+                 command="cat", *args, **kwargs):
         """
         :param:
 
          - `output`: A file-like object to send output to.
          - `event`: A threading event to stop a threaded watcher
-         - `connection`: A connection to the Device
+         - `connection`: A connection to the Device         
          - `path`: The full path to the log.
+         - `command`: the command to watch the log (change to `tail -f` if needed)
         """
         super(LogWatcher, self).__init__(*args, **kwargs)
         self.output = output
         self.event = event
         self._connection = connection
         self.path = path
+        self.command = command
         self._arguments = None
         self._logger = None
         self._stop = None
@@ -73,7 +75,7 @@ class LogWatcher(BaseClass):
         """
         if self._arguments is None:
             self._arguments = self.path
-            self.logger.debug("logcat argument string: '{0}'".format(self._arguments))
+            self.logger.debug("log argument string: '{0}'".format(self._arguments))
         return self._arguments
          
     def run(self):
@@ -81,7 +83,7 @@ class LogWatcher(BaseClass):
         Runs an infinite loop that reads the tail of the log.
         Writes the lines to self.output.write()
         """
-        for line in self.connection.cat(self.arguments):
+        for line in self.connection.bash("{0} {1}".formac(self.command, self.arguments)):
             self.output.write(line)
             if self.stopped:
                 return
