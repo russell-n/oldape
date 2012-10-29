@@ -103,7 +103,7 @@ class ProcnetdevWatcher(BaseClass):
              pass
         while not self.stopped:                
             start = time()
-            output, error = self.connection.cat("/proc/net/dev")
+            output, error = self.connection.cat(self.name)
             for line in output:
                 match = self.expression.search(line)
                 if match:
@@ -117,7 +117,9 @@ class ProcnetdevWatcher(BaseClass):
             try:
                 sleep(self.interval - (time() - start))
             except IOError:
-                self.logger.debug("cat /proc/net/dev took more than one second")
+                self.logger.debug("cat {0} took more than one second".format(self.name))
 
         return
 # end class ProcnetdevWatcher
+
+                                  
