@@ -23,6 +23,7 @@ from tottest.baseclass import BaseClass
 from tottest.parsers import oatbran 
 from timestamp import TimestampFormat
 
+
 class ProcnetdevWatcherEnum(object):
     """
     A class to hold constants
@@ -53,6 +54,7 @@ class ProcnetdevWatcher(BaseClass):
         self.output = output
         self.interface = interface
         self.interval = interval
+        self.connection = connection
         self._expression = None
         self._timestamp = None
         self.name = name
@@ -89,6 +91,7 @@ class ProcnetdevWatcher(BaseClass):
         return
 
     def __call__(self):
+        self.output.write("timestamp,interface,packets,bytes\n")
         start = time()
         output, error = self.connection.cat(self.name)
         for line in output:
@@ -97,10 +100,10 @@ class ProcnetdevWatcher(BaseClass):
                 match  = match.groupdict()
                 start_bytes = int(match[ProcnetdevWatcherEnum.bytes])
                 start_packets = int(match[ProcnetdevWatcherEnum.packets])
-         try:
-             sleep(self.interval - (time() - start))
-         except IOError:
-             pass
+            try:
+                sleep(self.interval - (time() - start))
+            except IOError:
+                pass
         while not self.stopped:                
             start = time()
             output, error = self.connection.cat(self.name)
@@ -111,9 +114,9 @@ class ProcnetdevWatcher(BaseClass):
                     next_bytes = int(match[ProcnetdevWatcherEnum.bytes])
                     next_packets = int(match[ProcnetdevWatcherEnum.packets])
                     self.output.write("{0},{1},{2},{3}\n".format(self.timestamp.now, match[ProcnetdevWatcherEnum.interface],
-                                                               next_bytes - start_bytes,
-                                                               next_packets - start_packets)
-            start_bytes, start_packets = next_bytes, next_packets
+                                                                 next_packets - start_packets,
+                                                                 next_bytes - start_bytes))
+                    start_bytes, start_packets = next_bytes, next_packets
             try:
                 sleep(self.interval - (time() - start))
             except IOError:
@@ -123,3 +126,9 @@ class ProcnetdevWatcher(BaseClass):
 # end class ProcnetdevWatcher
 
                                   
+if __name__ == "__main__":
+    from tottest.connections.sshconnection import SSHConnection
+    import sys                                  
+    c = SSHConnection("portege", "portegeadmin")
+    p = ProcnetdevWatcher(sys.stdout, c, "wlan0")
+    p()
