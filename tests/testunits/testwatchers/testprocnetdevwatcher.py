@@ -21,7 +21,9 @@ interface = 'wlan0-mon'
 class TestProcnetdevWatcher(TestCase):
     def setUp(self):
         self.output = MagicMock()
+        connection = MagicMock()
         self.watcher = ProcnetdevWatcher(output=self.output, interface=interface,
+                                         connection = connection,
                                          interval=1)
         return
 
