@@ -19,6 +19,7 @@ class TsharkWatcherEnum(object):
     
 # end class TsharkWatcherEnum
 
+COMMAND_STRING = "-i {interface} -nqz io,stat,1 -a duration:{duration}"
     
 class TsharkWatcher(BaseClass):
     """
@@ -76,12 +77,13 @@ class TsharkWatcher(BaseClass):
 
     def call_once(self):
         """
-        :return: timestamp, frames, bytes
+
         """
         timestamp = self.timestamp.now
         byte_count = 0
         frames = 0
-        output, error = self.connection.tshark("-i {0} -nqz io,stat,1 -a duration:1".format(self.interface))
+        output, error = self.connection.tshark(COMMAND_STRING.format(interface=self.interface,
+                                                                     duration=1))
         for line in output:
             match = self.expression.search(line)
             if match:
@@ -97,22 +99,29 @@ class TsharkWatcher(BaseClass):
         self.stopped = True
         return
     
-    def __call__(self):
+    def __call__(self, duration=10):
         """
         :postcondition: tshark data sent to self.output
         """
         self.output.write("timestamp,frames,bytes\n")
-        start_time = time.time()
-        while not self.stopped:
-            time_stamp, next_frames, next_bytes = self.call_once()
-            self.output.write("{0},{1},{2}\n".format(time_stamp,
-                                                     next_frames,
-                                                     next_bytes))
+        ctime = time.time()
+        command = COMMAND_STRING.format(interface=self.interface,
+                                        duration=duration)
+        self.logger.debug(command)
+        output, error = self.connection.tshark(command)
+        for line in output:
+            match = self.expression.search(line)
+            if match:
+                match = match.groupdict()
+                time_stamp = self.timestamp.convert(ctime)
+                frames = match[TsharkWatcherEnum.frames]
+                byte_count = match[TsharkWatcherEnum.bytes]
 
-            try:
-                time.sleep(1 - (time.time() - start_time))
-            except IOError:
-                self.logger.debug("tshark took more than 1 second")
+                self.output.write("{0},{1},{2}\n".format(time_stamp,
+                                                         frames,
+                                                     byte_count))
+
+                ctime += 1
 
         return
 # end class TsharkWatcher

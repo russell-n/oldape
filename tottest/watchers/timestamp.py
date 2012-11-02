@@ -57,4 +57,14 @@ class TimestampFormat(object):
         :return: timestamp for now
         """
         return time.strftime(self.format)
+
+    def convert(self, time_in_seconds):
+        """
+        :param:
+
+         - `time_in_seconds`: seconds since the epoch (as float)
+
+        :return: the given time converted to a formatted string
+        """
+        return time.strftime(self.format, time.localtime(time_in_seconds))
 # end class TimeStampFormat
