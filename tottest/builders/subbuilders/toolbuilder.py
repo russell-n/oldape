@@ -1,5 +1,7 @@
 """
 A module to aggregate the tool-builders
+
+This will eventually be replaced by the importer class(es)
 """
 
 class ToolBuilderEnum(object):
@@ -9,6 +11,7 @@ class ToolBuilderEnum(object):
     timetorecovery = "timetorecovery"
     dumpdevicestatebuilder = "dumpdevicestatebuilder"
     iperf = "iperf"
+    rotate = 'rotate'
 # end class ToolBuilderEnum
 
 class ToolBuilder(object):
@@ -21,8 +24,14 @@ class ToolBuilder(object):
         self._timetorecovery = None
         self._dumpdevicestate = None
         self._iperf = None
+        self._rotate = None
         return
 
+    @property
+    def rotate(self):
+        from rotatebuilder import RotateBuilder
+        return RotateBuilder
+    
     @property
     def ners(self):
         from nersbuilder import NersBuilder

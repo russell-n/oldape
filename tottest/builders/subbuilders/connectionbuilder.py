@@ -6,12 +6,14 @@ A module to build the connections.
 * Each has a connection parameter
 """
 #python
-from types import StringType
+from collections import namedtuple
 
 from tottest.connections import adbconnection
 from tottest.baseclass import BaseClass
 from tottest.connections import sshconnection
 from tottest.commons import errors
+
+SSHParameters = namedtuple("SSHParameters", "hostname username password".split())XS
 
 class AdbShellConnectionBuilder(BaseClass):
     """

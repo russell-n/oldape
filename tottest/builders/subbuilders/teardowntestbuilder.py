@@ -2,12 +2,12 @@
 A module to build test teardowns
 """
 
-from basetoolbuilder import BaseToolBuilder
+from baseoperationbuilder import BaseOperationBuilder
 from tottest.lexicographers.config_options import ConfigOptions
 from tottest.operations.teardowntest import DummyTeardownTest
 from tottest.commons.errors import ConfigurationError
 
-class TeardownTestBuilder(BaseToolBuilder):
+class TeardownTestBuilder(BaseOperationBuilder):
     """
     A class to build Setup Operations
     """
@@ -16,23 +16,20 @@ class TeardownTestBuilder(BaseToolBuilder):
         return
 
     @property
-    def product(self):
+    def config_option(self):
         """
-        :return: Teardown Test object
-        
+        :return: the name of the option for this builder in config file
         """
-        if self._product is None:
-            try:
-                tools = self.config_map.get_list(ConfigOptions.test_section,
-                                                 ConfigOptions.operation_setup_option,)
-            except ConfigurationError as error:
-                self.logger.debug(error)                
-                self._product = DummyTeardownTest()
-        return self._product
+        if self._config_option is None:
+            self._config_option = ConfigOptions.teardown_test_option
+        return self._config_option
 
     @property
-    def parameters(self):
+    def operation(self):
         """
+        :return: the class for to build
         """
-        return self._parameters
+        if self._operation is None:
+            self._operation = DummyTeardownTest
+        return self._operation
 # end class TeardownTestBuilder

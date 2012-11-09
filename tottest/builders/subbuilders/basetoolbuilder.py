@@ -7,7 +7,15 @@ from collections import namedtuple
 
 # tottest
 from tottest.baseclass import BaseClass
+from tottest.commons.errors import ConfigurationError
 
+class BaseToolBuilderError(ConfigurationError):
+    """
+    An error to raise if there's something wrong with the user's configuration
+    """
+# end class BaseToolBuilderError
+
+    
 Parameters = namedtuple("Parameters", "name parameters".split())
 
 
@@ -44,6 +52,13 @@ class BaseToolBuilder(BaseClass):
         """
         :return: list of namedtuples - each needs a `name` property to identify it
         """
+        if self._parameters is None:
+            try:
+                options = self.config_map.options(self.section)[0]
+                self._parameters = self.config_map.get_namedtuple(self.section,
+                                                                  options)
+            except TypeError as error:
+                raise BaseToolBuilderError(error)
         return self._parameters
 # end class BaseToolBuilder
     

@@ -1,28 +1,35 @@
 """
 A module to build operations
 """
-
+#python
 from abc import ABCMeta, abstractproperty
+
+#tottest
+from tottest.baseclass import BaseClass
 from tottest.operations.baseoperation import DummyOperation
 from tottest.lexicographers.config_options import ConfigOptions
 from tottest.commons.errors import ConfigurationError
-from basetoolbuilder import BaseToolBuilder
+#from basetoolbuilder import BaseToolBuilder
 
 from toolbuilder import ToolBuilder
 
-class BaseOperationBuilder(BaseToolBuilder):
+class BaseOperationBuilder(BaseClass):
     """
     A class to build Test Setups
     """
     __metaclass__ = ABCMeta
-    def __init__(self, *args, **kwargs):
+    def __init__(self, master, config_map, previous_parameters):
         """
         :param:
 
          - `master`: Builder (inherited argument)
          - `config_map`: ConfigurationMap (inherited argument)
+         -  `previous_parameters`: parameters built by other builders
         """
-        super(BaseOperationBuilder, self).__init__(*args, **kwargs)
+        super(BaseOperationBuilder, self).__init__()
+        self.master = master
+        self.config_map = config_map
+        self.previous_parameters = previous_parameters
         self._logger = None
         self._plans = None
         self._builders = None
@@ -30,6 +37,8 @@ class BaseOperationBuilder(BaseToolBuilder):
         self._tool_builder = None
         self._operation = None
         self._config_option = None
+        self._product = None
+        self._parameters = None
         return
 
     @abstractproperty

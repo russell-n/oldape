@@ -104,6 +104,7 @@ class TsharkWatcher(BaseClass):
         :postcondition: tshark data sent to self.output
         """
         self.output.write("timestamp,frames,bytes\n")
+        self.logger.info("Watching the tshark packets for {0} seconds.".format(duration))
         ctime = time.time()
         command = COMMAND_STRING.format(interface=self.interface,
                                         duration=duration)

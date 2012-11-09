@@ -28,6 +28,15 @@ class TimeToRecoveryBuilder(BaseToolBuilder):
         return
 
     @property
+    def section(self):
+        """
+        :return: the name of the section in the config_file
+        """
+        if self._section is None:
+            self._section = ConfigOptions.time_to_recovery_section
+        return self._section
+    
+    @property
     def timeout(self):
         """
         :return: the total time to try and ping

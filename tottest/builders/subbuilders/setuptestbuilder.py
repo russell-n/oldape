@@ -37,4 +37,11 @@ class SetupTestBuilder(BaseOperationBuilder):
         if self._operation is None:
             self._operation = SetupTest
         return self._operation
+
+    @property
+    def section(self):
+        """
+        :return: None
+        """
+        return self._section
 # end class SetupTestBuilder
