@@ -7,6 +7,7 @@ class ConfigOptions(object):
     operation_teardown_option = "operation_teardown"
     test_setup_option = "setup_test"
     execute_test_option = "execute_test"
+    teardown_test_option="teardown_test"
     
     output_folder_option = 'output_folder'
     data_file_option = "data_file"
@@ -49,3 +50,6 @@ class ConfigOptions(object):
     affector_type_option = "type"
     switches_option = "switches"
     hostname_option = "hostname"
+    username_option = 'username'
+    rotate_section = "ROTATE"
+    angles_option = "angles"

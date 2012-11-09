@@ -15,6 +15,15 @@ class OperationSetupBuilder(BaseToolBuilder):
         return
 
     @property
+    def section(self):
+        """
+        :return: the name of the section in the config file
+        """
+        if self._section is None:
+            self._section = ConfigOptions.test_section
+        return self._section 
+    
+    @property
     def product(self):
         """
         :return: Operation Setup object
@@ -22,7 +31,7 @@ class OperationSetupBuilder(BaseToolBuilder):
         """
         if self._product is None:
             try:
-                tools = self.config_map.get_list(ConfigOptions.test_section,
+                tools = self.config_map.get_list(self.section,
                                                  ConfigOptions.operation_setup_option,)
             except ConfigurationError as error:
                 self.logger.debug(error)                

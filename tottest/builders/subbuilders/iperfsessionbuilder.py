@@ -89,12 +89,12 @@ class IperfSessionBuilder(BaseToolBuilder):
         :return: list of namedtuples
         """
         if self._parameters is None:
-
             if not any([p.name == BuilderParameterEnums.nodes for p in self.previous_parameters]):
                 self.previous_parameters.append(Parameters(name=BuilderParameterEnums.nodes,
                                                            parameters=self.master.nodes.keys()))
             if not any([p.name == BuilderParameterEnums.iperf_directions for p in self.previous_parameters]):
                 self.previous_parameters.append(Parameters(name=BuilderParameterEnums.iperf_directions,
                                                            parameters=self.directions))
+            self._parameters = self.previous_parameters
         return self._parameters
 # end class IperfSessionBuilder
