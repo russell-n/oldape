@@ -71,8 +71,13 @@ class WindowsDevice(BaseDevice):
         """
         :return: String containing the wifi info
         """
-        return "".join([line for line in self.wifi_query.output] +
-                       ["rssi: {0} dbm".format(self.rssi_query())])
+        out, err = self.connection.wifi('status')
+        output = "".join([line for line in out])
+        error = err.readline()
+        if len(error):
+            self.logger.error(error)
+        return output
+            
 
     @property
     def wifi_query(self):

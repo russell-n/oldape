@@ -3,6 +3,7 @@ A command-line interface to run the rotate command remotely.
 """
 
 from tottest.baseclass import BaseClass
+from tottest.commons.errors import ConfigurationError
 from tottest.commons.errors import CommandError
 
 class RotateCommand(BaseClass):
@@ -19,17 +20,22 @@ class RotateCommand(BaseClass):
         self.connection = connection
         return
 
-    def __call__(self, angle=0):
+    def __call__(self, parameters):
         """
         :param:
 
-         - `angle`: int, float or coercible for angle of rotation (degrees)
+         - `parameters`: namedtuple with parameters.angles.parameters
         """
-        stdout, stderr = self.connection.rotate(angle)
+        angle = parameters.angles.parameters
+        velocity = parameters.velocities.parameters
+        arguments = "{0} --velocity {1}".format(angle, velocity)
+        stdout, stderr = self.connection.rotate(arguments)
         for line in stdout:
             self.logger.debug(line)
         for line in stderr:
             self.logger.error(line)
+            if "Requested position is out of range." in line:
+                raise ConfigurationError("Requested rotation angle of {0} is out of range".format(parameters.angles.parameters))
         return
 
     def check_errors(self, line):

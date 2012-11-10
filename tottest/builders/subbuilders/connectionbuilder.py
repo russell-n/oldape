@@ -13,7 +13,7 @@ from tottest.baseclass import BaseClass
 from tottest.connections import sshconnection
 from tottest.commons import errors
 
-SSHParameters = namedtuple("SSHParameters", "hostname username password".split())XS
+SSHParameters = namedtuple("SSHParameters", "hostname username password".split())
 
 class AdbShellConnectionBuilder(BaseClass):
     """

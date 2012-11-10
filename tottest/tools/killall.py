@@ -102,6 +102,7 @@ class KillAll(BaseClass):
                 self.logger.debug("matched: " + line)
                 self.logger.debug("killing: " + match.group(expressions.PID_NAME))
                 command = " -9 " + match.group(expressions.PID_NAME)
+                kill_count+= 1
                 self.logger.debug("kill " + command)
                 k_output, k_error = self.connection.kill(command)
                 for k_line in k_error:
@@ -122,7 +123,7 @@ class KillAll(BaseClass):
                 self.logger.error(line)
 
             match = self.expression.search(process)
-            if match and match.group(expressions.PROCESS_NAME) == name:
+            if match and name in line:
                 err = error.read()
                 if len(err):
                     self.logger.error(err)
@@ -130,6 +131,7 @@ class KillAll(BaseClass):
         err = error.read()
         if len(err):
             self.logger.error(err)
+        self.logger.info("Killed {0} iperf processes on {1}".format(kill_count, self.connection.hostname))
         return
 
     def __call__(self, connection, name=None, time_to_sleep=None):
