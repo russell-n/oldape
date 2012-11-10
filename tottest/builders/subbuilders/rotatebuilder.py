@@ -6,6 +6,7 @@ from tottest.lexicographers.config_options import ConfigOptions
 from connectionbuilder import connection_builders, ConnectionBuilderTypes, SSHParameters
 from tottest.commands.rotate import RotateCommand
 
+COLON = ":"
 
 class RotateBuilderEnums(object):
     """
@@ -13,6 +14,7 @@ class RotateBuilderEnums(object):
     """
     __slots__ = ()
     angles = 'angles'
+    velocities = 'velocities'
 # end class RotateBuilderEnums
     
 class RotateBuilder(BaseToolBuilder):
@@ -22,6 +24,7 @@ class RotateBuilder(BaseToolBuilder):
     def __init__(self, *args, **kwargs):
         super(RotateBuilder, self).__init__(*args, **kwargs)
         self._angles = None
+        self._velocities = None
         self._connection_parameters = None
         self._connection = None
         return
@@ -35,7 +38,7 @@ class RotateBuilder(BaseToolBuilder):
             hostname = self.config_map.get(ConfigOptions.rotate_section,
                                            ConfigOptions.hostname_option)
             username = self.config_map.get(ConfigOptions.rotate_section,
-                                           ConfigOptions.username_section)
+                                           ConfigOptions.username_option)
             password = self.config_map.get(ConfigOptions.rotate_section,
                                            ConfigOptions.username_option,
                                            optional=True)
@@ -49,7 +52,8 @@ class RotateBuilder(BaseToolBuilder):
         :return: ssh-connection to the rotation-master
         """
         if self._connection is None:
-            self._connection = connection_builders[ConnectionBuilderTypes.ssh](self.connection_parameters)
+            self._connection = connection_builders[ConnectionBuilderTypes.ssh](self.connection_parameters).connection
+            assert self._connection.__class__.__name__ == "SSHConnection", self._connection.__class__.__name__
         return self._connection
 
     @property
@@ -58,9 +62,18 @@ class RotateBuilder(BaseToolBuilder):
         :return: list of angles
         """
         if self._angles is None:
-            self._angles = self.config_map.get_ints(ConfigOptions.rotate_section,
-                                                    ConfigOptions.angles_option)
+            self._angles = self.get_parameters()
         return self._angles
+
+    @property
+    def velocities(self):
+        """
+        :return: list of velocities
+        """
+        if self._velocities is None:
+            self._velocities = self.get_parameters(parameter_index=1,
+                                                   pad=True)
+        return self._velocities                                                        
     
     @property
     def parameters(self):
@@ -69,7 +82,9 @@ class RotateBuilder(BaseToolBuilder):
         """
         if self._parameters is None:
             self.previous_parameters.append(Parameters(name=RotateBuilderEnums.angles,
-                                                       parameter=self.angles))
+                                                       parameters=self.angles))
+            self.previous_parameters.append(Parameters(name=RotateBuilderEnums.velocities,
+                                                       parameters=self.velocities))
             self._parameters = self.previous_parameters
         return self._parameters
 
@@ -81,5 +96,24 @@ class RotateBuilder(BaseToolBuilder):
         if self._product is None:
             self._product = RotateCommand(connection=self.connection)
         return self._product
+
+    def get_parameters(self, parameter_index=0, pad=False):
+        """
+        :param:
+
+         - `parameter_index`: index of the item wanted if there is a velocity in the parameter
+         - `pad`: if true, put a 0 in the list when there's no velocity
+
+        :return: list of integer parameters
+        """
+        parameters = self.config_map.get_list(ConfigOptions.rotate_section,
+                                                    ConfigOptions.angles_option)
+        for list_index, item in enumerate(parameters):
+            if COLON in item:
+                value = parameters[list_index].split(COLON)[parameter_index]
+            else:
+                value = 0
+            parameters[list_index] = value                
+        return parameters
 # end class RotateBuilder
     

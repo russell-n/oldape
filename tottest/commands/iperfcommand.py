@@ -230,9 +230,6 @@ class IperfCommand(BaseClass):
         
         if len(err):
             self.validate(err)
-            for line in error:
-                self.logger.error(line)
-                self.validate(line)
         return
 
     def start(self, device, filename):

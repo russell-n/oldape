@@ -110,7 +110,7 @@ class ConfigurationMap(BaseClass):
         return self._parser
 
     def raise_error(self, error):
-        self.logger.error(error)
+        self.logger.debug(error)
         raise ConfigurationError(error)
 
 
@@ -158,7 +158,7 @@ class ConfigurationMap(BaseClass):
         try:
             return BooleanValues.map[value]
         except KeyError as error:
-            self.logger.error(error)
+            self.logger.debug(error)
             self.raise_error("Unknown Boolean: {0}".format(value))
         return
 
@@ -177,7 +177,7 @@ class ConfigurationMap(BaseClass):
         try:
             return [BooleanValues.map[value.lower()] for value in values]
         except KeyError as error:
-            self.logger.error(error)
+            self.logger.debug(error)
             self.raise_error("Unknown Boolean in: {0}".format(values))
         return
 
@@ -212,7 +212,7 @@ class ConfigurationMap(BaseClass):
             
         except ValueError as error:
             values = self.get(section=section, option=option, default=default, optional=optional)
-            self.logger.error(error)
+            self.logger.debug(error)
             raise ConfigurationError("Unable to cast '{0}' to integers".format(values))
         return
     
@@ -246,7 +246,7 @@ class ConfigurationMap(BaseClass):
                                     converter=float)
         except ValueError as error:
             values = self.get(section=section, option=option, default=default, optional=optional)
-            self.logger.error(error)
+            self.logger.debug(error)
             raise ConfigurationError("Unable to cast '{0}' to floats".format(values))
         return
 

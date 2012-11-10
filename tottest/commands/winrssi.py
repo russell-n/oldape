@@ -58,7 +58,7 @@ class WinRssi(BaseClass):
         :return: the rssi value
         :raises: CommandError if the rssi can't be retrieved.
         """
-        output = self.connection.rssi()
+        output = self.connection.wifi("rssi")
         for line in output.output:
             match = self.expression.search(line)
             if match:
