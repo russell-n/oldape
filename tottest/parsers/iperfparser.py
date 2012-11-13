@@ -7,9 +7,10 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # python libraries
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 import os
 
+#tottest modules
 from tottest.baseclass import BaseClass
 
 from iperfexpressions import HumanExpression, ParserKeys
@@ -17,7 +18,16 @@ from iperfexpressions import CsvExpression
 from unitconverter import UnitConverter
 from coroutine import coroutine
 
+class BandwidthData(namedtuple("BandwidthData", "interval bandwidth units".split())):
+    """
+    A tuple to hold the bandwidth data
+    """
+    __slots__ = ()
 
+    def __str__(self):
+        return  "({0}) {1} {2}/sec".format(self.interval, self.bandwidth, self.units)
+# end class BandwidthData
+                        
 class IperfParser(BaseClass):
     """
     The Iperf Parser extracts bandwidth and other information from the output
@@ -206,6 +216,7 @@ class IperfParser(BaseClass):
         """
         Resets the attributes set during parsing
         """
+        self.logger.info("Reseting the IperfParser")
         self.format = None
         self._interval_threads = None
         self._thread_count = None

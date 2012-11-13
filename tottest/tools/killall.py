@@ -46,13 +46,13 @@ class KillAll(BaseClass):
         :return: The regular expression for the ps command
         """
         if self.connection.operating_system == operating_systems.android:
-            self.logger.debug("Using Android Expression")
+            #self.logger.debug("Using Android Expression")
             return re.compile(expressions.PS_ANDROID)
         if self.connection.operating_system == operating_systems.windows:
-            self.logger.debug("Using Cygwin Expression")
+            #self.logger.debug("Using Cygwin Expression")
             return re.compile(CYGWIN)
 
-        self.logger.debug("Using linux expression")
+        #self.logger.debug("Using linux expression")
         return re.compile(expressions.PSE_LINUX)
 
     @property
@@ -106,9 +106,10 @@ class KillAll(BaseClass):
                 self.logger.debug("kill " + command)
                 k_output, k_error = self.connection.kill(command)
                 for k_line in k_error:
-                    self.logger.error(k_line)
+                    if len(k_line) > 1:
+                        self.logger.error(k_line)
         err = error.read()
-        if len(err):
+        if len(err) > 1:
             self.logger.error(err)
         if not kill_count:
             self.logger.info("No iperf sessions found on {0}".format(self.connection.hostname))
