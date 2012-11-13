@@ -26,14 +26,14 @@ class RotateCommand(BaseClass):
 
          - `parameters`: namedtuple with parameters.angles.parameters
         """
-        angle = parameters.angles.parameters
-        velocity = parameters.velocities.parameters
+        angle, velocity = parameters.angle_velocity.parameters
         arguments = "{0} --velocity {1}".format(angle, velocity)
         stdout, stderr = self.connection.rotate(arguments)
         for line in stdout:
             self.logger.debug(line)
         for line in stderr:
-            self.logger.error(line)
+            if len(line) > 1:
+                self.logger.error(line)
             if "Requested position is out of range." in line:
                 raise ConfigurationError("Requested rotation angle of {0} is out of range".format(parameters.angles.parameters))
         return
