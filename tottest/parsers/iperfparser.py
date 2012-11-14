@@ -216,7 +216,7 @@ class IperfParser(BaseClass):
         """
         Resets the attributes set during parsing
         """
-        self.logger.info("Reseting the IperfParser")
+        self.logger.debug("Resetting the IperfParser")
         self.format = None
         self._interval_threads = None
         self._thread_count = None

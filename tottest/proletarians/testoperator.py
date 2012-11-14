@@ -73,18 +73,22 @@ class TestOperator(BaseClass):
         #. Runs test
         #. Runs Teardown
         """
+        #**** Setup Test
         self.logger.info("Running Parameters: {0}".format(parameter))
         self.logger.info(TEST_PREAMBLE.format(r=count,
                                               t=parameter.total_count))
         self.logger.info("Running test setup")
-        #import pudb; pudb.set_trace()
-        self.test_setup(parameter)
+
+        filename_prefix = self.test_setup(parameter)
         self.sleep()
-        
+
+        #**** Execute test
         self.logger.info("Running Test")
-        test_result = self.tests(parameter)
+        test_result = self.tests(parameter, filename_prefix)
         self.logger.info(TEST_RESULT.format(r=test_result))
         self.logger.info("Running teardown")
+
+        #**** Teardown Test
         self.test_teardown(parameter)
         self.logger.info(TIME_REMAINING.format(t=self.countdown_timer()))
         return
