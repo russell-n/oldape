@@ -19,6 +19,7 @@ class BaseDevice(BaseClass):
     __metaclass__ = ABCMeta
     def __init__(self, connection=None, interface=None,
                  address=None, role=None,
+                 identifier=None,
                  *args, **kwargs):
         """
         :param:
@@ -27,6 +28,7 @@ class BaseDevice(BaseClass):
          - `interface`: The test-interface name to try and get the address
          - `address` The Test-interface IP to use if the interface name isn't given
          - `role`: an identifier to help with building file-names
+         - `identifier`: A string to help identify the device
         """
         self._connection = connection
         self.interface = interface
