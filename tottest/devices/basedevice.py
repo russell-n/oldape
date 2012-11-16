@@ -13,7 +13,7 @@ class BaseDeviceEnum(object):
     node = "node"
 # end class BaseDeviceEnum
     
-CSV_OUTPUT = "{ssid},{bssid},{channel},{ip},{mac},{rssi},{mac}"
+CSV_OUTPUT = "{ssid},{bssid},{channel},{ip},{mac},{rssi},{noise}\n"
 HUMAN_OUTPUT = """
 SSID        = {ssid}
 BSSID       = {bssid}
@@ -86,13 +86,13 @@ class BaseDevice(BaseClass):
         else:
             out_string = HUMAN_OUTPUT
 
-        return out_string.format(ip=self.address,
-                                 rssi=self.rssi,
-                                 ssid=self.ssid,
-                                 bssid=self.bssid,
-                                 channel=self.channel,
-                                 noise=self.noise,
-                                 mac=self.mac_address)
+        return out_string.format(ip=self.address.rstrip(),
+                                 rssi=self.rssi.rstrip(),
+                                 ssid=self.ssid.rstrip(),
+                                 bssid=self.bssid.rstrip(),
+                                 channel=self.channel.rstrip(),
+                                 noise=self.noise.rstrip(),
+                                 mac=self.mac_address.rstrip())
     
     @abstractproperty
     def address(self):
