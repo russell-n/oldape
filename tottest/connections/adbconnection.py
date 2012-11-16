@@ -13,9 +13,10 @@ from localconnection import EOF
 from tottest.commons import errors 
 from tottest.commons import readoutput 
 from tottest.commons import enumerations
-from tottest.tools import killall
+from sshconnection import SSHConnection 
 
 ConnectionError = errors.ConnectionError
+CommandError = errors.CommandError
 ConnectionWarning = errors.ConnectionWarning
 ValidatingOutput = readoutput.ValidatingOutput
 OperatingSystem = enumerations.OperatingSystem
@@ -26,6 +27,7 @@ NOT_CONNECTED = "No Android Device Detected by ADB (USB) Connection"
 
 DEVICE_NOT_ROOTED = "adbd cannot run as root in production builds"
 NOT_ROOTED = "This Android device isn't rootable."
+NOT_FOUND = "not found"
 
 #regular expressions
 ALPHA = r'\w'
@@ -161,6 +163,52 @@ class ADBShellBlockingConnection(ADBShellConnection):
         self._unknown_command = None
         return
 
+class ADBSSHConnection(SSHConnection):
+    """
+    An ADB Connection sends commands to the Android Debug Bridge
+    """
+    def __init__(self, serial_number=None,*args, **kwargs):
+        """
+        :param:
+
+         - `serial_number`: An optional serial number to specify the device.
+        """
+        super(ADBSSHConnection, self).__init__(*args, **kwargs)
+        self._logger = None
+        self.command_prefix = "adb"
+        if serial_number is not None:
+            self.command_prefix += " -s " + serial_number
+        self.operating_system = OperatingSystem.Android
+        return
+
+    def _procedure_call(self, command, arguments="",
+                        path='', timeout=10):
+        """
+        Overrides the SSHConnection._procedure_call to check for errors
+        """
+        output = self._main(command, arguments, path, timeout)
+        return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), output.error)
+
+
+    def check_errors(self, line):
+        """
+        This is here so that children can override it.
+        :param:
+
+         - `line`: a line of output
+        """
+        if line.startswith(DEVICE_NOT_FOUND):
+            self.logger.debug(line)
+            raise ConnectionError(NOT_CONNECTED)
+        elif line.startswith(DEVICE_NOT_ROOTED):
+            self.logger.debug(line)
+            raise ConnectionWarning(NOT_ROOTED)
+        elif NOT_FOUND in line:
+            raise CommandError(NOT_FOUND)
+        return
+        
+# end class ADBConnection
+    
 #if __name__ == "__main__":
 #    from tottest.main import watcher
 #    import sys

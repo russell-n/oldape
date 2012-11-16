@@ -63,14 +63,11 @@ class TestWindowsDevice(TestCase):
         return
 
     def test_wifi_info(self):
-        rssi = "-89"
-        self.rssi.return_value = rssi
-        self.netsh.output = OUTPUT.split("\n")
+        self.connection.wifi.return_value = StringIO("information\n"), StringIO("")
         actual = self.device.wifi_info
         #self.netsh.output.assert_called_with()
-        print self.rssi.mock_calls
-        self.rssi.assert_called_with()
-        expected = OUTPUT  + "\nrssi: {0} dbm".format(rssi)
+        expected = "information\n"
+        self.connection.wifi.assert_called_with('status')
         self.assertEqual(expected, actual)
         return
 

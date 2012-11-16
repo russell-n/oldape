@@ -34,6 +34,54 @@ class AdbDevice(BaseDevice):
         return
 
     @property
+    def channel(self):
+        """
+        :return: the channel for the current wifi connection
+        """
+        return self.wifi_querier.channel
+    
+    @property
+    def rssi(self):
+        """
+        :return: the current RSSI
+        """
+        return self.wifi_querier.rssi
+
+    @property
+    def noise(self):
+        """
+        :return: the current noise
+        """
+        return self.wifi_querier.noise
+
+    @property
+    def ssid(self):
+        """
+        :return: the ssid of the attached AP
+        """
+        return self._wifi_querier.ssid
+
+    @property
+    def bssid(self):
+        """
+        :return: the MAC address of the attached AP
+        """
+        return self._wifi_querier.bssid
+    
+    @property
+    def mac_address(self):
+        """
+        :return: devices mac address
+        """
+        if self._mac_address is None:
+            if "wpa_cli" in self.commands:
+                self._mac_address = commands['wpa_cli'](connection=self.connection,
+                                                        interface=self.interface).mac_address
+            else:
+                self._mac_address = self.wifi_querier.mac_address
+        return self._mac_address
+    
+    @property
     def wifi_commands(self):
         """
         :return: list of available wifi commands
@@ -113,6 +161,7 @@ class AdbDevice(BaseDevice):
         :rtype: StringType
         :return: The Wifi Info
         """
+        
         raise NotImplementedError("Get WiFi Info not done yet")
         return
 
@@ -135,14 +184,8 @@ class AdbDevice(BaseDevice):
         """
         :return: ip address of interface
         """
-        return self.netcfg.ip_address
-
-    @property
-    def wifi_info(self):
-        """
-        :return: wifi info summary
-        """
-        return
+        return self.netcfg.ip_address                         
+        
 # end class AdbDevice
 
 wifi_commands = ("wifi wl iw wpa_cli".split())
@@ -163,7 +206,7 @@ class AdbWifiCommandFinder(object):
         for command in wifi_commands:
             not_found = False
             output, error = getattr(connection, command)("-h")
-            for line in line:
+            for line in output:
                 if "not found" in line:
                     not_found = True
                     break
@@ -171,3 +214,9 @@ class AdbWifiCommandFinder(object):
                 commands.append(command)
         return commands
 # end class WifiCommandInventory
+
+if __name__ == "__main__":
+    from tottest.connections.sshconnection import SSHConnection
+    c = SSHConnection("localhost", "allion")
+    a = AdbDevice(connection = c, interface="wlan0")
+    print a.rssi

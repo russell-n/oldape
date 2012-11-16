@@ -79,6 +79,24 @@ class SSHConnection(NonLocalConnection):
     def _procedure_call(self, command, arguments="",
                         path='', timeout=10):
         """
+        The reason for this is so that sub-classes can override this method
+        this isn't intended to be run.
+        The . notation is the expected interface.
+        
+        runs self._main
+
+        :param:
+
+         - `command`: The shell command.
+         - `arguments`: A string of command arguments.
+         - `path`: An optional path to prepend to the command
+         - `timeout`: readline timeout for the SSHConnection
+        :return: OutputError with output and error file-like objects
+        """
+        return self._main(command, arguments, path, timeout)
+
+    def _main(self, command, arguments, path, timeout):
+        """
         this isn't intended to be run.
         The . notation is the expected interface.
         

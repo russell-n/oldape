@@ -14,7 +14,7 @@ MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
 
 
-class WlCommand(BaseWifiCommand):
+class WifiCommand(BaseWifiCommand):
     """
     The Wl Command interprets WL information
     """
@@ -26,7 +26,7 @@ class WlCommand(BaseWifiCommand):
          - `interface`: The interface to check
          - `operating_system` : The operating system on the devices.
         """
-        super(WlCommand, self).__init__(*args, **kwargs)
+        super(WifiCommand, self).__init__(*args, **kwargs)
         return
     
     @property
@@ -133,7 +133,7 @@ class WlCommand(BaseWifiCommand):
     def __str__(self):
         return "({iface}) RSSI: {rssi}".format(iface=self.interface,
                                                rssi=self.rssi)
-# end class WlCommand
+# end class WifiCommand
     
 if __name__ == "__main__":
     from tottest.connections import adbconnection
