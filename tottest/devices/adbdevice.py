@@ -2,6 +2,7 @@
 An ADB device
 """
 
+from tottest.baseclass import BaseClass 
 from basedevice import BaseDevice
 from tottest.connections.adbconnection import ADBShellConnection
 from tottest.commands.svc import Svc
@@ -10,6 +11,8 @@ from tottest.commands.iwcommand import IwCommand
 from tottest.commands.wlcommand import WlCommand
 from tottest.commands.wificommand import WifiCommand
 from tottest.commands.wpacli import WpaCliCommand
+
+from tottest.commons.errors import CommandError
 
 commands = {"iw":IwCommand,
             'wl':WlCommand,
@@ -74,7 +77,7 @@ class AdbDevice(BaseDevice):
         :return: devices mac address
         """
         if self._mac_address is None:
-            if "wpa_cli" in self.commands:
+            if "wpa_cli" in self.wifi_commands:
                 self._mac_address = commands['wpa_cli'](connection=self.connection,
                                                         interface=self.interface).mac_address
             else:
@@ -190,7 +193,7 @@ class AdbDevice(BaseDevice):
 
 wifi_commands = ("wifi wl iw wpa_cli".split())
 
-class AdbWifiCommandFinder(object):
+class AdbWifiCommandFinder(BaseClass):
     """
     A finder of the main wifi command.
     """
@@ -202,21 +205,24 @@ class AdbWifiCommandFinder(object):
 
         :return: string identifier of primary wifi query command
         """
+        super(AdbWifiCommandFinder, self).__init__()
         commands = []
         for command in wifi_commands:
-            not_found = False
-            output, error = getattr(connection, command)("-h")
-            for line in output:
-                if "not found" in line:
-                    not_found = True
-                    break
-            if not not_found:
+            try:
+                output, error = getattr(connection, command)("-v")
+                for line in output:
+                    self.logger.debug(line)
                 commands.append(command)
+            except CommandError as error:
+                self.logger.debug(error)
         return commands
 # end class WifiCommandInventory
 
 if __name__ == "__main__":
-    from tottest.connections.sshconnection import SSHConnection
-    c = SSHConnection("localhost", "allion")
-    a = AdbDevice(connection = c, interface="wlan0")
-    print a.rssi
+    from tottest.connections.adbconnection import ADBShellSSHConnection
+    import sys
+    c = ADBShellSSHConnection(hostname="localhost", username="allion")
+    a = AdbDevice(connection = c, interface="wlan0", csv=True)
+    sys.stdout.write(a.wifi_info)
+    sys.stdout.write(a.wifi_info)
+    

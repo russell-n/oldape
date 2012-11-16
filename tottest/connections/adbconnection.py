@@ -178,7 +178,7 @@ class ADBSSHConnection(SSHConnection):
         self.command_prefix = "adb"
         if serial_number is not None:
             self.command_prefix += " -s " + serial_number
-        self.operating_system = OperatingSystem.Android
+        self.operating_system = OperatingSystem.android
         return
 
     def _procedure_call(self, command, arguments="",
@@ -197,23 +197,55 @@ class ADBSSHConnection(SSHConnection):
 
          - `line`: a line of output
         """
+        self._check_errors(line)
+        return
+    
+    def _check_errors(self, line):
+        """
+        Checks connection-related errors
+
+        :raise: ConnectionError if the device isn't detected
+        :raise: ConnectionWarning if the device isn't rooted
+        """
         if line.startswith(DEVICE_NOT_FOUND):
             self.logger.debug(line)
-            raise ConnectionError(NOT_CONNECTED)
+            raise ConnectionError(line)
         elif line.startswith(DEVICE_NOT_ROOTED):
             self.logger.debug(line)
-            raise ConnectionWarning(NOT_ROOTED)
-        elif NOT_FOUND in line:
-            raise CommandError(NOT_FOUND)
+            raise ConnectionWarning(line)
         return
-        
-# end class ADBConnection
+# end class ADBSSHConnection
+
+class ADBShellSSHConnection(ADBSSHConnection):
+    """
+    A class to talk to the shell, note the adb-server
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param: (see the ADBSSHConnection)
+        """
+        super(ADBShellSSHConnection, self).__init__(*args, **kwargs)
+        self.command_prefix += " shell "
+        return
+
+    def check_errors(self, line):
+        """
+        :line: line of standard output
+
+        :raise: CommandError if the command issued wasn't recognized
+        """
+        self._check_errors(line)
+        if line.rstrip().endswith(NOT_FOUND):
+            raise CommandError(line)                                  
+        return
+# end class ADBSHellSSHConnection
     
-#if __name__ == "__main__":
-#    from tottest.main import watcher
-#    import sys
-#    watcher()
-#    adb = ADBShellConnection()
-#    for line in adb.logcat('-v time', timeout=1):
-#        sys.stdout.write(line)
+if __name__ == "__main__":
+    from tottest.main import watcher
+    import sys
+    watcher()
+    adb = ADBShellSSHConnection(hostname="localhost", username="allion")
+    output, error= adb.iw('wlan0 link', timeout=1)
+    for line in output:
+        sys.stdout.write(line)
     
