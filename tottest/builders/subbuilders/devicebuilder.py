@@ -5,26 +5,24 @@ This is a module to hold device builders.
 * Each builder has a `device` property that will return the built device
 """
 
-from tottest.baseclass import BaseClass
+from basedevicebuilder import BaseDeviceBuilder
 from tottest.devices import adbdevice, windowsdevice, linuxdevice
 
 
-class WindowsDeviceBuilder(BaseClass):
+class WindowsDeviceBuilder(BaseDeviceBuilder):
     """
     A Device Builder for Windows Devices
     """
-    def __init__(self, connection, role, interface=None, address=None):
+    def __init__(self, *args, **kwargs):
         """
         :param:
 
          - `connection`: a connection to the device
+         - `role`: some kind of identifier (e.g. node)
+         - `interface`: the name of the test interface
+         - `address`: hostname of the test interface
         """
-        super(WindowsDeviceBuilder, self).__init__()
-        self.connection = connection
-        self.interface = interface
-        self.address = address
-        self.role = role
-        self._device = None
+        super(WindowsDeviceBuilder, self).__init__(*args, **kwargs)
         return
 
     @property
@@ -38,11 +36,11 @@ class WindowsDeviceBuilder(BaseClass):
         return self._device
 # end class WindowsDeviceBuilder
 
-class LinuxDeviceBuilder(BaseClass):
+class LinuxDeviceBuilder(BaseDeviceBuilder):
     """
     A Device Builder for Linux Devices
     """
-    def __init__(self, connection, role, interface=None, address=None):
+    def __init__(self, *args, **kwargs):
         """
         :param:
 
@@ -51,12 +49,7 @@ class LinuxDeviceBuilder(BaseClass):
          - `interface`: The name of the wireless interface
          - `address`: the test address (if needed)
         """
-        super(LinuxDeviceBuilder, self).__init__()
-        self.connection = connection
-        self.role = role
-        self.interface = interface
-        self.address = address
-        self._device = None
+        super(LinuxDeviceBuilder, self).__init__(*args, **kwargs)
         return
 
     @property
@@ -73,19 +66,20 @@ class LinuxDeviceBuilder(BaseClass):
 # end class LinuxDeviceBuilder
 
     
-class AdbDeviceBuilder(BaseClass):
+class AndroidDeviceBuilder(BaseDeviceBuilder):
     """
-    A Device Builder builds ADB devices
+    A Device Builder builds Android devices
     """
-    def __init__(self, parameters=None):
+    def __init__(self, *args, **kwargs):
         """
         :param:
 
-         - `parameters`: Just used to keep the interface uniform
+         - `connection`: a connection to the device
+         - `role`: some kind of identifier (e.g. node)
+         - `interface`: the name of the test interface
+         - `address`: hostname of the test interface
         """
-        super(AdbDeviceBuilder, self).__init__()
-        self.parameters = parameters
-        self._device = None
+        super(AndroidDeviceBuilder, self).__init__(*args, **kwargs)
         return
 
     @property
@@ -95,7 +89,11 @@ class AdbDeviceBuilder(BaseClass):
         """
         if self._device is None:
             self.logger.debug("building the ADB device for the DUT")
-            self._device = adbdevice.AdbDevice()
+            self._device = adbdevice.AdbDevice(connection=self.connection,
+                                               interface=self.interface,
+                                               address=self.address,
+                                               role=self.role,
+                                               csv=self.csv)
         return self._device
 # end class DutDeviceBuilder
 
@@ -103,7 +101,9 @@ class DeviceBuilderTypes(object):
     __slots__ = ()
     windows = "windows"
     linux = "linux"
+    android = "android"
 # end class DeviceBuilderTypes
 
 device_builders = {DeviceBuilderTypes.windows:WindowsDeviceBuilder,
-                   DeviceBuilderTypes.linux:LinuxDeviceBuilder}
+                   DeviceBuilderTypes.linux:LinuxDeviceBuilder,
+                   DeviceBuilderTypes.android:AndroidDeviceBuilder}

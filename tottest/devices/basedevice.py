@@ -156,8 +156,8 @@ class BaseDevice(BaseClass):
         return
 
     def __str__(self):
-        return "Role: {3}\nConnection: {0}\nAddress: {1}\nWiFi Info: {2}\n".format(self.connection,
-                                                                                   self.wifi_info,
-                                                                                   self.role)
+        return "Role: {2}\nConnection: {0}\nWiFi Info: {1}\n".format(self.connection,
+                                                                     self.wifi_info,
+                                                                     self.role)
         
 # end class BaseDevice
