@@ -20,7 +20,7 @@ setup(name='tottest',
       install_requires = ['pudb', 'paramiko', 'pyserial'],
       packages = find_packages(exclude=["__main__"]),
       include_package_data = True,
-      package_data = {"":["*.txt", "*.rst", "*.ini"]},
+      package_data = {"tottest":["*.txt", "*.rst", "*.ini"]},
       entry_points = """
 	  [console_scripts]
           tot=tottest.main:main
