@@ -129,6 +129,6 @@ class TsharkWatcher(BaseClass):
 
 if __name__ == "__main__":
     from tottest.connections.sshconnection import SSHConnection
-    c = SSHConnection("portege", "portegeadmin")
+    c = SSHConnection("portegeether", "portegeadmin")
     watch = TsharkWatcher(c)
     watch()
