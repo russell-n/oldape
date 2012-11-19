@@ -8,8 +8,15 @@ from itertools import tee
 from tottest.baseclass import BaseClass
 from tottest.commons import enumerations
 from tottest.commons import expressions
+from tottest.commons.errors import ConfigurationError
 
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
+
+class IfconfigError(ConfigurationError):
+    """
+    raise this if there is a user error
+    """
+# end class Ifconfig error
 
 
 class IfconfigCommand(BaseClass):
@@ -46,7 +53,7 @@ class IfconfigCommand(BaseClass):
     @property
     def ip_address(self):
         """
-        :return: The IP Address of the interface
+        :return: The IP Address of the interface 
         """
         return self._match(self.ip_expression,
                            expressions.IP_ADDRESS_NAME)

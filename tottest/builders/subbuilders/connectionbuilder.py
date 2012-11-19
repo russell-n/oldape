@@ -13,6 +13,7 @@ from tottest.baseclass import BaseClass
 from tottest.connections import sshconnection
 from tottest.commons import errors
 
+
 SSHParameters = namedtuple("SSHParameters", "hostname username password".split())
 
 class AdbShellConnectionBuilder(BaseClass):
@@ -52,6 +53,7 @@ class SSHConnectionBuilder(BaseClass):
          - `parameters`: An object with `hostname`, `username`, and `password` attributes
         """
         super(SSHConnectionBuilder, self).__init__()
+        self._logger = None
         self.parameters = parameters
         self._hostname = None
         self._username = None
@@ -126,6 +128,9 @@ class SSHConnectionBuilder(BaseClass):
     
     @property
     def connection(self):
+        """
+        :return: an SSHConnection
+        """
         if self._connection is None:
             self.logger.debug("Creating the ssh connection.")
             self._connection = sshconnection.SSHConnection(hostname=self.hostname,
@@ -135,9 +140,41 @@ class SSHConnectionBuilder(BaseClass):
         return self._connection
 # end class SshConnectionBuilder
 
+class AdbShellSshConnectionBuilder(SSHConnectionBuilder):
+    """
+    A class to build an adb-shell connection over ssh
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `parameters`: An object with `hostname`, `username`, and `password` attributes
+        """
+        super(AdbShellSshConnectionBuilder, self).__init__(*args, **kwargs)
+        return
+
+    @property
+    def connection(self):
+        """
+        :return: ADBShellSSHConnection instance
+        """
+        if self._connection is None:
+            self.logger.debug("Creating the ADBShellConnection")
+            self._connection = adbconnection.ADBShellSSHConnection(hostname=self.hostname,
+                                                                   username=self.username,
+                                                                   password=self.password,
+                                                                   operating_system=self.operating_system)
+        return self._connection
+# end class AdbShellSshConnectionBuilder
+
+    
 class ConnectionBuilderTypes(object):
     __slots__ = ()
     ssh = 'ssh'
+    adbshellssh = "adbshellssh"
+    adbshell = "adbshell"
 # end class BuilderTypes
 
-connection_builders = {ConnectionBuilderTypes.ssh: SSHConnectionBuilder}
+connection_builders = {ConnectionBuilderTypes.ssh: SSHConnectionBuilder,
+                       ConnectionBuilderTypes.adbshellssh: AdbShellSshConnectionBuilder,
+                       ConnectionBuilderTypes.adbshell: AdbShellConnectionBuilder}

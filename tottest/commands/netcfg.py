@@ -45,12 +45,15 @@ class NetcfgCommand(BaseClass):
         """
         :return: The IP Address of the interface
         """
-        if self._ip_address is None:
-            if self.operating_system == enumerations.OperatingSystem.android:
-                expression = self.interface + expressions.NETCFG_IP
-            self._ip_address = self._match(expression,
-                                           expressions.IP_ADDRESS_NAME)
-        return self._ip_address
+        expression = self.interface + expressions.NETCFG_IP
+        output, error = self.connection.netcfg()
+        for line in output:
+            match = re.search(expression, line)
+            if match:
+                return match.groupdict()[expressions.IP_ADDRESS_NAME]
+        err = error.readline()
+        if len(err):
+            self.logger.error(err)
 
     @property
     def interface(self):

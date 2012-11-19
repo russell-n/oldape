@@ -30,7 +30,7 @@ class StoragePipe(BaseClass):
     A class to add a pipe interface to the Storage Output
     """
     def __init__(self, path='', role=StoragePipeEnum.pipe,
-                 target=None, header_token=None, transform=None):
+                 target=None, header_token=None, transform=None, emit=False):
         """
         :param:
 
@@ -39,12 +39,15 @@ class StoragePipe(BaseClass):
          - `target`: the target to send lines to
          - `header_token`: the token to use for a header before the data
          - `transform`: callable function to transform sent lines
+         - `emit`: if true emit the output when actin as a sink
         """
+        super(StoragePipe, self).__init__()
         self.path = path
         self.role = role        
         self.target = target
         self.header_token = header_token
         self.transform = transform
+        self.emit = emit
         self._storage = None
         return
 
@@ -100,12 +103,15 @@ class StoragePipe(BaseClass):
         :postcondition: pipe is an opened coroutine
         """
         if self.transform is not None:
+            self.transform.reset()
             filename = self.transform.filename(filename)
         output = self.storage.open(filename)
         line = None
         if self.header_token is not None:
             line = (yield)
             output.writeline("{0},{1}".format(line, self.header_token))
+            if self.emit:
+                self.logger.info(line)
         while line !=  EOF:
             line = (yield)
             if self.transform is not None:
@@ -114,6 +120,8 @@ class StoragePipe(BaseClass):
                     continue
 
             output.writeline(str(line))
+            if self.emit:
+                self.logger.info(line)
         output.close()
         return
 
@@ -201,5 +209,23 @@ class StoragePipe(BaseClass):
          - `subdirectory`: A sub-directory within the output folder
         """
         self.storage.extend_path(subdirectory)
+        return
+
+    def set_emit(self):
+        """
+        :postcondition: if has target, target.set_emit called, emit set
+        """
+        self.emit = True
+        if self.target is not None:
+            self.target.set_emit()
+        return
+
+    def unset_emit(self):
+        """
+        :postcondition: if has target, target.unset_emit called, emit unset
+        """
+        self.emit = False
+        if self.target is not None:
+            self.target.unset_emit()
         return
 # end class StoragePipe

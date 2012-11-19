@@ -13,9 +13,10 @@ from localconnection import EOF
 from tottest.commons import errors 
 from tottest.commons import readoutput 
 from tottest.commons import enumerations
-from tottest.tools import killall
+from sshconnection import SSHConnection 
 
 ConnectionError = errors.ConnectionError
+CommandError = errors.CommandError
 ConnectionWarning = errors.ConnectionWarning
 ValidatingOutput = readoutput.ValidatingOutput
 OperatingSystem = enumerations.OperatingSystem
@@ -26,7 +27,28 @@ NOT_CONNECTED = "No Android Device Detected by ADB (USB) Connection"
 
 DEVICE_NOT_ROOTED = "adbd cannot run as root in production builds"
 NOT_ROOTED = "This Android device isn't rootable."
+NOT_FOUND = "not found"
 
+# errors
+class ADBConnectionError(ConnectionError):
+    """
+    Raise if there is a problem with the ADB Connection
+    """
+# end class ADBConnectionError
+
+class ADBCommandError(CommandError):
+    """
+    Raise if there is a problem with an ADB command
+    """
+# end class ADBCommandError
+
+
+class ADBConnectionWarning(ConnectionWarning):
+    """
+    A warning to raise if something non-fatal but bad happens
+    """
+# end class ADBConnectionWarning
+    
 #regular expressions
 ALPHA = r'\w'
 ONE_OR_MORE = "+"
@@ -96,7 +118,11 @@ class ADBConnection(LocalNixConnection):
             self.logger.debug(line)
             raise ConnectionWarning(NOT_ROOTED)
         return
-        
+
+    def __str__(self):
+        if self.serial_number is not None:
+            return "ADBLocal: {0}".format(self.serial_number)
+        return "ADBLocal"
 # end class ADBConnection
 
 class ADBBlockingConnection(ADBConnection):
@@ -134,12 +160,15 @@ class ADBShellConnection(ADBConnection):
                                                             EVERYTHING, 'not', 'found']))
         return self._unknown_command
 
+    def _procedure_call(self, command, arguments='', path='', timeout=None):
+        output = self._main(command, arguments, path, timeout)
+        return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors),
+                           output.error)
+    
     def check_errors(self, line):
         self.check_base_errors(line)
-        match = self.unknown_command.search(line)
-        if match:
-            self.logger.debug(match.group(COMMAND_GROUP))
-            raise ConnectionError("Unknown ADB Shell Command: {0}".format(match.group(COMMAND_GROUP)))
+        if line.endswith(NOT_FOUND):
+            raise ConnectionError("Unknown ADB Shell Command: {0}".format(line))
         return
 
     #def __del__(self):
@@ -161,11 +190,89 @@ class ADBShellBlockingConnection(ADBShellConnection):
         self._unknown_command = None
         return
 
-#if __name__ == "__main__":
-#    from tottest.main import watcher
-#    import sys
-#    watcher()
-#    adb = ADBShellConnection()
-#    for line in adb.logcat('-v time', timeout=1):
-#        sys.stdout.write(line)
+class ADBSSHConnection(SSHConnection):
+    """
+    An ADB Connection sends commands to the Android Debug Bridge
+    """
+    def __init__(self, serial_number=None,*args, **kwargs):
+        """
+        :param:
+
+         - `serial_number`: An optional serial number to specify the device.
+        """
+        super(ADBSSHConnection, self).__init__(*args, **kwargs)
+        self._logger = None
+        self.command_prefix = "adb"
+        if serial_number is not None:
+            self.command_prefix += " -s " + serial_number
+        self.operating_system = OperatingSystem.android
+        return
+
+    def _procedure_call(self, command, arguments="",
+                        path='', timeout=10):
+        """
+        Overrides the SSHConnection._procedure_call to check for errors
+        """
+        output = self._main(command, arguments, path, timeout)
+        return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), output.error)
+
+
+    def check_errors(self, line):
+        """
+        This is here so that children can override it.
+        :param:
+
+         - `line`: a line of output
+        """
+        self._check_errors(line)
+        return
+    
+    def _check_errors(self, line):
+        """
+        Checks connection-related errors
+
+        :raise: ConnectionError if the device isn't detected
+        :raise: ConnectionWarning if the device isn't rooted
+        """
+        if line.startswith(DEVICE_NOT_FOUND):
+            self.logger.debug(line)
+            raise ADBConnectionError(line)
+        elif line.startswith(DEVICE_NOT_ROOTED):
+            self.logger.debug(line)
+            raise ADBConnectionWarning(line)
+        return
+# end class ADBSSHConnection
+
+class ADBShellSSHConnection(ADBSSHConnection):
+    """
+    A class to talk to the shell, note the adb-server
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param: (see the ADBSSHConnection)
+        """
+        super(ADBShellSSHConnection, self).__init__(*args, **kwargs)
+        self.command_prefix += " shell "
+        return
+
+    def check_errors(self, line):
+        """
+        :line: line of standard output
+
+        :raise: ADBCommandError if the command issued wasn't recognized
+        """
+        self._check_errors(line)
+        if line.rstrip().endswith(NOT_FOUND):
+            raise ADBCommandError(line)                                  
+        return
+# end class ADBSHellSSHConnection
+    
+if __name__ == "__main__":
+    from tottest.main import watcher
+    import sys
+    watcher()
+    adb = ADBShellSSHConnection(hostname="lancet", username="allion")
+    output, error= adb.iw('wlan0 link', timeout=1)
+    for line in output:
+        sys.stdout.write(line)
     

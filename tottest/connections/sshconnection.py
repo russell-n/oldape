@@ -20,7 +20,7 @@ import os
 
 
 # tottest Libraries
-from tottest.commons.readoutput import StandardOutput
+from tottest.commons.readoutput import ValidatingOutput
 from tottest.commons import enumerations
 
 
@@ -79,6 +79,24 @@ class SSHConnection(NonLocalConnection):
     def _procedure_call(self, command, arguments="",
                         path='', timeout=10):
         """
+        The reason for this is so that sub-classes can override this method
+        this isn't intended to be run.
+        The . notation is the expected interface.
+        
+        runs self._main
+
+        :param:
+
+         - `command`: The shell command.
+         - `arguments`: A string of command arguments.
+         - `path`: An optional path to prepend to the command
+         - `timeout`: readline timeout for the SSHConnection
+        :return: OutputError with output and error file-like objects
+        """
+        return self._main(command, arguments, path, timeout)
+
+    def _main(self, command, arguments, path, timeout):
+        """
         this isn't intended to be run.
         The . notation is the expected interface.
         
@@ -106,14 +124,19 @@ class SSHConnection(NonLocalConnection):
         
         self.logger.debug("Completed exec_command of: {0} {1}".format(command, arguments))
 
-        return OutputError(OutputFile(stdout), OutputFile(stderr))
+        return OutputError(OutputFile(stdout, self.check_errors), OutputFile(stderr, self.check_errors))
 
+    def check_errors(self, line):
+        """
+        Doesn't do anything - SSHClient handles ssh errors. Overwrite in sub-classes if needed
+        """
+        return
     
     def __str__(self):
         return "{0} ({1}): {2}@{3} ".format(self.__class__.__name__, self.operating_system, self.username, self.hostname)
 # end class SSHConnection
 
-class OutputFile(StandardOutput):
+class OutputFile(ValidatingOutput):
     """
     A class to handle the ssh output files
 
@@ -131,11 +154,12 @@ class OutputFile(StandardOutput):
 
         :return: line from readline, EOF or None (in event of timeout)
         """
-        if not self.end_of_file:
+        if not self.empty:
             try:
-                line = self.source.readline()
+                line = self.lines.readline()
                 if line == EOF:
                     self.end_of_file = True
+                self.validate(line)
                 return line
             except socket.timeout:
                 self.logger.debug("socket.timeout")

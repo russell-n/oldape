@@ -113,16 +113,11 @@ class ValidatingOutput(BaseClass):
         """
         :return: the next line in lines
         """
-        try:
-            if self.empty:
-                return EMPTY_STRING
-            threads.Thread(target=self._read_one_line)
-            line = self.queue.get(timeout=timeout)
-            if line == EOF:
-                self.empty = True
-        except Queue.Empty:
-            raise TimeoutError("Readline timed out")
-        return
+        if self.empty:
+            return EMPTY_STRING
+        line = self.lines.readline()
+        self.validate(line)
+        return line
 
     def readlines(self):
         """
