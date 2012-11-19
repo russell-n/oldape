@@ -40,25 +40,28 @@ class TelnetConnection(NonLocalConnection):
     A TelnetConnection executes commands over a Telnet Connection
 
     """
-    def __init__(self, hostname, port=23, login="root", prompt="#", timeout=2, end_of_line='\r\n',
+    def __init__(self, hostname, port=23, username="root", prompt="#", timeout=2, end_of_line='\r\n',
+                 mangle_prompt=True,
                  *args, **kwargs):
         """
         :param:
 
          - `hostname`: The IP Address or hostname
          - `port`: The telnet port 
-         - `login`: The login name
+         - `username`: The login name
          - `prompt`: The prompt to expect
          - `timeout`: The readline timeout
          - `end_of_line`: The string indicating the end of a line.
+         - `mangle_prompt`: If True, change the prompt
         """
         super(TelnetConnection, self).__init__(*args, **kwargs)
         self.hostname = hostname
         self.port = port
-        self.login = login
+        self.username = username
         self.prompt = prompt
         self.timeout = timeout
         self.end_of_line = end_of_line
+        self.mangle_prompt = mangle_prompt
         self._logger = None
         self._client = None
         return
@@ -70,12 +73,13 @@ class TelnetConnection(NonLocalConnection):
         """
         if self._client is None:
             self._client = TelnetAdapter(host=self.hostname, 
-                                         login=self.login, port=self.port,
+                                         login=self.username, port=self.port,
                                          timeout=self.timeout,
                                          end_of_line=self.end_of_line,
                                          prompt=self.prompt)
-            changer = changeprompt.ChangePrompt(adapter=self._client)
-            self.logger.debug(changer.run())
+            if self.mangle_prompt:
+                changer = changeprompt.ChangePrompt(adapter=self._client)
+                self.logger.debug(changer.run())
         return self._client
     
     def _procedure_call(self, command, arguments="",
@@ -109,7 +113,10 @@ class TelnetConnection(NonLocalConnection):
 
         stderr = StringIO("")
 
-        return OutputError(OutputFile(stdout), stderr)
+        return OutputError(OutputFile(stdout, self.validate), stderr)
+
+    def validate(self, line):
+        return
 # end class TelnetConnection
     
 if __name__ == "__main__":

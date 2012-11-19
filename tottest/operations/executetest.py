@@ -14,7 +14,7 @@ class DummyExecuteTest(BaseClass):
         super(DummyExecuteTest, self).__init__()
         return
 
-    def __call__(self, parameters):
+    def __call__(self, parameters, filename_prefix):
         return
 # end class DummyExecuteTest
 

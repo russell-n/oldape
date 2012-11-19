@@ -4,6 +4,8 @@ A module to hold the common elements for operations
 
 from tottest.baseclass import BaseClass
 
+TOKEN_JOINER = "_"
+
 class DummyOperation(BaseClass):
     """
     A dummy for an Test 
@@ -36,12 +38,22 @@ class BaseOperation(BaseClass):
         self.products = products
         return
 
-    def __call__(self, parameters):
+    def __call__(self, parameters, filename_prefix=None):
         """
-        :parameters: namedtuple with settings to run the operation
+        :param:
+
+         - `parameters` :namedtuple with settings to run the operation
+         - `filename_prefix`: optional prefix to pass to the products
+        :return: string of returned output from products
         """
+        return_tokens = []
         for product in self.products:
-            product(parameters)
-        return
+            if filename_prefix is not None:
+                returned = product(parameters, filename_prefix)
+            else:
+                returned = product(parameters)
+            if returned:
+                return_tokens.append(returned)
+        return TOKEN_JOINER.join((str(token) for token in return_tokens))
 # end class BaseOperation
     

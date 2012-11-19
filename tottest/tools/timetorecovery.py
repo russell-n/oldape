@@ -115,14 +115,13 @@ class TimeToRecovery(BaseClass):
 
          - `parameters`: namedtuple with nodes and targets attribute
 
-        :return: TTRData
         :raises: CommandError if unable to recover
         """
         ttr =  self.run(parameters, self.nodes[parameters.nodes.parameters].connection)
         self.logger.info("TTR: {0}".format(ttr))
         if ttr is None:
             raise CommandError("Unable to ping {0}".format(parameters.target.parameters))
-        return ttr
+        return 
 # end TimeToRecovery
 
 if __name__ == "__main__":

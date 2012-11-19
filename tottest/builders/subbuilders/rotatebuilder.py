@@ -1,6 +1,10 @@
 """
 A module to build a rotate object.
 """
+# python libraries
+from collections import namedtuple
+
+# tottest modules
 from basetoolbuilder import BaseToolBuilder, Parameters
 from tottest.lexicographers.config_options import ConfigOptions
 from connectionbuilder import connection_builders, ConnectionBuilderTypes, SSHParameters
@@ -13,9 +17,16 @@ class RotateBuilderEnums(object):
     A holder of Rotate constants
     """
     __slots__ = ()
-    angles = 'angles'
-    velocities = 'velocities'
+    angle_velocity = 'angle_velocity'
 # end class RotateBuilderEnums
+
+class RotateParameters(namedtuple("RotateParameters", "angle velocity".split())):
+    __slots__ = ()
+
+    def __str__(self):
+        return "angle: {0} velocity: {1}".format(self.angle, self.velocity)
+# end class RotateParameters
+                           
     
 class RotateBuilder(BaseToolBuilder):
     """
@@ -72,7 +83,7 @@ class RotateBuilder(BaseToolBuilder):
         """
         if self._velocities is None:
             self._velocities = self.get_parameters(parameter_index=1,
-                                                   pad=True)
+                                                   velocity=True)
         return self._velocities                                                        
     
     @property
@@ -81,10 +92,18 @@ class RotateBuilder(BaseToolBuilder):
         :return: list of named-tuple Parameters
         """
         if self._parameters is None:
-            self.previous_parameters.append(Parameters(name=RotateBuilderEnums.angles,
-                                                       parameters=self.angles))
-            self.previous_parameters.append(Parameters(name=RotateBuilderEnums.velocities,
-                                                       parameters=self.velocities))
+            parameters = []
+            values = self.config_map.get_list(ConfigOptions.rotate_section,
+                                                    ConfigOptions.angles_option)
+            for list_index, item in enumerate(values):
+                if COLON in item:
+                    angle, velocity = item.split(COLON)
+                else:
+                    angle, velocity = item, 0
+                parameters.append(RotateParameters(angle, velocity))
+
+            self.previous_parameters.append(Parameters(name=RotateBuilderEnums.angle_velocity,
+                                                       parameters=parameters))
             self._parameters = self.previous_parameters
         return self._parameters
 
@@ -97,23 +116,5 @@ class RotateBuilder(BaseToolBuilder):
             self._product = RotateCommand(connection=self.connection)
         return self._product
 
-    def get_parameters(self, parameter_index=0, pad=False):
-        """
-        :param:
-
-         - `parameter_index`: index of the item wanted if there is a velocity in the parameter
-         - `pad`: if true, put a 0 in the list when there's no velocity
-
-        :return: list of integer parameters
-        """
-        parameters = self.config_map.get_list(ConfigOptions.rotate_section,
-                                                    ConfigOptions.angles_option)
-        for list_index, item in enumerate(parameters):
-            if COLON in item:
-                value = parameters[list_index].split(COLON)[parameter_index]
-            else:
-                value = 0
-            parameters[list_index] = value                
-        return parameters
 # end class RotateBuilder
     

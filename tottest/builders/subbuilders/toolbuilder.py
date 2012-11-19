@@ -25,7 +25,13 @@ class ToolBuilder(object):
         self._dumpdevicestate = None
         self._iperf = None
         self._rotate = None
+        self._commandwatch = None
         return
+
+    @property
+    def commandwatch(self):
+        from commandwatchbuilder import CommandWatchBuilder
+        return CommandWatchBuilder
 
     @property
     def rotate(self):

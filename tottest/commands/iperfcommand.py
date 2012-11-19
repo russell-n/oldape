@@ -27,12 +27,16 @@ class IperfCommandError(ConfigurationError):
     """
     an error to raise if the settings are unknown
     """
+# end class IperfCommandError
     
+
 class IperfCommandEnum(object):
     __slots__ = ()
     client = "client"
     server = "server"
-     
+# end IperfCommandEnum
+    
+    
 class IperfCommand(BaseClass):
     """
     An Iperf Command executes iperf commands
@@ -121,7 +125,7 @@ class IperfCommand(BaseClass):
         :raise: ConfigurationError if self.role or node_type are unknown
         """
         if self.role == IperfCommandEnum.client:
-            filename = self.base_filename
+            filename = self.base_filename + filename
             if node_type == BaseDeviceEnum.node:
                 return "sent_from_node_" + filename
             elif node_type == BaseDeviceEnum.tpc:
@@ -176,7 +180,7 @@ class IperfCommand(BaseClass):
         self.stop = True
         return
     
-    def run(self, device, filename):
+    def run(self, device, filename, server=False):
         """
         Run the iperf command and send to the output
 
@@ -188,7 +192,12 @@ class IperfCommand(BaseClass):
         :raise: IperfError if runtime is greater than self.parameters.time
         """
         filename = self.filename(filename, device.role)
+        if not server:
+            self.output.set_emit()
+        else:
+            self.output.unset_emit()
         file_output = self.output.open(filename=filename)
+        
 
         self.logger.debug("Executing parameters: {0}".format(self.parameters))
         output, error = device.connection.iperf(str(self.parameters))
@@ -199,15 +208,13 @@ class IperfCommand(BaseClass):
         for line in readoutput.ValidatingOutput(output, self.validate):
             self.logger.debug(line.rstrip(NEWLINE))
             try:
-                #if "SUM" in line:
-                 #   import pudb; pudb.set_trace()
                 file_output.send(line)
             except StopIteration:
                 self.logger.debug("End Of File Reached")
                 break
             if self.now() > abort_time:
                 try:
-                    output.send(EOF)
+                    file_output.send(EOF)
                 except StopIteration:
                     pass
                 self.abort = False
@@ -242,7 +249,7 @@ class IperfCommand(BaseClass):
         :postcondition: iperf command started in thread
         """
         self.thread = threading.Thread(target=self.run, name='IperfCommand',
-                                     args=(device, filename))
+                                     args=(device, filename,True))
         self.thread.daemon = True
         self.thread.start()
         return

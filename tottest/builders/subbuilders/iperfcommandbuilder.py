@@ -41,12 +41,10 @@ class IperfCommandBuilder(object):
     @property
     def output(self):
         """
-        :return: a storage pipe.
+        :return: a new storage pipe (so that the behavior can be changed independently)
         """
-        if self._output is None:
-            self._output = StoragePipeBuilder(config_map=self.config_map,
-                                               role=StoragePipeEnum.sink).pipe
-        return self._output
+        return StoragePipeBuilder(config_map=self.config_map,
+                                  role=StoragePipeEnum.sink).pipe
 
     @property
     def parameters(self):

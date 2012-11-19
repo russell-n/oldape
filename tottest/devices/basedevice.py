@@ -13,12 +13,22 @@ class BaseDeviceEnum(object):
     node = "node"
 # end class BaseDeviceEnum
     
-
+CSV_OUTPUT = "{ssid},{bssid},{channel},{ip},{mac},{rssi},{noise}\n"
+HUMAN_OUTPUT = """
+SSID        = {ssid}
+BSSID       = {bssid}
+Channel     = {channel}
+IP Address  = {ip}
+MAC Address = {mac}
+RSSI        = {rssi}
+Noise       = {noise}
+"""
 
 class BaseDevice(BaseClass):
     __metaclass__ = ABCMeta
     def __init__(self, connection=None, interface=None,
                  address=None, role=None,
+                 csv=False,
                  *args, **kwargs):
         """
         :param:
@@ -27,15 +37,20 @@ class BaseDevice(BaseClass):
          - `interface`: The test-interface name to try and get the address
          - `address` The Test-interface IP to use if the interface name isn't given
          - `role`: an identifier to help with building file-names
+         - `csv`: if True, queries are output as CSV
         """
         self._connection = connection
         self.interface = interface
         self.role = role
+        self.csv = csv
         self._address = address
         self._rssi = None
+        self._ssid = None
+        self._bssid = None
+        self._noise = None
         self._wifi_info = None
         self._logger = None
-        self._address = address
+        self._mac_address = None
         return
 
     @property
@@ -60,15 +75,25 @@ class BaseDevice(BaseClass):
         Enable the WiFi radio.
         """
         return
-    
-    @abstractproperty
+
+    @property
     def wifi_info(self):
         """
-        :rtype: StringType
-        :return: The Wifi Info
+        :return: wifi info summary
         """
-        return
+        if self.csv:
+            out_string = CSV_OUTPUT
+        else:
+            out_string = HUMAN_OUTPUT
 
+        return out_string.format(ip=self.address.rstrip(),
+                                 rssi=self.rssi.rstrip(),
+                                 ssid=self.ssid.rstrip(),
+                                 bssid=self.bssid.rstrip(),
+                                 channel=self.channel.rstrip(),
+                                 noise=self.noise.rstrip(),
+                                 mac=self.mac_address.rstrip())
+    
     @abstractproperty
     def address(self):
         """
@@ -77,6 +102,48 @@ class BaseDevice(BaseClass):
         """
         return
 
+    @abstractproperty
+    def ssid(self):
+        """
+        :return: the SSID of the attached AP
+        """
+        return self._ssid
+
+    @abstractproperty
+    def bssid(self):
+        """
+        :return: the MAC address of the attached AP
+        """
+        return self._bssid
+
+    @abstractproperty
+    def channel(self):
+        """
+        :return: the channel for the wifi connection
+        """
+        return self._channel
+
+    @abstractproperty
+    def noise(self):
+        """
+        :return: the current reported noise for the wifi channel
+        """
+        return self._noise
+
+    @abstractproperty
+    def mac_address(self):
+        """
+        :return: the mac address of the device
+        """
+        return self._mac_address
+
+    @abstractproperty
+    def rssi(self):
+        """
+        :return: the RSSI for the wifi signal
+        """
+        return self._rssi
+    
     @abstractmethod
     def log(self, message):
         """
@@ -89,9 +156,8 @@ class BaseDevice(BaseClass):
         return
 
     def __str__(self):
-        return "Role: {3}\nConnection: {0}\nAddress: {1}\nWiFi Info: {2}\n".format(self.connection,
-                                                                                   self.address,
-                                                                                   self.wifi_info,
-                                                                                   self.role)
+        return "Role: {2}\nConnection: {0}\nWiFi Info: {1}\n".format(self.connection,
+                                                                     self.wifi_info,
+                                                                     self.role)
         
 # end class BaseDevice

@@ -17,7 +17,7 @@ class TelnetAdapter(BaseClass):
     """
     A TelnetAdapter Adapts the telnetlib.Telnet to this libraries interfaces.
     """
-    def __init__(self, host, prompt="#", login='root', port=23, timeout=2, end_of_line='\r\n',
+    def __init__(self, host, prompt="#", login='root', password=None, port=23, timeout=2, end_of_line='\r\n',
                  login_prompt="login:"):
         """
         :param:
@@ -29,6 +29,7 @@ class TelnetAdapter(BaseClass):
          - `timeout`: The timeout for blocking methods
          - `end_of_line`: The end of line string used by the device.
          - `login_prompt`: The prompt to look for when starting a connection.
+         - `password`: if given tries to login
         """
         super(TelnetAdapter, self).__init__()
         self.host = host
