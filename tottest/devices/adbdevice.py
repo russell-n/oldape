@@ -221,7 +221,7 @@ class AdbWifiCommandFinder(BaseClass):
 if __name__ == "__main__":
     from tottest.connections.adbconnection import ADBShellSSHConnection
     import sys
-    c = ADBShellSSHConnection(hostname="localhost", username="allion")
+    c = ADBShellSSHConnection(hostname="lancet", username="allion")
     a = AdbDevice(connection = c, interface="wlan0", csv=True)
     sys.stdout.write(a.wifi_info)
     sys.stdout.write(a.wifi_info)

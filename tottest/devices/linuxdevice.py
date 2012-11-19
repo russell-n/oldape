@@ -21,9 +21,6 @@ class LinuxDevice(BaseDevice):
         super(LinuxDevice, self).__init__(*args, **kwargs)
         self._ifconfig = None
         self._wifi_query = None
-        self._rssi = None
-        self._ssid = None
-        self._bssid = None
         return
 
     @property
@@ -68,19 +65,16 @@ class LinuxDevice(BaseDevice):
         return self.wifi_query.bssid
     
     @property
-    def wifi_info(self):
-        """
-        :return: a summary string of available wifi info.
-        """
-        return "SSID:\t{ssid}\nBSSID:\t{bssid}\nRSSI:\t{rssi}\nIP Address:\t{ip}\nMAC:\t{mac}\n".format(ssid=self.ssid,
-                                                                                                        bssid=self.bssid,
-                                                                                                        rssi=self.rssi,
-                                                                                                        ip=self.address,
-                                                                                                        mac=self.mac_address)
-
-    @property
     def ssid(self):
         return self.wifi_query.ssid
+
+    @property
+    def noise(self):
+        return "NA"
+
+    @property
+    def channel(self):
+        return "NA"
     
     @property
     def rssi(self):
