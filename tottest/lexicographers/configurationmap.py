@@ -388,7 +388,7 @@ class ConfigurationMap(BaseClass):
          - `section`: The [section] in the config file.
          - `option`: the option in the section
          - `default`: what to return if fails and optional
-         - `optional`: if True, returns defauln instead of raising an error
+         - `optional`: if True, returns default instead of raising an error
          - `delimiter`: what separates the different key:value pairs
          - `converter`: a function to apply to the value
          - `key_value_separator`: Token to separate key-value pairs

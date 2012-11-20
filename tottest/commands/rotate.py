@@ -24,7 +24,7 @@ class RotateCommand(BaseClass):
         """
         :param:
 
-         - `parameters`: namedtuple with parameters.angles.parameters
+         - `parameters`: namedtuple with parameters.angle_velocity.parameters
         """
         angle, velocity = parameters.angle_velocity.parameters
         arguments = "{0} --velocity {1}".format(angle, velocity)

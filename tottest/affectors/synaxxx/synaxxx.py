@@ -17,53 +17,87 @@ A module to adapt the Synaccess network controller.
 
 #python standard library
 import telnetlib
-import time
 import re
+import socket
+from types import ListType
 
 # tottest modules
 from tottest.baseclass import BaseClass
 from tottest.parsers import oatbran
+from tottest.commons.errors import CommandError, ConnectionError
+from tottest.tools.sleep import Sleep
 
 NEWLINE = "\n\r"
 INVALID = "Invalid command"
 EOF = ''
-SWITCH_ON = 'pset {0} 1' + NEWLINE
-ALL_OFF = 'ps 0' + NEWLINE
-SHOW_STATUSES = 'pshow' + NEWLINE
+SWITCH_ON = 'pset {0} 1' 
+ALL_OFF = 'ps 0' 
+ALL_ON = 'ps 1' 
+SHOW_STATUSES = 'pshow' 
 ON = 'ON'
 OFF = "OFF"
-STATE = '(?P<state>ON|OFF)'
-SWITCH = '(?P<switch>{0})'.format(oatbran.INTEGER)
+STATE_NAME = 'state'
+SWITCH_NAME = 'switch'
+STATE = oatbran.NAMED(n=STATE_NAME,e=ON + oatbran.OR + OFF)
+SWITCH = oatbran.NAMED(n=SWITCH_NAME, e=oatbran.INTEGER)
 state_expression = re.compile(SWITCH + oatbran.EVERYTHING + STATE)
 
+class SynaxxxError(CommandError):
+    """
+    An error to raise in the event there is an invalid command
+    """
+# end class SynaxxxError
+
+class SynaxxxConnectionError(ConnectionError):
+    """
+    An error to raise if the socket times out
+    """
+# end class SynaxxxConnectionError
+
+    
 class Synaxxx(BaseClass):
     """
     A class to control the Synaxxx
     """
-    def __init__(self, host, port=23, timeout=1, sleep=5):
+    def __init__(self, hostname, port=23, timeout=5, wait_time=5):
         """
         :param:
 
-         - `host`: the hostname or IP of the target
+         - `hostname`: the hostname or IP of the target
          - `port`: the port number for the telnet service
          - `timeout`: the login and read timeout in seconds
-         - `sleep`: time to sleep between changing the state of the same switch
+         - `wait_time`: time to sleep between changing the state of the same switch
         """
         super(Synaxxx, self).__init__()
-        self.host = host
+        self.hostname = hostname
         self.port = port
         self.timeout = timeout
-        self.sleep = sleep
+        self.wait_time = wait_time
+        self.last_command = None
         self._client = None
         self._status = None
+        self._sleep = None
+        return
 
+    @property
+    def sleep(self):
+        """
+        :return: A sleep object
+        """
+        if self._sleep is None:
+            self._sleep = Sleep(self.wait_time)
+        return self._sleep
+    
     @property
     def client(self):
         """
         :return: the telnetlib client
         """
         if self._client is None:
-            self._client = telnetlib.Telnet(self.host, self.port, self.timeout)
+            try:
+                self._client = telnetlib.Telnet(self.hostname, self.port, self.timeout)
+            except socket.error:
+                raise SynaxxxConnectionError("Synaxxx Connection to: {0}:{1} failed (is it online?)".format(self.hostname, self.port))
         return self._client
 
     @property
@@ -76,7 +110,7 @@ class Synaxxx(BaseClass):
             match = state_expression.search(line)
             if match:
                 states = match.groupdict()
-                statuses[states['switch']] = states['state']
+                statuses[states[SWITCH_NAME]] = states[STATE_NAME]
         return statuses
 
     def exec_command(self, command):
@@ -88,6 +122,8 @@ class Synaxxx(BaseClass):
         :postcondition: command string sent to the device
         :yield: the lines of output
         """
+        self.last_command = command
+        self.client.write(NEWLINE)
         self.client.read_very_eager()
         self.client.write(command + NEWLINE)
         for line in self.lines():
@@ -107,16 +143,20 @@ class Synaxxx(BaseClass):
     def validate(self, line):
         """
         Checks the line for errors.
+
+        :raise: SynaxxxError if an error is detected
         """
+        self.logger.debug(line)
         if INVALID in line:
-            print "error: " + line
+            raise SynaxxxError("error: {0} {1}".format(self.last_command,
+                                                       line))
         return
     
     def all_off(self):
         """
         :postcondition: all outlets turned off
         """
-        for line in self.exec_command("ps 0"):
+        for line in self.exec_command(ALL_OFF):
             self.validate(line)
         return
 
@@ -124,7 +164,7 @@ class Synaxxx(BaseClass):
         """
         :postcondition: all outlets turned off
         """
-        for line in self.exec_command("ps 1"):
+        for line in self.exec_command(ALL_ON):
             self.validate(line)
         return
     
@@ -136,18 +176,23 @@ class Synaxxx(BaseClass):
 
         :postcondition: switches in list on, all others off
         """
+        self.logger.info("Turning all power-switches off")
         self.all_off()
-        time.sleep(self.sleep)
+        self.sleep()
+        if type(switches) is not ListType and switches is not None:
+            switches = [switches]
         if switches is None:
-            return
+            switches = []
         for switch in switches:
-            for line in self.exec_command("pset {0} 1".format(switch)):
+            self.logger.info("Turning on switch {0}".format(switch))
+            for line in self.exec_command(SWITCH_ON.format(switch)):
                 self.validate(line)
-                print line
         statuses = self.status
         for switch in switches:
-            assert statuses[switch] == ON
+            if not statuses[switch] == ON:
+                raise SynaxxxError("Switch {0} not successfully turned on.".format(switch))
         for switch in [switch for switch in statuses if switch not in switches]:
-            assert statuses[switch] == OFF
+            if not statuses[switch] == OFF:
+                raise SynaxxxError("Unable to turn off switch {0}.".format(switch))
         return
 # end class Synaxxx
