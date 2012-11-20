@@ -12,6 +12,7 @@ class ToolBuilderEnum(object):
     dumpdevicestatebuilder = "dumpdevicestatebuilder"
     iperf = "iperf"
     rotate = 'rotate'
+    poweron = 'poweron'
 # end class ToolBuilderEnum
 
 class ToolBuilder(object):
@@ -26,6 +27,7 @@ class ToolBuilder(object):
         self._iperf = None
         self._rotate = None
         self._commandwatch = None
+        self._poweron = None
         return
 
     @property
@@ -37,6 +39,14 @@ class ToolBuilder(object):
     def rotate(self):
         from rotatebuilder import RotateBuilder
         return RotateBuilder
+
+    @property
+    def poweron(self):
+        """
+        :return: A builder for the Synaxxx
+        """
+        from poweronbuilder import PowerOnBuilder
+        return PowerOnBuilder
     
     @property
     def ners(self):

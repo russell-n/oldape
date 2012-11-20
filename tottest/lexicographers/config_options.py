@@ -2,7 +2,11 @@ class ConfigOptions(object):
     """
     An enumeration of sorts to hold the section and option names for the config file.
     """
+    # sections
     test_section = 'TEST'
+    poweron_section = "POWERON"
+
+    #options
     operation_setup_option = "operation_setup"
     operation_teardown_option = "operation_teardown"
     test_setup_option = "setup_test"
@@ -22,7 +26,7 @@ class ConfigOptions(object):
     traffic_pc_section = "TRAFFIC_PC"
     login_option = "login"
     password_option = "password"
-
+    
     apconnect_section = "APCONNECT"
     ssids_option = "ssids"
     logwatcher_section = "LOGWATCHER"

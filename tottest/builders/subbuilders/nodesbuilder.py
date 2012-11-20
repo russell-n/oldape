@@ -4,7 +4,6 @@ A module to build id:node-device dictionaries
 
 #python
 from string import lower
-from threading import RLock
 
 #tottest
 from tottest.baseclass import BaseClass
