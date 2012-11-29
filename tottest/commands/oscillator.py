@@ -42,7 +42,7 @@ class Oscillator(BaseThreadedCommand):
         line = error.readline()
         if len(line):
             if "pthread_mutex_destroy" in line:
-                self.warning("Unable to grab the lock: Is the Oscillator already running?")
+                self.logger.warning("Unable to grab the lock: Is the Oscillator already running?")
             else:
                 self.logger.warning(line)
         return
