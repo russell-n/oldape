@@ -55,5 +55,3 @@ class BaseOperation(BaseClass):
             if returned:
                 return_tokens.append(returned)
         return TOKEN_JOINER.join((str(token) for token in return_tokens))
-# end class BaseOperation
-    

@@ -5,6 +5,7 @@ class ConfigOptions(object):
     # sections
     test_section = 'TEST'
     poweron_section = "POWERON"
+    oscillate_section = 'OSCILLATE'
 
     #options
     operation_setup_option = "operation_setup"

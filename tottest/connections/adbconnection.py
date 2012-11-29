@@ -111,12 +111,12 @@ class ADBConnection(LocalNixConnection):
 
          - `line`: A string of output
         """
-        if line.startswith(DEVICE_NOT_FOUND):
+        if DEVICE_NOT_FOUND in line:
             self.logger.debug(line)
-            raise ConnectionError(NOT_CONNECTED)
-        elif line.startswith(DEVICE_NOT_ROOTED):
+            raise ConnectionError("The Android wasn't found: {0}".format(line))
+        elif DEVICE_NOT_ROOTED in line:
             self.logger.debug(line)
-            raise ConnectionWarning(NOT_ROOTED)
+            raise ConnectionWarning("The Android isn't root: {0}".format(line))
         return
 
     def __str__(self):
@@ -236,10 +236,10 @@ class ADBSSHConnection(SSHConnection):
         """
         if line.startswith(DEVICE_NOT_FOUND):
             self.logger.debug(line)
-            raise ADBConnectionError(line)
+            raise ADBConnectionError("Android Not Detected: {0}".format(line))
         elif line.startswith(DEVICE_NOT_ROOTED):
             self.logger.debug(line)
-            raise ADBConnectionWarning(line)
+            raise ADBConnectionWarning("Anroid Not Rooted: {0}".format(line))
         return
 # end class ADBSSHConnection
 

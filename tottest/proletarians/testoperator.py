@@ -93,7 +93,7 @@ class TestOperator(BaseClass):
         self.logger.info(TIME_REMAINING.format(t=self.countdown_timer()))
         return
     
-    def run(self):
+    def __call__(self):
         """
         This is the main operation method.
         """

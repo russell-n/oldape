@@ -185,6 +185,13 @@ class SimpleClient(BaseClass):
         host = "Hostname: {0}".format(self.hostname)
         port = "Port: {0}".format(self.port)
         password = "Password: {0}".format(self.password)
-        return NEWLINE.join([user, host, port, password]) 
+        return NEWLINE.join([user, host, port, password])
+
+    def close(self):
+        """
+        :postcondition: client's connection is closed
+        """
+        self.client.close()
+        return
 # class SimpleClient
     

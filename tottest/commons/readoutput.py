@@ -4,7 +4,7 @@ A module to hold a file-like object for output.
 
 # python Libraries
 import Queue
-from tottest.threads import threads
+import socket
 
 #time to recover Libraries
 from tottest.baseclass import BaseClass
@@ -101,7 +101,11 @@ class ValidatingOutput(BaseClass):
         """
         line = None
         while line != EOF:
-            line = self.lines.readline()
+            try:
+                line = self.lines.readline()
+            except socket.timeout:
+                self.logger.debug("Socket timed out")
+                continue
             if line is SPACE:
                 continue
             self.validate(line)
