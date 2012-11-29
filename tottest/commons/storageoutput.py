@@ -19,12 +19,14 @@ WRITEABLE = 'w'
 NEWLINE_ADD = '{l}\n'
 TIMESTAMP_FLAG = "{t}"
 NEWLINE = "\n"
+IPERF_TIMESTAMP = "%Y%m%d%H%M%s"
+FOLDER_TIMESTAMP = "%Y_%m_%d"
 
 class StorageOutput(BaseClass):
     """
     A WriteOutput maintains an output file.
     """
-    def __init__(self, output_folder, timestamp_format="%Y_%m_%d", *args, **kwargs):
+    def __init__(self, output_folder, timestamp_format=IPERF_TIMESTAMP, *args, **kwargs):
         """
         :param:
 
@@ -51,7 +53,7 @@ class StorageOutput(BaseClass):
         """
         if self._path is None:
             if TIMESTAMP_FLAG in self.output_folder:
-                self.output_folder = self._timestamp(self.output_folder)
+                self.output_folder = self._timestamp(self.output_folder, FOLDER_TIMESTAMP)
             if not os.path.isdir(self.output_folder):
                 os.makedirs(self.output_folder)
             self._path = self.output_folder
@@ -98,13 +100,15 @@ class StorageOutput(BaseClass):
         clone.output_file = open(self.filename, WRITEABLE)
         return clone
 
-    def _timestamp(self, name):
+    def _timestamp(self, name, timestamp_format=None):
         """
         Checks for a '{t}' in the string for a placeholder
         
         :return: name with timestamp
         """
-        timestamp = time.strftime(self.timestamp_format)
+        if timestamp_format is None:
+            timestamp_format = self.timestamp_format
+        timestamp = time.strftime(timestamp_format)
         if timestamp in name or TIMESTAMP_FLAG not in name:
             return name
         return name.format(t=timestamp)
