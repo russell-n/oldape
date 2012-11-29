@@ -29,6 +29,7 @@ class ToolBuilder(object):
         self._oscillate = None
         self._commandwatch = None
         self._poweron = None
+        self._poweroff = None
         return
 
     @property
@@ -51,10 +52,17 @@ class ToolBuilder(object):
     @property
     def poweron(self):
         """
-        :return: A builder for the Synaxxx
+        :return: A builder for the Synaxxx power on
         """
         from poweronbuilder import PowerOnBuilder
         return PowerOnBuilder
+
+    @property
+    def poweroff(self):
+        """
+        """
+        from poweroffbuilder import PowerOffBuilder
+        return PowerOffBuilder
     
     @property
     def ners(self):

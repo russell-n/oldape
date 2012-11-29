@@ -196,6 +196,13 @@ class Synaxxx(object):
         """
         for switch in sorted(self.status):
             print switch, self.status[switch]
+        return
 
+    def close(self):
+        """
+        :postcondition: connection closed, client deleted
+        """
+        self.client.close()
+        self._client = None
         return
 # end class Synaxxx

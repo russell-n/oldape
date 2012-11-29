@@ -5,9 +5,9 @@ A module to maintain a controller for a networked power-switch
 from tottest.baseclass import BaseClass
 
 
-class PowerOn(BaseClass):
+class PowerOff(BaseClass):
     """
-    A class to power-on a networked-switch
+    A class to power-off a networked-switch
     """
     def __init__(self, switches):
         """
@@ -15,19 +15,21 @@ class PowerOn(BaseClass):
 
          - `switches`: A dictionary of identifiers:switches
         """
-        super(PowerOn, self).__init__()
+        super(PowerOff, self).__init__()
         self.switches = switches
         return
 
-    def __call__(self, parameters):
+    def __call__(self, parameters, filename_prefix=None):
         """
         :param:
 
          - `parameters`: namedtuple with parameters.id_switch.parameters
+         - `filename_prefix`: Temporary hack until the teardown test is setup
         """
         identifier, switch_hostname = parameters.id_switch.parameters
-        self.logger.info("Turning on {0} (switch '{1}')".format(identifier, switch_hostname))
-        self.switches[identifier](switch_hostname.switch)
+        self.logger.info("Turning off switches on {0}".format(switch_hostname))
+        self.switches[identifier]()
+        # a hack until poweron and off can share the same client
         self.switches[identifier].close()
-        return "id_{0}_switch_{1}".format(identifier, switch_hostname.switch)
-# end class PowerOn
+        return 
+# end class PowerOFF
