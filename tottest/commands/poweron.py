@@ -25,9 +25,19 @@ class PowerOn(BaseClass):
 
          - `parameters`: namedtuple with parameters.id_switch.parameters
         """
+        self.turn_all_off()
         identifier, switch_hostname = parameters.id_switch.parameters
         self.logger.info("Turning on {0} (switch '{1}')".format(identifier, switch_hostname))
         self.switches[identifier](switch_hostname.switch)
-        self.switches[identifier].close()
+        #self.switches[identifier].close()
         return "id_{0}_switch_{1}".format(identifier, switch_hostname.switch)
+
+    def turn_all_off(self):
+        """
+        :postcondition: all switches turned off       
+        """
+        for name,switch in self.switches.iteritems():
+            self.logger.info("Turning off switches on {0}".format(name))
+            switch.all_off()
+        return
 # end class PowerOn
