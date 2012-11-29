@@ -5,7 +5,7 @@ a module to hold a builder of objects
 # python
 #import threading
 #import os
-from threading import RLock
+
 
 # third party
 from mock import MagicMock
@@ -16,7 +16,7 @@ from tottest.baseclass import BaseClass
 # proletarians
 from tottest.proletarians import hortator
 from tottest.proletarians.testoperator import TestOperator
-from tottest.proletarians import countdowntimer
+#from tottest.proletarians import countdowntimer
 
 
 #config

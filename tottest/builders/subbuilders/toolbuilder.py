@@ -26,9 +26,17 @@ class ToolBuilder(object):
         self._dumpdevicestate = None
         self._iperf = None
         self._rotate = None
+        self._oscillate = None
         self._commandwatch = None
         self._poweron = None
         return
+
+    @property
+    def oscillate(self):
+        """
+        """
+        from oscillatebuilder import OscillateBuilder
+        return OscillateBuilder
 
     @property
     def commandwatch(self):

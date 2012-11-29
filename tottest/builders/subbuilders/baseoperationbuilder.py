@@ -67,7 +67,7 @@ class BaseOperationBuilder(BaseClass):
     @property
     def plans(self):
         """
-        :return: list of options form the setup_test value
+        :return: list of options from the setup_test value
         """
         if self._plans is None:
             self._plans = self.config_map.get_list(ConfigOptions.test_section,

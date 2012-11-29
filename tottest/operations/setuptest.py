@@ -18,6 +18,9 @@ class DummySetupTest(BaseClass):
 # end class DummyTestSetup
 
 class SetupTest(BaseOperation):
+    """
+    A class to run every iteration
+    """
     def __init__(self, *args, **kwargs):
         """
         :param:

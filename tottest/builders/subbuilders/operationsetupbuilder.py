@@ -1,35 +1,47 @@
 """
 A module to build operation setups
 """
-from basetoolbuilder import BaseToolBuilder
-from tottest.lexicographers.config_options import ConfigOptions
-from tottest.operations.operationsetup import DummySetupOperation
-from tottest.commons.errors import ConfigurationError
 
-class OperationSetupBuilder(BaseToolBuilder):
+from baseoperationbuilder import BaseOperationBuilder
+from tottest.lexicographers.config_options import ConfigOptions
+from tottest.operations.operationsetup import OperationSetup
+
+class OperationSetupBuilder(BaseOperationBuilder):
     """
-    A class to build Setup Operations
+    A class to build Operation Setups
     """
     def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `master`: Builder (inherited argument)
+         - `config_map`: ConfigurationMap (inherited argument)
+        """
         super(OperationSetupBuilder, self).__init__(*args, **kwargs)
         return
 
     @property
-    def product(self):
+    def config_option(self):
         """
-        :return: Operation Setup object
-        
+        :return: config_file option for this operation
         """
-        if self._product is None:
-            try:
-                tools = self.config_map.get_list(ConfigOptions.test_section,
-                                                 ConfigOptions.operation_setup_option,)
-            except ConfigurationError as error:
-                self.logger.debug(error)                
-                self._product = DummySetupOperation()
-        return self._product
+        if self._config_option is None:
+            self._config_option = ConfigOptions.operation_setup_option
+        return self._config_option
 
     @property
-    def parameters(self):
-        return self._parameters
+    def operation(self):
+        """
+        :return: the class definition for this operation
+        """
+        if self._operation is None:
+            self._operation = OperationSetup
+        return self._operation
+
+    @property
+    def section(self):
+        """
+        :return: None
+        """
+        return self._section
 # end class SetupOperationBuilder

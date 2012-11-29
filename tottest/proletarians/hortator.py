@@ -50,7 +50,7 @@ class Hortator(BaseClass):
             operation += 1
             operation_start = clock.now()
             try:
-                operator.run()
+                operator()
             except OperatorError as error:
                 crash_time = clock.now()
                 self.logger.error(error)
