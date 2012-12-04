@@ -17,8 +17,12 @@ A module to adapt the Synaccess network controller.
 
 #python standard library
 import telnetlib
-import time
 import re
+
+#tottest library
+from tottest.baseclass import BaseClass
+from tottest.tools.sleep import Sleep
+from tottest.commons.errors import CommandError
 
 NEWLINE = "\n\r"
 INVALID = "Invalid command"
@@ -40,14 +44,14 @@ ANYTHING = '.'
 EVERYTHING = ANYTHING + ONE_OR_MORE
 state_expression = re.compile(SWITCH + EVERYTHING + STATE)
 
-class SynaxxxError(Exception):
+class SynaxxxError(CommandError):
     """
     An error to raise if a command doesn't execute properly.
     """
 # end class SynaxxxError
     
 
-class Synaxxx(object):
+class Synaxxx(BaseClass):
     """
     A class to control the Synaxxx
     """
@@ -61,6 +65,7 @@ class Synaxxx(object):
          - `sleep`: time to sleep between changing the state of the same switch
          - `debug`: If true, show synaccess output
         """
+        super(Synaxxx, self).__init__()
         self.host = host
         self.port = port
         self.timeout = timeout
@@ -68,6 +73,17 @@ class Synaxxx(object):
         self.debug = debug
         self._client = None
         self._status = None
+        self._sleeper = None
+        return
+
+    @property
+    def sleeper(self):
+        """
+        :return: a sleeper
+        """
+        if self._sleeper is None:
+            self._sleeper = Sleep(self.sleep)
+        return self._sleeper
 
     @property
     def client(self):
@@ -75,6 +91,8 @@ class Synaxxx(object):
         :return: the telnetlib client
         """
         if self._client is None:
+            self.logger.debug("Opening telnet connection: {0}@{1}".format(self.host,
+                                                                          self.port))
             self._client = telnetlib.Telnet(self.host, self.port, self.timeout)
         return self._client
 
@@ -115,8 +133,7 @@ class Synaxxx(object):
         line = None
         while line != EOF:
             line = self.client.read_until(NEWLINE, 1)
-            if self.debug:
-                print line
+            self.logger.debug(line)
             yield line
         return
 
@@ -132,6 +149,7 @@ class Synaxxx(object):
         """
         :postcondition: all outlets turned off
         """
+        self.logger.info("Turning all switches off")
         for line in self.exec_command(ALL_OFF):
             pass
         return
@@ -163,31 +181,42 @@ class Synaxxx(object):
         :postcondition: switches in list on, all others off
         """
         self.all_off()
-        time.sleep(self.sleep)
+        
+        self.sleeper()
         if switches is None:
             return
 
         for switch in switches:
+            self.logger.info("Turning on switch {0}".format(switch))
             if switch not in self.status:
-                #raise SynaxxxError("Invalid Switch: '{0}'".format(switch))
-                print "Invalid Switch: '{0}'".format(switch)
-                continue
+                self.increment_sleep()
+                raise SynaxxxError("Invalid Switch: '{0}'".format(switch))                
             self.turn_on(switch)
 
+        self.logger.info("Validating switch states")
         statuses = self.status
         for switch in switches:
             try:
                 assert statuses[switch] == ON
             except (AssertionError, KeyError):
-                #raise SynaxxxError("Unable to turn on switch '{0}'".format(switch))
-                print "Unable to turn on switch '{0}'".format(switch)
+                self.increment_sleep()
+                SynaxxxError("Unable to turn on switch '{0}'".format(switch))                
         for switch in [switch for switch in statuses if switch not in switches]:
             try:
                 assert statuses[switch] == OFF
             except (AssertionError, KeyError):
-                #raise SynaxxxError("Unable to turn off switch '{0}'".format(switch))
-                print "Unable to turn off switch '{0}'".format(switch)
+                self.increment_sleep()
+                raise SynaxxxError("Unable to turn off switch '{0}'".format(switch))
         self.show_status()
+        return
+
+    def increment_sleep(self):
+        """
+        :postcondition: sleep increased by one second
+        """
+        self.sleep += 1
+        self.sleeper.sleep_time = self.sleep
+        self.logger.debug("Sleep time increased to {0}".format(self.sleep))
         return
 
     def show_status(self):
@@ -195,7 +224,7 @@ class Synaxxx(object):
         print switch states to stdout
         """
         for switch in sorted(self.status):
-            print switch, self.status[switch]
+            self.logger.info("{0} {1}".format(switch, self.status[switch]))
         return
 
     def close(self):

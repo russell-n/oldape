@@ -26,11 +26,11 @@ class PowerOn(BaseClass):
          - `parameters`: namedtuple with parameters.id_switch.parameters
         """
         self.turn_all_off()
-        identifier, switch_hostname = parameters.id_switch.parameters
-        self.logger.info("Turning on {0} (switch '{1}')".format(identifier, switch_hostname))
-        self.switches[identifier](switch_hostname.switch)
+        params = parameters.id_switch.parameters
+        self.logger.info("Turning on {0} (switch '{1}')".format(params.identifier, params.switch))
+        self.switches[params.identifier](params.switch)
         #self.switches[identifier].close()
-        return "id_{0}_switch_{1}".format(identifier, switch_hostname.switch)
+        return "id_{0}_switch_{1}".format(params.identifier, params.switch)
 
     def turn_all_off(self):
         """

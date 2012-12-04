@@ -45,7 +45,7 @@ class Hortator(BaseClass):
         start = clock.now()
         operation = 0
         crash_times = []
-
+        #import pudb;pudb.set_trace()
         for operator in self.operators:
             operation += 1
             operation_start = clock.now()
