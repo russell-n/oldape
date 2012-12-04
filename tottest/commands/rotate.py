@@ -36,7 +36,7 @@ class RotateCommand(BaseClass):
                 self.logger.error(line)
             if "Requested position is out of range." in line:
                 raise ConfigurationError("Requested rotation angle of {0} is out of range".format(parameters.angles.parameters))
-        return "angle_{0}_velocity_{1}".format(angle, velocity)
+        return "angle_{0}".format(angle.zfill(3))
 
     def check_errors(self, line):
         """

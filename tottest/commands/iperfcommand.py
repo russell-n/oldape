@@ -171,6 +171,9 @@ class IperfCommand(BaseClass):
         elif "Address already in use" in line:
             self.logger.warning(line)
             #raise IperfError("Another server is already running.")
+        elif "connect failed" in line:
+            self.logger.error(line)
+            raise IperfError("Client Unable to connect ({0})".format(line))
         return
 
     def abort(self):

@@ -105,9 +105,7 @@ class ValidatingOutput(BaseClass):
                 line = self.lines.readline()
             except socket.timeout:
                 self.logger.debug("Socket timed out")
-                continue
-            if line is SPACE:
-                continue
+                line = SPACE
             self.validate(line)
             yield line
         #yield EOF

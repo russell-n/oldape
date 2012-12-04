@@ -19,7 +19,7 @@ WRITEABLE = 'w'
 NEWLINE_ADD = '{l}\n'
 TIMESTAMP_FLAG = "{t}"
 NEWLINE = "\n"
-IPERF_TIMESTAMP = "%Y%m%d%H%M%s"
+IPERF_TIMESTAMP = "%Y%m%d%H%M%S"
 FOLDER_TIMESTAMP = "%Y_%m_%d"
 
 class StorageOutput(BaseClass):
