@@ -83,7 +83,7 @@ class LogWatcher(BaseClass):
         Runs an infinite loop that reads the tail of the log.
         Writes the lines to self.output.write()
         """
-        for line in self.connection.bash("{0} {1}".formac(self.command, self.arguments)):
+        for line in self.connection.bash("{0} {1}".format(self.command, self.arguments)):
             self.output.write(line)
             if self.stopped:
                 return

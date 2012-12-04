@@ -14,7 +14,7 @@ class DummyOperation(BaseClass):
         super(DummyOperation, self).__init__()
         return
 
-    def __call__(self, parameters):
+    def __call__(self, parameters=None):
         return
 
     def __getattr__(self, name):
@@ -55,3 +55,4 @@ class BaseOperation(BaseClass):
             if returned:
                 return_tokens.append(returned)
         return TOKEN_JOINER.join((str(token) for token in return_tokens))
+#end class BaseOperation

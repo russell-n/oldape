@@ -35,5 +35,7 @@ class OperationTeardownBuilder(BaseToolBuilder):
         """
         :return: list of namedtuples
         """
+        if self._parameters is None:
+            self._parameters = self.previous_parameters
         return self._parameters
 # end class TeardownOperationBuilder

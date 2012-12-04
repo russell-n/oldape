@@ -19,7 +19,8 @@ OperatorStaticTestParameters = namedtuple("OperatorStaticTestParameters",
                                            'test_parameters'])
 
 
-TEST_PREAMBLE = "**** ALLION: Repetition {r} of {t} ****"
+TEST_TAG = "**** ALLION: {s} Test {r} of {t} ****"
+
 TEST_POSTAMBLE = "**** ALLION: Ending test - elapsed time = {t} ****"
 TEST_RESULT = "**** ALLION: Test Result = {r} ****"
 
@@ -28,7 +29,7 @@ class TestOperator(BaseClass):
     An operator runs the sequence of operations.
     """
     def __init__(self, test_parameters, operation_setup, operation_teardown,
-                 test_setup, tests, test_teardown,
+                 test_setup, tests, test_teardown,nodes,
                  countdown_timer, sleep=None):
         """
         :params:
@@ -39,7 +40,8 @@ class TestOperator(BaseClass):
          - `test_setup`: A set up to run before each test
          - `tests`: The tests to be run with each parameter subset
          - `test_teardown`: A tear down to run after each test is run
-         - `countdown_timer`: An estimator of remaining time
+         - `nodes`: a dictionary of nodes
+         - `countdown_timer`: An estimator of remaining time         
          - `sleep`: A sleep for recovery times
         """
         super(TestOperator, self).__init__()
@@ -49,6 +51,7 @@ class TestOperator(BaseClass):
         self.test_setup = test_setup
         self.tests = tests
         self.test_teardown = test_teardown
+        self.nodes = nodes
         self.countdown_timer = countdown_timer
         self._sleep = sleep
         self.parameter_queue = Queue()
@@ -75,8 +78,10 @@ class TestOperator(BaseClass):
         """
         #**** Setup Test
         self.logger.info("Running Parameters: {0}".format(parameter))
-        self.logger.info(TEST_PREAMBLE.format(r=count,
-                                              t=parameter.total_count))
+        message = TEST_TAG.format(r=count,
+                                  t=parameter.total_count,
+                                  s='Starting')
+        self.log_info(message, parameter.nodes.parameters)
         self.logger.info("Running test setup")
 
         filename_prefix = self.test_setup(parameter)
@@ -91,6 +96,23 @@ class TestOperator(BaseClass):
         #**** Teardown Test
         self.test_teardown(parameter)
         self.logger.info(TIME_REMAINING.format(t=self.countdown_timer()))
+        message = TEST_TAG.format(r=count,
+                                  t=parameter.total_count,
+                                  s='Ending')
+        self.log_info(message, parameter.nodes.parameters)
+        return
+
+    def log_info(self, message, node):
+        """
+        :param:
+
+         - `message`: a string to log
+         - `node`: the name of the current node
+
+        :postcondition: message sent to node and info log.
+        """
+        self.logger.info(message)
+        self.nodes[node].log('"{0}"'.format(message))
         return
     
     def __call__(self):

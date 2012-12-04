@@ -124,6 +124,6 @@ class BaseOperationBuilder(BaseClass):
                 self._parameters = self.builders[-1].parameters
             except (ConfigurationError, IndexError) as error:
                 self.logger.debug(error)
-                self._parameters = []
+                self._parameters = self.previous_parameters
         return self._parameters
 # end class BaseOperationBuilder

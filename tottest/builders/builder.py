@@ -18,9 +18,10 @@ from tottest.proletarians import hortator
 from tottest.proletarians.testoperator import TestOperator
 #from tottest.proletarians import countdowntimer
 
-
+from subbuilders.basetoolbuilder import Parameters
 #config
 from tottest.lexicographers.parametergenerator import ParameterGenerator
+from tottest.lexicographers.config_options import ConfigOptions
 
 
 #commons
@@ -42,6 +43,14 @@ from subbuilders.executetestbuilder import ExecuteTestBuilder
 from subbuilders.teardowntestbuilder import TeardownTestBuilder
 from subbuilders.tpcdevicebuilder import TpcDeviceBuilder
 
+class BuilderEnum(object):
+    """
+    A class to hold constants for the builder
+    """
+    __slots__ = ()
+    repetition = 'repetition'
+# end class BuilderEnum
+
 class Builder(BaseClass):
     """
     A builder builds objects
@@ -54,12 +63,15 @@ class Builder(BaseClass):
         """
         super(Builder, self).__init__(*args, **kwargs)
         self.maps = maps
+        self._repetitions = None
+        self._parameters = None
         self._operators = None
         self._hortator = None
         self._tpc_device = None
         self._storage = None
         self._lock = None
         self._nodes = None
+        self._thread_nodes = None
 
         self._operation_setup_builder = None
         self._operation_teardown_builder = None
@@ -68,6 +80,41 @@ class Builder(BaseClass):
         self._teardown_test_builder = None        
         return
 
+    @property
+    def parameters(self):
+        """
+        :return: list of parameters
+        """
+        if self._parameters is None:
+            self._parameters = []
+            self._parameters.append(self.repetitions)
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, new_parameters):
+        """
+        :param:
+
+         - `new_parameters`: a list of parameter named tuples
+
+        :postcondition: self.parameters = new_parameters
+        """
+        self._parameters = new_parameters
+        return self._parameters
+
+    @property
+    def repetitions(self):
+        """
+        :return: list of named tuples giving repetitions parameters
+        """
+        if self._repetitions is None:
+                reps = self.current_config.get_int(ConfigOptions.test_section,
+                                               ConfigOptions.repeat_option)
+                self._repetitions = Parameters(name=BuilderEnum.repetition,
+                                                  parameters=[rep for rep in range(1, reps+1)])
+
+        return self._repetitions
+    
     def operation_setup_builder(self, config_map=None, parameters=None):
         """
         :return: builder for the operation
@@ -128,7 +175,17 @@ class Builder(BaseClass):
             #import pudb; pudb.set_trace()
             self._nodes = NodesBuilder(self, self.current_config).nodes
         return self._nodes
-    
+
+    @property
+    def thread_nodes(self):
+        """
+        :return: dictionary of id:node-device pairs to be used in threads
+        """
+        if self._thread_nodes is None:
+            #import pudb; pudb.set_trace()
+            self._thread_nodes = NodesBuilder(self, self.current_config).nodes
+        return self._thread_nodes
+
     @property
     def operators(self):
         """
@@ -138,29 +195,31 @@ class Builder(BaseClass):
             self.reset()
             self.current_config = config_map
             self.logger.debug("Building the TestParameters with configmap - {0}".format(config_map))
-            operation_setup = self.operation_setup_builder(config_map).product
-            operation_setup_parameters = self.operation_setup_builder(config_map).parameters
+            operation_setup = self.operation_setup_builder(config_map, self.parameters).product
+            self.parameters = self.operation_setup_builder(config_map).parameters
             
-            operation_teardown = self.operation_teardown_builder(config_map, operation_setup_parameters).product
-            operation_teardown_parameters = self.operation_teardown_builder(config_map, operation_setup_parameters).parameters
+            operation_teardown = self.operation_teardown_builder(config_map, self.parameters).product
+            self.parameters = self.operation_teardown_builder(config_map,
+                                                               self.parameters).parameters
 
             
-            test_setup = self.setup_test_builder(config_map, operation_teardown_parameters).product
-            test_setup_parameters = self.setup_test_builder(config_map, operation_teardown_parameters).parameters
+            test_setup = self.setup_test_builder(config_map, self.parameters).product
+            self.parameters = self.setup_test_builder(config_map, self.parameters).parameters
 
-            test = self.execute_test_builder(config_map, test_setup_parameters).product
-            test_parameters = self.execute_test_builder(config_map, test_setup_parameters).parameters
+            test = self.execute_test_builder(config_map, self.parameters).product
+            self.parameters = self.execute_test_builder(config_map, self.parameters).parameters
             
-            test_teardown = self.teardown_test_builder(config_map, test_parameters).product
-            test_teardown_parameters = self.teardown_test_builder(config_map, test_parameters).parameters
+            test_teardown = self.teardown_test_builder(config_map, self.parameters).product
+            self.parameters = self.teardown_test_builder(config_map, self.parameters).parameters
             
-            yield TestOperator(ParameterGenerator(test_setup_parameters),
+            yield TestOperator(ParameterGenerator(self.parameters),
                                operation_setup=operation_setup,
                                operation_teardown=operation_teardown,
                                test_setup=test_setup,
                                tests=test,
                                test_teardown=test_teardown,
-                               countdown_timer=MagicMock())
+                               countdown_timer=MagicMock(),
+                               nodes=self.nodes)
         return
 
     @property
@@ -201,6 +260,8 @@ class Builder(BaseClass):
         """
         :postcondition: parameters reset to None
         """
+        self._parameters = None
+        self._repetitions = None
         self._operation_setup_builder = None
         self._operation_teardown_builder = None
         self._setup_test_builder = None

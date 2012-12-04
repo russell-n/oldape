@@ -26,6 +26,7 @@ class PowerOnBuilderEnum(object):
     """
     __slots__ = ()
     id_switch = "id_switch"
+    sleep = "sleep"
 # end class PowerOnBuilderEnums
 
 class PowerOnParameters(namedtuple("PowerOnParameters", "identifier switch".split())):
@@ -55,9 +56,9 @@ class PowerOnBuilder(BaseToolBuilder):
         """
         if self._synaxxxes is None:
             self._synaxxxes = {}
-            for identifier, switch in self.config_options.iteritems():
+            for identifier, param in self.config_options.iteritems():
                 if identifier not in self._synaxxxes:
-                    self._synaxxxes[identifier] = self.clients[switch.hostname]
+                    self._synaxxxes[identifier] = self.clients[param.hostname]
         return self._synaxxxes
 
     @property
@@ -69,7 +70,12 @@ class PowerOnBuilder(BaseToolBuilder):
             self._clients = {}
             for switch in self.config_options.itervalues():
                 if switch.hostname not in self._clients:
-                    self._clients[switch.hostname] = Synaxxx(switch.hostname)
+                    if hasattr(switch, PowerOnBuilderEnum.sleep):
+                        sleep = float(switch.sleep)
+                    else:
+                        sleep = 0
+                    self._clients[switch.hostname] = Synaxxx(switch.hostname,
+                                                             sleep=sleep)
         return self._clients
 
     @property
@@ -107,7 +113,9 @@ class PowerOnBuilder(BaseToolBuilder):
         """
         if self._parameters is None:
             parameters = []
-            for identifier, switch in self.config_options.iteritems():
+            for identifier, param in self.config_options.iteritems():
+                switch = param.switch
+                
                 parameters.append(PowerOnParameters(identifier=identifier,
                                                     switch=switch))
             self.previous_parameters.append(Parameters(name=PowerOnBuilderEnum.id_switch,

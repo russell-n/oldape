@@ -6,6 +6,7 @@ class ConfigOptions(object):
     test_section = 'TEST'
     poweron_section = "POWERON"
     oscillate_section = 'OSCILLATE'
+    watchlogs_section = "WATCHLOGS"
 
     #options
     operation_setup_option = "operation_setup"
@@ -16,7 +17,7 @@ class ConfigOptions(object):
     
     output_folder_option = 'output_folder'
     data_file_option = "data_file"
-    repetitions_option = "repeat"
+    repeat_option = "repeat"
     recovery_time_option = "recovery_time"
     
     test_interface_option = "test_interface"
@@ -30,11 +31,8 @@ class ConfigOptions(object):
     
     apconnect_section = "APCONNECT"
     ssids_option = "ssids"
-    logwatcher_section = "LOGWATCHER"
     paths_option = "paths"
 
-    logcatwatcher_section = "LOGCATWATCHER"
-    buffers_option = "buffers"
 
     nodes_section = "NODES"
     
