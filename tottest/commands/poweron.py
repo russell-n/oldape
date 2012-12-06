@@ -37,7 +37,7 @@ class PowerOn(BaseClass):
         :postcondition: all switches turned off       
         """
         for name,switch in self.switches.iteritems():
-            self.logger.info("Turning off {1} on {0}".format(switch, name))
+            self.logger.info("Turning off {1} on {0}".format(switch.host, name))
             switch.all_off()
         return
 # end class PowerOn
