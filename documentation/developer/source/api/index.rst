@@ -3,7 +3,7 @@ Auto-Generated API
 
 The sections of the *API* correspond to sub-modules within the timetorecovertest package.
 
-.. currentmodule:: tottest
+.. currentmodule:: apetools
 
 .. autosummary::
    :toctree: base_api
@@ -21,7 +21,7 @@ The *Affectors* affect the environment (as opposed to impelling devices to chang
 Networked Power Supply
 ~~~~~~~~~~~~~~~~~~~~~~
 
-.. currentmodule:: tottest.affectors.elexol
+.. currentmodule:: apetools.affectors.elexol
 
 .. autosummary::
    :toctree: naxxx_api
@@ -34,7 +34,7 @@ Networked Power Supply
 The Rotator
 ~~~~~~~~~~~
 
-.. currentmodule:: tottest.affectors.rotator
+.. currentmodule:: apetools.affectors.rotator
 
 .. autosummary::
    :toctree: rotator_api
@@ -44,7 +44,7 @@ The Rotator
 The Rest
 ~~~~~~~~
 
-.. currentmodule:: tottest.affectors
+.. currentmodule:: apetools.affectors
 
 .. autosummary::
    :toctree: other_affectors_api
@@ -57,7 +57,7 @@ Builder
 
 The **Builder** builds. It maps the Lexicographer's parameters to objects by calling sub-builders.
 
-.. currentmodule:: tottest.builders
+.. currentmodule:: apetools.builders
 
 .. autosummary::
    :toctree: builders_api
@@ -70,7 +70,7 @@ Sub-Builders
 
 *Sub-Builders* are experts in building their objects, allowing the *Builder* to delegate the burden of knowledge to them.
 
-.. currentmodule:: tottest.builders.subbuilders
+.. currentmodule:: apetools.builders.subbuilders
 
 .. autosummary::
    :toctree: sub_builders_api
@@ -103,7 +103,7 @@ Commands
 
 The **Commands** bundle specific commands with device connections. It is their responsibility to understand command errors and return validated output.
 
-.. currentmodule:: tottest.commands
+.. currentmodule:: apetools.commands
 
 .. autosummary::
    :toctree: commands_api
@@ -130,7 +130,7 @@ Commons
 
 The **Commons** is a place to put things that the different sub-modules need to share.
 
-.. currentmodule:: tottest.commons
+.. currentmodule:: apetools.commons
 
 .. autosummary::
    :toctree: commons_api
@@ -155,7 +155,7 @@ Connections
 
 The **Connections** provide connectivity to devices. It is their responsibility to send commands to them and to understand connection failure errors.
 
-.. currentmodule:: tottest.connections
+.. currentmodule:: apetools.connections
 
 .. autosummary::
    :toctree: connections_api
@@ -181,7 +181,7 @@ Adapters
 
 The **Adapters** adapt external libraries for connections to provide a common interface (and are kept with their connections).
 
-.. currentmodule:: tottest.connections
+.. currentmodule:: apetools.connections
 
 .. autosummary::
    :toctree: adapters_api
@@ -196,7 +196,7 @@ Devices
 
 The **Devices** provide a set of standardized method calls to the connections (the devices should all have the same method-names).
 
-.. currentmodule:: tottest.devices
+.. currentmodule:: apetools.devices
 
 .. autosummary::
    :toctree: devices_api
@@ -213,7 +213,7 @@ Informants
 
 **Informants** provide command-line help system for the APE. It is meant to be a prompting system to remind the user how to configure the test and run it.
 
-.. currentmodule:: tottest.informants
+.. currentmodule:: apetools.informants
 
 .. autosummary::
    :toctree: info_api
@@ -226,7 +226,7 @@ Lexicographers
 
 The *Config-file* is the primary user-interface for the test. It allows the APE to set parameters that need to change between tests. The **Lexicographer** translate config-files to parameters for the builder(s).
 
-.. currentmodule:: tottest.lexicographers
+.. currentmodule:: apetools.lexicographers
 
 .. autosummary::
    :toctree: lexicographer_api
@@ -244,7 +244,7 @@ Sub-Lexicographers
 
 **Sub-Lexicographers** know how to translate specific sections of the config-file, alleviating the translational burden of the main *Lexicographer*.
 
-.. currentmodule:: tottest.lexicographers.sublexicographers
+.. currentmodule:: apetools.lexicographers.sublexicographers
 
 .. autosummary::
    :toctree: sub_lexicographer_api
@@ -259,7 +259,7 @@ Operations
 
 `operations` are tool bundlers for the TestOperator.
 
-.. currentmodule:: tottest.operations
+.. currentmodule:: apetools.operations
 
 .. autosummary::
    :toctree: operations_API
@@ -275,7 +275,7 @@ Parameters
 
 **Parameters** hold complex parameters for complicated commands. Besides being holders of values, they check for errors in settings and allow the dynamic generation of values.
 
-.. currentmodule:: tottest.parameters
+.. currentmodule:: apetools.parameters
 
 .. autosummary:: 
    :toctree: parameters_api
@@ -290,7 +290,7 @@ Since the parameters define the behavior of commands, choosing them declares the
 Parsers
 -------
 
-.. currentmodule:: tottest.parsers
+.. currentmodule:: apetools.parsers
 
 .. autosummary::
    :toctree: parsers_api
@@ -304,7 +304,7 @@ Parsers
 Pipes
 -----
 
-.. currentmodule:: tottest.pipes
+.. currentmodule:: apetools.pipes
 
 .. autosummary::
    :toctree: pipes_api
@@ -316,7 +316,7 @@ Proletarians
 
 The **Proletarians** contains modules to run the test. They are the civil-servants of the system -- modules that shouldn't change for different types of tests.
 
-.. currentmodule:: tottest.proletarians
+.. currentmodule:: apetools.proletarians
 
 .. autosummary::
    :toctree: proletarian_api
@@ -339,7 +339,7 @@ Threads
 
 The **Threads** are used by the logwatchers and connections so they don't block execution (these aren't actually used at run-time, they're for debugging).
 
-.. currentmodule:: tottest.threads
+.. currentmodule:: apetools.threads
 
 .. autosummary:: 
    :toctree: threads_api
@@ -354,7 +354,7 @@ Tools
 
 The **Tools** are bundled commands that the operator uses. By ordering the set of tools, the operator creates the test-algorithm.
 
-.. currentmodule:: tottest.tools
+.. currentmodule:: apetools.tools
 
 .. autosummary:: 
    :toctree: tools_api
@@ -382,7 +382,7 @@ Watchers
 
 The **Watchers** watch logs.
 
-.. currentmodule:: tottest.watchers
+.. currentmodule:: apetools.watchers
 
 .. autosummary:: 
    :toctree: watchers_api
