@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.connections import adbconnection
+from apetools.connections import adbconnection
 
 DEFAULT_PATH = "/sys:/bin"
 

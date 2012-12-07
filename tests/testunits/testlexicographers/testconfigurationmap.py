@@ -3,7 +3,7 @@ from collections import namedtuple
 
 from mock import MagicMock
 
-from tottest.lexicographers import configurationmap
+from apetools.lexicographers import configurationmap
 
 
 ConfigurationMap = configurationmap.ConfigurationMap

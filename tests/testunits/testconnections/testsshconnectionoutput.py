@@ -3,7 +3,7 @@ from StringIO import StringIO
 import socket
 from mock import MagicMock
 
-from tottest.connections.sshconnection import OutputFile
+from apetools.connections.sshconnection import OutputFile
 
 output = """Now is the winter of our discontent,
 Made glorious summey by this Son of York,

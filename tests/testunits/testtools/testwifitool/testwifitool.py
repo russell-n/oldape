@@ -2,7 +2,7 @@ from unittest import TestCase
 from StringIO import StringIO
 
 from mock import MagicMock
-from tottest.tools import wifitool
+from apetools.tools import wifitool
 
 import wpa_cli_status, iw_link, wpa_cli_interface_list
 

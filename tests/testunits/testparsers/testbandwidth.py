@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from tottest.parsers import iperfparser
+from apetools.parsers import iperfparser
 
 # human-readable format
 LINE = "[  5]  5.0- 6.0 sec   256 KBytes  2.10 Mbits/sec"

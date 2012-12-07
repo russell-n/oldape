@@ -4,8 +4,8 @@ from StringIO import StringIO
 from mock import MagicMock
 from nose.tools import raises
 
-from tottest.commons.errors import CommandError
-from tottest.commands.windowsssidconnect import WindowsSSIDConnect
+from apetools.commons.errors import CommandError
+from apetools.commands.windowsssidconnect import WindowsSSIDConnect
 
 OUTPUT = """
 Connection request was completed successfully.

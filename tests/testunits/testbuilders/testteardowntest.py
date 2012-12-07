@@ -3,9 +3,9 @@ from ConfigParser import NoOptionError
 
 from mock import MagicMock
 
-from tottest.builders.subbuilders.teardowntestbuilder import TeardownTestBuilder
-from tottest.lexicographers.configurationmap import ConfigurationMap
-from tottest.operations.teardowntest import DummyTeardownTest
+from apetools.builders.subbuilders.teardowntestbuilder import TeardownTestBuilder
+from apetools.lexicographers.configurationmap import ConfigurationMap
+from apetools.operations.teardowntest import DummyTeardownTest
 
 class TestTeardownTestBuilder(TestCase):
     def setUp(self):

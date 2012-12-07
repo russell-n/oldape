@@ -1,4 +1,4 @@
-from tottest.parsers import iperfparser
+from apetools.parsers import iperfparser
 
 from unittest import TestCase
 

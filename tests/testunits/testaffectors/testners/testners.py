@@ -5,7 +5,7 @@ from collections import namedtuple
 
 from mock import MagicMock
 
-from tottest.affectors import ners
+from apetools.affectors import ners
 
 EMPTY_STRING = ""
 

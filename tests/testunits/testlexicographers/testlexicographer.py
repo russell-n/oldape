@@ -6,10 +6,10 @@ from StringIO import StringIO
 from nose.tools import raises
 from mock import MagicMock, patch
 
-from tottest.lexicographers import lexicographer
-from tottest.lexicographers.configurationmap import ConfigurationMap
+from apetools.lexicographers import lexicographer
+from apetools.lexicographers.configurationmap import ConfigurationMap
 
-from tottest.commons import errors
+from apetools.commons import errors
 
 ConfigurationError = errors.ConfigurationError
 ArgumentError = errors.ArgumentError

@@ -3,7 +3,7 @@ from StringIO import StringIO
 
 from mock import MagicMock
 
-from tottest.watchers.tsharkwatcher import TsharkWatcher, TsharkWatcherEnum
+from apetools.watchers.tsharkwatcher import TsharkWatcher, TsharkWatcherEnum
 
 sample = """
 Capturing on wlan0

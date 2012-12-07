@@ -6,10 +6,10 @@ from collections import namedtuple
 from mock import MagicMock
 from nose.tools import raises
 
-#tottest
-from tottest.connections import adbconnection, sshconnection
-from tottest.builders.subbuilders import connectionbuilder
-from tottest.commons import errors
+#apetools
+from apetools.connections import adbconnection, sshconnection
+from apetools.builders.subbuilders import connectionbuilder
+from apetools.commons import errors
 ConfigurationError = errors.ConfigurationError
 
 

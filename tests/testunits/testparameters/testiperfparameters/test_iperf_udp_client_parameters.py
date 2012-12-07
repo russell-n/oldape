@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from nose.tools import raises
 
-from tottest.commons import errors
-from tottest.parameters import iperf_client_parameters
+from apetools.commons import errors
+from apetools.parameters import iperf_client_parameters
 
 SPACE = ' '
 bandwidth_value = '5M'

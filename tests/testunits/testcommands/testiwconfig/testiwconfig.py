@@ -4,9 +4,9 @@ from StringIO import StringIO
 from mock import MagicMock
 from nose.tools import raises
 
-from tottest.commands.iwconfig import Iwconfig
-from tottest.connections.localconnection import OutputError
-from tottest.commons.errors import CommandError
+from apetools.commands.iwconfig import Iwconfig
+from apetools.connections.localconnection import OutputError
+from apetools.commons.errors import CommandError
 
 OUTPUT = """
 wlan0     IEEE 802.11bgn  ESSID:"allionstaff"

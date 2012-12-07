@@ -1,8 +1,8 @@
 from unittest import TestCase
 from mock import MagicMock
 
-from tottest.parsers.iperfparser import IperfParser
-from tottest.parsers.sumparser import SumParser
+from apetools.parsers.iperfparser import IperfParser
+from apetools.parsers.sumparser import SumParser
 
 FRAGMENT = """
 ------------------------------------------------------------

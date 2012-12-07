@@ -4,9 +4,9 @@ from unittest import TestCase
 #third party
 from nose.tools import raises
 
-# tottest
-from tottest.parameters import iperf_client_parameters
-from tottest.commons import errors
+# apetools
+from apetools.parameters import iperf_client_parameters
+from apetools.commons import errors
 
 ConfigurationError = errors.ConfigurationError
 

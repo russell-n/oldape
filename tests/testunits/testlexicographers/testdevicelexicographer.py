@@ -5,16 +5,16 @@ from unittest import TestCase
 from mock import MagicMock
 from nose.tools import raises
 
-#tottest
-from tottest.commons import enumerations
+#apetools
+from apetools.commons import enumerations
 ConnectionTypes = enumerations.ConnectionTypes
-from tottest.lexicographers.sublexicographers import devicelexicographer
-from tottest.lexicographers.configurationmap import ConfigurationMap
-from tottest.commons.errors import ConfigurationError
+from apetools.lexicographers.sublexicographers import devicelexicographer
+from apetools.lexicographers.configurationmap import ConfigurationMap
+from apetools.commons.errors import ConfigurationError
 DeviceLexicographer = devicelexicographer.DeviceLexicographer
 DeviceParameters = devicelexicographer.DeviceParameters
 
-from tottest.lexicographers import config_options
+from apetools.lexicographers import config_options
 ConfigOptions = config_options.ConfigOptions
 
 class TestDeviceLexicographer(TestCase):

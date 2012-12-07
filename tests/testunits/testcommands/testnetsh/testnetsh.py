@@ -3,9 +3,9 @@ from StringIO import StringIO
 
 from mock import MagicMock
 
-from tottest.commands import netsh
-from tottest.connections.sshconnection import OutputError
-from tottest.commons import errors
+from apetools.commands import netsh
+from apetools.connections.sshconnection import OutputError
+from apetools.commons import errors
 CommandError = errors.CommandError
 
 OUTPUT = """

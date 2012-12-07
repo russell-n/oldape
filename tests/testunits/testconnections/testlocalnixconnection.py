@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.connections import localconnection
+from apetools.connections import localconnection
 
 DEFAULT_PATH = "/sys:/bin"
 

@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.builders.subbuilders.nersbuilder import NersBuilder
-from tottest.affectors.ners import NeRS
+from apetools.builders.subbuilders.nersbuilder import NersBuilder
+from apetools.affectors.ners import NeRS
 
 class TestNersBuilder(TestCase):
     def setUp(self):

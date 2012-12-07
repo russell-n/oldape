@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.connections import serialconnection
+from apetools.connections import serialconnection
 
 DEFAULT_PATH = "/sys:/bin"
 

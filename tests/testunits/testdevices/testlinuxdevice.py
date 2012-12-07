@@ -3,8 +3,8 @@ from StringIO import StringIO
 
 from mock import MagicMock
 
-from tottest.connections.localconnection import OutputError
-from tottest.devices.linuxdevice import LinuxDevice
+from apetools.connections.localconnection import OutputError
+from apetools.devices.linuxdevice import LinuxDevice
 
 ifconfig = """
 wlan0     Link encap:Ethernet  HWaddr 74:2f:68:e0:e3:33

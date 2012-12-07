@@ -6,5 +6,5 @@ class TestRotator(TestCase):
     def test_import(self):
         rate_table = MagicMock()
         with patch("RateTable", rate_table):
-            import tottest.affectors.rotator.rotator 
-            rotator = tottest.affectors.rotator.rotator.Rotator()
+            import apetools.affectors.rotator.rotator 
+            rotator = apetools.affectors.rotator.rotator.Rotator()

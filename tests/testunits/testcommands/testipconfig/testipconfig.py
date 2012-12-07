@@ -3,8 +3,8 @@ from StringIO import StringIO
 
 from mock import MagicMock
 
-from tottest.commands.ipconfig import Ipconfig
-from tottest.connections.localconnection import OutputError
+from apetools.commands.ipconfig import Ipconfig
+from apetools.connections.localconnection import OutputError
 
 output = """
 Windows IP Configuration

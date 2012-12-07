@@ -4,8 +4,8 @@ from unittest import TestCase
 from mock import MagicMock as Mock
 from mock import call
 from kmsg import output, output_copy
-# tottest
-from tottest.watchers import logwatcher
+# apetools
+from apetools.watchers import logwatcher
 
 class SafeLogWatcherTest(TestCase):
     def setUp(self):

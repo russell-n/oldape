@@ -6,17 +6,17 @@ from ConfigParser import NoOptionError
 #third-party
 from mock import MagicMock
 
-#tottest
-from tottest.builders import builder
-from tottest.proletarians import hortator
-from tottest.lexicographers.configurationmap import ConfigurationMap
+#apetools
+from apetools.builders import builder
+from apetools.proletarians import hortator
+from apetools.lexicographers.configurationmap import ConfigurationMap
 
 # Dummies
-from tottest.operations.operationsetup import DummySetupOperation
-from tottest.operations.operationteardown import DummyTeardownOperation
-from tottest.operations.setuptest import DummySetupTest
-from tottest.operations.executetest import DummyExecuteTest
-from tottest.operations.teardowntest import DummyTeardownTest
+from apetools.operations.operationsetup import DummySetupOperation
+from apetools.operations.operationteardown import DummyTeardownOperation
+from apetools.operations.setuptest import DummySetupTest
+from apetools.operations.executetest import DummyExecuteTest
+from apetools.operations.teardowntest import DummyTeardownTest
 
 class TestBuilder(TestCase):
     def setUp(self):

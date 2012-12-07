@@ -1,8 +1,8 @@
 from StringIO import StringIO
 from mock import MagicMock
-from tottest.commands import ifconfig
-from tottest.commons import enumerations
-from tottest.connections.localconnection import OutputError
+from apetools.commands import ifconfig
+from apetools.commons import enumerations
+from apetools.connections.localconnection import OutputError
 
 def assert_equal(expected, actual):
     assert expected == actual, "Expected: {0} Actual: {1}".format(expected, actual)

@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.connections import telnetconnection
+from apetools.connections import telnetconnection
 
 DEFAULT_PATH = "/sys:/bin"
 

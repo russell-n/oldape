@@ -9,8 +9,8 @@ from unittest import TestCase
 # third party
 from mock import MagicMock
 
-from tottest.commons import enumerations
-from tottest.commands import ping
+from apetools.commons import enumerations
+from apetools.commands import ping
 
 class PingCommandTest(TestCase):
     def setUp(self):

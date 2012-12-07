@@ -3,8 +3,8 @@ from unittest import TestCase
 from nose.tools import raises
 from mock import MagicMock, call
 
-from tottest.tools import setupiteration
-from tottest.commons import errors
+from apetools.tools import setupiteration
+from apetools.commons import errors
 
 from iw_link import output
 

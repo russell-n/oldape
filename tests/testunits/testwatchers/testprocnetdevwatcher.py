@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.watchers.procnetdevwatcher import ProcnetdevWatcher, ProcnetdevWatcherEnum
-from tottest.watchers.timestamp import TimestampFormat
+from apetools.watchers.procnetdevwatcher import ProcnetdevWatcher, ProcnetdevWatcherEnum
+from apetools.watchers.timestamp import TimestampFormat
 
 sample = """
 Inter-|   Receive                                                |  Transmit

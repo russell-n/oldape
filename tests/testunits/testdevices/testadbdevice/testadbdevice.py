@@ -3,7 +3,7 @@ from unittest import TestCase
 from mock import MagicMock
 from nose.tools import raises
 
-from tottest.devices import adbdevice
+from apetools.devices import adbdevice
 
 LOG_MESSAGE = "how now frau cow"
 

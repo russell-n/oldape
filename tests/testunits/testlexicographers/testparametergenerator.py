@@ -1,6 +1,6 @@
 from unittest import TestCase
 from collections import namedtuple
-from tottest.lexicographers.parametergenerator import ParameterGenerator
+from apetools.lexicographers.parametergenerator import ParameterGenerator
 
 Parameter = namedtuple("Parameter", "name parameters".split())
 

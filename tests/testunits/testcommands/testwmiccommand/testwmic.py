@@ -2,9 +2,9 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.commands import wmic
-from tottest.commons import errors
-from tottest.connections.nonlocalconnection import OutputError
+from apetools.commands import wmic
+from apetools.commons import errors
+from apetools.connections.nonlocalconnection import OutputError
 
 PASS = """
 Executing (\\IGOR\root\cimv2:Win32_NetworkAdapter.DeviceID="11")->enable()

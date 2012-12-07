@@ -3,8 +3,8 @@ from unittest import TestCase
 from nose import tools
 
 raises = tools.raises
-from tottest.parameters import iperf_server_parameters, iperf_udp_server_parameters
-from tottest.commons import errors
+from apetools.parameters import iperf_server_parameters, iperf_udp_server_parameters
+from apetools.commons import errors
 
 ConfigurationError = errors.ConfigurationError
 

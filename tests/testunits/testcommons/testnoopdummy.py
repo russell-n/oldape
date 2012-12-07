@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.commons import dummy
+from apetools.commons import dummy
 
 
 class TestDummy(TestCase):
