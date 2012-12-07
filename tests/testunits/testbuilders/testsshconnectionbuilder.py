@@ -1,2 +1,2 @@
-from tottest.builders.subbuilders.connectionbuilder import SSHConnectionBuilder
+from apetools.builders.subbuilders.connectionbuilder import SSHConnectionBuilder
 

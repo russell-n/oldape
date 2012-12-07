@@ -1,7 +1,7 @@
 from unittest import TestCase
 from mock import patch, MagicMock
 
-from tottest.connections import producer
+from apetools.connections import producer
 
 class TestPopenProducer(TestCase):
     def setUp(self):

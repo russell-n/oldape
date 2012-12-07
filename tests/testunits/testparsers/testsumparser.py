@@ -2,8 +2,8 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.parsers.iperfexpressions import ParserKeys
-from tottest.parsers import sumparser
+from apetools.parsers.iperfexpressions import ParserKeys
+from apetools.parsers import sumparser
 
 HUMAN = "[SUM]  0.0- 1.0 sec   114 MBytes   957 Mbits/sec"
 CSV = "20120720091543,192.168.20.62,0,192.168.20.50,5001,-1,0.0-1.0,786432,6291456"

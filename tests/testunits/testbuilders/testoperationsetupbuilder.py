@@ -3,9 +3,9 @@ from ConfigParser import NoOptionError
 
 from mock import MagicMock
 
-from tottest.builders.subbuilders.operationsetupbuilder import OperationSetupBuilder
-from tottest.lexicographers.configurationmap import ConfigurationMap
-from tottest.operations.operationsetup import DummySetupOperation
+from apetools.builders.subbuilders.operationsetupbuilder import OperationSetupBuilder
+from apetools.lexicographers.configurationmap import ConfigurationMap
+from apetools.operations.operationsetup import DummySetupOperation
 
 class TestSetupOperationBuilder(TestCase):
     def setUp(self):

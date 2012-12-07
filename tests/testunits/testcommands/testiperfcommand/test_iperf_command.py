@@ -7,11 +7,11 @@ from collections import namedtuple
 from mock import MagicMock, call
 from nose.tools import raises
 
-# tottest
-from tottest.commands import iperfcommand
-from tottest.parameters import iperf_client_parameters
-from tottest.parameters import iperf_server_parameters
-from tottest.parameters import iperf_test_parameters
+# apetools
+from apetools.commands import iperfcommand
+from apetools.parameters import iperf_client_parameters
+from apetools.parameters import iperf_server_parameters
+from apetools.parameters import iperf_test_parameters
 IperfError = iperfcommand.IperfError
 
 #testing

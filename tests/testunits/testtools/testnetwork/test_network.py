@@ -7,11 +7,11 @@ A set of tests that check different cases for the network tester
 from mock import MagicMock
 import nose
 
-#from tottest.tools import networkcheck
+#from apetools.tools import networkcheck
 
-from tottest.tools import timetorecovery as ttr
-from tottest.tools import networktester
-from tottest.commons import errors
+from apetools.tools import timetorecovery as ttr
+from apetools.tools import networktester
+from apetools.commons import errors
 
 def test_case_1():
     """

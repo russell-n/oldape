@@ -1,7 +1,7 @@
 from unittest import TestCase
 import os
 
-from tottest.lexicographers import configfetcher
+from apetools.lexicographers import configfetcher
 
 class TestConfigFetcher(TestCase):
     def setUp(self):

@@ -1,7 +1,7 @@
 from unittest import TestCase
 from collections import namedtuple
 
-from tottest.lexicographers.parametertree import ParameterTree
+from apetools.lexicographers.parametertree import ParameterTree
 
 
 cargo = namedtuple("cargo", "name parameters".split())

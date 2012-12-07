@@ -4,8 +4,8 @@ from StringIO import StringIO
 
 from mock import MagicMock
 
-from tottest.devices import windowsdevice
-from tottest.connections.localconnection import OutputError
+from apetools.devices import windowsdevice
+from apetools.connections.localconnection import OutputError
 
 OUTPUT = """
 There is 1 interface on the system:

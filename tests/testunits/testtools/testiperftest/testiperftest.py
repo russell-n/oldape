@@ -5,7 +5,7 @@ from unittest import TestCase
 from mock import MagicMock
 
 
-from tottest.tools import iperftest
+from apetools.tools import iperftest
 
 
 class IperfTestTest(TestCase):

@@ -2,10 +2,10 @@ from unittest import TestCase
 from ConfigParser import NoOptionError
 
 from mock import MagicMock
-from tottest.builders.subbuilders.setuptestbuilder import SetupTestBuilder
-from tottest.lexicographers.configurationmap import ConfigurationMap
-from tottest.operations.setuptest import SetupTest
-from tottest.operations.setuptest import DummySetupTest
+from apetools.builders.subbuilders.setuptestbuilder import SetupTestBuilder
+from apetools.lexicographers.configurationmap import ConfigurationMap
+from apetools.operations.setuptest import SetupTest
+from apetools.operations.setuptest import DummySetupTest
 
 class TestSetupTestBuilder(TestCase):
     def setUp(self):

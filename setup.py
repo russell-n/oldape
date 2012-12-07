@@ -9,9 +9,9 @@ except ImportError:
 
 from datetime import datetime
 
-setup(name='tottest',
+setup(name='apetools',
       version= datetime.today().strftime("%Y.%m.%d"),
-      description="A program to run Throughput-Over-Time (TOT) tests",
+      description="A program to run tests",
       author="russell",
       platforms=['linux'],
       url = '',
@@ -20,10 +20,10 @@ setup(name='tottest',
       install_requires = ['pudb', 'paramiko', 'pyserial'],
       packages = find_packages(exclude=["__main__"]),
       include_package_data = True,
-      package_data = {"tottest":["*.txt", "*.rst", "*.ini"]},
+      package_data = {"apetools":["*.txt", "*.rst", "*.ini"]},
       entry_points = """
 	  [console_scripts]
-          tot=tottest.main:main
+          ape=apetools.main:main
 	  """
       )
 

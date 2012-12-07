@@ -2,11 +2,11 @@ from unittest import TestCase
 from mock import MagicMock
 from nose.tools import raises
 
-from tottest.lexicographers.sublexicographers import iperflexicographer
-from tottest.lexicographers.config_options import ConfigOptions
-from tottest.lexicographers.configurationmap import ConfigurationMap
-from tottest.commons.enumerations import IperfDefaults
-from tottest.commons.errors import ConfigurationError
+from apetools.lexicographers.sublexicographers import iperflexicographer
+from apetools.lexicographers.config_options import ConfigOptions
+from apetools.lexicographers.configurationmap import ConfigurationMap
+from apetools.commons.enumerations import IperfDefaults
+from apetools.commons.errors import ConfigurationError
 
 WINDOW = "112M"
 LENGTH = "14700"

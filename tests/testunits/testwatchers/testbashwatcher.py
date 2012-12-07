@@ -6,8 +6,8 @@ import time
 #third-party
 from mock import MagicMock, patch
 
-#tottest
-from tottest.watchers.commandwatcher import CommandWatcher
+#apetools
+from apetools.watchers.commandwatcher import CommandWatcher
 
 OUTPUT = """
 [INFO]  SSID:    allionstaff

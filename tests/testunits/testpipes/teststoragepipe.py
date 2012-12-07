@@ -2,7 +2,7 @@ from unittest import TestCase
 
 from mock import MagicMock, patch
 
-from tottest.pipes.storagepipe import StoragePipe
+from apetools.pipes.storagepipe import StoragePipe
 
 EOF = ""
 

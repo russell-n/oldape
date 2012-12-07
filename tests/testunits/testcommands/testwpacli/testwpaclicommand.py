@@ -4,8 +4,8 @@ from StringIO import StringIO
 from nose.tools import raises
 from mock import MagicMock
 
-from tottest.commands import wpacli
-from tottest.commons import errors
+from apetools.commands import wpacli
+from apetools.commons import errors
 
 CommandError = errors.CommandError
 

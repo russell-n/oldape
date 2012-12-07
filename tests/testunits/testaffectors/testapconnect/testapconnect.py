@@ -3,7 +3,7 @@ from collections import namedtuple
 
 from mock import MagicMock
 
-from tottest.affectors.apconnect import APConnect
+from apetools.affectors.apconnect import APConnect
 
 Parameter = namedtuple("Parameter", 'nodes parameters'.split())
 Parameters = namedtuple("Parameters", 'address parameters'.split())

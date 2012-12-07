@@ -3,11 +3,11 @@ import ConfigParser
 
 from mock import MagicMock
 
-from tottest.builders.subbuilders.nodesbuilder import NodesBuilder
-from tottest.lexicographers.configurationmap import ConfigurationMap
-from tottest.lexicographers.config_options import ConfigOptions
-from tottest.devices.dummydevice import DummyDevice
-from tottest.devices.windowsdevice import WindowsDevice
+from apetools.builders.subbuilders.nodesbuilder import NodesBuilder
+from apetools.lexicographers.configurationmap import ConfigurationMap
+from apetools.lexicographers.config_options import ConfigOptions
+from apetools.devices.dummydevice import DummyDevice
+from apetools.devices.windowsdevice import WindowsDevice
 
 
 class TestNodesBuilder(TestCase):

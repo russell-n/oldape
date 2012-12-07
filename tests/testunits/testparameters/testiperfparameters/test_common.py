@@ -1,8 +1,8 @@
 import nose
 
 raises = nose.tools.raises
-from tottest.commons import errors
-from tottest.parameters import iperf_common_parameters
+from apetools.commons import errors
+from apetools.parameters import iperf_common_parameters
 
 from common import assert_equal
 

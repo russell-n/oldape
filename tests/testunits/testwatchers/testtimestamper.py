@@ -2,7 +2,7 @@ from unittest import TestCase
 import time
 from mock import patch, MagicMock
 
-from tottest.watchers.timestamp import TimestampFormat, TimestampFormatEnums
+from apetools.watchers.timestamp import TimestampFormat, TimestampFormatEnums
 
 class TestTimestampFormat(TestCase):
     def setUp(self):

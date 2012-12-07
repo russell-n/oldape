@@ -2,9 +2,9 @@ from unittest import TestCase
 
 from mock import MagicMock
 
-from tottest.builders.subbuilders.nodebuilder import WindowsNodeBuilder
-from tottest.connections.sshconnection import SSHConnection
-from tottest.devices.windowsdevice import WindowsDevice
+from apetools.builders.subbuilders.nodebuilder import WindowsNodeBuilder
+from apetools.connections.sshconnection import SSHConnection
+from apetools.devices.windowsdevice import WindowsDevice
 
 class TestWindowsNodeBuilder(TestCase):
     def setUp(self):

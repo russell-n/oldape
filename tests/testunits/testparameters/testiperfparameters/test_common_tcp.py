@@ -3,8 +3,8 @@ import nose.tools
 
 raises = nose.tools.raises
 
-from tottest.parameters import iperf_common_tcp_parameters
-from tottest.commons import errors
+from apetools.parameters import iperf_common_tcp_parameters
+from apetools.commons import errors
 
 ConfigurationError = errors.ConfigurationError
 

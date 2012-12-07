@@ -7,8 +7,8 @@ from mock import MagicMock
 from nose import tools
 raises = tools.raises
 
-from tottest.affectors.elexol import naxxx
-from tottest.affectors.elexol import errors
+from apetools.affectors.elexol import naxxx
+from apetools.affectors.elexol import errors
 
 FaucetteError = errors.FaucetteError
 NaxxxError = naxxx.NaxxxError

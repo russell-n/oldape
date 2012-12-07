@@ -2,9 +2,9 @@ from unittest import TestCase
 from mock import MagicMock
 from StringIO import StringIO
 
-from tottest.commands.winrssi import WinRssi, NA
-from tottest.commons.errors import CommandError
-from tottest.connections.localconnection import OutputError
+from apetools.commands.winrssi import WinRssi, NA
+from apetools.commons.errors import CommandError
+from apetools.connections.localconnection import OutputError
 
 class TestWinRssi(TestCase):
     def setUp(self):

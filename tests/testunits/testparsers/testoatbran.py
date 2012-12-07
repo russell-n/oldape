@@ -1,7 +1,7 @@
 from unittest import TestCase
 import re
 
-from tottest.parsers import oatbran
+from apetools.parsers import oatbran
 
 bran = oatbran
 COW = 'cow'

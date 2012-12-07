@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from tottest.parsers.unitconverter import UnitConverter
-from tottest.parsers.unitconverter import UnitNames
+from apetools.parsers.unitconverter import UnitConverter
+from apetools.parsers.unitconverter import UnitNames
 
 bits = UnitNames.bits
 kbits = UnitNames.kbits

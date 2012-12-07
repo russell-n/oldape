@@ -5,9 +5,9 @@ from StringIO import StringIO
 from mock import MagicMock
 from nose.tools import raises
 
-from tottest.tools.timetorecovery import TimeToRecovery
-from tottest.commons.enumerations import OperatingSystem
-from tottest.commons.errors import CommandError
+from apetools.tools.timetorecovery import TimeToRecovery
+from apetools.commons.enumerations import OperatingSystem
+from apetools.commons.errors import CommandError
 
 Parameters = namedtuple("Parameters", "nodes target".split())
 ParametersNodes = namedtuple("ParametersNodes", "parameters".split())

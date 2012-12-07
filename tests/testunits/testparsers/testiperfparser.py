@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from tottest.parsers import iperfparser
+from apetools.parsers import iperfparser
 ParserKeys = iperfparser.ParserKeys
 
 # human-readable format

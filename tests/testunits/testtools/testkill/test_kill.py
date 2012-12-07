@@ -8,8 +8,8 @@ import mock
 import nose
 from nose.tools import raises
 
-from tottest.tools import killall
-from tottest.commons import enumerations, expressions, errors
+from apetools.tools import killall
+from apetools.commons import enumerations, expressions, errors
 
 
 from pse_sample import PSE_LINUX, PSE_LINUX_NO_FIREFOX

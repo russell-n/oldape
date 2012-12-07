@@ -1,12 +1,12 @@
 from unittest import TestCase
 from mock import MagicMock
 
-#from tottest.tools import networkcheck
+#from apetools.tools import networkcheck
 
-from tottest.commands import ifconfig, netcfg
-from tottest.commands import ping
-from tottest.commons import enumerations
-from tottest.tools import timetorecovery
+from apetools.commands import ifconfig, netcfg
+from apetools.commands import ping
+from apetools.commons import enumerations
+from apetools.tools import timetorecovery
 
 # test folder
 from ifconfig_samples import ifconfig_linux
