@@ -6,6 +6,7 @@ import re
 import ConfigParser
 from string import whitespace
 from collections import namedtuple
+from types import BooleanType
 
 # apetools Libraries
 from apetools.baseclass import BaseClass
@@ -154,12 +155,18 @@ class ConfigurationMap(BaseClass):
 
         """
         value = self.get(section, option, default, optional)
-        value = value.lower()
+
         try:
+            value = value.lower()
             return BooleanValues.map[value]
         except KeyError as error:
             self.logger.debug(error)
-            self.raise_error("Unknown Boolean: {0}".format(value))
+        except AttributeError as error:
+            self.logger.debug(error)
+            if type(value) is BooleanType:
+                return value
+        self.raise_error("Unknown Boolean: {0}".format(value))
+        
         return
 
     def get_booleans(self, section, option, default="", optional=False, delimiter=COMMA):
