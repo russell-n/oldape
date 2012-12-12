@@ -59,7 +59,9 @@ class OscillateBuilder(BaseToolBuilder):
         """
         if self._block is None:
             self._block = self.config_map.get_boolean(self.section,
-                                                      ConfigOptions.block_option)
+                                                      ConfigOptions.block_option,
+                                                      default=False,
+                                                      optional=True)
         return self._block
 
     def get_option(self, option, optional=False):
