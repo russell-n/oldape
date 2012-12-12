@@ -28,7 +28,8 @@ import os
 try:
     import pexpect
 except ImportError as error:
-    print error
+    #print error
+    pass
 
 # apetools Libraries
 from apetools.baseclass import BaseClass

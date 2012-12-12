@@ -13,6 +13,8 @@ class ToolBuilderEnum(object):
     iperf = "iperf"
     rotate = 'rotate'
     poweron = 'poweron'
+    oscillate = 'oscillate'
+    oscillatestop = 'oscillatestop'
 # end class ToolBuilderEnum
 
 class ToolBuilder(object):
@@ -27,10 +29,16 @@ class ToolBuilder(object):
         self._iperf = None
         self._rotate = None
         self._oscillate = None
+        self._oscillatestop = None
         self._commandwatch = None
         self._poweron = None
         self._poweroff = None
         return
+
+    @property
+    def oscillatestop(self):
+        from oscillatebuilder import OscillateStopBuilder
+        return OscillateStopBuilder
 
     @property
     def oscillate(self):
