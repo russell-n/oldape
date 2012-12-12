@@ -7,7 +7,7 @@ import time
 
 from apetools.parsers import oatbran
 from apetools.baseclass import BaseClass
-from timestamp import TimestampFormat
+from apetools.commons.timestamp import TimestampFormat
 
 class TsharkWatcherEnum(object):
     """

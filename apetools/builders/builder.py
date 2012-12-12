@@ -242,17 +242,24 @@ class Builder(BaseClass):
         if self._tpc_device is None:
             self._tpc_device = TpcDeviceBuilder(self.current_config).device
         return self._tpc_device
-            
-    def storage(self, folder_name=None):
+
+    @property
+    def storage(self):
         """
         :param:
 
          - `folder_name`: The name of the output folder for data.
 
+        :precondition: self.current_config is a configuration map
         :return: StorageOutput for the folder.
         """
         if self._storage is None:
-            self.logger.debug("Buidling the Storage with folder: {0}".format(folder_name))
+            folder_name = self.current_config.get(section=ConfigOptions.test_section,
+                                                  option=ConfigOptions.output_folder_option,
+                                                  default="",
+                                                  optional=True)        
+
+            self.logger.debug("Building the Storage with folder: {0}".format(folder_name))
             self._storage = storageoutput.StorageOutput(folder_name)
         return self._storage
 

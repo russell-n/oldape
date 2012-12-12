@@ -23,7 +23,7 @@ class BaseThreadedCommand(BaseClass):
         super(BaseThreadedCommand, self).__init__()
         self._logger = None
         self.stopped = False
-        self.thread = None
+        self._thread = None
         return
 
     @abstractmethod

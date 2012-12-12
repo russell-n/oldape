@@ -21,7 +21,7 @@ from time import time, sleep
 
 from apetools.baseclass import BaseClass
 from apetools.parsers import oatbran 
-from timestamp import TimestampFormat
+from apetools.commons.timestamp import TimestampFormat
 
 
 
