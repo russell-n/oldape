@@ -2,12 +2,11 @@
 A module to build operation teardowns
 """
 
-from basetoolbuilder import BaseToolBuilder
+from baseoperationbuilder import BaseOperationBuilder
 from apetools.lexicographers.config_options import ConfigOptions
-from apetools.operations.operationteardown import DummyTeardownOperation
-from apetools.commons.errors import ConfigurationError
+from apetools.operations.operationteardown import OperationTeardown
 
-class OperationTeardownBuilder(BaseToolBuilder):
+class OperationTeardownBuilder(BaseOperationBuilder):
     """
     A class to build Teardown Operations
     """
@@ -16,26 +15,26 @@ class OperationTeardownBuilder(BaseToolBuilder):
         return
 
     @property
-    def product(self):
+    def config_option(self):
+        """
+        """
+        if self._config_option is None:
+            self._config_option = ConfigOptions.operation_teardown_option
+        return self._config_option
+
+    @property
+    def operation(self):
         """
         :return: Operation Teardown object
         
         """
-        if self._product is None:
-            try:
-                tools = self.config_map.get_list(ConfigOptions.test_section,
-                                                 ConfigOptions.operation_teardown_option,)
-            except ConfigurationError as error:
-                self.logger.debug(error)                
-                self._product = DummyTeardownOperation()
-        return self._product
+        if self._operation is None:
+            self._operation = OperationTeardown
+        return self._operation
 
     @property
-    def parameters(self):
+    def section(self):
         """
-        :return: list of namedtuples
         """
-        if self._parameters is None:
-            self._parameters = self.previous_parameters
-        return self._parameters
+        return self._section
 # end class TeardownOperationBuilder
