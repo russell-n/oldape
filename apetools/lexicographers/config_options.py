@@ -32,7 +32,7 @@ class ConfigOptions(object):
     apconnect_section = "APCONNECT"
     ssids_option = "ssids"
     paths_option = "paths"
-
+    port_option = 'port'
 
     nodes_section = "NODES"
     
@@ -56,3 +56,10 @@ class ConfigOptions(object):
     username_option = 'username'
     rotate_section = "ROTATE"
     angles_option = "angles"
+
+    start_option = "start"
+    arc_option = "arc"
+    noise_start_option = "noise_start"
+    noise_end_option = "noise_end"
+
+    block_option = "block"

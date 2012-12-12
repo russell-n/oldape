@@ -9,7 +9,7 @@ from basetoolbuilder import BaseToolBuilder
 from apetools.lexicographers.config_options import ConfigOptions
 
 from apetools.connections.sshconnection import SSHConnection
-from apetools.commands.oscillator import Oscillator
+from apetools.commands.oscillate import Oscillate
 
 from apetools.commons.errors import ConfigurationError
 
@@ -46,8 +46,21 @@ class OscillateBuilder(BaseToolBuilder):
         self._hostname = None
         self._username = None
         self._password = None
+        self._output = None
+        self._arguments = None
+        self._block = None
         self.section = ConfigOptions.oscillate_section
         return
+
+    @property
+    def block(self):
+        """
+        :return: Boolean on whether to block and wait for rotation start
+        """
+        if self._block is None:
+            self._block = self.config_map.get_boolean(self.section,
+                                                      ConfigOptions.block_option)
+        return self._block
 
     def get_option(self, option, optional=False):
         """
@@ -60,6 +73,36 @@ class OscillateBuilder(BaseToolBuilder):
         """        
         return self.config_map.get(self.section, option, optional=optional)
 
+    @property
+    def output(self):
+        """
+        :return: file to output angles to
+        """
+        if self._output is None:
+            self._output = self.master.storage.open("oscillate.log", 'logs')
+        return self._output
+
+    @property
+    def arguments(self):
+        """
+        :return: string of arguments for the oscillate command
+        """
+        if self._arguments is None:
+            arguments = {}
+            section = ConfigOptions.oscillate_section
+            for option in (ConfigOptions.start_option,
+                           ConfigOptions.arc_option,
+                           ConfigOptions.timeout_option,
+                           ConfigOptions.noise_start_option,
+                           ConfigOptions.noise_end_option,            
+                           ConfigOptions.port_option):
+                value = self.config_map.get(section, option,optional=True)
+                if value is not None:
+                    arguments[option] = value
+            self._arguments = " ".join(["--{0} {1}".format(key, value) for key,value in arguments.iteritems()])
+        return self._arguments
+    
+    
     @property
     def hostname(self):
         """
@@ -105,7 +148,10 @@ class OscillateBuilder(BaseToolBuilder):
         :return: PowerOn object
         """
         if self._product is None:
-            self._product = Oscillator(self.connection)
+            self._product = Oscillate(connection=self.connection,
+                                      output=self.output,
+                                      arguments=self.arguments,
+                                      block=self.block)
         return self._product
 
     @property

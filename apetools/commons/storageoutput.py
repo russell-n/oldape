@@ -134,8 +134,8 @@ class StorageOutput(BaseClass):
         try:
             #assert_is(type(line), StringType)
             self.output_file.write(line)
-            #self.output_file.flush()
-            #os.fsync(self.output_file.fileno())
+            self.output_file.flush()
+            os.fsync(self.output_file.fileno())
         except AssertionError as error:
             self.logger.error(error)
         except AttributeError as error:

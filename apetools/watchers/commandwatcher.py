@@ -22,7 +22,7 @@ from time import time, sleep
 import threading
 
 from apetools.baseclass import BaseClass
-from timestamp import TimestampFormat
+from apetools.commons.timestamp import TimestampFormat
 
 class CommandWatcher(BaseClass):
     """
