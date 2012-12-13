@@ -15,14 +15,15 @@ class Semaphore(BaseClass):
 
     This is an unbounded semaphore so it can release more than it has acquired
     """
-    def __init__(self, value=1):
+    def __init__(self, size=1):
         """
         :param:
 
-         - `value`: The number of threads to wait for.
+         - `size`: The number of threads to wait for.
         """
         super(Semaphore, self).__init__()
-        self.semaphore = threading.Semaphore(value)
+        self.size = size
+        self.semaphore = threading.BoundedSemaphore(size)
         return
 
     def wait(self):
@@ -44,5 +45,13 @@ class Semaphore(BaseClass):
         self.logger.debug("releasing {n} times".format(n=value))
         for i in repeat(None, times=value):
             self.semaphore.release()
+        return
+
+    def increment_size(self):
+        """
+        :postcondition: self.semaphore is a new semaphore that is 1 bigger than last
+        """
+        self.size += 1
+        self.semaphore = threading.Semaphore(self.size)
         return
 # end class Semaphore

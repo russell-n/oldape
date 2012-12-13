@@ -70,7 +70,7 @@ class KillAll(BaseClass):
         :return: A sleep timer
         """
         if self._sleep is None:
-            self._sleep = sleep.Sleep().run
+            self._sleep = sleep.Sleep(1).run
         return self._sleep
     
     def run(self, connection, name=None, time_to_sleep=None):

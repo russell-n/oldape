@@ -30,9 +30,19 @@ class OscillateBuilder(BaseToolBuilder):
         self._output = None
         self._arguments = None
         self._block = None
+        self._semaphore = None
         self.section = ConfigOptions.oscillate_section
         return
 
+    @property
+    def semaphore(self):
+        """
+        :return: the master's semaphore increased by one
+        """
+        if self._semaphore is None:
+            self._semaphore = self.master.semaphore
+        return self._semaphore
+    
     @property
     def block(self):
         """
@@ -130,11 +140,12 @@ class OscillateBuilder(BaseToolBuilder):
         """
         :return: PowerOn object
         """
-        if self._product is None:
+        if self._product is None:            
             self._product = Oscillate(connection=self.connection,
                                       output=self.output,
-                                      arguments=self.arguments,
-                                      block=self.block)
+                                      arguments=self.arguments)
+            if self.block:
+                self.master.event_list.append(self._product.event)
         return self._product
 
     @property
@@ -147,6 +158,7 @@ class OscillateBuilder(BaseToolBuilder):
         return self._parameters
 # end class PowerOnBuilder            
 
+    
 class OscillateStopBuilder(BaseToolBuilder):
     """
     A networked oscillator stopper builder
