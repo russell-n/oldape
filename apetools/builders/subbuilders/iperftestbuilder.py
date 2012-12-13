@@ -22,13 +22,15 @@ class IperfTestBuilder(BaseClass):
     """
     A builder of iperf tests
     """
-    def __init__(self, config_map):
+    def __init__(self, config_map, events=None):
         """
         :param:
 
          - `config_map`: a pre-loaded configuration map
+         - `events`: a list of events to wait for
         """
         self.config_map = config_map
+        self.events = events
         self._test = None
         self._commands = None
         return
@@ -49,7 +51,8 @@ class IperfTestBuilder(BaseClass):
         """
         if self._test is None:
             self._test = iperftest.IperfTest(receiver_command=self.commands.server_command,
-                                             sender_command=self.commands.client_command)
+                                             sender_command=self.commands.client_command,
+                                             wait_events=self.events)
         return self._test
         
 # end class IperfTestBuilder

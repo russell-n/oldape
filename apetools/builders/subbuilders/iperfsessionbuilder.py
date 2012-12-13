@@ -52,7 +52,7 @@ class IperfSessionBuilder(BaseToolBuilder):
         :return: An IperfTest
         """
         if self._test is None:
-            self._test = IperfTestBuilder(self.config_map).test
+            self._test = IperfTestBuilder(self.config_map, self.master.event_list).test
         return self._test
 
     @property

@@ -4,7 +4,7 @@ A module to build test teardowns
 
 from baseoperationbuilder import BaseOperationBuilder
 from apetools.lexicographers.config_options import ConfigOptions
-from apetools.operations.teardowntest import DummyTeardownTest
+from apetools.operations.teardowntest import TeardownTest
 from apetools.commons.errors import ConfigurationError
 
 class TeardownTestBuilder(BaseOperationBuilder):
@@ -30,6 +30,13 @@ class TeardownTestBuilder(BaseOperationBuilder):
         :return: the class for to build
         """
         if self._operation is None:
-            self._operation = DummyTeardownTest
+            self._operation = TeardownTest
         return self._operation
+
+    @property
+    def section(self):
+        """
+        :return: None
+        """
+        return self._section
 # end class TeardownTestBuilder

@@ -43,21 +43,25 @@ class Hortator(BaseClass):
         Runs the operators
         """
         start = clock.now()
-        operation = 0
+        operation_count = 0
         crash_times = []
         #import pudb;pudb.set_trace()
-        for operator in self.operators:
-            operation += 1
+        for operation in self.operators:
+            operation_count += 1
             operation_start = clock.now()
             try:
-                operator()
+                operation()
             except OperatorError as error:
                 crash_time = clock.now()
                 self.logger.error(error)
-                crash_times.append(CrashRecord(id=operation,
+                crash_times.append(CrashRecord(id=operation_count,
                                                start_time=operation_start,
                                                error=error,
                                                crash_time=crash_time))
+            except BaseException:
+                operation.operation_teardown()
+                raise
+            
         end = clock.now()
         for crash in crash_times:
             print str(crash)

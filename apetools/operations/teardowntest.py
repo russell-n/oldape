@@ -3,6 +3,7 @@ A place to put classes to execute a test
 """
 
 from apetools.baseclass import BaseClass
+from baseoperation import BaseOperation
 
 class DummyTeardownTest(BaseClass):
     """
@@ -15,3 +16,17 @@ class DummyTeardownTest(BaseClass):
     def __call__(self, parameter):
         return
 # end class DummyTeardownTest
+
+class TeardownTest(BaseOperation):
+    """
+    A class to run every iteration
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `products`: list of products
+        """
+        super(TeardownTest, self).__init__(*args, **kwargs)
+        return
+# end class SetupTest

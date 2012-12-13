@@ -14,17 +14,20 @@ class IperfTest(BaseClass):
     """
     The Iperf Test runs a single iperf test.
     """
-    def __init__(self, sender_command=None, receiver_command=None, sleep=None):
+    def __init__(self, sender_command=None, receiver_command=None, sleep=None,
+                 wait_events=None):
         """
         :param:
 
          - `sender_command`: an IperfCommand bundled with client parameters
          - `receiver_command`: IperfCommand bundled with server parameters
          - `sleep`: A Sleep object with the sleep time preset
+         - `wait_events`: list of events to wait for
         """
         super(IperfTest, self).__init__()
         self.sender_command = sender_command
-        self.receiver_command = receiver_command        
+        self.receiver_command = receiver_command
+        self.wait_events = wait_events
         self._sleep = sleep
         self._kill = None
         return
@@ -44,7 +47,7 @@ class IperfTest(BaseClass):
         :return: A sleep
         """
         if self._sleep is None:
-            self._sleep = Sleep()
+            self._sleep = Sleep(1)
         return self._sleep
     
     def __call__(self, sender, receiver, filename):
@@ -68,6 +71,9 @@ class IperfTest(BaseClass):
         self.receiver_command.start(receiver, filename)
         self.logger.info("Sleeping to let the server start.")
         self.sleep()
+        if self.wait_events is not None:
+            for event in self.wait_events:
+                event.wait()
         self.logger.info("Running the client (sender)")
         self.sender_command.run(sender, filename)
         if self.receiver_command.running:

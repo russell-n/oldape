@@ -33,6 +33,7 @@ ConnectionTypes = enumerations.ConnectionTypes
 from apetools.commons import dummy
 NoOpDummy = dummy.NoOpDummy
 
+from apetools.threads.semaphore import Semaphore
 
 # builders
 from subbuilders.nodesbuilder import NodesBuilder
@@ -72,6 +73,9 @@ class Builder(BaseClass):
         self._lock = None
         self._nodes = None
         self._thread_nodes = None
+        self._semaphore = None
+        self._saved_semaphore = None
+        self._event_list = None
 
         self._operation_setup_builder = None
         self._operation_teardown_builder = None
@@ -80,6 +84,32 @@ class Builder(BaseClass):
         self._teardown_test_builder = None        
         return
 
+    @property
+    def saved_semaphore(self):
+        """
+        :return: semaphore allowing increase in size (default=0)
+        """
+        if self._saved_semaphore is None:
+            self._saved_semaphore = Semaphore(0)
+        return self._saved_semaphore
+
+    @property
+    def semaphore(self):
+        """
+        :return: semaphore with size incremented by one
+        """
+        self.saved_semaphore.increment_size()
+        return self.saved_semaphore
+
+    @property
+    def event_list(self):
+        """
+        :return: list to hold events
+        """
+        if self._event_list is None:
+            self._event_list = []
+        return self._event_list
+    
     @property
     def parameters(self):
         """
