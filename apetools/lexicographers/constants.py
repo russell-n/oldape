@@ -9,4 +9,4 @@ TIME_FORMAT = "%Y_%m_%d_%a"
 
 
 CONFIG_FOLDER = "lexicographers/configfiles"
-DEFAULTS = ["throughputovertime.ini"]
+DEFAULTS = ["apetools.ini"]
