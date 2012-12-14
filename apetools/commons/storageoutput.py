@@ -122,7 +122,7 @@ class StorageOutput(BaseClass):
         count = sum((1 for filename in os.listdir(self.path) if filename.startswith(name)
                      and filename.endswith(extension)))
         if count > 0:
-            name = "{0}_{1}".format(name, count+1)
+            name = "{0}_{1}".format(name, str(count+1).zfill(3))
         return name
 
     def write(self, line):

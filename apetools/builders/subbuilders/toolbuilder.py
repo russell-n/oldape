@@ -33,7 +33,16 @@ class ToolBuilder(object):
         self._commandwatch = None
         self._poweron = None
         self._poweroff = None
+        self._watchlogs = None
         return
+
+    @property
+    def watchlogs(self):
+        """
+        :return: TheWatcher builder
+        """
+        from watcherbuilder import WatcherBuilder
+        return WatcherBuilder
 
     @property
     def oscillatestop(self):

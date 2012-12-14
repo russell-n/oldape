@@ -5,6 +5,9 @@ A module to hold an exhorter of operators
 # python Libraries
 from datetime import datetime as clock
 from collections import namedtuple
+import sys
+import os
+import signal
 
 # apetools Libraries
 from apetools.baseclass import BaseClass
@@ -36,6 +39,7 @@ class Hortator(BaseClass):
         """
         super(Hortator, self).__init__(*args, **kwargs)
         self.operators = operators
+        self.last_operator = None
         return
 
     def __call__(self):
@@ -43,14 +47,13 @@ class Hortator(BaseClass):
         Runs the operators
         """
         start = clock.now()
-        operation_count = 0
+
         crash_times = []
         #import pudb;pudb.set_trace()
-        for operation in self.operators:
-            operation_count += 1
+        for operation_count, operator in enumerate(self.operators):
             operation_start = clock.now()
             try:
-                operation()
+                operator()
             except OperatorError as error:
                 crash_time = clock.now()
                 self.logger.error(error)
@@ -58,13 +61,14 @@ class Hortator(BaseClass):
                                                start_time=operation_start,
                                                error=error,
                                                crash_time=crash_time))
-            except BaseException:
-                operation.operation_teardown()
-                raise
-            
+            except KeyboardInterrupt:
+                self.logger.warning("Oh, I am slain.")
+                return
+           
         end = clock.now()
         for crash in crash_times:
             print str(crash)
         self.logger.info(ELAPSED_TIME.format(t=end - start))
         return
+
 # end class Hortator

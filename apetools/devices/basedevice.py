@@ -33,7 +33,7 @@ class BaseDevice(BaseClass):
         """
         :param:
 
-         - `connection`: An device connection
+         - `connection`: A device connection
          - `interface`: The test-interface name to try and get the address
          - `address` The Test-interface IP to use if the interface name isn't given
          - `role`: an identifier to help with building file-names

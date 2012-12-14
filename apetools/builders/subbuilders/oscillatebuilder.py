@@ -145,7 +145,7 @@ class OscillateBuilder(BaseToolBuilder):
                                       output=self.output,
                                       arguments=self.arguments)
             if self.block:
-                self.master.event_list.append(self._product.event)
+                self.master.events.append(self._product.event)
         return self._product
 
     @property
