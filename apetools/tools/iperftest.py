@@ -1,13 +1,21 @@
 """
 A module to hold an iperf test tool
 """
+#python standard library
+import time
 
 # apetools
 from apetools.baseclass import BaseClass
+from apetools.commons.errors import CommandError
 
 #this folder
 from sleep import Sleep 
 from killall import KillAll
+
+class IperfTestError(CommandError):
+    """
+    """
+# end class IperfTestError
 
 
 class IperfTest(BaseClass):
@@ -59,10 +67,13 @@ class IperfTest(BaseClass):
          - `sender`: a device to originate traffic
          - `receiver`: A device to receive traffic
          - `filename`: a filename to use for output
+
+        :raise: IperfTestError if wait_events time out
         """
         # set the target address in the iperf command to the receiver (server)
         self.sender_command.parameters.client = receiver.address
-        
+
+        self.logger.info("Killing Existing Iperf Processes")
         self.kill(sender.connection)
         self.kill(receiver.connection)
         self.logger.info("Running Iperf: {2} ({0}) -> {3} ({1})".format(sender.address, receiver.address,
@@ -71,9 +82,12 @@ class IperfTest(BaseClass):
         self.receiver_command.start(receiver, filename)
         self.logger.info("Sleeping to let the server start.")
         self.sleep()
+
+        # allow other processes to block the iperf client-start
         if self.wait_events is not None:
-            for event in self.wait_events:
-                event.wait()
+            time_out = self.sender_command.max_time
+            if not self.wait_events.wait(time_out):
+                raise IperfTestError("Timed out waiting for event.")                
         self.logger.info("Running the client (sender)")
         self.sender_command.run(sender, filename)
         if self.receiver_command.running:

@@ -8,7 +8,16 @@ a module to hold a builder of objects
 
 
 # third party
-from mock import MagicMock
+#from mock import MagicMock
+
+class MagicMock(object):
+    def __call__(self):
+        print "This is a Mock"
+        return
+
+    def total_time(self):
+        return "I Don't Know"
+# end class MagicMock
 
 # apetools
 from apetools.baseclass import BaseClass
@@ -27,6 +36,8 @@ from apetools.lexicographers.config_options import ConfigOptions
 #commons
 from apetools.commons import storageoutput
 from apetools.commons import enumerations
+from apetools.commons import events
+
 operating_systems = enumerations.OperatingSystem
 iperf_direction = enumerations.IperfDirection
 ConnectionTypes = enumerations.ConnectionTypes
@@ -75,7 +86,7 @@ class Builder(BaseClass):
         self._thread_nodes = None
         self._semaphore = None
         self._saved_semaphore = None
-        self._event_list = None
+        self._events = None
 
         self._operation_setup_builder = None
         self._operation_teardown_builder = None
@@ -102,13 +113,13 @@ class Builder(BaseClass):
         return self.saved_semaphore
 
     @property
-    def event_list(self):
+    def events(self):
         """
-        :return: list to hold events
+        :return: EventHolder to hold events
         """
-        if self._event_list is None:
-            self._event_list = []
-        return self._event_list
+        if self._events is None:
+            self._events = events.EventHolder()
+        return self._events
     
     @property
     def parameters(self):
@@ -241,7 +252,11 @@ class Builder(BaseClass):
             
             test_teardown = self.teardown_test_builder(config_map, self.parameters).product
             self.parameters = self.teardown_test_builder(config_map, self.parameters).parameters
-            
+
+            no_cleanup = self.current_config.get_boolean(ConfigOptions.test_section,
+                                                         ConfigOptions.no_cleanup_option,
+                                                         default=False,
+                                                         optional=True)
             yield TestOperator(ParameterGenerator(self.parameters),
                                operation_setup=operation_setup,
                                operation_teardown=operation_teardown,
@@ -249,7 +264,8 @@ class Builder(BaseClass):
                                tests=test,
                                test_teardown=test_teardown,
                                countdown_timer=MagicMock(),
-                               nodes=self.nodes)
+                               nodes=self.nodes,
+                               no_cleanup=no_cleanup)
         return
 
     @property
@@ -258,7 +274,7 @@ class Builder(BaseClass):
         :return: The Hortator for the test operators
         """
         if self._hortator is None:
-            self.logger.debug("Building the Hortator")
+            self.logger.debug("Building the Hortator")            
             self._hortator = hortator.Hortator(operators=self.operators)
         return self._hortator
 

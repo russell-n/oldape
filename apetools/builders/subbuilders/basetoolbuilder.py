@@ -33,6 +33,7 @@ class BaseToolBuilder(BaseClass):
          - `previous_parameters`: A list of the parameters created by previous builders
         """
         super(BaseToolBuilder, self).__init__()
+        self._logger = None
         self.master = master
         self.config_map = config_map
         self.previous_parameters = previous_parameters

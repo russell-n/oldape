@@ -106,8 +106,8 @@ class Oscillate(BaseThreadedCommand):
                     self.rotation_start.set()
                     continue
 
-        except Exception as error:
-            self.error_queue.put(error)
+        except Exception as err:
+            self.error_queue.put(err)
         self.check_error(error)
         return
 
@@ -125,7 +125,7 @@ class Oscillate(BaseThreadedCommand):
         if len(line):
             if "pthread_mutex_destroy" in line:
                 self.error_queue.put(line)
-                self.logger.warning("Unable to grab the lock: Is the Oscillator already running?")
+                raise OscillatorError("Unable to grab the lock: Is the Oscillator already running?")
             else:
                 self.logger.warning(line)
         return
@@ -153,7 +153,8 @@ class Oscillate(BaseThreadedCommand):
         """
         with self.connection.lock:
             for line in self.generate_output(*self.connection.pkill('oscillate;rotate 0 -k')):
-                self.logger.debug(line)
+                if len(line):
+                    self.logger.debug(line)
         self.stopped = True
         return
 
@@ -198,16 +199,30 @@ class OscillateEvent(BaseClass):
         """
         super(OscillateEvent, self).__init__()
         self.event = event
+        self.timeout = None
         return
 
-    def wait(self):
+    def is_set(self):
         """
+        :return: True if the event is set, False otherwise.
+        """
+        return self.event.is_set()
+
+    def wait(self, timeout=None):
+        """
+        :param:
+
+         - `timeout`: if not None, stop blocking after timeout (seconds)
+        
         :postcondition: event is cleared then waited for
         """
         self.event.clear()
         self.logger.info("Waiting for the start of the next rotation.")
-        self.event.wait()
+        self.event.wait(timeout)
         return
+
+    def __str__(self):
+        return "Wait For Next Rotation Event"
 # end class OscillateEvent
     
 
@@ -234,7 +249,8 @@ class OscillateStop(BaseClass):
             output, error = self.connection.pkill('oscillate;sleep 2;rotate 0 -k')
 
         for line in output:
-            self.logger.info(line)
+            if len(line.strip()):
+                self.logger.info(line)
         err = error.readline()
         if len(err):
             self.logger.error(err)

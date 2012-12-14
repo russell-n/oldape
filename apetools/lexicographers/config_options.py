@@ -63,3 +63,4 @@ class ConfigOptions(object):
     noise_end_option = "noise_end"
 
     block_option = "block"
+    no_cleanup_option = "no_cleanup"

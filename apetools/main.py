@@ -42,26 +42,11 @@ def main():
         raise Exception("Something's wrong with the ArgumentParser")
         return
     set_logger(args)
-    enable_debugging(args)
+    enable_debugging(args)    
 
-    watcher()
     args.function(args)
     return
 
-def watcher():
-    """
-    The watcher watches for signal interrupts
-    """
-    child = os.fork()
-    if child == 0:
-        return
-    try:
-        os.wait()
-    except KeyboardInterrupt as interrupt:
-        print interrupt
-        os.kill(child, signal.SIGKILL)
-    sys.exit()
-    return
 
 if __name__ == "__main__":
     import pudb;pudb.set_trace()

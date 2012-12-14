@@ -4,6 +4,9 @@ An operator operates tests.
 #python Libraries
 from collections import namedtuple
 from Queue import Queue
+import os
+import sys
+import signal
 
 # apetools Libraries
 from apetools.baseclass import BaseClass
@@ -29,7 +32,7 @@ class TestOperator(BaseClass):
     An operator runs the sequence of operations.
     """
     def __init__(self, test_parameters, operation_setup, operation_teardown,
-                 test_setup, tests, test_teardown,nodes,
+                 test_setup, tests, test_teardown,nodes, no_cleanup,
                  countdown_timer, sleep=None):
         """
         :params:
@@ -41,6 +44,7 @@ class TestOperator(BaseClass):
          - `tests`: The tests to be run with each parameter subset
          - `test_teardown`: A tear down to run after each test is run
          - `nodes`: a dictionary of nodes
+         - `no_cleanup`: if True, allow ctrl-c to kill immediately
          - `countdown_timer`: An estimator of remaining time         
          - `sleep`: A sleep for recovery times
         """
@@ -52,6 +56,7 @@ class TestOperator(BaseClass):
         self.tests = tests
         self.test_teardown = test_teardown
         self.nodes = nodes
+        self.no_cleanup = no_cleanup
         self.countdown_timer = countdown_timer
         self._sleep = sleep
         self.parameter_queue = Queue()
@@ -119,6 +124,10 @@ class TestOperator(BaseClass):
         """
         This is the main operation method.
         """
+        if self.no_cleanup:
+            self.keyboard_interrupt_intercept()
+
+
         self.operation_setup()
         self.countdown_timer()
         try:
@@ -150,6 +159,26 @@ class TestOperator(BaseClass):
         except (errors.ConnectionError, errors.CommandError, errors.ConfigurationError) as error:
             self.logger.error(error)
         finally:
+            self.logger.info("Tearing Down the Current Operation")
             self.operation_teardown()
         return
+
+    def keyboard_interrupt_intercept(self):
+        """
+        The watcher watches for signal interrupts and kills children.
+
+        This was implemented to prevent user-confusion when a ctrl-c is
+        sent and the interpreter tries to clean up the threads
+        """
+        child = os.fork()
+        if child == 0:
+            return
+        try:
+            os.wait()
+        except KeyboardInterrupt:
+            self.logger.warning("Keyboard-Interrupt (killing without cleanup...)")
+            os.kill(child, signal.SIGKILL)
+        sys.exit()
+        return
+
 # end TestOperator

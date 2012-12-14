@@ -17,8 +17,9 @@ class LogcatWatcher(LogWatcher):
          - `logs`:  an optional list of logs to use instead of watching all of them.
         """
         super(LogcatWatcher, self).__init__(*args, **kwargs)
-        self._logs = logs
+        self.command = "logcat"
         self._arguments = None
+        self._logs = logs
         self._logger = None
         self._stop = None
         self._stopped = None
@@ -31,9 +32,12 @@ class LogcatWatcher(LogWatcher):
         :return: list of logcat buffer names
         """
         if self._logs is None:
-            output, error = self.connection.ls(self.path)
+            with self.connection.lock:
+                output, error = self.connection.ls(self.path)
             self._logs = [log for log in output]
-                
+            err = error.readline()
+            if len(err):
+                self.logger.error(err)
         return self._logs
     
     @property
@@ -48,66 +52,35 @@ class LogcatWatcher(LogWatcher):
             self._arguments = "-v time" + "".join((" -b " + log for log in logs))
             self.logger.debug("logcat argument string: '{0}'".format(self._arguments))
         return self._arguments
-    
-    def run(self):
-        """
-        Runs an infinite loop that reads the tail of the log.
-        Writes the lines to self.output.write()
-        """
-        for line in self.connection.logcat(self.arguments):
-            self.output.write(line)
-            if self.stopped:
-                return
-        return
-# end class LogcatWatcher
 
-
-class SafeLogcatWatcher(LogcatWatcher):
-    """
-    The SafeLogcatWatcher watches a lock to protect the call to the connection.
-  
-    """
-    def __init__(self, lock, *args, **kwargs):
+    @arguments.setter
+    def arguments(self, buffers):
         """
         :param:
 
-         - `lock`: A threading Lock
+        - `buffers`: not used
         """
-        super(SafeLogcatWatcher, self).__init__(*args, **kwargs)
-        self.lock = lock
-        self.path = "/dev/log/"
         return
 
-    @property
-    def logs(self):
+    def run(self, connection):
         """
-        :yield: A list of the adb logs.
-        """
-        with self.lock:
-            output, error = self.connection.ls(self.path)
-
-        for line in output:
-            yield line
-        return
-        
-    def run(self):
-        """
-        Runs an infinite loop that reads the tail of the log.
+        Runs an infinite loop that executes self.command on self.arguments
         Writes the lines to self.output.write()
         """
-        self.logger.debug("starting the logcat with: {0}".format(self.arguments))
-        with self.lock:
+        with self.connection.lock:
             output, error = self.connection.logcat(self.arguments)
-
-        self.logger.debug("Out of the lock")
         for line in output:
             self.output.write(line)
             if self.stopped:
-                self.logger.debug("Logcat has been stopped")
                 return
-        self.logger.debug("Exiting the logcat watcher")
+        err = error.readline()
+        if len(err):
+            self.logger.error(err)
         return
-# end class SafeLogcatWatcher
+
+# end class LogcatWatcher
+
+
     
 if __name__ == "__main__":
     import sys
