@@ -89,7 +89,8 @@ class IwCommand(BaseClass):
         :return: The named-group that matched or None
         """
         expression = re.compile(expression)
-        output, error = self.connection.iw(command)
+        with self.connection.lock:
+            output, error = self.connection.iw(command)
         for line in output:
             match = expression.search(line)
             if match:

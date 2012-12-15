@@ -109,7 +109,8 @@ class Svc(BaseClass):
 
          - `command`: the command to send to 'svc'
         """
-        output, error = self.connection.svc(command)
+        with self.connection.lock:
+            output, error = self.connection.svc(command)
         self.validate(output, command)
         return
         

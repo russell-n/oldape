@@ -4,9 +4,7 @@ A module to query the device for interface information.
 #python libraries
 import re
 
-from apetools.baseclass import BaseClass
-from apetools.commons import enumerations
-from apetools.commons import expressions
+#apetools
 from apetools.commons import errors
 
 from basewificommand import BaseWifiCommand
@@ -99,7 +97,8 @@ class WifiCommand(BaseWifiCommand):
 
         :return: stdout for the command
         """
-        output, error = self.connection.wl(subcommand)
+        with self.connection.lock:
+            output, error = self.connection.wl(subcommand)
         err = error.readline()
         if len(err) > 1:
             self.logger.error(err)
@@ -116,7 +115,8 @@ class WifiCommand(BaseWifiCommand):
         :return: The named-group that matched or None
         """
         expression = re.compile(expression)
-        output, error = self.connection.iw(command)
+        with self.connection.lock:
+            output, error = self.connection.iw(command)
         for line in output:
             match = expression.search(line)
             if match:

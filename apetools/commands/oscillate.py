@@ -102,7 +102,7 @@ class Oscillate(BaseThreadedCommand):
                 if line.startswith("<Oscillator>"):
                     self.output.write("{0}:{1}".format(self.timestamp.now, line))
                     continue
-                if line.startswith("Rotating from"):
+                if line.startswith("Rotating From"):
                     self.rotation_start.set()
                     continue
 

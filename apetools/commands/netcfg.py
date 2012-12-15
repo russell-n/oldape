@@ -46,7 +46,8 @@ class NetcfgCommand(BaseClass):
         :return: The IP Address of the interface
         """
         expression = self.interface + expressions.NETCFG_IP
-        output, error = self.connection.netcfg()
+        with self.connection.lock:
+            output, error = self.connection.netcfg()
         for line in output:
             match = re.search(expression, line)
             if match:
@@ -94,7 +95,8 @@ class NetcfgCommand(BaseClass):
         :return: The output of the netcfg command on the device
         """
         if self._output is None:
-            out, self.error = self.connection.netcfg()
+            with self.connection.lock:
+                out, self.error = self.connection.netcfg()
             self._output, output = tee(out)
         else:
             self._output, output = tee(self._output)
