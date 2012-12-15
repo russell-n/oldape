@@ -88,7 +88,9 @@ class OscillateBuilder(BaseToolBuilder):
                            ConfigOptions.timeout_option,
                            ConfigOptions.noise_start_option,
                            ConfigOptions.noise_end_option,            
-                           ConfigOptions.port_option):
+                           ConfigOptions.port_option,
+                           ConfigOptions.anti_adjustment_option,
+                           ConfigOptions.clockwise_adjustment_option):
                 value = self.config_map.get(section, option,optional=True)
                 if value is not None:
                     arguments[option] = value

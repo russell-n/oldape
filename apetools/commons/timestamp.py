@@ -67,4 +67,10 @@ class TimestampFormat(object):
         :return: the given time converted to a formatted string
         """
         return time.strftime(self.format, time.localtime(time_in_seconds))
-# end class TimeStampFormat
+
+    def __call__(self):
+        """
+        A pass-through to self.now
+        """
+        return self.now
+# end class TimestampFormat

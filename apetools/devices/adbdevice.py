@@ -209,7 +209,8 @@ class AdbWifiCommandFinder(BaseClass):
         commands = []
         for command in wifi_commands:
             try:
-                output, error = getattr(connection, command)("-v")
+                with connection.lock:
+                    output, error = getattr(connection, command)("-v")
                 for line in output:
                     self.logger.debug(line)
                 commands.append(command)

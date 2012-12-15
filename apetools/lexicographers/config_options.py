@@ -64,3 +64,6 @@ class ConfigOptions(object):
 
     block_option = "block"
     no_cleanup_option = "no_cleanup"
+
+    anti_adjustment_option = 'anti_adjustment'
+    clockwise_adjustment_option = 'clockwise_adjustment'

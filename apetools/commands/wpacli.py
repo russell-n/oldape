@@ -5,7 +5,6 @@ A module to query the device for interface information.
 import re
 
 from apetools.baseclass import BaseClass
-from apetools.commons import enumerations
 from apetools.commons import expressions
 from apetools.commons import errors
 
@@ -43,7 +42,9 @@ class WpaCliCommand(BaseClass):
         
         :return: The status of the wpa-connection
         """
-        return ''.join([line for line in self.connection.wpa_cli(self.status_command)[0]])
+        with self.connection.lock:
+            output = ''.join([line for line in self.connection.wpa_cli(self.status_command)[0]])
+        return output
 
     
     @property
@@ -128,7 +129,8 @@ class WpaCliCommand(BaseClass):
         :return: The named-group that matched or None
         """
         expression = re.compile(expression)
-        output, error = self.connection.wpa_cli(arguments)
+        with self.connection.lock:
+            output, error = self.connection.wpa_cli(arguments)
         for line in output:
             match = expression.search(line)
             if match:
