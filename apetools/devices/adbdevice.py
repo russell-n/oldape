@@ -51,6 +51,13 @@ class AdbDevice(BaseDevice):
         return self.wifi_querier.rssi
 
     @property
+    def bitrate(self):
+        """
+        :return: the current bitrate
+        """
+        return self.wifi_querier.bitrate
+    
+    @property
     def noise(self):
         """
         :return: the current noise
@@ -163,10 +170,16 @@ class AdbDevice(BaseDevice):
         """
         :rtype: StringType
         :return: The Wifi Info
-        """
-        
-        raise NotImplementedError("Get WiFi Info not done yet")
-        return
+        """        
+        return "SSID:{0}\nBSSID:{1}\nMAC:{2}\nChannel:{3}\nIP:{4}\nRSSI:{5}\nNoise:{6}\nBitrate:{7}".format(self.ssid,
+                                                                                                            self.bssid,
+                                                                                                            self.mac_address,
+                                                                                                            self.channel,
+                                                                                                            self.ip_address,
+                                                                                                            self.rssi,
+                                                                                                            self.noise,
+                                                                                                            self.bitrate)
+                                                                                                            
 
     def log(self, message):
         """
@@ -207,13 +220,20 @@ class AdbWifiCommandFinder(BaseClass):
         """
         super(AdbWifiCommandFinder, self).__init__()
         commands = []
+        #import pudb; pudb.set_trace()
+        
         for command in wifi_commands:
+            valid = True
             try:
                 with connection.lock:
                     output, error = getattr(connection, command)("-v")
+
                 for line in output:
-                    self.logger.debug(line)
-                commands.append(command)
+                    if "not found" in line:
+                        valid = False
+                        break
+                if valid:
+                    commands.append(command)
             except CommandError as error:
                 self.logger.debug(error)
         return commands

@@ -35,8 +35,14 @@ class TheWatcher(BaseClass):
 
         :postcondition: self.threads is a list of started threads
         """
+        self.threads = []
         try:
-            self.threads = [watcher.start() for watcher in self.watchers]
+            for watcher in self.watchers:
+                try:
+                    watcher.start()
+                except Exception as error:
+                    self.logger.error(error)
+                    raise TheWatcherError("Unable to start {0}".format(watcher))
         except AttributeError:
             raise TheWatcherError("No Watchers to Watch")
         return

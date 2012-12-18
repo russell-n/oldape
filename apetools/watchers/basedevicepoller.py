@@ -8,8 +8,9 @@ import re
 
 # apetools
 from apetools.baseclass import BaseClass
-from apetools.commons.timestamp import TimestampFormat
+from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
 from apetools.threads.threads import Thread
+
 
 #constants
 CSV_JOIN = "{0},{1}"
@@ -65,7 +66,7 @@ class BaseDevicePoller(BaseClass):
         :return: timestamp creator
         """
         if self._timestamp is None:
-            self._timestamp = TimestampFormat()
+            self._timestamp = TimestampFormat(TimestampFormatEnums.log)
         return self._timestamp
 
     @property

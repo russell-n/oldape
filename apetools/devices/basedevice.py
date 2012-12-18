@@ -51,6 +51,7 @@ class BaseDevice(BaseClass):
         self._wifi_info = None
         self._logger = None
         self._mac_address = None
+        self._bitrate = None
         return
 
     @property
@@ -61,6 +62,13 @@ class BaseDevice(BaseClass):
         if self._connection is None:
             self._connection = None
         return self._connection
+
+    @abstractproperty
+    def bitrate(self):
+        """
+        :return: the current bitrate
+        """
+        return 
 
     @abstractmethod
     def disable_wifi(self):
@@ -154,6 +162,12 @@ class BaseDevice(BaseClass):
          - `message`: A string to send to the device log.
         """
         return
+
+    def poll(self):
+        """
+        :return: rssi,noise,bitrate
+        """
+        return "{0},{1},{2}".format(self.rssi.rstrip(), self.noise.rstrip(), self.bitrate.rstrip())
 
     def __str__(self):
         return "Role: {2}\nConnection: {0}\nWiFi Info: {1}\n".format(self.connection,

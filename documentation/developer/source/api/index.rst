@@ -41,6 +41,17 @@ The Rotator
 
    rotator
 
+Synaxx
+~~~~~~
+
+.. currentmodule:: apetools.affectors.synaxxx
+
+.. autosummary::
+   :toctree: synaxxx_api
+   
+   synaxxx
+
+
 The Rest
 ~~~~~~~~
 
@@ -77,25 +88,41 @@ Sub-Builders
    
    affectorbuilder
    apconnectbuilder
+   basedevicebuilder
+   baseoperationbuilder
    basetoolbuilder
+   builderenumos
+   commandwatcherbuilder
    connectionbuilder
    devicebuilder
+   dumpdevicestatebuilder
    executetestbuilder
+   iperfcommandbuilder
+   iperfparameterbuilder
+   iperfsessionbuilder
    iperftestbuilder
+   logwatchersbuilder
    nersbuilder
    nodebuilder
    nodesbuilder
    operationsetupbuilder
    operationteardownbuilder
+   oscillatebuilder
+   pollerbuilder
+   poweroffbuilder
+   poweronbuilder
    reportbuilder
+   rotatebuilder
    setupiterationbuilder
    setuptestbuilder
+   storagepipebuilder
    teardownbuilder
    teardowniterationbuilder
    teardowntestbuilder
    timetorecoverybuilder
    toolbuilder
-   watchersbuilder
+   tpcdevicebuilder
+   watcherbuilder
 
 
 Commands
@@ -108,6 +135,8 @@ The **Commands** bundle specific commands with device connections. It is their r
 .. autosummary::
    :toctree: commands_api
 
+   basecommand
+   basewificommand
    changeprompt
    dumpsyswifi
    ifconfig
@@ -118,10 +147,16 @@ The **Commands** bundle specific commands with device connections. It is their r
    iwconfig
    netcfg
    netsh
+   oscillate
    ping
+   poweroff
+   poweron
    rotate
    svc
+   wificommand
+   windowsssindconnect
    winrssi
+   wlcommand
    wmic
    wpacli
 
@@ -138,10 +173,12 @@ The **Commons** is a place to put things that the different sub-modules need to 
    assertions
    broadcaster
    centraltendency
+   coroutine
    datacounter
    dummy
    enumerations
    errors
+   events
    expressions
    filterer
    generators
@@ -149,6 +186,7 @@ The **Commons** is a place to put things that the different sub-modules need to 
    reporter
    storagebroadcaster
    storageoutput
+   timestamp
 
 Connections
 -----------
@@ -163,7 +201,6 @@ The **Connections** provide connectivity to devices. It is their responsibility 
    adbconnection
    localconnection
    nonlocalconnection
-   producer
    puppetconnection
    serialconnection
    sl4aconnection   
@@ -172,6 +209,7 @@ The **Connections** provide connectivity to devices. It is their responsibility 
 
    sharedcounter
    lineproducer
+   producer
    
 * The `lineproducer` is a utility used to break up lines for connections that only have access to streams (as opposed to file-like objects). 
 * `sharedcounter` was created to prevent the subprocess files from prematurely killing the process on deletion (it acts like a non-blocking semaphore)
@@ -239,20 +277,6 @@ The *Config-file* is the primary user-interface for the test. It allows the APE 
    parametertree
    timeconverter
 
-Sub-Lexicographers
-~~~~~~~~~~~~~~~~~~
-
-**Sub-Lexicographers** know how to translate specific sections of the config-file, alleviating the translational burden of the main *Lexicographer*.
-
-.. currentmodule:: apetools.lexicographers.sublexicographers
-
-.. autosummary::
-   :toctree: sub_lexicographer_api
-   
-   devicelexicographer
-   iperflexicographer
-   naxxxlexicographer
-
 
 Operations
 ----------
@@ -264,6 +288,7 @@ Operations
 .. autosummary::
    :toctree: operations_API
 
+   baseoperation
    executetest
    operationsetup
    operationteardown
@@ -284,6 +309,8 @@ Parameters
    iperf_common_parameters
    iperf_common_tcp_parameters
    iperf_server_parameters
+   iperf_test_parameters
+   iperf_udp_parameters
 
 Since the parameters define the behavior of commands, choosing them declares their behavior, much as the choice and ordering of the tools defines the behavior of the Test Operator. 
 
@@ -295,6 +322,7 @@ Parsers
 .. autosummary::
    :toctree: parsers_api
 
+   coroutine
    iperfexpressions
    iperfparser
    oatbran
@@ -309,6 +337,7 @@ Pipes
 .. autosummary::
    :toctree: pipes_api
 
+   commandpipe
    storagepipe
 
 Proletarians
@@ -360,9 +389,10 @@ The **Tools** are bundled commands that the operator uses. By ordering the set o
    :toctree: tools_api
 
    copyfiles
+   dumpdevicestate
    getipaddress
-   iperftest
    iperfsession
+   iperftest
    killall
    movefiles
    networktester
@@ -387,9 +417,14 @@ The **Watchers** watch logs.
 .. autosummary:: 
    :toctree: watchers_api
    
+   basedevicepoller
+   commandwatcher
+   devicepoller
    logcatwatcher
    logwatcher
+   rssipoller
    thewatcher
+   tsharkwatcher
 
 
 Indices and tables
