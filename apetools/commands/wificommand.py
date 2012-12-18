@@ -12,9 +12,17 @@ MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
 
 
+class WifiCommandError(CommandError):
+    """
+    An error to raise if the Wifi Command fails
+    """
+# end class WifiCommandError
+
 class WifiCommand(BaseWifiCommand):
     """
-    The Wl Command interprets WL information
+    The Wifi Command interprets `wifi` information
+
+    :warning: this was copied from the wl command and needs updating
     """
     def __init__(self, *args, **kwargs):
         """
@@ -26,6 +34,10 @@ class WifiCommand(BaseWifiCommand):
         """
         super(WifiCommand, self).__init__(*args, **kwargs)
         return
+
+    @property
+    def bitrate(self):
+        return self.get("bitrate").readline()
     
     @property
     def interface(self):
@@ -93,13 +105,16 @@ class WifiCommand(BaseWifiCommand):
         """
         :param:
 
-         - `subcommand`: `wl` subcommand
+         - `subcommand`: `wifi` subcommand
 
         :return: stdout for the command
         """
         with self.connection.lock:
-            output, error = self.connection.wl(subcommand)
+            output, error = self.connection.wifi(subcommand)
         err = error.readline()
+        if "not found" in err:
+            self.logger.error(err)
+            raise CommandError("The `wifi` command wasn't found on the device")
         if len(err) > 1:
             self.logger.error(err)
         return output

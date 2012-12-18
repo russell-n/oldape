@@ -78,6 +78,9 @@ class LogcatWatcher(LogWatcher):
             self.logger.error(err)
         return
 
+    def __str__(self):
+        return "{0} {1}".format(self.command, self.arguments)
+
 # end class LogcatWatcher
 
 

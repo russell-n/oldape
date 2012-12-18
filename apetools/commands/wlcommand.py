@@ -56,6 +56,13 @@ class WlCommand(BaseWifiCommand):
         return self._mac_address
 
     @property
+    def bitrate(self):
+        """
+        :return: the reported physical bitrate
+        """
+        return self.get("rate").readline()
+
+    @property
     def ssid(self):
         """
         :return: the SSID of the currently attched ap

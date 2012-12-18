@@ -5,8 +5,6 @@ A base module to query the device for interface information.
 from abc import ABCMeta, abstractproperty
 
 from apetools.baseclass import BaseClass
-from apetools.commons import enumerations
-from apetools.commons import expressions
 from apetools.commons import errors
 
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
@@ -17,6 +15,7 @@ class BaseWifiCommand(BaseClass):
     """
     The Base Wifi query command
     """
+    __metaclass__ = ABCMeta
     def __init__(self, connection, interface=None, operating_system=None):
         """
         :param:
@@ -25,7 +24,6 @@ class BaseWifiCommand(BaseClass):
          - `interface`: The interface to check
          - `operating_system` : The operating system on the devices.
         """
-        __metaclass__ = ABCMeta
         super(BaseWifiCommand, self).__init__()
         self._logger = None
         self.connection = connection
@@ -37,6 +35,7 @@ class BaseWifiCommand(BaseClass):
         self._bssid = None
         self._mac_address = None
         self._ip_address = None
+        self._bitrate = None
         return
 
     @property
@@ -62,7 +61,14 @@ class BaseWifiCommand(BaseClass):
         
         :return: The rssi for the interface
         """        
-        return 
+        return
+
+    @abstractproperty
+    def bitrate(self):
+        """
+        :return: the reported physical bit-rate
+        """
+        return
     
     @abstractproperty
     def mac_address(self):

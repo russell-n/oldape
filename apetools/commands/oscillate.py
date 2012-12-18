@@ -5,6 +5,7 @@ A class to talk to an oscillator.
 #python standard library
 from threading import Thread, Event
 from Queue import Queue
+from time import sleep
 
 # apetools modules
 from apetools.baseclass import BaseClass
@@ -16,6 +17,8 @@ class OscillatorError(CommandError):
     """
     """
 # end class OscillatorError
+
+
 
 class Oscillate(BaseThreadedCommand):
     """
@@ -88,6 +91,10 @@ class Oscillate(BaseThreadedCommand):
             self._thread = Thread(target=self.run, name="Oscillator")
             self._thread.daemon = True
             self._thread.start()
+            sleep(0.5)
+            if not self.error_queue.empty():
+                raise OscillatorError(self.queue.get())
+            
         return self._thread
     
     def run(self):
@@ -96,6 +103,7 @@ class Oscillate(BaseThreadedCommand):
         """
         try:
             with self.connection.lock:
+                self.logger.info("Starting the oscillation")
                 output, error = self.connection.oscillate(self.arguments)
             for line in self.generate_output(output, error):            
                 self.logger.debug(line)
@@ -107,6 +115,7 @@ class Oscillate(BaseThreadedCommand):
                     continue
 
         except Exception as err:
+            self.logger.error(err)
             self.error_queue.put(err)
         self.check_error(error)
         return
@@ -124,8 +133,11 @@ class Oscillate(BaseThreadedCommand):
         line = error.readline()
         if len(line):
             if "pthread_mutex_destroy" in line:
+                self.error_queue.put("Unable to grab the lock: Is the Oscillator already running?")
+                #raise OscillatorError("Unable to grab the lock: Is the Oscillator already running?")
+            elif "Rate table returned invalid amount of data" in line:
                 self.error_queue.put(line)
-                raise OscillatorError("Unable to grab the lock: Is the Oscillator already running?")
+                #aise OscillatorError("Rate Table error")
             else:
                 self.logger.warning(line)
         return
@@ -152,7 +164,7 @@ class Oscillate(BaseThreadedCommand):
          - rotate() called
         """
         with self.connection.lock:
-            for line in self.generate_output(*self.connection.pkill('oscillate;rotate 0 -k')):
+            for line in self.generate_output(*self.connection.pkill('oscillate;sleep 1;rotate 0 -k')):
                 if len(line):
                     self.logger.debug(line)
         self.stopped = True
@@ -169,7 +181,9 @@ class Oscillate(BaseThreadedCommand):
         if self.thread.is_alive():
             if self.block:
                 self.event.wait()
-        elif not self.error_queue.empty():
+        # give the connection a chance to return an error
+        sleep(1)
+        if not self.error_queue.empty():
             raise OscillatorError("Unable to Oscillate: {0}".format(self.error_queue.get()))
         return
 
@@ -228,7 +242,7 @@ class OscillateEvent(BaseClass):
 
 class OscillateStop(BaseClass):
     """
-    A class to explicitly stop the Oscillator, since the Destructor doesn't seem to work.
+    A class to explicitly stop the Oscillator
     """
     def __init__(self, connection):
         """
@@ -240,14 +254,7 @@ class OscillateStop(BaseClass):
         self.connection = connection
         return
 
-    def kill_and_rotate(self):
-        """
-        :postcondition: pkill oscillate and rotate 0 -k sent to connection
-        :return: True if on stderr output, False otherwise
-        """
-        with self.connection.lock:
-            output, error = self.connection.pkill('oscillate;sleep 2;rotate 0 -k')
-
+    def check_output(self, output, error):
         for line in output:
             if len(line.strip()):
                 self.logger.info(line)
@@ -257,6 +264,26 @@ class OscillateStop(BaseClass):
             return False
         return True
     
+    
+    def kill_and_rotate(self, sleep_time=1):
+        """
+        :param:
+
+         - `sleep`: time to sleep between oscillate and rotate commands
+        
+        :postcondition: pkill oscillate and rotate 0 -k sent to connection
+        :return: True if on stderr output, False otherwise
+        """
+        with self.connection.lock:
+            output, error = self.connection.pkill("oscillate")
+        if not self.check_output(output, error):
+            return False
+        sleep(sleep_time)
+        with self.connection.lock:
+            output, error = self.connection.rotate("0 -k")
+        return self.check_output(output, error)
+        
+    
     def __call__(self, parameter=None):
         """
         :param:
@@ -265,8 +292,10 @@ class OscillateStop(BaseClass):
         
         :postcondition:
         """
-        if not self.kill_and_rotate():
-            self.logger.error("Sleeping 5 seconds and trying again.")
-            self.kill_and_rotate()
+        sleep_time = 5
+        while not self.kill_and_rotate():
+            self.logger.error("Sleeping {0} seconds and trying again.".format(sleep_time))
+            sleep(sleep_time)
+            sleep_time +=  1
         return
 # end OscillateStop

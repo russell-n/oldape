@@ -82,7 +82,14 @@ class LinuxDevice(BaseDevice):
         :return: rssi from the wifi_query
         """
         return self.wifi_query.rssi
-    
+
+    @property
+    def bitrate(self):
+        """
+        :return: bitrate from the wifi_query
+        """
+        return self.wifi_query.bitrate
+
     def disable_wifi(self):
         self.connection.rfkill("block wifi")
         return

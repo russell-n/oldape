@@ -6,6 +6,7 @@ from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 
 from apetools.watchers.rssipoller import RssiPoller
+from apetools.watchers.devicepoller import DevicePoller
 
 class PollerBuilderError(ConfigurationError):
     """
@@ -85,3 +86,36 @@ class RssiPollerBuilder(BasePollerBuilder):
                                        interval=self.interval)
         return self._product
 # end class RssiPollerBuilder
+
+class DevicePollerBuilder(BasePollerBuilder):
+    """
+    A builder of rssi-pollers
+    """
+    def __init__(self, *args, **kwargs):
+        super(DevicePollerBuilder, self).__init__(*args, **kwargs)
+        self._interval = None
+        return
+
+    @property
+    def interval(self):
+        """
+        :return: time between polls
+        """
+        if self._interval is None:
+            if hasattr(self.parameters, "interval"):
+                self._interval = float(self.parameters.interval)
+            else:
+                self._interval = 1
+        return self._interval
+
+    @property
+    def product(self):
+        """
+        :return: device-poller
+        """
+        if self._product is None:
+            self._product = DevicePoller(device=self.node,
+                                         output=self.output_file,
+                                         interval=self.interval)
+        return self._product
+# end class DevicePollerBuilder

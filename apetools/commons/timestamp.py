@@ -14,9 +14,11 @@
 """
 A module to store common timestamp formats
 """
-
+# python standard library
 import time
 
+# apetools
+from apetools.log_setter import LOG_TIMESTAMP
 
 class TimestampFormatEnums(object):
     """
@@ -24,9 +26,11 @@ class TimestampFormatEnums(object):
     """
     __slots__ = ()
     iperf = "iperf"
+    log = 'log'
 # end class TimestampFormatEnums
 
-formats = {TimestampFormatEnums.iperf:"%Y%m%d%H%M%S"}
+formats = {TimestampFormatEnums.iperf:"%Y%m%d%H%M%S",
+           TimestampFormatEnums.log:LOG_TIMESTAMP}
 
 class TimestampFormat(object):
     """

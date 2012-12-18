@@ -90,6 +90,9 @@ class LogWatcher(BaseClass):
         self.thread =  threads.Thread(target=self.run, args=(connection,),
                                       name="LogWatcher {0}".format(self.arguments))
         return self.thread
+
+    def __str__(self):
+        return "cat {0}".format(self.arguments)
 # end class LogWatcher
 
 class SafeLogWatcher(LogWatcher):
