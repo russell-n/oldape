@@ -12,7 +12,8 @@ class SafeLogWatcherTest(TestCase):
         self.mock = Mock()
         self.path = "/proc/kmsg"
         self.expected = output.split('\n')
-        self.watcher = logwatcher.SafeLogWatcher(lock=self.mock, output=self.mock, path=self.path, connection=self.mock)
+        
+        self.watcher = logwatcher.SafeLogWatcher(output=self.mock, arguments=self.path, connection=self.mock)
         return
 
     def test_run(self):
@@ -20,7 +21,7 @@ class SafeLogWatcherTest(TestCase):
         #self.watcher._logger = self.mock
         self.watcher.run()
 
-        expectation = [call.__enter__(), call.cat(self.path), call.__exit__(None, None, None)]
+        expectation = [call.lock.__enter__(), call.cat(self.path), call.lock.__exit__(None, None, None)]
 
         for line in self.expected:
             expectation.append(call.write(line))        

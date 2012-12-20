@@ -7,6 +7,7 @@ from apetools.commons.errors import ConfigurationError
 
 from apetools.watchers.rssipoller import RssiPoller
 from apetools.watchers.devicepoller import DevicePoller
+from apetools.watchers.procnetdevwatcher import ProcnetdevWatcher
 
 class PollerBuilderError(ConfigurationError):
     """
@@ -53,6 +54,39 @@ class BasePollerBuilder(BaseClass):
 
 # end class BasePollerBuilder
 
+class ProcnetdevWatcherBuilder(BasePollerBuilder):
+    """
+    A builder of network interface pollers
+    """
+    def __init__(self, *args, **kwargs):
+        super(ProcnetdevWatcherBuilder, self).__init__(*args, **kwargs)
+        self._interval = None
+        return
+
+    @property
+    def interval(self):
+        """
+        :return: time between polls
+        """
+        if self._interval is None:
+            if hasattr(self.parameters, "interval"):
+                self._interval = float(self.parameters.interval)
+            else:
+                self._interval = 1
+        return self._interval
+
+    @property
+    def product(self):
+        """
+        :return: rssi-poller
+        """
+        if self._product is None:
+            self._product = ProcnetdevWatcher(connection=self.node.connection,
+                                              output=self.output_file,
+                                              interval=self.interval,
+                                              interface=self.parameters.interface)
+        return self._product
+# end class RssiPollerBuilder
 
 class RssiPollerBuilder(BasePollerBuilder):
     """
