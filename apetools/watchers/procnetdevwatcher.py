@@ -159,7 +159,7 @@ class ProcnetdevWatcher(BaseClass):
                     for expression_key, value_index in EXPRESSION_INDICES:
                         next_array[value_index] = int(match[expression_key])
                     self.output.write("{0}\n".format(",".join((str(i) for i in (next_array - start_array)))))
-                    start_array = next_array
+                    start_array = numpy.copy(next_array)
             try:
                 sleep(self.interval - (time() - start))
             except IOError:
