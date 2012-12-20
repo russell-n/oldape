@@ -42,9 +42,9 @@ class TestCommandWatcher(TestCase):
         now = MagicMock(return_value=timestamp)
         with patch('time.strftime', now):
             self.watcher.start()
-
+            time.sleep(.1)
             self.watcher.stop()
-            time.sleep(1)
+            time.sleep(.1)
         self.connection.sh.assert_called_with("wifi.sh status")
         self.output.write.assert_called_with(EXPECTED)
         return

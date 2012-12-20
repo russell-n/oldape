@@ -99,14 +99,14 @@ class SafeLogWatcher(LogWatcher):
     """
     A SafeLogWatcher uses the connection's lock to protect calls to the connection.
     """
-    def __init__(self, lock, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         """
         :param:
 
          - `lock`: A threading.lock
         """
         super(SafeLogWatcher, self).__init__(*args, **kwargs)
-        self.lock = lock
+        self.lock = self.connection.lock
         return
 
     def run(self):
