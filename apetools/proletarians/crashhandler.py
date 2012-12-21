@@ -47,8 +47,9 @@ class CrashHandler(BaseClass):
             f.write(line)
         f.write(footer + "\n")
 
-        print header
-        traceback.print_exc()
-        print footer
+        #print header
+        #traceback.print_exc()
+        
+        #print footer
         return
 # end CrashHandler

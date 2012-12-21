@@ -4,8 +4,7 @@ from StringIO import StringIO
 
 from mock import MagicMock, patch, call, PropertyMock
 
-from apetools.watchers.procnetdevwatcher import ProcnetdevWatcher, ProcnetdevWatcherEnum, HEADER
-from apetools.watchers.procnetdevwatcher import REXPRESSION_KEYS
+from apetools.watchers.procpollster import ProcnetdevPollster, ProcnetdevPollsterEnum
 from apetools.commons.timestamp import TimestampFormat
 
 sample = """
@@ -29,42 +28,44 @@ wlan0-mon: 15683752  116761    3    4    5     6          0         0        7  
   eth0: 78917734   69440    0    0    0     0          0       334  4920158   33266    0    0    0     0       0          0
 """
 
-OUTPUT = ",".join('1 2 3 4 5 6 7 8 9 10 11 12 13'.split()) + "\n"
 TIMESTAMP = '2012-12-17:13:46:26'
+OUTPUT = TIMESTAMP + ',' +  ",".join('1 2 3 4 5 6 7 8 9 10 11 12 13'.split()) + "\n"
 
-class TestProcnetdevWatcher(TestCase):
+
+class TestProcnetdevPollster(TestCase):
     def setUp(self):
         self.output = MagicMock()
         self.connection = MagicMock()
         self.timestamp = MagicMock()
-        self.watcher = ProcnetdevWatcher(output=self.output, interface=interface,
-                                         connection = self.connection,
-                                         interval=1)
+        self.watcher = ProcnetdevPollster(output=self.output, interface=interface,
+                                          connection = self.connection,
+                                          interval=1)
         self.watcher._timestamp = self.timestamp
         return
 
     def test_keys(self):
-        self.assertEqual(REXPRESSION_KEYS[0], ProcnetdevWatcherEnum.receive_bytes)
+        self.assertEqual(self.watcher.rexpression_keys[0],
+                         ProcnetdevPollsterEnum.receive_bytes)
         return
 
     def test_expression(self):
         match = self.watcher.expression.search(line).groupdict()
         self.assertIsNotNone(match)
-        self.assertEqual("15683751", match[ProcnetdevWatcherEnum.receive_bytes])
-        self.assertEqual("116759", match[ProcnetdevWatcherEnum.receive_packets])
-        self.assertEqual('wlan0-mon', match[ProcnetdevWatcherEnum.interface])
-        self.assertEqual("12", match[ProcnetdevWatcherEnum.receive_errs])
-        self.assertEqual("13", match[ProcnetdevWatcherEnum.receive_drop])
-        self.assertEqual("14", match[ProcnetdevWatcherEnum.receive_fifo])
-        self.assertEqual('15', match[ProcnetdevWatcherEnum.receive_frame])
+        self.assertEqual("15683751", match[ProcnetdevPollsterEnum.receive_bytes])
+        self.assertEqual("116759", match[ProcnetdevPollsterEnum.receive_packets])
+        self.assertEqual('wlan0-mon', match[ProcnetdevPollsterEnum.interface])
+        self.assertEqual("12", match[ProcnetdevPollsterEnum.receive_errs])
+        self.assertEqual("13", match[ProcnetdevPollsterEnum.receive_drop])
+        self.assertEqual("14", match[ProcnetdevPollsterEnum.receive_fifo])
+        self.assertEqual('15', match[ProcnetdevPollsterEnum.receive_frame])
         
-        self.assertEqual('16', match[ProcnetdevWatcherEnum.transmit_bytes])
-        self.assertEqual('17', match[ProcnetdevWatcherEnum.transmit_packets])
-        self.assertEqual('18', match[ProcnetdevWatcherEnum.transmit_errs])
-        self.assertEqual('19', match[ProcnetdevWatcherEnum.transmit_drop])
-        self.assertEqual('20', match[ProcnetdevWatcherEnum.transmit_fifo])
-        self.assertEqual('21', match[ProcnetdevWatcherEnum.transmit_colls])
-        self.assertEqual('22', match[ProcnetdevWatcherEnum.transmit_carrier])
+        self.assertEqual('16', match[ProcnetdevPollsterEnum.transmit_bytes])
+        self.assertEqual('17', match[ProcnetdevPollsterEnum.transmit_packets])
+        self.assertEqual('18', match[ProcnetdevPollsterEnum.transmit_errs])
+        self.assertEqual('19', match[ProcnetdevPollsterEnum.transmit_drop])
+        self.assertEqual('20', match[ProcnetdevPollsterEnum.transmit_fifo])
+        self.assertEqual('21', match[ProcnetdevPollsterEnum.transmit_colls])
+        self.assertEqual('22', match[ProcnetdevPollsterEnum.transmit_carrier])
         return
 
     def test_stop(self):
@@ -80,9 +81,9 @@ class TestProcnetdevWatcher(TestCase):
         
         self.connection.cat.side_effect = side_effects
         timer = MagicMock()
-        expected = [call.write(HEADER), call.write(OUTPUT)]
+        expected = [call.write(self.watcher.header), call.write(OUTPUT)]
         self.timestamp.now.return_value = TIMESTAMP
-        
+        timer.return_value = 0
         with patch('time.time', timer):
             with patch('apetools.commons.timestamp.TimestampFormat.now', new_callable=PropertyMock) as mock_now:
                 mock_now.__get__ = MagicMock(return_value = TIMESTAMP)
@@ -92,7 +93,7 @@ class TestProcnetdevWatcher(TestCase):
                 self.watcher.stop()
         calls = self.output.write.call_args_list
         self.assertEqual(expected, calls)
-# end class TestProcnetdevWatcher
+# end class TestProcnetdevPollster
 
 class TestTimestampFormat(TestCase):
     def setUp(self):

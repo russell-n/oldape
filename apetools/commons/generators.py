@@ -58,7 +58,7 @@ class ShallowFind(object):
         :return: all files found in the path
         """
         if self._filenames is None:
-            self._filenames = os.listdir(self.path)
+            self._filenames = sorted(os.listdir(self.path))
         return self._filenames
 
     def reset(self):

@@ -62,7 +62,7 @@ class IperfSessionBuilder(BaseToolBuilder):
         """
         if self._directions is None:
             self._directions = self.config_map.get_list(ConfigOptions.iperf_section,
-                                                  ConfigOptions.directions_option)
+                                                        ConfigOptions.directions_option)
             for direction in self._directions:
                 if self.product.to_node_expression.search(direction):
                     continue
