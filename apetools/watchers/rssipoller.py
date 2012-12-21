@@ -50,6 +50,8 @@ class RssiPoller(BaseDevicePoller):
         :postcondition: the poller is sending rssi values to the output
         """
         interval = self.interval
+        if self.use_header:
+            self.output.write("timestamp,rssi\n")
         while True:
             if self.event is not None:
                 self.event.wait()

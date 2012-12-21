@@ -41,9 +41,9 @@ class Lexicographer(BaseClass):
             found = True            
             yield file_name
         if not found:
-            raise errors.ArgumentError(("'{0}' doesn't match any file in"
+            raise errors.ArgumentError(("Your glob for the config file ('{0}') doesn't match any file in"
                                         " directory {1}"
-                                        " containing ({2})").format(self.finder.glob,
+                                        " which contains ({2})").format(self.finder.glob,
                                                                     self.finder.path,
                                                                     self.finder.filenames))
         return

@@ -16,6 +16,7 @@ from apetools.baseclass import BaseClass
 from errors import StorageError
 
 WRITEABLE = 'w'
+APPEND = 'a'
 NEWLINE_ADD = '{l}\n'
 TIMESTAMP_FLAG = "{t}"
 NEWLINE = "\n"
@@ -73,10 +74,23 @@ class StorageOutput(BaseClass):
         self._path = None
         self.output_folder = os.path.join(self.output_folder, subdirectory)
         return
-        
-        
 
-    def open(self, filename, subdir=None):
+    def is_file(self, filename, subdir=None):
+        """
+        :param:
+
+         - `filename`: The name of the file to open 
+         - `subdir`: A subdirectory whithin the output folder to put the file in.
+         
+        :return: True if file exists, False otherwise
+        """
+        if subdir is not None:
+            dirname = os.path.join(self.path, subdir)
+        else:
+            dirname = self.path
+        return os.path.isfile(os.path.join(dirname, filename))
+    
+    def open(self, filename, subdir=None, mode=WRITEABLE):
         """
         :param:
 
@@ -91,13 +105,14 @@ class StorageOutput(BaseClass):
             directory = os.path.join(self.path, subdir)
             if not os.path.isdir(directory):
                 os.makedirs(directory)
-        filename = self._timestamp(filename)
-        filename = self._fix_duplicate_names(filename, extension)
+        if mode != APPEND:
+            filename = self._timestamp(filename)
+            filename = self._fix_duplicate_names(filename, extension, subdir)
         filename += extension
         self.filename = os.path.join(directory, filename)
         #self.logger.debug("Opening File: {0}".format(self.filename))
         clone = copy.deepcopy(self)
-        clone.output_file = open(self.filename, WRITEABLE)
+        clone.output_file = open(self.filename, mode)
         return clone
 
     def _timestamp(self, name, timestamp_format=None):
@@ -113,13 +128,17 @@ class StorageOutput(BaseClass):
             return name
         return name.format(t=timestamp)
         
-    def _fix_duplicate_names(self, name, extension):
+    def _fix_duplicate_names(self, name, extension, subdir=None):
         """
         Checks if the name exists as a prefix and adds a number if it does.
 
         :return: uniqued name
         """
-        count = sum((1 for filename in os.listdir(self.path) if filename.startswith(name)
+        if subdir is not None:
+            dirname = os.path.join(self.path, subdir)
+        else:
+            dirname = self.path
+        count = sum((1 for filename in os.listdir(dirname) if filename.startswith(name)
                      and filename.endswith(extension)))
         if count > 0:
             name = "{0}_{1}".format(name, str(count+1).zfill(3))

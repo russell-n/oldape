@@ -4,10 +4,10 @@ A module to build device pollers
 
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
-
+from apetools.commons.storageoutput import APPEND
 from apetools.watchers.rssipoller import RssiPoller
 from apetools.watchers.devicepoller import DevicePoller
-from apetools.watchers.procnetdevwatcher import ProcnetdevWatcher
+from apetools.watchers.procpollster import ProcnetdevPollster
 
 class PollerBuilderError(ConfigurationError):
     """
@@ -39,27 +39,63 @@ class BasePollerBuilder(BaseClass):
         self.output = output
         self._product = None
         self._output_file = None
+        self._filename = None
+        self._subdir = None
+        self._use_header = None
         return
 
+    @property
+    def use_header(self):
+        """
+        :return: True if this is a new file
+        """
+        if self._use_header is None:
+            self._use_header = not self.output.is_file(filename=self.filename,
+                                                       subdir=self.subdir)
+        return self._use_header
+    
+
+    @property
+    def subdir(self):
+        """
+        :return: name of subdirectory for output file
+        """
+        if self._subdir is None:
+            if hasattr(self.parameters, 'subdir'):
+                self._subdir = self.parameters.subdir
+            else:
+                self._subdir = 'logs'
+        return self._subdir
+    
+    @property
+    def filename(self):
+        """
+        :return: name for output filen
+        """
+        if self._filename is None:
+            self._filename = ("{0}_{1}".format(self.parameters.type, self.name) +
+                              ".log")
+        return self._filename
+    
     @property
     def output_file(self):
         """
         :return: opened file to send output to
         """
         if self._output_file is None:
-            prefix = "{0}_{1}".format(self.parameters.type, self.name)
-            self._output_file = self.output.open("{0}.log".format(prefix),
-                                                 subdir="logs")
+            self._output_file = self.output.open(self.filename,
+                                                 subdir=self.subdir,
+                                                 mode=APPEND)
         return self._output_file
 
 # end class BasePollerBuilder
 
-class ProcnetdevWatcherBuilder(BasePollerBuilder):
+class ProcnetdevPollsterBuilder(BasePollerBuilder):
     """
     A builder of network interface pollers
     """
     def __init__(self, *args, **kwargs):
-        super(ProcnetdevWatcherBuilder, self).__init__(*args, **kwargs)
+        super(ProcnetdevPollsterBuilder, self).__init__(*args, **kwargs)
         self._interval = None
         return
 
@@ -81,12 +117,13 @@ class ProcnetdevWatcherBuilder(BasePollerBuilder):
         :return: rssi-poller
         """
         if self._product is None:
-            self._product = ProcnetdevWatcher(connection=self.node.connection,
-                                              output=self.output_file,
-                                              interval=self.interval,
-                                              interface=self.parameters.interface)
+            self._product = ProcnetdevPollster(connection=self.node.connection,
+                                               output=self.output_file,
+                                               interval=self.interval,
+                                               interface=self.parameters.interface,
+                                               use_header=self.use_header)
         return self._product
-# end class RssiPollerBuilder
+# end class ProcdevnetPollterBuilder
 
 class RssiPollerBuilder(BasePollerBuilder):
     """
@@ -117,7 +154,8 @@ class RssiPollerBuilder(BasePollerBuilder):
         if self._product is None:
             self._product = RssiPoller(device=self.node,
                                        output=self.output_file,
-                                       interval=self.interval)
+                                       interval=self.interval,
+                                       use_header=self.use_header)
         return self._product
 # end class RssiPollerBuilder
 
@@ -150,6 +188,7 @@ class DevicePollerBuilder(BasePollerBuilder):
         if self._product is None:
             self._product = DevicePoller(device=self.node,
                                          output=self.output_file,
-                                         interval=self.interval)
+                                         interval=self.interval,
+                                         use_header=self.use_header)
         return self._product
 # end class DevicePollerBuilder

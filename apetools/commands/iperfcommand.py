@@ -34,6 +34,7 @@ class IperfCommandEnum(object):
     __slots__ = ()
     client = "client"
     server = "server"
+    time = 'time'
 # end IperfCommandEnum
     
     
@@ -52,6 +53,7 @@ class IperfCommand(BaseClass):
          - `subdirectory`: A folder to put the iperf files intn
         """
         super(IperfCommand, self).__init__()
+        self.role = role
         self.parameters = parameters
         self._parser  = None
         self._output = None
@@ -59,7 +61,6 @@ class IperfCommand(BaseClass):
         self.base_filename = base_filename
         self.output.extend_path(subdirectory) 
 
-        self.role = role
         self._max_time = None
         self._now = None
 
@@ -72,7 +73,7 @@ class IperfCommand(BaseClass):
         """
         :return: SumParser pipeline (if this is the client)
         """
-        if self._parser is None and hasattr(self.parameters, "time"):
+        if self._parser is None and self.role==IperfCommandEnum.client:
             threads = None
             if self.parameters.parallel is not None:
                 threads = int(self.parameters.parallel.split()[-1])
@@ -108,7 +109,7 @@ class IperfCommand(BaseClass):
         :return: time-function to check for timeouts
         """
         if self._now is None:
-            if hasattr(self.parameters, "time"):
+            if self.role == IperfCommandEnum.client:
                 self._now = time.time
             else:
                 self._now = lambda: 0
@@ -149,7 +150,7 @@ class IperfCommand(BaseClass):
         """
         if self._max_time is None:
             self._max_time = 0
-            if hasattr(self.parameters, "time"):
+            if hasattr(self.parameters, IperfCommandEnum.time):
                 self._max_time = max(120, 1.5 * float(self.parameters.time.split()[-1]))
         return self._max_time
     

@@ -22,7 +22,7 @@ class BaseDevicePoller(BaseClass):
     """
     __metaclass__ = ABCMeta
     def __init__(self, device, output, expression=None, interval=1,
-                 timestamp=None, name=None, event=None):
+                 timestamp=None, name=None, event=None, use_header=True):
         """
         :param:
 
@@ -33,14 +33,16 @@ class BaseDevicePoller(BaseClass):
          - `timestamp`: a timestamp creator
          - `name`: Name to use in the logs
          - `event`: An event which if set starts the polling
+         - `use_header`: If True, prepend header to output
         """
         super(BaseDevicePoller, self).__init__()
-        self._logger = None
+        self._logger = None        
         self.device = device
         self.output = output
         self._expression = expression
         self.interval = interval
         self.event = event
+        self.use_header = use_header
         self._name = name
         self._timestamp = timestamp
         self._regex = None

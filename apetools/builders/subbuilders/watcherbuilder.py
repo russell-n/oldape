@@ -5,7 +5,7 @@ A Watcher builder
 #apetools
 from basetoolbuilder import BaseToolBuilder
 from logwatcherbuilders import LogcatWatcherBuilder, LogWatcherBuilder
-from pollerbuilders import RssiPollerBuilder, DevicePollerBuilder, ProcnetdevWatcherBuilder
+from pollerbuilders import RssiPollerBuilder, DevicePollerBuilder, ProcnetdevPollsterBuilder
 from apetools.watchers import thewatcher
 
 from apetools.lexicographers.config_options import ConfigOptions
@@ -27,7 +27,7 @@ watcher_builder = {WatcherTypes.adblogcat:LogcatWatcherBuilder,
                    WatcherTypes.logcat:LogWatcherBuilder,
                    WatcherTypes.rssi:RssiPollerBuilder,
                    WatcherTypes.device:DevicePollerBuilder,
-                   WatcherTypes.procnetdev:ProcnetdevWatcherBuilder}
+                   WatcherTypes.procnetdev:ProcnetdevPollsterBuilder}
 
 class WatcherBuilder(BaseToolBuilder):
     """
