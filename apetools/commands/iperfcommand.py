@@ -10,6 +10,8 @@ from apetools.commons import errors
 from apetools.commons import readoutput
 from apetools.pipes.storagepipe import StoragePipe, StoragePipeEnum
 from apetools.parsers.sumparser import SumParser
+from apetools.parameters.iperf_common_parameters import IperfParametersEnum
+
 ConfigurationError = errors.ConfigurationError
 CommandError = errors.CommandError
 
@@ -125,6 +127,10 @@ class IperfCommand(BaseClass):
         :return: a prefix to add to the filename given
         :raise: ConfigurationError if self.role or node_type are unknown
         """
+        if hasattr(self.parameters, IperfParametersEnum.udp):
+            filename = "udp_" + filename
+        else:
+            filename = "tcp_" + filename
         if self.role == IperfCommandEnum.client:
             filename = self.base_filename + filename
             if node_type == BaseDeviceEnum.node:

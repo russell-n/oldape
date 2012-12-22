@@ -43,6 +43,7 @@ class Oscillate(BaseThreadedCommand):
         self._event = None
         self._thread = None
         self._error_queue = None
+        self.name = 'oscillate'
         return
 
     @property
@@ -112,6 +113,7 @@ class Oscillate(BaseThreadedCommand):
                     continue
                 if line.startswith("Rotating From"):
                     self.rotation_start.set()
+                    self.logger.debug("Start of rotation detected, event is set.")
                     continue
 
         except Exception as err:
@@ -175,7 +177,8 @@ class Oscillate(BaseThreadedCommand):
         :param:
 
          - `parameter`: not used
-         
+
+        :return: name
         :postcondition: thread is running, rotation_start is set
         """
         if self.thread.is_alive():
@@ -185,7 +188,7 @@ class Oscillate(BaseThreadedCommand):
         sleep(1)
         if not self.error_queue.empty():
             raise OscillatorError("Unable to Oscillate: {0}".format(self.error_queue.get()))
-        return
+        return self.name
 
     def __del__(self):
         """

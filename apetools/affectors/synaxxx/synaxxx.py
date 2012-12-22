@@ -110,26 +110,29 @@ class Synaxxx(BaseClass):
                 statuses[states['switch']] = states['state']
         return statuses
 
-    def exec_command(self, command):
+    def exec_command(self, command, attempts=2):
         """
         :param:
 
          - `command`: a string to send to the device
+         - `attempts`: number of times to try (the server tends to die)
 
         :postcondition: command string sent to the device
         :yield: line of output
         """
-        try:
-            self.client.read_very_eager()
-            self.client.write(NEWLINE)
-            self.client.write(command + NEWLINE)
-            for line in self.lines():            
-                self.validate(line, command)
-                yield line
-        except socket.error as error:
-            self.logger.error("Telnet Error: {0}".format(error))
-            self.close()
-            raise SynaxxxError("Error with: {0}@{1}".format(self.host,
+        for attempt in range(attempts):
+            try:
+                self.client.read_very_eager()
+                self.client.write(NEWLINE)
+                self.client.write(command + NEWLINE)
+                for line in self.lines():            
+                    self.validate(line, command)
+                    yield line
+            except socket.error as error:
+                self.logger.error("Telnet Error: {0}".format(error))
+                self.close()
+                if attempt == attempts - 1:
+                    raise SynaxxxError("Error with: ip: {0} port: {1}".format(self.host,
                                                             self.port))
         return 
     

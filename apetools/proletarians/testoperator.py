@@ -71,7 +71,7 @@ class TestOperator(BaseClass):
             self._sleep = sleep.Sleep()
         return self._sleep
         
-    def one_repetition(self, parameter, count):
+    def one_repetition(self, parameter, count, prefix):
         """
         Holds the test algorithm for one repetition.
 
@@ -80,7 +80,17 @@ class TestOperator(BaseClass):
         #. Runs Setup
         #. Runs test
         #. Runs Teardown
+
+        :param:
+
+         - `parameter`: namedtuple with tool-parameters
+         - `count`: the current test-count (for logging)
+         - `prefix`: any file-prefix given by the operation-setup
         """
+        if prefix is not None:
+            filename_prefix = prefix
+        else:
+            filename_prefix = ''
         #**** Setup Test
         self.logger.info("Running Parameters: {0}".format(parameter))
         message = TEST_TAG.format(r=count,
@@ -89,7 +99,7 @@ class TestOperator(BaseClass):
         self.log_info(message, parameter.nodes.parameters)
         self.logger.info("Running test setup")
 
-        filename_prefix = self.test_setup(parameter)
+        filename_prefix = "{0}_{1}".format(filename_prefix, self.test_setup(parameter))
         self.sleep()
 
         #**** Execute test
@@ -128,15 +138,14 @@ class TestOperator(BaseClass):
             self.keyboard_interrupt_intercept()
 
 
-        self.operation_setup()
+        prefix = self.operation_setup()
         self.countdown_timer()
         try:
-            count = 0
-        
+            count = 0        
             for parameter in self.test_parameters:
                 count += 1
                 try:
-                    self.one_repetition(parameter, count)
+                    self.one_repetition(parameter, count, prefix)
                 except (errors.AffectorError, errors.CommandError) as error:
                     self.logger.error(error)
                     self.logger.error("Quitting this iteration")
