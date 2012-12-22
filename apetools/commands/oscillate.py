@@ -6,6 +6,7 @@ A class to talk to an oscillator.
 from threading import Thread, Event
 from Queue import Queue
 from time import sleep
+import re
 
 # apetools modules
 from apetools.baseclass import BaseClass
@@ -102,6 +103,7 @@ class Oscillate(BaseThreadedCommand):
         """
         :postcondition: oscillate command sent to the oscillator
         """
+        rotation_expression = re.compile("Rotating\s+[Ff]rom")
         try:
             with self.connection.lock:
                 self.logger.info("Starting the oscillation")
@@ -111,9 +113,9 @@ class Oscillate(BaseThreadedCommand):
                 if line.startswith("<Oscillator>"):
                     self.output.write("{0}:{1}".format(self.timestamp.now, line))
                     continue
-                if line.startswith("Rotating From"):
-                    self.rotation_start.set()
+                if rotation_expression.search(line):
                     self.logger.debug("Start of rotation detected, event is set.")
+                    self.rotation_start.set()
                     continue
 
         except Exception as err:
