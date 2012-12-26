@@ -157,7 +157,7 @@ class TestOperator(BaseClass):
                 self.logger.info("Re-trying: {0}".format(parameter))
                 count += 1
                 try:
-                    self.one_repetition(parameter, count)
+                    self.one_repetition(parameter, count, prefix)
                 except (errors.AffectorError, errors.CommandError) as error:
                     self.logger.error(error)
                     self.logger.error("Quitting this iteration")

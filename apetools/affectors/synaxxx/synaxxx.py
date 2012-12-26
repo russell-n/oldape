@@ -188,7 +188,7 @@ class Synaxxx(BaseClass):
 
          - `switches`: a list of switches (integers)
 
-        :postcondition: switches in list on, all others off
+        :postcondition: switches in list on, all others off, self.close called
         """
         self.all_off()
         
@@ -218,6 +218,7 @@ class Synaxxx(BaseClass):
                 self.increment_sleep()
                 raise SynaxxxError("Unable to turn off switch '{0}'".format(switch))
         self.show_status()
+        self.close()
         return
 
     def increment_sleep(self):
