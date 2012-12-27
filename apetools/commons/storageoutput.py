@@ -89,6 +89,17 @@ class StorageOutput(BaseClass):
         else:
             dirname = self.path
         return os.path.isfile(os.path.join(dirname, filename))
+
+    def get_full_path(self, filename):
+        """
+        :param:
+
+         - `filename`: name of file
+
+        :return: path to filename in output folder
+        :postcondition: output folder exists
+        """
+        return os.path.join(self.output_folder, filename)
     
     def open(self, filename, subdir=None, mode=WRITEABLE):
         """

@@ -265,7 +265,8 @@ class Builder(BaseClass):
                                test_teardown=test_teardown,
                                countdown_timer=MagicMock(),
                                nodes=self.nodes,
-                               no_cleanup=no_cleanup)
+                               no_cleanup=no_cleanup,
+                               storage=self.storage)
         return
 
     @property

@@ -12,7 +12,7 @@ import signal
 from apetools.baseclass import BaseClass
 from apetools.tools import sleep
 from apetools.commons import errors
-
+from apetools.commons import sublogger
 
 TIME_REMAINING = "Estimated time Remaining: {t}"
 
@@ -33,7 +33,7 @@ class TestOperator(BaseClass):
     """
     def __init__(self, test_parameters, operation_setup, operation_teardown,
                  test_setup, tests, test_teardown,nodes, no_cleanup,
-                 countdown_timer, sleep=None):
+                 countdown_timer, storage, sleep=None):
         """
         :params:
 
@@ -45,7 +45,8 @@ class TestOperator(BaseClass):
          - `test_teardown`: A tear down to run after each test is run
          - `nodes`: a dictionary of nodes
          - `no_cleanup`: if True, allow ctrl-c to kill immediately
-         - `countdown_timer`: An estimator of remaining time         
+         - `countdown_timer`: An estimator of remaining time
+         - `storage`: a storage-output (mainly to get the 
          - `sleep`: A sleep for recovery times
         """
         super(TestOperator, self).__init__()
@@ -57,11 +58,22 @@ class TestOperator(BaseClass):
         self.test_teardown = test_teardown
         self.nodes = nodes
         self.no_cleanup = no_cleanup
+        self.storage=storage
         self.countdown_timer = countdown_timer
         self._sleep = sleep
+        self._sub_logger = None
         self.parameter_queue = Queue()
         return
 
+    @property
+    def sub_logger(self):
+        """
+        :return: holder of sub-logger
+        """
+        if self._sub_logger is None:
+            self._sub_logger = sublogger.SubLogger()
+        return self._sub_logger
+    
     @property
     def sleep(self):
         """
@@ -134,6 +146,9 @@ class TestOperator(BaseClass):
         """
         This is the main operation method.
         """
+        sublog_name = 'testoperation.log'
+        sublog_name = self.storage.get_full_path(sublog_name)
+        self.sub_logger.add(sublog_name)
         if self.no_cleanup:
             self.keyboard_interrupt_intercept()
 
@@ -170,6 +185,7 @@ class TestOperator(BaseClass):
         finally:
             self.logger.info("Tearing Down the Current Operation")
             self.operation_teardown()
+            self.sub_logger.remove(sublog_name)
         return
 
     def keyboard_interrupt_intercept(self):

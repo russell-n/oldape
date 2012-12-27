@@ -3,16 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive. 
 
-Developer Documentation
-=======================
+Appendices
+==========
 
 Contents:
 
 .. toctree::
    :maxdepth: 1
 
-   API <api/index>   
-   Project Log <project_log/source/index>
+              
 
 
 Indices and tables

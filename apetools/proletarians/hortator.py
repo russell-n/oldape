@@ -1,3 +1,16 @@
+# Copyright 2012 Russell Nakamura
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.'
 """
 A module to hold an exhorter of operators
 """
@@ -5,9 +18,6 @@ A module to hold an exhorter of operators
 # python Libraries
 from datetime import datetime as clock
 from collections import namedtuple
-import sys
-import os
-import signal
 
 # apetools Libraries
 from apetools.baseclass import BaseClass
@@ -38,10 +48,11 @@ class Hortator(BaseClass):
          - `operators`: An iterator of operators
         """
         super(Hortator, self).__init__(*args, **kwargs)
-        self.operators = operators
+        self.operations = operators
         self.last_operator = None
         return
 
+    
     def __call__(self):
         """
         Runs the operators
@@ -50,10 +61,10 @@ class Hortator(BaseClass):
 
         crash_times = []
         #import pudb;pudb.set_trace()
-        for operation_count, operator in enumerate(self.operators):
+        for operation_count, operation in enumerate(self.operations):
             operation_start = clock.now()
             try:
-                operator()
+                operation()
             except OperatorError as error:
                 crash_time = clock.now()
                 self.logger.error(error)
