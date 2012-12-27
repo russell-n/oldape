@@ -91,7 +91,7 @@ Sub-Builders
    basedevicebuilder
    baseoperationbuilder
    basetoolbuilder
-   builderenumos
+   builderenums
    commandwatcherbuilder
    connectionbuilder
    devicebuilder

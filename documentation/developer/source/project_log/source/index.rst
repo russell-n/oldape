@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive. 
 
-Developer Documentation
+Tate Throughput Testing
 =======================
 
 Contents:
@@ -11,8 +11,10 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
-   API <api/index>   
-   Project Log <project_log/source/index>
+   Introduction <introduction/introduction>
+   Experiment <experiment/experiment>
+   Conclusion <conclusion/conclusion>
+   Appendices <appendices/index>
 
 
 Indices and tables
