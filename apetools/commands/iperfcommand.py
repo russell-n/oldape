@@ -15,10 +15,6 @@ from apetools.parameters.iperf_common_parameters import IperfParametersEnum
 ConfigurationError = errors.ConfigurationError
 CommandError = errors.CommandError
 
-EOF = ""
-NEWLINE = "\n"
-
-
 class IperfError(CommandError):
     """
     An IperfError indicates a connection problem.
@@ -37,6 +33,9 @@ class IperfCommandEnum(object):
     client = "client"
     server = "server"
     time = 'time'
+    eof = ""
+    newline = "\n"
+    udp = 'udp'
 # end IperfCommandEnum
     
     
@@ -202,21 +201,36 @@ class IperfCommand(BaseClass):
         :raise: IperfError if runtime is greater than self.parameters.time
         """
         filename = self.filename(filename, device.role)
+        is_udp = hasattr(self.parameters, IperfCommandEnum.udp)
+
         if not server:
-            self.output.set_emit()
+            if not is_udp:
+                self.output.set_emit()
+            else:
+                self.output.unset_emit()
         else:
-            self.output.unset_emit()
+            if is_udp:
+                self.output.set_emit()
+            else:
+                self.output.unset_emit()
+                 
         file_output = self.output.open(filename=filename)
         
 
         self.logger.debug("Executing parameters: {0}".format(self.parameters))
-        output, error = device.connection.iperf(str(self.parameters))
-        
+
+        with device.connection.lock:
+            self.logger.debug("Waiting for the connection lock")
+            output, error = device.connection.iperf(str(self.parameters))
+            self.logger.debug("Out of the connection lock")
         start_time = time.time()
         abort_time = start_time + self.max_time
-        self.running = True 
+        self.running = True
+        newline = IperfCommandEnum.newline
+        end_of_file = IperfCommandEnum.eof
         for line in readoutput.ValidatingOutput(output, self.validate):
-            self.logger.debug(line.rstrip(NEWLINE))
+            if len(line.strip()):
+                self.logger.debug(line.rstrip(newline))
             try:
                 file_output.send(line)
             except StopIteration:
@@ -224,7 +238,7 @@ class IperfCommand(BaseClass):
                 break
             if self.now() > abort_time:
                 try:
-                    file_output.send(EOF)
+                    file_output.send(end_of_file)
                 except StopIteration:
                     pass
                 self.abort = False
@@ -233,7 +247,7 @@ class IperfCommand(BaseClass):
                                                                                        self.now() - start_time))
             if self.stop:
                 try:
-                    file_output.send(EOF)
+                    file_output.send(end_of_file)
                 except StopIteration:
                     pass
                 self.stop = False

@@ -185,7 +185,7 @@ class TestOperator(BaseClass):
         finally:
             self.logger.info("Tearing Down the Current Operation")
             self.operation_teardown()
-            self.sub_logger.remove(sublog_name)
+            self.sub_logger.remove(logname=sublog_name)
         return
 
     def keyboard_interrupt_intercept(self):

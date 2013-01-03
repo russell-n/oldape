@@ -4,6 +4,7 @@ A module to hold a sleeping class.
 
 # python Libraries
 import time
+from types import IntType, FloatType
 
 #apetools Libraries
 from apetools.baseclass import BaseClass
@@ -31,7 +32,7 @@ class Sleep(BaseClass):
 
          - `sleep_time`: The total amount of time to sleep.
         """
-        if sleep_time is None:
+        if sleep_time is None or not type(sleep_time) in (IntType, FloatType):
             sleep_time = self.sleep_time
 
         self.logger.info(MESSAGE.format(sleep_time))

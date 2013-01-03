@@ -69,3 +69,11 @@ Things to Check
 
  * What should happen to the master log that watches all the tests and contains the debug information?
 
+Update December 30, 2012
+------------------------
+
+The output of the sub-logger is missing timestamps, destroying much of the intent of creating it.
+
+.. todo::
+   Add timestamps to the output format.
+

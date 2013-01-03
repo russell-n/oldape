@@ -38,6 +38,19 @@ END_GROUP = "end"
 RANGE = re.compile(NAMED.format(name=START_GROUP, pattern=INTEGER) + SPACES_OPTIONAL +
                    DASH + SPACES_OPTIONAL + NAMED.format(name=END_GROUP, pattern=INTEGER))
 
+
+class ConfigurationSectionError(ConfigurationError):
+    """
+    """
+    pass
+# end class ConfigurationSectionError
+
+class ConfigurationOptionError(ConfigurationError):
+    """
+    """
+    pass
+# end class ConfigurationOptionError
+
 class BooleanValues(object):
     """
     A class to hold the valid booleans.
@@ -112,7 +125,7 @@ class ConfigurationMap(BaseClass):
 
     def raise_error(self, error):
         self.logger.debug(error)
-        raise ConfigurationError(error)
+        raise ConfigurationOptionError(error)
 
 
     def get(self, section, option, default=None, optional=False):
@@ -137,7 +150,9 @@ class ConfigurationMap(BaseClass):
         try:
             value = self.parser.get(section, option)
             return value.strip(STRIP_LIST)
-        except (ConfigParser.Error, AttributeError) as error:
+        except ConfigParser.NoSectionError as error:
+            raise ConfigurationSectionError(error)
+        except ConfigParser.NoOptionError as error:
             if optional:
                 return default
             self.raise_error(error)

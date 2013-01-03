@@ -7,6 +7,7 @@ class ConfigOptions(object):
     poweron_section = "POWERON"
     oscillate_section = 'OSCILLATE'
     watchlogs_section = "WATCHLOGS"
+    sleep_section = "SLEEP"
 
     #options
     operation_setup_option = "operation_setup"
