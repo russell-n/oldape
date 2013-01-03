@@ -9,6 +9,7 @@ from apetools.baseclass import BaseClass
 from apetools.operations.baseoperation import DummyOperation
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.commons.errors import ConfigurationError
+from apetools.lexicographers.configurationmap import ConfigurationOptionError
 #from basetoolbuilder import BaseToolBuilder
 
 from toolbuilder import ToolBuilder
@@ -109,7 +110,7 @@ class BaseOperationBuilder(BaseClass):
         if self._product is None:
             try:
                 self._product = self.operation(self.products)
-            except ConfigurationError as error:
+            except ConfigurationOptionError as error:
                 self.logger.debug(error)                
                 self._product = DummyOperation()
         return self._product

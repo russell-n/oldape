@@ -19,7 +19,7 @@ A sub-logger for logs that are sub-sets of the main log.
 import logging
 
 # apetools modules
-from apetools.log_setter import SCREEN_FORMAT, LOG_TIMESTAMP
+from apetools.log_setter import SCREEN_FORMAT_QUIET, LOG_TIMESTAMP
 from apetools import log_setter
 from apetools.baseclass import BaseClass
 
@@ -28,7 +28,7 @@ class SubLogger(BaseClass):
     """
     A creator and holder of sub-logs (meant for the Hortator)
     """
-    def __init__(self, log_format=SCREEN_FORMAT, timestamp=LOG_TIMESTAMP,
+    def __init__(self, log_format=SCREEN_FORMAT_QUIET, timestamp=LOG_TIMESTAMP,
                  level=logging.INFO):
         """
         :param:
@@ -38,7 +38,7 @@ class SubLogger(BaseClass):
          - `level`: the level of messages to record
         """
         super(SubLogger, self).__init__()
-        self.log_format = SCREEN_FORMAT
+        self.log_format = log_format
         self.timestamp = timestamp
         self.level = level
         self._handlers = None

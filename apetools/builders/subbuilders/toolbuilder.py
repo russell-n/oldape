@@ -15,6 +15,7 @@ class ToolBuilderEnum(object):
     poweron = 'poweron'
     oscillate = 'oscillate'
     oscillatestop = 'oscillatestop'
+    sleep = 'sleep'
 # end class ToolBuilderEnum
 
 class ToolBuilder(object):
@@ -33,9 +34,18 @@ class ToolBuilder(object):
         self._commandwatch = None
         self._poweron = None
         self._poweroff = None
+        self._sleep = None        
         self._watchlogs = None
         return
 
+    @property
+    def sleep(self):
+        """
+        :return: class to build sleep
+        """
+        from sleepbuilder import SleepBuilder 
+        return SleepBuilder
+        
     @property
     def watchlogs(self):
         """
