@@ -20,6 +20,7 @@ import time
 # apetools
 from apetools.log_setter import LOG_TIMESTAMP
 
+
 class TimestampFormatEnums(object):
     """
     A class to hold the format names
@@ -71,7 +72,7 @@ class TimestampFormat(object):
         :return: the given time converted to a formatted string
         """
         return time.strftime(self.format, time.localtime(time_in_seconds))
-
+    
     def __call__(self):
         """
         A pass-through to self.now

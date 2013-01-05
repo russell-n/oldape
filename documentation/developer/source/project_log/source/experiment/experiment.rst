@@ -12,6 +12,9 @@ Contents:
    :maxdepth: 1
 
    Iperf Timestamps <iperf_timestamp_pipeline>
+   Oscillator (Degenerate) <oscillator_degenerate>
+   Sub-Logger <sub_log>
+   
 
 Indices and tables
 ------------------

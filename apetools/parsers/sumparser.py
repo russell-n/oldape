@@ -81,7 +81,7 @@ class SumParser(IperfParser):
     """
     def __init__(self, *args, **kwargs):
         super(SumParser, self).__init__(*args, **kwargs)
-        self.log_format = "({0}) {1} {2}/sec"
+        self.log_format = "{0},{1},{2}/sec"
         return
 
     @property

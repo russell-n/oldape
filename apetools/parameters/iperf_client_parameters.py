@@ -154,28 +154,6 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
         return
 
     @property
-    def parallel(self):
-        """
-        :return: The parallel thread flag (-P <count>)
-        """
-        return self._parallel
-
-    @parallel.setter
-    def parallel(self, thread_count):
-        """
-        :param:
-
-         - `thread_count`: The number of parallel threads to run
-        """
-        try:
-            thread_count = int(thread_count)
-        except ValueError as error:
-            self.logger.error(error)
-            raise ConfigurationError("Thread count must be an integer, not {0}".format(thread_count))
-        self._parallel = "--parallel {0}".format(thread_count)
-        return
-
-    @property
     def time(self):
         """
         :return: The time flag (-t <seconds>)

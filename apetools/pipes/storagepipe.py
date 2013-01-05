@@ -11,6 +11,7 @@ storage and the target and ignores the header.
 from apetools.baseclass import BaseClass
 from apetools.commons.coroutine import coroutine
 from apetools.commons.storageoutput import StorageOutput
+from apetools.commons.timestamp import TimestampFormat
 
 EOF = ""
 NEWLINE = "\n"
@@ -30,7 +31,8 @@ class StoragePipe(BaseClass):
     A class to add a pipe interface to the Storage Output
     """
     def __init__(self, path='', role=StoragePipeEnum.pipe,
-                 target=None, header_token=None, transform=None, emit=False):
+                 target=None, header_token=None, transform=None, emit=False,
+                 add_timestamp=True):
         """
         :param:
 
@@ -40,6 +42,7 @@ class StoragePipe(BaseClass):
          - `header_token`: the token to use for a header before the data
          - `transform`: callable function to transform sent lines
          - `emit`: if true emit the output when actin as a sink
+         - `add_timestamp`: if true add timestamp to raw output
         """
         super(StoragePipe, self).__init__()
         self.path = path
@@ -48,8 +51,19 @@ class StoragePipe(BaseClass):
         self.header_token = header_token
         self.transform = transform
         self.emit = emit
+        self.add_timestamp = add_timestamp
+        self._timestamp = None
         self._storage = None
         return
+
+    @property
+    def timestamp(self):
+        """
+        :return: TimestampFormat
+        """
+        if self._timestamp is None:
+            self._timestamp = TimestampFormat()
+        return self._timestamp
 
     @property
     def storage(self):
@@ -68,7 +82,7 @@ class StoragePipe(BaseClass):
         :param:
 
          - `target`: a started coroutine
-         - `filename`: the name of te file to open
+         - `filename`: the name of the file to open
 
         :postcondition: pipe_start is an opened coroutine
         """
@@ -77,7 +91,11 @@ class StoragePipe(BaseClass):
         output = self.storage.open(filename)
         line = None
         if self.header_token is not None:
-            output.writeline(self.header_token)
+            if self.add_timestamp:
+                header = "timestamp,{0}".format(self.header)
+            else:
+                header = self.header_token
+            output.writeline(header)
             target.send(self.header_token)
 
         while line !=  EOF:
@@ -86,6 +104,10 @@ class StoragePipe(BaseClass):
                 line = self.transform(line)
                 if line is None:
                     continue
+                
+            if self.add_timestamp:
+                line = "{0},{1}".format(self.timestamp.now, line)
+                
             output.writeline(str(line))
             target.send(line)
         output.close()

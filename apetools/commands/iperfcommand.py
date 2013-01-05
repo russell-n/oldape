@@ -74,7 +74,7 @@ class IperfCommand(BaseClass):
         """
         :return: SumParser pipeline (if this is the client)
         """
-        if self._parser is None and self.role==IperfCommandEnum.client:
+        if self._parser is None:
             threads = None
             if self.parameters.parallel is not None:
                 threads = int(self.parameters.parallel.split()[-1])
@@ -216,7 +216,6 @@ class IperfCommand(BaseClass):
                  
         file_output = self.output.open(filename=filename)
         
-
         self.logger.debug("Executing parameters: {0}".format(self.parameters))
 
         with device.connection.lock:

@@ -22,6 +22,7 @@ import logging.handlers
 logger = logging.getLogger(__package__)
 SCREEN_FORMAT = "%(levelname)s: %(name)s.%(funcName)s, Line: %(lineno)d [%(asctime)s] -- %(message)s"
 SCREEN_FORMAT_QUIET = "%(levelname)s: [%(asctime)s] -- %(message)s"
+DATA_FRIENDLY_FORMAT = "%(levelname)s,%(asctime)s,%(message)s"
 LOG_FORMAT = "%(levelname)s,%(name)s,%(threadName)s,%(funcName)s,Line: %(lineno)d,%(asctime)s,%(message)s" 
 LOG_TIMESTAMP = "%Y-%m-%d:%H:%M:%S"
 
