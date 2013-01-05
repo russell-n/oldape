@@ -10,14 +10,16 @@ class RotateCommand(BaseClass):
     """
     A class to issue a remote 
     """
-    def __init__(self, connection):
+    def __init__(self, connection, retries=2):
         """
         :param:
 
          - `connection`: A connection to the controller of the rate-table (rotator)
+         - `retries`: The number of times to retry
         """
         super(RotateCommand, self).__init__()
         self.connection = connection
+        self.retries = retries
         return
 
     def __call__(self, parameters):

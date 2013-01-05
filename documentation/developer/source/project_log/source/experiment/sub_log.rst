@@ -74,6 +74,7 @@ Update December 30, 2012
 
 The output of the sub-logger is missing timestamps, destroying much of the intent of creating it.
 
-.. todo::
-   Add timestamps to the output format.
+*This wasn't true, the timestamps are just embedded in the middle of the string instead of starting it*
+
+
 

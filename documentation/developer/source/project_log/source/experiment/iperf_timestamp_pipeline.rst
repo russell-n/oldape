@@ -52,20 +52,21 @@ Possible Solutions
 Procedure
 ---------
 
-+------------------------------+-----+---------------+
-|Step                          |State|Completion Date|
-+==============================+=====+===============+
-|Move Log at end of each test  |     |               |
-+------------------------------+-----+---------------+
-|Make generic log find/split   |     |               |
-|command                       |     |               |
-+------------------------------+-----+---------------+
-|Update IperfLexer to handle   |     |               |
-|time-stamped output           |     |               |
-+------------------------------+-----+---------------+
-|Create output-pipeline for    |     |               |
-|live iperf transforms         |     |               |
-+------------------------------+-----+---------------+
++------------------------------+-----+--------------------+
+|Step                          |State|Completion Date     |
++==============================+=====+====================+
+|Create operator sub-loggers   |done |December 26, 2012   |
+|                              |     |                    |
++------------------------------+-----+--------------------+
+|Make generic log find/split   |     |                    |
+|command                       |     |                    |
++------------------------------+-----+--------------------+
+|Update IperfLexer to handle   |     |                    |
+|time-stamped output           |     |                    |
++------------------------------+-----+--------------------+
+|Create output-pipeline for    |     |                    |
+|live iperf transforms         |     |                    |
++------------------------------+-----+--------------------+
 
 
 Data
