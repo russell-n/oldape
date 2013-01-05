@@ -149,6 +149,8 @@ class Oscillate(BaseThreadedCommand):
             elif "Rate table returned invalid amount of data" in line:
                 self.error_queue.put(line)
                 #aise OscillatorError("Rate Table error")
+            elif 'File "/usr/bin/oscillate"' in line:
+                self.error_queue.put(line)
             else:
                 self.logger.warning(line)
         return
