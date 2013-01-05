@@ -60,7 +60,7 @@ class WlCommand(BaseWifiCommand):
         """
         :return: the reported physical bitrate
         """
-        return self.get("rate").readline()
+        return self.get("rate").readline().replace(" ", ',')
 
     @property
     def ssid(self):
