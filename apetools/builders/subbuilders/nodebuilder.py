@@ -3,6 +3,7 @@ A module to build nodes (devices) based on Operating System and connection type
 """
 
 from apetools.baseclass import BaseClass
+from apetools.commons.errors import ConfigurationError
 from apetools.devices.basedevice import BaseDeviceEnum
 from connectionbuilder import connection_builders
 from devicebuilder import device_builders
@@ -67,7 +68,8 @@ class NodeBuilder(BaseClass):
             try:
                 self._interface = self.parameters.test_interface
             except AttributeError as error:
-                self.logger.debug(error)
+                self.logger.error(error)
+                raise ConfigurationError("Missing the test-interface for {0}".format(self.parameters.connection.hostname))
         return self._interface
 
     @property

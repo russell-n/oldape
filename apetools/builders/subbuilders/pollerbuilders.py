@@ -35,14 +35,21 @@ class BasePollerBuilder(BaseClass):
         self.node = node
         self.parameters = parameters
         self.event = event
-        self.name = name
+        self._name = name
         self.output = output
         self._product = None
         self._output_file = None
         self._filename = None
         self._subdir = None
+        self._interval = None
         self._use_header = None
         return
+
+    @property
+    def name(self):
+        """
+        """
+        return self._name
 
     @property
     def use_header(self):
@@ -70,11 +77,11 @@ class BasePollerBuilder(BaseClass):
     @property
     def filename(self):
         """
-        :return: name for output filen
+        :return: name for output file
         """
         if self._filename is None:
-            self._filename = ("{0}_{1}".format(self.parameters.type, self.name) +
-                              ".log")
+            self._filename = ("{0}_{1}".format(self.parameters.type, self.name.replace('/', '') +
+                              ".log"))
         return self._filename
     
     @property
@@ -88,17 +95,6 @@ class BasePollerBuilder(BaseClass):
                                                  mode=APPEND)
         return self._output_file
 
-# end class BasePollerBuilder
-
-class ProcnetdevPollsterBuilder(BasePollerBuilder):
-    """
-    A builder of network interface pollers
-    """
-    def __init__(self, *args, **kwargs):
-        super(ProcnetdevPollsterBuilder, self).__init__(*args, **kwargs)
-        self._interval = None
-        return
-
     @property
     def interval(self):
         """
@@ -111,17 +107,30 @@ class ProcnetdevPollsterBuilder(BasePollerBuilder):
                 self._interval = 1
         return self._interval
 
+# end class BasePollerBuilder
+
+class ProcnetdevPollsterBuilder(BasePollerBuilder):
+    """
+    A builder of network interface pollers
+    """
+    def __init__(self, *args, **kwargs):
+        super(ProcnetdevPollsterBuilder, self).__init__(*args, **kwargs)
+        self._interval = None
+        return
+
     @property
     def product(self):
         """
         :return: rssi-poller
         """
         if self._product is None:
-            self._product = ProcnetdevPollster(connection=self.node.connection,
+            # self.output_file creates it so this check has to come first
+            use_header = self.use_header
+            self._product = ProcnetdevPollster(device=self.node,
                                                output=self.output_file,
                                                interval=self.interval,
-                                               interface=self.parameters.interface,
-                                               use_header=self.use_header)
+                                               interface=self.node.interface,
+                                               use_header=use_header)
         return self._product
 # end class ProcdevnetPollterBuilder
 
@@ -165,20 +174,7 @@ class DevicePollerBuilder(BasePollerBuilder):
     """
     def __init__(self, *args, **kwargs):
         super(DevicePollerBuilder, self).__init__(*args, **kwargs)
-        self._interval = None
         return
-
-    @property
-    def interval(self):
-        """
-        :return: time between polls
-        """
-        if self._interval is None:
-            if hasattr(self.parameters, "interval"):
-                self._interval = float(self.parameters.interval)
-            else:
-                self._interval = 1
-        return self._interval
 
     @property
     def product(self):

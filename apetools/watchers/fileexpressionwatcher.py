@@ -14,23 +14,31 @@
 """
 A module to watch packets and bytes received on an interface.
 
-This is presumably for monitor-mode wlan interfaces.
+The File-expression watchers differ from the catters and pollsters in that they:
+
+ * repeatedly cat the file at set intervals, unlike logcatters
+ * send output directly to file without making calculations (unlike proc-pollsters)
 """
-import re
+#python standard library
+from abc import ABCMeta, abstractproperty
 from time import time, sleep
-
-from apetools.baseclass import BaseClass
-from apetools.parsers import oatbran 
-from apetools.commons.timestamp import TimestampFormat
+from collections import defaultdict
 
 
+#apetools
+from basepollster import BasePollster
+from apetools.commons.errors import ConfigurationError
+from apetools.parsers import oatbran
+
+NOT_AVAILABLE = 'NA'
 
 
-class FileExpressionWatcher(BaseClass):
+class BaseFileexpressionwatcher(BasePollster):
     """
-    A class to repeatedly cat a file and output a csv-line
+    A class to repeatedly cat a file and output a csv-line. Unlike regular pollster, does no calculation
     """
-    def __init__(self, output, connection, name, expression, interval=1):
+    __metaclass__ = ABCMeta
+    def __init__(self, *args, **kwargs):
         """
         :param:
 
@@ -41,90 +49,128 @@ class FileExpressionWatcher(BaseClass):
         - `name`: the name of the file to watch
         - `expression`: A regular expression with groups to match the output
         """
-        super(FileExpressionWatcher, self).__init__()
-        self.output = output
-        self.interval = interval
-        self.connection = connection
-        self.expression = expression
-        self._timestamp = None
-        self.name = name
-        self.stopped = False
+        super(BaseFileexpressionwatcher, self).__init__(*args, **kwargs)
+        self._logger = None
+        self._connection = None
+        self._expression_keys = None
+        self._stopped = None
+        self._header = None
         return
 
     @property
-    def expression(self):
+    def stopped(self):
         """
-        :return: compiled regular expression to match the interface output line
+        :rtype: Boolean
+        :return: True if self.stop is set.
         """
-        return self._expression
+        if self.event is not None:
+            return self.event.is_set()
+        return False
 
-    @expression.setter
-    def expression(self, expr):
+
+    @property
+    def name(self):
+        """
+        :return: the path to the file to cat
+        """
+        return self._name
+
+    @name.setter
+    def name(self, new_name):
         """
         :param:
 
-         - `expr`: A string regular expression to match the file output
+         - `new_name`: path of the file to cat
 
-        :postcondition: self._expr is a compiled regular expression        
+        :raise: ConfigurationError if the new_name is none
         """
-        self._expression = re.compile(expr)
+        if new_name is None:
+            raise ConfigurationError("FileExpression watcher requires the name parameter")
         return
-    
+
+    @abstractproperty
+    def expression_keys(self):
+        """
+        :return: list of group-keys to order the output
+        """
+        return self._expression_keys
+
     @property
-    def timestamp(self):
+    def connection(self):
         """
-        :return: timestamper 
+        :return: the node connection
         """
-        if self._timestamp is None:
-            self._timestamp = TimestampFormat()
-        return self._timestamp
-    
-    def stop(self):
-        """
-        :postcondition: `self.stopped` is True
-        """
-        self.stopped = True
-        return
+        if self._connection is None:
+            self._connection = self.device.connection
+        return self._connection
 
-    def __call__(self):
-        self.output.write("timestamp,interface,packets,bytes\n")
-        start = time()
-        output, error = self.connection.cat(self.name)
-        for line in output:
-            match = self.expression.search(line)
-            if match:
-                match  = match.groupdict()
-                start_bytes = int(match[ProcnetdevWatcherEnum.bytes])
-                start_packets = int(match[ProcnetdevWatcherEnum.packets])
-            try:
-                sleep(self.interval - (time() - start))
-            except IOError:
-                pass
+    def run(self):
+        """
+        Repeatedly cats file self.name and saves matching output
+        """
+        if self.use_header:
+            self.output.writeline(self.header)
+       
         while not self.stopped:                
             start = time()
+            data = defaultdict(lambda:NOT_AVAILABLE)
             output, error = self.connection.cat(self.name)
             for line in output:
-                match = self.expression.search(line)
-                if match:
+                match = self.regex.search(line)
+                if match:                    
                     match = match.groupdict()
-                    next_bytes = int(match[ProcnetdevWatcherEnum.bytes])
-                    next_packets = int(match[ProcnetdevWatcherEnum.packets])
-                    self.output.write("{0},{1},{2},{3}\n".format(self.timestamp.now, match[ProcnetdevWatcherEnum.interface],
-                                                                 next_packets - start_packets,
-                                                                 next_bytes - start_bytes))
-                    start_bytes, start_packets = next_bytes, next_packets
+                    for key, value in match.iteritems():
+                        if value is not None:
+                            data[key] = value
+            data_out = ",".join([data[key] for key in self.expression_keys])
+            self.output.write("{0},{1}\n".format(self.timestamp.now, data_out))
             try:
                 sleep(self.interval - (time() - start))
             except IOError:
                 self.logger.debug("cat {0} took more than one second".format(self.name))
-
         return
-# end class ProcnetdevWatcher
+# end class BaseFileexpressionWatcher
 
-                                  
-if __name__ == "__main__":
-    from apetools.connections.sshconnection import SSHConnection
-    import sys                                  
-    c = SSHConnection("portege", "portegeadmin")
-    p = ProcnetdevWatcher(sys.stdout, c, "wlan0")
-    p()
+class BatteryWatcher(BaseFileexpressionwatcher):
+    """
+    Watches the battery data from a proc file
+    """
+    def __init__(self, *args, **kwargs):
+        super(BatteryWatcher, self).__init__(*args, **kwargs)
+        return
+
+    @property
+    def header(self):
+        """
+        :return: the header to use in files
+        """
+        if self._header is None:
+            self._header = "status,voltage,current,temp,charge,health,capacity"
+        return self._header
+
+    @property
+    def expression_keys(self):
+        """
+        :return: list of group-dict keys in order 
+        """
+        if self._expression_keys is None:
+            self._expression_keys = self.header.split(',')
+        return self._expression_keys
+
+    @property
+    def expression(self):
+        """
+        :return: regular expression to match the output
+        """
+        if self._expression is None:
+            status = oatbran.GROUP("STATUS=" + oatbran.NAMED(n='status', e=oatbran.LETTERS))
+            voltage = oatbran.GROUP("VOLTAGE_NOW=" + oatbran.NAMED(n="voltage", e= oatbran.INTEGER))
+            current = oatbran.GROUP("CURRENT_NOW=" + oatbran.NAMED(n='current', e=oatbran.INTEGER))
+            temp = oatbran.GROUP("TEMP="+ oatbran.NAMED(n='temp', e=oatbran.INTEGER))
+            charge = oatbran.GROUP("CHARGE_NOW=" + oatbran.NAMED(n='charge', e=oatbran.INTEGER))
+            health = oatbran.GROUP("HEALTH=" + oatbran.NAMED(n='health', e=oatbran.LETTERS))
+            capacity = oatbran.GROUP("CAPACITY=" + oatbran.NAMED(n='capacity', e=oatbran.INTEGER))
+            self._expression = oatbran.OR.join([status, voltage, current, temp, charge, health,
+                                                capacity])
+        return self._expression
+#end class BatteryWatcher       

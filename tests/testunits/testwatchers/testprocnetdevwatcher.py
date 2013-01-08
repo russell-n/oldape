@@ -49,7 +49,7 @@ class TestProcnetdevPollster(TestCase):
         return
 
     def test_expression(self):
-        match = self.watcher.expression.search(line).groupdict()
+        match = self.watcher.regex.search(line).groupdict()
         self.assertIsNotNone(match)
         self.assertEqual("15683751", match[ProcnetdevPollsterEnum.receive_bytes])
         self.assertEqual("116759", match[ProcnetdevPollsterEnum.receive_packets])

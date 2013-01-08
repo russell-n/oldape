@@ -6,6 +6,7 @@ A Watcher builder
 from basetoolbuilder import BaseToolBuilder
 from logwatcherbuilders import LogcatWatcherBuilder, LogWatcherBuilder
 from pollerbuilders import RssiPollerBuilder, DevicePollerBuilder, ProcnetdevPollsterBuilder
+from fileexpressionbuilders import BatteryWatcherBuilder
 from apetools.watchers import thewatcher
 
 from apetools.lexicographers.config_options import ConfigOptions
@@ -20,6 +21,7 @@ class WatcherTypes(object):
     rssi = "rssi"
     device = 'device'
     procnetdev = 'procnetdev'
+    battery = 'battery'
 # end class WatcherTypes
 
     
@@ -27,7 +29,8 @@ watcher_builder = {WatcherTypes.adblogcat:LogcatWatcherBuilder,
                    WatcherTypes.logcat:LogWatcherBuilder,
                    WatcherTypes.rssi:RssiPollerBuilder,
                    WatcherTypes.device:DevicePollerBuilder,
-                   WatcherTypes.procnetdev:ProcnetdevPollsterBuilder}
+                   WatcherTypes.procnetdev:ProcnetdevPollsterBuilder,
+                   WatcherTypes.battery:BatteryWatcherBuilder}
 
 class WatcherBuilder(BaseToolBuilder):
     """
@@ -70,6 +73,12 @@ class WatcherBuilder(BaseToolBuilder):
                 for name, node in self.master.thread_nodes.iteritems():
                     watcher = builder(node=node, parameters=parameters,
                                       output=self.master.storage, name=name).product
+                    self._watchers.append(watcher)
+                if parameters.type == WatcherTypes.procnetdev:
+                    watcher = builder(node=self.master.tpc_device,
+                                      parameters=parameters,
+                                      output=self.master.storage,
+                                      name='tpc').product
                     self._watchers.append(watcher)
         return self._watchers
 
