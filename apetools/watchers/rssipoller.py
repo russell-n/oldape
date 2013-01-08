@@ -6,7 +6,7 @@ from time import time as now, sleep
 
 #apetools
 from apetools.parsers import oatbran
-from basedevicepoller import BaseDevicePoller, CSV_JOIN, ZERO
+from basepollster import BasePollster, CSV_JOIN, ZERO
 
 
 class RssiPollerEnum(object):
@@ -18,7 +18,7 @@ class RssiPollerEnum(object):
     rssipoller = 'rssipoller'
 # end class RssiPollerEnum
 
-class RssiPoller(BaseDevicePoller):
+class RssiPoller(BasePollster):
     """
     A DevicePoller for RSSI
     """

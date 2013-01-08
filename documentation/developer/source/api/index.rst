@@ -420,11 +420,15 @@ The **Watchers** watch logs.
    basedevicepoller
    commandwatcher
    devicepoller
+   fileexpressionwatcher
    logcatwatcher
    logwatcher
+   procpollster
    rssipoller
    thewatcher
    tsharkwatcher
+
+Watchers are generally passive -- they just watch output, while the pollsters periodically poll devices for information.
 
 
 Indices and tables

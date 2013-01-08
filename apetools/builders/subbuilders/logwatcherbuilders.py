@@ -13,6 +13,7 @@ class LogwatcherBuilderError(ConfigurationError):
     """
 # end LogWatcherBuilerError
 
+APPEND = 'a'
 
 class BaseWatcherBuilder(BaseClass):
     """
@@ -70,7 +71,8 @@ class BaseWatcherBuilder(BaseClass):
                 prefix = "{0}_{1}".format(prefix, self.name)
 
             self._output_file = self.output.open("{0}.log".format(prefix),
-                                                 subdir="logs")
+                                                 subdir="logs",
+                                                 mode=APPEND)
         return self._output_file
 
 # end class BaseWatcherBuilder

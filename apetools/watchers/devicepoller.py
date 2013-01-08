@@ -5,7 +5,7 @@ An Device Poller Polls the device for changing measurements
 from time import time as now, sleep
 
 #apetools
-from basedevicepoller import BaseDevicePoller, CSV_JOIN, ZERO
+from basepollster import BasePollster, CSV_JOIN, ZERO
 
 
 class DevicePollerEnum(object):
@@ -17,7 +17,7 @@ class DevicePollerEnum(object):
     devicepoller = 'devicepoller'
 # end class DevicePollerEnum
 
-class DevicePoller(BaseDevicePoller):
+class DevicePoller(BasePollster):
     """
     A DevicePoller 
     """
@@ -37,6 +37,8 @@ class DevicePoller(BaseDevicePoller):
     @property
     def expression(self):
         """
+        This isn't used by the device poller right now
+        
         :return: None
         """
         return self._expression

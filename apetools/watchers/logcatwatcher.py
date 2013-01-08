@@ -62,21 +62,16 @@ class LogcatWatcher(LogWatcher):
         """
         return
 
-    def run(self, connection):
+    def execute(self):
         """
-        Runs an infinite loop that executes self.command on self.arguments
-        Writes the lines to self.output.write()
+        :return: stdout, stderr
+        :postcondition: logcat with arguments sent to the connection
         """
         with self.connection.lock:
             output, error = self.connection.logcat(self.arguments)
-        for line in output:
-            self.output.write(line)
-            if self.stopped:
-                return
-        err = error.readline()
-        if len(err):
-            self.logger.error(err)
-        return
+        
+        return output, error
+    
 
     def __str__(self):
         return "{0} {1}".format(self.command, self.arguments)

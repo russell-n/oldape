@@ -17,7 +17,6 @@ A module to watch packets and bytes received on an interface.
 This was originally for monitor-mode wlan interfaces but is now meant to look for errors
 """
 #python standard library
-import re
 from time import time, sleep
 import threading
 from abc import ABCMeta, abstractproperty
@@ -26,49 +25,43 @@ from abc import ABCMeta, abstractproperty
 import numpy
 
 #apetools
-from apetools.baseclass import BaseClass
+from basepollster import BasePollster
 from apetools.parsers import oatbran 
-from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
 
-class BaseProcPolster(BaseClass):
+
+class BaseProcPollster(BasePollster):
     """
     A base-class for polling proc-files
     """
     __metaclass__ = ABCMeta
-    def __init__(self, output, connection, interval=1,
-                 name="/proc/net/dev", timestamp_format=TimestampFormatEnums.log,
-                 use_header=True):
+    def __init__(self, *args, **kwargs):
         """
         :param:
 
         - `output`: A writeable file-like object
         - `interval`: seconds between samples
+        - `expression`: a regular expression to match the output
         - `connection`: the connection to the device to watch
         - `name`: the name of the file to watch
         - `timestamp_format`: format for timestamps
         - `use_header`: If True, prepend header to output
         """
-        super(BaseProcPolster, self).__init__()
+        super(BaseProcPollster, self).__init__(*args, **kwargs)
         self._logger = None
-        self.output = output
-        self.interval = interval
-        self.connection = connection
-        self.timestamp_format = timestamp_format
-        self.use_header = use_header
         self._header = None
         self._expression_keys = None
-        self._expression = None
-        self._timestamp = None
-        self.name = name
+        self._connection = None
         self.stopped = False
         return
 
-    @abstractproperty
-    def expression(self):
+    @property
+    def connection(self):
         """
-        :return: compiled regular expression to match the outputline
+        :return: the node's connection
         """
-        return self._expression
+        if self._connection is None:
+            self._connection = self.device.connection
+        return self._connection
 
     @abstractproperty
     def expression_keys(self):
@@ -83,16 +76,8 @@ class BaseProcPolster(BaseClass):
         :return: first line of output file
         """
         return self._header
-    
-    @property
-    def timestamp(self):
-        """
-        :return: timestamper 
-        """
-        if self._timestamp is None:
-            self._timestamp = TimestampFormat(self.timestamp_format)
-        return self._timestamp
-    
+
+
     def stop(self):
         """
         :postcondition: `self.stopped` is True
@@ -112,7 +97,7 @@ class BaseProcPolster(BaseClass):
         next_array = numpy.zeros(len(self.expression_keys), dtype=object)
         #enum = ProcnetdevWatcherEnum
         for line in output:
-            match = self.expression.search(line)
+            match = self.regex.search(line)
             if match:
                 self.logger.debug(line)
                 match  = match.groupdict()
@@ -126,7 +111,7 @@ class BaseProcPolster(BaseClass):
             start = time()
             output, error = self.connection.cat(self.name)
             for line in output:
-                match = self.expression.search(line)
+                match = self.regex.search(line)
                 if match:
                     tstamp = self.timestamp.now
                     self.logger.debug(line)
@@ -186,7 +171,7 @@ class ProcnetdevPollsterIndices(object):
     tbytes, tpackets, terrs, tdrop, tfifo, tcolls, tcarrier = range(6,13)
 # end class ProcnetdevPollsterIndices
 
-class ProcnetdevPollster(BaseProcPolster):
+class ProcnetdevPollster(BaseProcPollster):
     """
     A class to grab the bytes and packets received at timed intervals.
     """
@@ -205,6 +190,16 @@ class ProcnetdevPollster(BaseProcPolster):
         self._rexpression_keys = None
         self._texpression_keys = None
         return
+
+    @property
+    def name(self):
+        """
+        :return: the name for logging (or the name of the file)
+        """
+        if self._name is None:
+            self._name = "/proc/net/dev"
+        return self._name
+
 
     @property
     def expression_keys(self):
@@ -261,7 +256,7 @@ class ProcnetdevPollster(BaseProcPolster):
             interface = named(n=enum.interface, e=self.interface) + ":"
             rx_values = [named(n=name, e=integer) for name in self.rexpression_keys]
             tx_values = [named(n=name, e=integer) for name in self.texpression_keys]
-            self._expression = re.compile(oatbran.SPACES.join([interface] + rx_values + [integer] * 2 + tx_values))
+            self._expression = oatbran.SPACES.join([interface] + rx_values + [integer] * 2 + tx_values)
         return self._expression
 
 # end class ProcnetdevPollster

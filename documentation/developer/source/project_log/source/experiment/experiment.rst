@@ -12,6 +12,7 @@ Contents:
    :maxdepth: 1
 
    Iperf Timestamps <iperf_timestamp_pipeline>
+   TPC /proc/net/dev Pollster <tpc_proc_net_dev_pollster>
    Oscillator (Degenerate) <oscillator_degenerate>
    Sub-Logger <sub_log>
    
