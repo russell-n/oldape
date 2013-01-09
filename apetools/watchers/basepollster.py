@@ -21,7 +21,7 @@ import re
 
 
 # apetools
-from apetools.baseclass import BaseClass
+from apetools.baseclass import BaseThreadClass
 from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
 from apetools.threads.threads import Thread
 
@@ -30,7 +30,7 @@ CSV_JOIN = "{0},{1}"
 ZERO = 0
 
 
-class BasePollster(BaseClass):
+class BasePollster(BaseThreadClass):
     """
     An abstract class to base Device-Pollsters on.
     """
@@ -105,7 +105,7 @@ class BasePollster(BaseClass):
         """
         :postcondition: self.thread contains the run() thread
         """
-        self.thread = Thread(target=self.run, name=self.name)
+        self.thread = Thread(target=self.run_thread, name=self.name)
         return
 
     def __call__(self):

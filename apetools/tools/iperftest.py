@@ -1,9 +1,6 @@
 """
 A module to hold an iperf test tool
 """
-#python standard library
-import time
-
 # apetools
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError

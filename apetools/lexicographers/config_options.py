@@ -10,6 +10,7 @@ class ConfigOptions(object):
     sleep_section = "SLEEP"
 
     #options
+    tag_option = "tag"
     operation_setup_option = "operation_setup"
     operation_teardown_option = "operation_teardown"
     test_setup_option = "setup_test"

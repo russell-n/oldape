@@ -32,12 +32,11 @@ from subbuilders.basetoolbuilder import Parameters
 from apetools.lexicographers.parametergenerator import ParameterGenerator
 from apetools.lexicographers.config_options import ConfigOptions
 
-
 #commons
 from apetools.commons import storageoutput
 from apetools.commons import enumerations
 from apetools.commons import events
-
+from apetools.commons.errors import ConfigurationError
 operating_systems = enumerations.OperatingSystem
 iperf_direction = enumerations.IperfDirection
 ConnectionTypes = enumerations.ConnectionTypes
@@ -54,6 +53,30 @@ from subbuilders.setuptestbuilder import SetupTestBuilder
 from subbuilders.executetestbuilder import ExecuteTestBuilder
 from subbuilders.teardowntestbuilder import TeardownTestBuilder
 from subbuilders.tpcdevicebuilder import TpcDeviceBuilder
+
+class GeneratorHolder(object):
+    """
+    A holder of generators
+    """
+    def __init__(self, generator, count):
+        """
+        :param:
+
+         - `generator`: a generator to yield objects
+         - `count` : the number of items that should be generated
+        """
+        self.generator = generator
+        self.count = count
+        return
+
+    def __iter__(self):
+        """
+        :yield: generator's items
+        """
+        for item in self.generator:
+            yield item
+        return
+    
 
 class BuilderEnum(object):
     """
@@ -227,46 +250,74 @@ class Builder(BaseClass):
             self._thread_nodes = NodesBuilder(self, self.current_config).nodes
         return self._thread_nodes
 
+    def build_operator(self, config_map):
+        """
+        This is put here so that the operators property can catch exceptions and prevent killing later operators
+
+        :param:
+
+         - `config_map`: a Configuration Map
+        
+        :return: Built TestOperator
+        :postconditions:
+
+         - reset called
+         - self.current_config set to the config_map
+        """
+        self.reset()
+        self.current_config = config_map
+        self.logger.info("Building the TestParameters with configmap '{0}'".format(config_map.filename))
+        self.storage.copy(config_map.filename,)
+        #Operation Setup
+        operation_setup = self.operation_setup_builder(config_map, self.parameters).product
+        self.parameters = self.operation_setup_builder(config_map).parameters
+
+        #Operation Teardown 
+        operation_teardown = self.operation_teardown_builder(config_map, self.parameters).product
+        self.parameters = self.operation_teardown_builder(config_map,
+                                                               self.parameters).parameters
+        # Test Setup
+        test_setup = self.setup_test_builder(config_map, self.parameters).product
+        self.parameters = self.setup_test_builder(config_map, self.parameters).parameters
+
+        # Test Execution
+        test = self.execute_test_builder(config_map, self.parameters).product
+        self.parameters = self.execute_test_builder(config_map, self.parameters).parameters
+
+        # Test Tear-down
+        test_teardown = self.teardown_test_builder(config_map, self.parameters).product
+        self.parameters = self.teardown_test_builder(config_map, self.parameters).parameters
+
+        no_cleanup = self.current_config.get_boolean(ConfigOptions.test_section,
+                                                     ConfigOptions.no_cleanup_option,
+                                                     default=False,
+                                                     optional=True)
+        tag = self.current_config.get(ConfigOptions.test_section,
+                                      ConfigOptions.tag_option,
+                                      default="APETest",
+                                      optional=True)
+        return  TestOperator(ParameterGenerator(self.parameters),
+                             operation_setup=operation_setup,
+                             operation_teardown=operation_teardown,
+                             test_setup=test_setup,
+                             tests=test,
+                             test_teardown=test_teardown,
+                             nodes=self.nodes,
+                             no_cleanup=no_cleanup,
+                             storage=self.storage,
+                             tag=tag)            
+    
     @property
     def operators(self):
         """
         :yield: test operators
         """ 
         for config_map in self.maps:
-            self.reset()
-            self.current_config = config_map
-            self.logger.debug("Building the TestParameters with configmap - {0}".format(config_map))
-            operation_setup = self.operation_setup_builder(config_map, self.parameters).product
-            self.parameters = self.operation_setup_builder(config_map).parameters
-            
-            operation_teardown = self.operation_teardown_builder(config_map, self.parameters).product
-            self.parameters = self.operation_teardown_builder(config_map,
-                                                               self.parameters).parameters
-
-            
-            test_setup = self.setup_test_builder(config_map, self.parameters).product
-            self.parameters = self.setup_test_builder(config_map, self.parameters).parameters
-
-            test = self.execute_test_builder(config_map, self.parameters).product
-            self.parameters = self.execute_test_builder(config_map, self.parameters).parameters
-            
-            test_teardown = self.teardown_test_builder(config_map, self.parameters).product
-            self.parameters = self.teardown_test_builder(config_map, self.parameters).parameters
-
-            no_cleanup = self.current_config.get_boolean(ConfigOptions.test_section,
-                                                         ConfigOptions.no_cleanup_option,
-                                                         default=False,
-                                                         optional=True)
-            yield TestOperator(ParameterGenerator(self.parameters),
-                               operation_setup=operation_setup,
-                               operation_teardown=operation_teardown,
-                               test_setup=test_setup,
-                               tests=test,
-                               test_teardown=test_teardown,
-                               countdown_timer=MagicMock(),
-                               nodes=self.nodes,
-                               no_cleanup=no_cleanup,
-                               storage=self.storage)
+            try:
+                yield self.build_operator(config_map)
+            except Exception as error:
+                self.logger.error(error)
+                self.logger.error("Couldn't build {0}".format(config_map.filename))
         return
 
     @property
@@ -276,7 +327,8 @@ class Builder(BaseClass):
         """
         if self._hortator is None:
             self.logger.debug("Building the Hortator")            
-            self._hortator = hortator.Hortator(operators=self.operators)
+            self._hortator = hortator.Hortator(operations=GeneratorHolder(generator=self.operators,
+                                                                          count=self.maps.finder.matching_count))
         return self._hortator
 
     @property

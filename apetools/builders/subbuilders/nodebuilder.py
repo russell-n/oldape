@@ -7,7 +7,7 @@ from apetools.commons.errors import ConfigurationError
 from apetools.devices.basedevice import BaseDeviceEnum
 from connectionbuilder import connection_builders
 from devicebuilder import device_builders
-
+from apetools.lexicographers.config_options import ConfigOptions
 
 class NodeBuilder(BaseClass):
     """
@@ -69,6 +69,9 @@ class NodeBuilder(BaseClass):
                 self._interface = self.parameters.test_interface
             except AttributeError as error:
                 self.logger.error(error)
+                message = "Expected in Config-File: section `[{0}]`, option `{1}:<test interface>` (e.g. wlan0)"
+                self.logger.error(message.format(ConfigOptions.nodes_section,
+                                                 ConfigOptions.test_interface_option))
                 raise ConfigurationError("Missing the test-interface for {0}".format(self.parameters.connection.hostname))
         return self._interface
 
