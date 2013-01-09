@@ -8,10 +8,10 @@ from threading import Thread
 
 
 #apetools
-from apetools.baseclass import BaseClass
+from apetools.baseclass import BaseThreadClass
 
 
-class BaseThreadedCommand(BaseClass):
+class BaseThreadedCommand(BaseThreadClass):
     """
     An abstract base-class for simple commands to run in a thread
     """
@@ -49,7 +49,7 @@ class BaseThreadedCommand(BaseClass):
         :postcondition: self.thread is a running thread
         """
         #import pudb;pudb.set_trace()
-        self.thread = Thread(target=self.run, args=args,
+        self.thread = Thread(target=self.run_thread, args=args,
                              kwargs=kwargs)
         self.thread.daemon = True
         self.thread.start()

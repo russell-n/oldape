@@ -14,7 +14,8 @@
 """
 A module for base classes that have common methods to inherit.
 
-Primarily just logging for now.
+ * Sets up a logger.
+ * Has a run_thread method to wrap run methods meant for threads
 """
 
 import logging
@@ -40,3 +41,27 @@ class BaseClass(object):
                                   self.__class__.__name__))
         return self._logger
 # end BaseClass
+
+class BaseThreadClass(BaseClass):
+    """
+    Extends the base-class with a run_thread method.
+    """
+    def __init__(self):
+        super(BaseThreadClass, self).__init__()
+        self._logger = None
+        return
+
+    def run_thread(self, *args, **kwargs):
+        """
+        :param: Whatever self.run accepts
+        :precondition: self.run method exists and is thread-safe
+        """
+        try:
+            self.run(*args, **kwargs)
+        except Exception as error:
+            import traceback
+            self.logger.debug(traceback.format_exc())
+            self.logger.error(error)
+        return
+        
+# end BaseThreadClass

@@ -16,14 +16,15 @@ A module to hold an exhorter of operators
 """
 
 # python Libraries
-from datetime import datetime as clock
 from collections import namedtuple
 
 # apetools Libraries
 from apetools.baseclass import BaseClass
 from errors import OperatorError
+from countdown import CountDown
 
 ELAPSED_TIME = 'Elapsed Time: {t}'
+    
 
 class CrashRecord(namedtuple("CrashRecord",  "id start_time crash_time error")):
     """
@@ -41,45 +42,59 @@ class Hortator(BaseClass):
     """
     A builder builds objects.
     """
-    def __init__(self, operators, *args, **kwargs):
+    def __init__(self, operations, *args, **kwargs):
         """
         :param:
 
-         - `operators`: An iterator of operators
+         - `operations`: An iterator of operators
+         - `operation_count`: total number of operators
         """
         super(Hortator, self).__init__(*args, **kwargs)
-        self.operations = operators
+        self.operations = operations
         self.last_operator = None
+        self._countdown = None
         return
 
+    @property
+    def countdown(self):
+        """
+        :return: a countdown-timer
+        """
+        if self._countdown is None:
+            self._countdown = CountDown(self.operations.count)
+        return self._countdown
     
     def __call__(self):
         """
         Runs the operators
         """
-        start = clock.now()
+        self.countdown.start()
 
         crash_times = []
-        #import pudb;pudb.set_trace()
+
         for operation_count, operation in enumerate(self.operations):
-            operation_start = clock.now()
+            operation_start = self.countdown.now
             try:
                 operation()
             except OperatorError as error:
-                crash_time = clock.now()
+                crash_time = self.countdown.now
                 self.logger.error(error)
                 crash_times.append(CrashRecord(id=operation_count,
                                                start_time=operation_start,
                                                error=error,
                                                crash_time=crash_time))
             except KeyboardInterrupt:
-                self.logger.warning("Oh, I am slain.")
+                self.logger.warning("Oh, I am slain. (by a Keyboard-Interrupt)")
                 return
-           
-        end = clock.now()
+            self.countdown.add(operation_start)
+            remaining = self.countdown.remaining(operation_count)
+            if remaining:
+                self.logger.info("{0} out of {1} tests completed".format(operation_count,
+                                                                         self.operations.count))
+                self.logger.info("Estimated Time Remaining: {0}".format(remaining))
+
         for crash in crash_times:
             print str(crash)
-        self.logger.info(ELAPSED_TIME.format(t=end - start))
+        self.logger.info(ELAPSED_TIME.format(t=self.countdown.elapsed))
         return
-
 # end class Hortator

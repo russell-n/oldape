@@ -42,9 +42,6 @@ class Strategerizer(BaseClass):
             crash_handler = CrashHandler(args)
             crash_handler.run(error)
             return
-        #self.logger.info("Running the Tear-Down")
-        #teardown = TearDown(setup)
-        #teardown.run()
         return
 
     def fetch(self, args):

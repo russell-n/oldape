@@ -12,6 +12,7 @@ import re
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConnectionError, CommandError
 from apetools.commons.timestamp import TimestampFormat
+from apetools.tools.sleep import Sleep
 from basecommand import BaseThreadedCommand
 
 
@@ -46,9 +47,19 @@ class Oscillate(BaseThreadedCommand):
         self._event = None
         self._thread = None
         self._error_queue = None
+        self._sleep = None
         self.name = 'oscillate'
         return
 
+    @property
+    def sleep(self):
+        """
+        :return: a blocking (but verbose) sleep
+        """
+        if self._sleep is None:
+           self._sleep = Sleep() 
+        return self._sleep
+    
     @property
     def event(self):
         """
@@ -91,13 +102,13 @@ class Oscillate(BaseThreadedCommand):
         :return: self.run executing in a thread
         """
         if self._thread is None:
-            self._thread = Thread(target=self.run, name="Oscillator")
+            self._thread = Thread(target=self.run_thread, name="Oscillator")
             self._thread.daemon = True
             self._thread.start()
             sleep(0.5)
             if not self.error_queue.empty():
                 self._thread = None
-                raise OscillatorError(self.queue.get())
+                raise OscillatorError(self.error_queue.get())
 
         return self._thread
 
@@ -121,7 +132,9 @@ class Oscillate(BaseThreadedCommand):
                                        "event is set."))
                     self.rotation_start.set()
                     continue
-                elif 'Rate table returned invalid' in line:
+                elif ('Rate table returned invalid' in line or
+                      "The Turntable isn't responding" in line):
+                    self.error_queue.put("Unable to oscillate: {0}".format(line))
                     raise OscillatorError(line)
                     
         except Exception as err:
@@ -150,6 +163,8 @@ class Oscillate(BaseThreadedCommand):
                 self.error_queue.put(line)
                 #aise OscillatorError("Rate Table error")
             elif 'File "/usr/bin/oscillate"' in line:
+                self.error_queue.put(line)
+            elif "The Turntable isn't responding" in line:
                 self.error_queue.put(line)
             else:
                 self.logger.warning(line)
@@ -201,7 +216,8 @@ class Oscillate(BaseThreadedCommand):
             else:
                 self._thread = None
             # give the connection a chance to return an error
-            sleep(1)
+            self.logger.info("Sleeping to see if the turntable raises an error")
+            self.sleep()
             if not self.error_queue.empty():
                self._thread = None
                if attempt == self.retries - 1:

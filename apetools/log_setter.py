@@ -17,7 +17,7 @@ A place to hold the set_logger function. This has to be at the top-level so that
 # Python Libraries
 import logging
 import logging.handlers
-
+import os
 
 logger = logging.getLogger(__package__)
 SCREEN_FORMAT = "%(levelname)s: %(name)s.%(funcName)s, Line: %(lineno)d [%(asctime)s] -- %(message)s"
@@ -31,6 +31,26 @@ BACKUP_LOGS = 5
 
 LOGNAME = "{0}.log".format(__package__)
 
+def cleanup(log_directory="last_log"):
+    """
+    Saves the last log to sub-directory
+
+    :param:
+
+     - `log_directory`: sub-directory to save old file to
+
+    :postconditions:
+
+     - `log_directory` is a sub-directory of the current directory (if log exists)
+     - log-file is moved to the log-directory (if log existed)
+    """
+    if not os.path.isfile(LOGNAME):
+        return
+    if not os.path.isdir(log_directory):
+        os.makedirs(log_directory)
+    os.rename(LOGNAME, os.path.join(log_directory, LOGNAME))
+    return
+
 def set_logger(args):
     """
     Creates a logger and sets the level based on args.
@@ -39,6 +59,7 @@ def set_logger(args):
 
      - `args`: args with debug and silent attributes
     """
+    cleanup()
     stderr = logging.StreamHandler()
     if args.debug:
         screen_format = SCREEN_FORMAT

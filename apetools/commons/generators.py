@@ -41,6 +41,8 @@ class ShallowFind(object):
         self.glob = glob
         self._path = path
         self._filenames = None
+        self._matching_names = None
+        self._matching_count = None
         return
 
     @property
@@ -61,19 +63,41 @@ class ShallowFind(object):
             self._filenames = sorted(os.listdir(self.path))
         return self._filenames
 
+    @property
+    def matching_names(self):
+        """
+        Added so count could be given to hortator
+        
+        :return: list of matching names
+        """
+        if self._matching_names is None:
+            self._matching_names = [name for name in fnmatch.filter(self.filenames, self.glob)]
+        return self._matching_names
+
+    @property
+    def matching_count(self):
+        """
+        :return: count of matching names
+        """
+        if self._matching_count is None:
+            self._matching_count = len(self.matching_names)
+        return self._matching_count
+    
     def reset(self):
         """
         Sets all properties to None
         """
         self._filenames = None
         self._path = None
+        self._matching_names = None
+        self._matching_count = None
         return
 
     def __iter__(self):
         """
         :yield: the matching filenames
         """
-        for name in fnmatch.filter(self.filenames, self.glob):
+        for name in self.matching_names:
             yield name    
         return 
 # end class ShallowFind

@@ -4,7 +4,7 @@ A module to hold a generic iperf command.
 import threading
 import time
 
-from apetools.baseclass import BaseClass
+from apetools.baseclass import BaseThreadClass
 from apetools.devices.basedevice import BaseDeviceEnum
 from apetools.commons import errors
 from apetools.commons import readoutput
@@ -39,7 +39,7 @@ class IperfCommandEnum(object):
 # end IperfCommandEnum
     
     
-class IperfCommand(BaseClass):
+class IperfCommand(BaseThreadClass):
     """
     An Iperf Command executes iperf commands
     """
@@ -202,7 +202,7 @@ class IperfCommand(BaseClass):
         """
         filename = self.filename(filename, device.role)
         is_udp = hasattr(self.parameters, IperfCommandEnum.udp)
-
+        
         if not server:
             if not is_udp:
                 self.output.set_emit()
@@ -217,7 +217,7 @@ class IperfCommand(BaseClass):
         file_output = self.output.open(filename=filename)
         
         self.logger.debug("Executing parameters: {0}".format(self.parameters))
-
+        
         with device.connection.lock:
             self.logger.debug("Waiting for the connection lock")
             output, error = device.connection.iperf(str(self.parameters))
@@ -252,9 +252,9 @@ class IperfCommand(BaseClass):
                 self.stop = False
                 self.logger.debug("Aborting")
                 break
-
+        
         self.running = False
-
+        
         
         err = error.readline()
         
@@ -271,8 +271,10 @@ class IperfCommand(BaseClass):
 
         :postcondition: iperf command started in thread
         """
-        self.thread = threading.Thread(target=self.run, name='IperfCommand',
-                                     args=(device, filename,True))
+        self.thread = threading.Thread(target=self.run_thread, name='IperfCommand',
+                                       kwargs={'device':device,
+                                               'filename':filename,
+                                               'server':True})
         self.thread.daemon = True
         self.thread.start()
         return

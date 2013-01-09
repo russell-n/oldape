@@ -134,7 +134,7 @@ class BaseProcPollster(BasePollster):
         """
         self.stopped = False
         name = self.name.replace('/', '')
-        self.thread = threading.Thread(target=self.run, name=name)
+        self.thread = threading.Thread(target=self.run_thread, name=name)
         self.thread.daemon = True
         self.thread.start()
         return 
