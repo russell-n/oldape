@@ -105,7 +105,8 @@ class Oscillate(BaseThreadedCommand):
             self._thread = Thread(target=self.run_thread, name="Oscillator")
             self._thread.daemon = True
             self._thread.start()
-            sleep(0.5)
+            self.logger.info("sleeping to wait for the table to error-out")
+            self.sleep()
             if not self.error_queue.empty():
                 self._thread = None
                 raise OscillatorError(self.error_queue.get())
