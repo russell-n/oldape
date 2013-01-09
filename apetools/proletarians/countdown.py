@@ -50,7 +50,7 @@ class CountDown(BaseClass):
          - `total_repetitions`: number of times the operations will be repeated
         """
         super(CountDown, self).__init__()
-        self.total_repetitiions = total_repetitions
+        self.total_repetitions = total_repetitions
         self.start_time = None
         self._now = None
         self._heap = None

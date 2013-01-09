@@ -37,16 +37,13 @@ class CrashHandler(BaseClass):
         output = storageoutput.StorageOutput("crash_reports")
         output.copy(LOGNAME)
         f = output.open("crashreport.log")
-        temp = StringIO()
         separator = "*" * 20
         message = " Crash Report "
         header =  separator + message + separator
         footer = separator + separator + "*" * len(message)
         f.write(header + "\n")
         
-        traceback.print_exc(file=temp)
-        for line in temp:
-            f.write(line)
+        traceback.print_exc(file=f)
         f.write(footer + "\n")
         return
 # end CrashHandler
