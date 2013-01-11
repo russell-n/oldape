@@ -25,17 +25,18 @@ from apetools.baseclass import BaseClass
 from apetools.tools.sleep import Sleep
 from apetools.commons.errors import CommandError
 
-NEWLINE = "\n\r"
+NEWLINE = "\r"
 INVALID = "Invalid command"
 EOF = ''
-SWITCH_ON = 'pset {0} 1' + NEWLINE
-ALL_OFF = 'ps 0' + NEWLINE
-ALL_ON = 'ps 1' + NEWLINE
-SHOW_STATUSES = 'pshow' + NEWLINE
+SWITCH_ON = 'pset {0} 1'
+ALL_OFF = 'ps 0'
+ALL_ON = 'ps 1' 
+SHOW_STATUSES = 'pshow'
 
 ON = 'ON'
 OFF = "OFF"
 
+ZERO_OR_MORE = r"*"
 ONE_OR_MORE = r'+'
 DIGIT = r'\d'
 INTEGER = DIGIT + ONE_OR_MORE
@@ -43,7 +44,10 @@ STATE = '(?P<state>ON|OFF)'
 SWITCH = '(?P<switch>{0})'.format(INTEGER)
 ANYTHING = '.'
 EVERYTHING = ANYTHING + ONE_OR_MORE
-state_expression = re.compile(SWITCH + EVERYTHING + STATE)
+SEPARATOR = r'\|'
+SPACE = r'\s'
+SPACES = SPACE + ZERO_OR_MORE
+state_expression = re.compile(SWITCH + SPACES + SEPARATOR + SPACES + "Outlet" + INTEGER + SPACES + SEPARATOR + SPACES + STATE)
 
 class SynaxxxError(CommandError):
     """
