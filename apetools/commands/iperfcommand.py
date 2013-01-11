@@ -80,7 +80,8 @@ class IperfCommand(BaseThreadClass):
                 threads = int(self.parameters.parallel.split()[-1])
             parser = SumParser(threads=threads)
             self._parser = StoragePipe(role=StoragePipeEnum.sink,
-                                       transform=parser)            
+                                       transform=parser,
+                add_timestamp=True)            
         return self._parser
     @property
     def output(self):
