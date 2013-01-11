@@ -37,7 +37,7 @@ class TimestampFormat(object):
     """
     A class to hold timestampformats
     """
-    def __init__(self, format_type=TimestampFormatEnums.iperf):
+    def __init__(self, format_type=TimestampFormatEnums.log):
         """
         :param:
         
