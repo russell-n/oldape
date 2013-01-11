@@ -20,6 +20,7 @@ import logging.handlers
 import os
 
 logger = logging.getLogger(__package__)
+SMALL_TIMESTAMP = "%H:%M:%S"
 SCREEN_FORMAT = "%(levelname)s: %(name)s.%(funcName)s, Line: %(lineno)d [%(asctime)s] -- %(message)s"
 SCREEN_FORMAT_QUIET = "%(levelname)s: [%(asctime)s] -- %(message)s"
 DATA_FRIENDLY_FORMAT = "%(levelname)s,%(asctime)s,%(message)s"
@@ -66,7 +67,7 @@ def set_logger(args):
     else:
         screen_format = SCREEN_FORMAT_QUIET
         
-    screen_format = logging.Formatter(screen_format)
+    screen_format = logging.Formatter(screen_format, datefmt=SMALL_TIMESTAMP)
     stderr.setFormatter(screen_format)
 
     log_file = logging.handlers.RotatingFileHandler(LOGNAME,
