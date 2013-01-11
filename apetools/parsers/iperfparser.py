@@ -25,7 +25,7 @@ class BandwidthData(namedtuple("BandwidthData", "interval bandwidth units".split
     __slots__ = ()
 
     def __str__(self):
-        return  "({0}) {1} {2}/sec".format(self.interval, self.bandwidth, self.units)
+        return  "{0},{1},{2}/sec".format(self.interval, self.bandwidth, self.units)
 # end class BandwidthData
                         
 class IperfParser(BaseClass):
