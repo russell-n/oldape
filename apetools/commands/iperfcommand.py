@@ -205,6 +205,7 @@ class IperfCommand(BaseThreadClass):
         is_udp = hasattr(self.parameters, IperfCommandEnum.udp)
         
         if not server:
+            import pudb;pudb.set_trace()
             if not is_udp:
                 self.output.set_emit()
             else:
