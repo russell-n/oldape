@@ -57,7 +57,7 @@ class Oscillate(BaseThreadedCommand):
         :return: a blocking (but verbose) sleep
         """
         if self._sleep is None:
-           self._sleep = Sleep() 
+           self._sleep = Sleep(10) 
         return self._sleep
     
     @property
