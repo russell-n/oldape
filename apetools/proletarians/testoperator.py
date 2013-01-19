@@ -1,5 +1,20 @@
+# Copyright 2012 Russell Nakamura
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
 """
 An operator operates tests.
+
+For each configuration-file found an operator is created.
 """
 #python Libraries
 from collections import namedtuple
@@ -178,12 +193,13 @@ class TestOperator(BaseClass):
         
         try:
             # the count is decremented on error, so it can't use enmurate
-            count = 0
+            count = 1
             for parameter in self.test_parameters:
                 self.countdown_timer.total_repetitions = parameter.total_count
 
                 try:
-                    self.one_repetition(parameter, count+1, prefix)
+                    self.one_repetition(parameter, count, prefix)
+                    count += 1
                 except (errors.AffectorError, errors.CommandError) as error:
                     self.logger.error(error)
                     self.logger.error("Quitting this test")
