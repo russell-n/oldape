@@ -239,8 +239,9 @@ class ProcnetdevPollster(BaseProcPollster):
         :return: the first line for the output file
         """
         if self._header is None:
-            self._header = ("rbytes,rpackets,rerrs,rdrop,rfifo,tbytes,tpackets,terrs,"
-                            "tdrop,tfifo,tcolls,tcarrier\n")
+            self._header = ("timestamp,rx_bytes,rx_packets,rx_errs,rx_drop,rx_fifo,rx_frame,tx_bytes,"
+                            "tx_packets,tx_errs,"
+                            "txdrop,tx_fifo,tx_colls,tx_carrier\n")
         return self._header
     
     @property

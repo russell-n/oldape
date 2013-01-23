@@ -137,7 +137,10 @@ class TestOperator(BaseClass):
                                   t=parameter.total_count,
                                   s='Starting',
                                   tag=self.tag)
-        self.log_info(message, parameter.nodes.parameters)
+        try:
+            self.log_info(message, parameter.nodes.parameters)
+        except AttributeError as error:
+            self.logger.debug(error)
         self.logger.info("Running test setup")
 
         filename_prefix = "{0}_{1}".format(filename_prefix, self.test_setup(parameter))
