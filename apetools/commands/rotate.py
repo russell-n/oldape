@@ -32,7 +32,10 @@ class RotateCommand(BaseClass):
         arguments = "{0} --velocity {1}".format(angle, velocity)
         stdout, stderr = self.connection.rotate(arguments)
         for line in stdout:
-            self.logger.debug(line)
+            if 'Setting the table angle' in line:
+                self.logger.info(line)
+            else:                
+                self.logger.debug(line)
         for line in stderr:
             if len(line) > 1:
                 self.logger.error(line)

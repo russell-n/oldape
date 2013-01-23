@@ -48,8 +48,8 @@ class DevicePoller(BasePollster):
         :postcondition: the poller is sending rssi values to the output
         """
         interval = self.interval
-        if self.use_header:
-            self.output.write("timestamp,rssi,noise,bitrate\n")
+        #if self.use_header:
+        self.output.write("timestamp,rssi,noise,bitrate\n")
         while True:
             if self.event is not None:
                 self.event.wait()
