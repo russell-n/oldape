@@ -49,7 +49,7 @@ class DevicePoller(BasePollster):
         """
         interval = self.interval
         #if self.use_header:
-        self.output.write("timestamp,rssi,noise,bitrate\n")
+        self.output.write("timestamp,rssi,noise,bitrate,units\n")
         while True:
             if self.event is not None:
                 self.event.wait()
