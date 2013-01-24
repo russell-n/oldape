@@ -34,6 +34,8 @@ class RotateCommand(BaseClass):
         for line in stdout:
             if 'Setting the table angle' in line:
                 self.logger.info(line)
+            elif 'Table Angle:' in line:
+                self.logger.info(line)
             else:                
                 self.logger.debug(line)
         for line in stderr:
