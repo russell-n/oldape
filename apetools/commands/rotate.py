@@ -5,6 +5,16 @@ A command-line interface to run the rotate command remotely.
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.commons.errors import CommandError
+from apetools.tools.killall import KillAll
+
+
+
+class RotateError(CommandError):
+    """
+    An error in the rotation
+    """
+# end class RotateError
+
 
 class RotateCommand(BaseClass):
     """
@@ -31,6 +41,13 @@ class RotateCommand(BaseClass):
         angle, velocity = parameters.angle_velocity.parameters
         arguments = "{0} --velocity {1}".format(angle, velocity)
         stdout, stderr = self.connection.rotate(arguments)
+        try:
+            timeout = parameters.timeout
+        except AttributeError:
+            self.logger.debug("Using default 2 minute timeout")
+            timeout = 120
+        end_time = time.time() + 120
+        
         for line in stdout:
             if 'Setting the table angle' in line:
                 self.logger.info(line)
@@ -38,6 +55,9 @@ class RotateCommand(BaseClass):
                 self.logger.info(line)
             else:                
                 self.logger.debug(line)
+            if time.time() > end_time:
+                self.kill()
+                raise RotateError("Rotation exceeded timeout ({0})".format(timeout))
         for line in stderr:
             if len(line) > 1:
                 self.logger.error(line)
@@ -55,6 +75,14 @@ class RotateCommand(BaseClass):
         """
         if "No such file or directory" in line:
             raise CommandError("The Rotator was not found -- is the USB cable plugged in?")
+        return
+
+    def kill(self):
+        """
+        :postcondition: rotate process killed
+        """
+        kill = KillAll(name='rotate')
+        kill(self.connection)
         return
 # end class RotateCommand
 
