@@ -156,7 +156,7 @@ class Synaxxx(BaseClass):
             line = self.client.read_until(NEWLINE, 1)
             self.logger.debug(line)
             yield line
-            if time.time() > timeout:
+            if time.time() > end_time:
                 raise SynaxxxError("time exceeded {0} seconds".format(timeout))
         return
 
