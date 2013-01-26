@@ -24,19 +24,23 @@ from errors import OperatorError
 from countdown import CountDown
 
 ELAPSED_TIME = 'Elapsed Time: {t}'
-    
 
-class CrashRecord(namedtuple("CrashRecord",  "id start_time crash_time error")):
+
+class CrashRecord(namedtuple("CrashRecord",
+                             "id start_time crash_time error")):
     """
     A CrashRecord holds the crash information for later.
     """
     __slots__ = ()
 
     def __str__(self):
-        return "Crash Record -- ID: {i} Start Time: {s} Crash Time: {c} Error: {e}".format(i=self.id,
-                                                                                   s=self.start_time,
-                                                                                   e=self.error,
-                                                                                   c=self.crash_time)
+        message = ("Crash Record -- ID: {i}"
+                   " Start Time: {s} Crash Time: {c} Error: {e}")
+        return message.format(i=self.id,
+                              s=self.start_time,
+                              e=self.error,
+                              c=self.crash_time)
+
 
 class Hortator(BaseClass):
     """
@@ -47,7 +51,7 @@ class Hortator(BaseClass):
         :param:
 
          - `operations`: An iterator of operators
-         - `operation_count`: total number of operators
+         - `storage`: a file mover for the log
         """
         super(Hortator, self).__init__(*args, **kwargs)
         self.operations = operations
@@ -63,7 +67,7 @@ class Hortator(BaseClass):
         if self._countdown is None:
             self._countdown = CountDown(self.operations.count)
         return self._countdown
-    
+
     def __call__(self):
         """
         Runs the operators
@@ -84,15 +88,18 @@ class Hortator(BaseClass):
                                                error=error,
                                                crash_time=crash_time))
             except KeyboardInterrupt:
-                self.logger.warning("Oh, I am slain. (by a Keyboard-Interrupt)")
-                return
+                warning = "Oh, I am slain. (by a Keyboard-Interrupt)"
+                self.logger.warning(warning)
+                break
             self.countdown.add(operation_start)
             remaining = self.countdown.remaining(operation_count)
             if remaining:
-                self.logger.info("{0} out of {1} tests completed".format(operation_count,
-                                                                         self.operations.count))
-                self.logger.info("Estimated Time Remaining: {0}".format(remaining))
-
+                message = "{0} out of {1} tests completed"
+                self.logger.info(message.format(operation_count,
+                                                self.operations.count))
+                message = "Estimated Time Remaining: {0}"
+                self.logger.info(message.format(remaining))
+        raise Exception("this is a test")        
         for crash in crash_times:
             print str(crash)
         self.logger.info(ELAPSED_TIME.format(t=self.countdown.elapsed))

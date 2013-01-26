@@ -1,4 +1,4 @@
-# Copyright 2012 Russell Nakamura
+# Copyright 2013 Russell Nakamura
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -16,19 +16,21 @@ An operator operates tests.
 
 For each configuration-file found an operator is created.
 """
-#python Libraries
+#python standard library
 from collections import namedtuple
 from Queue import Queue
 import os
 import sys
 import signal
 
-# apetools Libraries
+# apetools modules
 from apetools.baseclass import BaseClass
 from apetools.tools import sleep
 from apetools.commons import errors
 from apetools.commons import sublogger
 from countdown import CountDown
+from apetools.log_setter import LOGNAME
+
 TIME_REMAINING = "Estimated time Remaining: {t}"
 
 OperatorStaticTestParameters = namedtuple("OperatorStaticTestParameters",
@@ -42,13 +44,14 @@ TEST_TAG = "**** {tag}: {s} Test {r} of {t} ****"
 TEST_POSTAMBLE = "**** {tag}: Ending test - elapsed time = {t} ****"
 TEST_RESULT = "**** {tag}: Test Result = {r} ****"
 
+
 class TestOperator(BaseClass):
     """
     An operator runs the sequence of operations.
     """
     def __init__(self, test_parameters, operation_setup, operation_teardown,
-                 test_setup, tests, test_teardown,nodes, no_cleanup, storage,
-                 countdown_timer=None, tag="APETools",sleep=None):
+                 test_setup, tests, test_teardown, nodes, no_cleanup, storage,
+                 countdown_timer=None, tag="APETools", sleep=None):
         """
         :params:
 
@@ -74,7 +77,7 @@ class TestOperator(BaseClass):
         self.test_teardown = test_teardown
         self.nodes = nodes
         self.no_cleanup = no_cleanup
-        self.storage=storage
+        self.storage = storage
         self._countdown_timer = countdown_timer
         self.tag = tag
         self._sleep = sleep
@@ -99,7 +102,7 @@ class TestOperator(BaseClass):
         if self._sub_logger is None:
             self._sub_logger = sublogger.SubLogger()
         return self._sub_logger
-    
+
     @property
     def sleep(self):
         """
@@ -108,7 +111,7 @@ class TestOperator(BaseClass):
         if self._sleep is None:
             self._sleep = sleep.Sleep()
         return self._sleep
-        
+
     def one_repetition(self, parameter, count, prefix):
         """
         Holds the test algorithm for one repetition.
@@ -143,7 +146,8 @@ class TestOperator(BaseClass):
             self.logger.debug(error)
         self.logger.info("Running test setup")
 
-        filename_prefix = "{0}_{1}".format(filename_prefix, self.test_setup(parameter))
+        filename_prefix = "{0}_{1}".format(filename_prefix,
+                                           self.test_setup(parameter))
         self.sleep()
 
         #**** Execute test
@@ -157,7 +161,7 @@ class TestOperator(BaseClass):
         self.test_teardown(parameter)
         self.countdown_timer.add(test_start)
         remaining = self.countdown_timer.remaining(count)
-        if remaining:                     
+        if remaining:
             self.logger.info(TIME_REMAINING.format(t=remaining))
         message = TEST_TAG.format(r=count,
                                   t=parameter.total_count,
@@ -178,7 +182,7 @@ class TestOperator(BaseClass):
         self.logger.info(message)
         self.nodes[node].log('"{0}"'.format(message))
         return
-    
+
     def __call__(self):
         """
         This is the main operation method.
@@ -190,10 +194,10 @@ class TestOperator(BaseClass):
         if self.no_cleanup:
             self.keyboard_interrupt_intercept()
         self.countdown_timer.start()
-        
+
         #Run the Operation Setup
         prefix = self.operation_setup()
-        
+
         try:
             # the count is decremented on error, so it can't use enmurate
             count = 1
@@ -217,17 +221,21 @@ class TestOperator(BaseClass):
                 except (errors.AffectorError, errors.CommandError) as error:
                     self.logger.error(error)
                     self.logger.error("Quitting this iteration")
-                
-            self.logger.info(TEST_POSTAMBLE.format(t=self.countdown_timer.elapsed,
+
+            elapsed_time = self.countdown_timer.elapsed
+            self.logger.info(TEST_POSTAMBLE.format(t=elapsed_time,
                                                    tag=self.tag))
-            self.logger.info("Sleeping to let the logs finish recording the test-information")
+            message = "Sleeping to let logs finish recording test-information"
+            self.logger.info(message)
             self.sleep()
-        except (errors.ConnectionError, errors.CommandError, errors.ConfigurationError) as error:
+        except (errors.ConnectionError, errors.CommandError,
+                errors.ConfigurationError) as error:
             self.logger.error(error)
         finally:
             self.logger.info("Tearing Down the Current Operation")
             try:
                 self.operation_teardown()
+                self.storage.copy(LOGNAME)
             except AttributeError as error:
                 self.logger.error(error)
             self.sub_logger.remove(logname=sublog_name)
@@ -246,7 +254,8 @@ class TestOperator(BaseClass):
         try:
             os.wait()
         except KeyboardInterrupt:
-            self.logger.warning("Keyboard-Interrupt (killing without cleanup...)")
+            warning = "Keyboard-Interrupt (killing without cleanup...)"
+            self.logger.warning(warning)
             os.kill(child, signal.SIGKILL)
         sys.exit()
         return

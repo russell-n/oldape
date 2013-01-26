@@ -36,7 +36,7 @@ from apetools.lexicographers.config_options import ConfigOptions
 from apetools.commons import storageoutput
 from apetools.commons import enumerations
 from apetools.commons import events
-from apetools.commons.errors import ConfigurationError
+
 operating_systems = enumerations.OperatingSystem
 iperf_direction = enumerations.IperfDirection
 ConnectionTypes = enumerations.ConnectionTypes
@@ -53,6 +53,7 @@ from subbuilders.setuptestbuilder import SetupTestBuilder
 from subbuilders.executetestbuilder import ExecuteTestBuilder
 from subbuilders.teardowntestbuilder import TeardownTestBuilder
 from subbuilders.tpcdevicebuilder import TpcDeviceBuilder
+
 
 class GeneratorHolder(object):
     """
@@ -76,7 +77,7 @@ class GeneratorHolder(object):
         for item in self.generator:
             yield item
         return
-    
+
 
 class BuilderEnum(object):
     """
@@ -85,6 +86,7 @@ class BuilderEnum(object):
     __slots__ = ()
     repetition = 'repetition'
 # end class BuilderEnum
+
 
 class Builder(BaseClass):
     """
@@ -115,7 +117,7 @@ class Builder(BaseClass):
         self._operation_teardown_builder = None
         self._setup_test_builder = None
         self._execute_test_builder = None
-        self._teardown_test_builder = None        
+        self._teardown_test_builder = None
         return
 
     @property
@@ -143,7 +145,7 @@ class Builder(BaseClass):
         if self._events is None:
             self._events = events.EventHolder()
         return self._events
-    
+
     @property
     def parameters(self):
         """
@@ -173,12 +175,13 @@ class Builder(BaseClass):
         """
         if self._repetitions is None:
                 reps = self.current_config.get_int(ConfigOptions.test_section,
-                                               ConfigOptions.repeat_option)
+                                                   ConfigOptions.repeat_option)
+                param = [rep for rep in range(1, reps+1)]
                 self._repetitions = Parameters(name=BuilderEnum.repetition,
-                                                  parameters=[rep for rep in range(1, reps+1)])
+                                               parameters=param)
 
         return self._repetitions
-    
+
     def operation_setup_builder(self, config_map=None, parameters=None):
         """
         :return: builder for the operation
@@ -186,7 +189,9 @@ class Builder(BaseClass):
         if self._operation_setup_builder is None:
             if parameters is None:
                 parameters = []
-            self._operation_setup_builder = OperationSetupBuilder(self, config_map, parameters)
+            self._operation_setup_builder = OperationSetupBuilder(self,
+                                                                  config_map,
+                                                                  parameters)
         return self._operation_setup_builder
 
     def operation_teardown_builder(self, config_map=None, parameters=None):
@@ -196,7 +201,10 @@ class Builder(BaseClass):
         if self._operation_teardown_builder is None:
             if parameters is None:
                 parameters = []
-            self._operation_teardown_builder = OperationTeardownBuilder(self, config_map, parameters)
+            builder = OperationTeardownBuilder(self,
+                                               config_map,
+                                               parameters)
+            self._operation_teardown_builder = builder
         return self._operation_teardown_builder
 
     def setup_test_builder(self, config_map=None, parameters=None):
@@ -206,7 +214,9 @@ class Builder(BaseClass):
         if self._setup_test_builder is None:
             if parameters is None:
                 parameters = []
-            self._setup_test_builder = SetupTestBuilder(self, config_map, parameters)
+            self._setup_test_builder = SetupTestBuilder(self,
+                                                        config_map,
+                                                        parameters)
         return self._setup_test_builder
 
     def execute_test_builder(self, config_map=None, parameters=None):
@@ -216,7 +226,9 @@ class Builder(BaseClass):
         if self._execute_test_builder is None:
             if parameters is None:
                 parameters = []
-            self._execute_test_builder = ExecuteTestBuilder(self, config_map, parameters)
+            self._execute_test_builder = ExecuteTestBuilder(self,
+                                                            config_map,
+                                                            parameters)
         return self._execute_test_builder
 
     def teardown_test_builder(self, config_map=None, parameters=None):
@@ -226,9 +238,10 @@ class Builder(BaseClass):
         if self._teardown_test_builder is None:
             if parameters is None:
                 parameters = []
-            self._teardown_test_builder = TeardownTestBuilder(self, config_map, parameters)
+            self._teardown_test_builder = TeardownTestBuilder(self,
+                                                              config_map,
+                                                              parameters)
         return self._teardown_test_builder
-    
 
     @property
     def nodes(self):
@@ -252,12 +265,13 @@ class Builder(BaseClass):
 
     def build_operator(self, config_map):
         """
-        This is put here so that the operators property can catch exceptions and prevent killing later operators
+        Put here so operators property can catch exceptions
+        and prevent killing later operators
 
         :param:
 
          - `config_map`: a Configuration Map
-        
+
         :return: Built TestOperator
         :postconditions:
 
@@ -266,58 +280,69 @@ class Builder(BaseClass):
         """
         self.reset()
         self.current_config = config_map
-        self.logger.info("Building the TestParameters with configmap '{0}'".format(config_map.filename))
+
+        message = "Building the TestParameters with configmap '{0}'"
+        self.logger.info(message.format(config_map.filename))
         self.storage.copy(config_map.filename,)
         #Operation Setup
-        operation_setup = self.operation_setup_builder(config_map, self.parameters).product
+        operation_setup = self.operation_setup_builder(config_map,
+                                                       self.parameters).product
         self.parameters = self.operation_setup_builder(config_map).parameters
 
-        #Operation Teardown 
-        operation_teardown = self.operation_teardown_builder(config_map, self.parameters).product
-        self.parameters = self.operation_teardown_builder(config_map,
-                                                               self.parameters).parameters
+        #Operation Teardown
+        builder = self.operation_teardown_builder(config_map,
+                                                  self.parameters)
+        operation_teardown = builder.product
+
+        self.parameters = builder.parameters
         # Test Setup
-        test_setup = self.setup_test_builder(config_map, self.parameters).product
-        self.parameters = self.setup_test_builder(config_map, self.parameters).parameters
+        test_setup = self.setup_test_builder(config_map,
+                                             self.parameters).product
+        self.parameters = self.setup_test_builder(config_map,
+                                                  self.parameters).parameters
 
         # Test Execution
         test = self.execute_test_builder(config_map, self.parameters).product
-        self.parameters = self.execute_test_builder(config_map, self.parameters).parameters
+        self.parameters = self.execute_test_builder(config_map,
+                                                    self.parameters).parameters
 
         # Test Tear-down
-        test_teardown = self.teardown_test_builder(config_map, self.parameters).product
-        self.parameters = self.teardown_test_builder(config_map, self.parameters).parameters
+        builder = self.teardown_test_builder(config_map,
+                                             self.parameters)
+        test_teardown = builder.product
+        self.parameters = builder.parameters
 
-        no_cleanup = self.current_config.get_boolean(ConfigOptions.test_section,
-                                                     ConfigOptions.no_cleanup_option,
-                                                     default=False,
-                                                     optional=True)
-        tag = self.current_config.get(ConfigOptions.test_section,
-                                      ConfigOptions.tag_option,
-                                      default="APETest",
-                                      optional=True)
-        return  TestOperator(ParameterGenerator(self.parameters),
-                             operation_setup=operation_setup,
-                             operation_teardown=operation_teardown,
-                             test_setup=test_setup,
-                             tests=test,
-                             test_teardown=test_teardown,
-                             nodes=self.nodes,
-                             no_cleanup=no_cleanup,
-                             storage=self.storage,
-                             tag=tag)            
-    
+        no_cleanup = config_map.get_boolean(ConfigOptions.test_section,
+                                            ConfigOptions.no_cleanup_option,
+                                            default=False,
+                                            optional=True)
+        tag = config_map.get(ConfigOptions.test_section,
+                             ConfigOptions.tag_option,
+                             default="APETest",
+                             optional=True)
+        return TestOperator(ParameterGenerator(self.parameters),
+                            operation_setup=operation_setup,
+                            operation_teardown=operation_teardown,
+                            test_setup=test_setup,
+                            tests=test,
+                            test_teardown=test_teardown,
+                            nodes=self.nodes,
+                            no_cleanup=no_cleanup,
+                            storage=self.storage,
+                            tag=tag)
+
     @property
     def operators(self):
         """
         :yield: test operators
-        """ 
+        """
         for config_map in self.maps:
             try:
                 yield self.build_operator(config_map)
             except Exception as error:
                 self.logger.error(error)
-                self.logger.error("Couldn't build {0}".format(config_map.filename))
+                message = "Couldn't build {0}".format(config_map.filename)
+                self.logger.error(message)
         return
 
     @property
@@ -326,16 +351,17 @@ class Builder(BaseClass):
         :return: The Hortator for the test operators
         """
         if self._hortator is None:
-            self.logger.debug("Building the Hortator")            
-            self._hortator = hortator.Hortator(operations=GeneratorHolder(generator=self.operators,
-                                                                          count=self.maps.finder.matching_count))
+            self.logger.debug("Building the Hortator")
+            generator = GeneratorHolder(generator=self.operators,
+                                        count=self.maps.finder.matching_count)
+            self._hortator = hortator.Hortator(operations=generator)
         return self._hortator
 
     @property
     def tpc_device(self):
         """
         This only creates a new device the first time.
-        
+
         :return: device for the traffic pc
         """
         if self._tpc_device is None:
@@ -353,12 +379,15 @@ class Builder(BaseClass):
         :return: StorageOutput for the folder.
         """
         if self._storage is None:
-            folder_name = self.current_config.get(section=ConfigOptions.test_section,
-                                                  option=ConfigOptions.output_folder_option,
+            section = ConfigOptions.test_section
+            option = ConfigOptions.output_folder_option
+            folder_name = self.current_config.get(section=section,
+                                                  option=option,
                                                   default="",
-                                                  optional=True)        
+                                                  optional=True)
 
-            self.logger.debug("Building the Storage with folder: {0}".format(folder_name))
+            message = "Building the Storage with folder: {0}"
+            self.logger.debug(message.format(folder_name))
             self._storage = storageoutput.StorageOutput(folder_name)
         return self._storage
 
@@ -378,4 +407,3 @@ class Builder(BaseClass):
         self._lock = None
         return
 # end Builder
-    

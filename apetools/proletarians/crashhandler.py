@@ -34,8 +34,8 @@ class CrashHandler(BaseClass):
         """
         self.logger.error("The program has crashed. I weep for you.")
         self.logger.error(error)
-        output = storageoutput.StorageOutput("crash_reports")
-        output.copy(LOGNAME)
+        output = storageoutput.StorageOutput("crash_report_{t}")
+        output.move(LOGNAME)
         f = output.open("crashreport.log")
         separator = "*" * 20
         message = " Crash Report "

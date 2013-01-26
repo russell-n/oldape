@@ -214,7 +214,10 @@ class StorageOutput(BaseClass):
         root, ext = os.path.splitext(filename)
         filename = self._fix_duplicate_names(root, ext) + ext
         target = os.path.join(directory, filename)
-        shutil.copy(source, target)
+        try:
+            shutil.copy(source, target)
+        except IOError as error:
+            self.logger.error(error)
         return
 
     def move(self, source, subdir=None):
@@ -233,7 +236,10 @@ class StorageOutput(BaseClass):
         root, ext = os.path.splitext(filename)
         filename = self._fix_duplicate_names(root, ext) + ext
         target = os.path.join(directory, filename)
-        shutil.move(source, target)
+        try:
+            shutil.move(source, target)
+        except IOError as error:
+            self.logger.error(error)
         return
 
     def close(self):
