@@ -19,6 +19,7 @@ A module to adapt the Synaccess network controller.
 import telnetlib
 import re
 import socket
+import time
 
 #apetools library
 from apetools.baseclass import BaseClass
@@ -140,15 +141,23 @@ class Synaxxx(BaseClass):
                                                             self.port))
         return 
     
-    def lines(self):
+    def lines(self, timeout=120):
         """
+        :param:
+
+         - `timeout`: maximum time to yield lines
+         
         :yield: each line of output
         """
         line = None
+        end_time = time.time() + timeout
+         
         while line != EOF:
             line = self.client.read_until(NEWLINE, 1)
             self.logger.debug(line)
             yield line
+            if time.time() > timeout:
+                raise SynaxxxError("time exceeded {0} seconds".format(timeout))
         return
 
     def validate(self, line, command):
