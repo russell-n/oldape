@@ -128,7 +128,7 @@ class LogWatcher(BaseThreadClass):
             raise LogWatcherError("Connection not given")
         
         self.thread =  threads.Thread(target=self.run_thread, args=(connection,),
-                                      name="LogWatcher {0}".format(self.arguments))
+                                      name="LogWatcher {0}".format(self.arguments))        
         return self.thread
 
     def __str__(self):

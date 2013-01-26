@@ -106,6 +106,10 @@ class ValidatingOutput(BaseClass):
             except socket.timeout:
                 self.logger.debug("Socket timed out")
                 line = SPACE
+            except AttributeError as error:
+                self.logger.error(error)
+                break
+            
             self.validate(line)
             yield line
         #yield EOF
