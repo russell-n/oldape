@@ -14,11 +14,13 @@ from apetools.commands.poweron import PowerOn
 
 from apetools.commons.errors import ConfigurationError
 
+
 class PowerOnConfigurationError(ConfigurationError):
     """
     An error to raise if the user's configuration is wrong
     """
 # end class PowerOnConfigurationError
+
 
 class PowerOnBuilderEnum(object):
     """
@@ -26,18 +28,21 @@ class PowerOnBuilderEnum(object):
     """
     __slots__ = ()
     id_switch = "id_switch"
+    timeout = 'timeout'
     sleep = "sleep"
 # end class PowerOnBuilderEnums
 
-class PowerOnParameters(namedtuple("PowerOnParameters", "identifier switch".split())):
+
+class PowerOnParameters(namedtuple("PowerOnParameters",
+                                   "identifier switch".split())):
     __slots__ = ()
 
     def __str__(self):
         return "identifier: {0} switch: {1}".format(self.identifier,
                                                     self.switch)
 # end class PowerOnParameters
-                           
-    
+
+
 class PowerOnBuilder(BaseToolBuilder):
     """
     A networked power-switch builder
@@ -74,8 +79,14 @@ class PowerOnBuilder(BaseToolBuilder):
                         sleep = float(switch.sleep)
                     else:
                         sleep = 0
+
+                    if hasattr(switch, PowerOnBuilderEnum.timeout):
+                        timeout = float(switch.timeout)
+                    else:
+                        timeout = 1
                     self._clients[switch.hostname] = Synaxxx(switch.hostname,
-                                                             sleep=sleep)
+                                                             sleep=sleep,
+                                                             timeout=timeout)
         return self._clients
 
     @property
@@ -85,17 +96,22 @@ class PowerOnBuilder(BaseToolBuilder):
         """
         if self._config_options is None:
             self._config_options = {}
-            identifiers = self.config_map.options(ConfigOptions.poweron_section)
+            section = ConfigOptions.poweron_section
+            identifiers = self.config_map.options(section)
             try:
-                config_tuples = [self.config_map.get_namedtuple(ConfigOptions.poweron_section, identifier, converter=lower) for identifier in identifiers]
+                config_tuples = [self.config_map.get_namedtuple(section,
+                                                                identifier,
+                                                                converter=lower) 
+                                                                for identifier in identifiers]
             except TypeError as error:
                 self.logger.error(error)
-                raise PowerOnConfigurationError("Missing POWERON section in the config-file.")
+                message = "Missing POWERON section in the config-file."
+                raise PowerOnConfigurationError(message)
             self._config_options = dict(zip(identifiers, config_tuples))
             if not len(self._config_options):
-                raise PowerOnConfigurationError("Missing POWERON options (<ID>=hostname:<hostname>,switch:<switch ID>) in the config file")
+                message = "Missing POWERON options (<ID>=hostname:<hostname>,switch:<switch ID>) in the config file"
+                raise PowerOnConfigurationError(message)
         return self._config_options
-
 
     @property
     def product(self):
@@ -115,11 +131,12 @@ class PowerOnBuilder(BaseToolBuilder):
             parameters = []
             for identifier, param in self.config_options.iteritems():
                 switch = param.switch
-                
+
                 parameters.append(PowerOnParameters(identifier=identifier,
                                                     switch=switch))
-            self.previous_parameters.append(Parameters(name=PowerOnBuilderEnum.id_switch,
+            name = PowerOnBuilderEnum.id_switch
+            self.previous_parameters.append(Parameters(name=name,
                                                        parameters=parameters))
             self._parameters = self.previous_parameters
         return self._parameters
-# end class PowerOnBuilder            
+# end class PowerOnBuilder

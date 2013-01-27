@@ -1,4 +1,3 @@
-# Copyright 2012 Russell Nakamura
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -31,7 +30,7 @@ INVALID = "Invalid command"
 EOF = ''
 SWITCH_ON = 'pset {0} 1'
 ALL_OFF = 'ps 0'
-ALL_ON = 'ps 1' 
+ALL_ON = 'ps 1'
 SHOW_STATUSES = 'pshow'
 
 ON = 'ON'
@@ -48,14 +47,16 @@ EVERYTHING = ANYTHING + ONE_OR_MORE
 SEPARATOR = r'\|'
 SPACE = r'\s'
 SPACES = SPACE + ZERO_OR_MORE
-state_expression = re.compile(SWITCH + SPACES + SEPARATOR + SPACES + "Outlet" + INTEGER + SPACES + SEPARATOR + SPACES + STATE)
+state_expression = re.compile(SWITCH + SPACES + SEPARATOR + SPACES + "Outlet" +
+                              INTEGER + SPACES + SEPARATOR + SPACES + STATE)
+
 
 class SynaxxxError(CommandError):
     """
     An error to raise if a command doesn't execute properly.
     """
 # end class SynaxxxError
-    
+
 
 class Synaxxx(BaseClass):
     """
@@ -97,8 +98,9 @@ class Synaxxx(BaseClass):
         :return: the telnetlib client
         """
         if self._client is None:
-            self.logger.debug("Opening telnet connection: {0}@{1}".format(self.host,
-                                                                          self.port))
+            message = "Opening telnet connection: {0}@{1}"
+            self.logger.debug(message.format(self.host,
+                                             self.port))
             self._client = telnetlib.Telnet(self.host, self.port, self.timeout)
         return self._client
 
@@ -130,28 +132,29 @@ class Synaxxx(BaseClass):
                 self.client.read_very_eager()
                 self.client.write(NEWLINE)
                 self.client.write(command + NEWLINE)
-                for line in self.lines():            
+                for line in self.lines():
                     self.validate(line, command)
                     yield line
-            except socket.error as error:
+            except (socket.timeout, socket.error) as error:
                 self.logger.error("Telnet Error: {0}".format(error))
                 self.close()
                 if attempt == attempts - 1:
-                    raise SynaxxxError("Error with: ip: {0} port: {1}".format(self.host,
-                                                            self.port))
-        return 
-    
+                    message = "Error with: ip: {0} port: {1}"
+                    raise SynaxxxError(message.format(self.host,
+                                                      self.port))
+        return
+
     def lines(self, timeout=120):
         """
         :param:
 
          - `timeout`: maximum time to yield lines
-         
+
         :yield: each line of output
         """
         line = None
         end_time = time.time() + timeout
-         
+
         while line != EOF:
             line = self.client.read_until(NEWLINE, 1)
             self.logger.debug(line)
@@ -165,9 +168,10 @@ class Synaxxx(BaseClass):
         Checks the line for errors.
         """
         if INVALID in line:
-            raise SynaxxxError("Error executing: '{0}'".format(command.strip()))
+            message = "Error executing: '{0}'"
+            raise SynaxxxError(message.format(command.strip()))
         return
-    
+
     def all_off(self):
         """
         :postcondition: all outlets turned off
@@ -194,7 +198,7 @@ class Synaxxx(BaseClass):
         for line in self.exec_command(SWITCH_ON.format(switch)):
             pass
         return
-    
+
     def __call__(self, switches=None):
         """
         :param:
@@ -204,7 +208,7 @@ class Synaxxx(BaseClass):
         :postcondition: switches in list on, all others off, self.close called
         """
         self.all_off()
-        
+
         self.sleeper()
         if switches is None:
             return
@@ -213,7 +217,7 @@ class Synaxxx(BaseClass):
             self.logger.info("Turning on switch {0}".format(switch))
             if switch not in self.status:
                 self.increment_sleep()
-                raise SynaxxxError("Invalid Switch: '{0}'".format(switch))                
+                raise SynaxxxError("Invalid Switch: '{0}'".format(switch))
             self.turn_on(switch)
 
         self.logger.info("Validating switch states")
@@ -223,13 +227,15 @@ class Synaxxx(BaseClass):
                 assert statuses[switch] == ON
             except (AssertionError, KeyError):
                 self.increment_sleep()
-                SynaxxxError("Unable to turn on switch '{0}'".format(switch))                
-        for switch in [switch for switch in statuses if switch not in switches]:
+                SynaxxxError("Unable to turn on switch '{0}'".format(switch))
+        for switch in [switch for switch in statuses
+                       if switch not in switches]:
             try:
                 assert statuses[switch] == OFF
             except (AssertionError, KeyError):
                 self.increment_sleep()
-                raise SynaxxxError("Unable to turn off switch '{0}'".format(switch))
+                message = "Unable to turn off switch '{0}'"
+                raise SynaxxxError(message.format(switch))
         self.show_status()
         self.close()
         return
@@ -255,7 +261,10 @@ class Synaxxx(BaseClass):
         """
         :postcondition: connection closed, client deleted
         """
-        self.client.close()
+        try:
+            self.client.close()
+        except socket.error as error:
+            self.logger.debug(error)
         self._client = None
         return
 # end class Synaxxx

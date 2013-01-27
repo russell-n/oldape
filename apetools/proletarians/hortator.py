@@ -99,7 +99,7 @@ class Hortator(BaseClass):
                                                 self.operations.count))
                 message = "Estimated Time Remaining: {0}"
                 self.logger.info(message.format(remaining))
-        raise Exception("this is a test")        
+
         for crash in crash_times:
             print str(crash)
         self.logger.info(ELAPSED_TIME.format(t=self.countdown.elapsed))
