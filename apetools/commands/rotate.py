@@ -1,7 +1,10 @@
 """
 A command-line interface to run the rotate command remotely.
 """
+#python standard library
+import time
 
+# apetools
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.commons.errors import CommandError
@@ -88,7 +91,6 @@ class RotateCommand(BaseClass):
 
 
 if __name__ == "__main__":
-    import time
     from apetools.connections.sshconnection import SSHConnection
     c = SSHConnection("pogo2", "root")
     r = RotateCommand(c)
