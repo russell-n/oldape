@@ -20,11 +20,12 @@ class RotateBuilderEnums(object):
     angle_velocity = 'angle_velocity'
 # end class RotateBuilderEnums
 
-class RotateParameters(namedtuple("RotateParameters", "angle velocity".split())):
+class RotateParameters(namedtuple("RotateParameters", "angle velocity clockwise".split())):
     __slots__ = ()
 
     def __str__(self):
-        return "angle: {0} velocity: {1}".format(self.angle, self.velocity)
+        return "angle: {0} velocity: {1} clockwise: {2}".format(self.angle, self.velocity,
+                                                                self.clockwise)
 # end class RotateParameters
                            
     
@@ -100,7 +101,11 @@ class RotateBuilder(BaseToolBuilder):
                     angle, velocity = item.split(COLON)
                 else:
                     angle, velocity = item, 0
-                parameters.append(RotateParameters(angle, velocity))
+
+                    # check the direction
+                clockwise = float(angle) < 0
+                parameters.append(RotateParameters(angle.lstrip('-'), velocity,
+                                                   clockwise))
 
             self.previous_parameters.append(Parameters(name=RotateBuilderEnums.angle_velocity,
                                                        parameters=parameters))
