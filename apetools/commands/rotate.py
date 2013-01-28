@@ -11,7 +11,6 @@ from apetools.commons.errors import CommandError
 from apetools.tools.killall import KillAll
 
 
-
 class RotateError(CommandError):
     """
     An error in the rotation
@@ -21,13 +20,13 @@ class RotateError(CommandError):
 
 class RotateCommand(BaseClass):
     """
-    A class to issue a remote 
+    A class to issue a remote
     """
     def __init__(self, connection, retries=2):
         """
         :param:
 
-         - `connection`: A connection to the controller of the rate-table (rotator)
+         - `connection`: connection to rate-table (rotator) control
          - `retries`: The number of times to retry
         """
         super(RotateCommand, self).__init__()
@@ -43,6 +42,8 @@ class RotateCommand(BaseClass):
         """
         angle, velocity = parameters.angle_velocity.parameters
         arguments = "{0} --velocity {1}".format(angle, velocity)
+        if parameters.clockwise:
+            arguments += " --clockwise"
         stdout, stderr = self.connection.rotate(arguments)
         try:
             timeout = parameters.timeout
@@ -50,22 +51,25 @@ class RotateCommand(BaseClass):
             self.logger.debug("Using default 2 minute timeout")
             timeout = 120
         end_time = time.time() + 120
-        
+
         for line in stdout:
             if 'Setting the table angle' in line:
                 self.logger.info(line)
             elif 'Table Angle:' in line:
                 self.logger.info(line)
-            else:                
+            else:
                 self.logger.debug(line)
             if time.time() > end_time:
                 self.kill()
-                raise RotateError("Rotation exceeded timeout ({0})".format(timeout))
+                message = "Rotation exceeded timeout ({0})"
+                raise RotateError(message.format(timeout))
         for line in stderr:
             if len(line) > 1:
                 self.logger.error(line)
             if "Requested position is out of range." in line:
-                raise ConfigurationError("Requested rotation angle of {0} is out of range".format(parameters.angles.parameters))
+                angle = parameters.angles.parameters
+                message = "Angle out of range: {0}".format(angle)
+                raise ConfigurationError(message)
         return "angle_{0}".format(angle.zfill(3))
 
     def check_errors(self, line):
@@ -77,7 +81,8 @@ class RotateCommand(BaseClass):
         :raise: CommandError if a known fatal error is detected
         """
         if "No such file or directory" in line:
-            raise CommandError("The Rotator was not found -- is the USB cable plugged in?")
+            message = "Rotator not found -- USB cable plugged in?"
+            raise CommandError(message)
         return
 
     def kill(self):
