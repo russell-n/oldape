@@ -40,10 +40,11 @@ class RotateCommand(BaseClass):
 
          - `parameters`: namedtuple with parameters.angle_velocity.parameters
         """
-        angle, velocity = parameters.angle_velocity.parameters
+        angle, velocity, clockwise = parameters.angle_velocity.parameters
         arguments = "{0} --velocity {1}".format(angle, velocity)
-        if parameters.clockwise:
+        if clockwise:
             arguments += " --clockwise"
+        self.logger.info("Rotating: {0}".format(arguments))
         stdout, stderr = self.connection.rotate(arguments)
         try:
             timeout = parameters.timeout
@@ -56,7 +57,7 @@ class RotateCommand(BaseClass):
             if 'Setting the table angle' in line:
                 self.logger.info(line)
             elif 'Table Angle:' in line:
-                self.logger.info(line)
+                self.logger.info(line.rstrip())
             else:
                 self.logger.debug(line)
             if time.time() > end_time:

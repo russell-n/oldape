@@ -14,7 +14,9 @@ class DummyOperation(BaseClass):
         super(DummyOperation, self).__init__()
         return
 
-    def __call__(self, parameters=None):
+    def __call__(self, parameters=None, filename_prefix=None):
+        self.logger.debug(str(parameters))
+        self.logger.debug(filename_prefix)        
         return
 
     def __getattr__(self, name):

@@ -103,7 +103,7 @@ class RotateBuilder(BaseToolBuilder):
                     angle, velocity = item, 0
 
                     # check the direction
-                clockwise = float(angle) < 0
+                clockwise = angle.startswith('-') 
                 parameters.append(RotateParameters(angle.lstrip('-'), velocity,
                                                    clockwise))
 

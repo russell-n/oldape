@@ -168,7 +168,10 @@ class TestOperator(BaseClass):
                                   t=parameter.total_count,
                                   s='Ending',
                                   tag=self.tag)
-        self.log_info(message, parameter.nodes.parameters)
+        try:
+            self.log_info(message, parameter.nodes.parameters)
+        except AttributeError as error:
+            self.logger.debug(error)
         return
 
     def log_info(self, message, node):
