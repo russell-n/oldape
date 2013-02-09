@@ -21,7 +21,7 @@ import os
 
 # apetools Libraries
 from apetools.commons.readoutput import ValidatingOutput
-from apetools.commons import enumerations
+
 
 
 # connections
@@ -42,7 +42,6 @@ class SSHConnection(NonLocalConnection):
     """
     def __init__(self, hostname, username,
                  password=None, port=22, timeout=5,
-                 operating_system=enumerations.OperatingSystem.linux,
                  *args, **kwargs):
         """
         :param:
@@ -59,7 +58,6 @@ class SSHConnection(NonLocalConnection):
         self.username = username
         self.password = password
         self.port = port
-        self.operating_system = operating_system
         self.timeout = timeout
         self._logger = None
         self._client = None

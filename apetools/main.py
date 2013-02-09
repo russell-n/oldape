@@ -16,9 +16,6 @@ The entry point for stand-alone invocation (runs the argumentbureau).
 
 """
 # python Libraries
-import os
-import sys
-import signal
 
 # testrunner Libraries
 from proletarians.argumentparser import ArgumentParser
