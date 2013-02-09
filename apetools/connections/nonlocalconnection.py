@@ -33,7 +33,7 @@ import threading
 # apetools Libraries
 from apetools.baseclass import BaseThreadClass
 from localconnection import OutputError 
-
+from apetools.commons import enumerations
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
 EOF = ''
@@ -44,12 +44,15 @@ class NonLocalConnection(BaseThreadClass):
     A non-local connection is the base for non-local connections
 
     """
-    def __init__(self, command_prefix='', lock=None, *args, **kwargs):
+    def __init__(self, command_prefix='', lock=None, 
+                 operating_system=enumerations.OperatingSystem.linux,
+                 *args, **kwargs):
         """
         :param:
 
          - `command_prefix`: A prefix to prepend to commands (e.g. 'adb shell')
          - `lock` : A lock to acquire before calls
+         - `operating_system`: the operating system
         """
         super(NonLocalConnection, self).__init__(*args, **kwargs)
         # logger is defined in BaseClass but declared here for child-classes
@@ -57,6 +60,7 @@ class NonLocalConnection(BaseThreadClass):
         self.command_prefix = command_prefix
         self._lock = lock
         self._queue = None
+        self.operating_system = operating_system
         self.exc_info = None
         return
 

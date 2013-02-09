@@ -5,7 +5,7 @@ from unittest import TestCase
 from mock import MagicMock
 
 #apetools
-from apetools.watchers.fileexpressionwatcher import FileExpressionWatcher
+#from apetools.watchers.fileexpressionwatcher import FileExpressionWatcher
 
 
 class TestFileExpressionWatcher(TestCase):
