@@ -47,7 +47,7 @@ class IfconfigCommand(BaseClass):
         :return: the operating system for the device to query
         """
         if self._operating_system is None:
-            self._operating_system = enumerations.OperatingSystem.linux
+            self._operating_system = self.connection.os
         return self._operating_system
 
     @property
