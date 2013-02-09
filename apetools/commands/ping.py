@@ -31,6 +31,7 @@ class PingArguments(object):
     android = ' -c 1 -w 1 '
     linux = " -c 1 -w 1 "
     windows = "-n 1 -w 1000 "
+    mac = ' -c 1 -t 1 '
 # end class PingArguments
     
 class PingCommand(BaseClass):
@@ -58,10 +59,14 @@ class PingCommand(BaseClass):
         """
         :return: The ping arguments to use
         """
-        if self.operating_system in (enumerations.OperatingSystem.android, enumerations.OperatingSystem.linux):
-            self._arguments = PingArguments.linux +  self.target
-        elif self.operating_system == enumerations.OperatingSystem.windows:
-            self._arguments = PingArguments.windows + self.target
+        if self._arguments is None:
+            if self.operating_system in (enumerations.OperatingSystem.android, 
+                                         enumerations.OperatingSystem.linux):
+                self._arguments = PingArguments.linux +  self.target
+            elif self.operating_system == enumerations.OperatingSystem.windows:
+                self._arguments = PingArguments.windows + self.target
+            elif self.operating_system == enumerations.OperatingSystem.mac:
+                self._arguments = PingArguments.mac + self.target            
         return self._arguments
 
     @property
@@ -85,11 +90,13 @@ class PingCommand(BaseClass):
         :return: PingData or None
         :raise: ConfigurationError if the target is unknown
         """
+        
         if target is None:
             target = self.target
         else:
             self._arguments = None
             self.target = target
+
         output, error = self.connection.ping(self.arguments, timeout=1)
         for line in output:
             self.logger.debug(line.rstrip(NEWLINE))

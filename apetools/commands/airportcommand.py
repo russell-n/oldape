@@ -7,7 +7,7 @@ from collections import defaultdict
 
 #apetools
 from apetools.commons import errors
-import apetools.expressions as expressions
+import apetools.commons.expressions as expressions
 from basewificommand import BaseWifiCommand
 CommandError = errors.CommandError
 
@@ -60,7 +60,7 @@ class AirportCommand(BaseWifiCommand):
     @property
     def ip_address(self):
         with self.connection.lock:
-            output, error = self.connection.airport(self.airport_command)
+            output, error = self.connection.ifconfig(self.interface)
         interface = False
         for line in output:
             if not interface:
@@ -92,7 +92,7 @@ class AirportCommand(BaseWifiCommand):
         """
         :return: the max bitrate if found
         """
-        return self.get("maxRate")
+        return self.get("lastTxRate")
     
     @property
     def interface(self):
@@ -121,7 +121,7 @@ class AirportCommand(BaseWifiCommand):
             interface = False
             MAC_ADDRESS_NAME = expressions.MAC_ADDRESS_NAME
             with self.connection.lock:
-                output, error = self.connection.airport(self.airport_command)
+                output, error = self.connection.ifconfig(self.interface)
             for line in output:
                 if not interface:
                     interface = line.startswith(self.interface)
