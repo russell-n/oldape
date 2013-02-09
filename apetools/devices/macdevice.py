@@ -23,7 +23,7 @@ class MacDevice(BaseDevice):
 
     @property
     def airport(self):
-        if self._aiport is None:
+        if self._airport is None:
             self._airport = AirportCommand(connection=self.connection,
                                            interface=self.interface)
         return self._airport
