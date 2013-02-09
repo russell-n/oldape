@@ -10,6 +10,9 @@ class OperatingSystem(object):
     linux = "linux"
     android = "android"
     windows = "windows"
+    mac = 'mac'
+    macintosh = 'mac'
+    osx = 'mac'
 # end class OperatingSystem
 
 

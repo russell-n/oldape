@@ -36,9 +36,11 @@ class TestProcnetdevPollster(TestCase):
     def setUp(self):
         self.output = MagicMock()
         self.connection = MagicMock()
+        self.device = MagicMock()
+        self.device.connection = self.connection
         self.timestamp = MagicMock()
         self.watcher = ProcnetdevPollster(output=self.output, interface=interface,
-                                          connection = self.connection,
+                                          device = self.device,
                                           interval=1)
         self.watcher._timestamp = self.timestamp
         return
@@ -84,6 +86,7 @@ class TestProcnetdevPollster(TestCase):
         expected = [call.write(self.watcher.header), call.write(OUTPUT)]
         self.timestamp.now.return_value = TIMESTAMP
         timer.return_value = 0
+        self.assertTrue(self.watcher.use_header)
         with patch('time.time', timer):
             with patch('apetools.commons.timestamp.TimestampFormat.now', new_callable=PropertyMock) as mock_now:
                 mock_now.__get__ = MagicMock(return_value = TIMESTAMP)

@@ -8,7 +8,6 @@ import argparse
 
 # testrunner Libraries
 from apetools.baseclass import BaseClass
-from apetools.lexicographers.constants import DEFAULTS
 from strategerizer import Strategerizer
 
 ARGUMENTS = ('fetch', 'run', 'help', 'test')
