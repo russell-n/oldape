@@ -6,7 +6,7 @@ This is a module to hold device builders.
 """
 
 from basedevicebuilder import BaseDeviceBuilder
-from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice
+from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice, hr44device
 
 
 class WindowsDeviceBuilder(BaseDeviceBuilder):
@@ -128,6 +128,38 @@ class MacDeviceBuilder(BaseDeviceBuilder):
         return self._device
 # end class MacDeviceBuilder
 
+class Hr44DeviceBuilder(BaseDeviceBuilder):
+    """
+    A Device Builder builds mac os devices
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `connection`: a connection to the device
+         - `role`: some kind of identifier (e.g. node)
+         - `interface`: the name of the test interface
+         - `address`: hostname of the test interface
+        """
+        super(Hr44DeviceBuilder, self).__init__(*args, **kwargs)
+        return
+
+    @property
+    def device(self):
+        """
+        :return: A device for the dut
+        """
+        if self._device is None:
+            self.logger.debug("building the HR44 device for the DUT")
+
+            self._device = hr44device.HR44Device(connection=self.connection,
+                                                 interface=self.interface,
+                                                 address=self.address,
+                                                 role=self.role,
+                                                 csv=self.csv)
+        return self._device
+# end class MacDeviceBuilder
+
 class DeviceBuilderTypes(object):
     __slots__ = ()
     windows = "windows"
@@ -136,9 +168,11 @@ class DeviceBuilderTypes(object):
     mac = 'mac'
     osx = 'mac'
     macintosh = 'mac'
+    hr44 = 'hr44'
 # end class DeviceBuilderTypes
 
 device_builders = {DeviceBuilderTypes.windows:WindowsDeviceBuilder,
                    DeviceBuilderTypes.linux:LinuxDeviceBuilder,
                    DeviceBuilderTypes.android:AndroidDeviceBuilder,
-                   DeviceBuilderTypes.mac:MacDeviceBuilder}
+                   DeviceBuilderTypes.mac:MacDeviceBuilder,
+                   DeviceBuilderTypes.hr44:Hr44DeviceBuilder}

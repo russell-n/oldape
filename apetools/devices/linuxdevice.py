@@ -106,6 +106,6 @@ class LinuxDevice(BaseDevice):
 
         :postcondition: message sent to the syslog
         """
-        self.connection.logger(message)
+        self.connection(command='logger', arguments=message)
         return
 # end class LinuxDevice

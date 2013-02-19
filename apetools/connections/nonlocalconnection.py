@@ -159,6 +159,21 @@ class NonLocalConnection(BaseThreadClass):
             return self._procedure_call(command, *args, **kwargs)
         return procedure_call
 
+    def __call__(self, command, arguments='', timeout=None):
+        """
+        A pass-through to the _main method to use when the dot-notation doesn't work
+
+        :param:
+
+         - `command`: the command string to execute
+         - `arguments`: The arguments for the command
+         - `timeout`: A timeout for the queue when doing a get
+
+        :return: OutputError named tuple
+        """
+        return self._procedure_call(command=command, 
+                                    arguments=arguments, timeout=timeout)        
+
     def __str__(self):
         return "{0}".format(self.__class__.__name__)
 # end class LocalConnection

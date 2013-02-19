@@ -3,7 +3,7 @@ A module to query the device for interface information.
 """
 #python libraries
 import re
-from itertools import tee
+import os
 
 from apetools.baseclass import BaseClass
 from apetools.commons import enumerations
@@ -23,7 +23,7 @@ class IfconfigCommand(BaseClass):
     """
     The IfconfigCommand interprets ifconfig
     """
-    def __init__(self, connection, interface, operating_system=None):
+    def __init__(self, connection, interface, operating_system=None, path=None):
         """
         :param:
 
@@ -39,6 +39,7 @@ class IfconfigCommand(BaseClass):
         self._mac_address = None
         self._output = None
         self._ip_expression = None
+        self.path = path
         return
 
     @property
@@ -91,7 +92,11 @@ class IfconfigCommand(BaseClass):
         """
         :return: The output of the ifconfig command on the device
         """
-        return  self.connection.ifconfig(self.interface)
+        if self.path is None:
+            return  self.connection.ifconfig(self.interface)
+        else:
+            return self.connection(os.path.join(self.path, 'ifconfig'),
+                                   self.interface)
 
     def _match(self, expression, name):
         """
@@ -106,6 +111,8 @@ class IfconfigCommand(BaseClass):
             match = expression.search(line)
             if match:
                 return match.group(name)
+        for line in self.output.error:
+            self.logger.error(line)
         return
 # end class IfconfigCommand
     
