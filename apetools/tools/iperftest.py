@@ -76,6 +76,7 @@ class IperfTest(BaseClass):
         self.logger.info("Running Iperf: {2} ({0}) -> {3} ({1})".format(sender.address, receiver.address,
                                                                         sender.role, receiver.role))
         self.logger.info("Starting the iperf server (receiver)")
+
         self.receiver_command.start(receiver, filename)
         self.logger.info("Sleeping to let the server start.")
         self.sleep()

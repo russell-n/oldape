@@ -1,9 +1,12 @@
 """
 A module to hold a generic iperf command.
 """
+#python standard library
 import threading
 import time
+import os
 
+#apetools
 from apetools.baseclass import BaseThreadClass
 from apetools.devices.basedevice import BaseDeviceEnum
 from apetools.commons import errors
@@ -36,6 +39,8 @@ class IperfCommandEnum(object):
     eof = ""
     newline = "\n"
     udp = 'udp'
+    path = 'path'
+    iperf = 'iperf'
 # end IperfCommandEnum
     
     
@@ -221,7 +226,16 @@ class IperfCommand(BaseThreadClass):
         
         with device.connection.lock:
             self.logger.debug("Waiting for the connection lock")
-            output, error = device.connection.iperf(str(self.parameters))
+            if self.parameters.path is None or device.role == BaseDeviceEnum.tpc:
+                self.logger.info("running iperf {0}".format(self.parameters))
+                output, error = device.connection.iperf(str(self.parameters))
+            else:
+                self.logger.info("running {0} {1}".format(os.path.join(self.parameters.path, 
+                                                                       IperfCommandEnum.path),
+                                                          self.parameters))
+                output, error = device.connection(os.path.join(self.parameters.path, 
+                                                               IperfCommandEnum.iperf),
+                                                  str(self.parameters))
             self.logger.debug("Out of the connection lock")
         start_time = time.time()
         abort_time = start_time + self.max_time

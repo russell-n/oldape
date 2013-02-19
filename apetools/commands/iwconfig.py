@@ -1,7 +1,11 @@
 """
 A module to extract information from iwconfig
 """
+#python standard library
 import re
+import os
+
+#third-party
 from apetools.parsers import oatbran
 from apetools.commons.errors import CommandError
 
@@ -17,17 +21,19 @@ class Iwconfig(object):
     """
     A class to extract `iwconfig` information
     """
-    def __init__(self, connection, interface="wlan0", not_available="NA"):
+    def __init__(self, connection, interface="wlan0", not_available="NA", path=None):
         """
         :param:
 
          - `connection`: A connection to the device
          - `interface`: the name of the wireless interface
          - `not_available`: token to return if the field isn't found
+         - `path`: fully-qualified path to iwconfig command
         """
         self.connection = connection
         self.interface = interface
         self.not_available = not_available
+        self.path = path
         self._ssid = None
         self._ssid_expression = None
         self._bssid = None
@@ -89,6 +95,10 @@ class Iwconfig(object):
         """
         return self.search(self.ssid_expression, IwconfigEnums.ssid)
 
+    def output(self):
+        if self.path is None:
+            return self.connection.iwconfig(self.interface)                    
+        return self.connection(os.path.join(self.path, 'iwconfig'), self.interface)
     def search(self, expression, name):
         """
         :param:
@@ -98,7 +108,7 @@ class Iwconfig(object):
 
         :return: matched sub-string or not_available
         """
-        output = self.connection.iwconfig(self.interface)
+        output = self.output()
         for line in output.output:
             match = expression.search(line)
             if match:

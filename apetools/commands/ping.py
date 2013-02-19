@@ -67,6 +67,9 @@ class PingCommand(BaseClass):
                 self._arguments = PingArguments.windows + self.target
             elif self.operating_system == enumerations.OperatingSystem.mac:
                 self._arguments = PingArguments.mac + self.target            
+            else:
+                self.logger.warning('unknown OS ({0}), using Linux'.format(self.operating_system))
+                self._arguments = PingArguments.linux +  self.target
         return self._arguments
 
     @property
