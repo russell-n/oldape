@@ -60,6 +60,7 @@ class SSHConnectionBuilder(BaseClass):
         self._password = None
         self._connection = None
         self._operating_system = None
+        self._path = None
         return
 
     @property
@@ -75,6 +76,17 @@ class SSHConnectionBuilder(BaseClass):
                 self.logger.warning("Operating System not found in: {0}".format(self.parameters))
         return self._operating_system
 
+    @property
+    def path(self):
+        """
+        :return: additions to the PATH
+        """
+        if self._path is None:
+            try:
+                self._path = ":".join(self.parameters.path.split())
+            except AttributeError as error:
+                self.logger.debug(error)
+        return self._path
     @property
     def hostname(self):
         """
@@ -136,6 +148,7 @@ class SSHConnectionBuilder(BaseClass):
             self._connection = sshconnection.SSHConnection(hostname=self.hostname,
                                                            username=self.username,
                                                            password=self.password,
+                                                           path=self.path,
                                                            operating_system=self.operating_system)
         return self._connection
 # end class SshConnectionBuilder
@@ -163,6 +176,7 @@ class AdbShellSshConnectionBuilder(SSHConnectionBuilder):
             self._connection = adbconnection.ADBShellSSHConnection(hostname=self.hostname,
                                                                    username=self.username,
                                                                    password=self.password,
+                                                                   path=self.path,
                                                                    operating_system=self.operating_system)
         return self._connection
 # end class AdbShellSshConnectionBuilder

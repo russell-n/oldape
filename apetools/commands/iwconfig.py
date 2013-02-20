@@ -14,6 +14,8 @@ class IwconfigEnums(object):
     ssid = "ssid"
     bssid = "bssid"
     rssi = "rssi"
+    noise = 'noise'
+    bitrate = 'bitrate'
 # end class IwconfigEnums
 
     
@@ -21,26 +23,60 @@ class Iwconfig(object):
     """
     A class to extract `iwconfig` information
     """
-    def __init__(self, connection, interface="wlan0", not_available="NA", path=None):
+    def __init__(self, connection, interface="wlan0", not_available="NA"):
         """
         :param:
 
          - `connection`: A connection to the device
          - `interface`: the name of the wireless interface
          - `not_available`: token to return if the field isn't found
-         - `path`: fully-qualified path to iwconfig command
         """
         self.connection = connection
         self.interface = interface
         self.not_available = not_available
-        self.path = path
         self._ssid = None
         self._ssid_expression = None
         self._bssid = None
         self._bssid_expression = None
         self._rssi = None
         self._rssi_expression = None
+        self._noise_expression = None
+        self._bitrate = None
+        self._bitrate_expression = None
+        self._noise = None
         return
+
+    @property
+    def bitrate_expression(self):
+        if self._bitrate_expression is None:
+            self._bitrate_expression = re.compile("Bit" + oatbran.SPACES + 
+                                                  "Rate" + oatbran.OPTIONAL_SPACES + '=' +
+                                                  oatbran.OPTIONAL_SPACES + 
+                                                  oatbran.NAMED(n=IwconfigEnums.bitrate,
+                                                                e=oatbran.INTEGER)+
+                                                  oatbran.SPACES)
+        return self._bitrate_expression
+
+    @property
+    def bitrate(self):
+        return self.search(self.bitrate_expression, IwconfigEnums.bitrate)
+
+
+
+    @property
+    def noise_expression(self):
+        if self._noise_expression is None:
+            self._noise_expression = re.compile("Noise" + oatbran.SPACES + 
+                                               "level" + oatbran.OPTIONAL_SPACES + '=' +
+                                               oatbran.OPTIONAL_SPACES + 
+                                               oatbran.NAMED(n=IwconfigEnums.noise,
+                                                             e='-' + oatbran.INTEGER)+
+                                               oatbran.SPACES + 'dBm')
+        return self._noise_expression
+
+    @property
+    def noise(self):
+        return self.search(self.noise_expression, IwconfigEnums.noise)
 
     @property
     def rssi_expression(self):
@@ -96,9 +132,8 @@ class Iwconfig(object):
         return self.search(self.ssid_expression, IwconfigEnums.ssid)
 
     def output(self):
-        if self.path is None:
-            return self.connection.iwconfig(self.interface)                    
-        return self.connection(os.path.join(self.path, 'iwconfig'), self.interface)
+        return self.connection.iwconfig(self.interface)                    
+
     def search(self, expression, name):
         """
         :param:
