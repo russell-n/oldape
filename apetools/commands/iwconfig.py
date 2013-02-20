@@ -50,10 +50,10 @@ class Iwconfig(object):
     def bitrate_expression(self):
         if self._bitrate_expression is None:
             self._bitrate_expression = re.compile("Bit" + oatbran.SPACES + 
-                                                  "Rate" + oatbran.OPTIONAL_SPACES + '=' +
+                                                  "Rate" + oatbran.OPTIONAL_SPACES + ':' +
                                                   oatbran.OPTIONAL_SPACES + 
                                                   oatbran.NAMED(n=IwconfigEnums.bitrate,
-                                                                e=oatbran.INTEGER)+
+                                                                e=oatbran.INTEGER + oatbran.EVERYTHING + 'b/s')+
                                                   oatbran.SPACES)
         return self._bitrate_expression
 
