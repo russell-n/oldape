@@ -23,7 +23,7 @@ class IfconfigCommand(BaseClass):
     """
     The IfconfigCommand interprets ifconfig
     """
-    def __init__(self, connection, interface, operating_system=None, path=None):
+    def __init__(self, connection, interface, operating_system=None):
         """
         :param:
 
@@ -39,7 +39,6 @@ class IfconfigCommand(BaseClass):
         self._mac_address = None
         self._output = None
         self._ip_expression = None
-        self.path = path
         return
 
     @property
@@ -92,11 +91,7 @@ class IfconfigCommand(BaseClass):
         """
         :return: The output of the ifconfig command on the device
         """
-        if self.path is None:
-            return  self.connection.ifconfig(self.interface)
-        else:
-            return self.connection(os.path.join(self.path, 'ifconfig'),
-                                   self.interface)
+        return  self.connection.ifconfig(self.interface)
 
     def _match(self, expression, name):
         """

@@ -87,6 +87,7 @@ class IperfTest(BaseClass):
             if not self.wait_events.wait(time_out):
                 raise IperfTestError("Timed out waiting for event.")                
         self.logger.info("Running the client (sender)")
+
         self.sender_command.run(sender, filename)
         if self.receiver_command.running:
             self.receiver_command.abort()

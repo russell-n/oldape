@@ -226,16 +226,8 @@ class IperfCommand(BaseThreadClass):
         
         with device.connection.lock:
             self.logger.debug("Waiting for the connection lock")
-            if self.parameters.path is None or device.role == BaseDeviceEnum.tpc:
-                self.logger.info("running iperf {0}".format(self.parameters))
-                output, error = device.connection.iperf(str(self.parameters))
-            else:
-                self.logger.info("running {0} {1}".format(os.path.join(self.parameters.path, 
-                                                                       IperfCommandEnum.path),
-                                                          self.parameters))
-                output, error = device.connection(os.path.join(self.parameters.path, 
-                                                               IperfCommandEnum.iperf),
-                                                  str(self.parameters))
+            self.logger.info("running iperf {0}".format(self.parameters))
+            output, error = device.connection.iperf(str(self.parameters))
             self.logger.debug("Out of the connection lock")
         start_time = time.time()
         abort_time = start_time + self.max_time

@@ -70,7 +70,7 @@ class LinuxDevice(BaseDevice):
 
     @property
     def noise(self):
-        return "NA"
+        return self.wifi_query.noise
 
     @property
     def channel(self):

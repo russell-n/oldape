@@ -46,6 +46,7 @@ class NonLocalConnection(BaseThreadClass):
     """
     def __init__(self, command_prefix='', lock=None, 
                  operating_system=enumerations.OperatingSystem.linux,
+                 path=None,
                  *args, **kwargs):
         """
         :param:
@@ -53,12 +54,14 @@ class NonLocalConnection(BaseThreadClass):
          - `command_prefix`: A prefix to prepend to commands (e.g. 'adb shell')
          - `lock` : A lock to acquire before calls
          - `operating_system`: the operating system
+         - `path`: a path setting to add to the path (before :$PATH)
         """
         super(NonLocalConnection, self).__init__(*args, **kwargs)
         # logger is defined in BaseClass but declared here for child-classes
         self._logger = None
         self.command_prefix = command_prefix
         self._lock = lock
+        self.path = path
         self._queue = None
         self.operating_system = operating_system
         self.exc_info = None
@@ -83,6 +86,17 @@ class NonLocalConnection(BaseThreadClass):
             self._queue = Queue.Queue()
         return self._queue
 
+    def add_path(self, command):
+        """
+        :param:
+        
+         - `command`: the name of a command
+        :return: command with path additions if given
+        """
+        if self.path is not None:
+            command = "PATH={0}:$PATH;{1}".format(self.path, command)
+        return command
+
     def _procedure_call(self, command, arguments='', timeout=None):
         """
         This is provided so it can be overriden by subclasses.
@@ -90,6 +104,7 @@ class NonLocalConnection(BaseThreadClass):
 
         Otherwise it just returns _main()
         """
+        command = self.add_path(command)
         return self._main(command, arguments, timeout)
     
     def _main(self, command, arguments='', timeout=None):
