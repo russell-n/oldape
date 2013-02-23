@@ -53,7 +53,7 @@ class Iwconfig(object):
                                                   "Rate" + oatbran.OPTIONAL_SPACES + ':' +
                                                   oatbran.OPTIONAL_SPACES + 
                                                   oatbran.NAMED(n=IwconfigEnums.bitrate,
-                                                                e=oatbran.INTEGER + oatbran.EVERYTHING + 'b/s')+
+                                                                e=oatbran.INTEGER + oatbran.EVERYTHING + 'b/s') +
                                                   oatbran.SPACES)
         return self._bitrate_expression
 

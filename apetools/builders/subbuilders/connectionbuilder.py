@@ -61,6 +61,7 @@ class SSHConnectionBuilder(BaseClass):
         self._connection = None
         self._operating_system = None
         self._path = None
+        self._library_path = None
         return
 
     @property
@@ -75,6 +76,18 @@ class SSHConnectionBuilder(BaseClass):
                 self.logger.debug(error)
                 self.logger.warning("Operating System not found in: {0}".format(self.parameters))
         return self._operating_system
+
+    @property
+    def library_path(self):
+        """
+        :return: LD_LIBRARY_PATH value(s) or None
+        """
+        if self._library_path is None:
+            try:
+                self._library_path = ":".join(self.parameters.library_path.split())
+            except AttributeError as error:
+                self.logger.debug(error)
+        return self._library_path
 
     @property
     def path(self):
@@ -149,6 +162,7 @@ class SSHConnectionBuilder(BaseClass):
                                                            username=self.username,
                                                            password=self.password,
                                                            path=self.path,
+                                                           library_path=self.library_path,
                                                            operating_system=self.operating_system)
         return self._connection
 # end class SshConnectionBuilder
@@ -177,6 +191,7 @@ class AdbShellSshConnectionBuilder(SSHConnectionBuilder):
                                                                    username=self.username,
                                                                    password=self.password,
                                                                    path=self.path,
+                                                                   library_path=self.library_path,
                                                                    operating_system=self.operating_system)
         return self._connection
 # end class AdbShellSshConnectionBuilder
