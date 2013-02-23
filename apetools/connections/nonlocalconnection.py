@@ -46,7 +46,7 @@ class NonLocalConnection(BaseThreadClass):
     """
     def __init__(self, command_prefix='', lock=None, 
                  operating_system=enumerations.OperatingSystem.linux,
-                 path=None,
+                 path=None, library_path=None,
                  *args, **kwargs):
         """
         :param:
@@ -55,6 +55,7 @@ class NonLocalConnection(BaseThreadClass):
          - `lock` : A lock to acquire before calls
          - `operating_system`: the operating system
          - `path`: a path setting to add to the path (before :$PATH)
+         - `library_path`: a setting for LD_LIBRARY_PATH
         """
         super(NonLocalConnection, self).__init__(*args, **kwargs)
         # logger is defined in BaseClass but declared here for child-classes
@@ -62,6 +63,7 @@ class NonLocalConnection(BaseThreadClass):
         self.command_prefix = command_prefix
         self._lock = lock
         self.path = path
+        self.library_path = library_path
         self._queue = None
         self.operating_system = operating_system
         self.exc_info = None
@@ -95,6 +97,9 @@ class NonLocalConnection(BaseThreadClass):
         """
         if self.path is not None:
             command = "PATH={0}:$PATH;{1}".format(self.path, command)
+        if self.library_path is not None:
+            command = "LD_LIBRARY_PATH={0}:$LD_LIBRARY_PATH;{1}".format(self.library_path,
+                                                                        command)
         return command
 
     def _procedure_call(self, command, arguments='', timeout=None):
