@@ -8,6 +8,8 @@ from apetools.commons.storageoutput import APPEND
 from apetools.watchers.rssipoller import RssiPoller
 from apetools.watchers.devicepoller import DevicePoller
 from apetools.watchers.procpollster import ProcnetdevPollster
+from apetools.watchers.procpollster import CpuPollster
+
 
 class PollerBuilderError(ConfigurationError):
     """
@@ -24,7 +26,7 @@ class BasePollerBuilder(BaseClass):
         """
         :param:
 
-         - `node`: device to watch        
+         - `node`: device to watch
          - `parameters`: named tuple built from config file
          - `output`: storageobject to send output to
          - `name`: a name to add to the output file
@@ -60,7 +62,7 @@ class BasePollerBuilder(BaseClass):
             self._use_header = not self.output.is_file(filename=self.filename,
                                                        subdir=self.subdir)
         return self._use_header
-    
+
 
     @property
     def subdir(self):
@@ -73,7 +75,7 @@ class BasePollerBuilder(BaseClass):
             else:
                 self._subdir = 'logs'
         return self._subdir
-    
+
     @property
     def filename(self):
         """
@@ -83,7 +85,7 @@ class BasePollerBuilder(BaseClass):
             self._filename = ("{0}_{1}".format(self.parameters.type, self.name.replace('/', '') +
                               ".log"))
         return self._filename
-    
+
     @property
     def output_file(self):
         """
@@ -188,3 +190,27 @@ class DevicePollerBuilder(BasePollerBuilder):
                                          use_header=self.use_header)
         return self._product
 # end class DevicePollerBuilder
+
+class CpuPollsterBuilder(BasePollerBuilder):
+    """
+    A builder of cpu pollers
+    """
+    def __init__(self, *args, **kwargs):
+        super(CpuPollsterBuilder, self).__init__(*args, **kwargs)
+        self._interval = None
+        return
+
+    @property
+    def product(self):
+        """
+        :return: cpu-poller
+        """
+        if self._product is None:
+            # self.output_file creates it so this check has to come first
+            use_header = self.use_header
+            self._product = CpuPollster(device=self.node,
+                                        output=self.output_file,
+                                        interval=self.interval,
+                                        use_header=use_header)
+        return self._product
+# end class CpuPollsterBuilder

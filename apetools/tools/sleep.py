@@ -41,7 +41,7 @@ class Sleep(BaseClass):
             time.sleep(1)
         return
 
-    def __call__(self, sleep_time=None):
+    def __call__(self, sleep_time=None, prefix=None):
         """
         An alias for run to make it compatible with the newer interface
 
@@ -49,7 +49,6 @@ class Sleep(BaseClass):
 
          - `sleep_time`: The total amount of time to sleep.
 
-        """
+        """       
         self.run(sleep_time)
 # end class Sleep
-        

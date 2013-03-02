@@ -20,7 +20,7 @@ setup(name='apetools',
       install_requires = ['pudb', 'paramiko', 'pyserial', 'numpy'],
       packages = find_packages(exclude=["__main__"]),
       include_package_data = True,
-      package_data = {"apetools":["*.txt", "*.rst", "*.ini"]},
+      package_data = {"apetools":["*.txt", "*.rst", "lexicographers/configfiles/*.ini"]},
       entry_points = """
 	  [console_scripts]
           ape=apetools.main:main
