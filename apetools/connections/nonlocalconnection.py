@@ -98,7 +98,7 @@ class NonLocalConnection(BaseThreadClass):
         if self.path is not None:
             command = "PATH={0}:$PATH;{1}".format(self.path, command)
         if self.library_path is not None:
-            command = "LD_LIBRARY_PATH={0}:$LD_LIBRARY_PATH;{1}".format(self.library_path,
+            command = "export LD_LIBRARY_PATH={0}:$LD_LIBRARY_PATH;{1}".format(self.library_path,
                                                                         command)
         return command
 
