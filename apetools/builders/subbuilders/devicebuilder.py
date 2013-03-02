@@ -6,7 +6,7 @@ This is a module to hold device builders.
 """
 
 from basedevicebuilder import BaseDeviceBuilder
-from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice, hr44device
+from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice
 
 
 class WindowsDeviceBuilder(BaseDeviceBuilder):

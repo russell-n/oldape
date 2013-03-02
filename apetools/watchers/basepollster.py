@@ -50,7 +50,7 @@ class BasePollster(BaseThreadClass):
          - `use_header`: If True, prepend header to output
         """
         super(BasePollster, self).__init__()
-        self._logger = None        
+        self._logger = None
         self.device = device
         self.output = output
         self._expression = expression
@@ -91,7 +91,7 @@ class BasePollster(BaseThreadClass):
         :return: a compiled regular expression to match the output
         """
         if self._regex is None:
-            self._regex = re.compile(self.expression)        
+            self._regex = re.compile(self.expression)
         return self._regex
 
     @abstractmethod
@@ -113,5 +113,12 @@ class BasePollster(BaseThreadClass):
         A pass-through to start
         """
         self.start()
+        return
+
+    def __del__(self):
+        """
+        :postcondition: output file is closed
+        """
+        self.output.close()
         return
 # end class BasePollster

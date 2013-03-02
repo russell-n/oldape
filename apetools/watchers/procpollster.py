@@ -26,7 +26,7 @@ import numpy
 
 #apetools
 from basepollster import BasePollster
-from apetools.parsers import oatbran 
+from apetools.parsers import oatbran
 
 
 class BaseProcPollster(BasePollster):
@@ -107,7 +107,7 @@ class BaseProcPollster(BasePollster):
                 sleep(self.interval - (time() - start))
             except IOError:
                 pass
-        while not self.stopped:                
+        while not self.stopped:
             start = time()
             output, error = self.connection.cat(self.name)
             for line in output:
@@ -118,7 +118,7 @@ class BaseProcPollster(BasePollster):
                     match = match.groupdict()
                     for value_index, expression_key  in enumerate(self.expression_keys):
                         next_array[value_index] = int(match[expression_key])
-                    
+
                     self.output.write("{0},{1}\n".format(tstamp,
                                                          ",".join((str(i) for i in (next_array - start_array)))))
                     start_array = numpy.copy(next_array)
@@ -137,7 +137,7 @@ class BaseProcPollster(BasePollster):
         self.thread = threading.Thread(target=self.run_thread, name=name)
         self.thread.daemon = True
         self.thread.start()
-        return 
+        return
 # end class BaseProcPollster
 
 class ProcnetdevPollsterEnum(object):
@@ -146,7 +146,7 @@ class ProcnetdevPollsterEnum(object):
     """
     __slots__ = ()
     interface = 'interface'
-    
+
     receive_bytes = 'receive_bytes'
     receive_packets = 'receive_packets'
     receive_errs = 'receive_errs'
@@ -243,7 +243,7 @@ class ProcnetdevPollster(BaseProcPollster):
                             "tx_packets,tx_errs,"
                             "txdrop,tx_fifo,tx_colls,tx_carrier\n")
         return self._header
-    
+
     @property
     def expression(self):
         """
@@ -253,7 +253,7 @@ class ProcnetdevPollster(BaseProcPollster):
             integer = oatbran.INTEGER
             enum = ProcnetdevPollsterEnum
             named = oatbran.NAMED
-            
+
             interface = named(n=enum.interface, e=self.interface) + ":"
             rx_values = [named(n=name, e=integer) for name in self.rexpression_keys]
             tx_values = [named(n=name, e=integer) for name in self.texpression_keys]
@@ -270,7 +270,7 @@ class CpuPollsterEnum(object):
     system = 'system'
     idle = 'idle'
     # end class CpuPollsterEnum
-    
+
 class CpuPollster(BaseProcPollster):
     """
     A class to grab the percent of CPU used.
@@ -319,7 +319,7 @@ class CpuPollster(BaseProcPollster):
         if self._header is None:
             self._header = "timestamp,cpu_percent\n"
         return self._header
-    
+
     @property
     def expression(self):
         """
@@ -335,10 +335,10 @@ class CpuPollster(BaseProcPollster):
             nice = named(n=enum.nice, e=integer)
             system = named(n=enum.system, e=integer)
             idle = named(n=enum.idle, e=integer)
-            self._expression = spaces.join(['cpu', 
-                                            user, 
-                                            nice, 
-                                            system, 
+            self._expression = spaces.join(['cpu',
+                                            user,
+                                            nice,
+                                            system,
                                             idle])
         return self._expression
 
@@ -363,17 +363,17 @@ class CpuPollster(BaseProcPollster):
             if match:
                 self.logger.debug(line)
                 match  = match.groupdict()
-                
-                for value_index, expression_key in enumerate(self.expression_keys):
-                    start_total = int(match[expression_key])
+
+                start_total = sum([int(value) for value in match.itervalues()])
                 start_used = start_total - int(match[CpuPollsterEnum.idle])
+
             try:
                 sleep(self.interval - (time() - start))
             except IOError:
                 pass
 
             # watch the file
-        while not self.stopped:                
+        while not self.stopped:
             start = time()
             with lock:
                 output, error = self.connection.cat(self.name)
@@ -383,24 +383,24 @@ class CpuPollster(BaseProcPollster):
                     tstamp = self.timestamp.now
                     self.logger.debug(line)
                     match = match.groupdict()
-                    for value_index, expression_key  in enumerate(self.expression_keys):
-                        next_total[value_index] = int(match[expression_key])
+                    next_total = sum([int(value) for value in match.itervalues()])
                     next_used = next_total - float(match[CpuPollsterEnum.idle])
-
                     used = (next_used - start_used)/(next_total - start_total)
                     self.output.write("{0},{1}\n".format(tstamp,
                                                          100 * used))
                     start_used, start_total = next_used, next_total
+                    next_used = next_total = 0
+                    break
             try:
                 sleep(self.interval - (time() - start))
             except IOError:
                 self.logger.debug("cat {0} took more than one second".format(self.name))
         return
 # end class CpuPollster
-                                  
+
 if __name__ == "__main__":
     from apetools.connections.sshconnection import SSHConnection
-    import sys                                  
+    import sys
     c = SSHConnection("portege", "portegeadmin")
     p = ProcnetdevPollster(sys.stdout, c, "wlan0")
     p()
