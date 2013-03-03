@@ -10,14 +10,12 @@
 The sumparser parses sums and logs the bandwidth sum
 """
 
-# apetools modules
-from iperfparser import IperfParser, BandwidthData
+from iperfparser import IperfParser 
 from iperfexpressions import HumanExpression, ParserKeys, CsvExpression
 import oatbran as bran
 from coroutine import coroutine
 
 BITS = 'bits'
-
 
 class HumanExpressionSum(HumanExpression):
     """
@@ -81,7 +79,7 @@ class SumParser(IperfParser):
     """
     def __init__(self, *args, **kwargs):
         super(SumParser, self).__init__(*args, **kwargs)
-        self.log_format = "{0},{1},{2}/sec"
+        self.log_format = "({0}) {1} {2}/sec"
         return
 
     @property
@@ -100,22 +98,19 @@ class SumParser(IperfParser):
 
          - `line`: a line of iperf output
 
-        :return: BandwidthData or None
+        :return: bandwidth or None
         """
         match = self.search(line)
         assert type(match) == dict or match is None, "match: {0}".format(type(match)) 
-        data = None
+        bandwidth = None
         if match is not None and self.valid(match):
             
             bandwidth = self.bandwidth(match)
             self.intervals[float(match[ParserKeys.start])] = bandwidth
-            data = BandwidthData(match[ParserKeys.start],
-                                 bandwidth,
-                                 self.units)
-            self.logger.debug(str(data))
-        return data
-
-
+            self.logger.info(self.log_format.format(match[ParserKeys.start],
+                                                    bandwidth,
+                                                    self.units))
+        return bandwidth
 
     @coroutine
     def pipe(self, target):
