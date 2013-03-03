@@ -24,6 +24,7 @@ setup(name='apetools',
       entry_points = """
 	  [console_scripts]
           ape=apetools.main:main
+          takataka=apetools.parsers.main:main
 	  """
       )
 
