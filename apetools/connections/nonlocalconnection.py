@@ -1,39 +1,16 @@
-## Copyright 2012 Russell Nakamura
-##
-##   Licensed under the Apache License, Version 2.0 (the "License");
-##   you may not use this file except in compliance with the License.
-##   You may obtain a copy of the License at
-##
-##     http://www.apache.org/licenses/LICENSE-2.0
-##
-##   Unless required by applicable law or agreed to in writing, software
-##   distributed under the License is distributed on an "AS IS" BASIS,
-##   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-##   See the License for the specific language governing permissions and
-##   limitations under the License.
-"""
-a module to hold a non-local connection.
-
-The NonLocalConnection takes the command-line command as a property and
-the arguments to the command as parameters.
-
-The main difference is that the Local Connection uses forked sub-processes
-while the NonLocalConnection is using threads.
-
-The Local Connection has the possibility of more efficiency, but can overload weaker systems
-and is generally less robust.
-"""
 
 #python Libraries
 from StringIO import StringIO
 import Queue
 import threading
-
+from abc import ABCMeta, abstractmethod
 
 # apetools Libraries
 from apetools.baseclass import BaseThreadClass
 from localconnection import OutputError 
 from apetools.commons import enumerations
+
+
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
 EOF = ''
@@ -44,11 +21,14 @@ class NonLocalConnection(BaseThreadClass):
     A non-local connection is the base for non-local connections
 
     """
+    __metaclass__ = ABCMeta
     def __init__(self, command_prefix='', lock=None, 
                  operating_system=enumerations.OperatingSystem.linux,
                  path=None, library_path=None,
                  *args, **kwargs):
         """
+        NonLocalConnection Constructor
+        
         :param:
 
          - `command_prefix`: A prefix to prepend to commands (e.g. 'adb shell')
@@ -88,8 +68,10 @@ class NonLocalConnection(BaseThreadClass):
             self._queue = Queue.Queue()
         return self._queue
 
-    def add_path(self, command):
+    def add_path(self, command):        
         """
+        Prepends any path additions passed in at instantiation to the command
+
         :param:
         
          - `command`: the name of a command
@@ -138,7 +120,7 @@ class NonLocalConnection(BaseThreadClass):
 
     def run(self, command, arguments):
         """
-        Runs the command in a subprocess and puts the output and error on the queue
+        Runs the command in a thread and puts the output and error on the queue
 
         :param:
 
@@ -146,8 +128,9 @@ class NonLocalConnection(BaseThreadClass):
          - `arguments`: A string of command arguments.
 
         :postcondition: OutputError with output and error file-like objects
+        :raise: NotImplementedError if sub-class doesn't override this method
         """
-        raise NotImplementedError("ThreadedConnection is a base class, not a useable class")
+        raise(NotImplementedError("Sub-classes need to implement the run"))
         return
 
     def start(self, command, arguments):
@@ -170,8 +153,6 @@ class NonLocalConnection(BaseThreadClass):
         :param:
 
          - `command`: The command to call.
-         - `arguments`: arguments to pass to the command
-         - `timeout`: amount of time to wait for the command to return the stdout and stderr files.
 
         :return: _procedure_call method called with passed-in args and kwargs
         """
@@ -196,5 +177,76 @@ class NonLocalConnection(BaseThreadClass):
 
     def __str__(self):
         return "{0}".format(self.__class__.__name__)
-# end class LocalConnection
+# end class NonLocalConnection
 
+
+class DummyConnection(NonLocalConnection):
+    """
+    A dummy connection is used to fake connections in commands.
+    """
+    def __init__(self, *args, **kwargs):
+        super(DummyConnection, self).__init__(*args, **kwargs)
+        self.main_string = "command={0}, arguments={1}, timeout={2}"
+        self.run_string = "command={0}, arguments={1}"
+        return
+
+    def _main(self, command, arguments, timeout):
+        """
+        Does nothing.
+
+        :return: OutputError with EOF in both
+        """
+        self.logger.debug(self.main_string.format(command,
+                                                 arguments,
+                                                 timeout))
+        return OutputError(StringIO(''), StringIO(''))
+
+
+# python standard library
+import unittest
+import random
+import string
+#third party
+from mock import MagicMock
+
+
+class TestDummyConnection(unittest.TestCase):
+    def setUp(self):
+        self.dummy = DummyConnection()
+        self.dummy._logger = MagicMock()
+        self.source_string = string.letters+ string.digits+ string.punctuation
+        return
+
+    def random_input(self):
+        """
+        :return: random string
+        """
+        return "".join(random.sample(self.source_string,
+                                          len(self.source_string)))
+        
+    def test_call(self):
+        """
+        Can you call it and get no output or errors?
+        """
+        command = self.random_input()
+        arguments = self.random_input()
+        o,e = self.dummy(command, arguments)
+        self.dummy.logger.debug.assert_called_with(self.dummy.main_string.format(command,
+                                                           arguments,
+                                                           None))
+        for index,line in enumerate(o):
+            self.assertEqual(index, 0)
+        for index, line in enumerate(e):
+            self.assertEqual(index, 0)
+        return
+
+    def test_dot_notation(self):
+        """
+        Does the dot-notation work?
+        """
+        arguments = self.random_input()
+        o, e = self.dummy.ummagumma(arguments)
+        self.dummy.logger.debug.assert_called_with(self.dummy.main_string.format('ummagumma',
+                                                                                 arguments,
+                                                                                 None))
+        return

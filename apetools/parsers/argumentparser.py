@@ -35,23 +35,29 @@ class Arguments(object):
                                  action="store_true")
 
         self.parser.add_argument("-v", "--voodoo",
-                                 help="Assume that Iperf doesn't know how to add so add threads yourself.",
+                                 help="Add threads yourself.",
                                  action="store_true", default=False)
         
         self.parser.add_argument('--pudb',
                                  help="Enable pudb (if installed).",
                                  default=False,                        
                                  action="store_true")
+        
         self.parser.add_argument('--pdb',
                                  help="Enable pdb",
                                  default=False, action="store_true")
+        
         self.parser.add_argument("-t", '--tee',
                                  help="Send lines standard error as they come in.",
                                  default=False,
                                  action="store_true")
 
+        self.parser.add_argument('--threads',
+                                 help="Specify thread count (default=%(default)s)",
+                                 default=4, type=int)
+
         self.parser.add_argument("-m", "--maximum",
-                                 help="Maximum allowed bandwidth (default=%(default)s",
+                                 help="Maximum allowed bandwidth (default=%(default)s)",
                                  default=1000000, type=int)
         return self.parser.parse_args()
 # end class Arguments
