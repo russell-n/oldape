@@ -40,6 +40,7 @@ Each of these options takes a comma-separated list that corresponds to a compone
 
 For example, the following would only run `iperf`::
 
+    [TEST]
     #operation_setup = watchlogs,oscillate
     execute_test = iperf
 
@@ -75,12 +76,12 @@ As with the previous options, there will need to be an `[IPERF]` section for thi
 The Teardown Options
 --------------------
 
-I think you get the idea for these sections -- `teardown_test` gets run after each `execute_test` and `operation_teardown` gets run once per configuration file.
+I think you get the idea for these sections -- `teardown_test` gets run after each `execute_test` and `operation_teardown` gets run after everything else is done.
 
 The Leftover Options
 ~~~~~~~~~~~~~~~~~~~~
 
-There ar also some remaining options in the `[TEST]` section that don't declare components:
+There are also some remaining options in the `[TEST]` section that don't declare components:
 
    * `output_folder`
 
@@ -104,7 +105,7 @@ Might produce a folder with the name `tate_cisco_1250_2013_04_08`.
 Repeat Option
 +++++++++++++
 
-The `repeat` option is how many times to repeat the setup in this configuration file (so the `test_section` will be repeated however many times the `repeat` is set to).
+The `repeat` option is how many times to repeat the setup in this configuration file (so the `setup_test`, `execute_test`, and `teardown_test` will be repeated however many times the `repeat` is set to).
 
 Tag Option
 ++++++++++
@@ -132,7 +133,7 @@ The next required section is [NODES]. This is where devices that are to be teste
 
     tate = hostname:phoridfly,login:root,operating_system:android,connection:adbshellssh,test_interface:wlan0
 
-The left-hand-side term (`tate` in this case)is only an identifier to make it easier to recognize what's being tested, it doesn't need to be any particular value.
+The left-hand-side term (`tate` in this case) is only an identifier to make it easier to recognize what's being tested, it doesn't need to be any particular value.
 
 The node options:
 
@@ -155,6 +156,8 @@ The connection type is one of:
    * telnet
    * adblocal
    * serial
+
+The `hostname`, and `login` aren't needed if the connection isn't a remote one.
 
 The operating system is one of: 
 
