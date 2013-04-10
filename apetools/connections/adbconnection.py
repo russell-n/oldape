@@ -209,11 +209,11 @@ class ADBSSHConnection(SSHConnection):
         return
 
     def _procedure_call(self, command, arguments="",
-                        path='', timeout=10):
+                        timeout=10):
         """
         Overrides the SSHConnection._procedure_call to check for errors
         """
-        output = self._main(command, arguments, path, timeout)
+        output = self._main(command, arguments, timeout)
         return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), output.error)
 
 
