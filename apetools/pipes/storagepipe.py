@@ -140,11 +140,12 @@ class StoragePipe(BaseClass):
                 line = self.transform(line)
                 if line is None:
                     continue
+
             if self.emit:
                 self.logger.info(line)
-
             if self.add_timestamp:
                 line = "{0},{1}".format(self.timestamp.now, line)
+                
             output.writeline(str(line))
         output.close()
         return
