@@ -149,7 +149,7 @@ class TestOperator(BaseClass):
 
         filename_prefix = "{0}_{1}".format(filename_prefix,
                                            self.test_setup(parameter))
-        self.sleep()
+        #self.sleep()
 
         #**** Execute test
         self.logger.info("Running Test")

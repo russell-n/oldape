@@ -7,6 +7,7 @@ Contents:
    :maxdepth: 1
 
    API <api/index>   
+   Builders <builders/index>
    Connections <connections/index>
 
 

@@ -3,63 +3,8 @@ The SSHConnection
 
 Encapsulates the Paramiko `SSHClient <http://www.lag.net/paramiko/docs/paramiko.SSHClient-class.html>`_ to provide a common interface with the other connection types.
 
-Example Use::
-         
-    connection = SSHConnection("allion","192.168.10.24")
-    output = connection.ls('-l')
-    for line in output.output:
-        print line
-
-    for line in output.error:
-        print line
-
-* prints the output of the `ls -l` command line command
 
 .. currentmodule:: apetools.connections.sshconnection
-.. autosummary::
-   :toctree: api
-
-   SSHConnection
-   SimpleClient
-   SSHClient
-   OutputFile
-
-   
-.. uml::
-
-   SSHConnection -|> NonLocalConnection
-   SSHConnection o-- SimpleClient
-   SSHConnection : hostname
-   SSHConnection : username
-   SSHConnection : password
-   SSHConnection : port
-   SSHConnection : timeout
-
-.. uml::
-
-   SSHClient -|> paramiko.SSHClient
-   SSHClient : exec_command(command, timeout, bufsize, combine_stderr)
-   SSHClient : invoke_shell(term, width, Height, timeout, bufsize)
-   SSHClient : invoke_shell_rw(term, width, Height, timeout, bufsize)
-
-.. uml::
-
-   SimpleClient -|> BaseClass
-   SimpleClient o-- SSHClient
-   SimpleClient : client
-   SimpleClient : hostname
-   SimpleClient : username
-   SimpleClient : password
-   SimpleClient : port
-   SimpleClient : timeout
-   SimpleClient : exec_command(command, timeout)
-   SimpleClient : __str__()
-   SimpleClient : close()
-   
-.. uml::
-
-   OutputFile -|> ValidatingOutput
-   OutputFile : readline(timeout)
    
 <<name='imports', echo=False>>=
 #python Libraries
@@ -91,6 +36,25 @@ DOT_JOIN = "{0}.{1}"
 NEWLINE = "\n"
 @
 
+.. _ssh-client:
+
+SSHClient
+---------
+
+This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used.
+
+.. autosummary::
+   :toctree: api
+   
+   SSHClient
+
+.. uml::
+
+   SSHClient -|> paramiko.SSHClient
+   SSHClient : exec_command(command, timeout, bufsize, combine_stderr)
+   SSHClient : invoke_shell(term, width, Height, timeout, bufsize)
+   SSHClient : invoke_shell_rw(term, width, Height, timeout, bufsize)
+   
 <<name='SSHClient', echo=False>>=
 class SSHClient(paramiko.SSHClient):
     """
@@ -166,6 +130,46 @@ class SSHClient(paramiko.SSHClient):
         return shell
 #end class SSHClient
 @
+
+.. _simple-client:
+
+SimpleClient
+------------
+
+This is a wrapper around the :ref:`SSHClient <ssh-client>` that sets some flags to avoid host-key errors. The following are (roughly equivalent).
+
+SSHClient::
+
+   c = SSHClient()
+   c.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+   c.load_system_host_keys()
+   c.connect(hostname='192.168.10.24', username='allion')
+   stdin, stdout, stderror = c.exec_command('ls')
+
+SimpleClient::
+
+   c = SimpleClient(hostname='192.168.10.24', username='allion')
+   stdin, stdout, stderr = c.exec_command('ls')
+   
+.. autosummary::
+   :toctree: api
+
+   SimpleClient
+
+.. uml::
+
+   SimpleClient -|> BaseClass
+   SimpleClient o-- SSHClient
+   SimpleClient : client
+   SimpleClient : hostname
+   SimpleClient : username
+   SimpleClient : password
+   SimpleClient : port
+   SimpleClient : timeout
+   SimpleClient : exec_command(command, timeout)
+   SimpleClient : __str__()
+   SimpleClient : close()
+
 
 <<name='SimpleClient', echo=False>>=
 class SimpleClient(BaseClass):
@@ -272,11 +276,53 @@ class SimpleClient(BaseClass):
 # class SimpleClient
 @
 
+.. _ssh-connecton:
+
+The SSHConnection
+-----------------
+
+This class uses the :ref:`SimpleClient <simple-client>` to implement the :ref:`NonLocalConnection <non-local-connection>` interface.
+
+.. autosummary::
+   :toctree: api
+
+   SSHConnection
+
+.. uml::
+
+   SSHConnection -|> NonLocalConnection
+   SSHConnection o-- SimpleClient
+   SSHConnection : hostname
+   SSHConnection : username
+   SSHConnection : password
+   SSHConnection : port
+   SSHConnection : timeout
+
+SimpleClient Example::
+
+   connection = SimpleClient(hostname='192.168.10.24', username='allion')
+   stdin, output, error = connection.exec_command('ls -l')
+   for line in output:
+       print line
+
+   for line in error:
+       print line
+   
+Equivalent SSHConnection Example::
+         
+    connection = SSHConnection(username="allion", hostname="192.168.10.24")
+    output, error = connection.ls('-l')
+    for line in output:
+        print line
+
+    for line in output:
+        print line
+
+
 <<name='SSHConnection', echo=False>>=
 class SSHConnection(NonLocalConnection):
     """
     An SSHConnection executes commands over an SSHConnection
-
     """
     def __init__(self, hostname, username,
                  password=None, port=22, timeout=5,
@@ -354,6 +400,23 @@ class SSHConnection(NonLocalConnection):
         return "{0} ({1}): {2}@{3} ".format(self.__class__.__name__, self.operating_system, self.username, self.hostname)
 # end class SSHConnection
 @
+
+.. _output-file:
+
+OutputFile
+----------
+
+This acts as a file-like object that traps socket timeouts so that users do not have to know that it contains a networked connection. To prevent blocking the socket-timeout causes it to return a SPACE. 
+
+.. autosummary::
+   :toctree: api
+
+   OutputFile
+
+.. uml::
+
+   OutputFile -|> ValidatingOutput
+   OutputFile : readline(timeout)
 
 <<name="OutputFile", echo=False>>=
 class OutputFile(ValidatingOutput):

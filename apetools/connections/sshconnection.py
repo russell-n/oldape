@@ -209,7 +209,6 @@ class SimpleClient(BaseClass):
 class SSHConnection(NonLocalConnection):
     """
     An SSHConnection executes commands over an SSHConnection
-
     """
     def __init__(self, hostname, username,
                  password=None, port=22, timeout=5,

@@ -51,7 +51,7 @@ class LinuxDevice(BaseDevice):
         """
         if self._address is None:
             return self.ifconfig.ip_address
-        return
+        return self._address
 
     @property
     def mac_address(self):
@@ -100,12 +100,15 @@ class LinuxDevice(BaseDevice):
 
     def log(self, message):
         """
+        Sends the message to the syslog
+        
         :param:
 
          - `message`: a string to send to the syslog
 
         :postcondition: message sent to the syslog
         """
-        self.connection(command='logger', arguments=message)
+        # This uses the call interface because the connection has its own logger property 
+        self.connection('logger', message)
         return
 # end class LinuxDevice

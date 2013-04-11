@@ -188,6 +188,7 @@ class DummyConnection(NonLocalConnection):
         super(DummyConnection, self).__init__(*args, **kwargs)
         self.main_string = "command={0}, arguments={1}, timeout={2}"
         self.run_string = "command={0}, arguments={1}"
+        self.hostname = 'DummyConnection'
         return
 
     def _main(self, command, arguments, timeout):
