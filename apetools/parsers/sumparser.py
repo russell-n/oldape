@@ -107,9 +107,15 @@ class SumParser(IperfParser):
             
             bandwidth = self.bandwidth(match)
             self.intervals[float(match[ParserKeys.start])] = bandwidth
-            self.logger.info(self.log_format.format(match[ParserKeys.start],
-                                                    bandwidth,
-                                                    self.units))
+            if self.emit:
+                self.logger.info(self.log_format.format(match[ParserKeys.start],
+                                                        bandwidth,
+                                                        self.units))
+            else:
+                self.logger.debug(self.log_format.format(match[ParserKeys.start],
+                                                        bandwidth,
+                                                        self.units))
+
         return bandwidth
 
     @coroutine

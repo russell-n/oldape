@@ -208,18 +208,18 @@ class IperfCommand(BaseThreadClass):
         """
         filename = self.filename(filename, device.role)
         is_udp = hasattr(self.parameters, IperfCommandEnum.udp)
-        
-        if not server:
-            if not is_udp:
-                self.output.set_emit()
-            else:
-                self.output.unset_emit()
-        else:
-            if is_udp:
-                self.output.set_emit()
-            else:
-                self.output.unset_emit()
-                 
+        self.output.unset_emit()        
+        #if not server:
+        #    if not is_udp:
+        #        self.output.set_emit()
+        #    else:
+        #        self.output.unset_emit()
+        #else:
+        #    if is_udp:
+        #        self.output.set_emit()
+        #    else:
+        #        self.output.unset_emit()
+        #         
         file_output = self.output.open(filename=filename)
         
         self.logger.debug("Executing parameters: {0}".format(self.parameters))

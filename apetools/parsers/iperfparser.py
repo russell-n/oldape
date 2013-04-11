@@ -52,6 +52,7 @@ class IperfParser(BaseClass):
 
         self.thread_count = 0
         self.current_thread = None
+        self.emit = True
         return
 
     @property
