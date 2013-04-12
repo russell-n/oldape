@@ -29,6 +29,7 @@ def NOT_PRECEDED_BY(e):
 ONE_OR_MORE = "+"
 ZERO_OR_MORE = '*'
 ZERO_OR_ONE = "?"
+EXACTLY = "{{{0}}}"
 
 def M_TO_N(m, n, e):
     """
@@ -89,6 +90,8 @@ INTEGER = NOT_PRECEDED_BY(DECIMAL_POINT) +  "-" + ZERO_OR_ONE + NATURAL + NOT_FO
 
 FLOAT = "-" + ZERO_OR_ONE + NATURAL + DECIMAL_POINT + NATURAL
 REAL = GROUP(FLOAT + OR + INTEGER)
+HEX = CLASS(string.hexdigits)
+HEXADECIMALS = HEX + ONE_OR_MORE
 
 SPACE = r"\s"
 SPACES = SPACE + ONE_OR_MORE
@@ -107,3 +110,9 @@ OCTET = GROUP(e=OR.join([SINGLE_DIGIT, TWO_DIGITS, ONE_HUNDREDS,
                          WORD_BOUNDARY("2[0-4][0-9]"), WORD_BOUNDARY("25[0-5]")]))
 
 IP_ADDRESS = DOT.join([OCTET] * 4)
+
+# from commons.expressions
+MAC_ADDRESS_NAME = "mac_address"
+HEX_PAIR = HEX + EXACTLY.format(2)
+MAC_ADDRESS = NAMED(n=MAC_ADDRESS_NAME,
+                    e=":".join([HEX_PAIR] * 6))
