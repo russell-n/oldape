@@ -138,7 +138,7 @@ class IperfParametersBuilder(BaseClass):
                 elif option in IperfExtraParameters.parameters:
                     continue
                 else:
-                    raise IperfParametersError("Unknown option: {0}".format(option))
+                    self.logger.warning("Unknown server option: {0}".format(option))
         return self._server_parameters
 # end class IperfParametersBuilder
 @
