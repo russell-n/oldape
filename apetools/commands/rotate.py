@@ -61,9 +61,10 @@ class RotateCommand(BaseClass):
             else:
                 self.logger.debug(line)
             if time.time() > end_time:
-                self.kill()
                 message = "Rotation exceeded timeout ({0})"
                 raise RotateError(message.format(timeout))
+
+                self.kill()
         for line in stderr:
             if len(line) > 1:
                 self.logger.error(line)
