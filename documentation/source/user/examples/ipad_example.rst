@@ -1,20 +1,28 @@
-Example Uses
-============
+IPad Throughput Example
+=======================
 
 .. _ipad-example:
 
-IPad Throughput Example
------------------------
-
 .. note:: To make it easier to read it will be assumed that there is an ssh-alias setup where `IPAD` is equivalent to `<login>@<address>` for the Ipad (with the correct login and IP address substituted).
 
-Description
-~~~~~~~~~~~
+Unique Features
+---------------
 
-This is called the IPad example but it is really for any situation where you can only have one interface to the device and need to stop interacting with it during testing. It can also be used in the cases where you have no control over the iperf server (as has occasionally been the case with embedded devices).
+Devices meeting the following conditions should be able to use this example:
+
+ * no control of the device during testing 
+
+ * iperf server started on the device external to the code
+
+Example Cases
+~~~~~~~~~~~~~
+
+ * Ipad: only has wifi interface which we want to be reserved for the iperf traffic
+
+ * Embedded Devices: At least one device was shipped to us with an iperf server running continuously on it
 
 The Pre-Requisites
-~~~~~~~~~~~~~~~~~~
+------------------
 
 This assumes that the following are True with regards to the IPad:
 
@@ -27,7 +35,7 @@ This assumes that the following are True with regards to the IPad:
 Additionally it is helpful to have `top` installed on the IPad in case you want to stop the iperf server.
 
 The Process
-~~~~~~~~~~~
+-----------
 
 The first step might seem a little abstract so see :ref:`the example <example-ipad-config-file>` below.
 
@@ -49,12 +57,12 @@ The first step might seem a little abstract so see :ref:`the example <example-ip
 
       ape run
 
-.. note:: If you forget the iperf flags you can also use ``iperf --server --daemon > /dev/null``
+.. note:: If you find it hard to remember the iperf flags you can also use ``iperf --server --daemon > /dev/null``
 
 .. note:: If you want to save the output replace ``/dev/null`` with a filename
 
 Killing Iperf
-~~~~~~~~~~~~~
+-------------
 
 If you've installed `top` then you should be able to kill it by doing the following:
 
@@ -73,7 +81,7 @@ If you've installed `top` then you should be able to kill it by doing the follow
 .. _example-ipad-config-file:
 
 Example Config File
-~~~~~~~~~~~~~~~~~~~
+-------------------
 
 .. highlight:: ini
 
