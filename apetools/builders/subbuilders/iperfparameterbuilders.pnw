@@ -108,6 +108,7 @@ class IperfParametersBuilder(BaseClass):
         if self._client_parameters is None:
             self.logger.debug("building the iperf client parameters")
             self._client_parameters = client_parameters[self.protocol]()
+
             for option in self.options:
                 if option == "time":
                     self._client_parameters.time = self.config_map.get_time(ConfigOptions.iperf_section,
