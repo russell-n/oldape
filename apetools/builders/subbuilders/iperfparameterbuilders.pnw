@@ -1,4 +1,9 @@
+Iperf Parameter Builders
+========================
 
+The builders for iperf parameter objects.
+
+<<name='imports', echo=False>>=
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.lexicographers.config_options import ConfigOptions
@@ -6,15 +11,51 @@ from apetools.parameters.iperf_common_parameters import IperfParametersEnum
 from apetools.parameters.iperf_common_parameters import IperfExtraParameters
 from apetools.parameters.iperf_client_parameters import client_parameters
 from apetools.parameters.iperf_server_parameters import server_parameters
+@
 
 
+IperfParametersError
+--------------------
+
+An exception to raise if there is an error in one of the parameters.
+
+.. currentmodule:: apetools.builders.subbuilders.iperfparameterbuilders
+.. autosummary::
+   :toctree: api
+
+   IperfParametersError
+
+.. uml::
+
+   IperfParametersError -|> ConfigurationError
+
+<<name='IperfParametersError', echo=False>>=
 class IperfParametersError(ConfigurationError):
     """
     An exception to raise for invalid parameters
     """
 # end class IperfParametersError
+@
 
+IperfParametersBuilder
+----------------------
 
+The builder of iperf parameters.
+
+.. autosummary::
+   :toctree: api
+
+   IperfParametersBuilder
+
+.. uml::
+
+   IperfParametersBuilder: config_map
+   IperfParametersBuilder : client_parameters
+   IperfParametersBuilder : server_parameters
+   IperfParametersBuilder : protocol
+   IperfParametersBuilder : options
+
+<<name='IperfParametersBuilder', echo=False>>=
 class IperfParametersBuilder(BaseClass):
     """
     A builder of IperfParameters
@@ -100,16 +141,29 @@ class IperfParametersBuilder(BaseClass):
                     raise IperfParametersError("Unknown option: {0}".format(option))
         return self._server_parameters
 # end class IperfParametersBuilder
+@
 
 
+Testing the IperfParametersBuilder
+----------------------------------
+
+.. autosummary::
+   :toctree: api
+
+   TestIperfParametersBuilder.test_invalid_client_option
+   TestIperfParametersBuilder.test_invalid_server_option
+   TestIperfParametersBuilder.test_valid_server_option
+
+<<name='test_imports', echo=False>>=
 #python standard library
 import unittest
 
 #third party
 from mock import MagicMock
 from nose.tools import raises
+@
 
-
+<<name='TestIperfParametersBuilder', echo=False>>=
 class TestIperfParametersBuilder(unittest.TestCase):
     @raises(IperfParametersError)
     def test_invalid_client_option(self):
@@ -147,3 +201,10 @@ class TestIperfParametersBuilder(unittest.TestCase):
     #    builder = IperfParametersBuilder(config)
     #    parameters = builder.server_parameters
     #    return
+@
+   
+<%
+for case in (TestIperfParametersBuilder,):
+    suite = unittest.TestLoader().loadTestsFromTestCase(case)    
+    unittest.TextTestRunner(verbosity=2).run(suite)
+%>

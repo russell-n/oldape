@@ -63,6 +63,3 @@ A holder of string constants to use for types of node-builders.
    NodeBuilderTypes : linux
    NodeBuilderTypes : android
    
-
-#node_builders = {NodeBuilderTypes.windows:WindowsNodeBuilder}
-
