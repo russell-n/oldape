@@ -326,8 +326,14 @@ class IperfCommonParameters(BaseClass):
         non_parameters = ("_block_attributes" , "_logger", 
                                     "_parameter_names", '_path')
         
-        keys = (key for key in sorted(self.__dict__.keys()) if key not in non_parameters)
-        values = (getattr(self, key.lstrip(UNDERSCORE)) for key in keys)
+        keys = [key for key in sorted(self.__dict__.keys()) if key not in non_parameters]
+            # temporary fix for --bandwidth problem
+            #import pudb;pudb.set_trace()
+        if '_client' in keys:
+            keys.remove('_client')
+            values = [self.client] + [getattr(self, key.lstrip(UNDERSCORE)) for key in keys]
+        else:
+            values = [getattr(self, key.lstrip(UNDERSCORE)) for key in keys]
         filtered_values = (value for value in values if value is not None)
         return SPACE.join(filtered_values)
 
