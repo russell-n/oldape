@@ -1,0 +1,37 @@
+# This will find the sl4a server port and forward it.
+# Due to permission restrictions, you can't run this as a script.
+# instead use source:
+# bash_prompt> source source_this_for_sl4a
+# Warning: this is a work in progress. In particular, netstat doesn't have a way to idendtify what the meaning of the ports are
+# So the port-forwarding might not work. On recently started machines, it usually works.
+
+#echo  "the Happy Path : kill all the servers in the SL4A GUI then source this."
+
+PREFIX="::ffff:127\.0\.0\.1:"
+PORT="[0-9]\{5\}"
+SUFFIX=" :::\\*"
+LOCAL_ADDRESS=$PREFIX$PORT
+
+
+# check if the server has been started
+SL4A=`adb shell netstat | grep -o $LOCAL_ADDRESS | grep -o $PORT`
+
+#start the server
+if [ -z $SL4A ]
+    then
+        adb shell am start -a com.googlecode.android_scripting.action.LAUNCH_SERVER -n com.googlecode.android_scripting/.activity.ScriptingLayerServiceLauncher
+        echo "Sleeping for a second to let the server start."
+        sleep 1
+fi
+
+SL4A=`adb shell netstat | grep -o $LOCAL_ADDRESS | grep -o $PORT`
+
+echo "Forwarding to port: "$SL4A
+
+echo $SL4A
+adb forward tcp:9999 tcp:$SL4A
+
+export AP_PORT=9999
+
+
+
