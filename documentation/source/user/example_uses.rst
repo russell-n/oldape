@@ -98,7 +98,7 @@ To setup a test that only ran traffic to the ipad you could use a configuration 
 
    protocol = tcp
    window = 256K
-   length = 1470
+   len = 1470
    parallel = 1
    interval = 1
    format = b

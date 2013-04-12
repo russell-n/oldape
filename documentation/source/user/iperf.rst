@@ -52,7 +52,7 @@ The default here is seconds, but you can use suffixes to change it (days, hours,
 
    protocol = tcp
    window = 256K
-   length = 1470
+   len = 1470
 
    parallel = 4
 
