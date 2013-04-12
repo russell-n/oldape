@@ -44,7 +44,7 @@ A sample configuration file that used all of the previous sections::
    time = 10 Seconds
    protocol = tcp
    window = 256K
-   length = 1470
+   len = 1470
    parallel = 4
    interval = 1
    format = b
