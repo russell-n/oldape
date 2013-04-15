@@ -45,33 +45,40 @@ class RotateCommand(BaseClass):
         if clockwise:
             arguments += " --clockwise"
         self.logger.info("Rotating: {0}".format(arguments))
-        stdout, stderr = self.connection.rotate(arguments)
+        stdout, stderr = self.connection.rotate(arguments, timeout=4)
         try:
             timeout = parameters.timeout
         except AttributeError:
             self.logger.debug("Using default 2 minute timeout")
             timeout = 120
         end_time = time.time() + 120
-
+        eof = False
         for line in stdout:
+            self.logger.debug("rotate stdout: {0}".format(line))
             if 'Setting the table angle' in line:
                 self.logger.info(line)
             elif 'Table Angle:' in line:
                 self.logger.info(line.rstrip())
+            elif 'Rotate Main Ending' in line:
+                self.logger.debug("End of program detected, no end of file reached.")
+                eof = True
+                break
             else:
                 self.logger.debug(line)
             if time.time() > end_time:
                 message = "Rotation exceeded timeout ({0})"
-                raise RotateError(message.format(timeout))
-
                 self.kill()
-        for line in stderr:
-            if len(line) > 1:
-                self.logger.error(line)
-            if "Requested position is out of range." in line:
-                angle = parameters.angles.parameters
-                message = "Angle out of range: {0}".format(angle)
-                raise ConfigurationError(message)
+                raise RotateError(message.format(timeout))
+        self.logger.debug("Finished with rotation Standard out.")
+        if eof:
+            self.logger.debug("Checking rotation Standard error")
+            for line in stderr:            
+                if len(line) > 1:
+                    self.logger.error(line)
+                if "Requested position is out of range." in line:
+                    angle = parameters.angles.parameters
+                    message = "Angle out of range: {0}".format(angle)
+                    raise ConfigurationError(message)
         return "angle_{0}".format(angle.zfill(3))
 
     def check_errors(self, line):
@@ -91,6 +98,7 @@ class RotateCommand(BaseClass):
         """
         :postcondition: rotate process killed
         """
+        self.logger.debug("Killing rotate")
         kill = KillAll(name='rotate')
         kill(self.connection)
         return
