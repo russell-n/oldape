@@ -85,7 +85,7 @@ class KillAll(BaseClass):
         self.connection = connection
         if name is None:
             name = self.name
-        
+        self.logger.debug("Preparing to kill '{0}'".format(name))        
         if time_to_sleep is None:
             time_to_sleep = self.time_to_sleep
 
@@ -111,13 +111,16 @@ class KillAll(BaseClass):
         err = error.read()
         if len(err) > 1:
             self.logger.error(err)
+        self.logger.debug('killed {0} instances of {1}.'.format(kill_count, name))
         if not kill_count:
-            self.logger.info("No iperf sessions found on {0}".format(self.connection.hostname))
+            self.logger.info("No {1} processes found on {0}".format(self.connection.hostname,
+                                                                   name))
             return
 
         self.sleep(time_to_sleep)
 
         # double-check to see if the process is dead
+        self.logger.debug("Double-checking to make sure processes died")
         output, error = self.connection.ps(self.arguments)
         for process in output:
             if name in line:
@@ -132,7 +135,8 @@ class KillAll(BaseClass):
         err = error.read()
         if len(err):
             self.logger.error(err)
-        self.logger.info("Killed {0} iperf processes on {1}".format(kill_count, self.connection.hostname))
+        self.logger.info("Killed {0} {2} processes on {1}".format(kill_count, self.connection.hostname,
+                                                                  name))
         return
 
     def __call__(self, connection, name=None, time_to_sleep=None):
