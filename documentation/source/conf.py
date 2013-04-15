@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Time-To-Recover Test documentation build configuration file, created by
+# APETools documentation build configuration file, created by
 # sphinx-quickstart on Fri May  4 13:58:22 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -59,8 +59,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Time-To-Recover Test'
-copyright = u'2012, russelln'
+project = u'APETools'
+copyright = u'2013, russelln'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

@@ -199,9 +199,10 @@ class SimpleClient(BaseClass):
 
     def close(self):
         """
-        :postcondition: client's connection is closed
+        :postcondition: client's connection is closed and self._client is None                
         """
         self.client.close()
+        self._client = None
         return
 # class SimpleClient
 
