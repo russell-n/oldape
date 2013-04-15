@@ -41,7 +41,7 @@ NEWLINE = "\n"
 SSHClient
 ---------
 
-This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used.
+This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used or with the added ``timeout`` parameter.
 
 .. autosummary::
    :toctree: api
@@ -136,7 +136,7 @@ class SSHClient(paramiko.SSHClient):
 SimpleClient
 ------------
 
-This is a wrapper around the :ref:`SSHClient <ssh-client>` that sets some flags to avoid host-key errors. The following are (roughly equivalent).
+This is a wrapper around the :ref:`SSHClient <ssh-client>` that sets some flags to avoid host-key errors. The following are (roughly) equivalent.
 
 SSHClient::
 
@@ -269,9 +269,10 @@ class SimpleClient(BaseClass):
 
     def close(self):
         """
-        :postcondition: client's connection is closed
+        :postcondition: client's connection is closed and self._client is None                
         """
         self.client.close()
+        self._client = None
         return
 # class SimpleClient
 @

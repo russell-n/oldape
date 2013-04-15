@@ -13,7 +13,7 @@ Encapsulates the Paramiko `SSHClient <http://www.lag.net/paramiko/docs/paramiko.
 SSHClient
 ---------
 
-This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used.
+This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used or with the added ``timeout`` parameter.
 
 .. autosummary::
    :toctree: api
@@ -34,7 +34,7 @@ This is an extension of paramiko.SSHClient that adds a timeout to the output rea
 SimpleClient
 ------------
 
-This is a wrapper around the :ref:`SSHClient <ssh-client>` that sets some flags to avoid host-key errors. The following are (roughly equivalent).
+This is a wrapper around the :ref:`SSHClient <ssh-client>` that sets some flags to avoid host-key errors. The following are (roughly) equivalent.
 
 SSHClient::
 
