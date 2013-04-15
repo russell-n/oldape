@@ -14,6 +14,8 @@ Calls to a NonLocalConnection takes the command-line command as a property and t
 
 
 
+.. _non-local-connection:
+
 The NonLocalConnection
 ----------------------
 
@@ -34,6 +36,7 @@ The DummyConnection
 .. uml::
 
    DummyConnection -|> NonLocalConnection
+   DummyConnection -|> hostname
 
 
 
@@ -45,6 +48,7 @@ Testing the DummyConnection
 
    TestDummyConnection.test_constructor
    TestDummyConnection.test_call
+   TestDummyConnection.test_dot_notation
 
 
 
