@@ -76,6 +76,7 @@ The `IperfCommand` executes iperf commands.
 .. uml::
 
    IperfCommand -|> BaseThreadClass
+   IperfCommand o-- StoragePipe
    IperfCommand : parameters
    IperfCommand : output
    IperfCommand : role
@@ -192,10 +193,10 @@ The code::
         self.validate(err)
     
 
+Example Use::
 
-
-
-
-
-
-
+   iperf_client = IperfCommand(client_parameters, output, IperfCommandEnum.client)
+   iperf_server = IperfCommand(server_parameters, output, IperfCommandEnum.server)
+   iperf_server.start()
+   iperf_client(client_device)
+   
