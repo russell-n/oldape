@@ -1,4 +1,11 @@
+Kill All
+========
 
+A module to kill processes.
+
+.. currentmodule:: apetools.tools.killall
+
+<<name='imports', echo=False>>=
 #python
 import re
 
@@ -7,24 +14,65 @@ from apetools.baseclass import BaseClass
 from apetools.tools import sleep
 from apetools.commons import enumerations, expressions, errors
 from apetools.parsers.oatbran import NAMED, STRING_START,SPACES, INTEGER
+@
 
-
+<<name='constants', echo=False>>=
 CYGWIN = STRING_START + SPACES + NAMED(n=expressions.PID_NAME,e=INTEGER)
 
 operating_systems = enumerations.OperatingSystem
+@
 
+KillAllError
+------------
 
+The `KillAllError` is raised if an error specific to the command is detected.
+
+.. uml::
+
+   KillAllError -|> CommandError
+
+<<name='KillAllError', echo=False>>=
 class KillAllError(errors.CommandError):
     """
     A KillAllError is raised if the kill didn't succeed.
     """
+@
 
+KillAll
+-------
 
+The `KillAll` command (it probably should not be in the `tools`) kills processes.
+
+.. autosummary::
+   :toctree: api
+
+   KillAll
+
+.. uml::
+
+   KillAll -|> BaseClass
+   KillAll : name
+   KillAll : time_to_sleep
+   KillAll : expression
+   KillAll : run(connection, name, time_to_sleep)
+   KillAll : __call__(connection, name, time_to_sleep)
+
+* The `name` parameter is the name of a process to kill.
+
+* The `time_to_sleep` parameter is an amount of time to wait before checking that the process was successfully killed.
+
+* The `connection` is a connection to the device.
+
+* all the constructor parameters can be passed in to the call instead
+
+* The expected ``ps`` output currently matches the standard GNU output (a la *Ubuntu*), android, and Cygwin
+
+<<name='KillAll', echo=False>>=
 class KillAll(BaseClass):
     """
     A killall kills processes. The default operating system is linux
     """
-    def __init__(self, name=None, time_to_sleep=1, connection=None):
+    def __init__(self, name=None, time_to_sleep=None, connection=None):
         """
         :param:
 
@@ -99,7 +147,7 @@ class KillAll(BaseClass):
 
         if name is None:
             name = self.name
-        self.logger.debug("Preparing to kill '{0}'".format(name))        
+        
         if time_to_sleep is None:
             time_to_sleep = self.time_to_sleep
 
@@ -131,16 +179,13 @@ class KillAll(BaseClass):
         err = error.read()
         if len(err) > 1:
             self.logger.error(err)
-        self.logger.debug('killed {0} instances of {1}.'.format(kill_count, name))
         if not kill_count:
-            self.logger.info("No {1} processes found on {0}".format(self.connection.hostname,
-                                                                   name))
+            self.logger.info("No iperf sessions found on {0}".format(self.connection.hostname))
             return
 
         self.sleep(time_to_sleep)
 
         # double-check to see if the process is dead
-        self.logger.debug("Double-checking to make sure processes died")
         output, error = self.connection.ps(self.arguments)
         for line in output:
             if name in line:
@@ -156,8 +201,7 @@ class KillAll(BaseClass):
         err = error.read()
         if len(err):
             self.logger.error(err)
-        self.logger.info("Killed {0} {2} processes on {1}".format(kill_count, self.connection.hostname,
-                                                                  name))
+        self.logger.info("Killed {0} iperf processes on {1}".format(kill_count, self.connection.hostname))
         return
 
     def __call__(self, connection, name=None, time_to_sleep=None):
@@ -174,3 +218,4 @@ class KillAll(BaseClass):
     def __str__(self):
         return "{0} ({2}):{1}".format(self.__class__.__name__, self.name, self.connection)
 # end class KillAll
+@
