@@ -8,4 +8,5 @@ The `tools` are generally bundles of commands.
 
    Iperf Session <iperfsession>
    Iperf Test <iperftest>
+   KillAll <killall>
 
