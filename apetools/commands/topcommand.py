@@ -6,6 +6,8 @@ import re
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
 from apetools.parsers import oatbran
+from apetools.commands.basecommand import BaseProcessCommand, BaseProcessGrep
+from apetools.commands.basecommand import ProcessCommandEnum, ProcessGrepEnum
 
 
 class TopCommandError(CommandError):
@@ -14,36 +16,30 @@ class TopCommandError(CommandError):
     """
 
 
-class TopCommandEnum(object):
-    """
-    A holder of connstants for the Top Command
-    """
-    __slots__ = ()
-    top = 'top'
-    missing = 'missing'
-    bad_arg = 'bad_arg'
-
-error_messages = {TopCommandEnum.missing:"the `top` command wasn't found (is it installed?)"}    
-
-
-class TopCommand(BaseClass):
+class TopCommand(BaseProcessCommand):
     """
     The Top Command issues commands and watches for errors
     """
-    def __init__(self, connection, one_flag='-l 1'):
+    def __init__(self, *args, **kwargs):
         """
         TopCommand Constructor
 
         :param:
 
          - `connection`: A connection to the device
-         - `one_flag`: the argument to get one output from `top`
+         - `arguments`: the arguments to get output from ``top``
         """
-        super(TopCommand, self).__init__()
-        self.connection = connection
-        self.one_flag = one_flag
-        self._error_expression = None
+        super(TopCommand, self).__init__(*args, **kwargs)
         return
+
+    @property
+    def arguments(self):
+        """
+        the arguments for the ``top`` command
+        """
+        if self._arguments is None:
+            self._arguments = '-l 1'
+        return self._arguments
 
     @property
     def error_expression(self):
@@ -53,13 +49,13 @@ class TopCommand(BaseClass):
         :return: compiled regular expression to match error messages
         """
         if self._error_expression is None:
-            missing = oatbran.NAMED(n=TopCommandEnum.missing,
-                                    e=oatbran.SPACES.join([TopCommandEnum.top+':',
+            missing = oatbran.NAMED(n=ProcessCommandEnum.missing,
+                                    e=oatbran.SPACES.join([self.command+':',
                                                            'command',
                                                            'not',
                                                            'found']))
-            bad_arg = oatbran.NAMED(n=TopCommandEnum.bad_arg,
-                                    e=oatbran.SPACES.join([TopCommandEnum.top + ":",
+            bad_arg = oatbran.NAMED(n=ProcessCommandEnum.bad_arg,
+                                    e=oatbran.SPACES.join([self.command + ":",
                                                            "Unrecognized",
                                                            'or',
                                                            'missing',
@@ -67,55 +63,29 @@ class TopCommand(BaseClass):
             self._error_expression = re.compile(missing + oatbran.OR + bad_arg)
         return self._error_expression
 
-    def __call__(self):
+    def run(self):
         """
-        Calls the ``top`` command and generates the output
+        Calls ``top`` on the connection
 
-        :yield: Stdout for the top command
+        :return: output from the connections call to top (stdout, stderr)
         """
-        output, error = self.connection.top(self.one_flag)
-        for line in output:
-            yield line
-        for line in error:
-            self.check_errors(line)
-        return
+        return self.connection.top(self.arguments)
 
-    def check_errors(self, line):
+    @property
+    def command(self):
         """
-        Check the line for known errors
-
-        :param:
-
-         - `line`: a line with possible top-related errors
+        `top`
         """
-        match = self.error_expression.search(line)
-        if match:
-            self.logger.error(line)
-            error_map = match.groupdict()
-            raise TopCommandError(error_messages[error_map.keys()[0]])
-        return            
+        if self._command is None:
+            self._command = 'top'
+        return self._command
 
 
-class TopGrepError(CommandError):
-    """
-    An error to raise if there's something wrong with the TopGrep
-    """
-
-
-class TopGrepEnum(object):
-    """
-    A holder of constants for the TopGrep
-    """
-    __slots__ = ()
-    pid = 'PID'
-    process = 'process'
-
-
-class TopGrep(BaseClass):
+class TopGrep(BaseProcessGrep):
     """
     The Top command adapted to extract process IDs.
     """
-    def __init__(self, connection, process=None, field=TopGrepEnum.pid):
+    def __init__(self, *args, **kwargs):
         """
         TopGrep Constructon
 
@@ -123,24 +93,19 @@ class TopGrep(BaseClass):
         
          - `process`: The name of the process to get (if not set pass into call())
         """
-        super(TopGrep, self).__init__()
-        self.connection = connection
-        self._expression = None
-        self.process = process
-        self._top = None
-        self.field = field
+        super(TopGrep, self).__init__(*args, **kwargs)
         return
-
+            
     @property
-    def top(self):
+    def process_query(self):
         """
         The ``top`` command
 
         :return: TopCommand to return output from the ``top`` command.
         """
-        if self._top is None:
-            self._top = TopCommand(connection=self.connection)
-        return self._top
+        if self._process_query is None:
+            self._process_query = TopCommand(connection=self.connection)
+        return self._process_query
 
     @property
     def expression(self):
@@ -153,9 +118,9 @@ class TopGrep(BaseClass):
             if self.process is None:
                 raise TopGrepError("self.process must be set")
             self._expression = re.compile(oatbran.SPACES.join([
-                oatbran.NAMED(n=TopGrepEnum.pid,
+                oatbran.NAMED(n=ProcessGrepEnum.pid,
                               e=oatbran.INTEGER+oatbran.ONE_OR_MORE),
-                              oatbran.NAMED(n=TopGrepEnum.process,
+                              oatbran.NAMED(n=ProcessGrepEnum.process,
                                             e=self.process),
                               oatbran.REAL + "%",
                               oatbran.NOT_SPACES,
@@ -168,27 +133,6 @@ class TopGrep(BaseClass):
                               oatbran.INTEGER + '[KBMG]\+']))
         return self._expression
 
-    def __call__(self, process=None):
-        """
-        Finds the process name and generates PIDs
-
-         * If a process name is passed in, self.process is set to it
-
-        :param:
-
-         - `process`: the name of a process
-
-        :yield: PID for process
-        """
-        if process is not None:
-            self._expression = None
-            self.process = process
-        for line in self.top():
-            match = self.expression.search(line)
-            if match:
-                line_map = match.groupdict()
-                yield line_map[self.field]
-        return
 # end class TopGrep    
 
 
@@ -444,14 +388,12 @@ class TestTop(unittest.TestCase):
         """
         Does the constructor have the expected signature?
         """
-        expected = ''.join([random.choice(ascii_letters) for letter in range(random.randrange(10))])
         connection=MagicMock()
-        top = TopCommand(connection=connection, one_flag=expected)
+        top = TopCommand(connection=connection)
         self.assertEqual(top.connection, connection)
-        self.assertEqual(top.one_flag, expected)
         return
 
-    @raises(TopCommandError)
+    @raises(CommandError)
     def test_wrong_command(self):
         """
         Does the TopCommand raise a TopCommandError if top isn't installed?
@@ -459,15 +401,18 @@ class TestTop(unittest.TestCase):
         self.top.check_errors('-sh: top: command not found')
         return
 
-    @raises(TopCommandError)
+    @raises(CommandError)
     def test_bad_argument(self):
         """
         Does TopCommand raise a TopCommandError if a bad command is given?
         """
-        self.top.check_errors('top: Unrecognized or missing option q')
+        line = 'top: Unrecognized or missing option q'
+        match = self.top.error_expression.search(line)
+        error_map = match.groupdict()
+        self.top.check_errors(line)
         return
 
-    @raises(TopCommandError)
+    @raises(CommandError)
     def test_standard_error(self):
         """
         Does an error from standard error get passed to the checker?
@@ -486,7 +431,7 @@ class TestTopGrep(unittest.TestCase):
 
     def test_call(self):
         """
-        Does the `__call__` return all the matching PIDs?"
+        Does the `__call__` return all the matching PIDs?
         """
         self.connection.top.return_value = (test_output, [''])
         
@@ -494,6 +439,19 @@ class TestTopGrep(unittest.TestCase):
             self.assertEqual(expected_pid[pid], pid)
         self.assertEqual(count+1, len(expected_pid))
         return
+
+    def test_constructor(self):
+        """
+        Does the constructor have the expected signature?
+        """
+        process = ''.join([random.choice(ascii_letters) for letter in range(random.randrange(10))])
+        connection=MagicMock()
+        grep = TopGrep(connection=connection, process=process, field=ProcessGrepEnum.process)
+        self.assertEqual(grep.connection, connection)
+        self.assertEqual(grep.process, process)
+        self.assertEqual(grep.field, ProcessGrepEnum.process)
+        return
+
 
 
     def test_unmatched(self):
@@ -521,15 +479,14 @@ class TestTopGrep(unittest.TestCase):
         Does the expression match the output lines correctly?
         """
         for index, line in enumerate(process_output):
-            print line
             self.grep._expression = None
             self.grep.process = process_names[index]
             match = self.grep.expression.search(line)
             self.assertIsNotNone(match, msg="Line: `{0}` did not match".format(line))
             pid_map = match.groupdict()
-            self.assertEqual(process_list[index], pid_map[TopGrepEnum.pid],
+            self.assertEqual(process_list[index], pid_map[ProcessGrepEnum.pid],
                              msg="expected: {0}, actual {1}".format(process_list[index],
-                                                                    pid_map[TopGrepEnum.pid]))
+                                                                    pid_map[ProcessGrepEnum.pid]))
         return
 
     def test_name_field(self):
@@ -538,9 +495,27 @@ class TestTopGrep(unittest.TestCase):
         """
         found = False
         self.grep.connection.top.return_value = (process_output, [''])
-        self.grep.field = TopGrepEnum.process
+        self.grep.field = ProcessGrepEnum.process
         for pid in self.grep('sshd'):
             self.assertEqual(pid, sshd_name)
             found = True
         self.assertTrue(found)
+        return
+
+    def test_change_connection(self):
+        """
+        Does the TopCommand get a new connection if you change the TopGrep's connection?
+        """
+        self.assertEqual(self.grep.connection, self.connection,
+                         msg="setUp connection not setting up")
+        self.assertEqual(self.grep.process_query.connection,
+                         self.connection,
+                         msg='setUp connection not passed to top')
+        connection_2 = MagicMock()
+        self.grep.connection = connection_2
+        self.assertEqual(self.grep.connection, connection_2,
+                         msg="grep connection not set")
+        self.assertEqual(self.grep.process_query.connection,
+                         connection_2)
+        return
 

@@ -14,12 +14,15 @@ from apetools.baseclass import BaseClass
 from apetools.tools import sleep
 from apetools.commons import enumerations, expressions, errors
 from apetools.parsers.oatbran import NAMED, STRING_START,SPACES, INTEGER
+from apetools.commands.pscommand import PsGrep
+from apetools.commands.topcommand import TopGrep
 @
 
 <<name='constants', echo=False>>=
 CYGWIN = STRING_START + SPACES + NAMED(n=expressions.PID_NAME,e=INTEGER)
 
 operating_systems = enumerations.OperatingSystem
+
 @
 
 KillAllError
@@ -90,33 +93,6 @@ class KillAll(BaseClass):
         self.connection = None
         return
 
-    @property
-    def expression(self):
-        """
-        Sets the regular expression to match output based on the connection.operating_system
-        
-        :return: compiled regular expression for the ps command
-        """
-        if self.connection.operating_system == operating_systems.android:
-            #self.logger.debug("Using Android Expression")
-            return re.compile(expressions.PS_ANDROID)
-        if self.connection.operating_system == operating_systems.windows:
-            #self.logger.debug("Using Cygwin Expression")
-            return re.compile(CYGWIN)
-
-        #self.logger.debug("Using linux expression")
-        return re.compile(expressions.PSE_LINUX)
-
-    @property
-    def arguments(self):
-        """
-        Returns the ``ps`` arguments based on the connection.operating_system
-        
-        :return: argument string for the ``ps`` call        
-        """
-        if self.connection.operating_system == operating_systems.android:
-            return ''
-        return "-e"
 
     @property
     def sleep(self):
@@ -151,34 +127,23 @@ class KillAll(BaseClass):
         if time_to_sleep is None:
             time_to_sleep = self.time_to_sleep
 
-        self.logger.debug("process to kill: {0}".format(name))
-        output, error = self.connection.ps(self.arguments)
+        if self.connection.operating_system == operating_system.ios:
+            grep = TopGrep(self.connection)
+        else:
+            grep = PsGrep(self.connection)
 
-        kill_count = 0
-        for line in output:
-            # line is the next line returned from stdout
-            if name in line:
-                self.logger.debug(line)
-            else:
-                continue
-            match = self.expression.search(line)
-            if match:
-                self.logger.debug("matched: " + line)
-                self.logger.debug("killing: " + match.group(expressions.PID_NAME))
-                command = " -9 " + match.group(expressions.PID_NAME)
-                kill_count+= 1
-                self.logger.debug("kill " + command)
-                k_output, k_error = self.connection.kill(command)
-                for k_line in k_error:
-                    if len(k_line) > 1:
-                        self.logger.error(k_line)
-            else:
-                self.logger.warning("Process `{0}` in line `{1}` but not matched.".format(name,
-                                                                                          line))
-                self.logger.warning("Check expression `{0}`".format(self.expression.pattern))
-        err = error.read()
-        if len(err) > 1:
-            self.logger.error(err)
+        self.logger.debug("process to kill: {0}".format(name))
+
+        for pid in grep():
+            self.logger.debug("killing: " + match.group(ProcessGrepEnum.pid))
+            command = " -9 " + match.group(ProcessGrepEnum.Process)
+            kill_count+= 1
+            self.logger.debug("kill " + command)
+            k_output, k_error = self.connection.kill(command)
+            for k_line in k_error:
+                if len(k_line) > 1:
+                    self.logger.error(k_line)
+
         if not kill_count:
             self.logger.info("No iperf sessions found on {0}".format(self.connection.hostname))
             return
@@ -186,20 +151,8 @@ class KillAll(BaseClass):
         self.sleep(time_to_sleep)
 
         # double-check to see if the process is dead
-        output, error = self.connection.ps(self.arguments)
-        for line in output:
-            if name in line:
-                self.logger.debug(line)
-            else:
-                continue
-            match = self.expression.search(line)
-            if match:
-                err = error.read()
-                if len(err):
-                    self.logger.error(err)
-                raise KillAllError("Unable to kill {0}".format(name))
-        err = error.read()
-        if len(err):
+        for pid in grep():
+            raise KillAllError("Unable to kill {0}".format(name))
             self.logger.error(err)
         self.logger.info("Killed {0} iperf processes on {1}".format(kill_count, self.connection.hostname))
         return
