@@ -13,6 +13,7 @@ class OperatingSystem(object):
     mac = 'mac'
     macintosh = 'mac'
     osx = 'mac'
+    ios = 'ios'
 # end class OperatingSystem
 
 

@@ -71,7 +71,8 @@ def STRING_BOUNDARY(e):
 # string help
 STRING_START = "^"
 STRING_END = "$"
-ALPHA_NUMS = r"\w"
+ALPHA_NUM = r"\w"
+ALPHA_NUMS = ALPHA_NUM + ONE_OR_MORE
 
 #anything and everything
 ANYTHING = r"."

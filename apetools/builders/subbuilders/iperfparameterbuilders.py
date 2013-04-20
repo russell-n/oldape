@@ -67,6 +67,7 @@ class IperfParametersBuilder(BaseClass):
         if self._client_parameters is None:
             self.logger.debug("building the iperf client parameters")
             self._client_parameters = client_parameters[self.protocol]()
+
             for option in self.options:
                 if option == "time":
                     self._client_parameters.time = self.config_map.get_time(ConfigOptions.iperf_section,
@@ -126,11 +127,14 @@ class TestIperfParametersBuilder(unittest.TestCase):
     @raises(IperfParametersError)
     def test_invalid_server_option(self):
         """
-        Does it raise an IperfParametersError if an invalid parameter is given?
+        Does it raise an IperfParametersError if an invalid parameter is given (no)?
+
+        This doesn't seem like a builder test, this should be a parameters test.
         """
         config = MagicMock()
+        logger = MagicMock()
         config.options.return_value = ['length']
-        config.get.return_value = 'tcp'
+        config.get.return_value = 'bob'
         builder = IperfParametersBuilder(config)
         parameters = builder.server_parameters
         return

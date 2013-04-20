@@ -5,7 +5,10 @@ from apetools.commons.errors import CommandError
 
 #this folder
 from sleep import Sleep 
-from killall import KillAll
+from killall import KillAll, KillAllError
+
+
+SIGKILL = 9
 
 
 class IperfTestError(CommandError):
@@ -54,6 +57,26 @@ class IperfTest(BaseClass):
         if self._sleep is None:
             self._sleep = Sleep(1)
         return self._sleep
+
+    def kill_processes(self, connection):
+        """
+        Kills iperf processes over the connection
+
+         * If the default level fails, tries a -9
+
+        :param:
+
+         - `connection`: connection to the host for the KillAll
+        """
+        self.kill.level = None
+        self.kill.connection = connection
+        try:
+            self.kill()
+        except KillAllError as error:
+            self.logger.warning(error)
+            self.kill.level = SIGKILL
+            self.kill()            
+        return
     
     def __call__(self, sender, receiver, filename):
         """
@@ -71,8 +94,8 @@ class IperfTest(BaseClass):
         self.sender_command.parameters.client = receiver.address
 
         self.logger.info("Killing Existing Iperf Processes")
-        self.kill(sender.connection)
-        self.kill(receiver.connection)
+        self.kill_processes(sender.connection)
+        self.kill_processes(receiver.connection)
         self.logger.info("Running Iperf: {2} ({0}) -> {3} ({1})".format(sender.address, receiver.address,
                                                                         sender.role, receiver.role))
         self.logger.info("Starting the iperf server (receiver)")
@@ -90,7 +113,9 @@ class IperfTest(BaseClass):
 
         self.sender_command.run(sender, filename)
         if self.receiver_command.running:
-            self.kill(receiver.connection)
+            # This was added to force the dumping of UDP server output
+            self.logger.info("Killing the server on {0}".format(receiver.connection.hostname))
+            self.kill_processes(receiver.connection)
             #self.receiver_command.abort()
         return
 # end class IperfTest

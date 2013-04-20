@@ -22,6 +22,8 @@ The `top` command on the iPad does not behave exactly like the GNU top and so an
 
 
 
+.. _top-command:
+
 The Top Command
 ---------------
 
@@ -33,13 +35,15 @@ The Top Command
 
 .. uml::
 
-   TopCommand -|> BaseClass
+   TopCommand -|> BaseProcessCommand
    TopCommand : connection
    TopCommand : __call__()
 
 .. uml::
 
    TopCommandError -|> CommandError
+
+* Parent: `BaseProcessCommand <base-process-command>`   
    
 Subclasses
 ~~~~~~~~~~
@@ -72,6 +76,8 @@ Example Use::
 
 
 
+.. _top-grep:
+
 The TopGrep
 -----------
 
@@ -83,9 +89,11 @@ The TopGrep
 
 .. uml::
 
-   TopGrep -|> BaseClass
+   TopGrep -|> BaseProcessGrep
    TopGrep : process
    TopGrep : expression
+
+* Parent: `BaseProcessGrep <base-process-grep>`   
 
 Subclasses
 ~~~~~~~~~~
@@ -152,6 +160,7 @@ Testing the Top
    TestTopGrep.test_call_parameter
    TestTopGrep.test_cpu_field
    TestTopGrep.test_change_connection
+   TestTopGrep.test_substring
 
 
 

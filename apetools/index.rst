@@ -7,7 +7,7 @@ Contents:
    :maxdepth: 1
 
    User Documentation <user/index>
-   Developer Documentation <developer_index>
+..   Developer Documentation <developer_index>
 
 
 Indices and tables
