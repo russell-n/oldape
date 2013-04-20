@@ -14,10 +14,14 @@ from apetools.baseclass import BaseThreadClass, BaseClass
 from apetools.commons.errors import CommandError
 @
 
+.. _base_threade-command:
+
 The BaseThreadedCommand
 -----------------------
 
 This is an abstract base class for threaded commands. Children of it will raise an exception on instantiation if the `run` and `stop` methods are not defined. The main interface to it is the `__call__` which will pass in any arguments given to the `run_thread` method (inherited from the `BaseThreadClass`).
+
+.. currentmodule:: apetools.commands.basecommand
 
 .. autosummary::
    :toctree: api
@@ -90,6 +94,8 @@ class BaseThreadedCommand(BaseThreadClass):
         return
 # end class BaseThreadedCommand
 @
+
+.. _base_process-command:
 
 Base Process Command
 --------------------
@@ -294,6 +300,8 @@ class BaseProcessCommand(BaseClass):
 # end class BaseProcessCommand
 @
 
+.. _base_process-grep:
+
 The BaseProcessGrep
 -------------------
 
@@ -335,8 +343,9 @@ class BaseProcessGrep(BaseClass):
     @abstractproperty
     def process_query(self):
         """
-        The command to query the device for process information
+        The command to query the device for process information        
         """
+        return
 
     @property
     def connection(self):
@@ -359,6 +368,7 @@ class BaseProcessGrep(BaseClass):
 
         :postcondition: self.process_query and self.expression set to None
         """
+        self.logger.debug("Setting the connection and unsetting expression and process_query")
         self._connection = connection
         self._expression = None
         self._process_query = None

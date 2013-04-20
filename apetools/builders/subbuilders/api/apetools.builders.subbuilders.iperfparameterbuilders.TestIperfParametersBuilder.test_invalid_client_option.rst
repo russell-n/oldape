@@ -1,6 +1,6 @@
 apetools.builders.subbuilders.iperfparameterbuilders.TestIperfParametersBuilder.test_invalid_client_option
 ==========================================================================================================
 
-.. currentmodule:: apetools.builders.subbuilders.iperfparameterbuilders
+.. currentmodule:: apetools.builders.subbuilders.iperfparameterbuilders.TestIperfParametersBuilder
 
-.. automethod:: TestIperfParametersBuilder.test_invalid_client_option
+.. autodata:: test_invalid_client_option

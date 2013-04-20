@@ -174,6 +174,8 @@ VM: 14G + 0   47836(0) pageins, 0(0) pageouts
   174 tccd         0.0%  0:00.18   2    27+     0      0      0   976K+  277M+
   172 assetsd      0.0%  0:05.93   3    47+     0      0      0  3996K+  298M+
   167 xpcd         0.0%  0:00.03   3    27+     0      0      0   788K+  277M+
+   96 emacsclient  0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+
+   98 emacs        0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+
    99 lsd          0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+
    97 distnoted    0.0%  0:00.08   2    34+     0      0      0  1108K+  295M+
    87 apsd         0.0%  0:23.01   5   115+     0      0      0  2548K+  296M+
@@ -230,6 +232,8 @@ process_output = """1153 top          2.2%  3:00.03   1    20+     0      0     
   174 tccd         0.0%  0:00.18   2    27+     0      0      0   976K+  277M+
   172 assetsd      0.0%  0:05.93   3    47+     0      0      0  3996K+  298M+
   167 xpcd         0.0%  0:00.03   3    27+     0      0      0   788K+  277M+
+   96 emacsclient  0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+
+   98 emacs        0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+
    99 lsd          0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+
    97 distnoted    0.0%  0:00.08   2    34+     0      0      0  1108K+  295M+
    87 apsd         0.0%  0:23.01   5   115+     0      0      0  2548K+  296M+
@@ -281,6 +285,8 @@ process_list="""1153
 174
 172
 167
+96
+98
 99
 97
 87
@@ -331,7 +337,9 @@ accountsd
 MobileMail   
 tccd         
 assetsd      
-xpcd         
+xpcd
+emacsclient
+emacs
 lsd          
 distnoted    
 apsd         
@@ -452,8 +460,6 @@ class TestTopGrep(unittest.TestCase):
         self.assertEqual(grep.field, ProcessGrepEnum.process)
         return
 
-
-
     def test_unmatched(self):
         """
         Does the expression not match lines similar to the process-lines?
@@ -519,3 +525,13 @@ class TestTopGrep(unittest.TestCase):
                          connection_2)
         return
 
+    def test_substring(self):
+        """
+        Does it only match complete strings, not substrings of other processes?
+        """
+        self.connection.top.return_value = test_output, [""]
+        called = False
+        for pid in self.grep('emacs'):
+            self.assertEqual(pid, '98')
+            called = True
+        self.assertTrue(called)

@@ -15,6 +15,7 @@ apetools.commands.topcommand.TopCommand
    
       ~TopCommand.__init__
       ~TopCommand.check_errors
+      ~TopCommand.run
    
    
 
@@ -24,7 +25,11 @@ apetools.commands.topcommand.TopCommand
 
    .. autosummary::
    
+      ~TopCommand.arguments
+      ~TopCommand.command
+      ~TopCommand.connection
       ~TopCommand.error_expression
+      ~TopCommand.error_messages
       ~TopCommand.logger
    
    

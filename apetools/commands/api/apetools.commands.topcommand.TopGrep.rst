@@ -23,8 +23,9 @@ apetools.commands.topcommand.TopGrep
 
    .. autosummary::
    
+      ~TopGrep.connection
       ~TopGrep.expression
       ~TopGrep.logger
-      ~TopGrep.top
+      ~TopGrep.process_query
    
    

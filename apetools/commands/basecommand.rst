@@ -6,10 +6,14 @@ A base for certain (simple) commands.
 
 
 
+.. _base_threade-command:
+
 The BaseThreadedCommand
 -----------------------
 
 This is an abstract base class for threaded commands. Children of it will raise an exception on instantiation if the `run` and `stop` methods are not defined. The main interface to it is the `__call__` which will pass in any arguments given to the `run_thread` method (inherited from the `BaseThreadClass`).
+
+.. currentmodule:: apetools.commands.basecommand
 
 .. autosummary::
    :toctree: api
@@ -29,6 +33,8 @@ This is an abstract base class for threaded commands. Children of it will raise 
 * To understand the `run_thread` see :ref:`BaseThreadClass <base-thread-class>`.   
 
 
+
+.. _base_process-command:
 
 Base Process Command
 --------------------
@@ -81,6 +87,8 @@ Collaborators
 This is an Abstract Class that should not be instantiated.
 
 
+
+.. _base_process-grep:
 
 The BaseProcessGrep
 -------------------

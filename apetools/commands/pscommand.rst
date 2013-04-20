@@ -1,21 +1,22 @@
 The PS Command
 ==============
 
-This implements a ``ps`` command caller.
+This implements a ``ps`` command caller, :ref:`PsCommand <ps-command>` and a parser for the output, :ref:`PsGrep <ps-grep>`.
 
 .. currentmodule:: apetools.commands.pscommand
 
 
 
 
+.. _ps-command:
+
 The PS Command
----------------
+--------------
 
 .. autosummary::
    :toctree: api
 
    PsCommand
-   PsCommandEnum
 
 .. uml::
 
@@ -23,11 +24,7 @@ The PS Command
    PsCommand : connection
    PsCommand : __call__()
 
-.. uml::
-
-   PsCommandEnum : top
-   PsCommandEnum : missing
-   PsCommandEnum : bad_arg
+* Parent: :ref:`BaseProcessCommand <base-process-command>`
 
    
 Subclasses
@@ -64,6 +61,8 @@ The errors have been tested on an Ubuntu system, a Nexus 7, and a Motorola Trium
 
 
 
+.. _ps-grep:
+
 The PsGrep
 -----------
 
@@ -77,6 +76,8 @@ The PsGrep
    PsGrep -|> BaseProcessGrep
    PsGrep : process
    PsGrep : expression
+
+* Parent: `BaseProcessGrep <base-process-grep>`
 
 Subclasses
 ~~~~~~~~~~
@@ -111,11 +112,11 @@ The advantage in having this relationship is that you can change the `PsCommand`
    connection_1 = SSHConnection(hostname='elin', username='tester')
    connection_2 = SSHConnection(hostname='bob', username='tester')
    grep = PsGrep(connection)
-   for pid in grep():
+   for pid in grep('iperf'):
        print pid
 
    grep.connection = connection_2
-   for pid in grep():
+   for pid in grep('iperf'):
        print pid
 
 
@@ -123,6 +124,7 @@ The advantage in having this relationship is that you can change the `PsCommand`
 Testing the PS
 --------------
 
+.. currentmodule:: apetools.commands.pscommand
 .. autosummary::
    :toctree: api
 
@@ -142,14 +144,15 @@ Testing the PS
    TestPsGrep.test_expression
    TestPsGrep.test_unmatched
    TestPsGrep.test_call_parameter
-   TestPsGrep.test_cpu_field
+..   TestPsGrep.test_cpu_field
    TestPsGrep.test_change_connection
+   TestPsGrep.test_android_expression
+   TestPsGrep.test_android_output
+   TestPsGrep.test_arguments
 
 
 
 
-[call.debug('Calling: ps '),
- call.debug('USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME'),
- call.warning('No processes found, check `ps `')]
+
 
 

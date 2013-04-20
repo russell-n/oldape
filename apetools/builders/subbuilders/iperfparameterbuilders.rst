@@ -52,7 +52,7 @@ Testing the IperfParametersBuilder
 
    TestIperfParametersBuilder.test_invalid_client_option
    TestIperfParametersBuilder.test_invalid_server_option
-   TestIperfParametersBuilder.test_valid_server_option
+   #TestIperfParametersBuilder.test_valid_server_option
 
 
    

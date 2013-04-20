@@ -247,8 +247,9 @@ class BaseProcessGrep(BaseClass):
     @abstractproperty
     def process_query(self):
         """
-        The command to query the device for process information
+        The command to query the device for process information        
         """
+        return
 
     @property
     def connection(self):
@@ -271,6 +272,7 @@ class BaseProcessGrep(BaseClass):
 
         :postcondition: self.process_query and self.expression set to None
         """
+        self.logger.debug("Setting the connection and unsetting expression and process_query")
         self._connection = connection
         self._expression = None
         self._process_query = None
