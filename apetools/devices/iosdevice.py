@@ -66,7 +66,7 @@ class IosDevice(BaseDevice):
         """
         :return: rssi from the wifi_query
         """
-        set.logger.warning('rssi query not implemented')
+        self.logger.warning('rssi query not implemented')
         return "NA"
 
     @property
