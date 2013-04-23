@@ -6,7 +6,7 @@ This is a module to hold device builders.
 """
 
 from basedevicebuilder import BaseDeviceBuilder
-from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice
+from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice, iosdevice
 
 
 class WindowsDeviceBuilder(BaseDeviceBuilder):
@@ -128,9 +128,9 @@ class MacDeviceBuilder(BaseDeviceBuilder):
         return self._device
 # end class MacDeviceBuilder
 
-class Hr44DeviceBuilder(BaseDeviceBuilder):
+class IosDeviceBuilder(BaseDeviceBuilder):
     """
-    A Device Builder builds mac os devices
+    A Device Builder builds ios devices
     """
     def __init__(self, *args, **kwargs):
         """
@@ -141,7 +141,7 @@ class Hr44DeviceBuilder(BaseDeviceBuilder):
          - `interface`: the name of the test interface
          - `address`: hostname of the test interface
         """
-        super(Hr44DeviceBuilder, self).__init__(*args, **kwargs)
+        super(IosDeviceBuilder, self).__init__(*args, **kwargs)
         return
 
     @property
@@ -150,15 +150,15 @@ class Hr44DeviceBuilder(BaseDeviceBuilder):
         :return: A device for the dut
         """
         if self._device is None:
-            self.logger.debug("building the HR44 device for the DUT")
-
-            self._device = hr44device.HR44Device(connection=self.connection,
-                                                 interface=self.interface,
-                                                 address=self.address,
-                                                 role=self.role,
-                                                 csv=self.csv)
+            self.logger.debug("building the IOS device for the DUT")
+            self._device = iosdevice.IosDevice(connection=self.connection,
+                                               interface=self.interface,
+                                               address=self.address,
+                                               role=self.role,
+                                               csv=self.csv)
         return self._device
 # end class MacDeviceBuilder
+
 
 class DeviceBuilderTypes(object):
     __slots__ = ()
@@ -168,11 +168,11 @@ class DeviceBuilderTypes(object):
     mac = 'mac'
     osx = 'mac'
     macintosh = 'mac'
-    hr44 = 'hr44'
+    ios = 'ios'
 # end class DeviceBuilderTypes
 
 device_builders = {DeviceBuilderTypes.windows:WindowsDeviceBuilder,
                    DeviceBuilderTypes.linux:LinuxDeviceBuilder,
                    DeviceBuilderTypes.android:AndroidDeviceBuilder,
                    DeviceBuilderTypes.mac:MacDeviceBuilder,
-                   DeviceBuilderTypes.hr44:Hr44DeviceBuilder}
+                   DeviceBuilderTypes.ios:IosDeviceBuilder}

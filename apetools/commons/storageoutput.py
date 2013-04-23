@@ -53,7 +53,7 @@ class StorageOutput(BaseClass):
         """
         if self._path is None:
             if TIMESTAMP_FLAG in self.output_folder:
-                self.output_folder = self._timestamp(self.output_folder, FOLDER_TIMESTAMP)
+                self.output_folder = self.timestamp(self.output_folder, FOLDER_TIMESTAMP)
             if not os.path.isdir(self.output_folder):
                 os.makedirs(self.output_folder)
             self._path = self.output_folder
@@ -123,7 +123,7 @@ class StorageOutput(BaseClass):
         clone.output_file = open(self.filename, mode)
         return clone
 
-    def get_filename(self, filename, subir=None, mode=WRITEABLE):
+    def get_filename(self, filename, subdir=None, mode=WRITEABLE):
         """
         Builds a super-filename with the path and numbering
 
@@ -144,13 +144,13 @@ class StorageOutput(BaseClass):
             if not os.path.isdir(directory):
                 os.makedirs(directory)
         if mode != APPEND:
-            filename = self._timestamp(filename)
+            filename = self.timestamp(filename)
             filename = self._fix_duplicate_names(filename, extension, subdir)
         filename += extension
         return os.path.join(directory, filename)
 
 
-    def _timestamp(self, name, timestamp_format=None):
+    def timestamp(self, name, timestamp_format=None):
         """
         Checks for a '{t}' in the string for a placeholder
         
