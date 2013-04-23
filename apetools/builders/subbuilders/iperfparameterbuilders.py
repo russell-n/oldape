@@ -79,7 +79,7 @@ class IperfParametersBuilder(BaseClass):
                 elif option in IperfExtraParameters.parameters:
                     continue
                 else:
-                    raise IperfParametersError("Unknown option: {0}".format(option))
+                    self.logger.warning("Unknown client option: {0}".format(option))
         return self._client_parameters
 
     @property

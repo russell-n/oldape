@@ -74,6 +74,7 @@ class LinuxDevice(BaseDevice):
 
     @property
     def channel(self):
+        self.logger.warning('channel query not implemented')
         return "NA"
     
     @property

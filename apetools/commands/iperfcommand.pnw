@@ -1,3 +1,4 @@
+
 The Iperf Command
 =================
 A module to hold a generic iperf command.
@@ -180,7 +181,7 @@ class IperfCommand(BaseThreadClass):
         :return: output-file name
         """
         if self.last_filename is not None:
-            return self.output.get_filename(self.last_filename)
+            return self.output.storage.get_filename(self.last_filename)
     
     @property
     def parameters(self):
@@ -354,8 +355,12 @@ class IperfCommand(BaseThreadClass):
          - `filename`: a base-name to use for the output file.
 
         :postcondition: self.last_filename is path to remote output file
+        :postcondition: self.device = device (this is another ipad thin)
         """
-        self.last_filename = self.filename(filename, device.role)
+        self.device = device
+        filename = self.filename(filename, device.role)
+        # the output is really a storage pipe, not a storage output
+        self.last_filename = self.output.storage.timestamp(filename)
         #self.output.unset_emit()
         parameters = str(self.parameters) + " > " + self.last_filename
         self.logger.debug("Executing parameters: {0}".format(parameters))
@@ -393,7 +398,7 @@ class IperfCommand(BaseThreadClass):
         err = error.readline(timeout=1)
         
         if len(err):
-            self.validate(err)
+            self.logger.debug(err)
         return
 
     def run(self, device, filename, server=False):
@@ -457,10 +462,12 @@ class IperfCommand(BaseThreadClass):
         
         self.running = False
 
-        err = error.readline(timeout=1)
-        
-        if len(err):
-            self.validate(err)
+        # checking stderr will raise an exception because we're always closing the connection
+        #self.logger.debug("Checking stderr")
+        #err = error.readline(timeout=1)
+        #
+        #if len(err):
+        #    self.validate(err)
         return
 
     def start(self, device, filename, server=True):

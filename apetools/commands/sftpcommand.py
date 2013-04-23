@@ -116,7 +116,7 @@ class SftpCommand(BaseClass):
          - `remote`: path to file on remote host
          - `local`: path to create file on local host
         """
-        return self.sftp.get(remote=remote, local=local)
+        return self.sftp.get(remotepath=remote, localpath=local)
 
     def put(self, local, remote):
         """
@@ -127,7 +127,7 @@ class SftpCommand(BaseClass):
          - `local`: path to a local file
          - `remote`: path to put file on remote host
         """
-        return self.sftp.put(local=local, remote=remote)
+        return self.sftp.put(localpath=local, remotepath=remote)
         
 
 
@@ -216,7 +216,7 @@ class TestSftpCommand(unittest.TestCase):
         target = 'test.iperf'
         self.command._sftp = self.sftp
         self.command.get(remote=source, local=target)
-        self.sftp.get.assert_called_with(remote=source, local=target)
+        self.sftp.get.assert_called_with(remotepath=source, localpath=target)
         return
 
     def test_put(self):
@@ -227,7 +227,7 @@ class TestSftpCommand(unittest.TestCase):
         target = 'there'
         self.command._sftp = self.sftp
         self.command.put(local=source, remote=target)
-        self.sftp.put.assert_called_with(local=source, remote=target)
+        self.sftp.put.assert_called_with(localpath=source, remotepath=target)
         return
 
     def test_connection_builder(self):

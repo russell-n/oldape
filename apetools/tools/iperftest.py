@@ -2,10 +2,12 @@
 # apetools
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
+from apetools.commands.sftpcommand import SftpCommand
 
 #this folder
 from sleep import Sleep 
 from killall import KillAll, KillAllError
+
 
 
 SIGKILL = 9
@@ -112,10 +114,20 @@ class IperfTest(BaseClass):
         self.logger.info("Running the client (sender)")
 
         self.sender_command.run(sender, filename)
-        if self.receiver_command.running:
-            # This was added to force the dumping of UDP server output
-            self.logger.info("Killing the server on {0}".format(receiver.connection.hostname))
-            self.kill_processes(receiver.connection)
-            #self.receiver_command.abort()
+
+        # This was added to force the dumping of UDP server output
+        self.logger.info("Killing the server on {0}".format(receiver.connection.hostname))
+        self.kill_processes(receiver.connection)
+
+        # this is a quick hack to get the ipad working
+        # it needs somehing more elegant
+        if self.receiver_command.is_daemon:
+            target = self.receiver_command.get_output_filename()
+            if target is None:
+                self.logger.warning("Unable to get the server-side filename to copy")
+            sftp = SftpCommand(connection=self.receiver_command.device.connection)
+            sftp.get(self.receiver_command.last_filename, target)
+                            
+        #self.receiver_command.abort()
         return
 # end class IperfTest
