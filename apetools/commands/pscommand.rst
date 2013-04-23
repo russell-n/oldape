@@ -100,7 +100,8 @@ Collaborators
 
 Example Use::
 
-    connection = SSHConnection(hostname='elin', username='tester')
+    connection = SSHConnection(hostname='elin', username='tester',
+                               operating_system=OperatingSystem.ios)
     grep = PsGrep(connection, 'iperf')
     for pid in grep():
         print pid
@@ -109,8 +110,10 @@ Example Use::
 
 The advantage in having this relationship is that you can change the `PsCommand` by changing the `PsGrep` connection::
 
-   connection_1 = SSHConnection(hostname='elin', username='tester')
-   connection_2 = SSHConnection(hostname='bob', username='tester')
+   connection_1 = SSHConnection(hostname='elin', username='tester',
+                                operating_system=OperatingSystem.android)
+   connection_2 = SSHConnection(hostname='bob', username='tester',
+                                Operating_system=OperatingSystem.linux)
    grep = PsGrep(connection)
    for pid in grep('iperf'):
        print pid

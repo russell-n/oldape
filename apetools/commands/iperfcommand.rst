@@ -2,6 +2,7 @@ The Iperf Command
 =================
 A module to hold a generic iperf command.
 
+.. currentmodule:: apetools.commands.iperfcommand
 
 
 Errors Raised
@@ -18,7 +19,6 @@ The `IperfError` is raised if a problem with the connection between the client a
 
    IperfError -|> CommandError
 
-.. currentmodule:: apetools.commands.iperfcommand
 .. autosummary::
    :toctree: api
 
@@ -66,7 +66,15 @@ The `IperfCommandEnum` holds string constants for the :ref:`IperfCommand <iperf-
 The Iperf Command
 -----------------
 
-The `IperfCommand` executes iperf commands.
+The `IperfCommand` executes iperf commands. This is very old code so it is not well-documented.
+
+
+Daemon Mode
+~~~~~~~~~~~
+
+The most recent change is a check for the `--daemon` flag in the parameters. If this is there, then it is assumed that the server will want to start, redirect the output to a file, then close the connection to the device. Another object will then have to kill the iperf process and copy it if the output is wanted. This is being implemented speciffically for the `ipad` running downlink iperf traffic. It probably will not work in other cases.
+
+Because the server is running in a thread, it will set a ``self.last_filename`` property so that users will know where to get the remote file.
 
 .. autosummary::
    :toctree: api
@@ -86,6 +94,8 @@ The `IperfCommand` executes iperf commands.
    IperfCommand : run(device, filename, server)
    IperfCommand : start(device, filename)
    IperfCommand : __call__(device, filename, server)
+   IperfCommand : last_filename
+   IperfCommand : is_daemon
 
 
 
@@ -197,6 +207,23 @@ Example Use::
 
    iperf_client = IperfCommand(client_parameters, output, IperfCommandEnum.client)
    iperf_server = IperfCommand(server_parameters, output, IperfCommandEnum.server)
-   iperf_server.start()
-   iperf_client(client_device)
+   iperf_server.start(server_device, 'test_file')
+   iperf_client(client_device, 'test_file')
    
+Testing The Iperf Command
+-------------------------
+
+.. autosummary::
+   :toctree: api
+
+   TestIperfCommand.test_daemon
+   TestIperfCommand.test_is_daemon
+   TestIperfCommand.test_set_parameters
+
+
+
+
+
+
+
+

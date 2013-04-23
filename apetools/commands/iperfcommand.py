@@ -60,6 +60,7 @@ class IperfCommand(BaseThreadClass):
         """
         super(IperfCommand, self).__init__()
         self.role = role
+        self._parameters = None
         self.parameters = parameters
         self._parser  = None
         self._output = None
@@ -72,7 +73,33 @@ class IperfCommand(BaseThreadClass):
 
         self.running = False
         self.stop = False
+        self._is_daemon = None
         return
+
+    @property
+    def parameters(self):
+        """
+        The iperf parameters
+        """
+        return self._parameters
+
+    @parameters.setter
+    def parameters(self, parameters):
+        """
+        Sets the parameters and re-sets is_daemon
+        """
+        self._is_daemon = None
+        self._parameters = parameters
+        return
+    
+    @property
+    def is_daemon(self):
+        """
+        If this is run is a server, will it be a daemon?
+        """
+        if self._is_daemon is None:
+            self._is_daemon = self.parameters.daemon is not None
+        return self._is_daemon
 
     @property
     def parser(self):
@@ -88,6 +115,7 @@ class IperfCommand(BaseThreadClass):
                                        transform=parser,
                 add_timestamp=True)            
         return self._parser
+    
     @property
     def output(self):
         """
@@ -206,6 +234,62 @@ class IperfCommand(BaseThreadClass):
             pass
         return
         
+    def run_daemon(self, device, filename, server=False):
+        """
+        Run the iperf command as a daemon, redirecting output to a file and detaching
+
+        * This was specifically created for the ipad, probably won't work otherwise
+
+        * The user of this method is responsible for getting the file from the device
+
+        :param:
+
+         - `device`: A device to issue the command on
+         - `filename`: a base-name to use for the output file.
+
+        :postcondition: self.last_filename is path to remote output file
+        """
+        self.last_filename = self.filename(filename, device.role)
+        #self.output.unset_emit()
+        parameters = str(self.parameters) + " > " + self.last_filename
+        self.logger.debug("Executing parameters: {0}".format(parameters))
+        
+        with device.connection.lock:
+            self.logger.debug("Waiting for the connection lock")
+            self.logger.info("running iperf {0}".format(parameters))
+            output, error = device.connection.iperf(parameters)
+            self.logger.info('Closing the connection to the device')
+            # don't use connection.close(), it looks like you're running `sh close`
+            device.connection._client.close()
+            self.logger.debug("Out of the connection lock")
+
+        self.running = True
+        #file_output = self.output.open(filename=filename)
+        #for line in readoutput.ValidatingOutput(output, self.validate):
+        #    if len(line.strip()):
+        #        self.logger.debug(line.rstrip(newline))
+        #    self.send_line(file_output, line)
+        #    
+        #    if self.now() > abort_time:
+        #        # We've run too long, something is wrong (abort path)
+        #        self.send_line(end_of_file)
+        #        self.abort = False
+        #        self.running = False
+        #        raise IperfError("Expected runtime: {0} Actual: {1} (aborting)".format(self.parameters.time,
+        #                                                                               self.now() - start_time))
+        #    if self.stop:
+        #        # someone has asked us to stop (stop path)
+        #        self.send_line(end_of_file)
+        #        self.stop = False
+        #        self.logger.debug("Aborting")
+        #        break
+        
+        err = error.readline(timeout=1)
+        
+        if len(err):
+            self.validate(err)
+        return
+
     def run(self, device, filename, server=False):
         """
         Run the iperf command and send to the output
@@ -230,9 +314,8 @@ class IperfCommand(BaseThreadClass):
         #        self.output.set_emit()
         #    else:
         #        self.output.unset_emit()
-        #         
-        file_output = self.output.open(filename=filename)
-        
+        #
+
         self.logger.debug("Executing parameters: {0}".format(self.parameters))
         
         with device.connection.lock:
@@ -245,6 +328,8 @@ class IperfCommand(BaseThreadClass):
         self.running = True
         newline = IperfCommandEnum.newline
         end_of_file = IperfCommandEnum.eof
+        
+        file_output = self.output.open(filename=filename)
         for line in readoutput.ValidatingOutput(output, self.validate):
             if len(line.strip()):
                 self.logger.debug(line.rstrip(newline))
@@ -266,7 +351,6 @@ class IperfCommand(BaseThreadClass):
         
         self.running = False
 
-        #This looks like it would block if self.stop was set and the process isn't over.
         err = error.readline(timeout=1)
         
         if len(err):
@@ -284,7 +368,11 @@ class IperfCommand(BaseThreadClass):
 
         :postcondition: iperf command started in self.thread
         """
-        self.thread = threading.Thread(target=self.run_thread, name='IperfCommand',
+        if self.parameters.daemon is not None:
+            run_method = self.run_daemon
+        else:
+            run_method = self.run
+        self.thread = threading.Thread(target=run_method, name='IperfCommand',
                                        kwargs={'device':device,
                                                'filename':filename,
                                                'server':server})
@@ -311,3 +399,77 @@ class IperfCommand(BaseThreadClass):
         return self.run(device, filename, server)
     
 # end IperfCommand
+
+
+# python standard library
+import unittest
+from threading import Lock
+from StringIO import StringIO
+
+# third-party
+from mock import MagicMock
+
+#ape
+from apetools.parameters.iperf_udp_server_parameters import IperfUdpServerParameters
+
+
+class TestIperfCommand(unittest.TestCase):
+    def setUp(self):
+        return
+    
+    def test_daemon(self):
+        """
+        If the parameters.daemon is set, will the run_daemon be called?
+        """
+        parameters = IperfUdpServerParameters()
+        parameters.daemon = True
+        output = MagicMock()
+        command = IperfCommand(parameters=parameters,
+                               output=output,
+                               role=IperfCommandEnum.server)
+
+        device = MagicMock()
+        device.connection.lock = Lock()
+        device.role = BaseDeviceEnum.node
+        error = MagicMock()
+        error.readline.return_value = ''
+        device.connection.iperf.return_value = [""], error
+        command.run_daemon(device, 'test', server=True)
+        #command.start(device, 'test', server=True)
+        filename = command.filename('test', BaseDeviceEnum.node)
+        device.connection._client.close.assert_called_with()
+        device.connection.iperf.assert_called_with(str(parameters) + ' > ' + filename)
+        self.assertEqual(command.last_filename, filename)
+        return
+
+    def test_is_daemon(self):
+        """
+        If the daemon parameter is set, does the command know it's a daemon?
+        """
+        parameters = IperfUdpServerParameters()
+        parameters.daemon = True
+        output = MagicMock()
+        command = IperfCommand(parameters=parameters,
+                               output=output,
+                               role=IperfCommandEnum.server)
+
+        self.assertTrue(command.is_daemon)
+        return
+
+    def test_set_parameters(self):
+        """
+        Does setting the parameters reset the is_daemon property?
+        """
+        parameters = IperfUdpServerParameters()
+        parameters.daemon = True
+        output = MagicMock()
+        command = IperfCommand(parameters=parameters,
+                               output=output,
+                               role=IperfCommandEnum.server)
+
+        self.assertTrue(command.is_daemon)
+        parameters._daemon = None
+        command.parameters = parameters
+        self.assertIsNone(command._is_daemon)
+        self.assertFalse(command.is_daemon)
+        return
