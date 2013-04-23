@@ -7,10 +7,12 @@ A module to hold an iperf test tool.
 # apetools
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
+from apetools.commands.sftpcommand import SftpCommand
 
 #this folder
 from sleep import Sleep 
 from killall import KillAll, KillAllError
+
 @
 
 <<name='constants', echo=False>>=
@@ -65,6 +67,15 @@ The `IperfTest` runs a single test, taking care of both sides of the connection 
 * :ref:`Sleep <sleep-command>` provides a sleep after the server is started so the client does not start too soon
 
 * :ref:`Kill <kill-command>` is used to kill all pre-existing iperf-sessions.
+
+Example Use::
+
+   test = IperfTest(iperf_client_command, iperf_server_command)
+   test(node, traffic_pc, 'output_file')
+
+* The `iperf_client_command` and `iperf_server_command` are :ref:`IperfCommands <iperf-command>`.
+
+* The `node` and `traffic_pc` are :ref:`Devices <base-device>`
    
 <<name='IperfTest', echo=False>>=
 class IperfTest(BaseClass):
@@ -165,6 +176,16 @@ class IperfTest(BaseClass):
             # This was added to force the dumping of UDP server output
             self.logger.info("Killing the server on {0}".format(receiver.connection.hostname))
             self.kill_processes(receiver.connection)
+
+            # this is a quick hack to get the ipad working
+            # it needs somehing more elegant
+            if self.receiver_command.is_daemon:
+                target = self.receiver.get_output_filename()
+                if target is None:
+                    self.logger.warning("Unable to get the server-side filename to copy")
+                sftp = SftpCommand(connection=self.receiver.device.connection)
+                sftp.get(self.receiver.last_filename, target)
+                                
             #self.receiver_command.abort()
         return
 # end class IperfTest

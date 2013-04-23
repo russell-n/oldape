@@ -77,6 +77,8 @@ class IperfSession(BaseClass):
     """
     def __init__(self, iperf_test, nodes, tpc, filename_base=None):
       """
+      IperfSession Constructor
+      
       :param:
 
        - `iperf_test`: a bundle of parameters and storage
@@ -97,6 +99,8 @@ class IperfSession(BaseClass):
     @property
     def from_node_expression(self):
         """
+        Regular expression to determine if it is an upload.
+        
         Expects `from_node`, `uplink`, `send`, `transmit`, `tx`
         
         :return: compiled regex to match TPC <-- Node        
@@ -108,6 +112,8 @@ class IperfSession(BaseClass):
     @property
     def to_node_expression(self):
         """
+        Regular expression to determine if it is a download
+        
         Assumes something like `to_node`, `downlink`, `receive`, `rx`
         
         :return: compiled regex to match direction of traffic TPC --> Node
@@ -118,6 +124,8 @@ class IperfSession(BaseClass):
 
     def particpants(self, parameters):
         """
+        Decides which node is participating and whether it is client or server
+        
         :param:
 
          - `parameters`: namedtuple passed in to call
@@ -143,6 +151,8 @@ class IperfSession(BaseClass):
 
     def filename(self, parameters, filename_prefix):
         """
+        Adds extra tags to the filename to make identifying them easier
+        
         :param:
 
          - `parameters`: Namedtuple passed in to __call__      
@@ -159,7 +169,7 @@ class IperfSession(BaseClass):
     
     def __call__(self, parameters, filename_prefix = None):
         """
-        Retrieves the participating and runs the iperf_test
+        Retrieves the participating node and runs the iperf_test
         
         :param:
 
