@@ -32,7 +32,7 @@ Setting Up the APE
 
 As always, the configuration-file is the means to set up the *APE*
 
-   * The only test-component that interacts with the Ipad should be the `iperf` component (I couldn't find an iwconfig or equivalent for the ipad, if someone finds one we can add some more)
+   * The `watchlogs` components and other components that interact with the DUT throughout the test should be removed
 
    * The Iperf directions should be limited to downlink only::
 
@@ -62,6 +62,7 @@ Example Configuration
 The following is a minimal example::
 
     [TEST]
+    setup_test = timetorecovery,dumpdevicestate
     execute_test = iperf
     output_folder = ipad_test_{t}
     repeat = 20
@@ -73,7 +74,6 @@ The following is a minimal example::
 
     [TRAFFIC_PC]
     tpc = operating_system:linux,connection:ssh,test_interface:wlan0,hostname:localhost,login:fakeuser
-
     
     [IPERF]
     directions = to_dut
@@ -81,6 +81,7 @@ The following is a minimal example::
     time = 10 Minutes
 
     protocol = udp
+    bandwidth = 100M
     daemon = True
 
     len = 1470
@@ -89,3 +90,4 @@ The following is a minimal example::
     format = b
 
 
+.. note:: The `dumpdevicestate` won't actually return much useful since I couldn't find an `iwconfig` equivalent for `ipad`. If someone finds one it might prove more useful.
