@@ -52,7 +52,7 @@ class RotateBuilder(BaseToolBuilder):
             username = self.config_map.get(ConfigOptions.rotate_section,
                                            ConfigOptions.username_option)
             password = self.config_map.get(ConfigOptions.rotate_section,
-                                           ConfigOptions.username_option,
+                                           ConfigOptions.password_option,
                                            optional=True)
             self._connection_parameters = SSHParameters(hostname, username, password)
 
