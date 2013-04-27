@@ -47,6 +47,15 @@ The `IperfTest` runs a single test, taking care of both sides of the connection 
 * :ref:`Sleep <sleep-command>` provides a sleep after the server is started so the client does not start too soon
 
 * :ref:`Kill <kill-command>` is used to kill all pre-existing iperf-sessions.
+
+Example Use::
+
+   test = IperfTest(iperf_client_command, iperf_server_command)
+   test(node, traffic_pc, 'output_file')
+
+* The `iperf_client_command` and `iperf_server_command` are :ref:`IperfCommands <iperf-command>`.
+
+* The `node` and `traffic_pc` are :ref:`Devices <base-device>`
    
 
 

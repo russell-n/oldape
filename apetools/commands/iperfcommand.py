@@ -299,7 +299,7 @@ class IperfCommand(BaseThreadClass):
         #        self.logger.debug("Aborting")
         #        break
         
-        err = error.readline(timeout=1)
+        err = error.readline()
         
         if len(err):
             self.logger.debug(err)
@@ -444,6 +444,8 @@ class TestIperfCommand(unittest.TestCase):
         command = IperfCommand(parameters=parameters,
                                output=output,
                                role=IperfCommandEnum.server)
+        filename = command.filename('test', BaseDeviceEnum.node)
+        output.storage.timestamp.return_value = filename
 
         device = MagicMock()
         device.connection.lock = Lock()
@@ -453,7 +455,7 @@ class TestIperfCommand(unittest.TestCase):
         device.connection.iperf.return_value = [""], error
         command.run_daemon(device, 'test', server=True)
         #command.start(device, 'test', server=True)
-        filename = command.filename('test', BaseDeviceEnum.node)
+
         device.connection._client.close.assert_called_with()
         device.connection.iperf.assert_called_with(str(parameters) + ' > ' + filename)
         self.assertEqual(command.last_filename, filename)

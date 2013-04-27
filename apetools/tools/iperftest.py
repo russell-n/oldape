@@ -116,6 +116,8 @@ class IperfTest(BaseClass):
         self.sender_command.run(sender, filename)
 
         # This was added to force the dumping of UDP server output
+        self.logger.info("Sleeping to let the server finish its output.")
+        self.sleep()
         self.logger.info("Killing the server on {0}".format(receiver.connection.hostname))
         self.kill_processes(receiver.connection)
 
