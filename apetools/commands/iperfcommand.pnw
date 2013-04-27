@@ -395,7 +395,7 @@ class IperfCommand(BaseThreadClass):
         #        self.logger.debug("Aborting")
         #        break
         
-        err = error.readline(timeout=1)
+        err = error.readline()
         
         if len(err):
             self.logger.debug(err)
