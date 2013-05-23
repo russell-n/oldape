@@ -71,8 +71,8 @@ class NaxxxBuilder(BaseToolBuilder):
                            if identifier !='hostname']
             try:
                 switches = [self.config_map.get(section,
-                                                    identifier) 
-                                                    for identifier in identifiers]
+                                                identifier) 
+                                                for identifier in identifiers]
             except TypeError as error:
                 self.logger.error(error)
                 message = "Missing NAXXX section in the config-file."
@@ -99,9 +99,9 @@ class NaxxxBuilder(BaseToolBuilder):
         """
         if self._parameters is None:
             parameters = []
-            for identifier, switch in self.config_options.iteritems():
+            for identifier in sorted(self.config_options.iterkeys()):
                 parameters.append(NaxxxParameters(identifier=identifier,
-                                                  switch=switch))
+                                                  switch=self.config_options[identifier]))
             name = NaxxxBuilderEnum.name
             self.previous_parameters.append(Parameters(name=name,
                                                        parameters=parameters))
