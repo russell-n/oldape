@@ -97,7 +97,6 @@ class SSHClient(paramiko.SSHClient):
         channel.invoke_shell()
 
         shell = channel.makefile('r+b', bufsize)
-
         return shell
 #end class SSHClient
 
@@ -259,7 +258,6 @@ class SSHConnection(NonLocalConnection):
 
          - `command`: The shell command.
          - `arguments`: A string of command arguments.
-         - `path`: An optional path to prepend to the command
          - `timeout`: readline timeout for the SSHConnection
         :return: OutputError with output and error file-like objects
         """

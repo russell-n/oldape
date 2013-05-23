@@ -122,7 +122,7 @@ ADBShellSSHConnection
 Issues ADB-shell commands to a remote PC (via SSH) which is connected to the Android via ADB. This should be preferred to :ref:`ADBShellConnection <adb-shell-connection>`.
 
 .. autosummary::
-   :toctree: 1
+   :toctree: api
 
    ADBShellSSHConnection
 
@@ -135,7 +135,7 @@ Issues ADB-shell commands to a remote PC (via SSH) which is connected to the And
 A Usage Example
 ---------------
 
-::
+.. code-block:: python
 
     if __name__ == "__main__":
         from apetools.main import watcher
@@ -146,5 +146,6 @@ A Usage Example
         for line in output:
             sys.stdout.write(line)
         
+    
     
 

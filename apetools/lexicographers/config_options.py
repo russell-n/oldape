@@ -8,6 +8,7 @@ class ConfigOptions(object):
     oscillate_section = 'OSCILLATE'
     watchlogs_section = "WATCHLOGS"
     sleep_section = "SLEEP"
+    naxxx_section = 'NAXXX'
 
     #options
     tag_option = "tag"

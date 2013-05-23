@@ -129,6 +129,7 @@ class TestOperator(BaseClass):
          - `count`: the current test-count (for logging)
          - `prefix`: any file-prefix given by the operation-setup
         """
+        import pudb;pudb.set_trace()
         self.logger.info("starting TestOperator.one_repetition")
         test_start = self.countdown_timer.now
         if prefix is not None:

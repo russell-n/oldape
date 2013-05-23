@@ -138,12 +138,14 @@ This acts as a file-like object that traps socket timeouts so that users do not 
 Another Example
 ---------------
 
-::
+.. code-block:: python
 
     if __name__ == "__main__":
         c = SSHConnection('igor', 'developer')
-        o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless Network Connection\'" call enable')
+        o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless
+     Network Connection\'" call enable')
         for index, line in enumerate(o.output):
             print index, line
+    
     
 

@@ -7,7 +7,7 @@ Calls to a NonLocalConnection takes the command-line command as a property and t
 
 .. currentmodule:: apetools.connections.nonlocalconnection
 .. autosummary::
-   :toctree:
+   :toctree: api
 
    NonLocalConnection
    DummyConnection
@@ -22,6 +22,10 @@ The NonLocalConnection
 .. uml::
 
    NonLocalConnection -|> BaseThreadClass
+   NonLocalConnection : command_prefix
+   NonLocalConnection : operating_system
+   NonLocalConnection: path
+   NonLocalConnection : library_path
    NonLocalConnection : lock
    NonLocalConnection o-- threading.RLock
    NonLocalConnection o-- Queue.Queue
