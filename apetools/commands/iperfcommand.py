@@ -352,14 +352,14 @@ class IperfCommand(BaseThreadClass):
             
             if self.now() > abort_time:
                 # We've run too long, something is wrong (abort path)
-                self.send_line(end_of_file)
+                self.send_line(file_output, end_of_file)
                 self.abort = False
                 self.running = False
                 raise IperfError("Expected runtime: {0} Actual: {1} (aborting)".format(self.parameters.time,
                                                                                        self.now() - start_time))
             if self.stop:
                 # someone has asked us to stop (stop path)
-                self.send_line(end_of_file)
+                self.send_line(file_output, end_of_file)
                 self.stop = False
                 self.logger.debug("Aborting")
                 break
