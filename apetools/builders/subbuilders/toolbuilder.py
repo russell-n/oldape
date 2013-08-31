@@ -17,6 +17,7 @@ class ToolBuilderEnum(object):
     oscillatestop = 'oscillatestop'
     sleep = 'sleep'
     naxxx = 'naxxx'
+    busyboxwget = 'busiboxwget'
 # end class ToolBuilderEnum
 
 class ToolBuilder(object):
@@ -38,8 +39,14 @@ class ToolBuilder(object):
         self._sleep = None        
         self._watchlogs = None
         self._naxxx = None
+        self._busyboxwget = None
         return
 
+    @property
+    def busyboxwget(self):
+        from busyboxwgetbuilder import BusyboxWgetBuilder
+        return BusyboxWgetBuilder
+    
     @property
     def sleep(self):
         """
