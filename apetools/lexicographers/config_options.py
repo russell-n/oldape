@@ -9,8 +9,12 @@ class ConfigOptions(object):
     watchlogs_section = "WATCHLOGS"
     sleep_section = "SLEEP"
     naxxx_section = 'NAXXX'
+    busyboxwget_section = 'BUSYBOXWGET'
 
     #options
+    target_option = 'target'
+    output_option = 'output'
+    
     tag_option = "tag"
     operation_setup_option = "operation_setup"
     operation_teardown_option = "operation_teardown"

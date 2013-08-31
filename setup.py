@@ -18,7 +18,7 @@ setup(name='apetools',
       author_email="russellnakamura@us.allion.com",
       license = "",
       install_requires = ['pudb', 'paramiko', 'pyserial', 'numpy', 'mock', 'nose'],
-      packages = find_packages(exclude=["__main__"]),
+      #packages = find_packages(exclude=["__main__"]),
       include_package_data = True,
       package_data = {"apetools":["*.txt", "*.rst", "lexicographers/configfiles/*.ini"]},
       entry_points = """
