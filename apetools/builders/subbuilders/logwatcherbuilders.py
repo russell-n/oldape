@@ -8,6 +8,7 @@ from apetools.commons.errors import ConfigurationError
 from apetools.watchers.logcatwatcher import LogcatWatcher
 from apetools.watchers.logwatcher import LogWatcher
 from apetools.watchers.logfollower import LogFollower
+from apetools.watchers.pingwatcher import PingWatcher
 
 class LogwatcherBuilderError(ConfigurationError):
     """
@@ -165,6 +166,65 @@ class LogWatcherBuilder(BaseWatcherBuilder):
         return self._product
     
 # end class LogcatWatcherBuilder
+class PingWatcherBuilder(BaseWatcherBuilder):
+    """
+    A builder of ping watchers
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        PingWatcherBuilder Constructor
+
+        :param:
+
+         - `node`: device to watch        
+         - `parameters`: named tuple built from config file
+         - `output`: storageobject to send output to
+         - `name`: a name to add to the output file
+         - `event`: event to watch to decide when to stop
+        """
+        super(PingWatcherBuilder, self).__init__(*args, **kwargs)
+        self._target = None
+        self._threshold = None
+        return
+
+    @property
+    def arguments(self):
+        return self.target
+    
+    @property
+    def target(self):
+        """
+        Hostname to ping
+        """
+        if self._target is None:
+            self._target = self.parameters.target
+        return self._target
+
+    @property
+    def threshold(self):
+        """
+        Consecutive failed pings to consider a failure
+        """
+        if self._threshold is None:
+            if hasattr(self.parameters, 'threshold'):
+                self._threshold = int(self.parameters.threshold)
+            else:
+                self._threshold = 5
+        return self._threshold
+    
+    @property
+    def product(self):
+        """
+        :return: logcatwatcher
+        """
+        if self._product is None:
+            self._product = PingWatcher(target=self.target,
+                                        threshold=self.threshold,
+                                        output=self.output_file,
+                                        connection=self.node.connection)
+        return self._product
+    
+# end class PingWatcherBuilder
     
 class LogFollowerBuilder(BaseWatcherBuilder):
     """

@@ -53,6 +53,11 @@ class BaseThreadClass(BaseClass):
 
     def run_thread(self, *args, **kwargs):
         """
+        To use:
+
+           * define run(*args, **kwargs) in child
+           * use self.run_thread as target for thread
+        
         :param: Whatever self.run accepts
         :precondition: self.run method exists and is thread-safe
         """
