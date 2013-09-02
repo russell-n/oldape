@@ -55,7 +55,7 @@ DummyConnectionBuilder
 This is for the odd cases where we need a fake connection that does not actually connect to anything. In particular this was created for the screen-iperf-hack for iPads.
 
 .. autosummary::
-   :toctree: 1
+   :toctree: api
 
    DummyConnectionBuilder
 

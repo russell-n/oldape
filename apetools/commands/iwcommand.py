@@ -31,6 +31,10 @@ class IwCommand(BaseClass):
         self._operating_system = operating_system
         self._rssi = None
         self._mac_address = None
+        self._ssid = None
+        self.bssid = ""
+        self._channel = None
+        self.noise = 'NA'
         return
 
     @property
@@ -55,6 +59,34 @@ class IwCommand(BaseClass):
         return self._interface
 
     @property
+    def ssid(self):
+        """
+        The ssid of the attached ap
+        """
+        self.logger.debug('Getting the SSID')
+        name = 'SSID'
+
+        expr = expressions.NAMED.format(name=name,
+                                        pattern=expressions.EVERYTHING)
+        expression = 'SSID:' + expressions.SPACES + expr + '$'
+        command = '{i} link'.format(i=self.interface)
+        return self._match(expression, name, command)
+    
+    @property
+    def channel(self):
+        """
+        The channel of the attached ap (actually frequency right now)
+        """
+        self.logger.debug('Getting the channel')
+        name = 'channel'
+
+        expr = expressions.NAMED.format(name=name,
+                                        pattern=expressions.INTEGER)
+        expression = 'freq:' + expressions.SPACES + expr
+        command = '{i} link'.format(i=self.interface)
+        return self._match(expression, name, command)
+    
+    @property
     def rssi(self):
         """
         This is dynamically generated
@@ -74,7 +106,7 @@ class IwCommand(BaseClass):
         if self._mac_address is None:
             expression = expressions.MAC_ADDRESS
             name = expressions.MAC_ADDRESS_NAME
-            command = "phy phy0 wowlan show"
+            command = "{i} link".format(i=self.expression)
             self._mac_address = self._match(expression, name, command)
         return self._mac_address
     
@@ -102,7 +134,7 @@ class IwCommand(BaseClass):
                 raise CommandError("Unknown Interface: {0}".format(self.interface))
             else:
                 raise CommandError(err)
-        return
+        return ''
 
     def __str__(self):
         return "({iface}) RSSI: {rssi}".format(iface=self.interface,

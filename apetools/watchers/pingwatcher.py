@@ -193,11 +193,11 @@ class PingWatcher(BaseThreadClass):
             self.logger.debug('waiting for a failure')
             outcome = self.time_to_failure()
             if outcome:
-                self.logger.debug('Failure Detected')
+                self.logger.info('Failure Detected')
                 self.output.write(ADD_NEWLINE.format(outcome))
             outcome = self.time_to_recovery()
             if outcome:
-                self.logger.debug('Recovery Detected')
+                self.logger.info('Recovery Detected')
                 self.output.write(ADD_NEWLINE.format(outcome))
         return
     

@@ -498,7 +498,7 @@ class ConfigurationMap(BaseClass):
         :return: Value in the option (in seconds) or 0 if not present.
         """
         source = self._get(section, option, default, optional)
-        if source == 0:
+        if source == default:
             return source
         return self.time_converter(source)
     
