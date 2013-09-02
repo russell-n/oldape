@@ -62,16 +62,7 @@ class AdbShellConnectionBuilder(BaseClass):
         """
         super(AdbShellConnectionBuilder, self).__init__()
         self._connection = None
-        self._serial_number = None
         return
-
-    @property
-    def serial_number(self):
-        if self._serial_number is None:
-            if hasattr(self.parameters, 'serial_number'):
-                self._serial_number = self.parameters.serial_number
-        return self._serial_number
-        
 
     @property
     def connection(self):
@@ -83,7 +74,7 @@ class AdbShellConnectionBuilder(BaseClass):
         """
         if self._connection is None:
             self.logger.debug("Creating the adb shell connection")
-            self._connection = adbconnection.ADBShellConnection(serial_number=self.serial_number)
+            self._connection = adbconnection.ADBShellConnection()
         return self._connection
 # end class AdbShellConnectionBuilder
 
@@ -230,10 +221,14 @@ class AdbShellSshConnectionBuilder(SSHConnectionBuilder):
 
     @property
     def serial_number(self):
-        if self._serial_number is None and hasattr(self.parameters, 'serial_number'):
-            self._serial_number = self.parameters.serial_number
+        """
+        A serial number for the USB connection
+        """
+        if self._serial_number is None:
+            if hasattr(self.parameters, 'serial_number'):
+                self._serial_number = self.parameters.serial_number
         return self._serial_number
-
+    
     @property
     def connection(self):
         """
@@ -241,13 +236,13 @@ class AdbShellSshConnectionBuilder(SSHConnectionBuilder):
         """
         if self._connection is None:
             self.logger.debug("Creating the ADBShellConnection")
-            self._connection = adbconnection.ADBShellSSHConnection(serial_number=self.serial_number,
-                                                                   hostname=self.hostname,
+            self._connection = adbconnection.ADBShellSSHConnection(hostname=self.hostname,
                                                                    username=self.username,
                                                                    password=self.password,
                                                                    path=self.path,
                                                                    library_path=self.library_path,
-                                                                   operating_system=self.operating_system)
+                                                                   operating_system=self.operating_system,
+                                                                   serial_number=self.serial_number)
         return self._connection
 # end class AdbShellSshConnectionBuilder
 

@@ -256,7 +256,13 @@ class ADBShellSSHConnection(ADBSSHConnection):
     """
     def __init__(self, *args, **kwargs):
         """
-        :param: (see the ADBSSHConnection)
+        :param:
+
+         - `serial_number`: id to distinguish bewtween multiple devices (case-sensitive)
+         - `hostname`: Address of ssh server
+         - `username`: login username
+         - `port`: ssh port (default=22)
+         - `timeout`: seconds to try to connect
         """
         super(ADBShellSSHConnection, self).__init__(*args, **kwargs)
         self.command_prefix += " shell "

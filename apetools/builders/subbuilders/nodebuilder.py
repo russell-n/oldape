@@ -76,10 +76,10 @@ class NodeBuilder(BaseClass):
             try:
                 self._interface = self.parameters.test_interface
             except AttributeError as error:
-                self.logger.error(error)
+                self.logger.warning(error)
                 message = "Expected in Config-File: section `[{0}]`, option `{1}:<test interface>` (e.g. wlan0)"
-                self.logger.error(message.format(ConfigOptions.nodes_section,
-                                                 ConfigOptions.test_interface_option))
+                self.logger.warning(message.format(ConfigOptions.nodes_section,
+                                                   ConfigOptions.test_interface_option))
                 if self.address is None:
                     raise ConfigurationError("Missing the test-interface for {0}".format(self.parameters.connection.hostname))
         return self._interface
@@ -105,4 +105,5 @@ class NodeBuilderTypes(object):
     windows = "windows"
     linux = "linux"
     android = 'android'
+    ios = 'ios'
 # end class NodeBuilderTypes
