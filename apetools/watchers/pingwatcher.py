@@ -44,7 +44,7 @@ class PingWatcher(BaseThreadClass):
 
     """
     def __init__(self, target, output, connection, threshold=5,
-                 event=None,
+                 event=None, interval=1,
                  timestamp_format=TimestampFormatEnums.log,
                  *args, **kwargs):
         """
@@ -55,16 +55,18 @@ class PingWatcher(BaseThreadClass):
          - `target`: hostname to ping
          - `output`: A file-like object to send output to.
          - `threshold`: consecutive ping-failures to count as a failure
+         - `interval`: time between pings
          - `event`: A threading event to stop a threaded watcher
          - `connection`: A connection to the Device         
          - `timestamp_format`: One of the TimestampFormatEnums
         """
         super(PingWatcher, self).__init__(*args, **kwargs)
         self.target = target
-        self.output = output
+        self.output = output        
         self.event = event
         self.connection = connection
         self.threshold = int(threshold)
+        self.interval = float(interval)
         self._arguments = None
         self.timestamp_format = timestamp_format
         self._timestamp = None
@@ -168,6 +170,7 @@ class PingWatcher(BaseThreadClass):
         events = 0
         first_time = None
         while events < self.threshold and not self.stopped:
+            loop_start = time.time()
             rtt = self.ping()
             if event_evaluation(rtt):
                 events += 1
@@ -177,6 +180,13 @@ class PingWatcher(BaseThreadClass):
                     self.logger.debug('possible event-state change')
             else:
                 events, first_time = 0, None
+            loop_end = time.time()
+            try:
+                time.sleep(self.interval - (loop_end - loop_start))
+            except IOError:
+                self.logger.debug(("ping took {0} seconds (greater than {1} " +
+                                   "second interval)").format(loop_end-loop_start,
+                                                              self.interval))
         if events == self.threshold:
             return event_data(timestamp=first_timestamp, elapsed=first_time-start_time)
         return
@@ -190,14 +200,14 @@ class PingWatcher(BaseThreadClass):
         """
         self.output.write(HEADER)
         while not self.stopped:            
-            self.logger.debug('waiting for a failure')
+            self.logger.debug('Waiting for a Failure')
             outcome = self.time_to_failure()
             if outcome:
-                self.logger.info('Failure Detected')
+                self.logger.info('PingWatch: Failure Detected')
                 self.output.write(ADD_NEWLINE.format(outcome))
             outcome = self.time_to_recovery()
             if outcome:
-                self.logger.info('Recovery Detected')
+                self.logger.info('PingWatch: Recovery Detected')
                 self.output.write(ADD_NEWLINE.format(outcome))
         return
     
@@ -315,7 +325,9 @@ class TestPingWatcher(unittest.TestCase):
         return
     
     def test_run(self):
-        self.watcher._timestamp = 5
+        timestamp = MagicMock()
+        self.watcher._timestamp = timestamp
+        self.watcher._timestamp.return_value = 5
         self.connection.ping.return_value = '\n\n'.split('\n'), StringIO('')
         # prevent the infinite loop
         events = [True, True, False, False]
@@ -325,7 +337,9 @@ class TestPingWatcher(unittest.TestCase):
 
         # set the times
         time_time = MagicMock()
-        times = [2,1]
+        # the time_to_event checks the time once before checking is_stopped
+        # so there needs to be 1 extra time
+        times = [2,2,2,1,1]
         def time_effects():
             return times.pop()
         time_time.side_effect = time_effects
@@ -334,7 +348,7 @@ class TestPingWatcher(unittest.TestCase):
             self.watcher.run()
         time_time.assert_called_with()
         self.connection.ping.assert_called_with(self.watcher.arguments)
-        calls = [call(HEADER), call('5,1\n')]
+        calls = [call(HEADER), call('5,Failure,1\n')]
         self.assertEqual(calls, self.output.write.mock_calls)
         return
         

@@ -12,7 +12,7 @@ class BusyboxWgetSession(BaseClass):
     A busybox-based wget monitor
     """
     def __init__(self, url, connection, storage, repetitions=None,
-                 data_file=None,
+                 data_file=None, recovery_time=1,
                  max_time=None):
         """
         BusyboxWgetSession constructor
@@ -25,6 +25,7 @@ class BusyboxWgetSession(BaseClass):
          - `repetitions`: number of times to call wget
          - `max_time`: maximum seconds to run
          - `data_file`: name to use for file
+         - `recovery_time`: seconds to sleep if an error is detected
         """
         super(BusyboxWgetSession, self).__init__()
         self.url = url
@@ -32,6 +33,7 @@ class BusyboxWgetSession(BaseClass):
         self.storage = storage
         self.repetitions = repetitions
         self.max_time = max_time
+        self.recovery_time = recovery_time
         self._data_file = data_file
         self.end_time = None
         self.increment = 1
@@ -107,13 +109,20 @@ class BusyboxWgetSession(BaseClass):
 
          - `parameters`: not used (legacy signature)
         """
+        self.logger.info("Starting `wget` session")
         output = self.storage.open(self.data_file)
         output.write(HEADER)
         self.start_timer()
         while self.time_remains:
+            self.logger.info('calling wget')
             data = self.wget()
             self.logger.info("{0}\n".format(data))
             output.write("{0}\n".format(data))
+            if len(data.error):
+                self.logger.error(data.error)
+                self.logger.info('Sleeping for {0} second to allow for a recovery'.format(self.recovery_time))
+                time.sleep(self.recovery_time)
+        self.logger.info("Ended `wget` session")
         return
 
 
