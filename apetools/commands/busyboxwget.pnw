@@ -57,7 +57,7 @@ This is what will be returned by the wget. The idea I am converging on is that `
 <<name='BusyboxWgetData', echo=False>>=
 attributes = 'elapsed error percentage kbits'
 
-HEADER = 'Elapsed(seconds),Complete(%),Size(kbits),Error\n'
+HEADER = 'Elapsed(seconds),Complete(%),Size,Error\n'
 
 class BusyboxWgetData(namedtuple('BusyboxWgetData', attributes)):
     """
@@ -152,10 +152,17 @@ class BusyboxWget(BaseClass):
                                        e=oatbran.INTEGER) + '%' 
             expression = destination + oatbran.SPACES + percentage + oatbran.SPACES
             expression += '\|' + oatbran.CLASS('*\s') + oatbran.ZERO_OR_MORE + '\|'
-            # busybox seems to always use `k` as a unit so it is not included
+            # busybox seems to change between k and M so units are included
             expression += oatbran.SPACES + oatbran.NAMED(n=BusyboxEnum.kbits_transferred,
-                                                         e=oatbran.INTEGER) + 'k'
+                                                         e=oatbran.INTEGER + '[kM]')
             expression += oatbran.SPACES
+
+            # elapsed time
+            expression += ":".join([oatbran.DIGIT * 2]*3) + oatbran.SPACES + 'ETA'
+
+            # sometimes multiple data lines are concanetnated so we want the last one
+            # but sometimes error strings are also concatenated so match that too
+            expression += oatbran.GROUP(oatbran.STRING_END + oatbran.OR + 'wget:')
             
             self._expression = re.compile(expression)
         return self._expression
@@ -246,7 +253,7 @@ null                 100% |*******************************| 65536k 00:00:00 ETA
 COMPLETED_LINE = 'null                 100% |*******************************| 65536k 00:00:00 ETA'
 DESTINATION = 'null'
 PERCENTAGE = '100'
-FILE_SIZE = '65536'
+FILE_SIZE = '65536k'
 
 KILLED_SERVER ='null                  22% |******                         | 14538k 00:00:10 ETA'
 CONCATENATED = 'null                  52% |****************               | 34564k 00:00:05 ETAwget: read error: Connection timed out'
@@ -259,6 +266,7 @@ wget: can't connect to remote host (192.168.20.51): No route to host
 
 
 """
+APE_LOG='null                  99% |****************************** |  1021M 00:00:00 ETA^Mnull                 100% |*******************************|  1024M 00:00:00 ETA'
 @
 <<name='TestBusyboxWget', echo=False>>=
 class TestBusyboxWget(unittest.TestCase):
@@ -314,7 +322,7 @@ class TestBusyboxWget(unittest.TestCase):
         match = self.wget.expression.search(KILLED_SERVER)
         self.assertEqual('null', match.group(BusyboxEnum.destination))
         self.assertEqual('22', match.group(BusyboxEnum.percentage_completed))
-        self.assertEqual('14538', match.group(BusyboxEnum.kbits_transferred))
+        self.assertEqual('14538k', match.group(BusyboxEnum.kbits_transferred))
         return
 
     def test_run(self):
@@ -331,7 +339,7 @@ class TestBusyboxWget(unittest.TestCase):
             data = self.wget.run()
         self.assertEqual(2, data.elapsed)
         self.assertEqual('100', data.percentage)
-        self.assertEqual('65536', data.kbits)
+        self.assertEqual('65536k', data.kbits)
         self.assertEqual('', data.error)
         self.connection.busybox.assert_called_with('wget {0} -O {1} -T {2}'.format(self.url,
                                                                                    self.destination,
@@ -353,7 +361,7 @@ class TestBusyboxWget(unittest.TestCase):
         with patch('time.time', time_time):
             data = self.wget.run()
         self.assertEqual('52', data.percentage)
-        self.assertEqual('34564', data.kbits)
+        self.assertEqual('34564k', data.kbits)
         self.assertEqual('Connection timed out', data.error)
         self.assertEqual(end-start, data.elapsed)
         return
@@ -389,6 +397,31 @@ class TestBusyboxWget(unittest.TestCase):
                                kbits=kbits)
         self.assertEqual(",".join([elapsed,percentage,kbits,error]),
                          str(data))
+        return
+
+    def test_ape_string(self):
+        '''
+        Can it get data from an actual output string from the log?
+        '''
+        self.connection.busybox.return_value = StringIO(APE_LOG), StringIO('')
+                # mock the time.time calls
+        start = random.randint(0,100)
+        end = random.randint(0,100)
+        times = [end, start]
+        time_effects = lambda : times.pop()
+        time_time = MagicMock()
+        time_time.side_effect = time_effects
+        with patch('time.time', time_time):
+            data = self.wget.__call__()
+        self.assertEqual(data.percentage, '100')
+@
+<<name='debug', echo=False>>=
+if __name__ == "__main__":
+    connection = MagicMock()
+    wget = BusyboxWget('abc', connection)
+    connection.busybox.return_value = StringIO(APE_LOG), StringIO('')#
+    import pudb;pudb.set_trace()
+    data = wget.__call__()
 @
 <%
 for case in (TestBusyboxWget, ):
