@@ -135,7 +135,7 @@ Issues ADB-shell commands to a remote PC (via SSH) which is connected to the And
 A Usage Example
 ---------------
 
-.. code-block:: python
+::
 
     if __name__ == "__main__":
         from apetools.main import watcher
