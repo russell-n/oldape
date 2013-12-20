@@ -34,11 +34,12 @@ class RotateCommand(BaseClass):
         self.retries = retries
         return
 
-    def __call__(self, parameters):
+    def __call__(self, parameters, filename_prefix=None):
         """
         :param:
 
          - `parameters`: namedtuple with parameters.angle_velocity.parameters
+         - `filename_prefix`: not used
         """
         angle, velocity, clockwise = parameters.angle_velocity.parameters
         arguments = "{0} --velocity {1}".format(angle, velocity)
