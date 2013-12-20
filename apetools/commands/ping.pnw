@@ -1,0 +1,210 @@
+The Ping Command
+================
+
+A Ping command pings and checks the response.
+
+.. currentmodule:: apetools.commands.ping
+
+<<name="imports", echo=False>>=
+#python Libraries
+import re
+from collections import namedtuple
+
+# apetools Libraries
+from apetools.baseclass import BaseClass
+from apetools.commons import expressions
+from apetools.commons.enumerations import OperatingSystem
+from apetools.commons import errors
+
+ConfigurationError = errors.ConfigurationError
+@
+
+<<name='constants', echo=False>>=
+UNKNOWN_HOST = 'unknown host'
+NEWLINE = "\n"
+@
+
+The PingData
+------------
+
+The `PingData` class is a namedtuple that holds the address that was pinged and the round-trip time for the ping.
+
+.. autosummary::
+   :toctree: api
+
+   PingData
+
+.. uml::
+
+   PingData -|> collections.namedtuple
+   PingData : target
+   PingData : rtt
+   PingData : __str__()
+
+<<name='PingData', echo=False>>=
+class PingData(namedtuple("PingData", ["target", "rtt"])):
+    __slots__ = ()
+
+    def __str__(self):
+        return ",".join(["{f}:{v}".format(f=f,v=getattr(self, f)) for f in self._fields])
+@    
+                   
+PingArguments
+-------------
+
+The `PingArguments` class holds string constants for the ping-command.
+
+.. uml::
+
+   PingArguments : arguments
+
+The keys to the `arguments` dictionary are the values in `apetools.commons.enumerations.OperatingSystem`.
+
+Example Use::
+
+   ping_args = PingArguments.arguments['android']  + '192.168.10.12'
+
+<<name='PingArguments', echo=False>>=
+class PingArguments(object):
+    """
+    PingArguments is a holder of ping arguments 
+    """
+    __slots__ = ()
+    arguments = {OperatingSystem.android:' -c 1 -w 1 ',
+                 OperatingSystem.linux:" -c 1 -w 1 ",
+                 OperatingSystem.windows:"-n 1 -w 1000 ",
+                 OperatingSystem.mac:' -c 1 -t 1 ',
+                 OperatingSystem.ios:' -c 1 '}
+# end class PingArguments
+@
+
+The PingCommand
+---------------
+
+The `PingCommand` issues the ping command and checks the outcome
+
+.. autosummary::
+   :toctree: api
+
+   PingCommand
+
+.. uml::
+
+   PingCommand
+
+<<name='PingCommand', echo=False>>=
+class PingCommand(BaseClass):
+    """
+    A ping is a simple ping-command.
+    """
+    def __init__(self, target=None, connection=None, operating_system=None):
+        """
+        PingCommand constructor
+        
+        :param:
+
+         - `target`: An IP Address to ping.
+         - `connection`: A Connection to the device
+         - `operating_system`: The operating system of the device
+        """
+        super(PingCommand, self).__init__()
+        self.target = target
+        self.connection = connection
+        self.operating_system = operating_system
+        self._arguments = None
+        self._expression = None
+        return
+
+    @property
+    def arguments(self):
+        """
+        :return: The ping arguments to use
+        """
+        if self._arguments is None:
+            try:
+                self._arguments = PingArguments.arguments[self.operating_system] + self.target
+            except KeyError as error:
+                self.logger.error(error)
+                self.logger.warning('unknown OS ({0}), using Linux'.format(self.operating_system))
+                self._arguments = PingArguments.arguments[OperatingSystem.linux] +  self.target
+        return self._arguments
+
+    @property
+    def expression(self):
+        """
+        :return: compiled regular expression matching a successful ping.
+        """
+        if self._expression is None:
+            expression = expressions.PING
+            self._expression = re.compile(expression)
+        return self._expression
+    
+    def run(self, target=None):
+        """
+        Executes a single ping, checks for a success, returns ping data if it succeeds.
+
+        :param:
+
+         - `target`: The host to ping.
+        
+        :return: PingData or None
+        :raise: ConfigurationError if the target is unknown
+        """
+        
+        if target is None:
+            target = self.target
+        else:
+            self._arguments = None
+            self.target = target
+
+        output, error = self.connection.ping(self.arguments, timeout=1)
+        for line in output:
+            self.logger.debug(line.rstrip(NEWLINE))
+            match = self.expression.search(line)
+            if match:
+                return PingData(match.group("ip_address"), match.group('rtt'))
+            if UNKNOWN_HOST in line:
+                raise ConfigurationError("Unknown Host: {0}".format(target))
+        err = error.readline()
+        if len(err):
+            self.logger.error(err)
+        return
+
+    def __call__(self, target, connection):
+        """
+        Executes a single ping, checks for a success, returns ping data if it succeeds.
+
+        :param:
+
+         - `target`: Address to ping
+         - `connection`: the connection to the originator of the ping
+        
+        :return: PingData or None
+        :raise: ConfigurationError if the target is unknown
+        """
+        self.operating_system = connection.operating_system
+        self.target = target
+        #import pudb; pudb.set_trace()
+        output, error = connection.ping(self.arguments, timeout=5)
+        for line in output:
+            self.logger.debug(line.rstrip(NEWLINE))
+            match = self.expression.search(line)
+            if match:
+                return PingData(match.group("ip_address"), match.group('rtt'))
+            if UNKNOWN_HOST in line:
+                raise ConfigurationError("Unknown Host: {0}".format(self.target))
+        err = error.readline()
+        if len(err):
+            self.logger.error(err)
+        return
+# end class Ping
+@
+
+Example Use::
+
+    ping = PingCommand('192.168.20.1')
+    print str(ping.run())
+
+    connection = SSHConnection('192.168.10.23', 'tester')
+    target = "192.168.30.1"
+    print str(ping(target, connection))
