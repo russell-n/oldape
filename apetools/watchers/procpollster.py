@@ -90,6 +90,7 @@ class BaseProcPollster(BasePollster):
         The main loop
         """
         if self.use_header:
+            self.logger.info("self.header")
             self.output.write(self.header)
         start = time()
         output, error = self.connection.cat(self.name)
