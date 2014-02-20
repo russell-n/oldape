@@ -1,0 +1,439 @@
+The ADB Connections
+===================
+
+
+An ADB connection sends commands to a local ADB Connection and interprets errors
+
+<<name='imports', echo=False>>=
+# python standard library
+import re
+from StringIO import StringIO
+
+# apetools Libraries
+from localconnection import LocalNixConnection
+from localconnection import OutputError
+from localconnection import EOF
+from apetools.commons import errors 
+from apetools.commons import readoutput 
+from apetools.commons import enumerations
+from sshconnection import SSHConnection 
+
+ConnectionError = errors.ConnectionError
+CommandError = errors.CommandError
+ConnectionWarning = errors.ConnectionWarning
+ValidatingOutput = readoutput.ValidatingOutput
+OperatingSystem = enumerations.OperatingSystem
+@
+
+<<name='constants', echo=False>>=
+# Error messages
+DEVICE_NOT_FOUND = "error: device not found"
+NOT_CONNECTED = "No Android Device Detected by ADB (USB) Connection"
+
+DEVICE_NOT_ROOTED = "adbd cannot run as root in production builds"
+NOT_ROOTED = "This Android device isn't rootable."
+NOT_FOUND = "device not found"
+@
+
+<<name="regular_expressions", echo=False>>=
+#regular expressions
+ALPHA = r'\w'
+ONE_OR_MORE = "+"
+ZERO_OR_MORE = "*"
+SPACE = r"\s"
+SPACES = SPACE + ONE_OR_MORE
+NAMED = "(?P<{n}>{p})"
+COMMAND_GROUP = "command"
+ANYTHING = r'.'
+EVERYTHING = ANYTHING + ZERO_OR_MORE
+@
+
+Errors
+------
+
+The ADBConnections raise two types of errors and a warning if predictable but incorrect behavior is detected.
+
+.. currentmodule:: apetools.connections.adbconnection
+.. autosummary::
+   :toctree: api
+
+   ADBConnectionError
+   ADBCommandError
+   ADBConnectionWarning
+
+.. uml::
+
+   ADBConnectionError -|> ConnectionError
+
+.. uml::   
+   ADBCommandError -|> CommandError
+
+.. uml::   
+   ADBConnectionWarning -|> ConnectionWarning
+   
+<<name='ADBConnectionError', echo=False>>=
+class ADBConnectionError(ConnectionError):
+    """
+    Raise if there is a problem with the ADB Connection
+    """
+# end class ADBConnectionError
+@
+
+<<name='ADBCommandError', echo=False>>=
+class ADBCommandError(CommandError):
+    """
+    Raise if there is a problem with an ADB command
+    """
+# end class ADBCommandError
+@
+
+<<name='ADBConnectionWarning', echo=False>>=
+class ADBConnectionWarning(ConnectionWarning):
+    """
+    A warning to raise if something non-fatal but bad happens
+    """
+# end class ADBConnectionWarning
+@
+
+.. _adb-connection:
+
+ADBConnection
+-------------
+
+Creates a local connection to the device over ADB. This differs from the :ref:`ADBShellConnection <adb-shell-connection>` in that it talks to the server, not to the shell on the device. It would be used, for instance, when pushing files to the device.
+
+.. autosummary::
+   :toctree: api
+
+   ADBConnection
+
+.. uml::
+
+   ADBConnection -|> LocalNixConnection
+   ADBConnection : serial_number
+
+<<name="ADBConnection", echo=False>>=
+class ADBConnection(LocalNixConnection):
+    """
+    An ADB Connection sends commands to the Android Debug Bridge
+    """
+    def __init__(self, serial_number=None,*args, **kwargs):
+        """
+        :param:
+
+         - `serial_number`: An optional serial number to specify the device.
+        """
+        super(ADBConnection, self).__init__(*args, **kwargs)
+        self._logger = None
+        self.command_prefix = "adb"
+        if serial_number is not None:
+            self.command_prefix += " -s " + serial_number
+        self._operating_system = None
+        return
+
+    @property
+    def operating_system(self):
+        """
+        :return: enumeration for android
+        """
+        if self._operating_system is None:
+            self._operating_system = OperatingSystem.android
+        return self._operating_system
+
+    def _rpc(self, command, arguments='', timeout=None):
+        """
+        Overrides the LocalConnection._rpc to check for errors
+        """
+        output = self._main(command, arguments, timeout)
+        return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), StringIO(EOF))
+
+
+    def check_errors(self, line):
+        """
+        This is here so that children can override it.
+        :param:
+
+         - `output`: OutputError tuple
+        """
+        self.check_base_errors(line)
+        return
+    
+    def check_base_errors(self, line):
+        """
+        :param:
+
+         - `line`: A string of output
+
+        :raise: ADBConnectionError if connection fails
+        :raise: ADBConnectionWarning if the Android isn't running as root
+        """
+        if DEVICE_NOT_FOUND in line:
+            self.logger.debug(line)
+            raise ConnectionError("The Android wasn't found: {0}".format(line))
+        elif DEVICE_NOT_ROOTED in line:
+            self.logger.debug(line)
+            raise ConnectionWarning("The Android isn't root: {0}".format(line))
+        return
+
+    def __str__(self):
+        if self.serial_number is not None:
+            return "ADBLocal: {0}".format(self.serial_number)
+        return "ADBLocal"
+# end class ADBConnection
+@
+
+.. _adb-blocking-connection
+
+ADBBlockingConnection
+---------------------
+
+This is the same as the :ref:`ADBConnection <adb-connection>` but will wait for the ADB server if it is not on-line yet. It was created for the somewhat obscure case where the device is rebooted.
+
+.. autosummary::
+   :toctree: api
+
+   ADBBlockingConnection
+
+.. uml::
+
+   ADBBlockingConnection -|> ADBConnection
+
+<<name="ADBBlockingConnection", echo=False>>=
+class ADBBlockingConnection(ADBConnection):
+    """
+    Like the ADBConnection but waits for a device to come online
+    """
+    def __init__(self, *args, **kwargs):
+        super(ADBBlockingConnection, self).__init__(*args, **kwargs)
+        self.command_prefix += " wait-for-device"
+        return
+# end class ADBConnection
+@
+
+ADBShellConnection
+------------------
+
+This creates a local connection to talk to the shell on an android over ADB.
+
+.. autosummary::
+   :toctree: api
+
+   ADBShellConnection
+
+.. uml::
+
+   ADBShellConnection -|> ADBConnection
+
+<<name='ADBShellConnection', echo=False>>=
+class ADBShellConnection(ADBConnection):
+    """
+    An ADBShellConnection connects to the adb shell.
+
+    If you use a timeout parameter on method calls, the output acts line-buffered.
+    If you leave the timeout as None, it acts file-buffered
+    """
+    def __init__(self, *args, **kwargs):
+        super(ADBShellConnection, self).__init__(*args, **kwargs)
+        self.command_prefix += " shell"
+        self._unknown_command = None
+        self._logger = None
+        return
+
+    @property
+    def unknown_command(self):
+        """
+        A regular expression to match unknown command errors.
+
+        Uses:
+
+           
+        :rtype: SRE_Pattern
+        :return: regex to match unknown_command error.
+        """
+        if self._unknown_command is None:
+            self._unknown_command = re.compile(SPACES.join([NAMED.format(n=COMMAND_GROUP, p=ALPHA + ONE_OR_MORE) + "/sh:",
+                                                            EVERYTHING, 'not', 'found']))
+        return self._unknown_command
+
+    def _procedure_call(self, command, arguments='', path='', timeout=None):
+        output = self._main(command, arguments, path, timeout)
+        return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors),
+                           output.error)
+    
+    def check_errors(self, line):
+        """
+        Checks the line to see if the line has an unknow command error
+        """
+        self.check_base_errors(line)
+        if self.unknown_command.search(line):
+            raise ConnectionError("Unknown ADB Shell Command: {0}".format(line))
+        return
+# end class ADBShellConnection
+@
+
+ADBShellBlockingConnection
+--------------------------
+
+This is like the :ref:`ADBBlockingConnection <adb-blocking-connection>` except that waits until the ADB server is online then issues commands to the shell.
+
+.. autosummary::
+   :toctree: api
+
+   ADBShellBlockingConnection
+
+.. uml::
+
+   ADBShellBlockingConnection -|> ADBShellConnection
+
+<<name='ADBShellBlockingConnection', echo=False>>=
+class ADBShellBlockingConnection(ADBShellConnection):
+    def __init__(self, *args, **kwargs):
+        super(ADBShellBlockingConnection, self).__init__(*args, **kwargs)
+        self.command_prefix = "adb wait-for-device shell"
+        self._unknown_command = None
+        return
+@
+
+ADBSSHConnection
+----------------
+
+Connects to the remote PC connected to the Android and issues ADB commands (this should be preferred to the :ref:`ADBConnection <adb-connection>`).
+
+.. autosummary::
+   :toctree: api
+
+.. uml::
+
+   ADBSSHConnection -|> SSHConnection
+   ADBSSHConnection : serial_number
+
+   
+<<name="ADBSSHConnection", echo=False>>=
+class ADBSSHConnection(SSHConnection):
+    """
+    An ADB Connection sends commands to the Android Debug Bridge
+    """
+    def __init__(self, serial_number=None,*args, **kwargs):
+        """
+        :param:
+
+         - `serial_number`: An optional serial number to specify the device.
+        """
+        super(ADBSSHConnection, self).__init__(*args, **kwargs)
+        self._logger = None
+        self.command_prefix = "adb"
+        if serial_number is not None:
+            self.command_prefix += " -s " + serial_number
+        self.operating_system = OperatingSystem.android
+        return
+
+    def _procedure_call(self, command, arguments="",
+                        timeout=10):
+        """
+        Overrides the SSHConnection._procedure_call to check for errors
+        """
+        command = self.add_path(command)
+        output = self._main(command, arguments, timeout)
+        return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), output.error)
+
+
+    def check_errors(self, line):
+        """
+        This is here so that children can override it.
+        :param:
+
+         - `line`: a line of output
+        """
+        self._check_errors(line)
+        return
+    
+    def _check_errors(self, line):
+        """
+        Checks connection-related errors
+
+        :raise: ADBConnectionError if the device isn't detected
+        :raise: ADBConnectionWarning if the device isn't rooted
+        """
+        if DEVICE_NOT_FOUND in line:
+            self.logger.error(line)
+            raise ADBConnectionError("Android Not Detected: {0}".format(line))
+        elif DEVICE_NOT_ROOTED in line:
+            self.logger.warning(line)
+            raise ADBConnectionWarning("Anroid Not Rooted: {0}".format(line))
+        return
+# end class ADBSSHConnection
+@
+
+ADBShellSSHConnection
+---------------------
+
+Issues ADB-shell commands to a remote PC (via SSH) which is connected to the Android via ADB. This should be preferred to :ref:`ADBShellConnection <adb-shell-connection>`.
+
+.. autosummary::
+   :toctree: api
+
+   ADBShellSSHConnection
+
+.. uml::
+
+   ADBShellSSHConnection -|> ADBSSHConnection
+
+<<name='ADBShellSSHConnection', echo=False>>=
+class ADBShellSSHConnection(ADBSSHConnection):
+    """
+    A class to talk to the shell, note the adb-server
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param: (see the ADBSSHConnection)
+        """
+        super(ADBShellSSHConnection, self).__init__(*args, **kwargs)
+        self.command_prefix += " shell "
+        self._unknown_command = None
+        return
+
+    @property
+    def unknown_command(self):
+        """
+        A regular expression to match unknown command errors.
+
+        Uses:
+
+           '\w+/sh: *.* *not *found'
+        
+        :rtype: SRE_Pattern
+        :return: regex to match unknown_command error.
+        """
+        if self._unknown_command is None:
+            self._unknown_command = re.compile(SPACES.join([NAMED.format(n=COMMAND_GROUP, p=ALPHA + ONE_OR_MORE) + "/sh:",
+                                                            EVERYTHING, 'not', 'found']))
+        return self._unknown_command
+
+
+    def check_errors(self, line):
+        """
+        :line: line of standard output
+
+        :raise: ADBCommandError if the command issued wasn't recognized
+        """
+        self._check_errors(line)
+        if self.unknown_command.search(line):
+            raise ADBCommandError(line)                                  
+        return
+# end class ADBSHellSSHConnection
+@
+
+A Usage Example
+---------------
+
+<<name='main'>>=
+if __name__ == "__main__":
+    from apetools.main import watcher
+    import sys
+    watcher()
+    adb = ADBShellSSHConnection(hostname="lancet", username="allion")
+    output, error= adb.iw('wlan0 link', timeout=1)
+    for line in output:
+        sys.stdout.write(line)
+    
+@
