@@ -119,9 +119,9 @@ class ArgumentParser(BaseClass):
 
         tester.set_defaults(function=self.strategerizer.test)
 
-        helper = self.subparsers.add_parser("help", help="Show more help")
-        helper.add_argument('topic', help="A specific subject to inquire about.", nargs="?")
-        helper.set_defaults(function=self.strategerizer.handle_help)
+        #helper = self.subparsers.add_parser("help", help="Show more help")
+        #helper.add_argument('topic', help="A specific subject to inquire about.", nargs="?")
+        #helper.set_defaults(function=self.strategerizer.handle_help)
         return
     
     def print_help(self):
