@@ -1,12 +1,10 @@
-"""
-A module to build nodes (devices) based on Operating System and connection type
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.devices.basedevice import BaseDeviceEnum
 from connectionbuilder import connection_builders
 from devicebuilder import device_builders
+from apetools.lexicographers.config_options import ConfigOptions
 
 
 class NodeBuilder(BaseClass):
@@ -15,6 +13,7 @@ class NodeBuilder(BaseClass):
     """
     def __init__(self, parameters, role=None):
         """
+        NodeBuilder Constructor
         :param:
 
          - `parameters`: object with attributes needed for device & connection
@@ -32,6 +31,8 @@ class NodeBuilder(BaseClass):
     @property
     def role(self):
         """
+        Sets the role to BaseDeviceEnum.node
+        
         :return: the device role
         """
         if self._role is None:
@@ -41,6 +42,8 @@ class NodeBuilder(BaseClass):
     @property
     def address(self):
         """
+        If parameters have a `test_address` field uses it
+         
         :return: the test-interface address (if given)
         """
         if self._address is None:
@@ -53,6 +56,8 @@ class NodeBuilder(BaseClass):
     @property
     def connection(self):
         """
+        Builds a connection to the node
+        
         :return: connection built to match parameter.connection
         """
         if self._connection is None:
@@ -62,19 +67,28 @@ class NodeBuilder(BaseClass):
     @property
     def interface(self):
         """
+        Sets the test interface using parameters.test_interface
+        
         :return: the name of the device's test_interface
+        :raises: ConfigurationError if test_interface & test_address not given
         """
         if self._interface is None:
             try:
                 self._interface = self.parameters.test_interface
             except AttributeError as error:
-                self.logger.error(error)
-                raise ConfigurationError("Missing the test-interface for {0}".format(self.parameters.connection.hostname))
+                self.logger.warning(error)
+                message = "Expected in Config-File: section `[{0}]`, option `{1}:<test interface>` (e.g. wlan0)"
+                self.logger.warning(message.format(ConfigOptions.nodes_section,
+                                                   ConfigOptions.test_interface_option))
+                if self.address is None:
+                    raise ConfigurationError("Missing the test-interface for {0}".format(self.parameters.connection.hostname))
         return self._interface
 
     @property
     def node(self):
         """
+        The Built Node
+        
         :return: device built to match parameter.operating_system
         """
         if self._node is None:
@@ -90,7 +104,6 @@ class NodeBuilderTypes(object):
     __slots__ = ()
     windows = "windows"
     linux = "linux"
+    android = 'android'
+    ios = 'ios'
 # end class NodeBuilderTypes
-
-#node_builders = {NodeBuilderTypes.windows:WindowsNodeBuilder}
-

@@ -1,6 +1,3 @@
-"""
-This module holds (a) class(es) to send lines to files.
-"""
 
 #python libraries
 import os
@@ -15,6 +12,7 @@ from apetools.baseclass import BaseClass
 #from assertions import assert_is
 from errors import StorageError
 
+
 WRITEABLE = 'w'
 APPEND = 'a'
 NEWLINE_ADD = '{l}\n'
@@ -23,9 +21,10 @@ NEWLINE = "\n"
 IPERF_TIMESTAMP = "%Y%m%d%H%M%S"
 FOLDER_TIMESTAMP = "%Y_%m_%d"
 
+
 class StorageOutput(BaseClass):
     """
-    A WriteOutput maintains an output file.
+    A StorageOutput maintains an output file.
     """
     def __init__(self, output_folder, timestamp_format=IPERF_TIMESTAMP, *args, **kwargs):
         """
@@ -54,7 +53,7 @@ class StorageOutput(BaseClass):
         """
         if self._path is None:
             if TIMESTAMP_FLAG in self.output_folder:
-                self.output_folder = self._timestamp(self.output_folder, FOLDER_TIMESTAMP)
+                self.output_folder = self.timestamp(self.output_folder, FOLDER_TIMESTAMP)
             if not os.path.isdir(self.output_folder):
                 os.makedirs(self.output_folder)
             self._path = self.output_folder
@@ -62,6 +61,8 @@ class StorageOutput(BaseClass):
 
     def extend_path(self, subdirectory):
         """
+        Extends the current path with the given sub-directory.
+        
         :param:
 
          - `subdirectory`: a path to add to the current path
@@ -77,6 +78,8 @@ class StorageOutput(BaseClass):
 
     def is_file(self, filename, subdir=None):
         """
+        Checks if the file exists within the known path
+        
         :param:
 
          - `filename`: The name of the file to open 
@@ -92,6 +95,8 @@ class StorageOutput(BaseClass):
 
     def get_full_path(self, filename):
         """
+        Returns the filename with the (relative) path 
+        
         :param:
 
          - `filename`: name of file
@@ -103,12 +108,34 @@ class StorageOutput(BaseClass):
     
     def open(self, filename, subdir=None, mode=WRITEABLE):
         """
+        Opens a writeable file using the stored path information 
+        
         :param:
 
          - `filename`: The name of the file to open 
          - `subdir`: A subdirectory whithin the output folder to put the file in.
          
         :return: A clone of this object with a new file opened.
+        """
+        self.filename = self.get_filename(filename, subdir, mode)
+        #self.logger.debug("Opening File: {0}".format(self.filename))
+        clone = copy.deepcopy(self)
+        clone.output_file = open(self.filename, mode)
+        return clone
+
+    def get_filename(self, filename, subdir=None, mode=WRITEABLE):
+        """
+        Builds a super-filename with the path and numbering
+
+         * This was broken out so that other file-related classes can use it
+
+        :param:
+
+         - `filename`: a filename around which to build the new name
+         - `subdir`: A sub-directory of self.path
+         - `mode`: file-mode (writeable or appendable)
+
+        :return: the path to the output file
         """
         filename, extension = os.path.splitext(filename)
         directory = self.path
@@ -117,16 +144,13 @@ class StorageOutput(BaseClass):
             if not os.path.isdir(directory):
                 os.makedirs(directory)
         if mode != APPEND:
-            filename = self._timestamp(filename)
+            filename = self.timestamp(filename)
             filename = self._fix_duplicate_names(filename, extension, subdir)
         filename += extension
-        self.filename = os.path.join(directory, filename)
-        #self.logger.debug("Opening File: {0}".format(self.filename))
-        clone = copy.deepcopy(self)
-        clone.output_file = open(self.filename, mode)
-        return clone
+        return os.path.join(directory, filename)
 
-    def _timestamp(self, name, timestamp_format=None):
+
+    def timestamp(self, name, timestamp_format=None):
         """
         Checks for a '{t}' in the string for a placeholder
         
@@ -157,6 +181,8 @@ class StorageOutput(BaseClass):
 
     def write(self, line):
         """
+        Write a line to the file
+        
         :param:
 
          - `line`: A string to send to the output_file
@@ -188,6 +214,8 @@ class StorageOutput(BaseClass):
 
     def writelines(self, lines):
         """
+        Write all the lines to the output file
+        
         :param:
 
          - `lines`: iterable of strings to send to the file
@@ -198,6 +226,8 @@ class StorageOutput(BaseClass):
 
     def copy(self, source, subdir=None):
         """
+        Copy the file to a subdirectory
+        
         :param:
 
          - `source`: The path to a file.
@@ -214,11 +244,15 @@ class StorageOutput(BaseClass):
         root, ext = os.path.splitext(filename)
         filename = self._fix_duplicate_names(root, ext) + ext
         target = os.path.join(directory, filename)
-        shutil.copy(source, target)
+        try:
+            shutil.copy(source, target)
+        except IOError as error:
+            self.logger.error(error)
         return
 
     def move(self, source, subdir=None):
         """
+        Move the file to a subdirectory.
         :param:
 
          - `source`: The path to a file or directory to move to the output folder.
@@ -233,11 +267,15 @@ class StorageOutput(BaseClass):
         root, ext = os.path.splitext(filename)
         filename = self._fix_duplicate_names(root, ext) + ext
         target = os.path.join(directory, filename)
-        shutil.move(source, target)
+        try:
+            shutil.move(source, target)
+        except IOError as error:
+            self.logger.error(error)
         return
 
     def close(self):
         """
+        Close the output filen
         :postcondition:
 
          - self.output_file is flushed
@@ -254,6 +292,8 @@ class StorageOutput(BaseClass):
 
     def __del__(self):
         """
+        Destructor
+        
         :postcondition: self.close called
         """
         self.close()

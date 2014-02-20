@@ -15,7 +15,7 @@
 A module for watchers of kmsg logs.
 """
 
-from apetools.baseclass import BaseClass
+from apetools.baseclass import BaseThreadClass
 from apetools.commons.errors import CommandError
 from apetools.threads import threads
 from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
@@ -28,7 +28,7 @@ class LogWatcherError(CommandError):
 # end class LogWatcherError
 
 
-class LogWatcher(BaseClass):
+class LogWatcher(BaseThreadClass):
     """
     A LogWatcher watches a log.
 
@@ -127,8 +127,8 @@ class LogWatcher(BaseClass):
         if connection is None:
             raise LogWatcherError("Connection not given")
         
-        self.thread =  threads.Thread(target=self.run, args=(connection,),
-                                      name="LogWatcher {0}".format(self.arguments))
+        self.thread =  threads.Thread(target=self.run_thread, args=(connection,),
+                                      name="LogWatcher {0}".format(self.arguments))        
         return self.thread
 
     def __str__(self):

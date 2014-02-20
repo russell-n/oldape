@@ -33,12 +33,13 @@ class IperfServerParameters(IperfCommonTcpParameters):
     @daemon.setter
     def daemon(self, set_daemon):
         """
+        Daemon setter (anything other than None, 0 or False will set the flag)
         :param:
 
          - `set_daemon`: Boolean which if True sets daemon flag
         """
-        if type(set_daemon) is not BooleanType:
-            raise ConfigurationError("set_daemon must be Boolean, not {0}".format(set_daemon))
+        #if type(set_daemon) is not BooleanType:
+        #    raise ConfigurationError("set_daemon must be Boolean, not {0}".format(set_daemon))
         if set_daemon:
             self._daemon = "--daemon"
         return

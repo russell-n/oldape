@@ -1,8 +1,5 @@
-"""
-An ADB connection sends commands to a local ADB Connection and
-interprets errors
-"""
-# python Libraries
+
+# python standard library
 import re
 from StringIO import StringIO
 
@@ -21,6 +18,7 @@ ConnectionWarning = errors.ConnectionWarning
 ValidatingOutput = readoutput.ValidatingOutput
 OperatingSystem = enumerations.OperatingSystem
 
+
 # Error messages
 DEVICE_NOT_FOUND = "error: device not found"
 NOT_CONNECTED = "No Android Device Detected by ADB (USB) Connection"
@@ -29,12 +27,25 @@ DEVICE_NOT_ROOTED = "adbd cannot run as root in production builds"
 NOT_ROOTED = "This Android device isn't rootable."
 NOT_FOUND = "device not found"
 
-# errors
+
+#regular expressions
+ALPHA = r'\w'
+ONE_OR_MORE = "+"
+ZERO_OR_MORE = "*"
+SPACE = r"\s"
+SPACES = SPACE + ONE_OR_MORE
+NAMED = "(?P<{n}>{p})"
+COMMAND_GROUP = "command"
+ANYTHING = r'.'
+EVERYTHING = ANYTHING + ZERO_OR_MORE
+
+
 class ADBConnectionError(ConnectionError):
     """
     Raise if there is a problem with the ADB Connection
     """
 # end class ADBConnectionError
+
 
 class ADBCommandError(CommandError):
     """
@@ -48,17 +59,7 @@ class ADBConnectionWarning(ConnectionWarning):
     A warning to raise if something non-fatal but bad happens
     """
 # end class ADBConnectionWarning
-    
-#regular expressions
-ALPHA = r'\w'
-ONE_OR_MORE = "+"
-ZERO_OR_MORE = "*"
-SPACE = r"\s"
-SPACES = SPACE + ONE_OR_MORE
-NAMED = "(?P<{n}>{p})"
-COMMAND_GROUP = "command"
-ANYTHING = r'.'
-EVERYTHING = ANYTHING + ZERO_OR_MORE
+
 
 class ADBConnection(LocalNixConnection):
     """
@@ -110,6 +111,9 @@ class ADBConnection(LocalNixConnection):
         :param:
 
          - `line`: A string of output
+
+        :raise: ADBConnectionError if connection fails
+        :raise: ADBConnectionWarning if the Android isn't running as root
         """
         if DEVICE_NOT_FOUND in line:
             self.logger.debug(line)
@@ -125,6 +129,7 @@ class ADBConnection(LocalNixConnection):
         return "ADBLocal"
 # end class ADBConnection
 
+
 class ADBBlockingConnection(ADBConnection):
     """
     Like the ADBConnection but waits for a device to come online
@@ -134,6 +139,7 @@ class ADBBlockingConnection(ADBConnection):
         self.command_prefix += " wait-for-device"
         return
 # end class ADBConnection
+
 
 class ADBShellConnection(ADBConnection):
     """
@@ -152,11 +158,16 @@ class ADBShellConnection(ADBConnection):
     @property
     def unknown_command(self):
         """
+        A regular expression to match unknown command errors.
+
+        Uses:
+
+           
         :rtype: SRE_Pattern
         :return: regex to match unknown_command error.
         """
         if self._unknown_command is None:
-            self._unknown_command = re.compile(SPACES.join([NAMED.format(n=COMMAND_GROUP, p=ALPHA + ONE_OR_MORE) + ":",
+            self._unknown_command = re.compile(SPACES.join([NAMED.format(n=COMMAND_GROUP, p=ALPHA + ONE_OR_MORE) + "/sh:",
                                                             EVERYTHING, 'not', 'found']))
         return self._unknown_command
 
@@ -166,22 +177,15 @@ class ADBShellConnection(ADBConnection):
                            output.error)
     
     def check_errors(self, line):
+        """
+        Checks the line to see if the line has an unknow command error
+        """
         self.check_base_errors(line)
-        if line.endswith(NOT_FOUND):
+        if self.unknown_command.search(line):
             raise ConnectionError("Unknown ADB Shell Command: {0}".format(line))
         return
-
-    #def __del__(self):
-    #    """
-    #    :postcondition: kill called on all adb shell processes
-    #    """
-    #    kill = killall.KillAll(self, name=self.command_prefix,
-    #                             operating_system=enumerations.OperatingSystem.android)
-    #    kill)(
-    #    return
-        
-        
 # end class ADBShellConnection
+
 
 class ADBShellBlockingConnection(ADBShellConnection):
     def __init__(self, *args, **kwargs):
@@ -189,6 +193,7 @@ class ADBShellBlockingConnection(ADBShellConnection):
         self.command_prefix = "adb wait-for-device shell"
         self._unknown_command = None
         return
+
 
 class ADBSSHConnection(SSHConnection):
     """
@@ -209,11 +214,12 @@ class ADBSSHConnection(SSHConnection):
         return
 
     def _procedure_call(self, command, arguments="",
-                        path='', timeout=10):
+                        timeout=10):
         """
         Overrides the SSHConnection._procedure_call to check for errors
         """
-        output = self._main(command, arguments, path, timeout)
+        command = self.add_path(command)
+        output = self._main(command, arguments, timeout)
         return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), output.error)
 
 
@@ -231,8 +237,8 @@ class ADBSSHConnection(SSHConnection):
         """
         Checks connection-related errors
 
-        :raise: ConnectionError if the device isn't detected
-        :raise: ConnectionWarning if the device isn't rooted
+        :raise: ADBConnectionError if the device isn't detected
+        :raise: ADBConnectionWarning if the device isn't rooted
         """
         if DEVICE_NOT_FOUND in line:
             self.logger.error(line)
@@ -243,17 +249,43 @@ class ADBSSHConnection(SSHConnection):
         return
 # end class ADBSSHConnection
 
+
 class ADBShellSSHConnection(ADBSSHConnection):
     """
     A class to talk to the shell, note the adb-server
     """
     def __init__(self, *args, **kwargs):
         """
-        :param: (see the ADBSSHConnection)
+        :param:
+
+         - `serial_number`: id to distinguish bewtween multiple devices (case-sensitive)
+         - `hostname`: Address of ssh server
+         - `username`: login username
+         - `port`: ssh port (default=22)
+         - `timeout`: seconds to try to connect
         """
         super(ADBShellSSHConnection, self).__init__(*args, **kwargs)
         self.command_prefix += " shell "
+        self._unknown_command = None
         return
+
+    @property
+    def unknown_command(self):
+        """
+        A regular expression to match unknown command errors.
+
+        Uses:
+
+           '\w+/sh: *.* *not *found'
+        
+        :rtype: SRE_Pattern
+        :return: regex to match unknown_command error.
+        """
+        if self._unknown_command is None:
+            self._unknown_command = re.compile(SPACES.join([NAMED.format(n=COMMAND_GROUP, p=ALPHA + ONE_OR_MORE) + "/sh:",
+                                                            EVERYTHING, 'not', 'found']))
+        return self._unknown_command
+
 
     def check_errors(self, line):
         """
@@ -262,11 +294,12 @@ class ADBShellSSHConnection(ADBSSHConnection):
         :raise: ADBCommandError if the command issued wasn't recognized
         """
         self._check_errors(line)
-        if line.rstrip().endswith(NOT_FOUND):
+        if self.unknown_command.search(line):
             raise ADBCommandError(line)                                  
         return
 # end class ADBSHellSSHConnection
-    
+
+
 if __name__ == "__main__":
     from apetools.main import watcher
     import sys

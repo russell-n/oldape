@@ -1,7 +1,11 @@
 """
 A module to extract information from iwconfig
 """
+#python standard library
 import re
+import os
+
+#third-party
 from apetools.parsers import oatbran
 from apetools.commons.errors import CommandError
 
@@ -10,6 +14,8 @@ class IwconfigEnums(object):
     ssid = "ssid"
     bssid = "bssid"
     rssi = "rssi"
+    noise = 'noise'
+    bitrate = 'bitrate'
 # end class IwconfigEnums
 
     
@@ -34,7 +40,43 @@ class Iwconfig(object):
         self._bssid_expression = None
         self._rssi = None
         self._rssi_expression = None
+        self._noise_expression = None
+        self._bitrate = None
+        self._bitrate_expression = None
+        self._noise = None
         return
+
+    @property
+    def bitrate_expression(self):
+        if self._bitrate_expression is None:
+            self._bitrate_expression = re.compile("Bit" + oatbran.SPACES + 
+                                                  "Rate" + oatbran.OPTIONAL_SPACES + r'(:|=)' +
+                                                  oatbran.OPTIONAL_SPACES + 
+                                                  oatbran.NAMED(n=IwconfigEnums.bitrate,
+                                                                e=oatbran.INTEGER + oatbran.EVERYTHING + 'b/s') +
+                                                  oatbran.SPACES)
+        return self._bitrate_expression
+
+    @property
+    def bitrate(self):
+        return self.search(self.bitrate_expression, IwconfigEnums.bitrate)
+
+
+
+    @property
+    def noise_expression(self):
+        if self._noise_expression is None:
+            self._noise_expression = re.compile("Noise" + oatbran.SPACES + 
+                                               "level" + oatbran.OPTIONAL_SPACES + '=' +
+                                               oatbran.OPTIONAL_SPACES + 
+                                               oatbran.NAMED(n=IwconfigEnums.noise,
+                                                             e='-' + oatbran.INTEGER)+
+                                               oatbran.SPACES + 'dBm')
+        return self._noise_expression
+
+    @property
+    def noise(self):
+        return self.search(self.noise_expression, IwconfigEnums.noise)
 
     @property
     def rssi_expression(self):
@@ -89,6 +131,9 @@ class Iwconfig(object):
         """
         return self.search(self.ssid_expression, IwconfigEnums.ssid)
 
+    def output(self):
+        return self.connection.iwconfig(self.interface)                    
+
     def search(self, expression, name):
         """
         :param:
@@ -98,7 +143,7 @@ class Iwconfig(object):
 
         :return: matched sub-string or not_available
         """
-        output = self.connection.iwconfig(self.interface)
+        output = self.output()
         for line in output.output:
             match = expression.search(line)
             if match:

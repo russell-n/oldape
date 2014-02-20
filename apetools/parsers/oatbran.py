@@ -29,6 +29,7 @@ def NOT_PRECEDED_BY(e):
 ONE_OR_MORE = "+"
 ZERO_OR_MORE = '*'
 ZERO_OR_ONE = "?"
+EXACTLY = "{{{0}}}"
 
 def M_TO_N(m, n, e):
     """
@@ -70,7 +71,8 @@ def STRING_BOUNDARY(e):
 # string help
 STRING_START = "^"
 STRING_END = "$"
-ALPHA_NUMS = r"\w"
+ALPHA_NUM = r"\w"
+ALPHA_NUMS = ALPHA_NUM + ONE_OR_MORE
 
 #anything and everything
 ANYTHING = r"."
@@ -89,15 +91,17 @@ INTEGER = NOT_PRECEDED_BY(DECIMAL_POINT) +  "-" + ZERO_OR_ONE + NATURAL + NOT_FO
 
 FLOAT = "-" + ZERO_OR_ONE + NATURAL + DECIMAL_POINT + NATURAL
 REAL = GROUP(FLOAT + OR + INTEGER)
+HEX = CLASS(string.hexdigits)
+HEXADECIMALS = HEX + ONE_OR_MORE
 
 SPACE = r"\s"
 SPACES = SPACE + ONE_OR_MORE
+NOT_SPACE = r'\S'
+NOT_SPACES = NOT_SPACE + ONE_OR_MORE
 OPTIONAL_SPACES = SPACE + ZERO_OR_MORE
 
-ANYTHING_BOUNDED_BY_SPACES = WORD_BOUNDARY(EVERYTHING)
 # common constants
 DASH = "-"
-COLON = ":"
 LETTER = CLASS(e=string.ascii_letters)
 LETTERS = LETTER + ONE_OR_MORE
 OPTIONAL_LETTERS = LETTER + ZERO_OR_MORE
@@ -109,5 +113,9 @@ OCTET = GROUP(e=OR.join([SINGLE_DIGIT, TWO_DIGITS, ONE_HUNDREDS,
                          WORD_BOUNDARY("2[0-4][0-9]"), WORD_BOUNDARY("25[0-5]")]))
 
 IP_ADDRESS = DOT.join([OCTET] * 4)
-HEX_PAIR = CLASS(e=string.hexdigits) * 2
-MAC_ADDRESS = COLON.join([HEX_PAIR] * 6)
+
+# from commons.expressions
+MAC_ADDRESS_NAME = "mac_address"
+HEX_PAIR = HEX + EXACTLY.format(2)
+MAC_ADDRESS = NAMED(n=MAC_ADDRESS_NAME,
+                    e=":".join([HEX_PAIR] * 6))

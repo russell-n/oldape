@@ -1,12 +1,4 @@
-"""
-A module to hold iperf parameter classes
 
-Names of parameters match the long-options given to iperf :
-
-    e.g. --port becomes IperfCommonParameters.port
-
-and the doc-strings cross-reference them as the short form (-p)
-"""
 #python
 import re
 from types import BooleanType
@@ -16,9 +8,8 @@ from apetools.baseclass import BaseClass
 from apetools.commons import errors
 from apetools.commons import expressions
 
-
-
 ConfigurationError = errors.ConfigurationError
+
 
 SPACE = ' '
 UNDERSCORE = "_"
@@ -32,6 +23,7 @@ VALID_OUTPUT = expressions.NOT_SPACE + expressions.ONE_OR_MORE + expressions.WOR
 VALID_EXCLUDES = expressions.CLASS.format("CDMSV") + expressions.ONE_OR_MORE + expressions.WORD_ENDING
 VALID_REPORT_STYLES = "cC"
 
+
 class IperfParametersEnum(object):
     """
     A holder for Iperf Parameter Constants
@@ -40,6 +32,7 @@ class IperfParametersEnum(object):
     udp = "udp"
     tcp = "tcp"
 # end class IperfParametersEnum
+
 
 class IperfCommonParameters(BaseClass):
     """
@@ -61,7 +54,8 @@ class IperfCommonParameters(BaseClass):
         self._reportstyle = None
         self._parameter_names = None
         self._parallel = None        
-        self._block_attributes = True
+        self._path = None
+        self._block_attributes = True        
         return
 
     @property
@@ -84,6 +78,25 @@ class IperfCommonParameters(BaseClass):
             self.logger.error(error)
             raise ConfigurationError("Thread count must be an integer, not {0}".format(thread_count))
         self._parallel = "--parallel {0}".format(thread_count)
+        return
+
+    @property
+    def path(self):
+        """
+        :return: the path to the iperf executable or None
+        """
+        return self._path
+
+    @path.setter
+    def path(self, path):
+        """
+        :param:
+
+         - `path`: fully-qualified path to add to the iperf command
+
+        :postcondition: self._path = path
+        """
+        self._path = path
         return
 
     @property
@@ -309,9 +322,18 @@ class IperfCommonParameters(BaseClass):
         """
         :return: string of set flags in alphabetical order (of the flags, not the values)
         """
-        non_parameters = ("_block_attributes" , "_logger", "_parameter_names")
-        keys = (key for key in sorted(self.__dict__.keys()) if key not in non_parameters)
-        values = (getattr(self, key.lstrip(UNDERSCORE)) for key in keys)
+        #import pudb;pudb.set_trace()
+        non_parameters = ("_block_attributes" , "_logger", 
+                                    "_parameter_names", '_path')
+        
+        keys = [key for key in sorted(self.__dict__.keys()) if key not in non_parameters]
+            # temporary fix for --bandwidth problem
+            #import pudb;pudb.set_trace()
+        if '_client' in keys:
+            keys.remove('_client')
+            values = [self.client] + [getattr(self, key.lstrip(UNDERSCORE)) for key in keys]
+        else:
+            values = [getattr(self, key.lstrip(UNDERSCORE)) for key in keys]
         filtered_values = (value for value in values if value is not None)
         return SPACE.join(filtered_values)
 
@@ -324,3 +346,10 @@ class IperfCommonParameters(BaseClass):
         super(IperfCommonParameters, self).__setattr__(key, value)
         return
 # end class IperfCommonParameters
+
+
+class IperfExtraParameters(object):
+    __slots__ = ()
+    directions = 'directions'
+    protocol = 'protocol'
+    parameters = [directions, protocol]

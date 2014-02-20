@@ -21,7 +21,7 @@ import re
 
 
 # apetools
-from apetools.baseclass import BaseClass
+from apetools.baseclass import BaseThreadClass
 from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
 from apetools.threads.threads import Thread
 
@@ -30,7 +30,7 @@ CSV_JOIN = "{0},{1}"
 ZERO = 0
 
 
-class BasePollster(BaseClass):
+class BasePollster(BaseThreadClass):
     """
     An abstract class to base Device-Pollsters on.
     """
@@ -50,7 +50,7 @@ class BasePollster(BaseClass):
          - `use_header`: If True, prepend header to output
         """
         super(BasePollster, self).__init__()
-        self._logger = None        
+        self._logger = None
         self.device = device
         self.output = output
         self._expression = expression
@@ -91,7 +91,7 @@ class BasePollster(BaseClass):
         :return: a compiled regular expression to match the output
         """
         if self._regex is None:
-            self._regex = re.compile(self.expression)        
+            self._regex = re.compile(self.expression)
         return self._regex
 
     @abstractmethod
@@ -105,7 +105,7 @@ class BasePollster(BaseClass):
         """
         :postcondition: self.thread contains the run() thread
         """
-        self.thread = Thread(target=self.run, name=self.name)
+        self.thread = Thread(target=self.run_thread, name=self.name)
         return
 
     def __call__(self):
@@ -113,5 +113,12 @@ class BasePollster(BaseClass):
         A pass-through to start
         """
         self.start()
+        return
+
+    def __del__(self):
+        """
+        :postcondition: output file is closed
+        """
+        self.output.close()
         return
 # end class BasePollster

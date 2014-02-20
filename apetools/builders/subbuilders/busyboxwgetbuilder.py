@@ -1,90 +1,123 @@
 """
-A module to build a BusyboxWget object.
+A builder of busybox wget sessions
 """
-# python libraries
-from collections import namedtuple
 
-# apetools modules
-from basetoolbuilder import BaseToolBuilder, Parameters
 from apetools.lexicographers.config_options import ConfigOptions
-from connectionbuilder import connection_builders, ConnectionBuilderTypes, SSHParameters
-from apetools.commands.busyboxwget import BusyboxWget
+from apetools.tools.wgetsession import BusyboxWgetSession
+from apetools.commons.errors import ConfigurationError
 
-COLON = ":"
+from basetoolbuilder import BaseToolBuilder, Parameters
+from builderenums import BuilderParameterEnums
 
-class RotateBuilderEnums(object):
+class WgetSessionBuilderError(ConfigurationError):
     """
-    A holder of Rotate constants
+    An error to raise if the config file has an error
     """
-    __slots__ = ()
-    angle_velocity = 'angle_velocity'
-# end class RotateBuilderEnums
+# end class WgetSessionBuilderError
 
-class BusyboxWgetParameters(namedtuple("BusyboxWgetParameters", "target timeout output".split())):
-    __slots__ = ()
 
-    def __str__(self):
-        return "angle: {0} velocity: {1} clockwise: {2}".format(self.target, self.timeout,
-                                                                self.output)
-# end class RotateParameters
-                           
-    
 class BusyboxWgetBuilder(BaseToolBuilder):
     """
-    A Busybox Wget builder
+    A class to build a wget session
     """
     def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `master`: The Master Builder
+         - `config_map`: a pre-loaded configuration map
+        """
         super(BusyboxWgetBuilder, self).__init__(*args, **kwargs)
-        self._target = None
-        self._timeout = None
-        self._output = None
+        self._url = None
         self._connection = None
+        self._storage = None
+        self._repetitions = None
+        self._data_file = None
+        self._max_time = None
         return
 
     @property
-    def parameters(self):
-        if self._parameters is None:
-            self.previous_parameters.append(None)
-            self._parameters = self.previous_parameters
-        return self._parameters
-         
-    @property
-    def target(self):
-        if self._target is None:
-            self._target = self.config_map.get(ConfigOptions.busyboxwget_section,
-                                               ConfigOptions.target_option)
-        return self._target
+    def data_file(self):
+        """
+        :return: the filename given by the user
+        """
+        if self._data_file is None:
+            self._data_file = self.config_map.get(ConfigOptions.busyboxwget_section,
+                                                  ConfigOptions.data_file_option,
+                                                  default=None,
+                                                  optional=True)
+        return self._data_file
 
     @property
-    def timeout(self):
-        if self._timeout is None:
-            self._timeout = self.config_map.get(ConfigOptions.busyboxwget_section,
-                                                ConfigOptions.timeout_option,
-                                                optional=True,
-                                                default=2)
-        return self._timeout
+    def url(self):
+        """
+        The URL of the http (or ftp) server and file
+        
+        :return: URL
+        """
+        if self._url is None:
+            self._url = self.config_map.get(ConfigOptions.busyboxwget_section,
+                                            ConfigOptions.url_option)
+        return self._url
 
     @property
-    def output(self):
-        if self._output is None:
-            self._output = self.config_map.get(ConfigOptions.busyboxwget_section,
-                                               ConfigOptions.output_option,
-                                               optional=True,
-                                               default='/dev/null')
-        return self._output
+    def connection(self):
+        """
+        This is a hack that ignores the possibility of multiple nodes
+        
+        :return: connection to the device to run wget on
+        """
+        if self._connection is None:
+            self._connection = self.master.nodes.values()[0].connection
+        return self._connection
 
+    @property
+    def storage(self):
+        """
+        Storage to send output to
+        """
+        if self._storage is None:
+            self._storage = self.master.storage
+        return self._storage
+
+    @property
+    def repetitions(self):
+        if self._repetitions is None:
+            self._repetitions = self.config_map.get_int(ConfigOptions.busyboxwget_section,
+                                                        ConfigOptions.repetitions_option,
+                                                        default=None,
+                                                        optional=True)
+        return self._repetitions
+
+    @property
+    def max_time(self):
+        if self._max_time is None:
+            self._max_time = self.config_map.get_time(ConfigOptions.busyboxwget_section,
+                                                      ConfigOptions.time_option,
+                default=None,
+                optional=True)
+        return self._max_time   
+    
     @property
     def product(self):
         """
-        :return: a busybox wget
+        :return: An Iperf Session
         """
         if self._product is None:
-            self._product = BusyboxWget(connection=self.connection,
-                                        target=self.target,
-                                        timeout=self.timeout,
-                                        output=self.output)
+            self._product = BusyboxWgetSession(url=self.url,
+                                               connection=self.connection,
+                                               storage=self.master.storage,
+                                               data_file=self.data_file,
+                                               repetitions=self.repetitions,
+                                               max_time=self.max_time)
         return self._product
 
-
-# end class RotateBuilder
-    
+    @property
+    def parameters(self):
+        """
+        :return: list of namedtuples
+        """
+        if self._parameters is None:
+            self._parameters = self.previous_parameters
+        return self._parameters
+# end class BusyboxWgetSessionBuilder

@@ -4,8 +4,8 @@ A Watcher builder
 
 #apetools
 from basetoolbuilder import BaseToolBuilder
-from logwatcherbuilders import LogcatWatcherBuilder, LogWatcherBuilder
-from pollerbuilders import RssiPollerBuilder, DevicePollerBuilder, ProcnetdevPollsterBuilder
+from logwatcherbuilders import LogcatWatcherBuilder, LogWatcherBuilder, LogFollowerBuilder, PingWatcherBuilder
+from pollerbuilders import RssiPollerBuilder, DevicePollerBuilder, ProcnetdevPollsterBuilder, CpuPollsterBuilder
 from fileexpressionbuilders import BatteryWatcherBuilder
 from apetools.watchers import thewatcher
 
@@ -16,21 +16,27 @@ class WatcherTypes(object):
     The names of the valid watcher types
     """
     __slots__ = ()
+    logfollow = 'logfollow'
     logcat = "logcat"
     adblogcat = 'adblogcat'
     rssi = "rssi"
     device = 'device'
     procnetdev = 'procnetdev'
     battery = 'battery'
+    cpu = 'cpu'
+    pingwatcher = 'pingwatcher'
 # end class WatcherTypes
 
-    
+
 watcher_builder = {WatcherTypes.adblogcat:LogcatWatcherBuilder,
                    WatcherTypes.logcat:LogWatcherBuilder,
                    WatcherTypes.rssi:RssiPollerBuilder,
                    WatcherTypes.device:DevicePollerBuilder,
                    WatcherTypes.procnetdev:ProcnetdevPollsterBuilder,
-                   WatcherTypes.battery:BatteryWatcherBuilder}
+                   WatcherTypes.battery:BatteryWatcherBuilder,
+                   WatcherTypes.cpu:CpuPollsterBuilder,
+                   WatcherTypes.logfollow:LogFollowerBuilder,
+                   WatcherTypes.pingwatcher:PingWatcherBuilder}
 
 class WatcherBuilder(BaseToolBuilder):
     """
@@ -52,7 +58,7 @@ class WatcherBuilder(BaseToolBuilder):
     @property
     def watcher_ids(self):
         """
-        :return: list of options from the Watch Log config section 
+        :return: list of options from the Watch Log config section
         """
         if self._watcher_ids is None:
             self._watcher_ids = self.config_map.options(ConfigOptions.watchlogs_section)
@@ -61,7 +67,7 @@ class WatcherBuilder(BaseToolBuilder):
     @property
     def watchers(self):
         """
-        :rtype: ListType 
+        :rtype: ListType
         :return: A list of watchers
         """
         if self._watchers is None:
@@ -86,7 +92,7 @@ class WatcherBuilder(BaseToolBuilder):
     def product(self):
         """
         :rtype: TheWatcher
-        :return: A master watcher 
+        :return: A master watcher
         """
         if self._product is None:
             self._product = thewatcher.TheWatcher(watchers=self.watchers)

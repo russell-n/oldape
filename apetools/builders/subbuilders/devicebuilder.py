@@ -6,7 +6,7 @@ This is a module to hold device builders.
 """
 
 from basedevicebuilder import BaseDeviceBuilder
-from apetools.devices import adbdevice, windowsdevice, linuxdevice
+from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice, iosdevice
 
 
 class WindowsDeviceBuilder(BaseDeviceBuilder):
@@ -97,13 +97,82 @@ class AndroidDeviceBuilder(BaseDeviceBuilder):
         return self._device
 # end class DutDeviceBuilder
 
+class MacDeviceBuilder(BaseDeviceBuilder):
+    """
+    A Device Builder builds mac os devices
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `connection`: a connection to the device
+         - `role`: some kind of identifier (e.g. node)
+         - `interface`: the name of the test interface
+         - `address`: hostname of the test interface
+        """
+        super(MacDeviceBuilder, self).__init__(*args, **kwargs)
+        return
+
+    @property
+    def device(self):
+        """
+        :return: A device for the dut
+        """
+        if self._device is None:
+            self.logger.debug("building the Mac os device for the DUT")
+            self._device = macdevice.MacDevice(connection=self.connection,
+                                               interface=self.interface,
+                                               address=self.address,
+                                               role=self.role,
+                                               csv=self.csv)
+        return self._device
+# end class MacDeviceBuilder
+
+class IosDeviceBuilder(BaseDeviceBuilder):
+    """
+    A Device Builder builds ios devices
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `connection`: a connection to the device
+         - `role`: some kind of identifier (e.g. node)
+         - `interface`: the name of the test interface
+         - `address`: hostname of the test interface
+        """
+        super(IosDeviceBuilder, self).__init__(*args, **kwargs)
+        return
+
+    @property
+    def device(self):
+        """
+        :return: A device for the dut
+        """
+        if self._device is None:
+            self.logger.debug("building the IOS device for the DUT")
+            self._device = iosdevice.IosDevice(connection=self.connection,
+                                               interface=self.interface,
+                                               address=self.address,
+                                               role=self.role,
+                                               csv=self.csv)
+        return self._device
+# end class MacDeviceBuilder
+
+
 class DeviceBuilderTypes(object):
     __slots__ = ()
     windows = "windows"
     linux = "linux"
     android = "android"
+    mac = 'mac'
+    osx = 'mac'
+    macintosh = 'mac'
+    ios = 'ios'
 # end class DeviceBuilderTypes
 
 device_builders = {DeviceBuilderTypes.windows:WindowsDeviceBuilder,
                    DeviceBuilderTypes.linux:LinuxDeviceBuilder,
-                   DeviceBuilderTypes.android:AndroidDeviceBuilder}
+                   DeviceBuilderTypes.android:AndroidDeviceBuilder,
+                   DeviceBuilderTypes.mac:MacDeviceBuilder,
+                   DeviceBuilderTypes.ios:IosDeviceBuilder}

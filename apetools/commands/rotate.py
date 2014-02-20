@@ -1,20 +1,32 @@
 """
 A command-line interface to run the rotate command remotely.
 """
+#python standard library
+import time
 
+# apetools
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.commons.errors import CommandError
+from apetools.tools.killall import KillAll
+
+
+class RotateError(CommandError):
+    """
+    An error in the rotation
+    """
+# end class RotateError
+
 
 class RotateCommand(BaseClass):
     """
-    A class to issue a remote 
+    A class to issue a remote
     """
     def __init__(self, connection, retries=2):
         """
         :param:
 
-         - `connection`: A connection to the controller of the rate-table (rotator)
+         - `connection`: connection to rate-table (rotator) control
          - `retries`: The number of times to retry
         """
         super(RotateCommand, self).__init__()
@@ -28,16 +40,45 @@ class RotateCommand(BaseClass):
 
          - `parameters`: namedtuple with parameters.angle_velocity.parameters
         """
-        angle, velocity = parameters.angle_velocity.parameters
+        angle, velocity, clockwise = parameters.angle_velocity.parameters
         arguments = "{0} --velocity {1}".format(angle, velocity)
-        stdout, stderr = self.connection.rotate(arguments)
+        if clockwise:
+            arguments += " --clockwise"
+        self.logger.info("Rotating: {0}".format(arguments))
+        stdout, stderr = self.connection.rotate(arguments, timeout=4)
+        try:
+            timeout = parameters.timeout
+        except AttributeError:
+            self.logger.debug("Using default 2 minute timeout")
+            timeout = 120
+        end_time = time.time() + 120
+        eof = False
         for line in stdout:
-            self.logger.debug(line)
-        for line in stderr:
-            if len(line) > 1:
-                self.logger.error(line)
-            if "Requested position is out of range." in line:
-                raise ConfigurationError("Requested rotation angle of {0} is out of range".format(parameters.angles.parameters))
+            self.logger.debug("rotate stdout: {0}".format(line))
+            if 'Setting the table angle' in line:
+                self.logger.info(line)
+            elif 'Table Angle:' in line:
+                self.logger.info(line.rstrip())
+            elif 'Rotate Main Ending' in line:
+                self.logger.debug("End of program detected, no end of file reached.")
+                eof = True
+                break
+            else:
+                self.logger.debug(line)
+            if time.time() > end_time:
+                message = "Rotation exceeded timeout ({0})"
+                self.kill()
+                raise RotateError(message.format(timeout))
+        self.logger.debug("Finished with rotation Standard out.")
+        if eof:
+            self.logger.debug("Checking rotation Standard error")
+            for line in stderr:            
+                if len(line) > 1:
+                    self.logger.error(line)
+                if "Requested position is out of range." in line:
+                    angle = parameters.angles.parameters
+                    message = "Angle out of range: {0}".format(angle)
+                    raise ConfigurationError(message)
         return "angle_{0}".format(angle.zfill(3))
 
     def check_errors(self, line):
@@ -49,13 +90,22 @@ class RotateCommand(BaseClass):
         :raise: CommandError if a known fatal error is detected
         """
         if "No such file or directory" in line:
-            raise CommandError("The Rotator was not found -- is the USB cable plugged in?")
+            message = "Rotator not found -- USB cable plugged in?"
+            raise CommandError(message)
+        return
+
+    def kill(self):
+        """
+        :postcondition: rotate process killed
+        """
+        self.logger.debug("Killing rotate")
+        kill = KillAll(name='rotate')
+        kill(self.connection)
         return
 # end class RotateCommand
 
 
 if __name__ == "__main__":
-    import time
     from apetools.connections.sshconnection import SSHConnection
     c = SSHConnection("pogo2", "root")
     r = RotateCommand(c)

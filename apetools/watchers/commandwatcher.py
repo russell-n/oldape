@@ -21,10 +21,10 @@ import re
 from time import time, sleep
 import threading
 
-from apetools.baseclass import BaseClass
+from apetools.baseclass import BaseThreadClass
 from apetools.commons.timestamp import TimestampFormat
 
-class CommandWatcher(BaseClass):
+class CommandWatcher(BaseThreadClass):
     """
     A class to call a command and save a csv using the output
     """
@@ -102,14 +102,12 @@ class CommandWatcher(BaseClass):
         """
         :postcondition: `run` method running in a thread
         """
-        t = threading.Thread(target=self.run, name="commandwatcher")
+        t = threading.Thread(target=self.run_thread, name="commandwatcher")
         t.daemon = True
         t.start()
         return
     
     def run(self):
-        start = time()
-
         while not self.stopped:                
             start = time()
             matches = []
@@ -130,9 +128,3 @@ class CommandWatcher(BaseClass):
 # end class CommandWatcher
 
                                   
-if __name__ == "__main__":
-    from apetools.connections.sshconnection import SSHConnection
-    import sys                                  
-    c = SSHConnection("portege", "portegeadmin")
-    p = ProcnetdevWatcher(sys.stdout, c, "wlan0")
-    p()

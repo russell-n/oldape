@@ -17,13 +17,14 @@ setup(name='apetools',
       url = '',
       author_email="russellnakamura@us.allion.com",
       license = "",
-      install_requires = ['pudb', 'paramiko', 'pyserial', 'numpy'],
+      install_requires = ['pudb', 'paramiko', 'pyserial', 'numpy', 'mock', 'nose'],
       packages = find_packages(exclude=["__main__"]),
       include_package_data = True,
-      package_data = {"apetools":["*.txt", "*.rst", "*.ini"]},
+      package_data = {"apetools":["*.txt", "*.rst", "lexicographers/configfiles/*.ini"]},
       entry_points = """
 	  [console_scripts]
           ape=apetools.main:main
+          takataka=apetools.parsers.main:main
 	  """
       )
 

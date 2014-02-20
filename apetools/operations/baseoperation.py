@@ -10,11 +10,13 @@ class DummyOperation(BaseClass):
     """
     A dummy for an Test 
     """
-    def __init__(self):
-        super(DummyOperation, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(DummyOperation, self).__init__(*args, **kwargs)
         return
 
-    def __call__(self, parameters=None):
+    def __call__(self, parameters=None, filename_prefix=None):
+        self.logger.debug(str(parameters))
+        self.logger.debug(filename_prefix)        
         return
 
     def __getattr__(self, name):

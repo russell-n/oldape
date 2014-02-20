@@ -3,7 +3,7 @@ A module to query the device for interface information.
 """
 #python libraries
 import re
-from itertools import tee
+import os
 
 from apetools.baseclass import BaseClass
 from apetools.commons import enumerations
@@ -47,7 +47,7 @@ class IfconfigCommand(BaseClass):
         :return: the operating system for the device to query
         """
         if self._operating_system is None:
-            self._operating_system = enumerations.OperatingSystem.linux
+            self._operating_system = self.connection.os
         return self._operating_system
 
     @property
@@ -106,6 +106,8 @@ class IfconfigCommand(BaseClass):
             match = expression.search(line)
             if match:
                 return match.group(name)
+        for line in self.output.error:
+            self.logger.error(line)
         return
 # end class IfconfigCommand
     

@@ -1,13 +1,13 @@
-"""
-An adapter to make the tools match the use of multiple nodes.
-"""
+
 import re
 from collections import namedtuple
 
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 
+
 SenderReceiver = namedtuple("SenderReceiver", "sender receiver".split())
+
 
 class IperfConfigurationError(ConfigurationError):
     """
@@ -15,12 +15,15 @@ class IperfConfigurationError(ConfigurationError):
     """
 # end class IperfConfigurationError
 
+
 class IperfSession(BaseClass):
     """
     A bundler of nodes and the iperftest
     """
     def __init__(self, iperf_test, nodes, tpc, filename_base=None):
       """
+      IperfSession Constructor
+      
       :param:
 
        - `iperf_test`: a bundle of parameters and storage
@@ -41,6 +44,8 @@ class IperfSession(BaseClass):
     @property
     def from_node_expression(self):
         """
+        Regular expression to determine if it is an upload.
+        
         Expects `from_node`, `uplink`, `send`, `transmit`, `tx`
         
         :return: compiled regex to match TPC <-- Node        
@@ -52,6 +57,8 @@ class IperfSession(BaseClass):
     @property
     def to_node_expression(self):
         """
+        Regular expression to determine if it is a download
+        
         Assumes something like `to_node`, `downlink`, `receive`, `rx`
         
         :return: compiled regex to match direction of traffic TPC --> Node
@@ -62,13 +69,23 @@ class IperfSession(BaseClass):
 
     def particpants(self, parameters):
         """
+        Decides which node is participating and whether it is client or server
+        
         :param:
 
          - `parameters`: namedtuple passed in to call
 
-        :return: 
+        :return: SenderReceiver for this set of parameters
+        :raises: IperfConfigurationError if traffic direction or node isn't known or parameters missing node
         """
-        node = self.nodes[parameters.nodes.parameters]
+        try:
+            node = self.nodes[parameters.nodes.parameters]
+        except KeyError as error:
+            self.logger.error(error)
+            raise IperfConfigurationError("unknown node id: {0}".format(parameters.nodes.parameters))
+        except AttributeError as error:
+            self.logger.error(error)
+            raise IperfConfigurationError("{0} doesn't have .nodes.parameters".format(parameters))
         direction = parameters.iperf_directions.parameters
         if self.to_node_expression.match(direction):
             return SenderReceiver(sender=self.tpc, receiver=node)
@@ -79,6 +96,8 @@ class IperfSession(BaseClass):
 
     def filename(self, parameters, filename_prefix):
         """
+        Adds extra tags to the filename to make identifying them easier
+        
         :param:
 
          - `parameters`: Namedtuple passed in to __call__      
@@ -95,16 +114,20 @@ class IperfSession(BaseClass):
     
     def __call__(self, parameters, filename_prefix = None):
         """
+        Retrieves the participating node and runs the iperf_test
+        
         :param:
 
          - `parameters`: namedtuple with nodes and direction parameters
          - `filename_prefix`: prefix to prepend to the filename
+
+        :return: output of IperfTest
+        :postcondition: self.poll set to whatever the IperfTest returned
         """
         sender_receiver = self.particpants(parameters)
         filename = self.filename(parameters, filename_prefix)
         self.poll = self.iperf_test(sender=sender_receiver.sender,
                                     receiver=sender_receiver.receiver,
                                     filename=filename)
-        return
+        return self.poll
 # end class IperfSession
-    

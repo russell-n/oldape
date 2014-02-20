@@ -5,9 +5,10 @@ A module to hold the CrashHandler
 import traceback
 from StringIO import StringIO
 
-# ttr
+# apetools
 from apetools.baseclass import BaseClass
 from apetools.commons import storageoutput
+from apetools.log_setter import LOGNAME
 
 class CrashHandler(BaseClass):
     """
@@ -33,23 +34,16 @@ class CrashHandler(BaseClass):
         """
         self.logger.error("The program has crashed. I weep for you.")
         self.logger.error(error)
-        output = storageoutput.StorageOutput("crash_reports")
+        output = storageoutput.StorageOutput("crash_report_{t}")
+        output.move(LOGNAME)
         f = output.open("crashreport.log")
-        temp = StringIO()
         separator = "*" * 20
         message = " Crash Report "
         header =  separator + message + separator
         footer = separator + separator + "*" * len(message)
         f.write(header + "\n")
         
-        traceback.print_exc(file=temp)
-        for line in temp:
-            f.write(line)
+        traceback.print_exc(file=f)
         f.write(footer + "\n")
-
-        #print header
-        #traceback.print_exc()
-        
-        #print footer
         return
 # end CrashHandler

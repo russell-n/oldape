@@ -7,10 +7,9 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 # python libraries
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 import os
 
-#apetools modules
 from apetools.baseclass import BaseClass
 
 from iperfexpressions import HumanExpression, ParserKeys
@@ -18,21 +17,13 @@ from iperfexpressions import CsvExpression
 from unitconverter import UnitConverter
 from coroutine import coroutine
 
-class BandwidthData(namedtuple("BandwidthData", "interval bandwidth units".split())):
-    """
-    A tuple to hold the bandwidth data
-    """
-    __slots__ = ()
 
-    def __str__(self):
-        return  "({0}) {1} {2}/sec".format(self.interval, self.bandwidth, self.units)
-# end class BandwidthData
-                        
 class IperfParser(BaseClass):
     """
     The Iperf Parser extracts bandwidth and other information from the output
     """
-    def __init__(self, expected_interval=1, interval_tolerance=0.1, units="Mbits", threads=4):
+    def __init__(self, expected_interval=1, interval_tolerance=0.1, units="Mbits", threads=4,
+                 maximum=10**9):
         """
         :param:
 
@@ -40,6 +31,7 @@ class IperfParser(BaseClass):
          - `interval_tolerance`: upper bound of difference between actual and expected
          - `units`: desired output units (must match iperf output case - e.g. MBytes)
          - `threads`: (number of threads) needed for coroutine and pipe
+         - `maximum`: the max value (after conversion) allowed (if exceeded converts to 0)
         """
         super(IperfParser, self).__init__()
         self._logger = None
@@ -47,6 +39,7 @@ class IperfParser(BaseClass):
         self.interval_tolerance = interval_tolerance
         self.units = units
         self.threads = threads
+        self.maximum = maximum
         self._regex = None
         self._human_regex = None
         self._csv_regex = None
@@ -59,6 +52,7 @@ class IperfParser(BaseClass):
 
         self.thread_count = 0
         self.current_thread = None
+        self.emit = True
         return
 
     @property
@@ -126,7 +120,10 @@ class IperfParser(BaseClass):
         except KeyError:
             # assume a csv-format
             units = 'bits'
-        return self.conversion[units][self.units] * bandwidth
+        b = self.conversion[units][self.units] * bandwidth
+        if b > self.maximum:
+            return 0.0
+        return b
 
     def __call__(self, line):
         """
@@ -216,9 +213,9 @@ class IperfParser(BaseClass):
         """
         Resets the attributes set during parsing
         """
-        self.logger.debug("Resetting the IperfParser")
         self.format = None
         self._interval_threads = None
+        self._intervals = None
         self._thread_count = None
         self._threads = None
         return

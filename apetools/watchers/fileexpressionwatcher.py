@@ -108,8 +108,8 @@ class BaseFileexpressionwatcher(BasePollster):
         """
         Repeatedly cats file self.name and saves matching output
         """
-        if self.use_header:
-            self.output.writeline(self.header)
+        #if self.use_header:
+        self.output.writeline(self.header)
        
         while not self.stopped:                
             start = time()
@@ -145,7 +145,7 @@ class BatteryWatcher(BaseFileexpressionwatcher):
         :return: the header to use in files
         """
         if self._header is None:
-            self._header = "status,voltage,current,temp,charge,health,capacity"
+            self._header = "timestamp,status,voltage,current,temp,charge,health,capacity"
         return self._header
 
     @property
@@ -154,7 +154,7 @@ class BatteryWatcher(BaseFileexpressionwatcher):
         :return: list of group-dict keys in order 
         """
         if self._expression_keys is None:
-            self._expression_keys = self.header.split(',')
+            self._expression_keys = self.header.split(',')[1:]
         return self._expression_keys
 
     @property

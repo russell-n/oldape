@@ -11,7 +11,7 @@ storage and the target and ignores the header.
 from apetools.baseclass import BaseClass
 from apetools.commons.coroutine import coroutine
 from apetools.commons.storageoutput import StorageOutput
-from apetools.commons.timestamp import TimestampFormat
+from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
 
 EOF = ""
 NEWLINE = "\n"
@@ -62,7 +62,7 @@ class StoragePipe(BaseClass):
         :return: TimestampFormat
         """
         if self._timestamp is None:
-            self._timestamp = TimestampFormat()
+            self._timestamp = TimestampFormat(TimestampFormatEnums.log)
         return self._timestamp
 
     @property
@@ -141,9 +141,12 @@ class StoragePipe(BaseClass):
                 if line is None:
                     continue
 
-            output.writeline(str(line))
             if self.emit:
                 self.logger.info(line)
+            if self.add_timestamp:
+                line = "{0},{1}".format(self.timestamp.now, line)
+                
+            output.writeline(str(line))
         output.close()
         return
 
@@ -177,6 +180,8 @@ class StoragePipe(BaseClass):
                 line = self.transform(line)
                 if line is None:
                     continue
+            if self.add_timestamp:
+                line = "{0},{1}".format(self.timestamp.now, line)
 
             output.writeline(str(line))
             target.send(line)
