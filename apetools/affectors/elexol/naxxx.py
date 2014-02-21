@@ -106,4 +106,11 @@ class Naxxx(BaseClass):
             self.logger.error(error)
             raise NaxxxError("Unable to connect to the Naxxx  - check your LAN connection.")
         return
+
+    def __call__(self, parameters):
+        """
+        turns on parameters.naxxx.identifier (this is backwards, maybe I'll fix it)
+        """
+        self.run(parameters.naxxx.parameters.identifier)
+        return parameters.naxxx.parameters.switch
 # end class NAXXX

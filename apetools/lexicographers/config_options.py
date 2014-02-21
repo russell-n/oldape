@@ -8,18 +8,25 @@ class ConfigOptions(object):
     oscillate_section = 'OSCILLATE'
     watchlogs_section = "WATCHLOGS"
     sleep_section = "SLEEP"
+    naxxx_section = 'NAXXX'
+    busyboxwget_section = 'BUSYBOXWGET'
 
     #options
+    target_option = 'target'
+    output_option = 'output'
+    
     tag_option = "tag"
     operation_setup_option = "operation_setup"
     operation_teardown_option = "operation_teardown"
     test_setup_option = "setup_test"
     execute_test_option = "execute_test"
-    teardown_test_option="teardown_test"
+    teardown_test_option = "teardown_test"
     
     output_folder_option = 'output_folder'
     data_file_option = "data_file"
-    repeat_option = "repeat"
+    url_option = 'url'
+    repetitions_option  = "repetitions"
+    repeat_option = 'repeat'
     recovery_time_option = "recovery_time"
     
     test_interface_option = "test_interface"
@@ -48,7 +55,7 @@ class ConfigOptions(object):
     time_option = "time"
     protocol_option = "protocol"
 
-    time_to_recovery_section="TIMETORECOVERY"
+    time_to_recovery_section = "TIMETORECOVERY"
     threshold_option = "threshold"
     timeout_option = "timeout"
     affector_section = "AFFECTOR"

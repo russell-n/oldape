@@ -62,4 +62,5 @@ A holder of string constants to use for types of node-builders.
    NodeBuilderTypes : windows
    NodeBuilderTypes : linux
    NodeBuilderTypes : android
+   NodeBuilderTypes : ios
    

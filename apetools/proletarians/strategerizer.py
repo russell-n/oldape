@@ -9,7 +9,7 @@ from setuprun import SetUp
 #from teardown import TearDown
 from crashhandler import CrashHandler
 from apetools.lexicographers.configfetcher import ConfigFetcher
-from apetools.informants.helper import Helper
+#from apetools.informants.helper import Helper
 from apetools.baseclass import BaseClass
 from apetools.tools import testdumpsyswifi
 

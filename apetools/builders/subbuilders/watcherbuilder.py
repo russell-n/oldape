@@ -4,7 +4,7 @@ A Watcher builder
 
 #apetools
 from basetoolbuilder import BaseToolBuilder
-from logwatcherbuilders import LogcatWatcherBuilder, LogWatcherBuilder
+from logwatcherbuilders import LogcatWatcherBuilder, LogWatcherBuilder, LogFollowerBuilder, PingWatcherBuilder
 from pollerbuilders import RssiPollerBuilder, DevicePollerBuilder, ProcnetdevPollsterBuilder, CpuPollsterBuilder
 from fileexpressionbuilders import BatteryWatcherBuilder
 from apetools.watchers import thewatcher
@@ -16,6 +16,7 @@ class WatcherTypes(object):
     The names of the valid watcher types
     """
     __slots__ = ()
+    logfollow = 'logfollow'
     logcat = "logcat"
     adblogcat = 'adblogcat'
     rssi = "rssi"
@@ -23,6 +24,7 @@ class WatcherTypes(object):
     procnetdev = 'procnetdev'
     battery = 'battery'
     cpu = 'cpu'
+    pingwatcher = 'pingwatcher'
 # end class WatcherTypes
 
 
@@ -32,7 +34,9 @@ watcher_builder = {WatcherTypes.adblogcat:LogcatWatcherBuilder,
                    WatcherTypes.device:DevicePollerBuilder,
                    WatcherTypes.procnetdev:ProcnetdevPollsterBuilder,
                    WatcherTypes.battery:BatteryWatcherBuilder,
-                   WatcherTypes.cpu:CpuPollsterBuilder}
+                   WatcherTypes.cpu:CpuPollsterBuilder,
+                   WatcherTypes.logfollow:LogFollowerBuilder,
+                   WatcherTypes.pingwatcher:PingWatcherBuilder}
 
 class WatcherBuilder(BaseToolBuilder):
     """

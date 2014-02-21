@@ -327,8 +327,19 @@ class AdbShellSshConnectionBuilder(SSHConnectionBuilder):
          - `parameters`: An object with `hostname`, `username`, and `password` attributes
         """
         super(AdbShellSshConnectionBuilder, self).__init__(*args, **kwargs)
+        self._serial_number = None
         return
 
+    @property
+    def serial_number(self):
+        """
+        A serial number for the USB connection
+        """
+        if self._serial_number is None:
+            if hasattr(self.parameters, 'serial_number'):
+                self._serial_number = self.parameters.serial_number
+        return self._serial_number
+    
     @property
     def connection(self):
         """
@@ -341,7 +352,8 @@ class AdbShellSshConnectionBuilder(SSHConnectionBuilder):
                                                                    password=self.password,
                                                                    path=self.path,
                                                                    library_path=self.library_path,
-                                                                   operating_system=self.operating_system)
+                                                                   operating_system=self.operating_system,
+                                                                   serial_number=self.serial_number)
         return self._connection
 # end class AdbShellSshConnectionBuilder
 @
