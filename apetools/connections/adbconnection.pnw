@@ -328,11 +328,12 @@ class ADBSSHConnection(SSHConnection):
         return
 
     def _procedure_call(self, command, arguments="",
-                        path='', timeout=10):
+                        timeout=10):
         """
         Overrides the SSHConnection._procedure_call to check for errors
         """
-        output = self._main(command, arguments, path, timeout)
+        command = self.add_path(command)
+        output = self._main(command, arguments, timeout)
         return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), output.error)
 
 
@@ -369,7 +370,7 @@ ADBShellSSHConnection
 Issues ADB-shell commands to a remote PC (via SSH) which is connected to the Android via ADB. This should be preferred to :ref:`ADBShellConnection <adb-shell-connection>`.
 
 .. autosummary::
-   :toctree: 1
+   :toctree: api
 
    ADBShellSSHConnection
 

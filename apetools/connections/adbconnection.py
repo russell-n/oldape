@@ -214,11 +214,12 @@ class ADBSSHConnection(SSHConnection):
         return
 
     def _procedure_call(self, command, arguments="",
-                        path='', timeout=10):
+                        timeout=10):
         """
         Overrides the SSHConnection._procedure_call to check for errors
         """
-        output = self._main(command, arguments, path, timeout)
+        command = self.add_path(command)
+        output = self._main(command, arguments, timeout)
         return OutputError(ValidatingOutput(lines=output.output, validate=self.check_errors), output.error)
 
 
@@ -255,7 +256,13 @@ class ADBShellSSHConnection(ADBSSHConnection):
     """
     def __init__(self, *args, **kwargs):
         """
-        :param: (see the ADBSSHConnection)
+        :param:
+
+         - `serial_number`: id to distinguish bewtween multiple devices (case-sensitive)
+         - `hostname`: Address of ssh server
+         - `username`: login username
+         - `port`: ssh port (default=22)
+         - `timeout`: seconds to try to connect
         """
         super(ADBShellSSHConnection, self).__init__(*args, **kwargs)
         self.command_prefix += " shell "

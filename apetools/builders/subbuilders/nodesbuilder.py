@@ -43,7 +43,7 @@ class NodesBuilder(BaseClass):
             nodes = self.config_map.options(ConfigOptions.nodes_section)
             self._nodes = {}
             try:
-                config_tuples = [self.config_map.get_namedtuple(ConfigOptions.nodes_section,node, converter=lower)
+                config_tuples = [self.config_map.get_namedtuple(ConfigOptions.nodes_section,node, converter=lambda x: x)
                                for node in nodes]
                 node_tuples = dict(zip(nodes, config_tuples))
                 for node, parameters in node_tuples.items():

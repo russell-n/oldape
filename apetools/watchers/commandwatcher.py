@@ -108,8 +108,6 @@ class CommandWatcher(BaseThreadClass):
         return
     
     def run(self):
-        start = time()
-
         while not self.stopped:                
             start = time()
             matches = []

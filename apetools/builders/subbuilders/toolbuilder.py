@@ -16,6 +16,8 @@ class ToolBuilderEnum(object):
     oscillate = 'oscillate'
     oscillatestop = 'oscillatestop'
     sleep = 'sleep'
+    naxxx = 'naxxx'
+    busyboxwget = 'busiboxwget'
 # end class ToolBuilderEnum
 
 class ToolBuilder(object):
@@ -36,8 +38,15 @@ class ToolBuilder(object):
         self._poweroff = None
         self._sleep = None        
         self._watchlogs = None
+        self._naxxx = None
+        self._busyboxwget = None
         return
 
+    @property
+    def busyboxwget(self):
+        from busyboxwgetbuilder import BusyboxWgetBuilder
+        return BusyboxWgetBuilder
+    
     @property
     def sleep(self):
         """
@@ -115,6 +124,11 @@ class ToolBuilder(object):
     def iperf(self):
         from iperfsessionbuilder import IperfSessionBuilder
         return IperfSessionBuilder
+
+    @property
+    def naxxx(self):
+        from naxxxbuilder import NaxxxBuilder
+        return NaxxxBuilder
 # end class ToolBuilder
         
 #tool_builders = {ToolBuilderEnum.ners:NersBuilder,

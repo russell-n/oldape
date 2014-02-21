@@ -372,7 +372,6 @@ class SSHConnection(NonLocalConnection):
 
          - `command`: The shell command.
          - `arguments`: A string of command arguments.
-         - `path`: An optional path to prepend to the command
          - `timeout`: readline timeout for the SSHConnection
         :return: OutputError with output and error file-like objects
         """
@@ -456,8 +455,12 @@ Another Example
 
 <<name="main">>=
 if __name__ == "__main__":
-    c = SSHConnection('igor', 'developer')
-    o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless Network Connection\'" call enable')
-    for index, line in enumerate(o.output):
-        print index, line
+    #c = SSHConnection('igor', 'developer')
+    #o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless Network Connection\'" call enable')
+    #for index, line in enumerate(o.output):
+    #    print index, line
+    c = SSHConnection('fakeuser', 'localhost')
+    o = c.ls()
+    for line in o.output:
+        print line
 @
