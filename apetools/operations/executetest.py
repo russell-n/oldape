@@ -28,7 +28,6 @@ class ExecuteTest(BaseOperation):
 
          - `products`: list of products
         """
-        super(ExecuteTest, self).__init__(*args, **kwargs)
-        return
+        return super(ExecuteTest, self).__init__(*args, **kwargs)
 # end class ExecuteTest
                   
