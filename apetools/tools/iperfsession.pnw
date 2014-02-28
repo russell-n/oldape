@@ -56,11 +56,16 @@ The `IperfSession` bundles nodes and the Iperf Test.
    :toctree: api
 
    IperfSession
+   IperfSession.from_node_expression
+   IperfSession.to_node_expression
+   IperfSession.participants
+   IperfSession.filename
+   IperfSession.__call__
 
 .. uml::
 
-   IperfSession -|> BaseClass
-   IperfSession o-- IperfTest
+   BaseClass <|-- IperfSession
+   IperfSession o- IperfTest
    IperfSession : nodes
    IperfSession : tpc
    IperfSession : filename_base
