@@ -178,16 +178,16 @@ class IperfCommand(BaseThreadClass):
         if self.role == IperfCommandEnum.client:
             filename = self.base_filename + filename
             if node_type == BaseDeviceEnum.node:
-                return "sent_from_node_" + filename
+                return "upstream_tx_" + filename
             elif node_type == BaseDeviceEnum.tpc:
-                return "sent_to_node_" + filename
+                return "downstream_tx_" + filename
             else:
                 raise IperfCommandError("Unknown device.role: '{0}'".format(node_type))
         elif self.role == IperfCommandEnum.server:
             if node_type == BaseDeviceEnum.node:
-                return "received_by_node_" + filename
+                return "downstream_rx_" + filename
             elif node_type == BaseDeviceEnum.tpc:
-                return "received_by_tpc_" + filename
+                return "upstream_rx_" + filename
             else:
                 raise IperfCommandError("Unknown device.role: '{0}'".format(node_type))
         raise IperfCommandError("Unknown Iperf Role: '{0}'".format(self.role))
