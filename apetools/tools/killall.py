@@ -165,7 +165,8 @@ class KillAll(BaseClass):
         kill_count = self.kill(name)
         
         if not kill_count:
-            self.logger.info("No iperf sessions found on {0}".format(self.connection.hostname))
+            self.logger.info("No '{p}' processes found on {h}".format(h=self.connection.hostname,
+                                                                        p=name))
             return
 
         self.sleep(time_to_sleep)
@@ -174,7 +175,9 @@ class KillAll(BaseClass):
         for pid in self.grep(name):
             raise KillAllError("Unable to kill {0}".format(name))
             self.logger.error(err)
-        self.logger.info("Killed {0} iperf processes on {1}".format(kill_count, self.connection.hostname))
+        self.logger.info("Killed {k} '{p}' processes on {h}".format(k=kill_count, 
+                                                                    h=self.connection.hostname,
+                                                                    p=name))
         return
 
     def __call__(self, name=None, time_to_sleep=None):
