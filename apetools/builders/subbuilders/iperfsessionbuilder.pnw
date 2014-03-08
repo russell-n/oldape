@@ -1,4 +1,7 @@
+Iperf Session Builder
+=====================
 
+<<name='imports', echo=False>>=
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.tools.iperfsession import IperfSession
 from apetools.commons.errors import ConfigurationError
@@ -6,15 +9,45 @@ from apetools.commons.errors import ConfigurationError
 from iperftestbuilder import IperfTestBuilder
 from basetoolbuilder import BaseToolBuilder, Parameters
 from builderenums import BuilderParameterEnums
+@
 
+.. currentmodule:: ape.builders.subbuilders.iperfsessionbuilder
+.. autosummary::
+   :toctree: api
 
+   IperfSessionBuilderError
+
+.. uml::
+
+   ConfigurationError <|-- IperfSessionBuilderError
+
+<<name='IperfSessionBuilderError', echo=False>>=
 class IperfSessionBuilderError(ConfigurationError):
     """
     An error to raise if the config file has an error
     """
 # end class IperfSessionBuilderError
+@
 
+.. autosummary::
+   :toctree: api
 
+   IperfSessionBuilder
+   IperfSessionBuilder.filename
+   IperfSessionBuilder.test
+   IperfSessionBuilder.directions
+   IperfSessionBuilder.product
+   IperfSessionBuilder.parameters  
+
+.. uml::
+
+   BaseToolBuilder <|-- IperfSessionBuilder
+   IperfSessionBuilder o- MasterBuilder
+   IperfSessionBuilder o- ConfigurationMap
+   IperfSessionBuilder o- IperfTestBuilder
+   IperfSessionBuilder o- IperfSession
+
+<<name='IperfSessionBuilder', echo=False>>=
 class IperfSessionBuilder(BaseToolBuilder):
     """
     A class to build an iperf session
@@ -96,3 +129,4 @@ class IperfSessionBuilder(BaseToolBuilder):
             self._parameters = self.previous_parameters
         return self._parameters
 # end class IperfSessionBuilder
+@
