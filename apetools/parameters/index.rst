@@ -1,11 +1,13 @@
 Parameters
 ==========
 
-Contents:
 
 .. toctree::
    :maxdepth: 1
 
-   IperfCommonParameters <iperf_common_parameters>
+   Common Iperf Parameters <iperf_common_parameters.rst>
+
+.. toctree::
+   :maxdepth: 1
 
 

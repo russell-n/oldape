@@ -1,23 +1,14 @@
-.. Time-To-Recover Test documentation master file, created by
-   sphinx-quickstart on Fri May  4 13:58:22 2012.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 Watchers
 ========
 
-Contents:
 
 .. toctree::
    :maxdepth: 1
 
-   LogWatcher <kmsgwatcher>
-   LogcatWatcher <logcatwatcher>
+   The Ping Watcher <pingwatcher.rst>
+   The Log Follower <logfollower.rst>
 
-Indices and tables
-------------------
+.. toctree::
+   :maxdepth: 1
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 

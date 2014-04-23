@@ -3,12 +3,6 @@ The SSHConnection
 
 Encapsulates the Paramiko `SSHClient <http://www.lag.net/paramiko/docs/paramiko.SSHClient-class.html>`_ to provide a common interface with the other connection types.
 
-Contents:
-
-    * :ref:`SSHClient <ssh-client>`
-    * :ref:`SimpleClient <simple-client>`
-    * :ref:`SSHConnection <ssh-connection>`
-    * :ref:`OutputFile <output-file>`
 
 .. currentmodule:: apetools.connections.sshconnection
    
@@ -21,14 +15,12 @@ SSHClient
 
 This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used or with the added ``timeout`` parameter.
 
-.. currentmodule:: apetools.connections.sshconnection
+.. note:: the updated `paramiko` code added this feature so this is unnecessary now. 
+
 .. autosummary::
    :toctree: api
    
    SSHClient
-   SSHClient.exec_command
-   SSHClient.invoke_shell
-   SSHClient.invoke_shell_rw
 
 .. uml::
 
@@ -58,15 +50,11 @@ SimpleClient::
 
    c = SimpleClient(hostname='192.168.10.24', username='allion')
    stdin, stdout, stderr = c.exec_command('ls')
-
-.. currentmodule:: apetools.connections.sshconnection   
+   
 .. autosummary::
    :toctree: api
 
    SimpleClient
-   SimpleClient.exec_command
-   SimpleClient.__str__
-   SimpleClient.close
 
 .. uml::
 
@@ -85,14 +73,13 @@ SimpleClient::
 
 
 
-.. _ssh-connection:
+.. _ssh-connecton:
 
 The SSHConnection
 -----------------
 
 This class uses the :ref:`SimpleClient <simple-client>` to implement the :ref:`NonLocalConnection <non-local-connection>` interface.
 
-.. currentmodule:: apetools.connections.sshconnection
 .. autosummary::
    :toctree: api
 
@@ -156,9 +143,15 @@ Another Example
 ::
 
     if __name__ == "__main__":
-        c = SSHConnection('igor', 'developer')
-        o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless Network Connection\'" call enable')
-        for index, line in enumerate(o.output):
-            print index, line
+        #c = SSHConnection('igor', 'developer')
+        #o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireles
+    #s Network Connection\'" call enable')
+        #for index, line in enumerate(o.output):
+        #    print index, line
+        c = SSHConnection('fakeuser', 'localhost')
+        o = c.ls()
+        for line in o.output:
+            print line
+    
     
 

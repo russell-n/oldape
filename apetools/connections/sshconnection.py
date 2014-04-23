@@ -2,6 +2,7 @@
 #python Libraries
 import socket
 import os
+from threading import RLock
 
 # third-party libraries
 import paramiko
@@ -233,6 +234,7 @@ class SSHConnection(NonLocalConnection):
         self.timeout = timeout
         self._logger = None
         self._client = None
+        self._lock = None
         return
 
     @property
@@ -266,12 +268,19 @@ class SSHConnection(NonLocalConnection):
         if len(self.command_prefix):
             command = SPACER.format(self.command_prefix,
                                     command)
+
+        command = SPACER.format(command, arguments)
+        self.logger.debug("calling client.exec_command with '{0}'".format(command))
+
+        # the guys at Ryan's house are running into 'Administratively prohibited'
+        # which apparently happens if too many clients try to connect to the ssh-server
+        # I don't think this is where the problem is
+        # but to take this out of the question I'm going to put a lock so no more
+        # than one paramiko client can hit the server at once
+        with self.lock:
+            stdin, stdout, stderr = self.client.exec_command(command, timeout=timeout)
         
-        self.logger.debug("calling client.exec_command")
-            
-        stdin, stdout, stderr = self.client.exec_command(SPACER.format(command, arguments), timeout=timeout)
-        
-        self.logger.debug("Completed exec_command of: {0} {1}".format(command, arguments))
+        self.logger.debug("Completed exec_command of: '{0}'".format(command))
 
         return OutputError(OutputFile(stdout, self.check_errors), OutputFile(stderr, self.check_errors))
 
@@ -319,7 +328,11 @@ class OutputFile(ValidatingOutput):
 
 
 if __name__ == "__main__":
-    c = SSHConnection('igor', 'developer')
-    o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless Network Connection\'" call enable')
-    for index, line in enumerate(o.output):
-        print index, line
+    #c = SSHConnection('igor', 'developer')
+    #o = c.wmic('path win32_networkadapter where netconnectionid="\'Wireless Network Connection\'" call enable')
+    #for index, line in enumerate(o.output):
+    #    print index, line
+    c = SSHConnection('fakeuser', 'localhost')
+    o = c.ls()
+    for line in o.output:
+        print line
