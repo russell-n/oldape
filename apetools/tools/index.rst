@@ -1,12 +1,16 @@
 Tools
 =====
 
-The `tools` are generally bundles of commands.
 
 .. toctree::
    :maxdepth: 1
 
-   Iperf Session <iperfsession>
-   Iperf Test <iperftest>
-   KillAll <killall>
+   The IperfSession <iperfsession.rst>
+   The Iperf Test <iperftest.rst>
+   Kill All <killall.rst>
+   Wget Session <wgetsession.rst>
+
+.. toctree::
+   :maxdepth: 1
+
 

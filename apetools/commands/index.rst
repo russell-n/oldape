@@ -1,17 +1,21 @@
 Commands
 ========
 
-Contents:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   The Iperf Command <iperfcommand>
-   The Base Commands <basecommand>
-   The Ping Command <pingcommand>
-   The Ps Commands <pscommand>
-   The Screen Command <screencommand>
-   The Sftp Command <sftpcommand>
-   The Top Command <topcommand>
+   Busybox wget <busyboxwget.rst>
+   The PS Command <pscommand.rst>
+   The Iperf Command <iperfcommand.rst>
+   The Iperf Screen Command <iperfscreencommand.rst>
+   The SFTP Command <sftpcommand.rst>
+   The Ping Command <ping.rst>
+   The Base Command <basecommand.rst>
+   The Top Command <topcommand.rst>
+   The Screen Command <screencommand.rst>
+
+.. toctree::
+   :maxdepth: 1
 
 

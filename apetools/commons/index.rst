@@ -1,23 +1,13 @@
-The Commons
-===========
+Commons
+=======
 
-The commons is a folder for code that is intended to be shared by both infrastructure and lower-level classes.
-
-Contents:
 
 .. toctree::
    :maxdepth: 1
 
-   Errors <errors>
-   Generators <generators>
-   StandardOutput <output>
-   StorageOutput <storage>
-   Threads <threads>
+   The Storage Output <storageoutput.rst>
 
-Indices and tables
-------------------
+.. toctree::
+   :maxdepth: 1
 
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
 
