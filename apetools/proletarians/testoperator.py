@@ -1,4 +1,3 @@
-
 # Copyright 2013 Russell Nakamura
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
@@ -185,7 +184,7 @@ class TestOperator(BaseClass):
         :postcondition: message sent to node and info log.
         """
         self.logger.info(message)
-        self.nodes[node].log('"{0}"'.format(message))
+        #self.nodes[node].logger('"{0}"'.format(message))
         return
 
     def __call__(self):

@@ -136,7 +136,7 @@ class MacDevice(BaseDevice):
         """
         :postcondition: message sent to the connection
         """
-        self.connection.log(message)
+        self.connection.logger(message)
         return
 
     @property

@@ -92,10 +92,16 @@ PID = oatbran.NAMED(n=ProcessGrepEnum.pid,
                            e=oatbran.NATURAL)
 TTY = oatbran.GROUP("\?" + oatbran.OR + "pts/" + oatbran.NATURAL +
                     oatbran.OR + oatbran.NOT_SPACES)
-TIME = ":".join([oatbran.DIGIT + oatbran.EXACTLY.format(2)] * 3)
+
+TWO_DIGITS = oatbran.DIGIT + oatbran.EXACTLY.format(2)
+TIME = ":".join([TWO_DIGITS] * 3)
+MAC_TIME = (oatbran.DIGIT + r"{1,2}" + ':' + TWO_DIGITS + '\.' +
+            TWO_DIGITS)
+
 #PROCESS = oatbran.NAMED(n=ProcessGrepEnum.process,
 #                        e="{{{process_name}}}")
 PSE_LINUX = oatbran.SPACES.join([PID, TTY, TIME])
+PSE_MAC = oatbran.SPACES.join([PID, TTY, MAC_TIME])
 
 #android ps
 USER = oatbran.CLASS(oatbran.ALPHA_NUM + '_') + oatbran.ONE_OR_MORE
@@ -153,6 +159,9 @@ class PsGrep(BaseProcessGrep):
                 #self.logger.debug("Using Cygwin Expression")
                 #expression = CYGWIN
                 raise CommandError("Cygwin Expression not implemented")
+            elif self.connection.operating_system == OperatingSystem.mac:
+                self.logger.debug("Using Mac OS 'ps' regular expression")
+                expression = PSE_MAC
             else:
                 #self.logger.debug("Using linux expression")
                 expression = PSE_LINUX
