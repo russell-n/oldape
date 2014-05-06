@@ -72,6 +72,7 @@ class IperfTest(BaseClass):
         """
         self.kill.level = None
         self.kill.connection = connection
+
         try:
             self.kill()
         except KillAllError as error:
@@ -129,7 +130,7 @@ class IperfTest(BaseClass):
                 self.logger.warning("Unable to get the server-side filename to copy")
             sftp = SftpCommand(connection=self.receiver_command.device.connection)
             sftp.get(self.receiver_command.last_filename, target)
-                            
+
         #self.receiver_command.abort()
         return
 # end class IperfTest
