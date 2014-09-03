@@ -71,7 +71,8 @@ class AirportCommand(BaseWifiCommand):
                 return match.groupdict()[expressions.IP_ADDRESS_NAME]
         err = error.readline()
         if err:
-            raise AirportCommand(err)    
+            self.logger.error("Unable to get ip for {0}".format(self.connection))
+            raise Exception(err)    
         return 
 
     @property
