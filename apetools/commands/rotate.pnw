@@ -1,4 +1,9 @@
+The Rotate
+==========
 
+A command-line interface to run the rotate command remotely.
+
+<<name='imports', echo=False>>=
 #python standard library
 import time
 
@@ -7,19 +12,42 @@ from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.commons.errors import CommandError
 from apetools.tools.killall import KillAll, KillAllError
+@
 
-
+<<name='constants'>>=
 SIGKILL = 9
 PROCESS = 'rotate'
+@
 
+RotateError
+-----------
 
+.. uml::
+
+   CommandError <|-- RotateError
+   
+<<name="RotateError">>=
 class RotateError(CommandError):
     """
     An error in the rotation
     """
 # end class RotateError
+@
 
+RotateCommand
+-------------
 
+.. module:: apetools.commands.rotate
+.. autosummary::
+   :toctree: api
+
+   RotateCommand
+   RotateCommand.kill
+   RotateCommand.kill_process
+   RotateCommand.__call__
+   RotateCommand.check_errors
+   
+<<name='RotateCommand', echo=False>>=
 class RotateCommand(BaseClass):
     """
     A class to issue a remote 'rotate' command
@@ -133,8 +161,9 @@ class RotateCommand(BaseClass):
         return
 
 # end class RotateCommand
+@
 
-
+<<name='debug'>>=
 if __name__ == "__main__":
     from apetools.connections.sshconnection import SSHConnection
     c = SSHConnection("pogo2", "root")
@@ -147,3 +176,4 @@ if __name__ == "__main__":
     time.sleep(1)
     print "Rotate to 0 degrees"
     r()
+@
