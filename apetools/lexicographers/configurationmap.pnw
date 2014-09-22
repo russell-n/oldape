@@ -1,4 +1,9 @@
+Configuration Map
+=================
 
+An extension of the ConfigParser to do conversions
+
+<<name='imports', echo=False>>=
 #python
 import re
 import ConfigParser
@@ -11,8 +16,9 @@ from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.commons import expressions
 from timeconverter import TimeConverter
+@
 
-
+<<name='constants', echo=False>>=
 STRIP_LIST = "'\"" + whitespace
 EMPTY_STRING = ''
 DAY_STRING = 'day'
@@ -36,24 +42,43 @@ START_GROUP = "start"
 END_GROUP = "end"
 RANGE = re.compile(NAMED.format(name=START_GROUP, pattern=INTEGER) + SPACES_OPTIONAL +
                    DASH + SPACES_OPTIONAL + NAMED.format(name=END_GROUP, pattern=INTEGER))
+@
 
+Helper Classes
+--------------
 
+.. module:: apetools.lexicographers.configuratiomap
+.. autosummary::
+   :toctree: api
+
+   ConfigurationSectionError
+   ConfigurationOptionError
+   BooleanValues
+
+.. uml::
+
+   ConfigurationError <|-- ConfigurationSectionError
+   ConfigurationError <|-- ConfigurationOptionError
+
+<<name='ConfigurationSectionError', echo=False>>=
 class ConfigurationSectionError(ConfigurationError):
     """
     An error to raise if a section is missing
     """
     pass
 # end class ConfigurationSectionError
+@
 
-
+<<name='ConfigurationOptionError', echo=False>>=
 class ConfigurationOptionError(ConfigurationError):
     """
     An error to raise if an option is missing
     """
     pass
 # end class ConfigurationOptionError
+@
 
-
+<<name='BooleanValues'>>=
 class BooleanValues(object):
     """
     A class to hold the valid booleans.
@@ -63,8 +88,47 @@ class BooleanValues(object):
     false = "n no 0 false f off".split()
     map = dict([(t, True) for t in true] + [(f, False) for f in false])
 # end class Booleans
+@
 
+ConfigurationMap
+----------------
 
+.. uml::
+
+   BaseClass <|-- ConfigurationMap
+
+.. autosummary::
+   :toctree: api
+
+   ConfigurationMap
+   ConfigurationMap.time_converter
+   ConfigurationMap.sections
+   ConfigurationMap.options
+   ConfigurationMap.parser
+   ConfigurationMap.raise_error
+   ConfigurationMap.get
+   ConfigurationMap._get
+   ConfigurationMap.get_boolean
+   ConfigurationMap.get_booleans
+   ConfigurationMap.get_int
+   ConfigurationMap.get_ints
+   ConfigurationMap.get_float
+   ConfigurationMap.get_floats
+   ConfigurationMap.get_string
+   ConfigurationMap.get_strings
+   ConfigurationMap.get_list
+   ConfigurationMap.get_lists
+   ConfigurationMap.get_dictionary
+   ConfigurationMap.get_dictionaries
+   ConfigurationMap.get_namedtuple
+   ConfigurationMap.get_range
+   ConfigurationMap.get_ranges
+   ConfigurationMap.get_times
+   ConfigurationMap.get_time
+   ConfigurationMap.time_in_seconds
+
+   
+<<name='ConfigurationMap', echo=False>>=
 class ConfigurationMap(BaseClass):
     """
     The ConfigurationMap is a variant of SafeConfigParser that adds some extra methods
@@ -323,7 +387,6 @@ class ConfigurationMap(BaseClass):
                 return default
         return
         
-
     def get_lists(self, section, option, default=None, optional=False, delimiter=COMMA, converter=str,
                   list_separator=SEMICOLON):
         """
@@ -407,7 +470,6 @@ class ConfigurationMap(BaseClass):
             line = [(pair[0], converter(pair[-1])) for pair in line]
             dictionaries.append(dict(line))
         return dictionaries
-
 
     def get_namedtuple(self, section, option, default=None, delimiter=COMMA, converter=str,
                        key_value_separator=":"):
@@ -543,5 +605,5 @@ class ConfigurationMap(BaseClass):
             elif SECOND_STRING in token:
                 total += float(tokens[index - 1])
         return total
-
 # end ConfigurationMap
+@

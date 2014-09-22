@@ -1,6 +1,9 @@
-"""
+Rotate Builder
+==============
+
 A module to build a rotate object.
-"""
+
+<<name='imports', echo=False>>=
 # python libraries
 from collections import namedtuple
 
@@ -9,7 +12,8 @@ from basetoolbuilder import BaseToolBuilder, Parameters
 from apetools.lexicographers.config_options import ConfigOptions
 from connectionbuilder import connection_builders, ConnectionBuilderTypes, SSHParameters
 from apetools.commands.rotate import RotateCommand
-
+@
+<<name='constants'>>=
 COLON = ":"
 
 class RotateBuilderEnums(object):
@@ -19,7 +23,16 @@ class RotateBuilderEnums(object):
     __slots__ = ()
     angle_velocity = 'angle_velocity'
 # end class RotateBuilderEnums
+@
 
+Rotate Parameters
+-----------------
+
+The RotateParameters is a named tuple that should be passed into the RotateCommand's call method.
+
+.. '
+
+<<name="RotateParameters">>=
 class RotateParameters(namedtuple("RotateParameters", "angle velocity clockwise".split())):
     __slots__ = ()
 
@@ -27,8 +40,31 @@ class RotateParameters(namedtuple("RotateParameters", "angle velocity clockwise"
         return "angle: {0} velocity: {1} clockwise: {2}".format(self.angle, self.velocity,
                                                                 self.clockwise)
 # end class RotateParameters
-                           
-    
+@
+
+RotateBuilder
+-------------
+
+The RotateBuilder builds the RotateCommand.
+
+.. uml::
+
+   BaseToolBuilder <|-- RotateBuilder
+
+   
+.. module:: apetools.builders.subbuilders.rotatebuilder
+.. autosummary::
+   :toctree: api
+
+   RotateBuilder
+   RotateBuilder.connection_parameters
+   RotateBuilder.connection
+   RotateBuilder.angles
+   RotateBuilder.velocities
+   RotateBuilder.parameters
+   RotateBuilder.product
+
+<<name='RotateBuilder', echo=False>>=
 class RotateBuilder(BaseToolBuilder):
     """
     A Rotator builder
@@ -86,7 +122,7 @@ class RotateBuilder(BaseToolBuilder):
             self._velocities = self.get_parameters(parameter_index=1,
                                                    velocity=True)
         return self._velocities                                                        
-
+    
     @property
     def parameters(self):
         """
@@ -115,11 +151,11 @@ class RotateBuilder(BaseToolBuilder):
     @property
     def product(self):
         """
-        :return: a rotator
+        :return: a RotateCommand
         """
         if self._product is None:
-            self._product = RotateCommand(connection=self.connection)
+            self._product = RotateCommand(connections=self.connections)
         return self._product
 
 # end class RotateBuilder
-    
+@

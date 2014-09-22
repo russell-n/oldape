@@ -52,28 +52,28 @@ class RotateCommand(BaseClass):
     """
     A class to issue a remote 'rotate' command
     """
-    def __init__(self, connection, retries=2):
+    def __init__(self, connections, retries=2):
         """
         :param:
 
-         - `connection`: connection to rate-table (rotator) control
+         - `connections`: list of connections to turntable controls
          - `retries`: The number of times to retry
         """
         super(RotateCommand, self).__init__()
-        self.connection = connection
+        self.connections = connections
         self.retries = retries
-        self._kill = None
+        self._killers = None
         return
 
     @property
-    def kill(self):
+    def killers(self):
         """
         :return: rotate process killer
         """
-        if self._kill is None:
-            self._kill = KillAll(connection=self.connection,
-                                 name=PROCESS)
-        return self._kill
+        if self._killers is None:            
+            self._killers = [KillAll(connection=connection,
+                                 name=PROCESS) for connection in self.connections]
+        return self._killers
 
 
     def kill_process(self):
@@ -82,40 +82,23 @@ class RotateCommand(BaseClass):
 
          * If the default level fails, tries a -9
 
-        :param:
-
-         - `connection`: connection to the host for the KillAll
         """
         self.logger.info('Killing any existing rotate processes')
-        try:
-            self.kill()
-        except KillAllError as error:
-            self.logger.warning(error)
-            self.kill.level = SIGKILL
-            self.kill()            
+        for kill in self.killers:
+            try:
+                kill()
+            except KillAllError as error:
+                self.logger.warning(error)
+                kill.level = SIGKILL
+                kill()            
         return
     
-
-    def __call__(self, parameters, filename_prefix=None):
+    def rotate(connection, arguments, timeout=120):
         """
-        :param:
-
-         - `parameters`: namedtuple with parameters.angle_velocity.parameters
-         - `filename_prefix`: not used
+        sends the arguments to the connection
         """
-        self.kill_process()
-        angle, velocity, clockwise = parameters.angle_velocity.parameters
-        arguments = "{0} --velocity {1}".format(angle, velocity)
-        if clockwise:
-            arguments += " --clockwise"
-        self.logger.info("Rotating: {0}".format(arguments))
-        stdout, stderr = self.connection.rotate(arguments, timeout=4)
-        try:
-            timeout = parameters.timeout
-        except AttributeError:
-            self.logger.debug("Using default 2 minute timeout")
-            timeout = 120
-        end_time = time.time() + 120
+        stdout, stderr = connection.rotate(arguments, timeout=4)
+        end_time = time.time() + timeout
         eof = True
         for line in stdout:
             self.logger.debug("rotate stdout: {0}".format(line))
@@ -145,6 +128,29 @@ class RotateCommand(BaseClass):
                     angle = parameters.angles.parameters
                     message = "Angle out of range: {0}".format(angle)
                     raise ConfigurationError(message)
+        return
+    
+    def __call__(self, parameters, filename_prefix=None):
+        """
+        :param:
+
+         - `parameters`: namedtuple with parameters.angle_velocity.parameters
+         - `filename_prefix`: not used
+        """
+        self.kill_process()
+        angle, velocity, clockwise = parameters.angle_velocity.parameters
+        arguments = "{0} --velocity {1}".format(angle, velocity)
+        if clockwise:
+            arguments += " --clockwise"
+        try:
+            timeout = parameters.timeout
+        except AttributeError:
+            self.logger.debug("Using default 2 minute timeout")
+            timeout = 120
+
+        for connection in self.connections:
+            self.logger.info("Rotating: {0}".format(arguments))
+            self.rotate(connection, arguments, timeout)
         return "angle_{0}".format(angle.zfill(3))
 
     def check_errors(self, line):
