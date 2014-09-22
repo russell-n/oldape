@@ -1,6 +1,4 @@
-"""
-A module to build a rotate object.
-"""
+
 # python libraries
 from collections import namedtuple
 
@@ -9,6 +7,7 @@ from basetoolbuilder import BaseToolBuilder, Parameters
 from apetools.lexicographers.config_options import ConfigOptions
 from connectionbuilder import connection_builders, ConnectionBuilderTypes, SSHParameters
 from apetools.commands.rotate import RotateCommand
+
 
 COLON = ":"
 
@@ -20,6 +19,7 @@ class RotateBuilderEnums(object):
     angle_velocity = 'angle_velocity'
 # end class RotateBuilderEnums
 
+
 class RotateParameters(namedtuple("RotateParameters", "angle velocity clockwise".split())):
     __slots__ = ()
 
@@ -27,8 +27,8 @@ class RotateParameters(namedtuple("RotateParameters", "angle velocity clockwise"
         return "angle: {0} velocity: {1} clockwise: {2}".format(self.angle, self.velocity,
                                                                 self.clockwise)
 # end class RotateParameters
-                           
-    
+
+
 class RotateBuilder(BaseToolBuilder):
     """
     A Rotator builder
@@ -115,11 +115,10 @@ class RotateBuilder(BaseToolBuilder):
     @property
     def product(self):
         """
-        :return: a rotator
+        :return: a RotateCommand
         """
         if self._product is None:
-            self._product = RotateCommand(connection=self.connection)
+            self._product = RotateCommand(connections=self.connections)
         return self._product
 
 # end class RotateBuilder
-    
