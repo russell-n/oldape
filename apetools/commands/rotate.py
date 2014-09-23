@@ -65,7 +65,7 @@ class RotateCommand(BaseClass):
                 kill()            
         return
     
-    def rotate(connection, arguments, timeout=120):
+    def rotate(self, connection, arguments, timeout=120):
         """
         sends the arguments to the connection
         """

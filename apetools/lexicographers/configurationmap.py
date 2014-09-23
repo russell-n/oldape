@@ -323,7 +323,6 @@ class ConfigurationMap(BaseClass):
                 return default
         return
         
-
     def get_lists(self, section, option, default=None, optional=False, delimiter=COMMA, converter=str,
                   list_separator=SEMICOLON):
         """
@@ -407,7 +406,6 @@ class ConfigurationMap(BaseClass):
             line = [(pair[0], converter(pair[-1])) for pair in line]
             dictionaries.append(dict(line))
         return dictionaries
-
 
     def get_namedtuple(self, section, option, default=None, delimiter=COMMA, converter=str,
                        key_value_separator=":"):
@@ -543,5 +541,4 @@ class ConfigurationMap(BaseClass):
             elif SECOND_STRING in token:
                 total += float(tokens[index - 1])
         return total
-
 # end ConfigurationMap

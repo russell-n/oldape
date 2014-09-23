@@ -58,8 +58,8 @@ The RotateBuilder builds the RotateCommand.
    :toctree: api
 
    RotateBuilder
-   RotateBuilder.connection_parameters
-   RotateBuilder.connection
+   RotateBuilder.connections_parameters
+   RotateBuilder.connections
    RotateBuilder.angles
    RotateBuilder.velocities
    RotateBuilder.parameters

@@ -57,8 +57,8 @@ The RotateBuilder builds the RotateCommand.
    :toctree: api
 
    RotateBuilder
-   RotateBuilder.connection_parameters
-   RotateBuilder.connection
+   RotateBuilder.connections_parameters
+   RotateBuilder.connections
    RotateBuilder.angles
    RotateBuilder.velocities
    RotateBuilder.parameters
@@ -73,36 +73,32 @@ class RotateBuilder(BaseToolBuilder):
         super(RotateBuilder, self).__init__(*args, **kwargs)
         self._angles = None
         self._velocities = None
-        self._connection_parameters = None
-        self._connection = None
+        self._connections_parameters = None
+        self._connections = None
         return
 
     @property
-    def connection_parameters(self):
+    def connections_parameters(self):
         """
-        :return: SSHParameters
+        :return: list of SSHParameters
         """
-        if self._connection_parameters is None:
-            hostname = self.config_map.get(ConfigOptions.rotate_section,
-                                           ConfigOptions.hostname_option)
-            username = self.config_map.get(ConfigOptions.rotate_section,
-                                           ConfigOptions.username_option)
-            password = self.config_map.get(ConfigOptions.rotate_section,
-                                           ConfigOptions.password_option,
-                                           optional=True)
-            self._connection_parameters = SSHParameters(hostname, username, password)
-
-        return self._connection_parameters
+        if self._connections_parameters is None:
+            section = ConfigOptions.rotate_section
+            nodes = (option for option in self.config_map.options(section)
+                     if option.startswith('node'))
+            node_kwargs = (self.config_map.get_dictionary(section, node) for node in nodes)
+            self._connections_parameters = [SSHParameters(**kwargs) for kwargs in node_kwargs]
+        return self._connections_parameters
     
     @property
-    def connection(self):
+    def connections(self):
         """
-        :return: ssh-connection to the rotation-master
+        :return: list of ssh-connections to the rotation-master
         """
-        if self._connection is None:
-            self._connection = connection_builders[ConnectionBuilderTypes.ssh](self.connection_parameters).connection
-            assert self._connection.__class__.__name__ == "SSHConnection", self._connection.__class__.__name__
-        return self._connection
+        if self._connections is None:
+            self._connections = [connection_builders[ConnectionBuilderTypes.ssh](parameters).connection for
+                                 parameters in self.connections_parameters]
+        return self._connections
 
     @property
     def angles(self):

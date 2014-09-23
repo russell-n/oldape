@@ -72,7 +72,8 @@ class BaseOperationBuilder(BaseClass):
         """
         if self._plans is None:
             self._plans = self.config_map.get_list(ConfigOptions.test_section,
-                                                   self.config_option)
+                                                   self.config_option,
+                                                   optional=True)
         return self._plans
 
     @property
@@ -84,12 +85,13 @@ class BaseOperationBuilder(BaseClass):
             if self.previous_parameters is None:
                 self.previous_parameters = []
             self._builders = []
-            for plan in self.plans:
-                builder = getattr(self.tool_builder, plan)(master=self.master,
-                                                           config_map=self.config_map,
-                                                           previous_parameters=self.previous_parameters)
-                self.previous_parameters = builder.parameters
-                self._builders.append(builder)
+            if self.plans is not None:
+                for plan in self.plans:
+                    builder = getattr(self.tool_builder, plan)(master=self.master,
+                                                               config_map=self.config_map,
+                                                               previous_parameters=self.previous_parameters)
+                    self.previous_parameters = builder.parameters
+                    self._builders.append(builder)
         return self._builders
 
     @property
