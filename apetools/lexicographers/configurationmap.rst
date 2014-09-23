@@ -8,7 +8,7 @@ An extension of the ConfigParser to do conversions
 Helper Classes
 --------------
 
-.. module:: apetools.lexicographers.configuratiomap
+.. module:: apetools.lexicographers.configurationmap
 .. autosummary::
    :toctree: api
 

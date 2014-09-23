@@ -39,7 +39,16 @@ This is a named-tuple to pass parameters to the ssh-connection.
    SSHParameters : password
    
 <<name='SSHParameters', echo=False>>=
-SSHParameters = namedtuple("SSHParameters", "hostname username password".split())
+#SSHParameters = namedtuple("SSHParameters", "hostname username password".split())
+class SSHParameters(object):
+    """
+    To make the parameters optional this is changed to a class
+    """
+    def __init__(self, hostname, username, password=None):
+        self.hostname = hostname
+        self.username = username
+        self.password = password
+    
 @
 
 .. _connection-builder-base:

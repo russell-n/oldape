@@ -7,7 +7,7 @@ A module to build the connections.
 
 * Each has a connection parameter
 
-.. currentmodule:: apetools.builders.subbuilders.connectionbuilder
+.. module:: apetools.builders.subbuilders.connectionbuilder
    
 
 
@@ -159,6 +159,7 @@ Testing the Builders
 --------------------
 
 .. autosummary::
+   :toctree: api
 
    TestConnectionBuilders.test_valid_keys
    TestDummyConnectionBuilder.test_connection

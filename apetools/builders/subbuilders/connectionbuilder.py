@@ -10,7 +10,16 @@ from apetools.connections import sshconnection
 from apetools.commons import errors
 
 
-SSHParameters = namedtuple("SSHParameters", "hostname username password".split())
+#SSHParameters = namedtuple("SSHParameters", "hostname username password".split())
+class SSHParameters(object):
+    """
+    To make the parameters optional this is changed to a class
+    """
+    def __init__(self, hostname, username, password=None):
+        self.hostname = hostname
+        self.username = username
+        self.password = password
+    
 
 
 class ConnectionBuilderBase(BaseClass):
