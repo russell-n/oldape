@@ -1,6 +1,3 @@
-"""
-A builder of busybox wget sessions
-"""
 
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.tools.wgetsession import BusyboxWgetSession
@@ -8,6 +5,7 @@ from apetools.commons.errors import ConfigurationError
 
 from basetoolbuilder import BaseToolBuilder, Parameters
 from builderenums import BuilderParameterEnums
+
 
 class WgetSessionBuilderError(ConfigurationError):
     """
@@ -101,7 +99,7 @@ class BusyboxWgetBuilder(BaseToolBuilder):
     @property
     def product(self):
         """
-        :return: An Iperf Session
+        :return: A Busybox Wget Session
         """
         if self._product is None:
             self._product = BusyboxWgetSession(url=self.url,

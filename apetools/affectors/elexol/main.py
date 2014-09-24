@@ -1,26 +1,23 @@
-"""
-A Module to hold a command-line  version of the NAxxx
-"""
 
 # python libraries
 import argparse
 import traceback
-
-#nps libraries
-from naxxx import NAXXXOn
-
-# Python Libraries
 import logging
 import logging.handlers
+
+#nps libraries
+from naxxx import Naxxx
+
 
 IPERF_TIMESTAMP = "%Y%m%d%H%M%S"
 logger = logging.getLogger(__package__)
 SCREEN_FORMAT = "%(levelname)s: %(name)s.%(funcName)s, Line: %(lineno)d [%(asctime)s] -- %(message)s"
 SCREEN_FORMAT_QUIET = "%(levelname)s: [%(asctime)s] -- %(message)s"
-LOG_FORMAT = "%(levelname)s,%(name)s,%(threadName)s,%(funcName)s,Line: %(lineno)d,%(asctime)s,%(message)s" 
+LOG_FORMAT = "%(levelname)s,%(name)s,%(threadName)s,%(funcName)s,Line: %(lineno)d,%(asctime)s,%(message)s"
 
 GIGABYTE = 1073741824
 BACKUP_LOGS = 5
+
 
 def set_logger(args):
     """
@@ -60,6 +57,9 @@ def set_logger(args):
 
 
 def enable_debugging(args):
+    """
+    Checks if pdb pudb has been set runs pudb if it was
+    """
     if not args.pdb:
         return
     try:
@@ -69,7 +69,11 @@ def enable_debugging(args):
     pdb.set_trace()
     return
 
+
 def parse_args():
+    """
+    parses the command-line arguments
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("--pdb", help="Start an interactive debugger.",
                         action="store_true", default=False)
@@ -88,6 +92,7 @@ def parse_args():
                         dest="id_list")
     return parser.parse_args()
 
+
 def handle_crash(error):
     """
     Generates a crash report.
@@ -96,6 +101,7 @@ def handle_crash(error):
     with open("crashreport.naxxx", 'w') as f:
         traceback.print_exc(file=f)
     return
+
 
 def run(args):
     """
@@ -114,11 +120,15 @@ def run(args):
     except ValueError:
         print "ids need to be comma-separated integers, got {0}".format(args.id_list)
         return
-    naxxx = NAXXXOn(IP=args.ip_address)
+    naxxx = Naxxx(IP=args.ip_address)
     naxxx.run(ids)
     return
 
+
 def main():
+    """
+    calls parse_args, set_logger, enable_debugging, and run
+    """
     args = parse_args()
     set_logger(args)
     enable_debugging(args)

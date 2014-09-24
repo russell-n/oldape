@@ -1,14 +1,3 @@
-"""
-a module to hold a builder of objects
-"""
-
-# python
-#import threading
-#import os
-
-
-# third party
-#from mock import MagicMock
 
 class MagicMock(object):
     def __call__(self):
@@ -18,6 +7,7 @@ class MagicMock(object):
     def total_time(self):
         return "I Don't Know"
 # end class MagicMock
+
 
 # apetools
 from apetools.baseclass import BaseClass
@@ -77,6 +67,7 @@ class GeneratorHolder(object):
         for item in self.generator:
             yield item
         return
+# end GeneratorHolder        
 
 
 class BuilderEnum(object):
@@ -85,7 +76,6 @@ class BuilderEnum(object):
     """
     __slots__ = ()
     repetition = 'repetition'
-# end class BuilderEnum
 
 
 class Builder(BaseClass):

@@ -1,6 +1,3 @@
-"""
-A module to run the NAXXX Network Power Supply 
-"""
 
 #python libraries
 from types import ListType, TupleType, IntType
@@ -16,6 +13,7 @@ from apetools.commons import errors
 
 AffectorError = errors.AffectorError
 ConfigurationError = errors.ConfigurationError
+
 
 class NaxxxError(AffectorError):
     """

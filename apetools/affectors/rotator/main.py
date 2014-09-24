@@ -1,13 +1,14 @@
-"""
-The main entry point to convert the rotator to a command.
-"""
 
+# python standard library
 import argparse
 
-from log_setter import set_logger
+# this module
+from apetools.log_setter import set_logger
+
 
 def enable_debugger(args):
     """
+    Enables pudb if args.pudb, or pdb if args.pdb
     :param:
 
      - `args`: an argument namespace
@@ -24,9 +25,10 @@ def enable_debugger(args):
         pdb.set_trace()
     return
 
+
 def parse_args():
     """
-    An argument parser for the rate-table command
+    An argument parser for the rotate command
     """
     parser = argparse.ArgumentParser()
 
@@ -51,7 +53,11 @@ def parse_args():
                         default = False)
     return parser.parse_args()
 
+
 def main():
+    """
+    parse_args, enable_debugger, create Rotator, rotate
+    """
     args = parse_args()
     enable_debugger(args)
     #set_logger(args)
@@ -62,4 +68,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-        

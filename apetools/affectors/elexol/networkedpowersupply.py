@@ -1,3 +1,4 @@
+
 #python
 import time
 from types import IntType
@@ -8,6 +9,7 @@ from apetools.baseclass import BaseClass
 #affectors
 from elexol import elexol24
 from errors import FaucetteError
+
 
 # Total number of AC ports device can control
 MAX_PINS = 24
@@ -317,4 +319,4 @@ class NetworkedPowerSupply (BaseClass):
                                                                                    self.clear,
                                                                                    self.retry,
                                                                                    self.ports)
-# end class nps
+# end class NetworkedPowerSupply

@@ -1,4 +1,6 @@
+
 from synaxxx import Synaxxx
+
 
 def run(args):
     naxxx = Synaxxx(args.hostname)

@@ -1,8 +1,17 @@
+
+# python standard library
 import argparse
 
+# this package
 from handlers import run
 
+
 def parse_args():
+    """
+    parses the command-line arguments
+
+    :return: ArgumentParser namespace
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument("--pudb", help="Enable pudb debugger.",
                         default=False, action="store_true")
@@ -15,7 +24,15 @@ def parse_args():
                         default=None)
     return parser.parse_args()
 
+
 def enable_debugging(args):
+    """
+    enables pudb or pdb if set in the args
+
+    :param:
+
+     - `args`: something with pudb and pdb attributes
+    """
     if args.pudb:
         import pudb
         pudb.set_trace()
@@ -25,7 +42,11 @@ def enable_debugging(args):
         pdb.set_trace()
     return
 
+
 def main():
+    """
+    Parses the arguments, enables debugging, calls 'run'
+    """
     args = parse_args()
     enable_debugging(args)
     run(args)

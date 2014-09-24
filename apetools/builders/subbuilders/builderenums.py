@@ -1,6 +1,3 @@
-"""
-A place for common constants
-"""
 
 class BuilderParameterEnums(object):
     """

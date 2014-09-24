@@ -1,6 +1,3 @@
-"""
-A fake module to add the API to the Documentation
-"""
 
 class RateTable(object):
     """

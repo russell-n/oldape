@@ -1,13 +1,9 @@
-"""
-A builder of AP Connectors
-"""
 
 from apetools.affectors.apconnect import APConnect
 from apetools.lexicographers.config_options import ConfigOptions
 
 from basetoolbuilder import BaseToolBuilder, Parameters
 from builderenums import BuilderParameterEnums
-
 
 
 class APConnectBuilder(BaseToolBuilder):
