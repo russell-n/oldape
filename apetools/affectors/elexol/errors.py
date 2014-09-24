@@ -1,6 +1,11 @@
+
+# this package
 from apetools.commons import errors
 ConfigurationError = errors.ConfigurationError
+
+
 MAX_PINS = 24
+
 
 class FaucetteError(ConfigurationError):
     """

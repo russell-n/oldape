@@ -1,8 +1,8 @@
-"""
-A Networked Radio Switch based on the Naxxx interface.
-"""
+
+# python standard library
 from types import StringType
 
+# this package
 from apetools.baseclass import BaseClass
 
 

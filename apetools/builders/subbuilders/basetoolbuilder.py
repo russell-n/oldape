@@ -1,6 +1,4 @@
-"""
-A base-class for tool-builders
-"""
+
 # python
 from abc import ABCMeta, abstractproperty
 from collections import namedtuple
@@ -9,13 +7,14 @@ from collections import namedtuple
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 
+
 class BaseToolBuilderError(ConfigurationError):
     """
     An error to raise if there's something wrong with the user's configuration
     """
 # end class BaseToolBuilderError
 
-    
+
 Parameters = namedtuple("Parameters", "name parameters".split())
 
 
@@ -62,4 +61,3 @@ class BaseToolBuilder(BaseClass):
                 raise BaseToolBuilderError(error)
         return self._parameters
 # end class BaseToolBuilder
-    

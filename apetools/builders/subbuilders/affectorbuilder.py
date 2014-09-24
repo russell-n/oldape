@@ -1,9 +1,7 @@
-"""
-A builder of affectors.
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.affectors.elexol import naxxx
+
 
 class NaxxxAffectorBuilder(BaseClass):
     """

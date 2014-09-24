@@ -1,12 +1,10 @@
-"""
-A base-device builder to serve as a template
-"""
 
 #python standard library
 from abc import ABCMeta, abstractproperty
 
 # apetools modules
 from apetools.baseclass import BaseClass
+
 
 class BaseDeviceBuilder(BaseClass):
     """

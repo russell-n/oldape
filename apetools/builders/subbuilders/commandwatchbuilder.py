@@ -1,6 +1,4 @@
-"""
-A module to build a commandwatcher
-"""
+
 from basetoolbuilder import BaseToolBuilder, Parameters
 from builderenums import BuilderParameterEnums
 

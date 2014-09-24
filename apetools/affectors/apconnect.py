@@ -1,11 +1,13 @@
-"""
-A module to connect devices to APs using SSID identifiers
-"""
-from collections import namedtuple 
 
+# python standard-library
+from collections import namedtuple
+
+# this package
 from apetools.baseclass import BaseClass
 
+
 APParameters = namedtuple("APParameters", "name node ssid")
+
 
 class APConnect(BaseClass):
     """
@@ -31,5 +33,4 @@ class APConnect(BaseClass):
                                                                   parameters.ssids.parameters))
         self.nodes[parameters.nodes.parameters].connect(parameters.ssids.parameters)
         return
-# end class APConnect
-        
+# end class APConnect       

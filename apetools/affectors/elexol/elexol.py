@@ -1,8 +1,9 @@
-#!/usr/bin/python
 
+# python standard library
 import socket
 
-class elexol24:
+
+class elexol24(object):
     """
     A class for UDP socket communication with the Elexol24 Ethernet I/O board. 
     
@@ -313,4 +314,8 @@ class elexol24:
     
     # destructor
     def __del__(self):
+        """
+        Calls self.close
+        """
         self.close()
+# end elexol24        

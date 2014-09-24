@@ -1,6 +1,4 @@
-"""
-A module to build operations
-"""
+
 #python
 from abc import ABCMeta, abstractproperty
 
@@ -13,6 +11,7 @@ from apetools.lexicographers.configurationmap import ConfigurationOptionError
 #from basetoolbuilder import BaseToolBuilder
 
 from toolbuilder import ToolBuilder
+
 
 class BaseOperationBuilder(BaseClass):
     """

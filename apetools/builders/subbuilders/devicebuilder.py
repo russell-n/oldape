@@ -1,9 +1,3 @@
-"""
-This is a module to hold device builders.
-
-* Each builder expects a single parameter on initialization
-* Each builder has a `device` property that will return the built device
-"""
 
 from basedevicebuilder import BaseDeviceBuilder
 from apetools.devices import adbdevice, windowsdevice, linuxdevice, macdevice, iosdevice
@@ -36,6 +30,7 @@ class WindowsDeviceBuilder(BaseDeviceBuilder):
         return self._device
 # end class WindowsDeviceBuilder
 
+
 class LinuxDeviceBuilder(BaseDeviceBuilder):
     """
     A Device Builder for Linux Devices
@@ -65,7 +60,7 @@ class LinuxDeviceBuilder(BaseDeviceBuilder):
         return self._device
 # end class LinuxDeviceBuilder
 
-    
+
 class AndroidDeviceBuilder(BaseDeviceBuilder):
     """
     A Device Builder builds Android devices
@@ -95,7 +90,8 @@ class AndroidDeviceBuilder(BaseDeviceBuilder):
                                                role=self.role,
                                                csv=self.csv)
         return self._device
-# end class DutDeviceBuilder
+# end class AndroidDeviceBuilder
+
 
 class MacDeviceBuilder(BaseDeviceBuilder):
     """
@@ -128,6 +124,7 @@ class MacDeviceBuilder(BaseDeviceBuilder):
         return self._device
 # end class MacDeviceBuilder
 
+
 class IosDeviceBuilder(BaseDeviceBuilder):
     """
     A Device Builder builds ios devices
@@ -157,7 +154,7 @@ class IosDeviceBuilder(BaseDeviceBuilder):
                                                role=self.role,
                                                csv=self.csv)
         return self._device
-# end class MacDeviceBuilder
+# end class IosDeviceBuilder
 
 
 class DeviceBuilderTypes(object):
