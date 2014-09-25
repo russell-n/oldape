@@ -30,6 +30,9 @@ These are the documents created from the source files.
 .. toctree::
    :maxdepth: 1
 
+   The BaseClass <baseclass.rst>
+   The Log Setter <log_setter.rst>
+   The Main Module <main.rst>
 
 .. toctree::
    :maxdepth: 1
@@ -38,7 +41,6 @@ These are the documents created from the source files.
    Builders <builders/index.rst>
    Commands <commands/index.rst>
    Commons <commons/index.rst>
-   Connections <connections/index.rst>
    Devices <devices/index.rst>
    Informants <informants/index.rst>
    Lexicographers <lexicographers/index.rst>

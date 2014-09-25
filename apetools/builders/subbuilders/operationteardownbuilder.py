@@ -1,10 +1,8 @@
-"""
-A module to build operation teardowns
-"""
 
 from baseoperationbuilder import BaseOperationBuilder
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.operations.operationteardown import OperationTeardown
+
 
 class OperationTeardownBuilder(BaseOperationBuilder):
     """
@@ -17,6 +15,7 @@ class OperationTeardownBuilder(BaseOperationBuilder):
     @property
     def config_option(self):
         """
+        Name of the option expected in the config-file
         """
         if self._config_option is None:
             self._config_option = ConfigOptions.operation_teardown_option
@@ -35,6 +34,7 @@ class OperationTeardownBuilder(BaseOperationBuilder):
     @property
     def section(self):
         """
+        Section name expected in the config-file
         """
         return self._section
 # end class TeardownOperationBuilder

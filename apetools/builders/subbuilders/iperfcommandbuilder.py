@@ -1,12 +1,10 @@
-"""
-A builder of iperfcommands
-"""
 
 from apetools.lexicographers.config_options import ConfigOptions
 from iperfparameterbuilders import IperfParametersBuilder
 from apetools.commands.iperfcommand import IperfCommand, IperfCommandEnum
 from storagepipebuilder import StoragePipeBuilder
 from apetools.pipes.storagepipe import StoragePipeEnum
+
 
 class IperfCommandBuilder(object):
     """

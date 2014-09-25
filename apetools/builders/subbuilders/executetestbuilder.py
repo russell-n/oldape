@@ -1,12 +1,10 @@
-"""
-A module to build tests
-"""
 
+# this package
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.operations.executetest import ExecuteTest 
 
 from baseoperationbuilder import BaseOperationBuilder
- 
+
 
 class ExecuteTestBuilder(BaseOperationBuilder):
     """
