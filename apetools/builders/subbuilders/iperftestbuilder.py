@@ -1,6 +1,3 @@
-"""
-A module to hold test builders.
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.tools import iperftest
@@ -8,6 +5,8 @@ from apetools.tools import iperftest
 from iperfcommandbuilder import IperfCommandBuilder 
 from apetools.commons import errors
 from apetools.commons import enumerations
+
+
 IperfDirection = enumerations.IperfDirection
 ConfigurationError = errors.ConfigurationError
 

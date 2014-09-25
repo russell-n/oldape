@@ -1,10 +1,8 @@
-"""
-A module to build operation setups
-"""
 
 from baseoperationbuilder import BaseOperationBuilder
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.operations.operationsetup import OperationSetup
+
 
 class OperationSetupBuilder(BaseOperationBuilder):
     """

@@ -1,6 +1,3 @@
-"""
-A builder of Network Radio Switches
-"""
 
 from apetools.affectors.ners import NeRS
 from basetoolbuilder import BaseToolBuilder, Parameters

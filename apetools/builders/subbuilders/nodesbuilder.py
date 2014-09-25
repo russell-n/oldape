@@ -1,6 +1,3 @@
-"""
-A module to build id:node-device dictionaries
-"""
 
 #python
 from string import lower
@@ -16,6 +13,7 @@ class NodeTypes(object):
     __slots__ = ()
     dummy = "dummy"
 # end class NodeTypes
+
 
 class NodesBuilder(BaseClass):
     """
