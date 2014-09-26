@@ -9,7 +9,7 @@ A builder of busybox wget sessions.
 
    ConfigurationError <|-- WgetSessionBuilderError
 
-.. module:: apetools.builder.subbuilders.busyboxwgetbuilder
+.. module:: apetools.builders.subbuilders.busyboxwgetbuilder
 .. autosummary::
    :toctree: api
 

@@ -1,6 +1,3 @@
-"""
-A module to maintain a controller for a networked power-switch
-"""
 
 from apetools.baseclass import BaseClass
 

@@ -1,8 +1,6 @@
-"""
-A module to build a setup for iterations.
-"""
 
 from apetools.tools import setupiteration
+
 
 class SetupIterationBuilder(object):
     """

@@ -3,7 +3,7 @@ Iperf Session Builder
 
 
 
-.. currentmodule:: ape.builders.subbuilders.iperfsessionbuilder
+.. module:: apetools.builders.subbuilders.iperfsessionbuilder
 .. autosummary::
    :toctree: api
 

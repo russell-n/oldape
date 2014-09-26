@@ -1,6 +1,4 @@
-"""
-A module to query the device for interface information.
-"""
+
 #python libraries
 import re
 
@@ -8,6 +6,8 @@ import re
 from apetools.commons import errors
 
 from basewificommand import BaseWifiCommand
+
+
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
 
@@ -17,6 +17,7 @@ class WifiCommandError(CommandError):
     An error to raise if the Wifi Command fails
     """
 # end class WifiCommandError
+
 
 class WifiCommand(BaseWifiCommand):
     """
@@ -149,7 +150,8 @@ class WifiCommand(BaseWifiCommand):
         return "({iface}) RSSI: {rssi}".format(iface=self.interface,
                                                rssi=self.rssi)
 # end class WifiCommand
-    
+
+
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()

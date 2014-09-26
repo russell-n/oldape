@@ -1,6 +1,3 @@
-"""
-A module to build device pollers
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
@@ -13,6 +10,7 @@ from apetools.watchers.procpollster import CpuPollster
 
 class PollerBuilderError(ConfigurationError):
     """
+    An exception to raise of the poller can't be built
     """
 # end PollerBuilderError
 
@@ -50,6 +48,7 @@ class BasePollerBuilder(BaseClass):
     @property
     def name(self):
         """
+        A getter for name (identifier)
         """
         return self._name
 
@@ -108,8 +107,8 @@ class BasePollerBuilder(BaseClass):
             else:
                 self._interval = 1
         return self._interval
-
 # end class BasePollerBuilder
+
 
 class ProcnetdevPollsterBuilder(BasePollerBuilder):
     """
@@ -134,7 +133,8 @@ class ProcnetdevPollsterBuilder(BasePollerBuilder):
                                                interface=self.node.interface,
                                                use_header=use_header)
         return self._product
-# end class ProcdevnetPollterBuilder
+# end class ProcdevnetPollsterBuilder
+
 
 class RssiPollerBuilder(BasePollerBuilder):
     """
@@ -170,6 +170,7 @@ class RssiPollerBuilder(BasePollerBuilder):
         return self._product
 # end class RssiPollerBuilder
 
+
 class DevicePollerBuilder(BasePollerBuilder):
     """
     A builder of rssi-pollers
@@ -190,6 +191,7 @@ class DevicePollerBuilder(BasePollerBuilder):
                                          use_header=self.use_header)
         return self._product
 # end class DevicePollerBuilder
+
 
 class CpuPollsterBuilder(BasePollerBuilder):
     """

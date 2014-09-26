@@ -1,6 +1,3 @@
-"""
-A module to build tear-downs run at the end of a test set.
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.tools import copyfiles

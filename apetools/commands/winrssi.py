@@ -1,11 +1,12 @@
-"""
-A command to interpret the output of Miller's rssi puller
-"""
+
+# python standard library
 import re
 
+# this package
 from apetools.parsers import oatbran
 from apetools.commons.errors import CommandError
 from apetools.baseclass import BaseClass
+
 
 class WinRssiError(CommandError):
     """
@@ -13,7 +14,9 @@ class WinRssiError(CommandError):
     """
 # end WinRssiError
 
+
 NA = "NA"
+
 
 class WinRssi(BaseClass):
     """

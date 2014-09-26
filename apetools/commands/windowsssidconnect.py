@@ -1,11 +1,10 @@
-"""
-A re-associator between a device and a SSID/profile
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
 
+
 NEWLINE = "\n"
+
 
 class WindowsSSIDConnect(BaseClass):
     """

@@ -1,7 +1,3 @@
-"""
-A module to change the prompt variable on a device.
-Meant to help serial, telnet and other connections that read streams.
-"""
 
 #python libraries
 import random
@@ -11,6 +7,7 @@ from itertools import repeat
 
 # apetools libraries
 from apetools.baseclass import BaseClass
+
 
 EMPTY_STRING = ''
 
@@ -72,9 +69,3 @@ class ChangePrompt(BaseClass):
         return self.prompt
         
 # end class ChangePrompt
-
-#if __name__ == "__main__":
-#    from apetools.connections import telnetadapter 
-#    t = telnetadapter.TelnetAdapter("192.168.10.172")
-#    c = ChangePrompt(t)
-#    print c.run()

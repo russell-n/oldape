@@ -1,6 +1,3 @@
-"""
-A builder for reporting objects
-"""
 
 from apetools.commons.reporter import Reporter
 

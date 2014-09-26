@@ -1,6 +1,4 @@
-"""
-A module to hold a front for android's `svc` command.
-"""
+
 from abc import ABCMeta, abstractmethod
 
 from apetools.baseclass import BaseClass
@@ -42,6 +40,7 @@ class ToggleWifiBase(BaseClass):
         return
 # end class ToggleWifiBase
 
+
 class EnableWifi(ToggleWifiBase):
     """
     A callable class to enable wifi
@@ -57,7 +56,8 @@ class EnableWifi(ToggleWifiBase):
         self.command.enable_wifi()
         return
 # end class EnableWifi
-    
+
+
 class DisableWifi(ToggleWifiBase):
     """
     A callable class to disable wifi
@@ -74,7 +74,7 @@ class DisableWifi(ToggleWifiBase):
         return
 # end class DisableWifi
 
-    
+
 class Svc(BaseClass):
     """
     The Android's SVC command (wifi only).
@@ -142,4 +142,3 @@ class Svc(BaseClass):
                 raise CommandError("'svc' subcommand missing or incorrect (given: `{0}`".format(subcommand))
         return
 # end class Svc
-    

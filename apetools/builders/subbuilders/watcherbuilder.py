@@ -1,6 +1,3 @@
-"""
-A Watcher builder
-"""
 
 #apetools
 from basetoolbuilder import BaseToolBuilder
@@ -8,8 +5,8 @@ from logwatcherbuilders import LogcatWatcherBuilder, LogWatcherBuilder, LogFollo
 from pollerbuilders import RssiPollerBuilder, DevicePollerBuilder, ProcnetdevPollsterBuilder, CpuPollsterBuilder
 from fileexpressionbuilders import BatteryWatcherBuilder
 from apetools.watchers import thewatcher
-
 from apetools.lexicographers.config_options import ConfigOptions
+
 
 class WatcherTypes(object):
     """
@@ -37,6 +34,7 @@ watcher_builder = {WatcherTypes.adblogcat:LogcatWatcherBuilder,
                    WatcherTypes.cpu:CpuPollsterBuilder,
                    WatcherTypes.logfollow:LogFollowerBuilder,
                    WatcherTypes.pingwatcher:PingWatcherBuilder}
+
 
 class WatcherBuilder(BaseToolBuilder):
     """

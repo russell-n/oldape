@@ -1,9 +1,8 @@
-"""
-A module to query the device for interface information.
-"""
+
 #python libraries
 import re
 
+# this package
 from apetools.baseclass import BaseClass
 from apetools.commons import expressions
 from apetools.commons import errors
@@ -149,7 +148,8 @@ class WpaCliCommand(BaseClass):
                                                                                          sup=self.supplicant_state)
 
 # end class WpaCliCommand
-    
+
+
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()

@@ -1,10 +1,8 @@
-"""
-A module to build test setups
-"""
 
 from baseoperationbuilder import BaseOperationBuilder
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.operations.setuptest import SetupTest
+
 
 class SetupTestBuilder(BaseOperationBuilder):
     """

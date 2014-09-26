@@ -1,6 +1,4 @@
-"""
-A module to extract information from `ipconfig`
-"""
+
 # python
 import re
 from time import time as now
@@ -10,19 +8,21 @@ from apetools.parsers import oatbran
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
 
+
 NEWLINE = "\n"
+
 
 class IpconfigEnum(object):
     __slots__ = ()
     address = "address"
 # end class IpConfigEnum
 
+
 class IpconfigError(CommandError):
     """
     An exception to raise if the command fails.
     """
 # end class IpconfigError
-
 
 
 class Ipconfig(BaseClass):

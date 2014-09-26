@@ -1,6 +1,4 @@
-"""
-A module to extract information from iwconfig
-"""
+
 #python standard library
 import re
 import os
@@ -8,6 +6,7 @@ import os
 #third-party
 from apetools.parsers import oatbran
 from apetools.commons.errors import CommandError
+
 
 class IwconfigEnums(object):
     __slots__ = ()
@@ -18,7 +17,7 @@ class IwconfigEnums(object):
     bitrate = 'bitrate'
 # end class IwconfigEnums
 
-    
+
 class Iwconfig(object):
     """
     A class to extract `iwconfig` information

@@ -52,10 +52,14 @@ The `PingCommand` issues the ping command and checks the outcome
    :toctree: api
 
    PingCommand
+   PingCommand.arguments
+   PingCommand.expression
+   PingCommand.run
+   PingCommand.__call__
 
 .. uml::
 
-   PingCommand
+   BaseClass <|-- PingCommand
 
 
 

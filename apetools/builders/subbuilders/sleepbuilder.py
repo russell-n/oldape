@@ -1,6 +1,4 @@
-"""
-A module to build a sleep object.
-"""
+
 # apetools modules
 from basetoolbuilder import BaseToolBuilder, Parameters
 from apetools.lexicographers.config_options import ConfigOptions
@@ -18,10 +16,11 @@ class SleepConfigurationError(ConfigurationError):
 class SleepConfigurationEnum(object):
     __slots__ = ()
     time = 'time'
-        
+
+
 class SleepBuilder(BaseToolBuilder):
     """
-    A networked oscillator builder
+    A Sleep builder
     """
     def __init__(self, *args, **kwargs):
         super(SleepBuilder, self).__init__(*args, **kwargs)

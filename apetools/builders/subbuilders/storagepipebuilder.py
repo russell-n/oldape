@@ -1,9 +1,6 @@
-"""
-A builder of storage pipes
-"""
+
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.pipes.storagepipe import StoragePipe, StoragePipeEnum
-
 
 
 class StoragePipeBuilder(object):
