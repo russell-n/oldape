@@ -1,6 +1,4 @@
-"""
-A module to build a rotate object.
-"""
+
 # apetools modules
 from basetoolbuilder import BaseToolBuilder
 from apetools.lexicographers.config_options import ConfigOptions
@@ -9,6 +7,7 @@ from apetools.connections.sshconnection import SSHConnection
 from apetools.commands.oscillate import Oscillate, OscillateStop
 
 from apetools.commons.errors import ConfigurationError
+
 
 class OscillatorConfigurationError(ConfigurationError):
     """
@@ -158,9 +157,9 @@ class OscillateBuilder(BaseToolBuilder):
         if self._parameters is None:
             self._parameters = self.previous_parameters
         return self._parameters
-# end class PowerOnBuilder            
+# end class PowerOnBuilder
 
-    
+
 class OscillateStopBuilder(BaseToolBuilder):
     """
     A networked oscillator stopper builder

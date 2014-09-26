@@ -1,6 +1,4 @@
-"""
-A module to build a rotate object.
-"""
+
 # python libraries
 from collections import namedtuple
 from string import lower

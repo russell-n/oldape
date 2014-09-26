@@ -1,10 +1,8 @@
-"""
-A module to build time-to-recovery tools
-"""
 
 from basetoolbuilder import BaseToolBuilder, Parameters
 from apetools.tools.timetorecovery import TimeToRecovery
 from apetools.lexicographers.config_options import ConfigOptions
+
 
 class TimeToRecoveryBuilderEnum(object):
     __slots__ = ()

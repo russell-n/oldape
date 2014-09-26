@@ -1,8 +1,3 @@
-"""
-A module to aggregate the tool-builders
-
-This will eventually be replaced by the importer class(es)
-"""
 
 class ToolBuilderEnum(object):
     __slots__ = ()
@@ -19,6 +14,7 @@ class ToolBuilderEnum(object):
     naxxx = 'naxxx'
     busyboxwget = 'busiboxwget'
 # end class ToolBuilderEnum
+
 
 class ToolBuilder(object):
     """
@@ -130,7 +126,3 @@ class ToolBuilder(object):
         from naxxxbuilder import NaxxxBuilder
         return NaxxxBuilder
 # end class ToolBuilder
-        
-#tool_builders = {ToolBuilderEnum.ners:NersBuilder,
-#                 ToolBuilderEnum.apconnect:APConnectBuilder,
-#                 ToolBuilderEnum.timetorecovery:TimeToRecoveryBuilder}

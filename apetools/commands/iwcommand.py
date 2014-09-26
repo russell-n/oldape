@@ -1,6 +1,4 @@
-"""
-A module to query the device for interface information.
-"""
+
 #python libraries
 import re
 
@@ -8,6 +6,7 @@ from apetools.baseclass import BaseClass
 from apetools.commons import enumerations
 from apetools.commons import expressions
 from apetools.commons import errors
+
 
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
@@ -140,7 +139,8 @@ class IwCommand(BaseClass):
         return "({iface}) RSSI: {rssi}".format(iface=self.interface,
                                                rssi=self.rssi)
 # end class IfconfigCommand
-    
+
+
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()

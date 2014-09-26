@@ -1,6 +1,3 @@
-"""
-A Module to hold a teardown for a single iteration.
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.tools import teardowniteration
@@ -26,5 +23,3 @@ class TeardownIterationBuilder(BaseClass):
             self._teardowniteration = teardowniteration.TeardownIteration()
         return self._teardowniteration
 # end class TeardownIterationBuilder
-
-

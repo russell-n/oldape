@@ -13,7 +13,7 @@ NersBuilder
    BaseToolBuilder <|-- NersBuilder
    NersBuilder o- NeRS
 
-.. module:: apetools.builders.subbuilders
+.. module:: apetools.builders.subbuilders.nersbuilder
 .. autosummary::
    :toctree: api
 

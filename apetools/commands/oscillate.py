@@ -1,6 +1,3 @@
-"""
-A class to talk to an oscillator.
-"""
 
 #python standard library
 from threading import Thread, Event
@@ -18,6 +15,7 @@ from basecommand import BaseThreadedCommand
 
 class OscillatorError(CommandError):
     """
+    Exception to raise if the oscillator fails
     """
 # end class OscillatorError
 

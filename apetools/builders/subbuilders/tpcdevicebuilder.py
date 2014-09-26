@@ -1,6 +1,3 @@
-"""
-A module to build a traffic PC device
-"""
 
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.builders.subbuilders.connectionbuilder import connection_builders

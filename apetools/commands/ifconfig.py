@@ -1,16 +1,17 @@
-"""
-A module to query the device for interface information.
-"""
+
 #python libraries
 import re
 import os
 
+# this package
 from apetools.baseclass import BaseClass
 from apetools.commons import enumerations
 from apetools.commons import expressions
 from apetools.commons.errors import ConfigurationError
 
+
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
+
 
 class IfconfigError(ConfigurationError):
     """
@@ -110,4 +111,3 @@ class IfconfigCommand(BaseClass):
             self.logger.error(line)
         return
 # end class IfconfigCommand
-    

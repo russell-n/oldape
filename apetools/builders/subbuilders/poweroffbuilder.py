@@ -1,6 +1,4 @@
-"""
-A module to build a rotate object.
-"""
+
 # python libraries
 from collections import namedtuple
 from string import lower
@@ -14,29 +12,32 @@ from apetools.commands.poweroff import PowerOff
 
 from apetools.commons.errors import ConfigurationError
 
-class PowerOnConfigurationError(ConfigurationError):
+
+class PowerOffConfigurationError(ConfigurationError):
     """
     An error to raise if the user's configuration is wrong
     """
-# end class PowerOnConfigurationError
+# end class PowerOffConfigurationError
 
-class PowerOnBuilderEnum(object):
+
+class PowerOffBuilderEnum(object):
     """
     A holder of Synaxxx constants
     """
     __slots__ = ()
     id_switch = "id_switch"
-# end class PowerOnBuilderEnums
+# end class PowerOffBuilderEnums
 
-class PowerOnParameters(namedtuple("PowerOnParameters", "identifier switch".split())):
+
+class PowerOffParameters(namedtuple("PowerOffParameters", "identifier switch".split())):
     __slots__ = ()
 
     def __str__(self):
         return "identifier: {0} switch: {1}".format(self.identifier,
                                                     self.switch)
-# end class PowerOnParameters
-                           
-    
+# end class PowerOffParameters
+
+
 class PowerOffBuilder(BaseToolBuilder):
     """
     A networked power-switch builder (off)
@@ -84,10 +85,10 @@ class PowerOffBuilder(BaseToolBuilder):
                 config_tuples = [self.config_map.get_namedtuple(ConfigOptions.poweron_section, identifier, converter=lower) for identifier in identifiers]
             except TypeError as error:
                 self.logger.error(error)
-                raise PowerOnConfigurationError("Missing POWERON section in the config-file.")
+                raise PowerOffConfigurationError("Missing POWEROFF section in the config-file.")
             self._config_options = dict(zip(identifiers, config_tuples))
             if not len(self._config_options):
-                raise PowerOnConfigurationError("Missing POWERON options (<ID>=hostname:<hostname>,switch:<switch ID>) in the config file")
+                raise PowerOffConfigurationError("Missing POWEROFF options (<ID>=hostname:<hostname>,switch:<switch ID>) in the config file")
         return self._config_options
 
 
@@ -119,4 +120,4 @@ class PowerOffBuilder(BaseToolBuilder):
             #                                               parameters=parameters))
             self._parameters = self.previous_parameters
         return self._parameters
-# end class PowerOnBuilder            
+# end class PowerOffBuilder

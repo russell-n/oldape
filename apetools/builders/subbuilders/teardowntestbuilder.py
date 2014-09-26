@@ -1,11 +1,9 @@
-"""
-A module to build test teardowns
-"""
 
 from baseoperationbuilder import BaseOperationBuilder
 from apetools.lexicographers.config_options import ConfigOptions
 from apetools.operations.teardowntest import TeardownTest
 from apetools.commons.errors import ConfigurationError
+
 
 class TeardownTestBuilder(BaseOperationBuilder):
     """

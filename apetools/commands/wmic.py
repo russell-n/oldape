@@ -1,20 +1,22 @@
-"""
-A module to hold a front for window's `wmic` command to enable/disable wifi
-"""
+
+# python standard library
 import re
 
+# this package
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
 from apetools.parsers import oatbran
 
+
 NEWLINE = "\n"
+
 
 class WmicEnumeration(object):
     __slots__ = ()
     code = "code"
 # class WmicEnumeration
-    
-    
+
+
 class WmicWin32NetworkAdapter(BaseClass):
     """
     Window's wmic win32_networkadapter command (wifi only).
@@ -108,4 +110,3 @@ class WmicWin32NetworkAdapter(BaseClass):
             
         return
 # end class WmicWin32NetworkAdapter
-    

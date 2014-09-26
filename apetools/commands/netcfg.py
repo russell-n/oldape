@@ -1,6 +1,4 @@
-"""
-A module to query the device for interface information (using netcfg)
-"""
+
 #python libraries
 import re
 from itertools import tee
@@ -124,7 +122,8 @@ class NetcfgCommand(BaseClass):
                                                            interface=self.interface,
                                                            mac=self.mac_address)
 # end class IfconfigCommand
-    
+
+
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()

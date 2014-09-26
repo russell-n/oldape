@@ -1,11 +1,10 @@
-"""
-A base module to query the device for interface information.
-"""
+
 #python libraries
 from abc import ABCMeta, abstractproperty
 
 from apetools.baseclass import BaseClass
 from apetools.commons import errors
+
 
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
@@ -81,10 +80,4 @@ class BaseWifiCommand(BaseClass):
     def __str__(self):
         return "({iface}) RSSI: {rssi}".format(iface=self.interface,
                                                rssi=self.rssi)
-# end class IfconfigCommand
-    
-if __name__ == "__main__":
-    from apetools.connections import adbconnection
-    connection = adbconnection.ADBShellConnection()
-    iw = IwCommand(connection)
-    print str(iw)
+# end class BaseWifiCommand
