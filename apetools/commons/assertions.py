@@ -1,6 +1,3 @@
-"""
-A set of assertion functions to make the messages a little easier.
-"""
 
 def assert_equal(expected, actual):
     """
@@ -11,6 +8,8 @@ def assert_equal(expected, actual):
     """
     assert expected==actual, \
         "Expected: {e}=={a}, Actual: {e} != {a}".format(e=expected,a=actual)
+    return
+
 
 def assert_is(expected, actual):
     """
@@ -21,3 +20,4 @@ def assert_is(expected, actual):
     """
     assert expected is actual, \
         "Expected: {e} is {a}, Actual: {e} is not {a}".format(e=expected,a=actual)
+    return

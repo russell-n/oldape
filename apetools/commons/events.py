@@ -1,11 +1,10 @@
-"""
-A master event-list holder that adds a timeout
-"""
+
 # python standard library
 import time
 
 #apetools
 from apetools.baseclass import BaseClass
+
 
 class EventHolder(BaseClass):
     """

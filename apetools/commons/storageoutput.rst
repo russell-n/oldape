@@ -32,6 +32,7 @@ The `StorageOutput` is a class to maintain path information so that users of it 
    StorageOutput : writelines(lines)
    StorageOutput : copy(source, subdir)
    StorageOutput : move(source, subdir)
+   StorageOutput : timestamp(filename)
 
 
 Example::

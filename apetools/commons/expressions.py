@@ -1,10 +1,14 @@
+
+# python standard library
 import string
+
 
 NAMED = r"(?P<{name}>{pattern})"
 GROUP = r"({group})"
 CLASS = "[{0}]"
 OR = "|"
 NOT = "^"
+
 
 SPACE = r'\s'
 NOT_SPACE = r'\S'
@@ -14,7 +18,7 @@ WORD_ENDING = r'\b'
 LINE_ENDING = r"$"
 LINE_START = "^"
 
-# counts
+
 M_TO_N_TIMES = "{{{m},{n}}}"
 ONE_TO_3 = M_TO_N_TIMES.format(m=1, n=3)
 EXACTLY = "{{{0}}}"
@@ -24,7 +28,7 @@ ZERO_OR_ONE = '?'
 
 EVERYTHING = ANYTHING + ZERO_OR_MORE
 
-# characters
+
 LETTER = CLASS.format(string.ascii_letters)
 LETTERS = LETTER + ONE_OR_MORE
 ALPHA_NUM = string.ascii_letters + string.digits
@@ -37,14 +41,13 @@ SPACES = SPACE + ONE_OR_MORE
 DOT = r"\."
 
 
-# numbers
 HEX = CLASS.format(string.hexdigits)
 HEXADECIMALS = HEX + ONE_OR_MORE
 INTEGER = DIGIT + ONE_OR_MORE
 FLOAT = INTEGER + DOT + INTEGER
 REAL = INTEGER + GROUP.format(group=DOT + INTEGER) + ZERO_OR_ONE
 
-# Addresses
+
 OCTET = DIGIT + ONE_TO_3
 OCTET_DOT = OCTET + DOT
 
@@ -60,6 +63,8 @@ MAC_ADDRESS = NAMED.format(name=MAC_ADDRESS_NAME,
 LINUX_IP = SPACES.join('inet addr:'.split()) + IP_ADDRESS
 LINUX_MAC = "HWaddr" + SPACES + MAC_ADDRESS
 ANDROID_IP = 'ip' + SPACES + IP_ADDRESS
+
+
 INTERFACE_STATE_NAME = "state"
 INTERFACE_STATE =  NAMED.format(name=INTERFACE_STATE_NAME,
                                 pattern="UP" + OR + "DOWN")
@@ -69,7 +74,8 @@ INTERFACE_NAME = "interface"
 INTERFACE = NAMED.format(name=INTERFACE_NAME,
                                 pattern=LETTERS + INTEGER) 
 NETCFG_INTERFACE = INTERFACE + NETCFG_IP
-#ping expressions
+
+
 RTT = NAMED.format(name="rtt", pattern=REAL)
 
 PING = SPACES.join([EVERYTHING + IP_ADDRESS + ":"
@@ -77,7 +83,6 @@ PING = SPACES.join([EVERYTHING + IP_ADDRESS + ":"
                     "time" + SPACES_OPTIONAL + "(=|<)" + SPACES_OPTIONAL + RTT])
 
 
-# ps expressions
 PSE_NAME = "pse"
 PID_NAME = 'pid'
 PID = NAMED.format(name=PID_NAME,  pattern=INTEGER)
@@ -87,7 +92,7 @@ PROCESS_NAME = "process"
 PROCESS = NAMED.format(name=PROCESS_NAME,pattern=CLASS.format(NOT + SPACE) + ONE_OR_MORE)
 PSE_LINUX = SPACES.join([PID, TTY, TIME, PROCESS])
 
-#android ps
+
 USER = ALPHA_NUM_UNDERSCORES
 PPID = INTEGER
 VSIZE = INTEGER
@@ -97,14 +102,14 @@ PC = HEXADECIMALS
 S_OR_R = "(S" + OR + "R)"
 PS_ANDROID = SPACES.join((USER, PID, PPID, VSIZE, RSS, WCHAN, PC, S_OR_R, PROCESS))
 
-# iw expressions
+
 IW_INTERFACE = "Interface" + SPACES + INTERFACE
 
 RSSI_NAME = 'rssi'
 IW_RSSI = "signal:" + SPACES + NAMED.format(name=RSSI_NAME,
                                             pattern="-" + INTEGER + SPACES + "dBm")
 
-# wpa_cli expressions
+
 WPA_MAC = "address=" + MAC_ADDRESS
 WPA_IP = "ip_address=" + IP_ADDRESS
 WPA_INTERFACE = "Using" + SPACES + "interface" + SPACES + "'" + INTERFACE + "'"

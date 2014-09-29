@@ -1,0 +1,155 @@
+Errors
+======
+
+A module to hold common exceptions.
+
+These are made sub-classes of the OperatorError so that the hortator can recover and move on to the next hortator.
+
+Any exception raised that isn't a sub-class of the OperatorError is unexpected and will crash the program (to make it obvious).
+
+<<name='imports', echo=False>>=
+from apetools.proletarians.errors import OperatorError
+@
+
+.. uml::
+
+   OperatorError <|-- ConnectionError
+
+.. module:: apetools.commons.errors
+.. autosummary:: 
+   :toctree: api
+
+   ConnectionError
+
+<<name='ConnectionError', echo=False>>=
+class ConnectionError(OperatorError):
+    """
+    A ConnectionError is raised by connectinos to indicate a problem.
+    """
+    pass
+# end class ConnectionError
+@
+
+.. uml::
+
+   OperatorError <|-- ConnectionWarning
+
+.. autosummary::
+   :toctree: api
+
+   ConnectionWarning
+
+<<name='ConnectionWarning', echo=False>>=
+class ConnectionWarning(OperatorError):
+    """
+    A connection warning is a non-fatal connection-related error.
+    """
+    pass
+# end class ConnectionWarning
+@
+
+.. uml::
+
+   OperatorError <|-- TimeoutError
+
+.. autosummary::
+   :toctree: api
+
+   TimeoutError
+
+<<name='TimeoutError', echo=False>>=
+class TimeoutError(OperatorError):
+    """
+    A TimeoutError is a generic Timeout exception to wrap the various timeout
+    """
+    pass
+# end class TimeoutError
+@
+
+.. uml::
+
+   OperatorError <|-- CommandError
+
+.. autosummary::
+   :toctree: api
+
+   CommandError
+
+<<name='CommandError', echo=False>>=
+class CommandError(OperatorError):
+    """
+    A CommandError reflects a problem with the command on the Device-side
+    """
+    pass
+# end class CommandError
+@
+
+.. uml::
+
+   OperatorError <|-- ConfigurationError
+
+.. autosummary::
+   :toctree: api
+
+   ConfigurationError
+
+<<name="ConfigurationError", echo=False>>=
+class ConfigurationError(OperatorError):
+    """
+    A ConfigurationError is raised if there is an error in the configuration file
+    """
+    pass
+# end class ConfigurationError
+@
+
+.. uml::
+
+   OperatorError <|-- StorageError
+
+.. autosummary::
+   :toctree: api
+
+   StorageError
+
+<<name='StorageError', echo=False>>=
+class StorageError(OperatorError):
+    """
+    An StoragError is raised by the StorageOutput
+    """
+    pass
+# end class StorageError
+@
+
+.. uml::
+
+   OperatorError <|-- AffectorError
+
+.. autosummary::
+   :toctree: api
+
+   AffectorError
+    
+<<name='AffectorError', echo=False>>=
+class AffectorError(OperatorError):
+    """
+    An Affector Error is raised for non-recoverable affector errors
+    """
+# end class AffectorError
+@
+
+.. uml::
+
+   OperatorError <|-- ArgumentError
+
+.. autosummary::
+   :toctree: api
+
+   ArgumentError
+
+<<name='ArgumentError', echo=False>>=
+class ArgumentError(OperatorError):
+    """
+    raised if command-line arguments don't produce valid output
+    """
+# end class InvocationError
+@

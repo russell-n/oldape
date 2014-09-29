@@ -1,17 +1,15 @@
-"""
-The central tendency is the `middle` of a dataset.
-"""
+
+# python standard library
 import random
 from math import modf
 from itertools import repeat
 
-#import numpypy as numpy
-#except ImportError:
-#import numpy
+
 TWO = SQUARED = 2
 TWO_F = 2.0
 SQUARE_ROOT = 0.5
 PERCENT = 1/100.0
+
 
 class CentralTendency(object):
     """

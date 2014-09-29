@@ -1,11 +1,10 @@
-"""
-The dummy is meant to sit in when an object with a run method is called but not needed.
-"""
 
+# this package
 from apetools.baseclass import BaseClass
 
 
 LOG_STRING = "{0}.run() called with parameters '{1}'"
+
 
 class NoOpDummy(BaseClass):
     """
@@ -29,5 +28,8 @@ class NoOpDummy(BaseClass):
         return
 
     def __call__(self, parameters=None):
+        """
+        Calls self.run
+        """
         self.run(parameters)
 # end class NoOpDummy

@@ -1,0 +1,37 @@
+Assertions
+==========
+
+A set of assertion functions to make the messages a little easier. I don't really know what the use case is here. I think this is leftover from when I wasn't using UnitTest or pyhamcrest as much.
+
+.. module:: apetools.commons.assertions
+.. autosummary::
+   :toctree: api
+
+   assert_equal
+   assert_is
+
+<<name='assert_equal', echo=False>>=
+def assert_equal(expected, actual):
+    """
+    :param:
+
+     - `expected`: The expected Value
+     - `actual`: The actual value
+    """
+    assert expected==actual, \
+        "Expected: {e}=={a}, Actual: {e} != {a}".format(e=expected,a=actual)
+    return
+@
+
+<<name='assert_is', echo=False>>=
+def assert_is(expected, actual):
+    """
+    :param:
+
+     - `expected`: The expected Value
+     - `actual`: The actual value
+    """
+    assert expected is actual, \
+        "Expected: {e} is {a}, Actual: {e} is not {a}".format(e=expected,a=actual)
+    return
+@
