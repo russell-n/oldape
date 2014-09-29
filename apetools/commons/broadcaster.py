@@ -1,6 +1,3 @@
-"""
-A broadcaster implements a one-to-many pipe
-"""
 
 from apetools.baseclass import BaseClass
 
@@ -123,6 +120,9 @@ class Broadcaster(BaseClass):
         return receiver in self.receivers
 
     def __iter__(self):
+        """
+        :return: iterator over self.receivers
+        """
         return iter(self.receivers)
     
     def __call__(self, datum):

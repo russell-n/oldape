@@ -1,13 +1,7 @@
-"""
-A module to hold the generators for the concatenator.
-"""
-
-# python libraries
-import fnmatch
-import os
 
 WRITEABLE = 'w'
 EOSection = ''
+
 
 def find(glob, start=None):
     """
@@ -26,6 +20,7 @@ def find(glob, start=None):
         for name in fnmatch.filter(file_list, glob):
             yield os.path.join(path, name)
     return
+
 
 class ShallowFind(object):
     """
@@ -101,7 +96,8 @@ class ShallowFind(object):
             yield name    
         return 
 # end class ShallowFind
-    
+
+
 def shallow_find(glob, start = None):
     """
     Matches only in one directory
@@ -116,7 +112,8 @@ def shallow_find(glob, start = None):
     for name in fnmatch.filter(names, glob):
         yield name
     return
-             
+
+
 def concatenate(glob, start=None):
     """
     :param:

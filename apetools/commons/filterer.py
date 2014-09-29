@@ -1,12 +1,10 @@
-"""
-A filterer for pipelines
-"""
 
-#Python
+#python standard library
 import re
 
 # apetools
 from apetools.baseclass import BaseClass
+
 
 class Filterer(BaseClass):
     """
@@ -62,7 +60,11 @@ class Filterer(BaseClass):
         return
 # end class Filter
 
+
 class DummyEvent(object):
+    """
+    A dummy event for a pipeline
+    """
     def __init__(self):
         return
 

@@ -1,12 +1,14 @@
-"""
-A module for generic coroutines
-"""
+
+# python standard library
 from types import FileType
+import functools
+
 
 COMMA = ','
 NEWLINE = '\n'
 COMMA_JOIN = "{0},{1}"
 WRITEABLE = 'w'
+
 
 def coroutine(func):
     """
@@ -16,15 +18,19 @@ def coroutine(func):
     
      - `func`: A coroutine function.
     """
+    @functools.wraps(func)
     def wrap(*args, **kwargs):
         coroutine_func = func(*args, **kwargs)
         coroutine_func.next()
         return coroutine_func
     return wrap
 
+
 @coroutine
 def broadcast(targets):
     """
+    all lines sent to this will be piped to the targets
+    
     :param:
 
      - `targets`: A list of coroutines to send output to.
@@ -34,6 +40,7 @@ def broadcast(targets):
         for target in targets:
             target.send(line)
     return
+
 
 @coroutine
 def comma_join(target, input_count):
@@ -52,6 +59,7 @@ def comma_join(target, input_count):
         target.send(line)
     return
 
+
 @coroutine
 def output(target_file):
     """
@@ -66,18 +74,38 @@ def output(target_file):
         target_file.write(line)
     return
 
+
 @coroutine
 def comma_append(source, target):
+    """
+    appends line sent it to next item in list and sends it as a comma-separated string
+
+    Each line sent to it gets added to the next item in source (so creates a second column)
+
+    :param:
+
+     - `source`: list of strings to add lines to
+     - `target`: target to send lines to
+    """
     for line in source:
         line_2 = (yield)
         target.send(COMMA_JOIN.format(line.rstrip(NEWLINE), line_2))
     return
 
+
 @coroutine
 def file_output(file_object):
+    """
+    A pipe that writes input to a file
+
+    :param:
+
+     - `file_object`: a writeable file (or name of file to open)
+    """
     if not type(file_object) is FileType:
         file_object = open(file_object, WRITEABLE)
     while True:
         line = (yield)
         line = line.rstrip(NEWLINE) + NEWLINE
         file_object.write(line)
+    return

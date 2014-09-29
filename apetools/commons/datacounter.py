@@ -1,17 +1,5 @@
-"""
-The Data Counter is meant for event watching.
 
-It tracks the time from its start to its first call.
-
-Intended Sequence::
-
-    d = DataCounter()
-    d.start()
-    d([data])
-    d.stop()
-
-Since it's only counting the data anything passed in to the call is ignored
-"""
+# python standard library
 from collections import namedtuple
 import time
 
@@ -24,7 +12,7 @@ class CounterDatum(namedtuple("CounterDatum", "first count")):
      - `count`: total number of calls to DataCounter
     """
 # end class CounterDatum
-                   
+
 
 class DataCounter(object):
     """

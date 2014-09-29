@@ -1,11 +1,10 @@
 
-"""
-The Storage Broadcaster maintains a file object and broadcasts to a list of targets.
-"""
 #python
 import os
 
+# this package
 from apetools.baseclass import BaseClass
+
 
 WRITEABLE = "w"
 
@@ -119,6 +118,7 @@ class StorageBroadcaster(BaseClass):
             self.close()
             return
 # end class Storage Broadcaster
+
 
 class CallFile(object):
     """

@@ -1,14 +1,12 @@
-"""
-A module to hold a file-like object for output.
-"""
 
 # python Libraries
 import Queue
 import socket
 
-#time to recover Libraries
+#this package
 from apetools.baseclass import BaseClass
 from errors import TimeoutError
+
 
 EMPTY_STRING = ''
 EOF = EMPTY_STRING
@@ -78,6 +76,7 @@ class StandardOutput(BaseClass):
         return EMPTY_STRING.join(self.readlines())
 # end class StandardOutput
 
+
 class ValidatingOutput(BaseClass):
     """
     A ValidatingOutput reads from an iterable and validates the lines.
@@ -143,4 +142,3 @@ class ValidatingOutput(BaseClass):
         """
         return EMPTY_STRING.join(self.readlines())
 # end class ValidatingOutput
-        

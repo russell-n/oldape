@@ -1,6 +1,3 @@
-"""
-Not really a place for enumerations so much as classes that act like them.
-"""
 
 class OperatingSystem(object):
     """
@@ -19,6 +16,7 @@ class OperatingSystem(object):
 
 TO_DUT = 't'
 FROM_DUT = 'f'
+
 
 class IperfDirection(object):
     """
@@ -42,6 +40,7 @@ class IperfDirection(object):
     send = FROM_DUT
 # end class IperfDirection
 
+
 class IperfDefaults(object):
     __slots__ = ()
     window = "256K"
@@ -52,7 +51,7 @@ class IperfDefaults(object):
     path = ""
 # end class IperfDefaults
 
-    
+
 class AffectorTypes(object):
     """
     AffectorTypes hold the names of affectors.
