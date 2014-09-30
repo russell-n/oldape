@@ -1,7 +1,5 @@
-"""
-A place to put classes to execute a test
-"""
 
+# this package
 from apetools.baseclass import BaseClass
 from baseoperation import BaseOperation
 
@@ -15,8 +13,14 @@ class DummyExecuteTest(BaseClass):
         return
 
     def __call__(self, parameters, filename_prefix):
+        """
+        Logs the parameters
+        """
+        self.logger.info("parameters: {0}".format(parameters))
+        self.logger.info("filename_prefix: {0}".format(filename_prefix))
         return
 # end class DummyExecuteTest
+
 
 class ExecuteTest(BaseOperation):
     """
@@ -30,4 +34,3 @@ class ExecuteTest(BaseOperation):
         """
         return super(ExecuteTest, self).__init__(*args, **kwargs)
 # end class ExecuteTest
-                  

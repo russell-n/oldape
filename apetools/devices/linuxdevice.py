@@ -1,11 +1,9 @@
-"""
-A configurer and queryier for linux devices.
-"""
 
 from apetools.commands.ifconfig import IfconfigCommand
 from apetools.commands.iwconfig import Iwconfig
 from apetools.commons.enumerations import OperatingSystem
 from apetools.devices.basedevice import BaseDevice
+
 
 class LinuxDevice(BaseDevice):
     """
@@ -37,7 +35,7 @@ class LinuxDevice(BaseDevice):
     @property
     def wifi_query(self):
         """
-        :return: wifi_query command
+        :return: wifi_query command (Iwconfig command object)
         """
         if self._wifi_query is None:
             self._wifi_query = Iwconfig(connection=self.connection,
@@ -47,7 +45,7 @@ class LinuxDevice(BaseDevice):
     @property
     def address(self):
         """
-        :return: the address of the device
+        :return: the IP address of the device (using ifconfig)
         """
         if self._address is None:
             return self.ifconfig.ip_address
@@ -56,24 +54,36 @@ class LinuxDevice(BaseDevice):
     @property
     def mac_address(self):
         """
-        :return: the MAC address of the device
+        :return: the MAC address of the device (using ifconfig)
         """
         return self.ifconfig.mac_address
 
     @property
     def bssid(self):
+        """
+        :return: AP MAC address (using iwconfig)
+        """
         return self.wifi_query.bssid
     
     @property
     def ssid(self):
+        """
+        :return: AP SSID (using iwconfig)
+        """
         return self.wifi_query.ssid
 
     @property
     def noise(self):
+        """
+        :return: AP link noise (using iwconfig)
+        """
         return self.wifi_query.noise
 
     @property
     def channel(self):
+        """
+        Not implemented
+        """
         self.logger.warning('channel query not implemented')
         return "NA"
     
@@ -92,10 +102,16 @@ class LinuxDevice(BaseDevice):
         return self.wifi_query.bitrate
 
     def disable_wifi(self):
+        """
+        runs 'rfkill block wifi' command
+        """
         self.connection.rfkill("block wifi")
         return
 
     def enable_wifi(self):
+        """
+        run 'rfkill unblock wifi' command
+        """
         self.connection.rfkill("unblock wifi")
         return
 

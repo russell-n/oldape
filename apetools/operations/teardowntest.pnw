@@ -1,0 +1,70 @@
+Teardown Test
+=============
+
+A place to put classes to teard-down a test.
+
+<<name='imports', echo=False>>=
+# this package
+from apetools.baseclass import BaseClass
+from baseoperation import BaseOperation
+@
+
+Dummy Teardown Test
+-------------------
+
+.. uml::
+
+   BaseClass <|-- DummyTeardownTest
+
+.. module:: apetools.operations.teardowntest
+.. autosummary::
+   :toctree: api
+
+   DummyTeardownTest
+   DummyTeardownTest.__call__
+
+<<name='DummyTeardownTest', echo=False>>=
+class DummyTeardownTest(BaseClass):
+    """
+    A dummy for a Test teardown
+    """
+    def __init__(self):
+        super(DummyTeardownTest, self).__init__()
+        return
+
+    def __call__(self, parameter):
+        """
+        Logs the parameters
+        """
+        self.logger.debug("parameters: {0}".format(parameters))
+        return
+# end class DummyTeardownTest
+@
+
+Teardown Test
+-------------
+
+.. uml::
+
+   BaseOperation <|-- TeardownTest
+
+.. autosummary::
+   :toctree: api
+
+   TeardownTest
+
+<<name='TeardownTest', echo=False>>=
+class TeardownTest(BaseOperation):
+    """
+    A class to run every iteration
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `products`: list of products
+        """
+        super(TeardownTest, self).__init__(*args, **kwargs)
+        return
+# end class SetupTest
+@

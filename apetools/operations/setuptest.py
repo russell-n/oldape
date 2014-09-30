@@ -1,9 +1,8 @@
-"""
-A place to put classes to setup an test
-"""
 
+# this package
 from apetools.baseclass import BaseClass
 from baseoperation import BaseOperation 
+
 
 class DummySetupTest(BaseClass):
     """
@@ -14,8 +13,13 @@ class DummySetupTest(BaseClass):
         return
 
     def __call__(self, parameters):
+        """
+        Logs the call
+        """
+        self.logger.debug("parameters: {0}".format(parameters))
         return
 # end class DummyTestSetup
+
 
 class SetupTest(BaseOperation):
     """

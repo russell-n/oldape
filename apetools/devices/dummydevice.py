@@ -1,9 +1,7 @@
-"""
-A Dummy to stand in for a real device
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.connections.localconnection import OutputError
+
 
 class DummyConnection(BaseClass):
     """
@@ -14,14 +12,29 @@ class DummyConnection(BaseClass):
         return
 
     def _procedure_call(self, command, arguments, timeout):
+        """
+        Logs the command and arguments then returns empty strings
+
+        :param:
+
+         - `command`: command to send to the connection
+         - `arguments`: arguments for the command
+         - `timeout`: readline timeout
+
+        :return: OutputError with empty strings as data
+        """
         self.logger.info("DummyCall: {0} {1}".format(command, arguments))
         return OutputError("", "")
     
     def __getattr__(self, command):
+        """
+        Calls _procedure call (enables the dot-notation calls)
+        """
         def procedure_call(*args, **kwargs):
-            self._procedure_call(command, *args, **kwargs)
-            return 
+            return self._procedure_call(command, *args, **kwargs)
+        return procedure_call
 # end class DummyConnection
+
 
 class DummyDevice(BaseClass):
     """
@@ -61,6 +74,9 @@ class DummyDevice(BaseClass):
 
     @property
     def bssid(self):
+        """
+        Fake Basic service set identification 
+        """
         return "DummyBSSID"
     
     @property
@@ -76,6 +92,9 @@ class DummyDevice(BaseClass):
 
     @property
     def ssid(self):
+        """
+        Fake identifier for the AP
+        """
         return "DummySSID"
     
     @property
@@ -86,10 +105,16 @@ class DummyDevice(BaseClass):
         return "DummyRSSI"
     
     def disable_wifi(self):
+        """
+        Logs the fact that this method was called.
+        """
         self.logger.info("Disable WiFi Called")
         return
 
     def enable_wifi(self):
+        """
+        Logs the fact that this method was called
+        """
         self.logger.info("Enable WiFi Called")
         return
 
@@ -103,4 +128,4 @@ class DummyDevice(BaseClass):
         """
         self.logger.info(message)
         return
-# end class LinuxDevice
+# end class DummyDevice

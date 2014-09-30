@@ -1,6 +1,4 @@
-"""
-A module to hold common parameters for tcp (common to server and client).
-"""
+
 # python
 from types import BooleanType
 import re

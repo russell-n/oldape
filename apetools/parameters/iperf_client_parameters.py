@@ -1,6 +1,3 @@
-"""
-A module to hold client-specific parameters.
-"""
 
 #python
 from types import BooleanType
@@ -12,6 +9,7 @@ from iperf_common_parameters import VALID_BUFFER_LENGTHS as VALID_BYTES
 from iperf_common_parameters import MAXIMUM_PORT, MINIMUM_PORT, LOWEST_PORT, IperfParametersEnum
 
 from apetools.commons import errors, expressions
+
 
 ConfigurationError = errors.ConfigurationError
 
@@ -25,7 +23,7 @@ VALID_TIME_FLOAT = re.compile(expressions.FLOAT + expressions.WORD_ENDING +
 VALID_BANDWIDTHS = VALID_BYTES
 
 SPACE = ' '
-    
+
 
 class IperfTcpClientParameters(IperfCommonTcpParameters):
     """
@@ -219,6 +217,7 @@ class IperfTcpClientParameters(IperfCommonTcpParameters):
         return
 # end class IperfTcpClientParameters
 
+
 class IperfUdpClientParameters(IperfTcpClientParameters):
     """
     IperfUdpClientParameters is a superset of the IperfTcpClientParameters.
@@ -251,6 +250,7 @@ class IperfUdpClientParameters(IperfTcpClientParameters):
         self._bandwidth = "--bandwidth {0}".format(new_bandwidth)
         return
 # end class IperfUdpClientParameters
+
 
 client_parameters = {IperfParametersEnum.tcp: IperfTcpClientParameters,
                      IperfParametersEnum.udp: IperfUdpClientParameters}

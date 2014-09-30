@@ -1,9 +1,8 @@
-"""
-A place to put classes to execute a test
-"""
 
+# this package
 from apetools.baseclass import BaseClass
 from baseoperation import BaseOperation
+
 
 class DummyTeardownTest(BaseClass):
     """
@@ -14,8 +13,13 @@ class DummyTeardownTest(BaseClass):
         return
 
     def __call__(self, parameter):
+        """
+        Logs the parameters
+        """
+        self.logger.debug("parameters: {0}".format(parameters))
         return
 # end class DummyTeardownTest
+
 
 class TeardownTest(BaseOperation):
     """

@@ -1,18 +1,18 @@
-"""
-The Abstract Base for devices
-"""
+
 # python
 from abc import ABCMeta, abstractproperty, abstractmethod
 
 #local
 from apetools.baseclass import BaseClass
 
+
 class BaseDeviceEnum(object):
     __slots__ = ()
     tpc = "tpc"
     node = "node"
 # end class BaseDeviceEnum
-    
+
+
 CSV_OUTPUT = "{ssid},{bssid},{channel},{ip},{mac},{rssi},{noise}\n"
 HUMAN_OUTPUT = """
 SSID        = {ssid}
@@ -24,7 +24,11 @@ RSSI        = {rssi}
 Noise       = {noise}
 """
 
+
 class BaseDevice(BaseClass):
+    """
+    An abstract base class for devices
+    """
     __metaclass__ = ABCMeta
     def __init__(self, connection=None, interface=None,
                  address=None, role=None,

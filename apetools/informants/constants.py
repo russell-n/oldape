@@ -1,3 +1,4 @@
+
 BLUE = "\033[34m"
 BOLD = "\033[1m"
 RESET = "\033[0;0m"
@@ -23,4 +24,3 @@ NAME_TEMPLATE="{0}{{name}}{1} - {{description}}".format(BOLD, RESET)
 HELP_FOLDER = "apetools.info.helpfiles"
 OUTPUT_VARIABLE = "output"
 HELP_BASE = "helpmain"
-
