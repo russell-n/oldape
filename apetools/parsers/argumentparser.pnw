@@ -1,8 +1,24 @@
+Argument Parser Adapter
+=======================
 
+<<name='imports', echo=False>>=
 # python standard library
 import argparse
+@
 
+.. uml::
 
+   Arguments o- argparse.ArgumentParser
+
+.. module:: apetools.parsers.argumentparser
+.. autosummary::
+   :toctree: api
+
+   Arguments
+   Arguments.parser
+   Arguments.parse_args
+
+<<name='Arguments', echo=False>>=
 class Arguments(object):
     """
     An adapter for the argparse.ArgumentParser
@@ -64,3 +80,4 @@ class Arguments(object):
                                  default=1000000, type=int)
         return self.parser.parse_args()
 # end class Arguments
+@
