@@ -1,10 +1,11 @@
-"""
-A place for a time-converter.
-"""
+
+# python standard library
 import re
 
+# this package
 from apetools.parsers import oatbran
 from apetools.baseclass import BaseClass
+
 
 ZERO = 0
 EMPTY_STRING = ""
@@ -21,6 +22,7 @@ class TimeConversions(object):
     seconds_per_day = seconds_per_hour * 24
 # end class TimeConversions
 
+
 class TimeUnits(object):
     """
     An enumerator of sorts for time-units
@@ -30,7 +32,8 @@ class TimeUnits(object):
     minutes = "m"
     seconds = "s"
 # end class TimeUnits
-    
+
+
 class TimeConverter(BaseClass):
     """
     The Time Converter converts times
@@ -95,6 +98,7 @@ class TimeConverter(BaseClass):
             print units_key, time
         return accumulator
 # end class Time Converter
+
 
 class TimeConverterExpressions(BaseClass):
     """
@@ -276,6 +280,7 @@ class TimeConverterExpressions(BaseClass):
             yield token
         return
 # end class TimeConverterExpressions
+
 
 class TimeConverterEnums(object):
     """

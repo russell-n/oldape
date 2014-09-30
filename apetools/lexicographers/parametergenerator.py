@@ -1,11 +1,3 @@
-"""
-A parameter generator maps the lexicographer's static configuration to a set of test parameters
-
-This way a config-file can declare a set: e.g. repetitions=10
-
-and the parameter-generator will create 10 parameter-objects
-
-"""
 
 #python
 from collections import namedtuple
@@ -15,12 +7,14 @@ from apetools.baseclass import BaseClass
 from apetools.commons import enumerations, errors
 from parametertree import ParameterTree
 
+
 AffectorTypes = enumerations.AffectorTypes
 IperfDirection = enumerations.IperfDirection
 ConfigurationError = errors.ConfigurationError
 
 parameters = ("test_id repetition repetitions output_folder " +
               " receiver sender recovery_time affector").split()
+
 
 class TestParameter(namedtuple('TestParameter', parameters)):
     """
@@ -35,6 +29,7 @@ class TestParameter(namedtuple('TestParameter', parameters)):
 
     
 # end class TestParameter
+
 
 class ParameterGenerator(BaseClass):
     """

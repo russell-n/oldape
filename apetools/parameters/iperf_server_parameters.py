@@ -1,6 +1,4 @@
-"""
-A module to hold iperf server parameters
-"""
+
 #python
 from types import BooleanType
 
@@ -10,6 +8,7 @@ from iperf_common_parameters import IperfParametersEnum
 from apetools.commons import errors
 
 ConfigurationError = errors.ConfigurationError
+
 
 class IperfServerParameters(IperfCommonTcpParameters):
     """
@@ -46,6 +45,7 @@ class IperfServerParameters(IperfCommonTcpParameters):
 
 # end class IperfTcpServerParameters
 
+
 class IperfUdpServerParameters(IperfServerParameters):
     """
     IperfUdpServerParameters holds parameters for a UDP Server
@@ -79,6 +79,7 @@ class IperfUdpServerParameters(IperfServerParameters):
         return
     
 # end IperfUdpServerParameters
+
 
 server_parameters = {IperfParametersEnum.tcp:IperfServerParameters,
                      IperfParametersEnum.udp: IperfUdpServerParameters}

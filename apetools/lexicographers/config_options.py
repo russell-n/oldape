@@ -1,3 +1,4 @@
+
 class ConfigOptions(object):
     """
     An enumeration of sorts to hold the section and option names for the config file.

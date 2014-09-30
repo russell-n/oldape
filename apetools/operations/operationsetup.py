@@ -1,9 +1,8 @@
-"""
-A place to put classes to setup an operation
-"""
 
+# this package
 from apetools.baseclass import BaseClass
 from baseoperation import BaseOperation, TOKEN_JOINER
+
 
 class OperationSetup(BaseOperation):
     """
@@ -33,6 +32,7 @@ class OperationSetup(BaseOperation):
 
 # end class OperationSetup
 
+
 class DummySetupOperation(BaseClass):
     """
     A dummy for an Operation 
@@ -42,5 +42,9 @@ class DummySetupOperation(BaseClass):
         return
 
     def __call__(self):
+        """
+        Does nothing
+        """
+        self.logger.debug("Dummy Operation Setup")
         return
 # end class DummyOperationSetup

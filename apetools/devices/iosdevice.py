@@ -1,12 +1,10 @@
-"""
-A configurer and queryier for ios devices.
-"""
 
 #from apetools.commands.ifconfig import IfconfigCommand
 #from apetools.commands.iwconfig import Iwconfig
 from apetools.commons.enumerations import OperatingSystem
 from apetools.devices.basedevice import BaseDevice
 from apetools.commons.errors import ConfigurationError
+
 
 class IosDevice(BaseDevice):
     """
@@ -28,6 +26,7 @@ class IosDevice(BaseDevice):
     def address(self):
         """
         :return: the address of the device
+        :raise: ConfigurationError if not set by user
         """
         if self._address is None:
             raise ConfigurationError("'test_address' must be set in config for IOS devices")
@@ -36,6 +35,8 @@ class IosDevice(BaseDevice):
     @property
     def mac_address(self):
         """
+        Not implemented
+        
         :return: the MAC address of the device
         """
         self.logger.warning('mac address query not implemented')
@@ -43,27 +44,41 @@ class IosDevice(BaseDevice):
 
     @property
     def bssid(self):
+        """
+        Not implemented
+        """
         self.logger.warning('bssid query not implemented')
         return 'NA'
     
     @property
     def ssid(self):
+        """
+        Not implemented
+        """
         self.logger.warning('ssid query not implemented')
         return 'NA'
 
     @property
     def noise(self):
+        """
+        Not Implemented
+        """
         self.logger.warning('noise query not implemented')
         return 'NA'
 
     @property
     def channel(self):
+        """
+        Not implemented
+        """
         self.logger.warning('channel not implemented')
         return "NA"
     
     @property
     def rssi(self):
         """
+        Not implemented
+        
         :return: rssi from the wifi_query
         """
         self.logger.warning('rssi query not implemented')
@@ -72,22 +87,30 @@ class IosDevice(BaseDevice):
     @property
     def bitrate(self):
         """
+        Not implemented
+        
         :return: NA
         """
         self.logger.warning("bitrate query not implemented")
         return "NA"
 
     def disable_wifi(self):
+        """
+        Not implemented
+        """
         self.logger.warning('disable wifi not implemented')
         return
 
     def enable_wifi(self):
+        """
+        Not implemented
+        """
         self.logger.warning('enable wifi not implemented')
         return
 
     def log(self, message):
         """
-        Sends the message to the syslog
+        Sends the message to the syslog (Not implemented)
         
         :param:
 

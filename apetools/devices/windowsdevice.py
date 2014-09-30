@@ -1,6 +1,3 @@
-"""
-A Windows Device controller and queryer.
-"""
 
 from basedevice import BaseDevice
 from apetools.commands.wmic import WmicWin32NetworkAdapter
@@ -8,6 +5,7 @@ from apetools.commands.netsh import NetshWlan
 from apetools.commands.winrssi import WinRssi
 from apetools.commands.ipconfig import Ipconfig
 from apetools.commands.windowsssidconnect import WindowsSSIDConnect
+
 
 class WindowsDevice(BaseDevice):
     """
@@ -69,6 +67,8 @@ class WindowsDevice(BaseDevice):
     @property
     def wifi_info(self):
         """
+        calls 'wifi status'
+        
         :return: String containing the wifi info
         """
         out, err = self.connection.wifi('status')
@@ -111,14 +111,23 @@ class WindowsDevice(BaseDevice):
         return
 
     def display(self, message):
+        """
+        Not implemented
+        """
         self.logger.warning("Display not implemented")
         return
 
     def log(self, message):
+        """
+        Calls 'eventcreate /l Sysytem /id 999 /d "<message>" /t Informateion /so Private'
+        """
         self.connection.eventcreate('/l System /id 999 /d "{0}" /t Information /so Private'.format(message))
         return
 
     def wake_screen(self):
+        """
+        Not implemented
+        """
         self.logger.warning("Wake-Screen Not Implemented")
         return
 
@@ -133,6 +142,8 @@ class WindowsDevice(BaseDevice):
 
     def disconnect(self):
         """
+        Calls 'netsh wlan disconnect'
+        
         :postcondition: the device is disconnected from the AP but no disabled
         """
         self.connection.netsh("wlan disconnect")

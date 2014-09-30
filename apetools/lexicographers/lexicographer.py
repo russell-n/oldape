@@ -1,14 +1,10 @@
-"""
-A module to hold a translator of configurations to configuration map.
 
-The Lexicographers used to check configurations and do conversions,
-but more has been pushed to the builders and ConfigurationMap
-"""
 # apetools Libraries
 from apetools.baseclass import BaseClass
 from apetools.commons.generators import ShallowFind
 from apetools.commons import errors
-import configurationmap 
+import configurationmap
+
 
 class Lexicographer(BaseClass):
     """
@@ -64,8 +60,8 @@ class Lexicographer(BaseClass):
         for name in self.filenames:
             yield configurationmap.ConfigurationMap(name)
         return 
-
 # end class Lexicographer
+
 
 if __name__ == "__main__":
     import pudb; pudb.set_trace()

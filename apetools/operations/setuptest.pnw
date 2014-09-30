@@ -1,0 +1,70 @@
+Setup Test
+==========
+
+A place to put classes to setup an test.
+
+<<name='imports', echo=False>>=
+# this package
+from apetools.baseclass import BaseClass
+from baseoperation import BaseOperation 
+@
+
+Dummy Setup Test
+----------------
+
+.. uml::
+
+   BaseClass <|-- DummySetupTest
+
+.. module:: apetools.operations.setuptest
+.. autosummary::
+   :toctree: api
+
+   DummySetupTest
+   DummySetupTest.__call__
+
+<<name='DummySetupTest', echo=False>>=
+class DummySetupTest(BaseClass):
+    """
+    A dummy for an Test 
+    """
+    def __init__(self):
+        super(DummySetupTest, self).__init__()
+        return
+
+    def __call__(self, parameters):
+        """
+        Logs the call
+        """
+        self.logger.debug("parameters: {0}".format(parameters))
+        return
+# end class DummyTestSetup
+@
+
+Setup Test
+----------
+
+.. uml::
+
+   BaseOperation <|-- SetupTest
+
+.. autosummary::
+   :toctree: api
+
+   SetupTest
+
+<<name='SetupTest', echo=False>>=
+class SetupTest(BaseOperation):
+    """
+    A class to run every iteration
+    """
+    def __init__(self, *args, **kwargs):
+        """
+        :param:
+
+         - `products`: list of products
+        """
+        super(SetupTest, self).__init__(*args, **kwargs)
+        return
+# end class SetupTest
+@

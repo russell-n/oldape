@@ -1,9 +1,5 @@
-"""
-A Mac OS device
-"""
 
 from basedevice import BaseDevice
-
 from apetools.commands.airportcommand import AirportCommand
 
 
@@ -23,6 +19,9 @@ class MacDevice(BaseDevice):
 
     @property
     def airport(self):
+        """
+        :return: AirportCommand built with self.connection
+        """
         if self._airport is None:
             self._airport = AirportCommand(connection=self.connection,
                                            interface=self.interface)
@@ -73,12 +72,11 @@ class MacDevice(BaseDevice):
     @property
     def mac_address(self):
         """
-        :return: devices mac address
+        :return: device mac address
         """
         if self._mac_address is None:
             self._mac_address = self.airport.mac_address
         return self._mac_address
-    
 
     @property
     def wifi_control(self):
@@ -98,20 +96,22 @@ class MacDevice(BaseDevice):
 
     def wake_screen(self):
         """
-        Wake the screen
+        Wake the screen (not implemented)
         """
         raise NotImplementedError("Wake Screen not ready yet")
         return
 
     def display(self, message):
         """
-        Display a message on the screen
+        Display a message on the screen (not implemented)
         """
         raise NotImplementedError("Display <message> not done yet")
         return
 
     def disable_wifi(self):
         """
+        Sends 'networksetup -setairportpower airport off' command
+        
         :postcondition: WiFi radio disabled
         """
         self.connection.networksetup("-setairportpower airport off")
@@ -119,6 +119,8 @@ class MacDevice(BaseDevice):
 
     def enable_wifi(self):
         """
+        Sends 'networksetup -setairport airport on' command
+        
         :postcondition: WiFi radio enabled
         """
         self.connection.networksetup('-setairportpower airport on')
@@ -126,11 +128,11 @@ class MacDevice(BaseDevice):
 
     def get_wifi_info(self):
         """
+        gets the 'airpor status' command output
         :rtype: StringType
         :return: The Wifi Info
         """        
         return self.airport.status
-                                                                                                            
 
     def log(self, message):
         """
@@ -144,7 +146,5 @@ class MacDevice(BaseDevice):
         """
         :return: ip address of interface
         """
-        return self.airport.ip_address                         
-        
+        return self.airport.ip_address                                 
 # end class MacDevice
-

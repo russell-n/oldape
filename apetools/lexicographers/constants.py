@@ -1,6 +1,3 @@
-"""
-Constants needed to parse the config file.
-"""
 
 from string import whitespace
 STRIP_LIST = "'\"" + whitespace

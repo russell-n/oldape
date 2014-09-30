@@ -15,3 +15,7 @@ This is a fairly crude file to enable SL4a and forward the ports. It assumes tha
 
 For those not familiar with the `source` command, Unix doesn't allow a running program to change the state of its parents variables, so if you want to change an environment variable (in this case `AP_PORT`, which android.py uses to find the SL4a server), you need to use the `source` command to get around this.
 
+The `source_this_for_sl4a` file:
+
+.. literalinclude:: source_this_for_sl4a
+   :language: bash

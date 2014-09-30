@@ -1,9 +1,10 @@
-"""
-A module to tranform lists of namedtuple parameters into lists of dictionaries.
-"""
 
+# python standard library
 from collections import namedtuple
+
+
 Parameters = namedtuple("Parameters", "name parameters".split())
+
 
 class TreeNode(object):
     """
@@ -23,6 +24,7 @@ class TreeNode(object):
     def __str__(self):
         return str(self.cargo)
 # end class TreeNode
+
 
 class ParameterTree(object):
     """

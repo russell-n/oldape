@@ -1,12 +1,3 @@
-"""
-A module to fetch config files.
-
-The ConfigFetcher within copies the config file to the current working directory.
-
-It was built to be used to pick config files from a folder of different files,
-but if it gets no parameters, it will load whatever is set as the DEFAULTS
-in the `config.constants` module.
-"""
 
 # Python libraries
 import os
@@ -15,6 +6,7 @@ import shutil
 # apetools Libraries
 import apetools.baseclass as baseclass
 from constants import CONFIG_FOLDER, DEFAULTS
+
 
 INI_EXTENSION = '.ini'
 

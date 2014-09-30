@@ -1,8 +1,8 @@
-"""
-A place to put classes for operation teardowns
-"""
 
+# this package
 from apetools.baseclass import BaseClass
+from baseoperation import BaseOperation, TOKEN_JOINER
+
 
 class DummyTeardownOperation(BaseClass):
     """
@@ -13,10 +13,13 @@ class DummyTeardownOperation(BaseClass):
         return
 
     def __call__(self):
+        """
+        Does nothing but log the call
+        """
+        self.logger.debug("DummyOperationSetup called")
         return
 # end class DummyOperationSetup
 
-from baseoperation import BaseOperation, TOKEN_JOINER
 
 class OperationTeardown(BaseOperation):
     """

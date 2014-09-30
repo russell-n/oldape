@@ -1,6 +1,3 @@
-"""
-An SL4a Device provides the common device-methods using an SL4a connection
-"""
 
 from apetools.connections.sl4aconnection import SL4AConnection
 from basedevice import BaseDevice
@@ -30,19 +27,35 @@ class SL4ADevice(BaseDevice):
         return self._connection
 
     def wake_screen(self):
+        """
+        Acquires the wake lock then makes toast
+        """
         self.connection.wakeLockAcquireFull()
         self.connection.makeToast('wake Up')
         return
 
     def display(self, message):
+        """
+        Displays the message on the device screen
+
+        :param:
+
+         - `message`: message to display in GUI
+        """
         self.connection.makeToast(message)
         return
 
     def disable_wifi(self):
+        """
+        Turns off the radio
+        """
         self.connection.toggleWifiState(False)
         return
 
     def enable_wifi(self):
+        """
+        Turns on the radio
+        """
         self.connection.toggleWifiState(True)
         return
 

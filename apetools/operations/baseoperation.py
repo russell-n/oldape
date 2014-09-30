@@ -1,10 +1,10 @@
-"""
-A module to hold the common elements for operations
-"""
 
+# this package
 from apetools.baseclass import BaseClass
 
+
 TOKEN_JOINER = "_"
+
 
 class DummyOperation(BaseClass):
     """
@@ -15,11 +15,21 @@ class DummyOperation(BaseClass):
         return
 
     def __call__(self, parameters=None, filename_prefix=None):
+        """
+        Logs the parameters
+        """
         self.logger.debug(str(parameters))
         self.logger.debug(filename_prefix)        
         return
 
     def __getattr__(self, name):
+        """
+        Logs the attribute called
+
+        :param:
+
+         - `name`: name of attribute being called
+        """
         self.logger.info("{0} called".format(name))
         return
 # end class DummyOperation

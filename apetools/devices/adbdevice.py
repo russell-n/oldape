@@ -1,6 +1,3 @@
-"""
-An ADB device
-"""
 
 from apetools.baseclass import BaseClass 
 from basedevice import BaseDevice
@@ -14,10 +11,12 @@ from apetools.commands.wpacli import WpaCliCommand
 
 from apetools.commons.errors import CommandError
 
+
 commands = {"iw":IwCommand,
             'wl':WlCommand,
             'wifi':WifiCommand,
             'wpa_cli':WpaCliCommand}
+
 
 class AdbDevice(BaseDevice):
     """
@@ -179,8 +178,6 @@ class AdbDevice(BaseDevice):
                                                                                                             self.rssi,
                                                                                                             self.noise,
                                                                                                             self.bitrate)
-                                                                                                            
-
     def log(self, message):
         """
         :postcondition: message sent to the connection
@@ -200,11 +197,13 @@ class AdbDevice(BaseDevice):
         """
         :return: ip address of interface
         """
-        return self.netcfg.ip_address                         
-        
+        return self.netcfg.ip_address
 # end class AdbDevice
 
+
+# a tuple of commands to try
 wifi_commands = ("wifi wl iw wpa_cli".split())
+
 
 class AdbWifiCommandFinder(BaseClass):
     """
@@ -237,7 +236,8 @@ class AdbWifiCommandFinder(BaseClass):
             except CommandError as error:
                 self.logger.debug(error)
         return commands
-# end class WifiCommandInventory
+# end class AdbWifiCommandFinder
+
 
 if __name__ == "__main__":
     from apetools.connections.adbconnection import ADBShellSSHConnection
@@ -246,4 +246,3 @@ if __name__ == "__main__":
     a = AdbDevice(connection = c, interface="wlan0", csv=True)
     sys.stdout.write(a.wifi_info)
     sys.stdout.write(a.wifi_info)
-    

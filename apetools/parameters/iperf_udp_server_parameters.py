@@ -1,6 +1,4 @@
-"""
-A module to hold parameters for a Udp Server
-"""
+
 #python
 from types import BooleanType
 
