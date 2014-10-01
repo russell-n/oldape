@@ -1,6 +1,9 @@
+
+# python standard library
 import re
 from abc import ABCMeta, abstractproperty
 
+# this package
 from apetools.baseclass import BaseClass
 import oatbran as bran
 
@@ -32,6 +35,7 @@ class ExpressionBase(BaseClass):
         :return: compiled regex object
         """
         return self._regex
+
 
 class HumanExpression(ExpressionBase):
     """
@@ -84,6 +88,7 @@ class HumanExpression(ExpressionBase):
             self._regex = re.compile(self.expression)
         return self._regex
 # end class HumanExpression
+
 
 class CsvExpression(ExpressionBase):
     """
@@ -142,8 +147,8 @@ class CsvExpression(ExpressionBase):
             self._regex = re.compile(self.expression)
         return self._regex
 # end class CsvExpression
-    
-    
+
+
 class CombinedExpression(ExpressionBase):
     """
     A Combined expression matches either case (but doesn't break up the line).

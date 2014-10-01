@@ -1,3 +1,4 @@
+
 # python
 import sys
 import os
@@ -9,10 +10,15 @@ from sumparser import SumParser
 from unitconverter import UnitNames
 from finder import find
 
+
 class ArgumentError(Exception):
     """
+    An exception to raise if there is a command-line argument error
     """
 # end class ArgumentError
+#
+
+
 
 UNITS = {'bits': UnitNames.bits,
          'kbits': UnitNames.kbits,
@@ -23,15 +29,23 @@ UNITS = {'bits': UnitNames.bits,
          'mbytes': UnitNames.mbytes,
          'gbytes': UnitNames.gbytes}
 
+
 WRITEABLE = 'w'
 ADD_NEWLINE = "{0}\n"
 
+
 def enable_debugging():
+    """
+    enables the pudb debugger
+
+    :raise: argument error if it can't be imported
+    """
     try:
         import pudb
         pudb.set_trace()
     except ImportError:
         raise ArgumentError("`pudb` argument given but unable to import `pudb`")
+
 
 def pipe(args, infile=None, outfile=None):
     """
@@ -63,6 +77,7 @@ def pipe(args, infile=None, outfile=None):
     parser.reset()
     return
 
+
 def analyze(args):
     """
     Reads data from files and outputs to files
@@ -77,7 +92,11 @@ def analyze(args):
         pipe(args, open(name), output)
     return
 
+
 def main():
+    """
+    parses the arguments and sends them to 'pipe' or 'analyze'
+    """
     args = Arguments().parse_args()
     if args.pudb:
         enable_debugging()
@@ -86,6 +105,7 @@ def main():
     else:
         analyze(args)
     return
+
 
 if __name__ == "__main__":
     main()
