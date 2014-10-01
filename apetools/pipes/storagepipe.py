@@ -1,20 +1,13 @@
-"""
-A pipe to hold Storage Output
-
-The differernce between the 3 pipes (start, pipe, sink)
-is the way they handle a header line (if there is one)
-
-If no header token is given, it tee's all input to
-storage and the target and ignores the header.
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.commons.coroutine import coroutine
 from apetools.commons.storageoutput import StorageOutput
 from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
 
+
 EOF = ""
 NEWLINE = "\n"
+
 
 class StoragePipeEnum(object):
     """
@@ -25,6 +18,7 @@ class StoragePipeEnum(object):
     pipe = "pipe"
     sink = "sink"
 # end class StoragePipeEnum
+
 
 class StoragePipe(BaseClass):
     """

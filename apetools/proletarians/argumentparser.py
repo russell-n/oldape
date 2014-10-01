@@ -1,7 +1,3 @@
-"""
-A module to handle parsing the command-line arguments for the test runner.
-
-"""
 
 # Python Libraries
 import argparse
@@ -9,6 +5,7 @@ import argparse
 # testrunner Libraries
 from apetools.baseclass import BaseClass
 from strategerizer import Strategerizer
+
 
 ARGUMENTS = ('fetch', 'run', 'help', 'test')
 
@@ -130,5 +127,4 @@ class ArgumentParser(BaseClass):
         """
         self.parser.print_help()
         return
-# end class ArgumentParser
-    
+# end class ArgumentParser   

@@ -1,3 +1,4 @@
+
 class PipeEnum(object):
     """
     A holder of constants for the StoragePipe

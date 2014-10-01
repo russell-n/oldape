@@ -1,14 +1,13 @@
-"""
-A module to hold the generators for the concatenator.
-"""
 
 # python libraries
 import fnmatch
 import os
 import re
 
+
 WRITEABLE = 'w'
 EOSection = ''
+
 
 def find(glob, start=None):
     """
@@ -26,6 +25,7 @@ def find(glob, start=None):
             yield os.path.join(path, name)
     return
 
+
 def concatenate(glob, start=None):
     """
     :param:
@@ -39,6 +39,7 @@ def concatenate(glob, start=None):
         for line in open(name):
             yield line
     return
+
 
 def sections(glob, start, end, top=None):
     """
@@ -57,6 +58,7 @@ def sections(glob, start, end, top=None):
         if start.search(line):
             yield section(concatenator, end, line)
     return
+
 
 def section(iterator, end, firstline=None):
     """
@@ -79,7 +81,8 @@ def section(iterator, end, firstline=None):
             yield line
         except StopIteration:
             return
-            
+
+
 def line_counter(glob, start, end, interesting):
     """
     Counts interesting lines within sections

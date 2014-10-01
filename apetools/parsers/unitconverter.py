@@ -1,6 +1,3 @@
-"""
-The unit converter is a table to convert Data Rates
-"""
 
 class UnitNames(object):
     """
@@ -17,6 +14,7 @@ class UnitNames(object):
     gbytes = "GBytes"
 # end UnitNames
 
+
 IDENTITY = 1
 ONE = 1.0
 KILO = 10**3
@@ -28,10 +26,17 @@ TO_GIGA = ONE/GIGA
 BYTE = 8
 TO_BYTE = ONE/BYTE
 
-to_units = [UnitNames.bits, UnitNames.kbits,UnitNames.mbits , UnitNames.gbits,
-             UnitNames.bytes, UnitNames.kbytes, UnitNames.mbytes, UnitNames.gbytes]
+to_units = [UnitNames.bits,
+            UnitNames.kbits,
+            UnitNames.mbits ,
+            UnitNames.gbits,
+            UnitNames.bytes,
+            UnitNames.kbytes,
+            UnitNames.mbytes,
+            UnitNames.gbytes]
 
-bit_row_1 = [IDENTITY, TO_KILO,TO_MEGA , TO_GIGA,]
+bit_row_1 = [IDENTITY, TO_KILO,
+             TO_MEGA , TO_GIGA,]
 bit_row_2 = [KILO] + bit_row_1[:-1]
 bit_row_3 = [MEGA] + bit_row_2[:-1]
 bit_row_4 = [GIGA] + bit_row_3[:-1]
@@ -56,13 +61,10 @@ from_kbytes = dict(zip(to_units, byte_row_2 + bit_row_2))
 from_mbytes = dict(zip(to_units, byte_row_3 + bit_row_3))
 from_gbytes = dict(zip(to_units, byte_row_4 + bit_row_4))
 
+
 class UnitConverter(dict):
     """
     The UnitConverter is a conversion lookup table.
-
-    Usage::
-
-       converted = old * UnitConverter[old units][new units]
 
     Use class UnitNames to get valid unit names
     """
