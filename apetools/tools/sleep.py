@@ -1,6 +1,3 @@
-"""
-A module to hold a sleeping class.
-"""
 
 # python Libraries
 import time
@@ -9,8 +6,10 @@ from types import IntType, FloatType
 #apetools Libraries
 from apetools.baseclass import BaseClass
 
+
 ONE_SECOND = 1
 MESSAGE = "Sleeping for {0} seconds"
+
 
 class Sleep(BaseClass):
     """

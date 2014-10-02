@@ -1,7 +1,3 @@
-"""
-Implements a Threading convenience class based on
-one found in Allen Downey's 'Little Book of Semaphores'
-"""
 
 #python library
 import threading
@@ -26,4 +22,3 @@ class Thread(threading.Thread):
         self.start()
         return
 # end class Thread
-        

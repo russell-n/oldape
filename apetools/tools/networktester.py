@@ -1,6 +1,3 @@
-"""
-A module to hold a network tester.
-"""
 
 #python libraries
 import sys
@@ -8,6 +5,7 @@ import sys
 # apetools libraries
 from apetools.baseclass import BaseClass
 from apetools.commons import errors
+
 
 NEWLINE = '\n'
 ADD_NEWLINE = "{0}" + NEWLINE
@@ -58,5 +56,4 @@ class NetworkTester(BaseClass):
             self.logger.error(failure_message)
             raise errors.ConnectionError(failure_message)
         return
-# end class NetworkTester
-    
+# end class NetworkTester   

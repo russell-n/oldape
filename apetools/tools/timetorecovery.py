@@ -1,6 +1,4 @@
-"""
-The time to failure pings a target until the pings fail.
-"""
+
 #python
 import time
 now = time.time
@@ -11,6 +9,7 @@ from collections import namedtuple
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
 from apetools.commands import ping
+
 
 class TTRData(namedtuple("TTRData", "ttr rtt")):
     """
@@ -123,7 +122,3 @@ class TimeToRecovery(BaseClass):
             raise CommandError("Unable to ping {0}".format(parameters.target.parameters))
         return 
 # end TimeToRecovery
-
-if __name__ == "__main__":
-    ttr = TimeToRecovery()
-    print ttr.run("192.168.20.1")

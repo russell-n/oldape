@@ -1,13 +1,7 @@
-"""
-A lock to block a semaphore.
 
-This is primarily intended to enable::
-
- with Lock(mutex):
-     pass
-"""
-
+# python standard library
 from contextlib import contextmanager
+
 
 @contextmanager
 def lock(semaphore):
@@ -20,6 +14,7 @@ def lock(semaphore):
     finally:
         semaphore.signal()
     return
+
 
 class Lock(object):
     """

@@ -11,7 +11,7 @@ IperfParametersError
 
 An exception to raise if there is an error in one of the parameters.
 
-.. currentmodule:: apetools.builders.subbuilders.iperfparameterbuilders
+.. module:: apetools.builders.subbuilders.iperfparameterbuilders
 .. autosummary::
    :toctree: api
 
@@ -40,20 +40,4 @@ The builder of iperf parameters.
    IperfParametersBuilder : server_parameters
    IperfParametersBuilder : protocol
    IperfParametersBuilder : options
-
-
-
-
-Testing the IperfParametersBuilder
-----------------------------------
-
-.. autosummary::
-   :toctree: api
-
-   TestIperfParametersBuilder.test_invalid_client_option
-   TestIperfParametersBuilder.test_invalid_server_option
-   #TestIperfParametersBuilder.test_valid_server_option
-
-
-   
 

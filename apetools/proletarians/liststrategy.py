@@ -1,6 +1,4 @@
-"""
-A Nonparametric strategy runs commands that don't require parameters
-"""
+
 from apetools.baseclass import BaseClass
 
 
@@ -45,6 +43,7 @@ class ListStrategy(list):
         return
 # end class ListStrategy
 
+
 class NonparametricStrategy(ListStrategy):
     """
     A nonparametric Strategy is a container and runner of commands
@@ -57,6 +56,7 @@ class NonparametricStrategy(ListStrategy):
             command()
         return
 # end class NonParametricStrategy
+
 
 class ParametricStrategy(ListStrategy):
     """

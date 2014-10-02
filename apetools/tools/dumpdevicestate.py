@@ -1,6 +1,3 @@
-"""
-A module to log whatever the device has to say about it's state.
-"""
 
 from apetools.baseclass import BaseClass
 

@@ -1,6 +1,3 @@
-"""
-A module to hold the time-to-recovery test.
-"""
 
 # python libraries
 from collections import namedtuple
@@ -8,12 +5,15 @@ from collections import namedtuple
 #timetorecovery libraries
 from apetools.baseclass import BaseClass
 
+
 TimeToRecoveryTestParameters = namedtuple("TimeToRecoveryTestParameters",
                                           ['output',
                                           'device',
                                            'time_to_recovery'])
 
+
 NEWLINE_STRING = "{0}\n"
+
 
 class TimeToRecoveryTest(BaseClass):
     """

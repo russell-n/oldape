@@ -1,10 +1,8 @@
-"""
-An aggregator of wifi commands to create a single interface.
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.commands import wpacli, iwcommand, netcfg
 from apetools.connections import adbconnection
+
 
 class WifiToolAdb(BaseClass):
     """
@@ -123,7 +121,3 @@ class WifiToolAdb(BaseClass):
         return self.status_command.status + "\n" + self.rssi_command.rssi
     
 # end class WifiToolAdb
-
-if __name__ == "__main__":
-    tool = WifiToolAdb()
-    print str(tool)

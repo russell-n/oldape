@@ -1,16 +1,12 @@
-"""
-A module to hold a countdown-timer.
-"""
 
 # python Libraries
 from datetime import datetime as clock
 from datetime import timedelta
 
-# third party Libraries
-
 # apetools Libraries
 from apetools.baseclass import BaseClass
 from data import Data
+
 
 class CountdownTimer(BaseClass):
     """

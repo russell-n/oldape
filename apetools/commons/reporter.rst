@@ -7,6 +7,8 @@ The Reporter
 
    BaseClass <|-- Reporter
 
+.. module:: apetools.commons.reporter   
+
 .. autosummary::
    :toctree: api
 

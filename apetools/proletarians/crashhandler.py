@@ -1,6 +1,4 @@
-"""
-A module to hold the CrashHandler
-"""
+
 # python
 import traceback
 from StringIO import StringIO
@@ -9,6 +7,7 @@ from StringIO import StringIO
 from apetools.baseclass import BaseClass
 from apetools.commons import storageoutput
 from apetools.log_setter import LOGNAME
+
 
 class CrashHandler(BaseClass):
     """

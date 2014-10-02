@@ -1,10 +1,5 @@
-"""
-A module to hold a keeper of Strategies
-"""
 
-#python Libraries
-
-# testrunner Libraries
+# apetools
 from setuprun import SetUp
 #from teardown import TearDown
 from crashhandler import CrashHandler

@@ -1,6 +1,3 @@
-"""
-A module to hold ip address finders.
-"""
 
 # python libraries
 import re
@@ -9,6 +6,7 @@ import re
 from apetools.baseclass import BaseClass
 from apetools.commons import expressions
 from apetools.commons import errors
+
 
 ERROR_MESSAGE = "Unable to find address for {i}: {e}"
 
@@ -64,20 +62,3 @@ class GetIp(BaseClass):
                                                        e=error.read()))
         return
 # end class GetIp
-
-
-if __name__ == "__main__":
-    # spike
-    from apetools.connections import sshconnection
-    from apetools.tools import getipaddress
-    print "Getting Spike's address"
-    sc = sshconnection.SSHConnection('spike', 'allionadmin')
-    gs = getipaddress.GetIp('eth4', sc, expressions.ADDRESS)
-    print gs.run()
-
-    # android
-    from apetools.connections import adbconnection
-    print "Getting the DUT's Address"
-    ac = adbconnection.ADBShellConnection()
-    ag = getipaddress.GetIp('wlan0', ac, expressions.ADDRESS)
-    print ag.run()

@@ -27,6 +27,7 @@ The `KillAll` command (it probably should not be in the `tools`) kills processes
    :toctree: api
 
    KillAll
+   KillAll.__call__
 
 .. uml::
 
