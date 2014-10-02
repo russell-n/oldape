@@ -1,6 +1,4 @@
-"""
-A module to wrap the python semaphores.
-"""
+
 #python
 import threading
 from itertools import repeat

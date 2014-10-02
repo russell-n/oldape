@@ -1,6 +1,3 @@
-"""
-A module to hold the TearDown
-"""
 
 from apetools.baseclass import BaseClass
 

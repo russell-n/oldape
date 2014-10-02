@@ -1,9 +1,8 @@
-"""
-A module for an enforcer of barriers for threads.
-"""
+
 #apetools
 from semaphore import Semaphore
 from apetools.baseclass import BaseClass
+
 
 class Barrier(BaseClass):
     """

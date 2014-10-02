@@ -1,6 +1,3 @@
-"""
-A place to hold tools for the infrastructure.
-"""
 
 def enable_debugging(args):
     """
@@ -23,4 +20,3 @@ def enable_debugging(args):
         import pdb
         pdb.set_trace()
     return
-

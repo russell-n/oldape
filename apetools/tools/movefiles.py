@@ -1,8 +1,6 @@
-"""
-A module for file movers
-"""
 
 from apetools.baseclass import BaseClass
+
 
 class MoveFiles(BaseClass):
     """

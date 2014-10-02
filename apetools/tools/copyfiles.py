@@ -1,8 +1,6 @@
-"""
-A module for file copiers.
-"""
 
 from apetools.baseclass import BaseClass
+
 
 class CopyFiles(BaseClass):
     """

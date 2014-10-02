@@ -19,7 +19,7 @@ IperfParametersError
 
 An exception to raise if there is an error in one of the parameters.
 
-.. currentmodule:: apetools.builders.subbuilders.iperfparameterbuilders
+.. module:: apetools.builders.subbuilders.iperfparameterbuilders
 .. autosummary::
    :toctree: api
 
@@ -145,70 +145,3 @@ class IperfParametersBuilder(BaseClass):
 @
 
 
-Testing the IperfParametersBuilder
-----------------------------------
-
-.. autosummary::
-   :toctree: api
-
-   TestIperfParametersBuilder.test_invalid_client_option
-   TestIperfParametersBuilder.test_invalid_server_option
-   #TestIperfParametersBuilder.test_valid_server_option
-
-<<name='test_imports', echo=False>>=
-#python standard library
-import unittest
-
-#third party
-from mock import MagicMock
-from nose.tools import raises
-@
-
-<<name='TestIperfParametersBuilder', echo=False>>=
-class TestIperfParametersBuilder(unittest.TestCase):
-    @raises(IperfParametersError)
-    def test_invalid_client_option(self):
-        """
-        Does it raise an IperfParametersError if an invalid option is given?
-        """
-        config = MagicMock()
-        config.options.return_value = ['length']
-        config.get.return_value = 'tcp'
-        builder = IperfParametersBuilder(config)
-        parameters = builder.client_parameters
-        return
-
-    @raises(IperfParametersError)
-    def test_invalid_server_option(self):
-        """
-        Does it raise an IperfParametersError if an invalid parameter is given (no)?
-
-        This doesn't seem like a builder test, this should be a parameters test.
-        """
-        config = MagicMock()
-        logger = MagicMock()
-        config.options.return_value = ['length']
-        config.get.return_value = 'bob'
-        builder = IperfParametersBuilder(config)
-        parameters = builder.server_parameters
-        return
-
-    #def test_valid_server_option(self):
-    #    config = MagicMock()
-    #
-    #    values = {(ConfigOptions.iperf_section, 'parallel'):'4',
-    #    (ConfigOptions.iperf_section, 'protocol'): 'tcp'}
-    #    def side_effects(*args):
-    #        return values[args]
-    #        
-    #    config.get.side_effect = side_effects
-    #    builder = IperfParametersBuilder(config)
-    #    parameters = builder.server_parameters
-    #    return
-@
-   
-<%
-for case in (TestIperfParametersBuilder,):
-    suite = unittest.TestLoader().loadTestsFromTestCase(case)    
-    unittest.TextTestRunner(verbosity=2).run(suite)
-%>

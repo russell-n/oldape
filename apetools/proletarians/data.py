@@ -1,14 +1,13 @@
-"""
-A module to hold a simple calculator to get rid of the numpy dependency
-"""
 
 from bisect import insort
+
 
 ZERO = 0
 ONE = 1
 TWO = 2
 HALF = 0.5
 TWO_FLOAT = 2.0
+
 
 class Data(object):
     """

@@ -1,11 +1,9 @@
-"""
-A module to hold the SetUp
-"""
 
 # apetools Libraries
 from apetools.baseclass import BaseClass
 from apetools.builders import builder
 from apetools.lexicographers.lexicographer import Lexicographer
+
 
 class SetUp(BaseClass):
     """

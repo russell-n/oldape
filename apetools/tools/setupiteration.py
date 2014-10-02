@@ -1,6 +1,3 @@
-"""
-A module to hold a setup class for a single iteration.
-"""
 
 # apetools Libraries
 from apetools.baseclass import BaseClass
@@ -13,6 +10,7 @@ from sleep import Sleep
 
 ConfigurationError = errors.ConfigurationError
 AffectorError = errors.AffectorError
+
 
 class SetupIteration(BaseClass):
     """

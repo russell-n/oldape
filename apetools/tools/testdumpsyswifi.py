@@ -1,10 +1,8 @@
-"""
-A module to test the Dumpsys Wifi command
-"""
 
 from apetools.commands import dumpsyswifi
 from apetools.commands import netcfg
 from apetools.connections import adbconnection
+
 
 class TestDumpsysWifi(object):
     """
@@ -59,11 +57,3 @@ class TestDumpsysWifi(object):
         print self.netcfg.ip_address
         print "*" * 40
         return
-
-    
-if __name__ == "__main__":
-    class Param(object):
-        wifi_interface = "wlan0"
-
-    t = TestDumpsysWifi(parameters= Param)
-    t()

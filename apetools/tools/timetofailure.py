@@ -1,12 +1,9 @@
-"""
-The time to failure pings a target until the pings fail.
-"""
+
 #python
 import time
 now = time.time
 
 from apetools.baseclass import BaseClass
-
 from apetools.commands import ping
 
 
@@ -85,7 +82,3 @@ class TimeToFailure(BaseClass):
         return
                  
 # end TimeToFailure
-
-if __name__ == "__main__":
-    ttf = TimeToFailure()
-    print ttf.run("192.168.20.1")
