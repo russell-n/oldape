@@ -1,6 +1,4 @@
-"""
-An Device Poller Polls the device for changing measurements
-"""
+
 #python standard library
 from time import time as now, sleep
 
@@ -16,6 +14,7 @@ class DevicePollerEnum(object):
     rssi = 'RSSI'
     devicepoller = 'devicepoller'
 # end class DevicePollerEnum
+
 
 class DevicePoller(BasePollster):
     """

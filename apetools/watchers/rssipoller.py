@@ -1,6 +1,4 @@
-"""
-An RSSI Poller Polls the device for rssi measurements
-"""
+
 #python standard library
 from time import time as now, sleep
 
@@ -17,6 +15,7 @@ class RssiPollerEnum(object):
     rssi = 'RSSI'
     rssipoller = 'rssipoller'
 # end class RssiPollerEnum
+
 
 class RssiPoller(BasePollster):
     """

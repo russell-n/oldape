@@ -1,6 +1,3 @@
-"""
-The Watcher Watches Watchers.
-"""
 
 from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
@@ -8,6 +5,7 @@ from apetools.commons.errors import CommandError
 
 class TheWatcherError(CommandError):
     """
+    Exception to raise if one of the watchers fails
     """
 # end class TheWatcherError
 

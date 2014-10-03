@@ -27,6 +27,7 @@ def grab_headline(filename):
         for line in f:
             if len(line.strip()):
                 return line.strip()
+    return
 
 
 def create_toctree(maxdepth=1, subfolders=None, add_headers=False):
@@ -86,8 +87,14 @@ def subfolder_toctree(maxdepth=1, subfolders=None, add_headers=False):
         sub_indices = (join(subfolder, INDEX) for subfolder in subfolders)
     else:
         sub_indices = (join(name, INDEX) for name in contents if exists(join(name, INDEX)))
-        for sub_index in sub_indices:
+        for sub_index in sorted(sub_indices):
             pretty_name = grab_headline(sub_index)
             print CONTENTS.format(pretty_name, sub_index)
     
     return
+
+
+if __name__ == '__main__':
+    import pudb
+    pudb.set_trace()
+    create_toctree()

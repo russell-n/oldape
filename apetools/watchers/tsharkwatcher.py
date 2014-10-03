@@ -1,13 +1,14 @@
-"""
-A module to watch frame and byte-counts using tshark
-"""
+
+# python
 import sys
 import re
 import time
 
+# this package
 from apetools.parsers import oatbran
 from apetools.baseclass import BaseClass
 from apetools.commons.timestamp import TimestampFormat
+
 
 class TsharkWatcherEnum(object):
     """
@@ -19,8 +20,10 @@ class TsharkWatcherEnum(object):
     
 # end class TsharkWatcherEnum
 
+
 COMMAND_STRING = "-i {interface} -nqz io,stat,1 -a duration:{duration}"
-    
+
+
 class TsharkWatcher(BaseClass):
     """
     A class to watch bytes and frames using tshark
@@ -126,6 +129,7 @@ class TsharkWatcher(BaseClass):
 
         return
 # end class TsharkWatcher
+
 
 if __name__ == "__main__":
     from apetools.connections.sshconnection import SSHConnection

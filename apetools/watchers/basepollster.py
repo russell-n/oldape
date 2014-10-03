@@ -1,31 +1,14 @@
-## Copyright 2012 Russell Nakamura
-##
-##   Licensed under the Apache License, Version 2.0 (the "License");
-##   you may not use this file except in compliance with the License.
-##   You may obtain a copy of the License at
-##
-##     http://www.apache.org/licenses/LICENSE-2.0
-##
-##   Unless required by applicable law or agreed to in writing, software
-##   distributed under the License is distributed on an "AS IS" BASIS,
-##   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-##   See the License for the specific language governing permissions and
-##   limitations under the License.
-"""
-A Base for both pollsters and intermittent file watchers
-"""
 
 # python standard library
 from abc import ABCMeta, abstractmethod, abstractproperty
 import re
-
 
 # apetools
 from apetools.baseclass import BaseThreadClass
 from apetools.commons.timestamp import TimestampFormat, TimestampFormatEnums
 from apetools.threads.threads import Thread
 
-#constants
+
 CSV_JOIN = "{0},{1}"
 ZERO = 0
 
