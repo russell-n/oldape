@@ -37,19 +37,19 @@ These are the documents created from the source files.
 .. toctree::
    :maxdepth: 1
 
-   Informants <informants/index.rst>
-   Devices <devices/index.rst>
-   Pipes <pipes/index.rst>
    Affectors <affectors/index.rst>
-   Tools <tools/index.rst>
-   Commons <commons/index.rst>
-   Watchers <watchers/index.rst>
-   Parsers <parsers/index.rst>
-   Threads <threads/index.rst>
-   Parameters <parameters/index.rst>
-   Commands <commands/index.rst>
-   Operations <operations/index.rst>
-   Proletarians <proletarians/index.rst>
-   Lexicographers <lexicographers/index.rst>
    Builders <builders/index.rst>
+   Commands <commands/index.rst>
+   Commons <commons/index.rst>
+   Devices <devices/index.rst>
+   Informants <informants/index.rst>
+   Lexicographers <lexicographers/index.rst>
+   Operations <operations/index.rst>
+   Parameters <parameters/index.rst>
+   Parsers <parsers/index.rst>
+   Pipes <pipes/index.rst>
+   Proletarians <proletarians/index.rst>
+   Threads <threads/index.rst>
+   Tools <tools/index.rst>
+   Watchers <watchers/index.rst>
 

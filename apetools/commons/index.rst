@@ -17,6 +17,7 @@ Commons
    Expressions <expressions.rst>
    Filterer <filterer.rst>
    Generators <generators.rst>
+   Index Builder <index_builder.rst>
    Read Output <readoutput.rst>
    The Reporter <reporter.rst>
    Storage Broadcaster <storagebroadcaster.rst>

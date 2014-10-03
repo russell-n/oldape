@@ -1,7 +1,5 @@
-"""
-A module for watchers of logcat logs.
-"""
 
+# this package
 from logwatcher import LogWatcher
 
 
@@ -79,7 +77,6 @@ class LogcatWatcher(LogWatcher):
 # end class LogcatWatcher
 
 
-    
 if __name__ == "__main__":
     import sys
     lw = LogcatWatcher(sys.stdout)

@@ -1,21 +1,4 @@
-# Copyright 2012 Russell Nakamura
-#
-#   Licensed under the Apache License, Version 2.0 (the "License");
-#   you may not use this file except in compliance with the License.
-#   You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-#   Unless required by applicable law or agreed to in writing, software
-#   distributed under the License is distributed on an "AS IS" BASIS,
-#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#   See the License for the specific language governing permissions and
-#   limitations under the License.
-"""
-A module to watch packets and bytes received on an interface.
 
-This was originally for monitor-mode wlan interfaces but is now meant to look for errors
-"""
 #python standard library
 from time import time, sleep
 import threading
@@ -76,7 +59,6 @@ class BaseProcPollster(BasePollster):
         :return: first line of output file
         """
         return self._header
-
 
     def stop(self):
         """
@@ -141,6 +123,7 @@ class BaseProcPollster(BasePollster):
         return
 # end class BaseProcPollster
 
+
 class ProcnetdevPollsterEnum(object):
     """
     A class to hold constants
@@ -163,6 +146,7 @@ class ProcnetdevPollsterEnum(object):
     transmit_carrier = 'transmit_carrier'
 #end class ProcnetdevPollsterEnum
 
+
 class ProcnetdevPollsterIndices(object):
     """
     A class to hold indices to place the values in order
@@ -171,6 +155,7 @@ class ProcnetdevPollsterIndices(object):
     rbytes, rpackets, rerrs, rdrop, rfifo, rframe = range(6)
     tbytes, tpackets, terrs, tdrop, tfifo, tcolls, tcarrier = range(6,13)
 # end class ProcnetdevPollsterIndices
+
 
 class ProcnetdevPollster(BaseProcPollster):
     """
@@ -260,7 +245,6 @@ class ProcnetdevPollster(BaseProcPollster):
             tx_values = [named(n=name, e=integer) for name in self.texpression_keys]
             self._expression = oatbran.SPACES.join([interface] + rx_values + [integer] * 2 + tx_values)
         return self._expression
-
 # end class ProcnetdevPollster
 
 
@@ -270,7 +254,8 @@ class CpuPollsterEnum(object):
     nice = 'nice'
     system = 'system'
     idle = 'idle'
-    # end class CpuPollsterEnum
+# end class CpuPollsterEnum
+
 
 class CpuPollster(BaseProcPollster):
     """
@@ -398,6 +383,7 @@ class CpuPollster(BaseProcPollster):
                 self.logger.debug("cat {0} took more than one second".format(self.name))
         return
 # end class CpuPollster
+
 
 if __name__ == "__main__":
     from apetools.connections.sshconnection import SSHConnection
