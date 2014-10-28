@@ -1,18 +1,35 @@
-"""
-A builder of device-state dumpers
-"""
+Dump Device Builder
+===================
 
+A builder of device-state dumpers
+
+<<name='imports', echo=False>>=
 #python
 from collections import namedtuple
 
 from apetools.tools.dumpdevicestate import DumpDeviceState
 from basetoolbuilder import BaseToolBuilder, Parameters
+@
 
-
+<<name='DumpDeviceStateBuilderEnum'>>=
 class DumpDeviceStateBuilderEnum(object):
     __slots__ = ()
     name = "nodes"
+@
 
+.. uml::
+
+   BaseToolBuilder <|-- DumpDeviceStateBuilder
+
+.. module:: apetools.builders.subbuilders.dumpdevicestatebuilder
+.. autosummary::
+   :toctree: api
+
+   DumpDeviceStateBuilder
+   DumpDeviceStateBuilder.product
+   DumpDeviceStateBuilder.parameters
+
+<<name='DumpDeviceStateBuilder', echo=False>>=
 class DumpDeviceStateBuilder(BaseToolBuilder):
     """
     A class to build device-state dumpers
@@ -44,3 +61,4 @@ class DumpDeviceStateBuilder(BaseToolBuilder):
             self._parameters = self.previous_parameters
         return self._parameters
 # end class DumpDeviceStateBuilder
+@

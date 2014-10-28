@@ -24,8 +24,8 @@ apetools.builders.subbuilders.rotatebuilder.RotateBuilder
    .. autosummary::
    
       ~RotateBuilder.angles
-      ~RotateBuilder.connection
-      ~RotateBuilder.connection_parameters
+      ~RotateBuilder.connections
+      ~RotateBuilder.connections_parameters
       ~RotateBuilder.logger
       ~RotateBuilder.parameters
       ~RotateBuilder.product

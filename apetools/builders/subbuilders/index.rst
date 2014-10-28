@@ -15,7 +15,7 @@ Sub-Builders
    Command Watcher Builder <commandwatchbuilder.rst>
    The ConnectionBuilder <connectionbuilder.rst>
    Device Builder <devicebuilder.rst>
-   """ <dumpdevicestatebuilder.rst>
+   Dump Device Builder <dumpdevicestatebuilder.rst>
    Sub Builder Enums <enums.rst>
    The Execute Tests Sub-Builder <executetestbuilder.rst>
    File Expression Builders <fileexpressionbuilders.rst>

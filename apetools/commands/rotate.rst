@@ -31,6 +31,27 @@ RotateError
 
 
 
+RotateParameters
+----------------
+
+This is a class intended for the RotateCommand.__call__. It generates arguments based on what settings it gets.
+
+.. module:: apetools.commands.rotate
+.. autosummary::
+   :toctree: api
+
+   RotateParameters
+   RotateParameters.configuration
+   RotateParameters.section
+   RotateParameters.angles
+   RotateParameters.velocity
+   RotateParameters.acceleration
+   RotateParameters.deceleration
+   RotateParameters.arguments   
+   RotateParameters.non_angle_arguments
+
+
+
 RotateCommand
 -------------
 
