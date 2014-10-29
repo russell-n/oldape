@@ -34,7 +34,11 @@ RotateError
 RotateParameters
 ----------------
 
-This is a class intended for the RotateCommand.__call__. It generates arguments based on what settings it gets.
+This is a class intended for the RotateCommand.__call__. It generates arguments based on what settings it gets. It is only concerned with the argument string(s) needed to be sent to the rotate command. Something else will have to make sure that the right arguments are sent to the right table.
+
+.. uml::
+
+   RotateParameters o- ConfigurationMap
 
 .. module:: apetools.commands.rotate
 .. autosummary::
@@ -50,6 +54,17 @@ This is a class intended for the RotateCommand.__call__. It generates arguments 
    RotateParameters.base_arguments
 
 
+
+The basic idea (assuming you only have one table) is that you would traverse the `argument_strings` and send them to the call.
+
+::
+
+    rotate = RotateCommand(connections=connection)
+    parameters = RotateParameters(configuration, section='table1')
+    for arguments in pramaters.argument_strings:
+        command(arguments)
+
+This is not nearly so straight-forward in the builders themselves since the rotate is called in between the iperf calls... how does this work?
 
 RotateCommand
 -------------
