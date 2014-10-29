@@ -4,10 +4,10 @@ Feature: Rotate Parameters
   When the Rotate Parameters arguments are checked
   Then the Rotate Parameters arguments are the angles
 
- Scenario: Rotate angles and configuration set
-  Given Rotate Parameters built with a configuration
+ Scenario: Rotate angles and test set
+  Given Rotate Parameters built with test flag
   When the Rotate Parameters arguments are checked
-  Then the Rotate Parameters arguments have angles and configuration
+  Then the Rotate Parameters arguments have angles and test
 
  Scenario: Rotate angles and section set
   Given Rotate Parameters built with a section
