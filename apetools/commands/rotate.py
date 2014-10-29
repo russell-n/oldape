@@ -7,6 +7,7 @@ from apetools.baseclass import BaseClass
 from apetools.commons.errors import ConfigurationError
 from apetools.commons.errors import CommandError
 from apetools.tools.killall import KillAll, KillAllError
+from apetools.commands.rotation_arguments import BaseArguments
 
 
 SIGKILL = 9
@@ -24,153 +25,38 @@ class RotateParameters(object):
     """
     RotateParameters for the rotate command
     """
-    def __init__(self, angles, configuration=None, section=None, velocity=None,
-                 acceleration=None, deceleration=None):
+    def __init__(self, configuration, section):
         """
         RotateParameters constructor
 
         :param:
 
-         - `angles`: iterable collection of angles
-         - `configuration`: path to configuration file
+         - `configuration`: Configuration Map with settings
          - `section`: section header in configuration file
-         - `velocity`: rate at which to rotate
-         - `acceleration`: rate at which to accelerate
-         - `deceleration`: rate at which to decelerate
         """
-        self.angles = angles
-        self._configuration = ""
         self.configuration = configuration
-        self._non_angle_arguments = None
-        self._section = ""
         self.section = section
-        self._velocity = ""
-        self.velocity = velocity
-        self._acceleration = ""
-        self.acceleration = acceleration
-        self._deceleration = ""
-        self.deceleration = deceleration       
+        self._angles = None
+        self._argument_strings = None
         return
 
     @property
-    def deceleration(self):
+    def angles(self):
         """
-        deceleration option
+        List of angles from the configuration
         """
-        return self._deceleration
-
-    @deceleration.setter
-    def deceleration(self, deceleration):
-        """
-        sets the deceleration option
-
-        :param:
-
-         - `deceleration`: value for the deceleration option
-        """
-        if deceleration is not None:
-            self._deceleration = " --deceleration {0}".format(deceleration)
-        return
+        if self._angles is None:
+            self._angles = self.configuration.get_ints(section=self.section,
+                                                       option='angles')
+        return self._angles
 
     @property
-    def acceleration(self):
+    def argument_strings(self):
         """
-        acceleration option
-        """
-        return self._acceleration
-
-    @acceleration.setter
-    def acceleration(self, acceleration):
-        """
-        Sets the acceleration option
-        """
-        if acceleration is not None:
-            self._acceleration = " --acceleration {0}".format(acceleration)
-        return self._acceleration
-
-    @property
-    def velocity(self):
-        """
-        Velocity option
-        """
-        return self._velocity
-
-    @velocity.setter
-    def velocity(self, velocity):
-        """
-        Sets the velocity option
-
-        :param:
-
-         - `velocity`: rate for the table
-        """
-        if velocity is not None:
-            self._velocity = " --velocity {0}".format(velocity)
-        return
-
-    @property
-    def section(self):
-        """
-        Configuration section option
-        """
-        return self._section
-
-    @section.setter
-    def section(self, section):
-        """
-        sets the section option
-
-        :param:
-
-         - `section`: name of section in the configuration
-        """
-        if section is not None:
-            self._section = " --section {0}".format(section)
-        return
-
-    @property
-    def non_angle_arguments(self):
-        """
-        :return: argument string without angle
-        """
-        if self._non_angle_arguments is None:
-            self._non_angle_arguments = "".join([self.configuration,
-                                                 self.section,
-                                                 self.velocity,
-                                                 self.acceleration,
-                                                 self.deceleration])
-        return self._non_angle_arguments
-
-    @property
-    def configuration(self):
-        """
-        The configuration argument
-        """
-        return self._configuration
-
-    @configuration.setter
-    def configuration(self, configuration):
-        """
-        Sets the configuration option
-
-        :param:
-
-         - `configuration`: path to configuration or None
-
-        :postcondition: self._configuration is set
-        """
-        if configuration is not None:
-            self._configuration = " --configuration {0}".format(configuration)
-        return
-        
-    @property
-    def arguments(self):
-        """
-        Generator of arguments for the rotate command
+        Generates argument strings for each angle
         """
         for angle in self.angles:
-            yield "{0} {1}".format(self.non_angle_arguments,
-                                   angle)
+            yield angle
 
 
 class RotateCommand(BaseClass):

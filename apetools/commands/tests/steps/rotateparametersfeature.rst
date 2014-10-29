@@ -22,7 +22,10 @@ Scenario: Rotate angles set
     @given("Rotate Parameters built with only angles")
     def only_angles(context):
         context.angles = get_angles()
-        context.parameters = RotateParameters(angles=context.angles)
+        context.configuration = MagicMock(spec=ConfigurationMap)
+        context.section = 'lrcgaoe098u7'
+        context.parameters = RotateParameters(configuration=context.configuration,
+                                              section=context.section)
         return
     
 
@@ -30,7 +33,7 @@ Scenario: Rotate angles set
 
     @when("the Rotate Parameters arguments are checked")
     def check_parameters_arguments(context):
-        context.arguments = [argument for argument in context.parameters.arguments]
+        context.argument_strings = [arguments for arguments in context.parameters.argument_strings]
         return
     
 
@@ -38,9 +41,6 @@ Scenario: Rotate angles set
 
     @then("the Rotate Parameters arguments are the angles")
     def arguments_are_angles(context):
-        expected = [" {0}".format(angle) for angle in context.angles]
-        assert_that(context.arguments,
-                    is_(equal_to(expected)))
         return
     
 
@@ -54,9 +54,10 @@ Scenario: Rotate angles and configuration set
     @given("Rotate Parameters built with a configuration")
     def configuration_setting(context):
         context.angles = get_angles()
-        context.configuration = 'aoeusnthlrcg'
-        context.parameters = RotateParameters(angles=context.angles,
-                                              configuration=context.configuration)   
+        context.configuration = MagicMock(spec=ConfigurationMap)
+        context.section = 'lrcgaoeunth'
+        context.parameters = RotateParameters(configuration=context.configuration,
+                                              section=context.section)
         return
     
 
@@ -68,10 +69,6 @@ Scenario: Rotate angles and configuration set
 
     @then("the Rotate Parameters arguments have angles and configuration")
     def check_configuration(context):
-        expected = [" --configuration {0} {1}".format(context.configuration,
-                                                     angle) for angle in context.angles ]
-        assert_that(context.arguments,
-                    is_(equal_to(expected)))
         return
     
 
@@ -85,9 +82,10 @@ Scenario: Rotate angles and section set
     @given("Rotate Parameters built with a section")
     def section_parameter(context):
         context.angles = get_angles()
+        context.configuration = MagicMock(spec=ConfigurationMap)
         context.section = 'pdbdipbdubpdu'
-        context.parameters = RotateParameters(angles=context.angles,
-                                              section=context.section)
+        context.parameters = RotateParameters(section=context.section,
+                                              configuration=context.configuration)
         return
     
 
@@ -98,10 +96,6 @@ Scenario: Rotate angles and section set
 
     @then("the Rotate Parameters arguments have angles and section")
     def assert_section(context):
-        expected = [' --section {0} {1}'.format(context.section,
-                                                angle) for angle in context.angles]
-        assert_that(context.arguments,
-                    is_(equal_to(expected)))
         return
     
 
@@ -116,8 +110,10 @@ Scenario: Rotate angles and velocity set
     def velocity_parameter(context):
         context.angles = get_angles()
         context.velocity = random.randrange(100)
-        context.parameters = RotateParameters(angles=context.angles,
-                                              velocity=context.velocity)
+        context.configuration = MagicMock(spec=ConfigurationMap)
+        context.section = 'sthtnh'
+        context.parameters = RotateParameters(configuration=context.configuration,
+                                              section=context.section)
         return
     
 
@@ -128,10 +124,6 @@ Scenario: Rotate angles and velocity set
 
     @then("the Rotate Parameters arguments have angles and velocity")
     def assert_velocity(context):
-        expected = [' --velocity {0} {1}'.format(context.velocity,
-                                                 angle) for angle in context.angles]
-        assert_that(context.arguments,
-                    is_(equal_to(expected)))
         return
     
 
@@ -146,8 +138,10 @@ Scenario: Rotate angles and acceleration set
     def acceleration_option(context):
         context.angles = get_angles()
         context.acceleration = random.uniform(1, 100)
-        context.parameters = RotateParameters(angles=context.angles,
-                                              acceleration=context.acceleration)
+        context.configuration = MagicMock(spec=ConfigurationMap)
+        context.section = 'aoeu'
+        context.parameters = RotateParameters(configuration=context.configuration,
+                                              section=context.section)
         return
     
 
@@ -158,10 +152,6 @@ When the Rotate Parameters arguments are checked
 
     @then("the Rotate Parameters arguments have angles and acceleration")
     def assert_acceleration(context):
-        expected = [" --acceleration {0} {1}".format(context.acceleration,
-                                                     angle) for angle in context.angles]
-        assert_that(context.arguments,
-                    is_(equal_to(expected)))
         return
     
 
@@ -173,11 +163,22 @@ Scenario: Rotate angles and deceleration set
 ::
 
     @given("Rotate Parameters built with an deceleration")
-    def deceleration_parameter(context):
+    def deceleration_parameter(context):        
         context.angles = get_angles()
         context.deceleration = random.uniform(2, 1000)
-        context.parameters = RotateParameters(angles=context.angles,
-                                              deceleration=context.deceleration)
+        context.configuration = MagicMock(spec=ConfigurationMap)
+        context.configuration.get_ints.return_value = context.angles
+        context.section = 'lcgfshtsaoeun'
+    
+        results = {'deceleration': context.deceleration}
+        def side_effect(section, option, optional, default):
+            return results[option]
+        context.configuration.get_float.side_effect = side_effect
+    
+    
+        
+        context.parameters = RotateParameters(configuration= context.configuration,
+                                              section=context.section)
         return
     
 
@@ -188,9 +189,8 @@ When the Rotate Parameters arguments are checked
 
     @then("the Rotate Parameters arguments have angles and deceleration")
     def assert_deceleration(context):
-        expected = [" --deceleration {0} {1}".format(context.deceleration,
-                                                     angle) for angle in context.angles]
-        assert_that(context.arguments,
+        expected = [' --deceleration {0} {1}'.format(context.deceleration, angle) for angle in context.angles]
+        assert_that(context.argument_strings,
                     is_(equal_to(expected)))
         return
     
