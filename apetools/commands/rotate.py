@@ -38,7 +38,49 @@ class RotateParameters(object):
         self.section = section
         self._angles = None
         self._argument_strings = None
+        self._values_string = None
+        self._booleans_string = None
+        self._base_arguments = None        
         return
+
+    @property
+    def base_arguments(self):
+        """
+        A Rotate BaseArguments object 
+        """
+        if self._base_arguments is None:
+            self._base_arguments = BaseArguments(args=[])
+        return self._base_arguments
+
+    @property
+    def values_string(self):
+        """
+        :return: string of options with values
+        """
+        if self._values_string is None:
+            self._values_string = ''.join([" --{0} {1}".format(option,
+                                                               self.configuration.get(section=self.section,
+                                                                  option=option,
+                                                                  optional=True))
+                                                                  for option in self.base_arguments.value_options
+                                                                  if self.configuration.get(section=self.section,
+                                                                                            option=option,
+                                                                                            optional=True) is not None])
+        return self._values_string
+
+    @property
+    def booleans_string(self):
+        """
+        :return: string of boolean options 
+        """
+        if self._booleans_string is None:
+            self._booleans_string = ''.join([" --{0}".format(option)
+                                            for option in self.base_arguments.boolean_options
+                                            if self.configuration.get_boolean(section=self.section,
+                                                                                option=option,
+                                                                                optional=True,
+                                                                                default=False)])
+        return self._booleans_string
 
     @property
     def angles(self):
@@ -56,7 +98,9 @@ class RotateParameters(object):
         Generates argument strings for each angle
         """
         for angle in self.angles:
-            yield angle
+            yield "{0}{1} {2}".format(self.booleans_string,
+                                        self.values_string,
+                                        angle)
 
 
 class RotateCommand(BaseClass):

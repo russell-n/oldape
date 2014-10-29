@@ -24,6 +24,8 @@ def only_angles(context):
     context.section = 'lrcgaoe098u7'
     context.parameters = RotateParameters(configuration=context.configuration,
                                           section=context.section)
+    context.configuration.get_ints.return_value = context.angles
+    context.configuration.get.return_value = None
     return
 
 
@@ -35,21 +37,36 @@ def check_parameters_arguments(context):
 
 @then("the Rotate Parameters arguments are the angles")
 def arguments_are_angles(context):
+    expected = [' {0}'.format(angle) for angle in context.angles]
+    assert_that(context.argument_strings,
+                is_(equal_to(expected)))
+
     return
 
 
-@given("Rotate Parameters built with a configuration")
+@given("Rotate Parameters built with test flag")
 def configuration_setting(context):
     context.angles = get_angles()
     context.configuration = MagicMock(spec=ConfigurationMap)
     context.section = 'lrcgaoeunth'
+    context.configuration.get_ints.return_value = context.angles
     context.parameters = RotateParameters(configuration=context.configuration,
                                           section=context.section)
+    context.configuration.get.return_value = None
+    results = {'test': True}
+    def side_effect(section, option, optional):
+        if option in results:
+            return str(results[option])
+    context.configuration.get_boolean.side_effect = side_effect
     return
 
 
-@then("the Rotate Parameters arguments have angles and configuration")
+@then("the Rotate Parameters arguments have angles and test")
 def check_configuration(context):
+    expected = [' --test {0}'.format(angle) for angle in context.angles]
+    assert_that(context.argument_strings,
+                is_(equal_to(expected)))
+
     return
 
 
@@ -76,11 +93,24 @@ def velocity_parameter(context):
     context.section = 'sthtnh'
     context.parameters = RotateParameters(configuration=context.configuration,
                                           section=context.section)
+
+    context.configuration.get_ints.return_value = context.angles
+    results = {'velocity': context.velocity}
+    def side_effect(section, option, optional):
+        if option in results:
+            return str(results[option])
+    context.configuration.get.side_effect = side_effect
+    context.configuration.get_boolean.return_value = False
     return
 
 
 @then("the Rotate Parameters arguments have angles and velocity")
 def assert_velocity(context):
+    expected = [' --velocity {0} {1}'.format(context.velocity, angle)
+                for angle in context.angles]
+    assert_that(context.argument_strings,
+                is_(equal_to(expected)))
+
     return
 
 
@@ -90,13 +120,24 @@ def acceleration_option(context):
     context.acceleration = random.uniform(1, 100)
     context.configuration = MagicMock(spec=ConfigurationMap)
     context.section = 'aoeu'
+    context.configuration.get_ints.return_value = context.angles
     context.parameters = RotateParameters(configuration=context.configuration,
                                           section=context.section)
+    results = {'acceleration': context.acceleration}
+    def side_effect(section, option, optional):
+        if option in results:
+            return str(results[option])
+    context.configuration.get.side_effect = side_effect
+    context.configuration.get_boolean.return_value = False
     return
 
 
 @then("the Rotate Parameters arguments have angles and acceleration")
 def assert_acceleration(context):
+    expected = [' --acceleration {0} {1}'.format(context.acceleration, angle) for angle in context.angles]
+    assert_that(context.argument_strings,
+                is_(equal_to(expected)))
+
     return
 
 
@@ -109,11 +150,11 @@ def deceleration_parameter(context):
     context.section = 'lcgfshtsaoeun'
 
     results = {'deceleration': context.deceleration}
-    def side_effect(section, option, optional, default):
-        return results[option]
-    context.configuration.get_float.side_effect = side_effect
-
-
+    def side_effect(section, option, optional):
+        if option in results:
+            return str(results[option])
+    context.configuration.get.side_effect = side_effect
+    context.configuration.get_boolean.return_value = False
     
     context.parameters = RotateParameters(configuration= context.configuration,
                                           section=context.section)
