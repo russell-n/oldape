@@ -24,6 +24,7 @@ Commands
    Power On <poweron.rst>
    The PS Command <pscommand.rst>
    The Rotate <rotate.rst>
+   The Base Arguments <rotation_arguments.rst>
    The Screen Command <screencommand.rst>
    The SFTP Command <sftpcommand.rst>
    SVC <svc.rst>

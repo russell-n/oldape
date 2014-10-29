@@ -1,5 +1,5 @@
-The Base Arguments
-==================
+The Rotation Arguments
+======================
 ::
 
     """rotate (a turntable controller)

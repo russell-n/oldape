@@ -28,3 +28,18 @@ Feature: Rotate Parameters
   Given Rotate Parameters built with an deceleration
   When the Rotate Parameters arguments are checked
   Then the Rotate Parameters arguments have angles and deceleration
+
+ Scenario: Rotate angles and multiple booleans set
+  Given Rotate Parameters built with boolean options
+  When the Rotate Parameters arguments are checked
+  Then the Rotate Parameters arguments have angles and boolean options
+
+ Scenario: Rotate angles and multiple values set
+  Given Rotate Parameters built with value options
+  When the Rotate Parameters arguments are checked
+  Then the Rotate Parameters arguments have angles and values options
+
+ Scenario: Rotate angles and multiple values and booleans set
+  Given Rotate Parameters built with value and boolean options
+  When the Rotate Parameters arguments are checked
+  Then the Rotate Parameters arguments have angles, boolean and value options
