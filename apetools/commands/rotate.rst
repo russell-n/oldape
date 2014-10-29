@@ -44,11 +44,7 @@ This is a class intended for the RotateCommand.__call__. It generates arguments 
    RotateParameters.configuration
    RotateParameters.section
    RotateParameters.angles
-   RotateParameters.velocity
-   RotateParameters.acceleration
-   RotateParameters.deceleration
-   RotateParameters.arguments   
-   RotateParameters.non_angle_arguments
+   RotateParameters.argument_strings
 
 
 
