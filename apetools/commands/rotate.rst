@@ -66,19 +66,39 @@ The basic idea (assuming you only have one table) is that you would traverse the
 
 This is not nearly so straight-forward in the builders themselves since the rotate is called in between the iperf calls... how does this work?
 
-RotateCommand
--------------
+OldRotateCommand
+----------------
 
 .. module:: apetools.commands.rotate
 .. autosummary::
    :toctree: api
 
-   RotateCommand
-   RotateCommand.kill
-   RotateCommand.kill_process
-   RotateCommand.__call__
-   RotateCommand.check_errors
+   OldRotateCommand
+   OldRotateCommand.kill
+   OldRotateCommand.kill_process
+   OldRotateCommand.__call__
+   OldRotateCommand.check_errors
+
+This is the original rotate command when the tables were giving feedback for their positions.
    
+
+
+The RotateCommand
+-----------------
+
+This is the newer rotate command (as of November 3, 2014) to use the replacement turntables built with raised platforms to temper the effects of electro-magnetic interferece created by the turntable's motor.
+
+.. '
+
+.. uml::
+
+   OldRotateCommand <|-- RotateCommand
+
+.. autosummary::
+   :toctree: api
+
+   RotateCommand
+
 ::
 
     if __name__ == "__main__":

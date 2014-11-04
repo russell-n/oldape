@@ -151,23 +151,25 @@ The basic idea (assuming you only have one table) is that you would traverse the
 
 This is not nearly so straight-forward in the builders themselves since the rotate is called in between the iperf calls... how does this work?
 
-RotateCommand
--------------
+OldRotateCommand
+----------------
 
 .. module:: apetools.commands.rotate
 .. autosummary::
    :toctree: api
 
-   RotateCommand
-   RotateCommand.kill
-   RotateCommand.kill_process
-   RotateCommand.__call__
-   RotateCommand.check_errors
+   OldRotateCommand
+   OldRotateCommand.kill
+   OldRotateCommand.kill_process
+   OldRotateCommand.__call__
+   OldRotateCommand.check_errors
+
+This is the original rotate command when the tables were giving feedback for their positions.
    
-<<name='RotateCommand', echo=False>>=
-class RotateCommand(BaseClass):
+<<name='OldRotateCommand', echo=False>>=
+class OldRotateCommand(BaseClass):
     """
-    A class to issue a remote 'rotate' command
+    A class to issue a remote 'rotate' command (older version for pre-Cameron turntables)
     """
     def __init__(self, connections, retries=2):
         """
@@ -176,7 +178,7 @@ class RotateCommand(BaseClass):
          - `connections`: list of connections to turntable controls
          - `retries`: The number of times to retry
         """
-        super(RotateCommand, self).__init__()
+        super(OldRotateCommand, self).__init__()
         self.connections = connections
         self.retries = retries
         self._killers = None
@@ -213,7 +215,18 @@ class RotateCommand(BaseClass):
     def rotate(self, connection, arguments, timeout=120):
         """
         sends the arguments to the connection
+
+        :param:
+
+         - `connection`: connection to the turntable controller
+         - `arguments`: string of arguments for rotate command
+         - `timeout`: time to wait for the table to finish
+
+        :raise: ConfigurationError if table complains about arguments
+        :raise: RotateError if timeout reached before table finishes
         """
+        # the timeout here is an SSH timeout (or other connection timeout)
+        # not the timeout waiting for the table to finish
         stdout, stderr = connection.rotate(arguments, timeout=4)
         end_time = time.time() + timeout
         eof = True
@@ -283,7 +296,43 @@ class RotateCommand(BaseClass):
             raise CommandError(message)
         return
 
-# end class RotateCommand
+# end class OldRotateCommand
+@
+
+The RotateCommand
+-----------------
+
+This is the newer rotate command (as of November 3, 2014) to use the replacement turntables built with raised platforms to temper the effects of electro-magnetic interferece created by the turntable's motor.
+
+.. '
+
+.. uml::
+
+   OldRotateCommand <|-- RotateCommand
+
+.. autosummary::
+   :toctree: api
+
+   RotateCommand
+
+<<name='RotateCommand', echo=False>>=
+class RotateCommand(OldRotateCommand):
+    """
+    Command to rotate turntables
+    """
+    def __call__(self, parameters, filename_prefix=None):
+        """
+        Main interface to rotate tables
+
+        :param:
+
+         - `parameters`: object with turntable.parameters attribute
+         - `filename_prefix`: Not used
+        """
+        self.kill_process()
+        for connection in self.connections:
+            arguments = parameters.turntable.parameters
+        return
 @
 
 <<name='debug'>>=

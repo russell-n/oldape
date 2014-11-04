@@ -1,7 +1,25 @@
+Puppet Connection
+=================
 
+An intermediate class to add methods that affect a device connected to a standard connection.
+
+
+<<name='imports', echo=False>>=
 from localconnection import LocalConnection
+@
 
+.. uml::
 
+   LocalConnection <|-- PuppetConnection
+
+.. module:: apetools.connections.puppetconnection
+.. autosummary::
+   :toctree: api
+
+   PuppetConnection
+   PuppetConnection.add_paths
+
+<<name='PuppetConnection', echo=False>>=
 class PuppetConnection(LocalConnection):
     """
     A puppet connection holds methods to affect the attached device.
@@ -20,3 +38,4 @@ class PuppetConnection(LocalConnection):
         output, error = self._main("PATH={0}:{1}".format(paths, default))
         return
 # end class PuppetConnection
+@

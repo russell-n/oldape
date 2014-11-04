@@ -1,4 +1,20 @@
+Serial Connection
+=================
 
+A module to hold a serial connection.
+
+The SerialConnection takes the command-line command as a property and
+the arguments to the command as parameters.
+
+e.g. ::
+
+    sc = SerialConnection()
+    output = sc.ls('-l')
+    print output.output
+
+prints the output of the `ls -l` command line command
+
+<<name='imports', echo=False>>=
 #python Libraries
 from collections import namedtuple
 from StringIO import StringIO
@@ -11,13 +27,28 @@ from sshconnection import OutputFile
 # connections
 from localconnection import LocalConnection
 from serialadapter import SerialAdapter
+@
 
-
+<<name='globals', echo=False>>=
 SPACER = '{0} {1} '
 UNKNOWN = "command not found "
 EOF = ''
+@
 
+.. uml::
 
+   LocalConnection <|-- SerialConnection
+
+.. module:: apetools.connections.serialconnection
+.. autosummary::
+   :toctree: api
+
+   SerialConnection
+   SerialConnection.client
+   SerialConnection.set_timeout
+   SerialConnection._procedure_call
+
+<<name='SerialConnection', echo=False>>=
 class SerialConnection(LocalConnection):
     """
     A SerialConnection executes commands over a serial connections
@@ -95,8 +126,9 @@ class SerialConnection(LocalConnection):
         return OutputError(OutputFile(stdout), stderr)
 
 # end class SerialConnection        
+@
 
-
+<<name='debugging', echo=False>>=    
 if __name__ == "__main__":
     arguments = "-l"
     sc = SerialConnection("/dev/ttyUSB0", 115200)
@@ -141,3 +173,4 @@ if __name__ == "__main__":
 
     print output.output.read()
     print sc.reboot().output.read()
+@

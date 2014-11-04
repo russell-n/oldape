@@ -1,15 +1,34 @@
+Serial Adapter
+==============
 
+A module to hold an adapter for the serial port.
+
+<<name='imports', echo=False>>=
 # third party libraries
 import serial
 
 #apetools libraries
 #from apetools.baseclass import BaseClass
+@
 
-
+<<name='globals', echo=False>>=
 EMPTY_STRING = ''
 NEWLINE = '\n'
+@
 
+.. uml::
 
+   serial.Serial <|-- SerialAdapter
+
+.. module:: apetools.connections.serialadapter
+.. autosummary::
+   :toctree: api
+
+   SerialAdapter
+   SerialAdapter.exec_command
+   SerialAdapter.writeline
+
+<<name='SerialAdapter', echo=False>>=
 class SerialAdapter(serial.Serial):
     """
     A SerialAdapter adapts pyserial to this librarys' style.
@@ -46,3 +65,4 @@ class SerialAdapter(serial.Serial):
         self.write(message.rstrip(NEWLINE) + NEWLINE)
         return                                   
 # end class SerialAdapter
+@
