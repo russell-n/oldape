@@ -1,4 +1,19 @@
+Telnet Connection
+=================
 
+A module to hold an Telnet connection.
+
+The TelnetConnection takes the command-line command as a property and the arguments to the command as parameters.
+
+e.g. ::
+
+    sc = TelnetConnection()
+    output = sc.ls('-l')
+    print output.output
+
+prints the output of the `ls -l` command line command
+
+<<name='imports', echo=False>>=
 #python Libraries
 
 from StringIO import StringIO
@@ -14,13 +29,29 @@ from sshconnection import OutputFile
 from nonlocalconnection import NonLocalConnection
 from localconnection import OutputError
 from telnetadapter import TelnetAdapter
+@
 
-
+<<name='globals', echo=False>>=
 SPACER = '{0} {1}'
 UNKNOWN = "Unknown command: "
 EOF = ''
+@
 
+.. uml::
 
+   NonLocalConnection <|-- TelnetConnection
+   TelnetConnection o- TelnetAdapter
+
+.. module:: apetools.connections.telnetconnection
+.. autosummary::
+   :toctree: api
+
+   TelnetConnection
+   TelnetConnection.client
+   TelnetConnection._procedure_call
+   TelnetConnection.validate
+
+<<name='TelnetConnection', echo=False>>=
 class TelnetConnection(NonLocalConnection):
     """
     A TelnetConnection executes commands over a Telnet Connection
@@ -104,8 +135,9 @@ class TelnetConnection(NonLocalConnection):
     def validate(self, line):
         return
 # end class TelnetConnection
+@
 
-
+<<name='debug', echo=False>>=    
 if __name__ == "__main__":
     import curses.ascii
     arguments = "-l"
@@ -135,3 +167,4 @@ if __name__ == "__main__":
 
     print output.output.read()
     print output.error.read()    
+@

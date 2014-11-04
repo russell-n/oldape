@@ -1,4 +1,9 @@
+Popen Producer
+==============
 
+The purpose of the Popen Producer is to provide ways to read from the standard out and standard error without allowing incomplete file outputs to block the execution of the program.
+
+<<name='imports', echo=False>>=
 import subprocess 
 import threading
 import Queue
@@ -8,12 +13,33 @@ import shlex
 
 from apetools.baseclass import BaseThreadClass, BaseClass
 from sharedcounter import SharedCounter
+@
 
-
+<<name='globals', echo=False>>=
 EOF = ""
 SPACE = ' '
+@
 
+PopenProducer
+-------------
 
+.. uml::
+
+   BaseClass <|-- PopenProducer
+
+.. module:: apetools.connections.producer
+.. autosummary::
+   :toctree: api
+
+   PopenProducer
+   PopenProducer.lock
+   PopenProducer.counter
+   PopenProducer.process
+   PopenProducer.stdout
+   PopenProducer.stderr
+   PopenProducer.__del__
+
+<<name='PopenProducer', echo=False>>=
 class PopenProducer(BaseClass):
     """
     The subprocess.Popen Producer executes a command when its process or one of its files is requested
@@ -114,8 +140,29 @@ class PopenProducer(BaseClass):
                         self.logger.debug(error)
         return
 # end class PopenProducer
+@
 
+PopenFile
+---------
 
+.. uml::
+
+   BaseThreadClass <|-- PopenFile
+
+.. autosummary::
+   :toctree: api
+
+   PopenFile
+   PopenFile.queue
+   PopenFile.run
+   PopenFile.start
+   PopenFile.readline
+   PopenFile.read
+   PopenFile.close
+   PopenFile.__iter__
+   PopenFile.__del__
+   
+<<name='PopenFile', echo=False>>=
 class PopenFile(BaseThreadClass):
     """
     A container for a process' readable file-outputs
@@ -271,8 +318,9 @@ class PopenFile(BaseThreadClass):
                 self.close()
         return
 # end class PopenProducer
+@
 
-
+<<name='debug', echo=False>>=
 if __name__ == "__main__":
     def start_ping():
         p = PopenProducer("ping localhost")
@@ -310,3 +358,4 @@ if __name__ == "__main__":
         print line
 
     del(p)
+@

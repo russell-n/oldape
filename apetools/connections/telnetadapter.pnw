@@ -1,16 +1,38 @@
+Telnet Adapter
+==============
 
+This is a module to hold a telnet adapter.
+
+<<name='imports', echo=False>>=
 # python Libraries
 import telnetlib
 
 # apetools libraries
 
 from apetools.baseclass import BaseClass
+@
 
-
+<<name='globals', echo=False>>=
 NEWLINE = '\n'
 EOF = EMPTY_STRING = ''
+@
+
+.. uml::
+
+   BaseClass <|-- TelnetAdapter
 
 
+.. module:: apetools.connections.telnetadapter
+.. autosummary::
+   :toctree: api
+
+   TelnetAdapter
+   TelnetAdapter.client
+   TelnetAdapter.exec_command
+   TelnetAdapter.writeline
+   TelnetAdapter.__del__
+
+<<name='TelnetAdapter', echo=False>>=
 class TelnetAdapter(BaseClass):
     """
     A TelnetAdapter Adapts the telnetlib.Telnet to this libraries interfaces.
@@ -169,9 +191,11 @@ class TelnetOutput(BaseClass):
     def __iter__(self):
         return self.next()
 # end class TelnetOutput
+@
 
-
+<<name='debug', echo=False>>=
 if __name__ == "__main__":
     ta = TelnetAdapter(host="192.168.10.172")
     for line in ta.exec_command("iperf -c 192.168.10.51 -i 1"):
         print line
+@

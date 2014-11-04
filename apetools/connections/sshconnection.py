@@ -147,10 +147,6 @@ class SimpleClient(BaseClass):
         try:
             return self.client.exec_command(command, timeout)
 
-        except Exception as error:
-            import pudb
-            pudb.set_trace()
-            print error
         except paramiko.SSHException as error:
             self._client = None
             self.logger.error(error)
@@ -283,7 +279,6 @@ class SSHConnection(NonLocalConnection):
         # than one paramiko client can hit the server at once
         with self.lock:
             stdin, stdout, stderr = self.client.exec_command(command, timeout=timeout)
-
         
         self.logger.debug("Completed exec_command of: '{0}'".format(command))
 

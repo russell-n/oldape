@@ -103,9 +103,9 @@ class RotateParameters(object):
                                         angle)
 
 
-class RotateCommand(BaseClass):
+class OldRotateCommand(BaseClass):
     """
-    A class to issue a remote 'rotate' command
+    A class to issue a remote 'rotate' command (older version for pre-Cameron turntables)
     """
     def __init__(self, connections, retries=2):
         """
@@ -114,7 +114,7 @@ class RotateCommand(BaseClass):
          - `connections`: list of connections to turntable controls
          - `retries`: The number of times to retry
         """
-        super(RotateCommand, self).__init__()
+        super(OldRotateCommand, self).__init__()
         self.connections = connections
         self.retries = retries
         self._killers = None
@@ -151,7 +151,18 @@ class RotateCommand(BaseClass):
     def rotate(self, connection, arguments, timeout=120):
         """
         sends the arguments to the connection
+
+        :param:
+
+         - `connection`: connection to the turntable controller
+         - `arguments`: string of arguments for rotate command
+         - `timeout`: time to wait for the table to finish
+
+        :raise: ConfigurationError if table complains about arguments
+        :raise: RotateError if timeout reached before table finishes
         """
+        # the timeout here is an SSH timeout (or other connection timeout)
+        # not the timeout waiting for the table to finish
         stdout, stderr = connection.rotate(arguments, timeout=4)
         end_time = time.time() + timeout
         eof = True
@@ -221,7 +232,24 @@ class RotateCommand(BaseClass):
             raise CommandError(message)
         return
 
-# end class RotateCommand
+# end class OldRotateCommand
+
+
+class RotateCommand(OldRotateCommand):
+    """
+    Command to rotate turntables
+    """
+    def __call__(self, parameters, filename_prefix=None):
+        """
+        Main interface to rotate tables
+
+        :param:
+
+         - `parameters`: object with turntable.parameters attribute
+         - `filename_prefix`: Not used
+        """
+        self.kill_process()
+        return
 
 
 if __name__ == "__main__":
