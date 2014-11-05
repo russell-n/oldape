@@ -1,0 +1,48 @@
+SSH Connection
+==============
+
+.. literalinclude:: ../sshconnection.feature
+   :language: gherkin
+
+<<name='imports', echo=False>>=
+# python standard library
+import random
+import string
+
+# third-party
+from behave import given, when, then
+from hamcrest import assert_that, is_, equal_to
+
+# this package
+from apetools.connections.sshconnection import SSHConnection
+@
+
+Scenario: User sets the connection's identifier
+-----------------------------------------------
+
+.. '
+
+<<name='ssh_connection_identifier', wrap=False>>=
+@given("an ssh connection created with an identifier")
+def ssh_connection_identifier(context):
+    context.identifier = random.sample(string.letters, 10)
+    context.connection = SSHConnection(hostname='bob',
+                                       username='ted',
+                                       identifier=context.identifier)
+    return
+@
+
+<<name='check_identifier', wrap=False>>=
+@when("the connection's identifier is checked")
+def check_identifier(context):
+    context.outcome = context.connection.identifier   
+    return
+@
+
+<<name='assert_identifier', wrap=False>>=
+@then("the connection's identifier is the one the user set")
+def assert_identifier(context):
+    assert_that(context.outcome,
+                is_(equal_to(context.identifier)))
+    return
+@

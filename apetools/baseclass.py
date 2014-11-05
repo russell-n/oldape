@@ -5,6 +5,14 @@ import logging
 
 DOT_JOIN = "{0}.{1}"
 
+# the BaseClass is being imported into the __init__.py so these have to be defined here
+# to avoid a circular import
+RED  = "\033[31m"
+BOLD = "\033[1m"
+RESET = "\033[0;0m"
+
+RED_RESET =  "{red}{{thing}}{reset}".format(red=RED, reset=RESET)
+
 
 class BaseClass(object):
     """
@@ -23,6 +31,14 @@ class BaseClass(object):
             self._logger = logging.getLogger(DOT_JOIN.format(self.__module__,
                                   self.__class__.__name__))
         return self._logger
+
+    def log_error(self, message):
+        """
+        Logs the message as an error, adding extra formatting
+        """
+        self.logger.error(RED_RESET.format(thing=message))
+        return
+
 # end BaseClass
 
 

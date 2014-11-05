@@ -24,7 +24,7 @@ class NonLocalConnection(BaseThreadClass):
     __metaclass__ = ABCMeta
     def __init__(self, command_prefix='', lock=None, 
                  operating_system=enumerations.OperatingSystem.linux,
-                 path=None, library_path=None,
+                 path=None, library_path=None, identifier=None,
                  *args, **kwargs):
         """
         NonLocalConnection Constructor
@@ -36,6 +36,7 @@ class NonLocalConnection(BaseThreadClass):
          - `operating_system`: the operating system
          - `path`: a path setting to add to the path (before :$PATH)
          - `library_path`: a setting for LD_LIBRARY_PATH
+         - `identifier`: string to use to identify the connection
         """
         super(NonLocalConnection, self).__init__(*args, **kwargs)
         # logger is defined in BaseClass but declared here for child-classes
@@ -44,6 +45,7 @@ class NonLocalConnection(BaseThreadClass):
         self._lock = lock
         self.path = path
         self.library_path = library_path
+        self.identifier = identifier
         self._queue = None
         self.operating_system = operating_system
         self.exc_info = None
