@@ -21,4 +21,5 @@ Connections
 .. toctree::
    :maxdepth: 1
 
+   Connections <tests/index.rst>
 

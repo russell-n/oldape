@@ -103,7 +103,7 @@ class RotateParameters(object):
                                         angle)
 
 
-class OldRotateCommand(BaseClass):
+class RotateCommand(BaseClass):
     """
     A class to issue a remote 'rotate' command (older version for pre-Cameron turntables)
     """
@@ -114,7 +114,7 @@ class OldRotateCommand(BaseClass):
          - `connections`: list of connections to turntable controls
          - `retries`: The number of times to retry
         """
-        super(OldRotateCommand, self).__init__()
+        super(RotateCommand, self).__init__()
         self.connections = connections
         self.retries = retries
         self._killers = None
@@ -232,10 +232,10 @@ class OldRotateCommand(BaseClass):
             raise CommandError(message)
         return
 
-# end class OldRotateCommand
+# end class RotateCommand
 
 
-class RotateCommand(OldRotateCommand):
+class RotateCommandUsurper(RotateCommand):
     """
     Command to rotate turntables
     """
@@ -249,6 +249,34 @@ class RotateCommand(OldRotateCommand):
          - `filename_prefix`: Not used
         """
         self.kill_process()
+        output_string = ""
+        
+        for connection in self.connections:
+            arguments = parameters.turntable.parameters[connection.identifier]
+            output_string += "{0}_{1}".format(connection.identifier,
+                                              "_".join(arguments.replace('-', '').split()))
+
+            self.rotate(connection=connection,
+                        arguments=arguments)
+        return output_string
+
+    def rotate(self, connection, arguments='', timeout=600):
+        """
+        Assumes that the command will block until done and nothing unusual happens
+
+        :param:
+
+         - `connection`: connection to the table (ssh)
+         - `arguments`: string to pass to the command
+        """
+        stdout, stderr = connection.rotate(arguments,
+                                           timeout)
+        
+        for line in stdout:
+            self.logger.info(line)
+
+        for line in stderr:
+            self.log_error(line)
         return
 
 
