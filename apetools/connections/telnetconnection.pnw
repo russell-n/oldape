@@ -1,0 +1,170 @@
+Telnet Connection
+=================
+
+A module to hold an Telnet connection.
+
+The TelnetConnection takes the command-line command as a property and the arguments to the command as parameters.
+
+e.g. ::
+
+    sc = TelnetConnection()
+    output = sc.ls('-l')
+    print output.output
+
+prints the output of the `ls -l` command line command
+
+<<name='imports', echo=False>>=
+#python Libraries
+
+from StringIO import StringIO
+import os.path
+
+# apetools Libraries
+#commands
+
+from apetools.commands import changeprompt
+
+# connections
+from sshconnection import OutputFile
+from nonlocalconnection import NonLocalConnection
+from localconnection import OutputError
+from telnetadapter import TelnetAdapter
+@
+
+<<name='globals', echo=False>>=
+SPACER = '{0} {1}'
+UNKNOWN = "Unknown command: "
+EOF = ''
+@
+
+.. uml::
+
+   NonLocalConnection <|-- TelnetConnection
+   TelnetConnection o- TelnetAdapter
+
+.. module:: apetools.connections.telnetconnection
+.. autosummary::
+   :toctree: api
+
+   TelnetConnection
+   TelnetConnection.client
+   TelnetConnection._procedure_call
+   TelnetConnection.validate
+
+<<name='TelnetConnection', echo=False>>=
+class TelnetConnection(NonLocalConnection):
+    """
+    A TelnetConnection executes commands over a Telnet Connection
+
+    """
+    def __init__(self, hostname, port=23, username="root", prompt="#", timeout=2, end_of_line='\r\n',
+                 mangle_prompt=True,
+                 *args, **kwargs):
+        """
+        :param:
+
+         - `hostname`: The IP Address or hostname
+         - `port`: The telnet port 
+         - `username`: The login name
+         - `prompt`: The prompt to expect
+         - `timeout`: The readline timeout
+         - `end_of_line`: The string indicating the end of a line.
+         - `mangle_prompt`: If True, change the prompt
+        """
+        super(TelnetConnection, self).__init__(*args, **kwargs)
+        self.hostname = hostname
+        self.port = port
+        self.username = username
+        self.prompt = prompt
+        self.timeout = timeout
+        self.end_of_line = end_of_line
+        self.mangle_prompt = mangle_prompt
+        self._logger = None
+        self._client = None
+        return
+
+    @property
+    def client(self):
+        """
+        :return: TelnetAdapter for the telnet connection
+        """
+        if self._client is None:
+            self._client = TelnetAdapter(host=self.hostname, 
+                                         login=self.username, port=self.port,
+                                         timeout=self.timeout,
+                                         end_of_line=self.end_of_line,
+                                         prompt=self.prompt)
+            if self.mangle_prompt:
+                changer = changeprompt.ChangePrompt(adapter=self._client)
+                self.logger.debug(changer.run())
+        return self._client
+    
+    def _procedure_call(self, command, arguments="",
+                        path='', timeout=10):
+        """
+        Despite its name, this isn't intended to be run.
+        The . notation is the expected interface.
+        
+        runs the SimpleClient exec_command and puts lines of output on the Queue
+
+        :param:
+
+         - `command`: The shell command.
+         - `arguments`: A string of command arguments.
+         - `path`: an optional path to add to the command
+         - `timeout`: readline timeout
+
+        :postcondition: OutputError with output and error file-like objects
+        """
+        command = os.path.join(path, command)
+        if len(self.command_prefix):
+            command = SPACER.format(self.command_prefix,
+                                    command)
+
+        self.logger.debug("calling 'client.exec_command({0})'".format(command))
+        stdout = self.client.exec_command(SPACER.format(command, arguments),
+                                          timeout=timeout)
+        self.logger.debug("Completed 'client.exec_command({0})'".format(command))
+
+        
+
+        stderr = StringIO("")
+
+        return OutputError(OutputFile(stdout, self.validate), stderr)
+
+    def validate(self, line):
+        return
+# end class TelnetConnection
+@
+
+<<name='debug', echo=False>>=    
+if __name__ == "__main__":
+    import curses.ascii
+    arguments = "-l"
+    sc = TelnetConnection("192.168.10.172")
+    sc.client.writeline(curses.ascii.crtl("c"))
+    print "Testing 'ls -l'"
+    output = sc.ls(arguments='-l')
+    for x in output.output:
+        print x
+
+    from time import sleep
+    sleep(0.1)
+    print "Testing ping"
+    output = sc.ping(arguments="-c 10 192.168.10.1", timeout=1)
+    for x in output.output:
+        print x
+
+    sleep(0.1)
+    print "Testing iperf"
+    output = sc.iperf('-i 1 -c 192.168.10.51')
+    for line in output.output:
+        print line
+
+    sleep(0.1)
+    print "Checking iperf version"
+    output = sc.iperf('-v')
+
+    print output.output.read()
+    print output.error.read()    
+@

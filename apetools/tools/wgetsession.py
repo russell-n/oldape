@@ -1,0 +1,127 @@
+
+# python standard library
+import time
+
+# this package
+from apetools.baseclass import BaseClass
+from apetools.commons.errors import ConfigurationError
+from apetools.commands.busyboxwget import BusyboxWget, HEADER
+
+
+class BusyboxWgetSession(BaseClass):
+    """
+    A busybox-based wget monitor
+    """
+    def __init__(self, url, connection, storage, repetitions=None,
+                 data_file=None, recovery_time=1,
+                 max_time=None):
+        """
+        BusyboxWgetSession constructor
+
+        :param:
+
+         - `url`: URL of server (http://<ip>[:<port>]/<file>)
+         - `connection`: connection to device to run `wget`
+         - `storage`: A file-like object to send data to
+         - `repetitions`: number of times to call wget
+         - `max_time`: maximum seconds to run
+         - `data_file`: name to use for file
+         - `recovery_time`: seconds to sleep if an error is detected
+        """
+        super(BusyboxWgetSession, self).__init__()
+        self.url = url
+        self.connection = connection
+        self.storage = storage
+        self.repetitions = repetitions
+        self.max_time = max_time
+        self.recovery_time = recovery_time
+        self._data_file = data_file
+        self.end_time = None
+        self.increment = 1
+        self.count = 0
+        self._time_remains = False
+        self._wget = None
+        return
+
+    @property
+    def wget(self):
+        """
+        A busy box wget command
+        """
+        if self._wget is None:
+            self._wget = BusyboxWget(url=self.url,
+                                     connection=self.connection)
+        return self._wget
+    
+
+    @property
+    def data_file(self):
+        """
+        Name to use for data-file
+        """
+        if self._data_file is None:
+            self._data_file = 'wget.csv'
+        return self._data_file
+
+    @property
+    def time_remains(self):
+        """
+        Checks if time is remaining
+
+         - increments self.count by self.increment
+         - returns True if count <= repetitions
+         
+        """
+        self.count += self.increment
+        if self.max_time is not None:
+            # False if count is too high or time has expired
+            return all((self.count <= self.repetitions, time.time() < self.end_time))
+        # False if count too high, regardless of time
+        return self.count <= self.repetitions
+
+    def start_timer(self):
+        """
+        Initializes the timer
+
+        :raises: ConfigurationError if neither max_time nor repetitions set
+        """
+        self.count = 0
+        if not any((self.max_time, self.repetitions)):
+            raise ConfigurationError('max_time or repetitions need to be set')
+        if self.repetitions is None:
+            # make it so it can't run out
+            self.repetitions = 1
+            self.increment = 0            
+        else:
+            self.increment = 1
+        if self.max_time not in (0,None) :
+            # end-time is the time to stop
+            self.end_time = time.time() + self.max_time
+        else:
+            # give the time_remaining a flag to know not to use time
+            self.end_time = self.max_time = None            
+        return
+
+    def __call__(self, parameters=None, filename_prefix=None):
+        """
+        calls wget  until we are out of time or repetitions
+
+        :param:
+
+         - `parameters`: not used (legacy signature)
+        """
+        self.logger.info("Starting `wget` session")
+        output = self.storage.open(self.data_file)
+        output.write(HEADER)
+        self.start_timer()
+        while self.time_remains:
+            self.logger.info('calling wget')
+            data = self.wget()
+            self.logger.info("{0}\n".format(data))
+            output.write("{0}\n".format(data))
+            if len(data.error):
+                self.logger.error(data.error)
+                self.logger.info('Sleeping for {0} second to allow for a recovery'.format(self.recovery_time))
+                time.sleep(self.recovery_time)
+        self.logger.info("Ended `wget` session")
+        return

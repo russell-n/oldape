@@ -1,0 +1,179 @@
+
+#python
+import os
+
+# this package
+from apetools.baseclass import BaseClass
+
+
+WRITEABLE = "w"
+
+
+class StorageBroadcaster(BaseClass):
+    """
+    The Storage Broadcaster maintains an open file and a set of targets.
+    """
+    def __init__(self, path, targets=None):
+        """
+        :param:
+
+         - `path`: a folder path for the output file.
+        """
+        super(StorageBroadcaster, self).__init__()
+        self.path = path
+        self._targets = targets
+        self._folder = None
+        return
+
+    @property
+    def targets(self):
+        """
+        :return: list of output targets
+        """
+        if self._targets is None:
+            self._targets = []
+        return self._targets
+
+    @property
+    def folder(self):
+        """
+        :return: the path to the output folder
+        :postcondition: the folder exists on the local machine
+        """
+        if self._folder is None:
+            self.check_folder(self.path)
+            self._folder = self.path
+        return self._folder
+
+    def check_folder(self, folder):
+        """
+        :param:
+
+         - `folder`: the name of a folder
+
+        :postcondition: folder is a folder in the local filesystem
+        """
+        if not os.path.isdir(folder):
+            os.makedirs(folder)
+        return
+    
+    def open(self, filename, subdir=""):
+        """
+        :param:
+
+         - `filename`: the name of a file to open and add to the targets
+         - `subdir`: a sub-directory within the main path.
+        """
+        folder = os.path.join(self.folder, subdir)
+        self.check_folder(folder)
+        if os.path.isfile(os.path.join(folder, filename)):
+            base, ext = os.path.splitext(filename)
+            names = [os.path.basename(name) for name in os.listdir(folder)]
+            count = len([name for name in names if name.startswith(base)])
+            filename = "{0}_{1}.{2}".format(base, count, ext)
+        outfile = CallFile(os.path.join(folder, filename))
+        self.targets.append(outfile)
+
+        def write(self, output):
+            """
+            :param:
+
+             - `output`: string to send to the targets
+            """
+            self(output)
+            return
+
+        def add(self, target):
+            """
+            :param:
+
+             - `target`: a target to add to the output targets
+            """
+            self.targets.append(target)
+            return
+
+        def __call__(self, output):
+            """
+            :param:
+
+             - `output`: string to send to the targets
+            """
+            for target in self.targets:
+                target(output)
+            return
+
+        def close(self):
+            """
+            :postcondition" close() called on all targets
+            """
+            for target in self.targets:
+                target.close()
+            self._targets = None
+            return
+        
+        def __del__(self):
+            """
+            :postcondition: self.close called.
+            """
+            self.close()
+            return
+# end class Storage Broadcaster
+
+
+class CallFile(object):
+    """
+    A class to wrap a file to meet the interface of the other targets
+    """
+    def __init__(self, filename):
+        """
+        :param:
+
+         - `filename`: the name of the file to open
+        """
+        self.filename = filename
+        self._open_file = None
+        return
+
+    @property
+    def open_file(self):
+        if self._open_file is None:
+            self._open_file = open(self.filename, WRITEABLE)
+        return self._open_file
+
+    def send(self, output):
+        """
+        an alias for write to use in coroutines
+        """
+        self.open_file.write(output)
+        return
+    
+    def __call__(self, output):
+        """
+        :param:
+
+         - `output`: string to write to the file
+        """
+        self.open_file.write(output)
+        return
+
+    def write(self, output):
+        """
+        an alias for __call__
+        """
+        self.open_file.write(output)
+        return
+
+    def close(self):
+        """
+        :postcondition: open_file is closed
+        """
+        self.open_file.close()
+        return
+
+    def __del__(self):
+        """
+        :postcondition: open_file is closed
+        """
+        self.open_file.close()
+        return
+# end CallFile

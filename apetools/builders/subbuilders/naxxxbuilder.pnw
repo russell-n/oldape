@@ -1,0 +1,156 @@
+Naxxx Builder
+=============
+
+A module to build a naxxx object.
+
+<<name='imports', echo=False>>=
+# python libraries
+from collections import namedtuple
+from string import lower
+
+# apetools modules
+from basetoolbuilder import BaseToolBuilder, Parameters
+from apetools.lexicographers.config_options import ConfigOptions
+
+from apetools.affectors.elexol.naxxx import Naxxx
+from apetools.commons.errors import ConfigurationError
+@
+
+Naxxx Configuration Error
+-------------------------
+
+.. uml::
+
+   ConfigurationError <|-- NaxxxConfigurationError
+
+.. module:: apetools.builders.subbuilders.naxxxbuilder
+.. autosummary::
+   :toctree: api
+
+   NaxxxConfigurationError
+
+<<name='NaxxxConfigurationError', echo=False>>=
+class NaxxxConfigurationError(ConfigurationError):
+    """
+    An error to raise if the user's configuration is wrong
+    """
+# end class NaxxxError
+@
+
+Naxxx Builder Constants
+-----------------------
+
+<<name='NaxxxBuilderEnum'>>=
+class NaxxxBuilderEnum(object):
+    """
+    A holder of Synaxxx constants
+    """
+    __slots__ = ()
+    hostname = "hostname"
+    name = 'naxxx'
+# end class NaxxxBuilderEnums
+@
+
+Naxxx Parameters
+----------------
+
+<<name='NaxxxParameters'>>=
+class NaxxxParameters(namedtuple("NaxxxParameters",
+                                   "identifier switch".split())):
+    __slots__ = ()
+
+    def __str__(self):
+        return "identifier: {1} switch: {0}".format(','.join(self.switch, self.identifier))
+# end class PowerOnParameters
+@
+
+The NaxxxBuilder
+----------------
+
+.. uml::
+
+   BaseToolBuilder <|-- NaxxxBuilder
+   NaxxxBuilder o- ConfigurationMap
+   NaxxxBuilder o- Naxxx
+
+.. autosummary::
+   :toctree: api
+
+   NaxxxBuilder
+   NaxxxBuilder.hostname
+   NaxxxBuilder.config_options
+   NaxxxBuilder.product
+   NaxxxBuilder.parameters
+
+
+<<name='NaxxxBuilder', echo=False>>=
+class NaxxxBuilder(BaseToolBuilder):
+    """
+    A networked power-switch builder
+    """
+    def __init__(self, *args, **kwargs):
+        super(NaxxxBuilder, self).__init__(*args, **kwargs)
+        self._hostname = None
+        self._config_options = None
+        return
+
+    @property
+    def hostname(self):
+        """
+        The ip (hostname) of the Naxxx
+        """
+        if self._hostname is None:
+            section = ConfigOptions.naxxx_section
+            self._hostname = self.config_map.get(section, 'hostname')            
+        return self._hostname
+
+    @property
+    def config_options(self):
+        """
+        :return: dictionary of <id>: switch number
+        """
+        if self._config_options is None:
+            self._config_options = {}
+            section = ConfigOptions.naxxx_section
+            identifiers = [identifier for identifier in self.config_map.options(section)
+                           if identifier !='hostname']
+            try:
+                switches = [self.config_map.get(section,
+                                                identifier) 
+                                                for identifier in identifiers]
+            except TypeError as error:
+                self.logger.error(error)
+                message = "Missing NAXXX section in the config-file."
+                raise NaxxxConfigurationError(message)
+            self._config_options = dict(zip(identifiers, switches))
+            if not len(self._config_options):
+                message = "Missing NAXXX options (<ID>=<switch ID>) in the config file"
+                raise NaxxxConfigurationError(message)
+        return self._config_options
+
+    @property
+    def product(self):
+        """
+        :return: PowerOn object
+        """
+        if self._product is None:
+            self._product = Naxxx(self.hostname)
+        return self._product
+
+    @property
+    def parameters(self):
+        """
+        :return: list of named tuples
+        """
+        if self._parameters is None:
+            parameters = []
+            for identifier in sorted(self.config_options.iterkeys()):
+                parameters.append(NaxxxParameters(identifier=identifier,
+                                                  switch=self.config_options[identifier]))
+            name = NaxxxBuilderEnum.name
+            self.previous_parameters.append(Parameters(name=name,
+                                                       parameters=parameters))
+            self._parameters = self.previous_parameters
+        return self._parameters
+# end class NaxxxBuilder
+@
