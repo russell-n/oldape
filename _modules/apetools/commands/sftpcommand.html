@@ -1,0 +1,390 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.sftpcommand &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commands.sftpcommand</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.connections.sshconnection</span> <span class="kn">import</span> <span class="n">SSHConnection</span>
+
+
+<span class="k">class</span> <span class="nc">SftpCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+<div class="viewcode-block" id="SftpCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An interface to the SftpCommand</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+<div class="viewcode-block" id="SftpCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.__init__">[docs]</a>                 <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sftp Command Constructor</span>
+
+<span class="sd">         * `connection` is the intended parameter, others are for building a connection if none given</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection`: An SSHConnection</span>
+<span class="sd">         - `hostname`: address of remote host</span>
+<span class="sd">         - `password`: password of remote host</span>
+<span class="sd">         - `username: user login to remote host</span>
+<span class="sd">         - `port`:  ssh server port number</span>
+<span class="sd">         - `timeout`: login timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ssh</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The SSHConnection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
+                                             <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                                             <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+                                             <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+
+    <span class="nd">@connection.setter</span>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+<div class="viewcode-block" id="SftpCommand.connection"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the SSH connection and resets the .ssh and .sftp attributes</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection`: A built SSHConnection</span>
+
+<span class="sd">        :postcondition: self.ssh and self.sftp are None</span>
+<span class="sd">        :postcondition: self.connection is connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ssh</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">None</span>        
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ssh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SftpCommand.ssh"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.ssh">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The Paramiko client extracted from the connection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssh</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ssh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_client</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssh</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">sftp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SftpCommand.sftp"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.sftp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sftp Client from the SSH client</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sftp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">open_sftp</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sftp</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SftpCommand.close"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Closes the sftp connection (not the ssh connection)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">getcwd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SftpCommand.getcwd"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.getcwd">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the remote current-working-directory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">listdir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;.&#39;</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SftpCommand.listdir"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.listdir">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns list of files</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">mkdir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="mi">511</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SftpCommand.mkdir"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.mkdir">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Makes the directory on the remote host</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">remote</span><span class="p">,</span> <span class="n">local</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SftpCommand.get"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.get">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the remote file and put it in the local location</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `remote`: path to file on remote host</span>
+<span class="sd">         - `local`: path to create file on local host</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remotepath</span><span class="o">=</span><span class="n">remote</span><span class="p">,</span> <span class="n">localpath</span><span class="o">=</span><span class="n">local</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">put</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">local</span><span class="p">,</span> <span class="n">remote</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SftpCommand.put"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand.put">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Put the local file on the remote host</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `local`: path to a local file</span>
+<span class="sd">         - `remote`: path to put file on remote host</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">localpath</span><span class="o">=</span><span class="n">local</span><span class="p">,</span> <span class="n">remotepath</span><span class="o">=</span><span class="n">remote</span><span class="p">)</span>
+        
+
+
+<span class="c">#python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div></div>
+
+<span class="c">#third party</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span>
+
+
+<span class="k">class</span> <span class="nc">TestSftpCommand</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">=</span> <span class="n">SftpCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ssh</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_ssh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestSftpCommand.test_ssh"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_ssh.html#apetools.commands.sftpcommand.TestSftpCommand.test_ssh">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the ssh property return the paramiko client?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">client</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">ssh</span><span class="p">,</span> <span class="n">client</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_sftp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_sftp"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_sftp.html#apetools.commands.sftpcommand.TestSftpCommand.test_sftp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the sftp property return the output of an open_sftp() call?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_ssh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">open_sftp</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">sftp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_close"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_close.html#apetools.commands.sftpcommand.TestSftpCommand.test_close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does close() call on the sftp-client&#39;s close?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">close</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_getcwd</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_getcwd"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_getcwd.html#apetools.commands.sftpcommand.TestSftpCommand.test_getcwd">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the getcwd call return the output of the sftp getcwd()?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s">&#39;right here&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">getcwd</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">expected</span>
+        <span class="n">cwd</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">cwd</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_listdir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_listdir"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_listdir.html#apetools.commands.sftpcommand.TestSftpCommand.test_listdir">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the listdir method call the sftp method and return its output?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filenames</span> <span class="o">=</span> <span class="s">&#39;a b c d e&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;/home/land&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">listdir</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">filenames</span>
+        <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="n">filenames</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">listdir</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_mkdir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_mkdir"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_mkdir.html#apetools.commands.sftpcommand.TestSftpCommand.test_mkdir">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the `mkdir` properly call the sftp `mkdir`?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;here&#39;</span>
+        <span class="n">mode</span> <span class="o">=</span> <span class="mi">420</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">mkdir</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_get</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_get"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_get.html#apetools.commands.sftpcommand.TestSftpCommand.test_get">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the get call the sftp-get?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;/home/test.iperf&#39;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="s">&#39;test.iperf&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">remote</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">local</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">remotepath</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">localpath</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_put</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_put"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_put.html#apetools.commands.sftpcommand.TestSftpCommand.test_put">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the `put` method call the sftp `put` method?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="s">&#39;here&#39;</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="s">&#39;there&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">local</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">remote</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="o">.</span><span class="n">put</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">localpath</span><span class="o">=</span><span class="n">source</span><span class="p">,</span> <span class="n">remotepath</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_connection_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_connection_builder"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_connection_builder.html#apetools.commands.sftpcommand.TestSftpCommand.test_connection_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the sftp create an SSHConnection if given the right parameters?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="k">def</span> <span class="nf">fake_init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="o">=</span><span class="n">hostname</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="o">=</span><span class="n">username</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="o">=</span><span class="n">password</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">=</span><span class="n">port</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span><span class="o">=</span><span class="bp">None</span>
+            <span class="k">return</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&#39;apetools.commands.sftpcommand.SftpCommand.__init__&#39;</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="n">fake_init</span><span class="p">):</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="n">SftpCommand</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;a&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;b&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="s">&#39;c&#39;</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">52686</span><span class="p">)</span>
+            <span class="n">connection</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">connection</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="s">&#39;a&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="s">&#39;b&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="s">&#39;c&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="mi">52686</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="n">SSHConnection</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_connection_setter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestSftpCommand.test_connection_setter"><a class="viewcode-back" href="../../../commands/api/apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter.html#apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does setting the connection re-set the sftp and ssh?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_ssh</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssh</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">ssh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssh</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">sftp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sftp</span><span class="p">)</span>        
+        
+        <span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_ssh</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">.</span><span class="n">_sftp</span><span class="p">)</span>
+        <span class="k">return</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

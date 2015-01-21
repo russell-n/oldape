@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Rotate Builder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Sub-Builders" href="index.html" />
+    <link rel="next" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.html" />
+    <link rel="prev" title="apetools.builders.subbuilders.reportbuilder.ReportBuilder.instance" href="api/apetools.builders.subbuilders.reportbuilder.ReportBuilder.instance.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.html" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.builders.subbuilders.reportbuilder.ReportBuilder.instance.html" title="apetools.builders.subbuilders.reportbuilder.ReportBuilder.instance"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Builders</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Sub-Builders</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rotate-builder">
+<h1>Rotate Builder<a class="headerlink" href="#rotate-builder" title="Permalink to this headline">¶</a></h1>
+<p>A module to build a rotate object.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">COLON</span> <span class="o">=</span> <span class="s">&quot;:&quot;</span>
+
+<span class="k">class</span> <span class="nc">RotateBuilderEnums</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A holder of Rotate constants</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">angle_velocity</span> <span class="o">=</span> <span class="s">&#39;angle_velocity&#39;</span>
+<span class="c"># end class RotateBuilderEnums</span>
+</pre></div>
+</div>
+<div class="section" id="rotate-parameters">
+<h2>Rotate Parameters<a class="headerlink" href="#rotate-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The RotateParameters is a named tuple that should be passed into the RotateCommand&#8217;s call method.</p>
+<div class="highlight-python"><div class="highlight"><pre>class RotateParameters(namedtuple(&quot;RotateParameters&quot;, &quot;angle velocity clock
+wise&quot;.split())):
+    __slots__ = ()
+
+    def __str__(self):
+        return &quot;angle: {0} velocity: {1} clockwise: {2}&quot;.format(self.angle,
+ self.velocity,
+                                                                self.clockw
+ise)
+# end class RotateParameters
+</pre></div>
+</div>
+</div>
+<div class="section" id="rotatebuilder">
+<h2>RotateBuilder<a class="headerlink" href="#rotatebuilder" title="Permalink to this headline">¶</a></h2>
+<p>The RotateBuilder builds the RotateCommand.</p>
+<p class="plantuml">
+<img src="../../_images/plantuml-780420ecd2c69c7b1c631d81f2ff960f0b612ad8.png" alt="BaseToolBuilder &lt;|-- RotateBuilder" />
+</p>
+<span class="target" id="module-apetools.builders.subbuilders.rotatebuilder"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">RotateBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A Rotator builder</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections_parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections_parameters" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections_parameters"><tt class="xref py py-obj docutils literal"><span class="pre">RotateBuilder.connections_parameters</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of SSHParameters</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections"><tt class="xref py py-obj docutils literal"><span class="pre">RotateBuilder.connections</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of ssh-connections to the rotation-master</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.angles.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.angles" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder.angles"><tt class="xref py py-obj docutils literal"><span class="pre">RotateBuilder.angles</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of angles</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.velocities.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.velocities" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder.velocities"><tt class="xref py py-obj docutils literal"><span class="pre">RotateBuilder.velocities</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of velocities</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.parameters" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder.parameters"><tt class="xref py py-obj docutils literal"><span class="pre">RotateBuilder.parameters</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of named-tuple Parameters</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.product.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.product" title="apetools.builders.subbuilders.rotatebuilder.RotateBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">RotateBuilder.product</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a RotateCommand</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="rotateusurperbuilderconstants">
+<h2>RotateUsurperBuilderConstants<a class="headerlink" href="#rotateusurperbuilderconstants" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">RotateUsurperConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constants for users</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">ROTATE_USURPER_NAME</span>
+    <span class="n">section</span> <span class="o">=</span> <span class="s">&#39;ROTATE_CUBE&#39;</span>
+    <span class="n">tables_option</span> <span class="o">=</span> <span class="s">&#39;tables&#39;</span>
+    <span class="n">hostname_option</span> <span class="o">=</span> <span class="s">&#39;hostname&#39;</span>
+    <span class="n">username_option</span> <span class="o">=</span> <span class="s">&#39;username&#39;</span>
+    <span class="n">password_option</span> <span class="o">=</span> <span class="s">&#39;password&#39;</span>
+</pre></div>
+</div>
+<p>The RotateUsurperConstants correspond to a config-file that has something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">ROTATE_CUBE</span><span class="p">]</span>
+<span class="n">tables</span> <span class="o">=</span> <span class="n">table1</span><span class="p">,</span> <span class="n">table2</span>
+
+<span class="p">[</span><span class="n">table1</span><span class="p">]</span>
+<span class="n">hostname</span> <span class="o">=</span> <span class="n">garbage</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">man</span>
+
+<span class="p">[</span><span class="n">table2</span><span class="p">]</span>
+<span class="n">hostname</span> <span class="o">=</span> <span class="n">apple</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">banana</span>
+<span class="n">password</span> <span class="o">=</span> <span class="n">pickle</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-rotateusurperbuilder">
+<h2>The RotateUsurperBuilder<a class="headerlink" href="#the-rotateusurperbuilder" title="Permalink to this headline">¶</a></h2>
+<p>Builds the newer rotate command.</p>
+<p class="plantuml">
+<img src="../../_images/plantuml-0e278e34a1ae8648cec2772a895cb5828de25550.png" alt="BaseToolBuilder &lt;|-- RotateUsurperBuilder
+RotateUsurperBuilder o- RotateUsurper" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Builder of RotateUsurper object and parameters</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.parameters</span></tt></a></td>
+<td>for each angle, create a dict of &lt;table-name:arguments string&gt;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.product</span></tt></a></td>
+<td>Built RotateUsurper object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.connections_parameters</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of SSHParameters from tables sections</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.connections</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">SSHConnections</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rotate Builder</a><ul>
+<li><a class="reference internal" href="#rotate-parameters">Rotate Parameters</a></li>
+<li><a class="reference internal" href="#rotatebuilder">RotateBuilder</a></li>
+<li><a class="reference internal" href="#rotateusurperbuilderconstants">RotateUsurperBuilderConstants</a></li>
+<li><a class="reference internal" href="#the-rotateusurperbuilder">The RotateUsurperBuilder</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/builders/subbuilders/rotatebuilder.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

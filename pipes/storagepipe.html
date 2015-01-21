@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Storage Pipe &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Pipes" href="index.html" />
+    <link rel="next" title="apetools.pipes.storagepipe.StoragePipe" href="api/apetools.pipes.storagepipe.StoragePipe.html" />
+    <link rel="prev" title="Pipe Constants" href="pipeenums.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.pipes.storagepipe.StoragePipe.html" title="apetools.pipes.storagepipe.StoragePipe"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pipeenums.html" title="Pipe Constants"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Pipes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="storage-pipe">
+<h1>Storage Pipe<a class="headerlink" href="#storage-pipe" title="Permalink to this headline">¶</a></h1>
+<p>A pipe to hold Storage Output.</p>
+<p>The differernce between the 3 pipes (start, pipe, sink) is the way they handle a header line (if there is one).</p>
+<p>If no header token is given, it tee&#8217;s all input to storage and the target and ignores the header.</p>
+<div class="section" id="storage-pipe-enum">
+<h2>Storage Pipe Enum<a class="headerlink" href="#storage-pipe-enum" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">StoragePipeEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A holder of constants for the StoragePipe</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span>  <span class="o">=</span> <span class="p">()</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="s">&quot;start&quot;</span>
+    <span class="n">pipe</span> <span class="o">=</span> <span class="s">&quot;pipe&quot;</span>
+    <span class="n">sink</span> <span class="o">=</span> <span class="s">&quot;sink&quot;</span>
+<span class="c"># end class StoragePipeEnum</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Storage Pipe<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-667104de66ab298197f521061116af9b215e5119.png" alt="BaseClass &lt;|-- StoragePipe" />
+</p>
+<span class="target" id="module-apetools.pipes.storagepipe"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.html#apetools.pipes.storagepipe.StoragePipe" title="apetools.pipes.storagepipe.StoragePipe"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe</span></tt></a>([path,&nbsp;role,&nbsp;target,&nbsp;...])</td>
+<td>A class to add a pipe interface to the Storage Output</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.timestamp.html#apetools.pipes.storagepipe.StoragePipe.timestamp" title="apetools.pipes.storagepipe.StoragePipe.timestamp"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.timestamp</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">TimestampFormat</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.storage.html#apetools.pipes.storagepipe.StoragePipe.storage" title="apetools.pipes.storagepipe.StoragePipe.storage"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.storage</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">opened StorageOutput</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.pipe_start.html#apetools.pipes.storagepipe.StoragePipe.pipe_start" title="apetools.pipes.storagepipe.StoragePipe.pipe_start"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.pipe_start</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>If a header_token was set, starts the header line .</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.pipe_sink.html#apetools.pipes.storagepipe.StoragePipe.pipe_sink" title="apetools.pipes.storagepipe.StoragePipe.pipe_sink"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.pipe_sink</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Assumes there are no further targets in the pipe.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.pipe.html#apetools.pipes.storagepipe.StoragePipe.pipe" title="apetools.pipes.storagepipe.StoragePipe.pipe"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.pipe</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Acts as a tee between a previous agent and the next target.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.open_start.html#apetools.pipes.storagepipe.StoragePipe.open_start" title="apetools.pipes.storagepipe.StoragePipe.open_start"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.open_start</span></tt></a>(filename)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.open_sink.html#apetools.pipes.storagepipe.StoragePipe.open_sink" title="apetools.pipes.storagepipe.StoragePipe.open_sink"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.open_sink</span></tt></a>(filename)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.open.html#apetools.pipes.storagepipe.StoragePipe.open" title="apetools.pipes.storagepipe.StoragePipe.open"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.open</span></tt></a>(filename)</td>
+<td>This uses self.role to chose the type of pipe to return.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.extend_path.html#apetools.pipes.storagepipe.StoragePipe.extend_path" title="apetools.pipes.storagepipe.StoragePipe.extend_path"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.extend_path</span></tt></a>(subdirectory)</td>
+<td>A pass-through to the storage&#8217;s command</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.set_emit.html#apetools.pipes.storagepipe.StoragePipe.set_emit" title="apetools.pipes.storagepipe.StoragePipe.set_emit"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.set_emit</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">if has target, target.set_emit called, emit set</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.pipes.storagepipe.StoragePipe.unset_emit.html#apetools.pipes.storagepipe.StoragePipe.unset_emit" title="apetools.pipes.storagepipe.StoragePipe.unset_emit"><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe.unset_emit</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">if has target, target.unset_emit called, emit unset</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Storage Pipe</a><ul>
+<li><a class="reference internal" href="#storage-pipe-enum">Storage Pipe Enum</a></li>
+<li><a class="reference internal" href="#id1">Storage Pipe</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/pipes/storagepipe.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

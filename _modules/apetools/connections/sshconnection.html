@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.connections.sshconnection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.connections.sshconnection</h1><div class="highlight"><pre>
+<span class="c">#python Libraries</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">RLock</span>
+
+<span class="c"># third-party libraries</span>
+<span class="kn">import</span> <span class="nn">paramiko</span>
+
+<span class="c"># apetools Libraries</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.readoutput</span> <span class="kn">import</span> <span class="n">ValidatingOutput</span>
+<span class="c">#apetools libraries</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span>
+
+<span class="n">ConnectionError</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConnectionError</span>
+
+<span class="c"># connections</span>
+<span class="kn">from</span> <span class="nn">nonlocalconnection</span> <span class="kn">import</span> <span class="n">NonLocalConnection</span>
+<span class="kn">from</span> <span class="nn">localconnection</span> <span class="kn">import</span> <span class="n">OutputError</span>
+
+
+<span class="n">SPACER</span> <span class="o">=</span> <span class="s">&#39;{0} {1}&#39;</span>
+<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s">&quot;Unknown command: &quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">SPACE</span> <span class="o">=</span> <span class="s">&#39; &#39;</span>
+<span class="n">DOT_JOIN</span> <span class="o">=</span> <span class="s">&quot;{0}.{1}&quot;</span>
+<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">SSHClient</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">):</span>
+<div class="viewcode-block" id="SSHClient"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subclasses paramiko&#39;s SSHClient to add a timeout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">combine_stderr</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="SSHClient.exec_command"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: A string to send to the client.</span>
+<span class="sd">         - `timeout`: Set non-blocking timeout.</span>
+<span class="sd">         - `bufsize`: Interpreted same way as python `file`.</span>
+<span class="sd">         - `combine_stderr`: Sets the paramiko flag so there&#39;s only one stream</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :return: stdin, stdout, stderr</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transport</span><span class="o">.</span><span class="n">open_session</span><span class="p">()</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="n">stdin</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;wb&#39;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
+        <span class="n">stdout</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;rb&#39;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">combine_stderr</span><span class="p">:</span>
+            <span class="n">channel</span><span class="o">.</span><span class="n">set_combine_stderr</span><span class="p">(</span><span class="n">combine_stderr</span><span class="p">)</span>
+            <span class="n">stderr</span> <span class="o">=</span> <span class="n">stdout</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">stderr</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">makefile_stderr</span><span class="p">(</span><span class="s">&#39;rb&#39;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span>
+
+    <span class="k">def</span> <span class="nf">invoke_shell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="o">=</span><span class="s">&#39;vt100&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SSHClient.invoke_shell"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.invoke_shell">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `term`: Terminal to emulate.</span>
+<span class="sd">         - `width`: Screen width</span>
+<span class="sd">         - `height`: Screen Height.</span>
+<span class="sd">         - `timeout`: Set non-blocking timeout.</span>
+<span class="sd">         - `bufsize`: Interpreted same way as python `file`.</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :return: stdin, stdout, stderr</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transport</span><span class="o">.</span><span class="n">open_session</span><span class="p">()</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">get_pty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">invoke_shell</span><span class="p">()</span>
+        <span class="n">stdin</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;wb&#39;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
+        <span class="n">stdout</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;rb&#39;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
+        <span class="n">stderr</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">makefile_stderr</span><span class="p">(</span><span class="s">&#39;rb&#39;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span>
+
+    <span class="k">def</span> <span class="nf">invoke_shell_rw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="o">=</span><span class="s">&#39;vt100&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SSHClient.invoke_shell_rw"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.invoke_shell_rw">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `term`: Terminal to emulate.</span>
+<span class="sd">         - `width`: Screen width</span>
+<span class="sd">         - `height`: Screen Height.</span>
+<span class="sd">         - `timeout`: Set non-blocking timeout.</span>
+<span class="sd">         - `bufsize`: Interpreted same way as python `file`.</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :return: i/o</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transport</span><span class="o">.</span><span class="n">open_session</span><span class="p">()</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">set_combine_stderr</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">get_pty</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="n">channel</span><span class="o">.</span><span class="n">invoke_shell</span><span class="p">()</span>
+
+        <span class="n">shell</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">makefile</span><span class="p">(</span><span class="s">&#39;r+b&#39;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">shell</span>
+<span class="c">#end class SSHClient</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleClient</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="SimpleClient"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simple wrapper around paramiko&#39;s SSHClient.</span>
+
+<span class="sd">    The only intended public interface is exec_command.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="SimpleClient.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `hostname`: ip address or resolvable hostname.</span>
+<span class="sd">         - `username`: the login name.</span>
+<span class="sd">         - `password`: optional if ssh-keys are set up.</span>
+<span class="sd">         - `port`: The port for the ssh process.</span>
+<span class="sd">         - `timeout`: Time to give the client to connect</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SimpleClient</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SimpleClient.exec_command"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A pass-through to the SSHClient&#39;s exec_command.</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: A string to send to the client.</span>
+<span class="sd">         - `timeout`: Set non-blocking timeout.</span>
+
+<span class="sd">        :rtype: tuple</span>
+<span class="sd">        :return: stdin, stdout, stderr</span>
+
+<span class="sd">        :raise: ConnectionError for paramiko or socket exceptions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">command</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">NEWLINE</span><span class="p">):</span>
+            <span class="n">command</span> <span class="o">+=</span> <span class="n">NEWLINE</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">SSHException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s">&quot;There is a problem with the ssh-connection to:</span><span class="se">\n</span><span class="s"> {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">PasswordRequiredException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Private Keys Not Set Up, Password Required.&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s">&quot;SSH Key Error :</span><span class="se">\n</span><span class="s"> {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s">&#39;Connection refused&#39;</span> <span class="ow">in</span> <span class="n">error</span><span class="p">:</span> 
+                <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s">&quot;SSH Server Not responding: check setup:</span><span class="se">\n</span><span class="s"> {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s">&quot;Problem with:</span><span class="se">\n</span><span class="s"> {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">return</span>
+        
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SimpleClient.client"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: paramiko.SSHClient</span>
+<span class="sd">        :return: An instance of SSHClient connected to remote host.</span>
+<span class="sd">        :raise: ClientError if the connection fails.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">SSHClient</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">load_system_host_keys</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
+                                     <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                                     <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+                                     <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
+                                     <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">paramiko</span><span class="o">.</span><span class="n">AuthenticationException</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s">&quot;There is a problem with the ssh-keys or password for </span><span class="se">\n</span><span class="s">{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s">&quot;Paramiko is unable to connect to </span><span class="se">\n</span><span class="s">{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SimpleClient.__str__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SimpleClient.__str__.html#apetools.connections.sshconnection.SimpleClient.__str__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: username, hostname, port, password in string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="s">&quot;Username: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">)</span>
+        <span class="n">host</span> <span class="o">=</span> <span class="s">&quot;Hostname: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
+        <span class="n">port</span> <span class="o">=</span> <span class="s">&quot;Port: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="s">&quot;Password: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">NEWLINE</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">user</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">password</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SimpleClient.close"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: client&#39;s connection is closed and self._client is None                </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+<span class="c"># class SimpleClient</span>
+
+
+<span class="k">class</span> <span class="nc">SSHConnection</span><span class="p">(</span><span class="n">NonLocalConnection</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="SSHConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An SSHConnection executes commands over an SSHConnection</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span>
+<div class="viewcode-block" id="SSHConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.__init__">[docs]</a>                 <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        SSHConnection Constructor</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `hostname`: The IP Address or hostname</span>
+<span class="sd">         - `username`: The login username.</span>
+<span class="sd">         - `password`: The login password</span>
+<span class="sd">         - `port`: The ssh port</span>
+<span class="sd">         - `operating_system`: OperatingSystem enumeration</span>
+<span class="sd">         - `timeout`: The login timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SSHConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SSHConnection.identifier"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.identifier">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        an alternative string identifier (defaults to hostname)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SSHConnection.client"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: SimpleClient for the SSHConnection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">SimpleClient</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+                                        <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                                        <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
+    
+
+    <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SSHConnection._main"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This isn&#39;t intended to be run.</span>
+<span class="sd">        The . notation is the expected interface.</span>
+<span class="sd">        </span>
+<span class="sd">        runs the SimpleClient exec_command</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: The shell command.</span>
+<span class="sd">         - `arguments`: A string of command arguments.</span>
+<span class="sd">         - `timeout`: readline timeout for the SSHConnection</span>
+<span class="sd">        :return: OutputError with output and error file-like objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;command: {0}, arguments: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                                                                <span class="n">arguments</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span><span class="p">):</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="n">SPACER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span><span class="p">,</span>
+                                    <span class="n">command</span><span class="p">)</span>
+
+        <span class="n">command</span> <span class="o">=</span> <span class="n">SPACER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;calling client.exec_command with &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+
+        <span class="c"># the guys at Ryan&#39;s house are running into &#39;Administratively prohibited&#39;</span>
+        <span class="c"># which apparently happens if too many clients try to connect to the ssh-server</span>
+        <span class="c"># I don&#39;t think this is where the problem is</span>
+        <span class="c"># but to take this out of the question I&#39;m going to put a lock so no more</span>
+        <span class="c"># than one paramiko client can hit the server at once</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Completed exec_command of: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">OutputFile</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">),</span> <span class="n">OutputFile</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SSHConnection.check_errors"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Doesn&#39;t do anything - SSHClient handles ssh errors. Overwrite in sub-classes if needed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+        <span class="k">return</span> <span class="s">&quot;{0} ({1}): {2}@{3} &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">operating_system</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
+<span class="c"># end class SSHConnection</span>
+
+
+<span class="k">class</span> <span class="nc">OutputFile</span><span class="p">(</span><span class="n">ValidatingOutput</span><span class="p">):</span></div>
+<div class="viewcode-block" id="OutputFile"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to handle the ssh output files</span>
+
+<span class="sd">    This traps socket timeouts.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="OutputFile.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">OutputFile</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">readline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span></div>
+<div class="viewcode-block" id="OutputFile.readline"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `timeout`: The length of time to wait for output</span>
+
+<span class="sd">        :return: line from readline, EOF or None (in event of timeout)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="n">EOF</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">end_of_file</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">line</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;socket.timeout&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">SPACE</span>
+        <span class="k">return</span> <span class="n">EOF</span>
+<span class="c"># end class OutputFile</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
+    <span class="c">#c = SSHConnection(&#39;igor&#39;, &#39;developer&#39;)</span>
+    <span class="c">#o = c.wmic(&#39;path win32_networkadapter where netconnectionid=&quot;\&#39;Wireless Network Connection\&#39;&quot; call enable&#39;)</span>
+    <span class="c">#for index, line in enumerate(o.output):</span>
+    <span class="c">#    print index, line</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&#39;fakeuser&#39;</span><span class="p">,</span> <span class="s">&#39;localhost&#39;</span><span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">o</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">line</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

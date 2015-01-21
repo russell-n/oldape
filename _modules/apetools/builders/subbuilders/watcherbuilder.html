@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.builders.subbuilders.watcherbuilder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.builders.subbuilders.watcherbuilder</h1><div class="highlight"><pre>
+<span class="c">#apetools</span>
+<span class="kn">from</span> <span class="nn">basetoolbuilder</span> <span class="kn">import</span> <span class="n">BaseToolBuilder</span>
+<span class="kn">from</span> <span class="nn">logwatcherbuilders</span> <span class="kn">import</span> <span class="n">LogcatWatcherBuilder</span><span class="p">,</span> <span class="n">LogWatcherBuilder</span><span class="p">,</span> <span class="n">LogFollowerBuilder</span><span class="p">,</span> <span class="n">PingWatcherBuilder</span>
+<span class="kn">from</span> <span class="nn">pollerbuilders</span> <span class="kn">import</span> <span class="n">RssiPollerBuilder</span><span class="p">,</span> <span class="n">DevicePollerBuilder</span><span class="p">,</span> <span class="n">ProcnetdevPollsterBuilder</span><span class="p">,</span> <span class="n">CpuPollsterBuilder</span>
+<span class="kn">from</span> <span class="nn">fileexpressionbuilders</span> <span class="kn">import</span> <span class="n">BatteryWatcherBuilder</span>
+<span class="kn">from</span> <span class="nn">apetools.watchers</span> <span class="kn">import</span> <span class="n">thewatcher</span>
+<span class="kn">from</span> <span class="nn">apetools.lexicographers.config_options</span> <span class="kn">import</span> <span class="n">ConfigOptions</span>
+
+
+<span class="k">class</span> <span class="nc">WatcherTypes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="WatcherTypes"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherTypes">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The names of the valid watcher types</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">logfollow</span> <span class="o">=</span> <span class="s">&#39;logfollow&#39;</span>
+    <span class="n">logcat</span> <span class="o">=</span> <span class="s">&quot;logcat&quot;</span>
+    <span class="n">adblogcat</span> <span class="o">=</span> <span class="s">&#39;adblogcat&#39;</span>
+    <span class="n">rssi</span> <span class="o">=</span> <span class="s">&quot;rssi&quot;</span>
+    <span class="n">device</span> <span class="o">=</span> <span class="s">&#39;device&#39;</span>
+    <span class="n">procnetdev</span> <span class="o">=</span> <span class="s">&#39;procnetdev&#39;</span>
+    <span class="n">battery</span> <span class="o">=</span> <span class="s">&#39;battery&#39;</span>
+    <span class="n">cpu</span> <span class="o">=</span> <span class="s">&#39;cpu&#39;</span>
+    <span class="n">pingwatcher</span> <span class="o">=</span> <span class="s">&#39;pingwatcher&#39;</span>
+<span class="c"># end class WatcherTypes</span>
+
+
+<span class="n">watcher_builder</span> <span class="o">=</span> <span class="p">{</span><span class="n">WatcherTypes</span><span class="o">.</span><span class="n">adblogcat</span><span class="p">:</span><span class="n">LogcatWatcherBuilder</span><span class="p">,</span></div>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">logcat</span><span class="p">:</span><span class="n">LogWatcherBuilder</span><span class="p">,</span>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">rssi</span><span class="p">:</span><span class="n">RssiPollerBuilder</span><span class="p">,</span>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">device</span><span class="p">:</span><span class="n">DevicePollerBuilder</span><span class="p">,</span>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">procnetdev</span><span class="p">:</span><span class="n">ProcnetdevPollsterBuilder</span><span class="p">,</span>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">battery</span><span class="p">:</span><span class="n">BatteryWatcherBuilder</span><span class="p">,</span>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">cpu</span><span class="p">:</span><span class="n">CpuPollsterBuilder</span><span class="p">,</span>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">logfollow</span><span class="p">:</span><span class="n">LogFollowerBuilder</span><span class="p">,</span>
+                   <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">pingwatcher</span><span class="p">:</span><span class="n">PingWatcherBuilder</span><span class="p">}</span>
+
+
+<span class="k">class</span> <span class="nc">WatcherBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span>
+<div class="viewcode-block" id="WatcherBuilder"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    builds a master logwatcher</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="WatcherBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `master`: The master Builder (builder.py)</span>
+<span class="sd">         - `config_map`: A populated configuration map</span>
+<span class="sd">         - `previous_parameters`: A list of the parameters created by previous builders</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WatcherBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_watcher_ids</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">watcher_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WatcherBuilder.watcher_ids"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watcher_ids">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of options from the Watch Log config section</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_watcher_ids</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_watcher_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">ConfigOptions</span><span class="o">.</span><span class="n">watchlogs_section</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_watcher_ids</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">watchers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WatcherBuilder.watchers"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watchers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: ListType</span>
+<span class="sd">        :return: A list of watchers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">watch_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher_ids</span><span class="p">:</span>
+                <span class="n">parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get_namedtuple</span><span class="p">(</span><span class="n">ConfigOptions</span><span class="o">.</span><span class="n">watchlogs_section</span><span class="p">,</span>
+                                                            <span class="n">watch_id</span><span class="p">)</span>
+                <span class="n">builder</span> <span class="o">=</span> <span class="n">watcher_builder</span><span class="p">[</span><span class="n">parameters</span><span class="o">.</span><span class="n">type</span><span class="p">]</span>
+                <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">thread_nodes</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                    <span class="n">watcher</span> <span class="o">=</span> <span class="n">builder</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                                      <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">storage</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">product</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">watcher</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">parameters</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">procnetdev</span><span class="p">:</span>
+                    <span class="n">watcher</span> <span class="o">=</span> <span class="n">builder</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">tpc_device</span><span class="p">,</span>
+                                      <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                                      <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">storage</span><span class="p">,</span>
+                                      <span class="n">name</span><span class="o">=</span><span class="s">&#39;tpc&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">product</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">watcher</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_watchers</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WatcherBuilder.product"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: TheWatcher</span>
+<span class="sd">        :return: A master watcher</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">thewatcher</span><span class="o">.</span><span class="n">TheWatcher</span><span class="p">(</span><span class="n">watchers</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">watchers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="WatcherBuilder.parameters"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the previous_parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
+<span class="c"># end class LogwatchersBuilder</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

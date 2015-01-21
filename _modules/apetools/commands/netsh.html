@@ -1,0 +1,415 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.netsh &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commands.netsh</h1><div class="highlight"><pre>
+<span class="c"># python</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers</span> <span class="kn">import</span> <span class="n">oatbran</span> <span class="k">as</span> <span class="n">bran</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">CommandError</span>
+
+
+<span class="n">COLON</span> <span class="o">=</span> <span class="s">&quot;:&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">NetshWlanExpressions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A container of expressions  for the output of `netsh wlan show interfaces`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netsh.NetshWlanExpressions.html#apetools.commands.netsh.NetshWlanExpressions.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">_authentication</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_cipher</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection_state</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_radio_type</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_receive_rate</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_transmit_rate</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">authentication</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.authentication"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.authentication">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression that gets the authentication type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_authentication</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Authentication : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_authentication</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">authentication</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_authentication</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.bssid"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the BSSID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;BSSID : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">bssid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">channel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.channel"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.channel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the channel</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span><span class="o">=</span> <span class="s">&quot;Channel : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">cipher</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.cipher"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.cipher">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the authentication cipher</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cipher</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Cipher                 : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cipher</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">cipher</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_cipher</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.connection_state"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.connection_state">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the connection state</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection_state</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;State                  : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">connection_state</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection_state</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">description</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.description"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.description">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the interface model </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Description            : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_description</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_description</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the MAC Address of the interface</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Physical address       : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">mac_address</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.name"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.name">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to match names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Name : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">radio_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.radio_type"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.radio_type">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to match the radio type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radio_type</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Radio type             : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_radio_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">radio_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_radio_type</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">receive_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.receive_rate"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.receive_rate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to match receive rate        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receive_rate</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Receive rate \(Mbps\)    : &quot;</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">receive_rate</span><span class="p">,</span>
+                               <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">NATURAL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_receive_rate</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">key</span> <span class="o">+</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_receive_rate</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">signal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.signal"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.signal">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the signal</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_signal</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Signal : &quot;</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">signal</span><span class="p">,</span>
+                               <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">NATURAL</span> <span class="o">+</span> <span class="s">&quot;%&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_signal</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">key</span> <span class="o">+</span> <span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_signal</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.ssid"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the ssid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;SSID : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">ssid</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">transmit_rate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlanExpressions.transmit_rate"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.transmit_rate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to get the transmit rate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transmit_rate</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            
+            <span class="n">key</span> <span class="o">=</span> <span class="s">&quot;Transmit rate \(Mbps\) : &quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_transmit_rate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_expression</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">transmit_rate</span><span class="p">)</span>
+            
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_transmit_rate</span>
+
+    <span class="k">def</span> <span class="nf">get_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NetshWlanExpressions.get_expression"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.get_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: expression that matches anything in the value column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">name</span><span class="p">,</span><span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">ANYTHING_BOUNDED_BY_SPACES</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">key</span> <span class="o">+</span> <span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+
+
+<span class="k">class</span> <span class="nc">NetshWlanKeys</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div></div>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">authentication</span> <span class="o">=</span> <span class="s">&quot;Authentication&quot;</span>
+    <span class="n">bssid</span> <span class="o">=</span> <span class="s">&quot;BSSID&quot;</span>
+    <span class="n">channel</span> <span class="o">=</span> <span class="s">&quot;Channel&quot;</span>
+    <span class="n">cipher</span> <span class="o">=</span> <span class="s">&quot;Cipher&quot;</span>
+    <span class="n">connection_state</span> <span class="o">=</span> <span class="s">&quot;State&quot;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s">&quot;Description&quot;</span>
+    <span class="n">mac_address</span> <span class="o">=</span> <span class="s">&quot;Physical&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">&quot;Name&quot;</span>
+    <span class="n">radio_type</span> <span class="o">=</span> <span class="s">&quot;Radio&quot;</span>
+    <span class="n">receive_rate</span> <span class="o">=</span> <span class="s">&quot;Receive&quot;</span>
+    <span class="n">signal</span> <span class="o">=</span> <span class="s">&quot;Signal&quot;</span>
+    <span class="n">ssid</span> <span class="o">=</span> <span class="s">&quot;SSID&quot;</span>
+    <span class="n">transmit_rate</span> <span class="o">=</span> <span class="s">&quot;Transmit&quot;</span>
+<span class="c"># end class NetshWlanExpressions</span>
+
+
+<span class="k">class</span> <span class="nc">NetshWlan</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlan"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlan">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A querier for basic netsh information</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s">&quot;:&quot;</span><span class="p">,</span> <span class="n">not_available</span><span class="o">=</span><span class="s">&quot;NA&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlan.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netsh.NetshWlan.html#apetools.commands.netsh.NetshWlan.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection`: A connection to the device with netsh</span>
+<span class="sd">         - `separator`: The column delimiter</span>
+<span class="sd">         - `not_available`: token to return if the field wasn&#39;t populated</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NetshWlan</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">separator</span> <span class="o">=</span> <span class="n">separator</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">not_available</span> <span class="o">=</span> <span class="n">not_available</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_signal</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">signal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlan.signal"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlan.signal">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: signal %</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">netsh</span><span class="p">(</span><span class="s">&quot;wlan show interface&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="n">NetshWlanKeys</span><span class="o">.</span><span class="n">signal</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">not_available</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlan.output"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlan.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: stdout as a list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">netsh</span><span class="p">(</span><span class="s">&quot;wlan show interface&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output</span>
+        
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NetshWlan.expressions"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlan.expressions">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: Netsh wlan regular expressions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="o">=</span> <span class="n">NetshWlanExpressions</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span>
+
+    <span class="k">def</span> <span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NetshWlan.get_value"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlan.get_value">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the value from netsh&#39;s output that matches the key</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;expression: {0}, key: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">key</span><span class="p">))</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">netsh</span><span class="p">(</span><span class="s">&quot;wlan show interface&quot;</span><span class="p">,</span> <span class="n">max_time</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span>  <span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="n">key</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="n">output</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">not_available</span>
+
+    <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stderr</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NetshWlan.check_errors"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlan.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `stderr`: file output of stderr</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># make a jazz noise here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Checking for errors&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">stderr</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s">&quot;no wireless interface&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NetshWlan.reset"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlan.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: self._output is None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+                              
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NetshWlan.__getattr__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netsh.NetshWlan.__getattr__.html#apetools.commands.netsh.NetshWlan.__getattr__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `property`: A valid property (use NetshWlanKeys properties)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="p">,</span> <span class="n">prop</span><span class="p">),</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">NetshWlanKeys</span><span class="p">,</span> <span class="n">prop</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="s">&quot;Unknown (or unimplemented) Field: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">prop</span><span class="p">))</span>
+<span class="c"># end class NetshWlan</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

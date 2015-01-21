@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.connections.telnetconnection.TelnetConnection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Telnet Connection" href="../telnetconnection.html" />
+    <link rel="next" title="apetools.connections.telnetconnection.TelnetConnection.client" href="apetools.connections.telnetconnection.TelnetConnection.client.html" />
+    <link rel="prev" title="apetools.connections.telnetconnection.TelnetConnection.validate" href="apetools.connections.telnetconnection.TelnetConnection.validate.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apetools.connections.telnetconnection.TelnetConnection.client.html" title="apetools.connections.telnetconnection.TelnetConnection.client"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apetools.connections.telnetconnection.TelnetConnection.validate.html" title="apetools.connections.telnetconnection.TelnetConnection.validate"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Connections</a> &raquo;</li>
+          <li><a href="../telnetconnection.html" accesskey="U">Telnet Connection</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="apetools-connections-telnetconnection-telnetconnection">
+<h1>apetools.connections.telnetconnection.TelnetConnection<a class="headerlink" href="#apetools-connections-telnetconnection-telnetconnection" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="apetools.connections.telnetconnection.TelnetConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.telnetconnection.</tt><tt class="descname">TelnetConnection</tt><big>(</big><em>hostname</em>, <em>port=23</em>, <em>username='root'</em>, <em>prompt='#'</em>, <em>timeout=2</em>, <em>end_of_line='rn'</em>, <em>mangle_prompt=True</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/apetools/connections/telnetconnection.html#TelnetConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TelnetConnection executes commands over a Telnet Connection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>hostname</cite>: The IP Address or hostname</li>
+<li><cite>port</cite>: The telnet port</li>
+<li><cite>username</cite>: The login name</li>
+<li><cite>prompt</cite>: The prompt to expect</li>
+<li><cite>timeout</cite>: The readline timeout</li>
+<li><cite>end_of_line</cite>: The string indicating the end of a line.</li>
+<li><cite>mangle_prompt</cite>: If True, change the prompt</li>
+</ul>
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>hostname</em>, <em>port=23</em>, <em>username='root'</em>, <em>prompt='#'</em>, <em>timeout=2</em>, <em>end_of_line='\r\n'</em>, <em>mangle_prompt=True</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/apetools/connections/telnetconnection.html#TelnetConnection.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>hostname</cite>: The IP Address or hostname</li>
+<li><cite>port</cite>: The telnet port</li>
+<li><cite>username</cite>: The login name</li>
+<li><cite>prompt</cite>: The prompt to expect</li>
+<li><cite>timeout</cite>: The readline timeout</li>
+<li><cite>end_of_line</cite>: The string indicating the end of a line.</li>
+<li><cite>mangle_prompt</cite>: If True, change the prompt</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.connections.telnetconnection.TelnetConnection.__init__" title="apetools.connections.telnetconnection.TelnetConnection.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(hostname[,&nbsp;port,&nbsp;username,&nbsp;prompt,&nbsp;...])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.add_path" title="apetools.connections.telnetconnection.TelnetConnection.add_path"><tt class="xref py py-obj docutils literal"><span class="pre">add_path</span></tt></a>(command)</td>
+<td>Prepends any path additions passed in at instantiation to the command</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.log_error" title="apetools.connections.telnetconnection.TelnetConnection.log_error"><tt class="xref py py-obj docutils literal"><span class="pre">log_error</span></tt></a>(message)</td>
+<td>Logs the message as an error, adding extra formatting</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.run" title="apetools.connections.telnetconnection.TelnetConnection.run"><tt class="xref py py-obj docutils literal"><span class="pre">run</span></tt></a>(command,&nbsp;arguments)</td>
+<td>Runs the command in a thread and puts the output and error on the queue</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.run_thread" title="apetools.connections.telnetconnection.TelnetConnection.run_thread"><tt class="xref py py-obj docutils literal"><span class="pre">run_thread</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>To use:</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.start" title="apetools.connections.telnetconnection.TelnetConnection.start"><tt class="xref py py-obj docutils literal"><span class="pre">start</span></tt></a>(command,&nbsp;arguments)</td>
+<td>starts run in a thread</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="apetools.connections.telnetconnection.TelnetConnection.validate.html#apetools.connections.telnetconnection.TelnetConnection.validate" title="apetools.connections.telnetconnection.TelnetConnection.validate"><tt class="xref py py-obj docutils literal"><span class="pre">validate</span></tt></a>(line)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.client" title="apetools.connections.telnetconnection.TelnetConnection.client"><tt class="xref py py-obj docutils literal"><span class="pre">client</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">TelnetAdapter for the telnet connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.identifier" title="apetools.connections.telnetconnection.TelnetConnection.identifier"><tt class="xref py py-obj docutils literal"><span class="pre">identifier</span></tt></a></td>
+<td>an alternative identifier</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.lock" title="apetools.connections.telnetconnection.TelnetConnection.lock"><tt class="xref py py-obj docutils literal"><span class="pre">lock</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a re-entrant lock</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.logger" title="apetools.connections.telnetconnection.TelnetConnection.logger"><tt class="xref py py-obj docutils literal"><span class="pre">logger</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.queue" title="apetools.connections.telnetconnection.TelnetConnection.queue"><tt class="xref py py-obj docutils literal"><span class="pre">queue</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Queue.Queue</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the command string to execute</li>
+<li><cite>arguments</cite>: The arguments for the command</li>
+<li><cite>timeout</cite>: A timeout for the queue when doing a get</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError named tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=10</em><big>)</big><a class="reference internal" href="../../_modules/apetools/connections/telnetconnection.html#TelnetConnection._procedure_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Despite its name, this isn&#8217;t intended to be run.
+The . notation is the expected interface.</p>
+<p>runs the SimpleClient exec_command and puts lines of output on the Queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+<li><cite>path</cite>: an optional path to add to the command</li>
+<li><cite>timeout</cite>: readline timeout</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.add_path">
+<tt class="descname">add_path</tt><big>(</big><em>command</em><big>)</big><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.add_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepends any path additions passed in at instantiation to the command</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the name of a command</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">command with path additions if given</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.run">
+<tt class="descname">run</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the command in a thread and puts the output and error on the queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">NotImplementedError if sub-class doesn&#8217;t override this method</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.run_thread">
+<tt class="descname">run_thread</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.start">
+<tt class="descname">start</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>starts run in a thread</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the thread object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.client">
+<tt class="descname">client</tt><a class="reference internal" href="../../_modules/apetools/connections/telnetconnection.html#TelnetConnection.client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.client" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">TelnetAdapter for the telnet connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.identifier">
+<tt class="descname">identifier</tt><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>an alternative identifier 
+Override to give a default id (see SSHConnection.identifier)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.lock">
+<tt class="descname">lock</tt><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.lock" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a re-entrant lock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetconnection.TelnetConnection.queue">
+<tt class="descname">queue</tt><a class="headerlink" href="#apetools.connections.telnetconnection.TelnetConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/connections/api/apetools.connections.telnetconnection.TelnetConnection.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

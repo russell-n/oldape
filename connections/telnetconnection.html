@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Telnet Connection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Connections" href="index.html" />
+    <link rel="next" title="apetools.connections.telnetconnection.TelnetConnection" href="api/apetools.connections.telnetconnection.TelnetConnection.html" />
+    <link rel="prev" title="apetools.connections.telnetadapter.TelnetAdapter.__del__" href="api/apetools.connections.telnetadapter.TelnetAdapter.__del__.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.connections.telnetconnection.TelnetConnection.html" title="apetools.connections.telnetconnection.TelnetConnection"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.connections.telnetadapter.TelnetAdapter.__del__.html" title="apetools.connections.telnetadapter.TelnetAdapter.__del__"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Connections</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="telnet-connection">
+<h1>Telnet Connection<a class="headerlink" href="#telnet-connection" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold an Telnet connection.</p>
+<p>The TelnetConnection takes the command-line command as a property and the arguments to the command as parameters.</p>
+<p>e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sc</span> <span class="o">=</span> <span class="n">TelnetConnection</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span>
+</pre></div>
+</div>
+<p>prints the output of the <cite>ls -l</cite> command line command</p>
+<p class="plantuml">
+<img src="../_images/plantuml-4bf626ea905a6fc7522bbcbeacf34e46b82e4b10.png" alt="NonLocalConnection &lt;|-- TelnetConnection
+TelnetConnection o- TelnetAdapter" />
+</p>
+<span class="target" id="module-apetools.connections.telnetconnection"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection" title="apetools.connections.telnetconnection.TelnetConnection"><tt class="xref py py-obj docutils literal"><span class="pre">TelnetConnection</span></tt></a>(hostname[,&nbsp;port,&nbsp;username,&nbsp;...])</td>
+<td>A TelnetConnection executes commands over a Telnet Connection</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.client" title="apetools.connections.telnetconnection.TelnetConnection.client"><tt class="xref py py-obj docutils literal"><span class="pre">TelnetConnection.client</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">TelnetAdapter for the telnet connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection._procedure_call" title="apetools.connections.telnetconnection.TelnetConnection._procedure_call"><tt class="xref py py-obj docutils literal"><span class="pre">TelnetConnection._procedure_call</span></tt></a>(command[,&nbsp;...])</td>
+<td>Despite its name, this isn&#8217;t intended to be run.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.connections.telnetconnection.TelnetConnection.validate.html#apetools.connections.telnetconnection.TelnetConnection.validate" title="apetools.connections.telnetconnection.TelnetConnection.validate"><tt class="xref py py-obj docutils literal"><span class="pre">TelnetConnection.validate</span></tt></a>(line)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/connections/telnetconnection.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

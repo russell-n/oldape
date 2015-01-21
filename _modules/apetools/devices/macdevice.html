@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.devices.macdevice &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.devices.macdevice</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">basedevice</span> <span class="kn">import</span> <span class="n">BaseDevice</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.airportcommand</span> <span class="kn">import</span> <span class="n">AirportCommand</span>
+
+
+<span class="k">class</span> <span class="nc">MacDevice</span><span class="p">(</span><span class="n">BaseDevice</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.html#apetools.devices.macdevice.MacDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to bundle commands to control a mac os device</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.__init__"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.html#apetools.devices.macdevice.MacDevice.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection`: An device connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MacDevice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_airport</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">airport</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.airport"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.airport.html#apetools.devices.macdevice.MacDevice.airport">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: AirportCommand built with self.connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_airport</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_airport</span> <span class="o">=</span> <span class="n">AirportCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                                           <span class="n">interface</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_airport</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">channel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.channel"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.channel.html#apetools.devices.macdevice.MacDevice.channel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the channel for the current wifi connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">channel</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.rssi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.rssi.html#apetools.devices.macdevice.MacDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the current RSSI</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">rssi</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bitrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.bitrate"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.bitrate.html#apetools.devices.macdevice.MacDevice.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the current bitrate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">bitrate</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">noise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.noise"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.noise.html#apetools.devices.macdevice.MacDevice.noise">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the current noise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">noise</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.ssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.ssid.html#apetools.devices.macdevice.MacDevice.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the ssid of the attached AP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">ssid</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.bssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.bssid.html#apetools.devices.macdevice.MacDevice.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the MAC address of the attached AP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">bssid</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.mac_address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.mac_address.html#apetools.devices.macdevice.MacDevice.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: device mac address</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">mac_address</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">wifi_control</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.wifi_control"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.wifi_control.html#apetools.devices.macdevice.MacDevice.wifi_control">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: Svc command (enable disable radio)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_control</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_control</span> <span class="o">=</span> <span class="n">Svc</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_control</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.connection"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.connection.html#apetools.devices.macdevice.MacDevice.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: connection passed in </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+
+    <span class="k">def</span> <span class="nf">wake_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MacDevice.wake_screen"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.wake_screen.html#apetools.devices.macdevice.MacDevice.wake_screen">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Wake the screen (not implemented)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Wake Screen not ready yet&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MacDevice.display"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.display.html#apetools.devices.macdevice.MacDevice.display">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Display a message on the screen (not implemented)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Display &lt;message&gt; not done yet&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">disable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MacDevice.disable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.disable_wifi.html#apetools.devices.macdevice.MacDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends &#39;networksetup -setairportpower airport off&#39; command</span>
+<span class="sd">        </span>
+<span class="sd">        :postcondition: WiFi radio disabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">networksetup</span><span class="p">(</span><span class="s">&quot;-setairportpower airport off&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">enable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MacDevice.enable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.enable_wifi.html#apetools.devices.macdevice.MacDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends &#39;networksetup -setairport airport on&#39; command</span>
+<span class="sd">        </span>
+<span class="sd">        :postcondition: WiFi radio enabled</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">networksetup</span><span class="p">(</span><span class="s">&#39;-setairportpower airport on&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">get_wifi_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MacDevice.get_wifi_info"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.get_wifi_info.html#apetools.devices.macdevice.MacDevice.get_wifi_info">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        gets the &#39;airpor status&#39; command output</span>
+<span class="sd">        :rtype: StringType</span>
+<span class="sd">        :return: The Wifi Info</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">status</span>
+
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
+<div class="viewcode-block" id="MacDevice.log"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.log.html#apetools.devices.macdevice.MacDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: message sent to the connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">logger</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="MacDevice.address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.macdevice.MacDevice.html#apetools.devices.macdevice.MacDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: ip address of interface</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">airport</span><span class="o">.</span><span class="n">ip_address</span>                                 
+<span class="c"># end class MacDevice</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

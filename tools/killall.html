@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Kill All &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Tools" href="index.html" />
+    <link rel="next" title="apetools.tools.killall.KillAll" href="api/apetools.tools.killall.KillAll.html" />
+    <link rel="prev" title="apetools.tools.iperftest.IperfTest" href="api/apetools.tools.iperftest.IperfTest.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.tools.killall.KillAll.html" title="apetools.tools.killall.KillAll"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.tools.iperftest.IperfTest.html" title="apetools.tools.iperftest.IperfTest"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="kill-all">
+<h1>Kill All<a class="headerlink" href="#kill-all" title="Permalink to this headline">¶</a></h1>
+<p>A module to kill processes.</p>
+<div class="section" id="killallerror">
+<h2>KillAllError<a class="headerlink" href="#killallerror" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>KillAllError</cite> is raised if an error specific to the command is detected.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-854211af39708164736262e79b0efe0ee67a0099.png" alt="KillAllError -|&gt; CommandError" />
+</p>
+</div>
+<div class="section" id="killall">
+<h2>KillAll<a class="headerlink" href="#killall" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>KillAll</cite> command (it probably should not be in the <cite>tools</cite>) kills processes.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll" title="apetools.tools.killall.KillAll"><tt class="xref py py-obj docutils literal"><span class="pre">KillAll</span></tt></a>([connection,&nbsp;name,&nbsp;time_to_sleep,&nbsp;level])</td>
+<td>A killall kills processes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.killall.KillAll.__call__.html#apetools.tools.killall.KillAll.__call__" title="apetools.tools.killall.KillAll.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">KillAll.__call__</span></tt></a>([name,&nbsp;time_to_sleep])</td>
+<td>This is an alias to <tt class="docutils literal"><span class="pre">run</span></tt> to match the newer-style</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-f2bfee04f497288a5f8955b434e666dc0ab81e69.png" alt="KillAll -|&gt; BaseClass
+KillAll : name
+KillAll : time_to_sleep
+KillAll : expression
+KillAll : run(connection, name, time_to_sleep)
+KillAll : __call__(connection, name, time_to_sleep)" />
+</p>
+<ul class="simple">
+<li>The <cite>name</cite> parameter is the name of a process to kill.</li>
+<li>The <cite>time_to_sleep</cite> parameter is an amount of time to wait before checking that the process was successfully killed.</li>
+<li>The <cite>connection</cite> is a connection to the device.</li>
+<li>all the constructor parameters can be passed in to the call instead</li>
+<li>The expected <tt class="docutils literal"><span class="pre">ps</span></tt> output currently matches the standard GNU output (a la <em>Ubuntu</em>), android, and Cygwin</li>
+</ul>
+<p>Example Use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;elin&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;tester&#39;</span><span class="p">,</span>
+                           <span class="n">operating_system</span><span class="o">=</span><span class="n">OperatingSystem</span><span class="o">.</span><span class="n">android</span><span class="p">)</span>
+<span class="n">connection_2</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;bob&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;tester&#39;</span><span class="p">,</span>
+                           <span class="n">operating_system</span><span class="o">=</span><span class="n">OperatingSystem</span><span class="o">.</span><span class="n">linux</span><span class="p">)</span>
+
+<span class="n">killer</span> <span class="o">=</span> <span class="n">KillAll</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="s">&#39;spotify&#39;</span><span class="p">)</span>
+<span class="n">killer</span><span class="p">()</span>
+<span class="n">killer</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection_2</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">killer</span><span class="p">(</span><span class="s">&#39;emacs&#39;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">KillAllError</span><span class="p">:</span>
+    <span class="n">killer</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="mi">9</span>
+    <span class="n">killer</span><span class="p">(</span><span class="s">&#39;emacs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="testing-the-killall">
+<h2>Testing the KillAll<a class="headerlink" href="#testing-the-killall" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.killall.TestKillAll.test_set_connection.html#apetools.tools.killall.TestKillAll.test_set_connection" title="apetools.tools.killall.TestKillAll.test_set_connection"><tt class="xref py py-obj docutils literal"><span class="pre">TestKillAll.test_set_connection</span></tt></a>()</td>
+<td>Does setting the connection re-set the grep?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.killall.TestKillAll.test_kill_command.html#apetools.tools.killall.TestKillAll.test_kill_command" title="apetools.tools.killall.TestKillAll.test_kill_command"><tt class="xref py py-obj docutils literal"><span class="pre">TestKillAll.test_kill_command</span></tt></a>()</td>
+<td>Will the correct kill command be called?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.killall.TestKillAll.test_failed_kill.html#apetools.tools.killall.TestKillAll.test_failed_kill" title="apetools.tools.killall.TestKillAll.test_failed_kill"><tt class="xref py py-obj docutils literal"><span class="pre">TestKillAll.test_failed_kill</span></tt></a>(*arg,&nbsp;**kw)</td>
+<td>Will a failed kill raise an error?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.killall.TestKillAll.test_call.html#apetools.tools.killall.TestKillAll.test_call" title="apetools.tools.killall.TestKillAll.test_call"><tt class="xref py py-obj docutils literal"><span class="pre">TestKillAll.test_call</span></tt></a>()</td>
+<td>Dose <cite>__call__</cite> do the same thing as <cite>run</cite>?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.killall.TestKillAll.test_set_level.html#apetools.tools.killall.TestKillAll.test_set_level" title="apetools.tools.killall.TestKillAll.test_set_level"><tt class="xref py py-obj docutils literal"><span class="pre">TestKillAll.test_set_level</span></tt></a>()</td>
+<td>If you set the level, will the command change?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.killall.TestKillAll.test_reset_level.html#apetools.tools.killall.TestKillAll.test_reset_level" title="apetools.tools.killall.TestKillAll.test_reset_level"><tt class="xref py py-obj docutils literal"><span class="pre">TestKillAll.test_reset_level</span></tt></a>()</td>
+<td>Can you go back to the default level?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Kill All</a><ul>
+<li><a class="reference internal" href="#killallerror">KillAllError</a></li>
+<li><a class="reference internal" href="#killall">KillAll</a></li>
+<li><a class="reference internal" href="#testing-the-killall">Testing the KillAll</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/tools/killall.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

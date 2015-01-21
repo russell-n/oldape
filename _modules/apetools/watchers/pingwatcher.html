@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.watchers.pingwatcher &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.watchers.pingwatcher</h1><div class="highlight"><pre>
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="c"># this package</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseThreadClass</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">CommandError</span>
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">expressions</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.enumerations</span> <span class="kn">import</span> <span class="n">OperatingSystem</span>
+<span class="kn">from</span> <span class="nn">apetools.threads</span> <span class="kn">import</span> <span class="n">threads</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.timestamp</span> <span class="kn">import</span> <span class="n">TimestampFormat</span><span class="p">,</span> <span class="n">TimestampFormatEnums</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.ping</span> <span class="kn">import</span> <span class="n">PingArguments</span>
+
+
+<span class="n">HEADER</span> <span class="o">=</span> <span class="s">&#39;TimeOfEvent,Event,SecondsToEvent</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">ADD_NEWLINE</span> <span class="o">=</span> <span class="s">&#39;{0}</span><span class="se">\n</span><span class="s">&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">FailureData</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;FailureData&#39;</span><span class="p">,</span> <span class="s">&#39;timestamp elapsed&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span>
+<div class="viewcode-block" id="FailureData"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.FailureData.html#apetools.watchers.pingwatcher.FailureData">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A tuple to hold Failure Data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="s">&#39;Failure&#39;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="FailureData.__str__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.FailureData.__str__.html#apetools.watchers.pingwatcher.FailureData.__str__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns &#39;timestamp,event,elapsed&#39;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;{0},{1},{2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">elapsed</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">RecoveryData</span><span class="p">(</span><span class="n">FailureData</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="RecoveryData"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.RecoveryData.html#apetools.watchers.pingwatcher.RecoveryData">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Holds recovery event data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">event</span> <span class="o">=</span> <span class="s">&#39;Recovery&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">PingWatcher</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A PingWatcher monitors pings and records times to failure(s)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+<div class="viewcode-block" id="PingWatcher.__init__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.__init__">[docs]</a>                 <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                 <span class="n">timestamp_format</span><span class="o">=</span><span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pingwatcher constructor</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `target`: hostname to ping</span>
+<span class="sd">         - `output`: A file-like object to send output to.</span>
+<span class="sd">         - `threshold`: consecutive ping-failures to count as a failure</span>
+<span class="sd">         - `interval`: time between pings</span>
+<span class="sd">         - `event`: A threading event to stop a threaded watcher</span>
+<span class="sd">         - `connection`: A connection to the Device         </span>
+<span class="sd">         - `timestamp_format`: One of the TimestampFormatEnums</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PingWatcher</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">threshold</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp_format</span> <span class="o">=</span> <span class="n">timestamp_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stopped</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PingWatcher.arguments"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.arguments.html#apetools.watchers.pingwatcher.PingWatcher.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Command-line arguments for the `ping` command</span>
+
+<span class="sd">        :return: argument string for ping</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="p">(</span><span class="n">PingArguments</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span><span class="p">]</span> <span class="o">+</span>
+                               <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PingWatcher.expression"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.expression.html#apetools.watchers.pingwatcher.PingWatcher.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compiled regular expression to match a ping</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">PING</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PingWatcher.timestamp"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.timestamp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a time-stamper</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="o">=</span> <span class="n">TimestampFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp_format</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PingWatcher.stop"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.stop">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This sets the event (to match the Watcher).</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c">#self.event.set()</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> 
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PingWatcher.stopped"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.stopped">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        :return: True if self.stop is set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher.execute"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.execute">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls the ping, generates the lines</span>
+<span class="sd">        </span>
+<span class="sd">        :yield:  lines from standard out</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">line</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher.ping"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.ping">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes as single ping and searches for the round-trip-time</span>
+
+<span class="sd">        :return: rtt (as a string, no units) or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+        
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&#39;rtt&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">time_to_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_evaluation</span><span class="p">,</span> <span class="n">event_data</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher.time_to_event"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.time_to_event">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the ping, evaluates the outcome based on event evaluation</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `event_evaluation`: methods that returns True or False based on ping fail/success</span>
+<span class="sd">         - `event_data`: RecoveryData or FailureData namedtuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">first_time</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">while</span> <span class="n">events</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>
+            <span class="n">loop_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">rtt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ping</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">event_evaluation</span><span class="p">(</span><span class="n">rtt</span><span class="p">):</span>
+                <span class="n">events</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">events</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">first_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+                    <span class="n">first_timestamp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;possible event-state change&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">events</span><span class="p">,</span> <span class="n">first_time</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">None</span>
+            <span class="n">loop_end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">-</span> <span class="p">(</span><span class="n">loop_end</span> <span class="o">-</span> <span class="n">loop_start</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">((</span><span class="s">&quot;ping took {0} seconds (greater than {1} &quot;</span> <span class="o">+</span>
+                                   <span class="s">&quot;second interval)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">loop_end</span><span class="o">-</span><span class="n">loop_start</span><span class="p">,</span>
+                                                              <span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">events</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">event_data</span><span class="p">(</span><span class="n">timestamp</span><span class="o">=</span><span class="n">first_timestamp</span><span class="p">,</span> <span class="n">elapsed</span><span class="o">=</span><span class="n">first_time</span><span class="o">-</span><span class="n">start_time</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher.run"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.run.html#apetools.watchers.pingwatcher.PingWatcher.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs an infinite loop that pings the target</span>
+
+<span class="sd">        Writes changes in connectivity state to output</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">HEADER</span><span class="p">)</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>            
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Waiting for a Failure&#39;</span><span class="p">)</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_failure</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">outcome</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;PingWatch: Failure Detected&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ADD_NEWLINE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">outcome</span><span class="p">))</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_recovery</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">outcome</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;PingWatch: Recovery Detected&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ADD_NEWLINE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">outcome</span><span class="p">))</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">time_to_recovery</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher.time_to_recovery"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.time_to_recovery">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        runs until the connection pings successfully</span>
+
+<span class="sd">        :return: RecoveryData</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_event</span><span class="p">(</span><span class="k">lambda</span> <span class="n">rtt</span><span class="p">:</span> <span class="n">rtt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">,</span>
+                                  <span class="n">RecoveryData</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">time_to_failure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher.time_to_failure"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.time_to_failure">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs until the connection fails to ping</span>
+
+<span class="sd">        :return: FailureData</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_event</span><span class="p">(</span><span class="k">lambda</span> <span class="n">rtt</span><span class="p">:</span> <span class="n">rtt</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">,</span>
+                                  <span class="n">FailureData</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PingWatcher.start"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.pingwatcher.PingWatcher.html#apetools.watchers.pingwatcher.PingWatcher.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs self in a thread.</span>
+
+<span class="sd">        :rtype: threading.Thread        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span>  <span class="n">threads</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_thread</span><span class="p">,</span>
+                                      <span class="n">name</span><span class="o">=</span><span class="s">&quot;PingWatcher {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+        <span class="k">return</span> <span class="s">&quot;ping {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+<span class="c"># end class PingWatcher</span>
+
+
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="c"># third party</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span><span class="p">,</span> <span class="n">call</span>
+
+
+<span class="n">example</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">PING 192.168.20.1 (192.168.20.1) 56(84) bytes of data.</span>
+<span class="s">64 bytes from 192.168.20.1: icmp_seq=1 ttl=255 time=207 ms</span>
+
+<span class="s">--- 192.168.20.1 ping statistics ---</span>
+<span class="s">1 packets transmitted, 1 received, 0% packet loss, time 0ms</span>
+<span class="s">rtt min/avg/max/mdev = 207.135/207.135/207.135/0.000 ms</span>
+<span class="s">&#39;&#39;&#39;</span>
+
+<span class="k">class</span> <span class="nc">TestPingWatcher</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="c"># set the operating system for the arguments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">android</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="s">&#39;192.168.10.1&#39;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">=</span><span class="n">PingWatcher</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+                                 <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+                                 <span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                                 <span class="n">threshold</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span>
+                                 <span class="n">event</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the constructor set all the parameters we pass in?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">threshold</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">event</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the argument-string get created correctly?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">android</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot; -c 1 -w 1 &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">linux</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39; -c 1 -w 1 &#39;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">example</span><span class="p">))</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">example</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;207&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="s">&#39;rtt&#39;</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_excecute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s">&#39;cow&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ping</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">execute</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIn</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">example</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_ping</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ping</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;207&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">ping</span><span class="p">())</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s">&#39;asonetuh&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ping</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">ping</span><span class="p">())</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">test_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">_timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">_timestamp</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ping</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="c"># prevent the infinite loop</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="bp">True</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">,</span> <span class="bp">False</span><span class="p">]</span>
+        <span class="k">def</span> <span class="nf">side_effects</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">events</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effects</span>
+
+        <span class="c"># set the times</span>
+        <span class="n">time_time</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="c"># the time_to_event checks the time once before checking is_stopped</span>
+        <span class="c"># so there needs to be 1 extra time</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">def</span> <span class="nf">time_effects</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">times</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">time_time</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">time_effects</span>
+        
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&#39;time.time&#39;</span><span class="p">,</span> <span class="n">time_time</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="n">time_time</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ping</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">watcher</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="n">calls</span> <span class="o">=</span> <span class="p">[</span><span class="n">call</span><span class="p">(</span><span class="n">HEADER</span><span class="p">),</span> <span class="n">call</span><span class="p">(</span><span class="s">&#39;5,Failure,1</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">calls</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="o">.</span><span class="n">mock_calls</span><span class="p">)</span>
+        <span class="k">return</span>
+        
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

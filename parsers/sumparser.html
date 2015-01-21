@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sum Parser &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Parsers" href="index.html" />
+    <link rel="next" title="apetools.parsers.sumparser.HumanExpressionSum" href="api/apetools.parsers.sumparser.HumanExpressionSum.html" />
+    <link rel="prev" title="apetools.parsers.oatbran.STRING_BOUNDARY" href="api/apetools.parsers.oatbran.STRING_BOUNDARY.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.sumparser.HumanExpressionSum.html" title="apetools.parsers.sumparser.HumanExpressionSum"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.oatbran.STRING_BOUNDARY.html" title="apetools.parsers.oatbran.STRING_BOUNDARY"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Parsers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sum-parser">
+<h1>Sum Parser<a class="headerlink" href="#sum-parser" title="Permalink to this headline">¶</a></h1>
+<p>The sumparser parses sums and logs the bandwidth sum.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BITS</span> <span class="o">=</span> <span class="s">&#39;bits&#39;</span>
+</pre></div>
+</div>
+<div class="section" id="human-expression-sum">
+<h2>Human Expression Sum<a class="headerlink" href="#human-expression-sum" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-a69e57dbbe8083e44c84ac30df1554c1f4284ecd.png" alt="HumanExpression &lt;|-- HumanExpression" />
+</p>
+<span class="target" id="module-apetools.parsers.sumparser"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.sumparser.HumanExpressionSum.html#apetools.parsers.sumparser.HumanExpressionSum" title="apetools.parsers.sumparser.HumanExpressionSum"><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpressionSum</span></tt></a>([threads])</td>
+<td>Changes the thread-column regular expression to match SUMS if needed</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.sumparser.HumanExpressionSum.thread_column.html#apetools.parsers.sumparser.HumanExpressionSum.thread_column" title="apetools.parsers.sumparser.HumanExpressionSum.thread_column"><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpressionSum.thread_column</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">expression to match the thread (sum) column</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="csv-expression-sum">
+<h2>CSV Expression Sum<a class="headerlink" href="#csv-expression-sum" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-761e07163e9f52e20ba9dfc2891f919a69dbfd72.png" alt="CsvExpression &lt;|-- CsvExpressionSum" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.sumparser.CsvExpressionSum.html#apetools.parsers.sumparser.CsvExpressionSum" title="apetools.parsers.sumparser.CsvExpressionSum"><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpressionSum</span></tt></a>([threads])</td>
+<td>Changes the thread column to look for -1 if needed</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.sumparser.CsvExpressionSum.thread_column.html#apetools.parsers.sumparser.CsvExpressionSum.thread_column" title="apetools.parsers.sumparser.CsvExpressionSum.thread_column"><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpressionSum.thread_column</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the expression to match the thread (sum) column</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h2>Sum Parser<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-af3870e2ee14cab486143244f0d5402c554cae56.png" alt="IperfParser &lt;|-- SumParser" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.sumparser.SumParser.html#apetools.parsers.sumparser.SumParser" title="apetools.parsers.sumparser.SumParser"><tt class="xref py py-obj docutils literal"><span class="pre">SumParser</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>The SumParser emits bandwidth sum lines</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.sumparser.SumParser.regex.html#apetools.parsers.sumparser.SumParser.regex" title="apetools.parsers.sumparser.SumParser.regex"><tt class="xref py py-obj docutils literal"><span class="pre">SumParser.regex</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a dictionary of compiled regular expressions</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.sumparser.SumParser.__call__.html#apetools.parsers.sumparser.SumParser.__call__" title="apetools.parsers.sumparser.SumParser.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">SumParser.__call__</span></tt></a>(line)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.sumparser.SumParser.pipe.html#apetools.parsers.sumparser.SumParser.pipe" title="apetools.parsers.sumparser.SumParser.pipe"><tt class="xref py py-obj docutils literal"><span class="pre">SumParser.pipe</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A coroutine to pipe output through</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sum Parser</a><ul>
+<li><a class="reference internal" href="#human-expression-sum">Human Expression Sum</a></li>
+<li><a class="reference internal" href="#csv-expression-sum">CSV Expression Sum</a></li>
+<li><a class="reference internal" href="#id1">Sum Parser</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/parsers/sumparser.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

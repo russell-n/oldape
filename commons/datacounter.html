@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Counter &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commons" href="index.html" />
+    <link rel="next" title="apetools.commons.datacounter.CounterDatum" href="api/apetools.commons.datacounter.CounterDatum.html" />
+    <link rel="prev" title="apetools.commons.coroutine.file_output" href="api/apetools.commons.coroutine.file_output.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commons.datacounter.CounterDatum.html" title="apetools.commons.datacounter.CounterDatum"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commons.coroutine.file_output.html" title="apetools.commons.coroutine.file_output"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commons</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="data-counter">
+<h1>Data Counter<a class="headerlink" href="#data-counter" title="Permalink to this headline">¶</a></h1>
+<p>The Data Counter is meant for event watching. It tracks the time from its start to its first call.</p>
+<p>Intended Sequence:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">d</span> <span class="o">=</span> <span class="n">DataCounter</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+<span class="n">d</span><span class="p">([</span><span class="n">data</span><span class="p">])</span>
+<span class="n">d</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Since it&#8217;s only counting the data anything passed in to the call is ignored</p>
+<div class="section" id="counter-datum-tuple">
+<h2>Counter Datum Tuple<a class="headerlink" href="#counter-datum-tuple" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-37eb4afdfa92afe077bef41d0565c59b1dfab4b0.png" alt="namedtuple &lt;|-- CounterDatum" />
+</p>
+<span class="target" id="module-apetools.commons.datacounter"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.CounterDatum" title="apetools.commons.datacounter.CounterDatum"><tt class="xref py py-obj docutils literal"><span class="pre">CounterDatum</span></tt></a></td>
+<td>CounterDatum is used to hold the final count:</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-data-counter">
+<h2>The Data Counter<a class="headerlink" href="#the-data-counter" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter" title="apetools.commons.datacounter.DataCounter"><tt class="xref py py-obj docutils literal"><span class="pre">DataCounter</span></tt></a>([missing])</td>
+<td>The DataCounter counts the number of times it&#8217;s called</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter.start" title="apetools.commons.datacounter.DataCounter.start"><tt class="xref py py-obj docutils literal"><span class="pre">DataCounter.start</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter.stop" title="apetools.commons.datacounter.DataCounter.stop"><tt class="xref py py-obj docutils literal"><span class="pre">DataCounter.stop</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Counter</a><ul>
+<li><a class="reference internal" href="#counter-datum-tuple">Counter Datum Tuple</a></li>
+<li><a class="reference internal" href="#the-data-counter">The Data Counter</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commons/datacounter.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,681 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="The NetworkedPowerSupply" href="../networkedpowersupply.html" />
+    <link rel="next" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch" href="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch.html" />
+    <link rel="prev" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except" href="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch.html" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except.html" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >Affectors</a> &raquo;</li>
+          <li><a href="../index.html" >Naxxx</a> &raquo;</li>
+          <li><a href="../networkedpowersupply.html" accesskey="U">The NetworkedPowerSupply</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="apetools-affectors-elexol-networkedpowersupply-networkedpowersupply">
+<h1>apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply<a class="headerlink" href="#apetools-affectors-elexol-networkedpowersupply-networkedpowersupply" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply">
+<em class="property">class </em><tt class="descclassname">apetools.affectors.elexol.networkedpowersupply.</tt><tt class="descname">NetworkedPowerSupply</tt><big>(</big><em>IP</em>, <em>clear=True</em>, <em>retry=5</em>, <em>ports='ABC'</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class provides access to the Network Power Supply (NPS). 
+It prevents electrically unsafe use.</p>
+<p>The most important commands to use are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>TurnOn()</cite></li>
+<li><cite>TurnOff()</cite></li>
+<li><cite>TurnOffList()</cite></li>
+<li><cite>TurnOnList()</cite></li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li><cite>TurnOn/Off()</cite>: specify which AC port to turn on/off via integer identifier</li>
+<li><cite>TurnOff/OnList()</cite>: accepts a list of devices to turn on or off.</li>
+<li><cite>TurnOnList()</cite>: keyword &#8216;clear&#8217; indicates whether to disable devices already on.</li>
+</ul>
+<p>Error checking is done to ensure that devices turn on/off as expected.</p>
+<p>Initializes an elexol24 object to talk to the NPS device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>IP</cite>    : String IP address of the Elexol device.</li>
+<li><cite>clear</cite> : Bool indicating whether or not NPS will disable all plugs at start</li>
+<li><cite>retry</cite> : Number of times to retry if communication with Elexol fails.</li>
+<li><cite>ports</cite>: The elexol&#8217;s serial port ID&#8217;s (needs to be iterable)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>IP</em>, <em>clear=True</em>, <em>retry=5</em>, <em>ports='ABC'</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes an elexol24 object to talk to the NPS device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>IP</cite>    : String IP address of the Elexol device.</li>
+<li><cite>clear</cite> : Bool indicating whether or not NPS will disable all plugs at start</li>
+<li><cite>retry</cite> : Number of times to retry if communication with Elexol fails.</li>
+<li><cite>ports</cite>: The elexol&#8217;s serial port ID&#8217;s (needs to be iterable)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.__init__" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(IP[,&nbsp;clear,&nbsp;retry,&nbsp;ports])</td>
+<td>Initializes an elexol24 object to talk to the NPS device.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except"><tt class="xref py py-obj docutils literal"><span class="pre">all_off_except</span></tt></a>([exceptions])</td>
+<td>Turns off all devices on the Elexol NPS not listed in <cite>exception</cite> list</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.set_port_status" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.set_port_status"><tt class="xref py py-obj docutils literal"><span class="pre">set_port_status</span></tt></a>()</td>
+<td>sets current ON/OFF status for all pins from elexol.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_off" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_off"><tt class="xref py py-obj docutils literal"><span class="pre">switch_is_off</span></tt></a>(switch)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_on" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_on"><tt class="xref py py-obj docutils literal"><span class="pre">switch_is_on</span></tt></a>(switch)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switches_on" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switches_on"><tt class="xref py py-obj docutils literal"><span class="pre">switches_on</span></tt></a>()</td>
+<td>Queries Elexol to determine how many switches are currently on.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.toggle_switch" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.toggle_switch"><tt class="xref py py-obj docutils literal"><span class="pre">toggle_switch</span></tt></a>(switch,&nbsp;on_or_off)</td>
+<td>Turns switch on or off based on <cite>on_or_off</cite> value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off"><tt class="xref py py-obj docutils literal"><span class="pre">turn_off</span></tt></a>(switch)</td>
+<td>Turn <em>off</em> switch listed by number</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off_switches" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off_switches"><tt class="xref py py-obj docutils literal"><span class="pre">turn_off_switches</span></tt></a>(off_list)</td>
+<td>Turn off all devices whose numbers are included in a provided list.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on"><tt class="xref py py-obj docutils literal"><span class="pre">turn_on</span></tt></a>(switch)</td>
+<td>Turn <em>on</em> switch</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on_switches" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on_switches"><tt class="xref py py-obj docutils literal"><span class="pre">turn_on_switches</span></tt></a>(switches[,&nbsp;turn_others_off])</td>
+<td>Turn on all switches whose numbers are included in a provided list.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.attempts" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.attempts"><tt class="xref py py-obj docutils literal"><span class="pre">attempts</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">List of allowed attempts (up to self.num_retry times)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.check_switch_is" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.check_switch_is"><tt class="xref py py-obj docutils literal"><span class="pre">check_switch_is</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">dict of ON:self.switch_is_on, OFF:port_is_off</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.elexol" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.elexol"><tt class="xref py py-obj docutils literal"><span class="pre">elexol</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">elexol24 object</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.logger" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.logger"><tt class="xref py py-obj docutils literal"><span class="pre">logger</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins"><tt class="xref py py-obj docutils literal"><span class="pre">pins</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">List of all pin identifiers</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins_per_port" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins_per_port"><tt class="xref py py-obj docutils literal"><span class="pre">pins_per_port</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">List of pins for a single port (0-7)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.port_status" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.port_status"><tt class="xref py py-obj docutils literal"><span class="pre">port_status</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">Dict of port:pin-status-list</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch" title="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch"><tt class="xref py py-obj docutils literal"><span class="pre">turn_switch</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">dict of ON:elexol.setpin24, OFF:elexol.clearpin24</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except">
+<tt class="descname">all_off_except</tt><big>(</big><em>exceptions=[]</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.all_off_except"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns off all devices on the Elexol NPS not listed in <cite>exception</cite> list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>exceptions</cite> : list of device numbers (int) to leave on. (Default=all off))</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">All devices not in <cite>exception</cite> are turned off.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.set_port_status">
+<tt class="descname">set_port_status</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.set_port_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.set_port_status" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets current ON/OFF status for all pins from elexol.</p>
+<p>Example retrieval of status:</p>
+<div class="highlight-python"><div class="highlight"><pre>status = np.port_status[port][pin]
+
+for example,
+
+np = nps.nps()
+np.set_port_status()
+if np.port_status[&#39;B&#39;][4]:
+    print &#39;Port B4 is on!&#39;
+</pre></div>
+</div>
+<p>See <cite>convert_to_port_pin()</cite> to convert pin (i.e. 23) to  port,pin (i.e., &#8216;C&#8217;, 7)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body"><cite>self.port_status</cite> dict contains port,pin statuses</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_off">
+<tt class="descname">switch_is_off</tt><big>(</big><em>switch</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.switch_is_off"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_off" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>switch</cite>: The switch ID</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if pin is off</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_on">
+<tt class="descname">switch_is_on</tt><big>(</big><em>switch</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.switch_is_on"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_on" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>switch</cite>: The switch ID (e.g. 16 for port C, pin 0)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">True if pin is on</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">FaucetteError if switch ID is invalid.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switches_on">
+<tt class="descname">switches_on</tt><big>(</big><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.switches_on"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switches_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Queries Elexol to determine how many switches are currently on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Number of switches currently ON.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.toggle_switch">
+<tt class="descname">toggle_switch</tt><big>(</big><em>switch</em>, <em>on_or_off</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.toggle_switch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.toggle_switch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns switch on or off based on <cite>on_or_off</cite> value.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>switch</cite>: Switch number to turn on.</li>
+<li><cite>on_or_off</cite>: ON turns switch on, OFF turns switch off</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">FaucetteError if invalid switch, failed change, too many switches on.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off">
+<tt class="descname">turn_off</tt><big>(</big><em>switch</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.turn_off"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn <em>off</em> switch listed by number</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>switch</cite> : switch number to turn off</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">switch identified by <cite>number</cite> is off.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">FaucetteError if switch out of bounds or unable to turn off.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off_switches">
+<tt class="descname">turn_off_switches</tt><big>(</big><em>off_list</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.turn_off_switches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off_switches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn off all devices whose numbers are included in a provided list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>off_list</cite> : List that contains the integer switch numbers</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">All switches in <cite>off_list</cite> are off.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on">
+<tt class="descname">turn_on</tt><big>(</big><em>switch</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.turn_on"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn <em>on</em> switch</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>switch</cite> : Switch number to turn on</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">switch is on.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">FaucetteError if switch out of bounds, too many on, or unable to turn on.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on_switches">
+<tt class="descname">turn_on_switches</tt><big>(</big><em>switches</em>, <em>turn_others_off=False</em><big>)</big><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.turn_on_switches"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on_switches" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turn on all switches whose numbers are included in a provided list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>switches</cite>: List containing integer switch numbers</li>
+<li><cite>turn_others_off</cite>  : <em>True</em> turn <em>Off</em> all others.*False* leave <em>On</em>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li>If <cite>clear</cite>, all switches not in <cite>switches</cite> are off.</li>
+<li>All switches in <cite>outlets</cite> are on.</li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.attempts">
+<tt class="descname">attempts</tt><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.attempts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.attempts" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of allowed attempts (up to self.num_retry times)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.check_switch_is">
+<tt class="descname">check_switch_is</tt><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.check_switch_is"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.check_switch_is" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dict of ON:self.switch_is_on, OFF:port_is_off</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.elexol">
+<tt class="descname">elexol</tt><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.elexol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.elexol" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">elexol24 object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins">
+<tt class="descname">pins</tt><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.pins"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of all pin identifiers</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins_per_port">
+<tt class="descname">pins_per_port</tt><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.pins_per_port"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins_per_port" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">List of pins for a single port (0-7)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.port_status">
+<tt class="descname">port_status</tt><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.port_status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.port_status" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Dict of port:pin-status-list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch">
+<tt class="descname">turn_switch</tt><a class="reference internal" href="../../../_modules/apetools/affectors/elexol/networkedpowersupply.html#NetworkedPowerSupply.turn_switch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dict of ON:elexol.setpin24, OFF:elexol.clearpin24</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/affectors/elexol/api/apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

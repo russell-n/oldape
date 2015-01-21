@@ -1,0 +1,201 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Rotate Configuration &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
+    <link rel="next" title="Cube Turntable (Rotate Cube)" href="rotate_cube.html" />
+    <link rel="prev" title="PowerOn Configuration" href="poweron.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="rotate_cube.html" title="Cube Turntable (Rotate Cube)"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="poweron.html" title="PowerOn Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Old Ape&#8217;s User Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rotate-configuration">
+<h1>Rotate Configuration<a class="headerlink" href="#rotate-configuration" title="Permalink to this headline">¶</a></h1>
+<p id="id1">This explains the <cite>[ROTATE]</cite> section of a configuration file. It assumes that there is a PC connected to the turntable with the <cite>rotate</cite> command installed on it.</p>
+<div class="section" id="the-test-section">
+<span id="rotate-configuration-test-section"></span><h2>The TEST Section<a class="headerlink" href="#the-test-section" title="Permalink to this headline">¶</a></h2>
+<p>To be included as part of the execution you need to add the <cite>rotate</cite> to one of the TEST fields. The recommended location would be the <cite>setup_test</cite> option (if you put it in <cite>execute_test</cite> option the angle information won&#8217;t get added to file names). If you wanted to rotate the table and run <cite>iperf</cite>, for instance, you might use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<span class="n">setup_test</span> <span class="o">=</span> <span class="n">rotate</span>
+<span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
+</pre></div>
+</div>
+<p>As always, you can add more things to the options using a comma-separated list. For example, to sleep after every rotation:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<span class="n">setup_test</span> <span class="o">=</span> <span class="n">rotate</span><span class="p">,</span> <span class="n">sleep</span>
+<span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
+</pre></div>
+</div>
+<p>Just remember that everything added to this section needs a corresponding section later in the configuration file with a capitalized version of the option as a header. For example, this setup will expect <tt class="docutils literal"><span class="pre">[SLEEP]</span></tt>, <tt class="docutils literal"><span class="pre">[ROTATE]</span></tt>, and <tt class="docutils literal"><span class="pre">[IPERF]</span></tt> sections somewhere in the configuration file.</p>
+</div>
+<div class="section" id="the-rotate-section">
+<span id="rotate-configuration-rotate-section"></span><h2>The ROTATE Section<a class="headerlink" href="#the-rotate-section" title="Permalink to this headline">¶</a></h2>
+<p>An example setup would be:</p>
+<div class="highlight-python"><div class="highlight"><pre>[ROTATE]
+node1 = hostname:phoridfly, username:root, password:testlabs
+angles = 180,0:50,45,90:100, 270:10
+</pre></div>
+</div>
+<ul class="simple">
+<li>the <cite>angles</cite> format is angles=&lt;comma-separated list of &lt;angle in degrees&gt;:&lt;angular velocity&gt;</li>
+<li>The &lt;angular velocity&gt; is optional (e.g. angles=0,45,90 or angles=0:100, 45:50, 90)</li>
+<li>Negative numbers rotate clockwise (depending on the table)</li>
+<li>The PC connected to the turntable to control it is assumed to have an SSH connection to it so the first three parameters are to log in to it</li>
+<li>The convoluted node information was added to accomodate a request for multiple turntables &#8211; add as many lines as there are turntables to control.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">At the time the request was made to extend this to handle multiple turntables the use-case was for them to rotate in lock-step (i.e. the same angles) the <a class="reference internal" href="rotate_cube.html#rotate-cube-configuration"><em>newer table</em></a> accomodates different angle lists but this does not. Since these turntables are being replaced because of a flaw in the design I assume that they won&#8217;t be used any more so I&#8217;m not updating their behavior.</p>
+</div>
+</div>
+<div class="section" id="the-tables">
+<h2>The Tables<a class="headerlink" href="#the-tables" title="Permalink to this headline">¶</a></h2>
+<p>There are two-tables that this is meant to work with &#8211; a servo-based turntable and a motor-based one.</p>
+<p>The servo-based turntable won&#8217;t rotate as far or with as fine a degree of separation between changes in angle and it uses absolute angles (so there&#8217;s no such thing as a direction, it will always turn clockwise if the chosen angle is less than the current angle or anti-clockwise if the chosen angle is greater than the current one).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The motor-based turntable has a finer-degree of control and will spin forever. If you are going to run more than one cycle then you should make the first or last angle negative so that it will revolve in the opposite direction. Otherwise whatever sits on the table will continue to rotate in the same direction, likely tangling whatever cables are attached to it.</p>
+</div>
+<p>For example, to rotate the table at 90 degree angles with the default speed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">ROTATE</span><span class="p">]</span>
+<span class="n">hostname</span> <span class="o">=</span> <span class="n">phoridfly</span>
+<span class="n">username</span> <span class="o">=</span> <span class="n">root</span>
+<span class="c">#password =</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">,</span> <span class="o">-</span><span class="mi">0</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>password</cite> is commented out because I normally use public-key authentication. If this isn&#8217;t set up un-comment the line and add your login password.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rotate Configuration</a><ul>
+<li><a class="reference internal" href="#the-test-section">The TEST Section</a></li>
+<li><a class="reference internal" href="#the-rotate-section">The ROTATE Section</a></li>
+<li><a class="reference internal" href="#the-tables">The Tables</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/documentation/user/rotate.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

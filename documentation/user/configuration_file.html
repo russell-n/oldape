@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Configuration File &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
+    <link rel="next" title="Sample Configuration" href="sample_configuration.html" />
+    <link rel="prev" title="Basic Usage" href="basic_usage.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sample_configuration.html" title="Sample Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="basic_usage.html" title="Basic Usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Old Ape&#8217;s User Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-configuration-file">
+<h1>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Permalink to this headline">¶</a></h1>
+<p id="configuration-file">The configuration file is how a particular test or set of test is run. When the <cite>run</cite> sub-command is given:</p>
+<div class="highlight-python"><div class="highlight"><pre>ape run
+</pre></div>
+</div>
+<p>The program will look for any file that matches the file-glob (<cite>*.ini</cite> by default) and execute them in lexicographic order. The configuration files use the <a class="reference external" href="http://en.wikipedia.org/wiki/INI_file">INI</a> file format.</p>
+<p>A sample:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sample_configuration.html">Sample</a></li>
+</ul>
+</div>
+<div class="section" id="the-test-section">
+<h2>The Test Section<a class="headerlink" href="#the-test-section" title="Permalink to this headline">¶</a></h2>
+<p>The configuration file is broken into sections, some of which are required, some of which are required only when needed. The first required section is the <cite>[TEST]</cite> section. This is where the parts of the test that will be executed are declared.</p>
+<div class="section" id="the-test-options">
+<h3>The TEST Options<a class="headerlink" href="#the-test-options" title="Permalink to this headline">¶</a></h3>
+<p>There are five option that declare the order that the test-components are run:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>operation_setup</cite></li>
+<li><cite>setup_test</cite></li>
+<li><cite>execute_test</cite></li>
+<li><cite>teardown_test</cite></li>
+<li><cite>operation_teardown</cite></li>
+</ul>
+</div></blockquote>
+<p>Each of these options takes a comma-separated list that corresponds to a component. See the following sections for examples. If you don&#8217;t want to use a particular option, comment it out or remove it.</p>
+<p>For example, the following would only run <cite>iperf</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<span class="c">#operation_setup = watchlogs,oscillate</span>
+<span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
+</pre></div>
+</div>
+<p>The values that can go in the section are properties of a class that has them mapped to the code to build them (see the <a class="reference internal" href="../../builders/subbuilders/toolbuilder.html#apetools-tool-builder"><em>ToolBuilder Documentation</em></a>) for the values allowed. Generally speaking, for each value declared (e.g. <tt class="docutils literal"><span class="pre">oscillate</span></tt>) there should be an upper-cased section header in the configuration file that gives the parameters for it (e.g. <tt class="docutils literal"><span class="pre">[OSCILLATE]</span></tt>).</p>
+<div class="section" id="operation-setup">
+<h4>Operation Setup<a class="headerlink" href="#operation-setup" title="Permalink to this headline">¶</a></h4>
+<p>The <cite>operation_setup</cite> option is run once per test (conceptually a configuration file corresponds to a single test, so these components will only be run once per file-setup). An example use of this option is to run the <cite>watchlogs</cite> component which captures various logs from devices:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<span class="n">operation_setup</span> <span class="o">=</span> <span class="n">watchlogs</span>
+</pre></div>
+</div>
+<p>Because this component is declared there needs to be a corresponding [WATCHLOGS] section somewhere in the configuration file for this to be a valid setup. The reason for putting <cite>watchlogs</cite> in the <cite>operation_setup</cite> is that the parts of the code that collect the logs run in the background continuously and so don&#8217;t need to be started with every repetition.</p>
+</div>
+<div class="section" id="the-setup-test-option">
+<h4>The Setup Test Option<a class="headerlink" href="#the-setup-test-option" title="Permalink to this headline">¶</a></h4>
+<p>The next option is <cite>setup_test</cite>. Components declared here will be run once for every test repetition. This is more of a conceptual-distinction, as you could put them in the test section. An example would be if you are using a power switch to turn on AP&#8217;s and want the code to wait until the device has connected to the AP:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup_test</span> <span class="o">=</span> <span class="n">poweron</span><span class="p">,</span><span class="n">timetorecovery</span><span class="p">,</span><span class="n">dumpdevicestate</span>
+</pre></div>
+</div>
+<p>The <cite>poweron</cite> component will be executed first (and will expect a <cite>[POWERON]</cite> section in the configuration), the <cite>timetorecovery</cite> will ping until there is a connection (or a timeout) and the <cite>dumpdevicestate</cite> will dump whatever information about the state of the device&#8217;s connection that it can get to the screen and a log-file.</p>
+</div>
+<div class="section" id="the-execute-test-options">
+<h4>The Execute Test Options<a class="headerlink" href="#the-execute-test-options" title="Permalink to this headline">¶</a></h4>
+<p>This is the section where components to actually run the test should go. The most common thing here would be <cite>iperf</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
+</pre></div>
+</div>
+<p>As with the previous options, there will need to be an <cite>[IPERF]</cite> section for this to be a valid configuration.</p>
+</div>
+</div>
+</div>
+<div class="section" id="the-teardown-options">
+<h2>The Teardown Options<a class="headerlink" href="#the-teardown-options" title="Permalink to this headline">¶</a></h2>
+<p>I think you get the idea for these sections &#8211; <cite>teardown_test</cite> gets run after each <cite>execute_test</cite> and <cite>operation_teardown</cite> gets run after everything else is done.</p>
+<div class="section" id="the-leftover-options">
+<h3>The Leftover Options<a class="headerlink" href="#the-leftover-options" title="Permalink to this headline">¶</a></h3>
+<p>There are also some remaining options in the <cite>[TEST]</cite> section that don&#8217;t declare components:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>output_folder</cite></li>
+<li><cite>repeat</cite></li>
+<li><cite>tag</cite></li>
+<li><cite>recovery_time</cite></li>
+<li><cite>no_cleanup</cite></li>
+</ul>
+</div></blockquote>
+<div class="section" id="output-folder-option">
+<h4>Output Folder Option<a class="headerlink" href="#output-folder-option" title="Permalink to this headline">¶</a></h4>
+<p>Hopefully this is fairly intuitive. The only thing that might not be is the time-stamping option. Anywhere in the string that there&#8217;s a <cite>{t}</cite> a timestamp will be inserted. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>output_folder = tate_cisco_1250_{t}
+</pre></div>
+</div>
+<p>Might produce a folder with the name <cite>tate_cisco_1250_2013_04_08</cite>.</p>
+</div>
+<div class="section" id="repeat-option">
+<h4>Repeat Option<a class="headerlink" href="#repeat-option" title="Permalink to this headline">¶</a></h4>
+<p>The <cite>repeat</cite> option is how many times to repeat the setup in this configuration file (so the <cite>setup_test</cite>, <cite>execute_test</cite>, and <cite>teardown_test</cite> will be repeated however many times the <cite>repeat</cite> is set to).</p>
+</div>
+<div class="section" id="tag-option">
+<h4>Tag Option<a class="headerlink" href="#tag-option" title="Permalink to this headline">¶</a></h4>
+<p>The <cite>tag</cite> is a string that will be inserted into the log at the start and end of a test. It&#8217;s mainly used to decompose the log afterwards via string matching.</p>
+</div>
+<div class="section" id="recovery-time">
+<h4>Recovery Time<a class="headerlink" href="#recovery-time" title="Permalink to this headline">¶</a></h4>
+<p>This is the number of seconds to rest between tests. This is sort of vestigial at this point.</p>
+</div>
+<div class="section" id="no-cleanup-option">
+<h4>No Cleanup Option<a class="headerlink" href="#no-cleanup-option" title="Permalink to this headline">¶</a></h4>
+<p>If this is chosen the code will exit immediately upon receiving a keyboard interrupt (control-c) without trying to clean up after itself. This is generally not a good thing.</p>
+</div>
+</div>
+</div>
+<div class="section" id="the-nodes">
+<span id="node-configuration"></span><h2>The Nodes<a class="headerlink" href="#the-nodes" title="Permalink to this headline">¶</a></h2>
+<p>The next required section is [NODES]. This is where devices that are to be tested are declared. Each device gets its own line. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>[NODES]
+
+tate = hostname:phoridfly,login:root,operating_system:android,connection:adbshellssh,test_interface:wlan0
+</pre></div>
+</div>
+<p>The left-hand-side term (<cite>tate</cite> in this case) is only an identifier to make it easier to recognize what&#8217;s being tested, it doesn&#8217;t need to be any particular value.</p>
+<p>The node options:</p>
+<blockquote>
+<div><ul class="simple">
+<li>hostname &#8211; The IP address or resolvable name for the node</li>
+<li>login &#8211; The user-login name</li>
+<li>operating_system &#8211; the OS of the node (see below for valid types)</li>
+<li>connection &#8211; the way the Control PC connects to the Node</li>
+<li>test_interface &#8211; the name of the testing interface (used to get the test IP)</li>
+</ul>
+</div></blockquote>
+<p>The general form for the node declarations are:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;identifier&gt; = hostname:&lt;ip or name&gt;,login:&lt;user login&gt;,operating_system:&lt;OS&gt;,
+    connection:&lt;type&gt;,test_interface:&lt;interface name&gt;
+</pre></div>
+</div>
+<p>The connection type is one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>ssh</li>
+<li>adbshellssh</li>
+<li>local</li>
+<li>telnet</li>
+<li>adblocal</li>
+<li>serial</li>
+</ul>
+</div></blockquote>
+<p>The <cite>hostname</cite>, and <cite>login</cite> aren&#8217;t needed if the connection isn&#8217;t a remote one.</p>
+<p>The operating system is one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>linux</li>
+<li>android</li>
+<li>windows</li>
+<li>mac</li>
+</ul>
+</div></blockquote>
+<p>If other options are neede by the connection, add with &lt;name&gt;:&lt;value&gt; format. The only extra option at the moment is <cite>password:&lt;login password&gt;</cite> which is only needed if the public-keys aren&#8217;t set up between the PC running the code and the Node.</p>
+<p>As a rule of thumb, prefer <em>ssh</em> over <em>telnet</em>, <em>telnet</em> over <em>serial</em> or <em>local</em>.</p>
+<p>A MacBook Sample:</p>
+<div class="highlight-python"><div class="highlight"><pre>[NODES]
+hostname:macbook,login:allion,password:testlabs,operating_system:mac, connection:ssh, test_interface:en1
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-traffic-pc">
+<span id="traffic-pc"></span><h2>The Traffic PC<a class="headerlink" href="#the-traffic-pc" title="Permalink to this headline">¶</a></h2>
+<p>The next required section is the <cite>[TRAFFIC_PC]</cite>. It uses the same format as the nodes but is used only for the other side of an iperf session.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre>[TRAFFIC_PC]
+tpc = operating_system:linux,connection:ssh,test_interface:eth3,hostname:lancet,login:allion
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-remaining-sections">
+<h2>The Remaining Sections<a class="headerlink" href="#the-remaining-sections" title="Permalink to this headline">¶</a></h2>
+<p>Any other section needed will correspond to one declared in the <cite>[TEST]</cite> section. See specific examples:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="iperf.html">Iperf</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rotate.html">Rotate</a></li>
+<li class="toctree-l1"><a class="reference internal" href="watchlogs.html">Watchlogs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sleep.html">Sleep</a></li>
+<li class="toctree-l1"><a class="reference internal" href="poweron.html">PowerOn</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Configuration File</a><ul>
+<li><a class="reference internal" href="#the-test-section">The Test Section</a><ul>
+<li><a class="reference internal" href="#the-test-options">The TEST Options</a><ul>
+<li><a class="reference internal" href="#operation-setup">Operation Setup</a></li>
+<li><a class="reference internal" href="#the-setup-test-option">The Setup Test Option</a></li>
+<li><a class="reference internal" href="#the-execute-test-options">The Execute Test Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-teardown-options">The Teardown Options</a><ul>
+<li><a class="reference internal" href="#the-leftover-options">The Leftover Options</a><ul>
+<li><a class="reference internal" href="#output-folder-option">Output Folder Option</a></li>
+<li><a class="reference internal" href="#repeat-option">Repeat Option</a></li>
+<li><a class="reference internal" href="#tag-option">Tag Option</a></li>
+<li><a class="reference internal" href="#recovery-time">Recovery Time</a></li>
+<li><a class="reference internal" href="#no-cleanup-option">No Cleanup Option</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-nodes">The Nodes</a></li>
+<li><a class="reference internal" href="#the-traffic-pc">The Traffic PC</a></li>
+<li><a class="reference internal" href="#the-remaining-sections">The Remaining Sections</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/documentation/user/configuration_file.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

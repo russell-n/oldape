@@ -1,0 +1,268 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Activity Diagrams &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="activity-diagrams">
+<h1>Activity Diagrams<a class="headerlink" href="#activity-diagrams" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="system-level">
+<h2>System Level<a class="headerlink" href="#system-level" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-32ad0a42d088071061030b338ae03d25d69ac1f6.png" alt="left to right direction
+
+(*) --&gt; &quot;Setup Session&quot;
+&quot;Setup Session&quot; --&gt; &quot;Run Session&quot;
+&quot;Run Session&quot; --&gt; &quot;Teardown Session&quot;
+&quot;Teardown Session&quot; --&gt; (*)" />
+</p>
+</div>
+<div class="section" id="setup-session">
+<h2>Setup Session<a class="headerlink" href="#setup-session" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-f15c54cb6b8a52d206996d6018d8a581fd0a75e4.png" alt="left to right direction
+skinParam packageStyle rect
+
+partition SetupSession {
+(*) --&gt; [args.glob] &quot;Translate Configuration&quot;
+&quot;Translate Configuration&quot; --&gt; [parameters] &quot;Build Components&quot;
+}
+&quot;Build Components&quot; --&gt; [TestOperators] &quot;Run Session&quot;
+&quot;Run Session&quot; --&gt; &quot;Teardown Session&quot;
+&quot;Teardown Session&quot; --&gt; (*)" />
+</p>
+</div>
+<div class="section" id="parse-configuration">
+<h2>Parse Configuration<a class="headerlink" href="#parse-configuration" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-86fe6075b15b6b0fefd2f759a6e299fcbf08c57b.png" alt="left to right direction
+skinParam packageStyle rect
+
+partition SetupSession {
+(*) --&gt; [args.glob] &quot;Parse Configuration File&quot;
+&quot;Parse Configuration File&quot; --&gt; [Configuration Map Parser] &quot;Build Test Parameters&quot;
+&quot;Build Test Parameters&quot; --&gt; [configuration parameters] &quot;Build Components&quot;
+}" />
+</p>
+</div>
+<div class="section" id="build-components">
+<h2>Build Components<a class="headerlink" href="#build-components" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-04c251505c35391218253443ced9ca6e7faec5bd.png" alt="skinParam packageStyle rect
+
+partition SetupSession {
+(*) --&gt; [args.glob] &quot;Translate Configuration File&quot;
+&quot;Translate Configuration File&quot; --&gt; [configuration parameters] &quot;Build Components&quot;
+&quot;Build Components&quot; --&gt; ===B1===
+===B1=== --&gt; [parameters.dut] &quot;Build DUT Connection&quot;
+&quot;Build DUT Connection&quot; --&gt; [DUT Connection] ===B2===
+===B1=== --&gt; [parameters.tpc] &quot;Build TPC Connection&quot;
+&quot;Build TPC Connection&quot; --&gt; [TPC Connection] ===B2===
+===B1=== --&gt; [parameters] &quot;Build Test Parameters&quot;
+&quot;Build Test Parameters&quot; --&gt; [test_parameters] ===B3===
+===B2=== --&gt; [parameters.directions] &quot;Build Iperf Tests&quot;
+&quot;Build Iperf Tests&quot; --&gt; [IperfTests] ===B3===
+===B3=== --&gt; &quot;Build Test Operators&quot;
+}
+&quot;Build Test Operators&quot; --&gt; [Test Operators] &quot;Run Session&quot;" />
+</p>
+</div>
+<div class="section" id="run-session">
+<h2>Run Session<a class="headerlink" href="#run-session" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-bf96f80b026076f21d6ff7d30fa2b7640f4db750.png" alt="left to right direction
+skinParam packageStyle rect
+
+(*) --&gt; &quot;Setup Session&quot;
+
+partition RunSession {
+&quot;Setup Session&quot; --&gt; [TestOperators] &quot;Setup Test&quot;
+&quot;Setup Test&quot; --&gt; &quot;Run Test&quot;
+&quot;Run Test&quot; --&gt; &quot;Teardown Test&quot;
+&quot;Teardown Test&quot; --&gt; &quot;Setup Test&quot;
+}
+&quot;Teardown Test&quot; --&gt; &quot;Teardown Session&quot;
+&quot;Teardown Session&quot; --&gt; (*)" />
+</p>
+</div>
+<div class="section" id="setup-test">
+<h2>Setup Test<a class="headerlink" href="#setup-test" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-ab8e9019f8348e54de78d82f20da7bff1c2cdf6d.png" alt="left to right direction
+skinParam packageStyle rect
+
+(*) --&gt; &quot;Setup Session&quot;
+partition SetupTest {
+&quot;Setup Session&quot; --&gt; [parameters.test_id] &quot;Get Test&quot;
+}
+&quot;Get Test&quot; --&gt; [test] &quot;Run Test&quot;
+&quot;Run Test&quot; --&gt; &quot;Teardown Session&quot;
+&quot;Teardown Session&quot; --&gt; (*)" />
+</p>
+</div>
+<div class="section" id="run-test">
+<h2>Run Test<a class="headerlink" href="#run-test" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-49fb18c3b4bab020a75476a1c6bf9349f59b5ff6.png" alt="skinParam packageStyle rect
+
+(*) --&gt; &quot;Setup Session&quot;
+&quot;Setup Session&quot; --&gt; [parameters] &quot;Setup Test&quot;
+
+partition RunTest {
+&quot;Setup Test&quot; --&gt; &quot;Kill All Iperf Processes&quot;
+&quot;Kill All Iperf Processes&quot; --&gt; ===B1===
+===B1=== --&gt; [parameters.IperfServerParameters] &quot;Start Iperf Server&quot;
+===B1=== --&gt; [parameters.time_to_recover] &quot;Wait&quot;
+&quot;Wait&quot; --&gt; [parameters.IperfClientParameters] &quot;Run Iperf Client&quot;
+&quot;Run Iperf Client&quot; --&gt; ===B2===
+&quot;Start Iperf Server&quot; --&gt; ===B2===
+}
+===B2=== --&gt; &quot;Teardown Session&quot;
+&quot;Teardown Session&quot; --&gt; (*)" />
+</p>
+</div>
+<div class="section" id="teardown-session">
+<h2>Teardown Session<a class="headerlink" href="#teardown-session" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-a3edfc3bd4b43c7ed4968b00c26823ba38fb6094.png" alt="skinParam packageStyle rect
+
+(*) --&gt; &quot;Setup Session&quot;
+&quot;Setup Session&quot; --&gt; &quot;Run Session&quot;
+
+partition TeardownSession {
+&quot;Run Session&quot; --&gt; &quot;Copy Configuration&quot;
+&quot;Copy Configuration&quot; --&gt; &quot;Copy Log&quot;
+}
+&quot;Copy Log&quot; --&gt; (*)" />
+</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Activity Diagrams</a><ul>
+<li><a class="reference internal" href="#system-level">System Level</a></li>
+<li><a class="reference internal" href="#setup-session">Setup Session</a></li>
+<li><a class="reference internal" href="#parse-configuration">Parse Configuration</a></li>
+<li><a class="reference internal" href="#build-components">Build Components</a></li>
+<li><a class="reference internal" href="#run-session">Run Session</a></li>
+<li><a class="reference internal" href="#setup-test">Setup Test</a></li>
+<li><a class="reference internal" href="#run-test">Run Test</a></li>
+<li><a class="reference internal" href="#teardown-session">Teardown Session</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/design/activities/activities.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

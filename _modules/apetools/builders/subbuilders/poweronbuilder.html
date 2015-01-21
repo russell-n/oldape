@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.builders.subbuilders.poweronbuilder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.builders.subbuilders.poweronbuilder</h1><div class="highlight"><pre>
+<span class="c"># python libraries</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">lower</span>
+
+<span class="c"># apetools modules</span>
+<span class="kn">from</span> <span class="nn">basetoolbuilder</span> <span class="kn">import</span> <span class="n">BaseToolBuilder</span><span class="p">,</span> <span class="n">Parameters</span>
+<span class="kn">from</span> <span class="nn">apetools.lexicographers.config_options</span> <span class="kn">import</span> <span class="n">ConfigOptions</span>
+
+<span class="kn">from</span> <span class="nn">apetools.affectors.synaxxx.synaxxx</span> <span class="kn">import</span> <span class="n">Synaxxx</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.poweron</span> <span class="kn">import</span> <span class="n">PowerOn</span>
+
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+
+
+<span class="k">class</span> <span class="nc">PowerOnConfigurationError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnConfigurationError"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnConfigurationError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An error to raise if the user&#39;s configuration is wrong</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class PowerOnConfigurationError</span>
+
+
+<span class="k">class</span> <span class="nc">PowerOnBuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+<div class="viewcode-block" id="PowerOnBuilderEnum"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilderEnum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A holder of Synaxxx constants</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">id_switch</span> <span class="o">=</span> <span class="s">&quot;id_switch&quot;</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="s">&#39;timeout&#39;</span>
+    <span class="n">sleep</span> <span class="o">=</span> <span class="s">&quot;sleep&quot;</span>
+<span class="c"># end class PowerOnBuilderEnums</span>
+
+
+<span class="k">class</span> <span class="nc">PowerOnParameters</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;PowerOnParameters&quot;</span><span class="p">,</span></div>
+                                   <span class="s">&quot;identifier switch&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;identifier: {0} switch: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
+                                                    <span class="bp">self</span><span class="o">.</span><span class="n">switch</span><span class="p">)</span>
+<span class="c"># end class PowerOnParameters</span>
+
+
+<span class="k">class</span> <span class="nc">PowerOnBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnBuilder"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A networked power-switch builder</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">PowerOnBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">synaxxxes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnBuilder.synaxxxes"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.synaxxxes">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: dict of &lt;hostname&gt;:&lt;synaxxx&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">identifier</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">hostname</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">clients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnBuilder.clients"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.clients">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a dict of &lt;hostname&gt;: telnet-client</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_options</span><span class="o">.</span><span class="n">itervalues</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">switch</span><span class="o">.</span><span class="n">hostname</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="n">PowerOnBuilderEnum</span><span class="o">.</span><span class="n">sleep</span><span class="p">):</span>
+                        <span class="n">sleep</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">switch</span><span class="o">.</span><span class="n">sleep</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">sleep</span> <span class="o">=</span> <span class="mi">0</span>
+
+                    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="n">PowerOnBuilderEnum</span><span class="o">.</span><span class="n">timeout</span><span class="p">):</span>
+                        <span class="n">timeout</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">switch</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">timeout</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span><span class="p">[</span><span class="n">switch</span><span class="o">.</span><span class="n">hostname</span><span class="p">]</span> <span class="o">=</span> <span class="n">Synaxxx</span><span class="p">(</span><span class="n">switch</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
+                                                             <span class="n">sleep</span><span class="o">=</span><span class="n">sleep</span><span class="p">,</span>
+                                                             <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">config_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnBuilder.config_options"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.config_options">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: dictionary of &lt;id&gt;: &lt;hostname, switch number&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">section</span> <span class="o">=</span> <span class="n">ConfigOptions</span><span class="o">.</span><span class="n">poweron_section</span>
+            <span class="n">identifiers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">config_tuples</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get_namedtuple</span><span class="p">(</span><span class="n">section</span><span class="p">,</span>
+                                                                <span class="n">identifier</span><span class="p">,</span>
+                                                                <span class="n">converter</span><span class="o">=</span><span class="n">lower</span><span class="p">)</span> 
+                                                                <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">identifiers</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Missing POWERON section in the config-file.&quot;</span>
+                <span class="k">raise</span> <span class="n">PowerOnConfigurationError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">identifiers</span><span class="p">,</span> <span class="n">config_tuples</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span><span class="p">):</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Missing POWERON options (&lt;ID&gt;=hostname:&lt;hostname&gt;,switch:&lt;switch ID&gt;) in the config file&quot;</span>
+                <span class="k">raise</span> <span class="n">PowerOnConfigurationError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnBuilder.product"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: PowerOn object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">PowerOn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">synaxxxes</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="PowerOnBuilder.parameters"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of named tuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">parameters</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">identifier</span><span class="p">,</span> <span class="n">param</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_options</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                <span class="n">switch</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">switch</span>
+
+                <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PowerOnParameters</span><span class="p">(</span><span class="n">identifier</span><span class="o">=</span><span class="n">identifier</span><span class="p">,</span>
+                                                    <span class="n">switch</span><span class="o">=</span><span class="n">switch</span><span class="p">))</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">PowerOnBuilderEnum</span><span class="o">.</span><span class="n">id_switch</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                                                       <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
+<span class="c"># end class PowerOnBuilder</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

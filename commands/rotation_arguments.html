@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Rotation Arguments &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="rotation_table.Rotator.Rotator.setAngularVelocity" href="api/rotation_table.Rotator.Rotator.setAngularVelocity.html" />
+    <link rel="prev" title="apetools.commands.rotate.RotateCommandUsurper.rotate" href="api/apetools.commands.rotate.RotateCommandUsurper.rotate.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/rotation_table.Rotator.Rotator.setAngularVelocity.html" title="rotation_table.Rotator.Rotator.setAngularVelocity"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.rotate.RotateCommandUsurper.rotate.html" title="apetools.commands.rotate.RotateCommandUsurper.rotate"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commands</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-rotation-arguments">
+<h1>The Rotation Arguments<a class="headerlink" href="#the-rotation-arguments" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;rotate (a turntable controller)</span>
+
+<span class="sd">Usage: rotate -h | -v</span>
+<span class="sd">       rotate [options] &lt;angle&gt;</span>
+
+<span class="sd">Help Options:</span>
+
+<span class="sd">    -h, --help     Display this help message and quit.</span>
+<span class="sd">    -v, --version  Display the version number and quit.</span>
+
+<span class="sd">Configuration File:</span>
+
+<span class="sd">    --configuration=&lt;path&gt;  Path to (optional) configuration file.</span>
+<span class="sd">    --section=&lt;section&gt;     Section name in configuration file [default: rotator]</span>
+
+<span class="sd">Logging Options:</span>
+
+<span class="sd">    --debug   Set logging level to DEBUG.</span>
+<span class="sd">    --silent  Set logging level to ERROR.</span>
+
+<span class="sd">Debugging Options:</span>
+
+<span class="sd">    --pudb       Enable the `pudb` debugger (if installed)</span>
+<span class="sd">    --pdb        Enable the `pdb` (python&#39;s default) debugger</span>
+
+<span class="sd">Orientation Options:</span>
+
+<span class="sd">    -k --clockwise     Rotate clockwise instead of anti-clockwise</span>
+
+<span class="sd">Test Options:</span>
+
+<span class="sd">    --test   Use a Mock Rotator to check the arguments</span>
+<span class="sd">    --crash  Make the MockRotator raise an exception</span>
+
+<span class="sd">Rotation Arguments:</span>
+
+<span class="sd">    -r, --velocity=&lt;rate&gt;           Rate at which to rotate (from 1.512 to 720) [default: 50].</span>
+<span class="sd">    -a, --acceleration=&lt;accel&gt;      Rate at which to accelerate to velocity (0.167 to 5461.167) [default: 100].</span>
+<span class="sd">    -d, --deceleration=&lt;decel&gt;      Rate at which to decelerate to stop (0.167 to 5461.167) [default: 100].</span>
+<span class="sd">    -t, --timeout=&lt;seconds&gt;         Time to wait for table to reach target angle [default: 10]</span>
+<span class="sd">    &lt;angle&gt;                         Angle to rotate table to (0 to 359) [default: 0].</span>
+
+<span class="sd">Set Table Angle:</span>
+<span class="sd">    The table doesn&#39;t have a sensor to tell it where it&#39;s at when it&#39;s turned on.</span>
+<span class="sd">    Whenever it is powered up, you should tell it what angle it&#39;s at.</span>
+
+<span class="sd">    --set  If set, calls set_angle instead of rotate function</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+<div class="admonition note" id="rotation-table-base-arguments">
+<p class="first admonition-title">Note</p>
+<p class="last">The docstring was created so that I could use <cite>docopt</cite>, but it turns out that <cite>docopt</cite> has a very major flaw in that it cannot accept negative numbers unless they are passed into a subcommand (otherwise it thinks that you are trying to pass in a short-option (e.g. <cite>-45</cite> is interpreted as option <cite>4</cite> with value <cite>5</cite>). So, I&#8217;m going to have to go back to ArgParse.</p>
+</div>
+<div class="section" id="global-constants">
+<h2>Global Constants<a class="headerlink" href="#global-constants" title="Permalink to this headline">¶</a></h2>
+<p>Constants for Rotator numeric settings.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DEGREES_IN_CIRCLE</span> <span class="o">=</span> <span class="mi">360</span>
+
+<span class="c"># from ht.cfg [rotator]</span>
+<span class="n">MIN_ACCELERATION</span> <span class="o">=</span> <span class="mf">0.167</span>
+<span class="n">MAX_ACCELERATION</span> <span class="o">=</span> <span class="mf">5461.167</span>
+
+<span class="c"># calculated from the ht.cfg velocity range</span>
+<span class="n">MIN_VELOCITY</span> <span class="o">=</span> <span class="mf">1.512</span>
+<span class="n">MAX_VELOCITY</span> <span class="o">=</span> <span class="mi">720</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-argumentconstants">
+<h2>The ArgumentConstants<a class="headerlink" href="#the-argumentconstants" title="Permalink to this headline">¶</a></h2>
+<p>Constants specific to the command-line options.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ArgumentsConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constants for the arguments</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="c">#options</span>
+    <span class="n">acceleration</span> <span class="o">=</span> <span class="s">&quot;--acceleration&quot;</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="s">&quot;&lt;angle&gt;&quot;</span>
+    <span class="n">clockwise</span> <span class="o">=</span> <span class="s">&quot;--clockwise&quot;</span>
+    <span class="n">configuration</span> <span class="o">=</span> <span class="s">&#39;--configuration&#39;</span>
+    <span class="n">crash</span> <span class="o">=</span> <span class="s">&#39;--crash&#39;</span>
+    <span class="n">debug</span> <span class="o">=</span> <span class="s">&quot;--debug&quot;</span>
+    <span class="n">deceleration</span> <span class="o">=</span> <span class="s">&#39;--deceleration&#39;</span>
+    <span class="n">pdb</span> <span class="o">=</span> <span class="s">&#39;--pdb&#39;</span>
+    <span class="n">pudb</span> <span class="o">=</span> <span class="s">&quot;--pudb&quot;</span>
+    <span class="n">section</span> <span class="o">=</span> <span class="s">&#39;--section&#39;</span>
+    <span class="n">set_option</span> <span class="o">=</span> <span class="s">&#39;--set&#39;</span>
+    <span class="n">silent</span> <span class="o">=</span> <span class="s">&#39;--silent&#39;</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="s">&#39;--velocity&#39;</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="s">&#39;--timeout&#39;</span>
+
+    <span class="c">#defaults</span>
+    <span class="n">default_configuration</span> <span class="o">=</span> <span class="s">&quot;rotator.ini&quot;</span>
+    <span class="n">default_angle</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">default_section</span> <span class="o">=</span> <span class="s">&#39;rotator&#39;</span>
+    <span class="n">default_velocity</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">default_timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">default_acceleration</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">default_deceleration</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="c"># end ArgumentConstants</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="arguments-schema">
+<h2>Arguments Schema<a class="headerlink" href="#arguments-schema" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>arguments_schema</cite> validates and adjusts the command-line arguments as needed. Now that I&#8217;m using ArgParse it&#8217;s not quite as clean (since ArgParse does some of this by itself), but I&#8217;m going to leave it in since it makes the description for the non-Boolean arguments more explicit.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">args_schema</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+<div class="section" id="acceleration">
+<h3>Acceleration<a class="headerlink" href="#acceleration" title="Permalink to this headline">¶</a></h3>
+<p>The acceleration option (<tt class="docutils literal"><span class="pre">--acceleration</span> <span class="pre">&lt;accel&gt;</span></tt>) is used to set how fast the table increases velocity. This along with velocity and deceleration determine not only how fast the table reaches its positions but also how accurately it can reach the target angles as well. The MIN_ACCELERATION and MAX_ACCELERATION were taken from the sample configuration provided by Cameron (&#8216;ht.cfg&#8217;).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Henry has asked that <cite>acceleration</cite> and <cite>deceleration</cite> be set with a default of 100.</p>
+</div>
+<div class="math">
+<p><img src="../_images/math/45d8ecf087114441eeb30996cda022333e1f3901.png" alt="schema = \{a | (a \in \mathbb{R}) \land (0.167 \leq a \leq 5,461.167))\}"/></p>
+</div><div class="highlight-python"><div class="highlight"><pre><span class="n">acceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">acceleration</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">acceleration</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s">&#39;acceleration must be float&#39;</span><span class="p">),</span>
+                                       <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">,</span>
+                                       <span class="n">error</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;acceleration out of range: &quot;</span>
+                                              <span class="s">&quot;({0} &lt;= accel &lt;= {1})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_ACCELERATION</span><span class="p">,</span>
+                                                                              <span class="n">MAX_ACCELERATION</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deceleration">
+<h3>Deceleration<a class="headerlink" href="#deceleration" title="Permalink to this headline">¶</a></h3>
+<p>The deceleration option sets how fast the table slows down as it nears the target angle.</p>
+<div class="math">
+<p><img src="../_images/math/7c440045d5549405302ce254153f043c922b0db1.png" alt="schema = \{d |  ((d \in \mathbb{R}) \land (0.167 \leq d \leq 5,461.167))\}"/></p>
+</div><div class="highlight-python"><div class="highlight"><pre><span class="n">deceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">deceleration</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">deceleration</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s">&#39;deceleration must be float&#39;</span><span class="p">),</span>
+                                       <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">,</span>
+                                       <span class="n">error</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;deceleration out of range: &quot;</span>
+                                              <span class="s">&quot;({0} &lt;= accel &lt;= {1})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_ACCELERATION</span><span class="p">,</span>
+                                                                              <span class="n">MAX_ACCELERATION</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="angle">
+<h3>Angle<a class="headerlink" href="#angle" title="Permalink to this headline">¶</a></h3>
+<p>The angle is the degrees from 0 that the turntable should rotate to. The table defaults to clockwise but this code uses anti-clockwise as the default to make it consistent with previous turntables.</p>
+<div class="math">
+<p><img src="../_images/math/a63c974b194bc6664fe33ed52ec8af773779134b.png" alt="schema = \{ a | a \in \mathbb{Z} \land 0 \leq a &lt; 359 \}"/></p>
+</div><p>In this case the ArgumentParser is doing the conversion to integers and supplying a default of 0. I&#8217;ll leave the integer conversion in the schema and add a modulus to keep the values within range (so really, there&#8217;s no failing values because ArgParse will catch it). The schema won&#8217;t know the value of the <tt class="docutils literal"><span class="pre">--clockwise</span></tt> option so the BaseArguments will have to do the anti-clockwise conversion for itself.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">angle</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">angle</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>
+                                    <span class="n">error</span><span class="o">=</span><span class="s">&#39;Angle must be an integer&#39;</span><span class="p">),</span>
+                                <span class="n">Use</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">%</span> <span class="n">DEGREES_IN_CIRCLE</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>The way the angles will be converted will depend on whether the user sets the <tt class="docutils literal"><span class="pre">--clockwise</span></tt> flag or not. First the schema applies the modulus to all angle values.</p>
+<div class="math">
+<p><img src="../_images/math/f0ec5d91e1b23cf69499a797ab7815dead1b9478.png" alt="angle' \gets angle \mod{360}"/></p>
+</div><p>Then, if the <cite>&#8211;clockwise</cite> option isn&#8217;t set, the angle is adjusted once more by BaseArguments.</p>
+<div class="math">
+<p><img src="../_images/math/5cde12aa4ea33d9067a44bd1747f5bbb90da251b.png" alt="angle'' \gets (360 - angle') \mod{360}"/></p>
+</div><p>We don&#8217;t have to do anything special for negative angles because according to the python <a class="reference external" href="https://docs.python.org/2/reference/expressions.html#binary-arithmetic-operations">documentation</a> &#8216;<em>The modulo operator always yields a result with the same sign as its second operand (or zero)</em>&#8216; so in this case the outcome of <tt class="docutils literal"><span class="pre">angle</span> <span class="pre">%</span> <span class="pre">360</span></tt> will always be positive since 360 is positive.</p>
+<p>For example, if we mod the values in <img class="math" src="../_images/math/91b8b1f844eb0dae9561a49d170145da1dbd3902.png" alt="\{0, -45, \dots, -315\}"/> we get:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">360</span><span class="p">,</span> <span class="o">-</span><span class="mi">45</span><span class="p">):</span>
+    <span class="k">print</span> <span class="s">&quot;   {0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">angle</span> <span class="o">%</span> <span class="mi">360</span><span class="p">)</span>
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<caption>Modulo Example</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Angle</th>
+<th class="head">Angle % 360</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-odd"><td>-45</td>
+<td>315</td>
+</tr>
+<tr class="row-even"><td>-90</td>
+<td>270</td>
+</tr>
+<tr class="row-odd"><td>-135</td>
+<td>225</td>
+</tr>
+<tr class="row-even"><td>-180</td>
+<td>180</td>
+</tr>
+<tr class="row-odd"><td>-225</td>
+<td>135</td>
+</tr>
+<tr class="row-even"><td>-270</td>
+<td>90</td>
+</tr>
+<tr class="row-odd"><td>-315</td>
+<td>45</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="module-rotation_table.Rotator">
+<span id="velocity"></span><h3>Velocity<a class="headerlink" href="#module-rotation_table.Rotator" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.Rotator.Rotator.setAngularVelocity.html#rotation_table.Rotator.Rotator.setAngularVelocity" title="rotation_table.Rotator.Rotator.setAngularVelocity"><tt class="xref py py-obj docutils literal"><span class="pre">Rotator.setAngularVelocity</span></tt></a>(vel)</td>
+<td>converts vel to angular velocity, calls parent&#8217;s setRevsPerSec</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-rotation_table.AMPStepperController"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.AMPStepperController.AMPStepperController.setRevsPerSec.html#rotation_table.AMPStepperController.AMPStepperController.setRevsPerSec" title="rotation_table.AMPStepperController.AMPStepperController.setRevsPerSec"><tt class="xref py py-obj docutils literal"><span class="pre">AMPStepperController.setRevsPerSec</span></tt></a>(revs_per_sec)</td>
+<td>Sets the table&#8217;s velocity in steps per second</td>
+</tr>
+</tbody>
+</table>
+<p>The <cite>velocity</cite> is an argument for the <cite>Rotator.setAngularVelocity</cite> method which converts the velocity given to a value acceptable to the <cite>AMPStepperController.setRevsPerSec</cite> method using the equation:</p>
+<div class="math">
+<p><img src="../_images/math/e75595055dd8eebc95c34078094f7a46cd6f88b3.png" alt="angularVelocity &amp;= \frac{velocity}{DegreesPerRevolution}\\"/></p>
+</div><p>The actual calculation also rounds the outcome to seven decimal places.</p>
+<p>In the <tt class="docutils literal"><span class="pre">[rotator]</span></tt> section of the sample configuration file given (<tt class="xref download docutils literal"><span class="pre">ht.cfg</span></tt>) the range of angular velocities is given as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">velocity_range</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.0042</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>velocity_range</cite> defines what the <cite>AMPStepperController.setRevsPerSec</cite> method expects not what <cite>Rotator.setAngularVelocity</cite> expects, so it is what is referred to in the <cite>Rotator</cite> as <cite>angular</cite> velocity, not the <cite>velocity</cite> set by the user.</p>
+</div>
+<p>Using a little algebra I isolated the <cite>velocity</cite> value:</p>
+<div class="math">
+<p><img src="../_images/math/76eaeb3e1fc6edbc09dd4277829c7e7caf3a381b.png" alt="angularVelocity &amp;= \frac{velocity}{DegreesPerRevolution}\\
+velocity &amp;= angularVelocity \times DegreesPerRevolution\\"/></p>
+</div><p>Plugging in the values from the <cite>velocity_range</cite> for the <cite>angularVelocity</cite>, and 360 for <cite>DegreesPerRevolution</cite>:</p>
+<div class="math">
+<p><img src="../_images/math/ba67860855f962f6055a3e7cd1583b6653ac3fc2.png" alt="MinVelocity &amp;= 0.0042 \times 360\\
+&amp;= 1.512\\"/></p>
+</div><div class="math">
+<p><img src="../_images/math/1af7a5de22aa9277e9651f2e48b7dccbdf13fde6.png" alt="MaxVelocity &amp;= 2.0 \times 360\\
+&amp;= 720.0"/></p>
+</div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <cite>acceptable</cite> minimum and maximum velocities aren&#8217;t necessarily values that you should use. If the velocity is too low the motor might not turn the table fast enough and if it&#8217;s too high the controller might not be able to accurately find the target angle.</p>
+</div>
+<p>So our schema becomes:</p>
+<div class="math">
+<p><img src="../_images/math/0aa71f8a56a43ecc06065597e92871f85968b7ff.png" alt="schema = \{v | (v \in \mathbb{R}) \land (1.512 \leq v \leq 720)\}"/></p>
+</div><div class="highlight-python"><div class="highlight"><pre><span class="n">velocity</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">velocity</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">velocity</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span>
+                                       <span class="n">error</span><span class="o">=</span><span class="s">&quot;&#39;velocity&#39; must be a real number&quot;</span><span class="p">),</span>
+                                        <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">MIN_VELOCITY</span> <span class="o">&lt;=</span> <span class="n">v</span> <span class="o">&lt;=</span> <span class="n">MAX_VELOCITY</span><span class="p">,</span>
+                                        <span class="n">error</span><span class="o">=</span><span class="s">&quot;velocity out of range ({0} &lt;= v &lt; {1})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_VELOCITY</span><span class="p">,</span>
+                                                                                             <span class="n">MAX_VELOCITY</span> <span class="p">)))</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Henry has asked that the default velocity be set to 50.</p>
+</div>
+</div>
+<div class="section" id="configuration">
+<h3>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h3>
+<p>The configuration is an optional valid ini file with settings to override the table&#8217;s default values. To avoid the expense of building the ConfigParser this only checks that the file exists, not that it&#8217;s a valid configuration file.</p>
+<div class="math">
+<p><img src="../_images/math/bc89b888ec8f8cf80d9081fd0d61ad1dfbd9ae75.png" alt="schema = \{c | None \lor isfile(c)\}"/></p>
+</div><div class="highlight-python"><div class="highlight"><pre><span class="n">config</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">configuration</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">config</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
+                                <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
+                                <span class="n">error</span><span class="o">=</span><span class="s">&quot;File not found&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-rotation_table.Rotator">
+<span id="timeout"></span><h3>Timeout<a class="headerlink" href="#module-rotation_table.Rotator" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.Rotator.Rotator.waitForPosition.html#rotation_table.Rotator.Rotator.waitForPosition" title="rotation_table.Rotator.Rotator.waitForPosition"><tt class="xref py py-obj docutils literal"><span class="pre">Rotator.waitForPosition</span></tt></a>([timeout])</td>
+<td>waits until target position (or timeout) is reached</td>
+</tr>
+</tbody>
+</table>
+<p>The Rotator&#8217;s rotation method call (<tt class="docutils literal"><span class="pre">rotateAbsolute</span></tt>) doesn&#8217;t block execution so the code would likely exit before the table reached its target position when called if nothing else was done (and thus kill the serial connection and stopping the table). To make sure that code waits for the table before exiting you can use the <tt class="docutils literal"><span class="pre">waitForPosition</span></tt> method, which takes an optional <tt class="docutils literal"><span class="pre">timeout</span></tt> argument (seconds to wait). It looks like sometimes when a slow speed (<cite>velocity</cite>) is used the <tt class="docutils literal"><span class="pre">waitForPosition</span></tt> method times-out so this option lets the user extend the wait-time further. The only invalid values are negative numbers (or non-numbers), although setting it to 0 might not make sense.</p>
+<div class="math">
+<p><img src="../_images/math/7567255caa6e4bf82a44afcedfc35385865efa18.png" alt="schema \gets \{t | (t \in \mathbb{R}) \land (t \geq 0)\}"/></p>
+</div><div class="highlight-python"><div class="highlight"><pre><span class="n">timeout</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">timeout</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">timeout</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                  <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span>
+                                  <span class="n">error</span><span class="o">=</span><span class="s">&#39;timeout must be a non-negative float&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="argumenterror">
+<h2>ArgumentError<a class="headerlink" href="#argumenterror" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>ArgumentsError</cite> is an error to raise if the argument can&#8217;t be validated. This is used so that the traceback will point to this code&#8217;s lines, not the lines of code in <cite>schema</cite>.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-77e2367e7cf99fb5ddc70cf5c7a819644652a264.png" alt="SchemaError &lt;|-- ArgumentError" />
+</p>
+<span class="target" id="module-rotation_table.base_arguments"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.base_arguments.ArgumentError.html#rotation_table.base_arguments.ArgumentError" title="rotation_table.base_arguments.ArgumentError"><tt class="xref py py-obj docutils literal"><span class="pre">ArgumentError</span></tt></a>(autos,&nbsp;errors)</td>
+<td>Error to raise if the schema validation fails</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-basearguments">
+<h2>The BaseArguments<a class="headerlink" href="#the-basearguments" title="Permalink to this headline">¶</a></h2>
+<p>The BaseArguments parses the command-line arguments and sets its properties based on them.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-79778c44ac81c9fd22d0e705521c868f28b33517.png" alt="BaseArguments o- Schema
+BaseArguments o- ArgumentParser" />
+</p>
+<div class="section" id="module-rotation_table.base_arguments">
+<span id="basearguments-functions"></span><h3>BaseArguments Functions<a class="headerlink" href="#module-rotation_table.base_arguments" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.html#rotation_table.base_arguments.BaseArguments" title="rotation_table.base_arguments.BaseArguments"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments</span></tt></a>([args])</td>
+<td>BaseArguments constructor</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.adjust_angle.html#rotation_table.base_arguments.BaseArguments.adjust_angle" title="rotation_table.base_arguments.BaseArguments.adjust_angle"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments.adjust_angle</span></tt></a>(angle)</td>
+<td>Checks if the &#8216;clockwise&#8217; flag set, converts to anticlockwise if not</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.check_rep.html#rotation_table.base_arguments.BaseArguments.check_rep" title="rotation_table.base_arguments.BaseArguments.check_rep"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments.check_rep</span></tt></a>()</td>
+<td>tries to get all the parameters (relies on the validators)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.reset.html#rotation_table.base_arguments.BaseArguments.reset" title="rotation_table.base_arguments.BaseArguments.reset"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments.reset</span></tt></a>()</td>
+<td>resets the properties to None</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="basearguments-properties">
+<h3>BaseArguments Properties<a class="headerlink" href="#basearguments-properties" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.arguments.html#rotation_table.base_arguments.BaseArguments.arguments" title="rotation_table.base_arguments.BaseArguments.arguments"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments.arguments</span></tt></a></td>
+<td>Namespace of parsed arguments</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.options.html#rotation_table.base_arguments.BaseArguments.options" title="rotation_table.base_arguments.BaseArguments.options"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments.options</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of options</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.boolean_options.html#rotation_table.base_arguments.BaseArguments.boolean_options" title="rotation_table.base_arguments.BaseArguments.boolean_options"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments.boolean_options</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">List of boolean-option names</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/rotation_table.base_arguments.BaseArguments.value_options.html#rotation_table.base_arguments.BaseArguments.value_options" title="rotation_table.base_arguments.BaseArguments.value_options"><tt class="xref py py-obj docutils literal"><span class="pre">BaseArguments.value_options</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of value-option names</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="the-options">
+<h4>The Options<a class="headerlink" href="#the-options" title="Permalink to this headline">¶</a></h4>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Rotation Arguments</a><ul>
+<li><a class="reference internal" href="#global-constants">Global Constants</a></li>
+<li><a class="reference internal" href="#the-argumentconstants">The ArgumentConstants</a></li>
+<li><a class="reference internal" href="#arguments-schema">Arguments Schema</a><ul>
+<li><a class="reference internal" href="#acceleration">Acceleration</a></li>
+<li><a class="reference internal" href="#deceleration">Deceleration</a></li>
+<li><a class="reference internal" href="#angle">Angle</a></li>
+<li><a class="reference internal" href="#module-rotation_table.Rotator">Velocity</a><ul>
+</ul>
+</li>
+<li><a class="reference internal" href="#configuration">Configuration</a></li>
+<li><a class="reference internal" href="#module-rotation_table.Rotator">Timeout</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#argumenterror">ArgumentError</a></li>
+<li><a class="reference internal" href="#the-basearguments">The BaseArguments</a><ul>
+<li><a class="reference internal" href="#module-rotation_table.base_arguments">BaseArguments Functions</a></li>
+<li><a class="reference internal" href="#basearguments-properties">BaseArguments Properties</a><ul>
+<li><a class="reference internal" href="#the-options">The Options</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commands/rotation_arguments.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

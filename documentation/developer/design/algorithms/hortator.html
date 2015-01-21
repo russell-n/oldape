@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Hortator Algorithms &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="hortator-algorithms">
+<h1>Hortator Algorithms<a class="headerlink" href="#hortator-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>The Hortator is the driver of the operations. Its role is to run the Operators, handle their crashes, and report the overall time elapsed as well as the time of any crashes.</p>
+<div class="section" id="hortator-run">
+<span id="hortatorrun"></span><h2>Hortator.run<a class="headerlink" href="#hortator-run" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="main-path">
+<h3>Main Path<a class="headerlink" href="#main-path" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><img class="math" src="../../../../_images/math/965365c68573fb8bef9b1eafa21d0cadf3fd06a5.png" alt="start \gets clock.now()"/></li>
+<li><img class="math" src="../../../../_images/math/48009dfdbc9edcd42abc6e6a0b4264f536049524.png" alt="operation \gets 0"/></li>
+<li><img class="math" src="../../../../_images/math/98a5ef60ea5cf87f77ed4523ae578a42ae6c7ec6.png" alt="\textit{for operator }\in \textit{ operators}:"/><ol class="arabic">
+<li><img class="math" src="../../../../_images/math/e7c162d708a53c18da31bbecf09203087515a8db.png" alt="operation' \gets operation + 1"/></li>
+<li><img class="math" src="../../../../_images/math/490016b0ccd29bf9956cb706d71fef57a1bdbdb3.png" alt="operation\_start \gets clock.now()"/></li>
+<li><img class="math" src="../../../../_images/math/5a55b02a793bb776b8df1709581bc99a6ff62424.png" alt="operator.run()"/></li>
+<li><img class="math" src="../../../../_images/math/0635134f6e1de23caea2b3fc344f73dd2faee511.png" alt="OperatorError \Rightarrow HandleCrash"/></li>
+</ol>
+</li>
+<li><img class="math" src="../../../../_images/math/388b51698fad1964a4a51115377e4c0b6d33ae3d.png" alt="end \gets clock.now()"/></li>
+<li><img class="math" src="../../../../_images/math/3a59ea6d7b913c7526ee7496ef33e8f9310f795b.png" alt="\textit{for crash }\in\textit{ crash\_times}:"/><ol class="arabic">
+<li><img class="math" src="../../../../_images/math/c8fb01b82f8b6f2837d4ca4f201c5237d3e27422.png" alt="\textit{print str(crash)}"/></li>
+</ol>
+</li>
+<li><img class="math" src="../../../../_images/math/e30c529c60c9fcc194c2c13f8c200d194b79412e.png" alt="logger.info(end - start)"/></li>
+</ol>
+</div>
+<div class="section" id="handlecrash-path">
+<h3><cite>HandleCrash</cite> Path<a class="headerlink" href="#handlecrash-path" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><img class="math" src="../../../../_images/math/ea4ed9ee1df3c49e0ba7b82acfe678e6695f38c6.png" alt="crash\_time \gets clock.now()"/></li>
+<li><img class="math" src="../../../../_images/math/fd29a28793d8ff0d150c14da5ea5549f1eeea0a1.png" alt="logger.error(error)"/></li>
+<li><img class="math" src="../../../../_images/math/67fd2cf9c04d1a81edacd400a5cd83cd5a1ac40f.png" alt="crash\_times.append(CrashRecord(operation, operation\_start, crash\_time, error))"/></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Hortator Algorithms</a><ul>
+<li><a class="reference internal" href="#hortator-run">Hortator.run</a><ul>
+<li><a class="reference internal" href="#main-path">Main Path</a></li>
+<li><a class="reference internal" href="#handlecrash-path"><cite>HandleCrash</cite> Path</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/design/algorithms/hortator.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.topcommand &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commands.topcommand</h1><div class="highlight"><pre>
+<span class="c"># python regular expressions</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c">#apetools</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">CommandError</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers</span> <span class="kn">import</span> <span class="n">oatbran</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.basecommand</span> <span class="kn">import</span> <span class="n">BaseProcessCommand</span><span class="p">,</span> <span class="n">BaseProcessGrep</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.basecommand</span> <span class="kn">import</span> <span class="n">ProcessCommandEnum</span><span class="p">,</span> <span class="n">ProcessGrepEnum</span>
+
+
+<span class="k">class</span> <span class="nc">TopCommandError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
+<div class="viewcode-block" id="TopCommandError"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopCommandError.html#apetools.commands.topcommand.TopCommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A command to raise if there is a problem with the top command.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">TopCommand</span><span class="p">(</span><span class="n">BaseProcessCommand</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TopCommand"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Top Command issues commands and watches for errors</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TopCommand.__init__"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TopCommand Constructor</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection`: A connection to the device</span>
+<span class="sd">         - `arguments`: the arguments to get output from ``top``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TopCommand</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TopCommand.arguments"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        the arguments for the ``top`` command</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s">&#39;-l 1&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">error_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TopCommand.error_expression"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.error_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Holds the expression to match error messages</span>
+
+<span class="sd">        :return: compiled regular expression to match error messages</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">missing</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessCommandEnum</span><span class="o">.</span><span class="n">missing</span><span class="p">,</span>
+                                    <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">+</span><span class="s">&#39;:&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;command&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;not&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;found&#39;</span><span class="p">]))</span>
+            <span class="n">bad_arg</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessCommandEnum</span><span class="o">.</span><span class="n">bad_arg</span><span class="p">,</span>
+                                    <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span><span class="p">,</span>
+                                                           <span class="s">&quot;Unrecognized&quot;</span><span class="p">,</span>
+                                                           <span class="s">&#39;or&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;missing&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;option&#39;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">missing</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="n">bad_arg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TopCommand.run"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls ``top`` on the connection</span>
+
+<span class="sd">        :return: output from the connections call to top (stdout, stderr)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TopCommand.command"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        `top`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="s">&#39;top&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
+
+
+<span class="k">class</span> <span class="nc">TopGrep</span><span class="p">(</span><span class="n">BaseProcessGrep</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="TopGrep"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Top command adapted to extract process IDs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="TopGrep.__init__"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        TopGrep Constructon</span>
+
+<span class="sd">        :param:</span>
+<span class="sd">        </span>
+<span class="sd">         - `process`: The name of the process to get (if not set pass into call())</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TopGrep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+            
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">process_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TopGrep.process_query"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.process_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ``top`` command</span>
+
+<span class="sd">        :return: TopCommand to return output from the ``top`` command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span> <span class="o">=</span> <span class="n">TopCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TopGrep.expression"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        An expression to parse a single line of output</span>
+
+<span class="sd">        :return: compiled regular expression to get PID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">TopGrepError</span><span class="p">(</span><span class="s">&quot;self.process must be set&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span>
+                              <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="o">+</span><span class="n">oatbran</span><span class="o">.</span><span class="n">ONE_OR_MORE</span><span class="p">),</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span><span class="p">,</span>
+                                            <span class="n">e</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">),</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">REAL</span> <span class="o">+</span> <span class="s">&quot;%&quot;</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">NOT_SPACES</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span> <span class="o">+</span> <span class="s">&quot;\+&quot;</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span> <span class="o">+</span> <span class="s">&#39;[KBMG]\+&#39;</span><span class="p">,</span>
+                              <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span> <span class="o">+</span> <span class="s">&#39;[KBMG]\+&#39;</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
+
+<span class="c"># end class TopGrep    </span>
+
+
+<span class="c">#python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div></div>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">ascii_letters</span>
+
+<span class="c"># third-party</span>
+<span class="kn">from</span> <span class="nn">nose.tools</span> <span class="kn">import</span> <span class="n">raises</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+
+
+<span class="n">first_line</span> <span class="o">=</span> <span class="s">&quot;Processes:  49 total, 1 running, 1 stuck, 47 sleeping... 223 threads    23:00:00&quot;</span>
+<span class="n">test_output</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;&quot;Processes:  49 total, 1 running, 1 stuck, 47 sleeping... 223 threads    23:00:00</span>
+
+<span class="s">Load Avg:  0.07,  0.05,  0.06    CPU usage: 50.00</span><span class="si">% u</span><span class="s">ser,  0.00</span><span class="si">% s</span><span class="s">ys, 50.00</span><span class="si">% i</span><span class="s">dle</span>
+<span class="s">SharedLibs: num =    0, resident =     0 code,     0 data,     0 linkedit.</span>
+<span class="s">MemRegions: num =     0, resident =     0 +     0 private,     0 shared.</span>
+<span class="s">PhysMem:   68M wired,  120M active,   15M inactive,  285M used,  218M free.</span>
+<span class="s">VM: 14G + 0   47836(0) pageins, 0(0) pageouts</span>
+
+<span class="s">  PID COMMAND      %CPU   TIME   #TH #PRTS #MREGS  RPRVT  RSHRD  RSIZE  VSIZE</span>
+<span class="s"> 1153 top          0.0%  0:00.03   1    20+     0      0      0   684K+  267M+</span>
+<span class="s"> 1152 sshd         0.0%  0:00.16   1    18+     0      0      0  1500K+  268M+</span>
+<span class="s"> 1151 launchprox   0.0%  0:00.01   1    18+     0      0      0   408K+  266M+</span>
+<span class="s">  952 geod         0.0%  0:00.08   2    30+     0      0      0  1456K+  295M+</span>
+<span class="s">  812 SCHelper     0.0%  0:26.09   4    34+     0      0      0   952K+  277M+</span>
+<span class="s">  748 iperf        0.0%  0:00.47   1     9+     0      0      0   228K+  267M+</span>
+<span class="s">  493 mediaremot   0.0%  0:04.89   3    47+     0      0      0  1636K+  278M+</span>
+<span class="s">  492 MobileTime   0.0%  0:01.60  11    93+     0      0      0    21M+  347M+</span>
+<span class="s">  489 AppStore     0.0%  0:03.40  14   156+     0      0      0    28M+  441M+</span>
+<span class="s">  275 coresymbol   0.0%  0:00.02   2    21+     0      0      0   660K+  277M+</span>
+<span class="s">  227 Preference   0.0%  0:33.08   4   111+     0      0      0    11M+  317M+</span>
+<span class="s">  184 filecoordi   0.0%  0:00.02   2    27+     0      0      0  1080K+  277M+</span>
+<span class="s">  177 accountsd    0.0%  0:00.11   2    36+     0      0      0  1716K+  276M+</span>
+<span class="s">  176 MobileMail   0.0%  0:13.02   6   125+     0      0      0  7312K+  315M+</span>
+<span class="s">  174 tccd         0.0%  0:00.18   2    27+     0      0      0   976K+  277M+</span>
+<span class="s">  172 assetsd      0.0%  0:05.93   3    47+     0      0      0  3996K+  298M+</span>
+<span class="s">  167 xpcd         0.0%  0:00.03   3    27+     0      0      0   788K+  277M+</span>
+<span class="s">   96 emacsclient  0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+</span>
+<span class="s">   98 emacs        0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+</span>
+<span class="s">   99 lsd          0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+</span>
+<span class="s">   97 distnoted    0.0%  0:00.08   2    34+     0      0      0  1108K+  295M+</span>
+<span class="s">   87 apsd         0.0%  0:23.01   5   115+     0      0      0  2548K+  296M+</span>
+<span class="s">   85 CommCenter   0.0%  0:06.91   5   108+     0      0      0  2800K+  280M+</span>
+<span class="s">   84 itunesstor   0.0%  1:32.98   5   107+     0      0      0  7204K+  301M+</span>
+<span class="s">   83 aggregated   0.0%  0:01.34   2    36+     0      0      0   624K+  277M+</span>
+<span class="s">   82 BlueTool     0.0%  0:00.06   2    25+     0      0      0   900K+  278M+</span>
+<span class="s">   81 networkd_p   0.0%  0:00.03   2    26+     0      0      0   656K+  277M+</span>
+<span class="s">   80 networkd     0.0%  0:01.95   2    61+     0      0      0  1328K+  277M+</span>
+<span class="s">   79 SpringBoar   0.0%  7:10.45  12   293+     0      0      0    25M+  360M+</span>
+<span class="s">   71 notifyd      0.0%  0:19.31   4    62+     0      0      0   848K+  278M+</span>
+<span class="s">   70 BTServer     0.0%  0:38.28   6    73+     0      0      0  2868K+  282M+</span>
+<span class="s">   65 kbd          0.0%  0:00.48   2    37+     0      0      0  3272K+  296M+</span>
+<span class="s">   61 backboardd   0.0%  2:07:12  12   577+     0      0      0  9884K+  406M+</span>
+<span class="s">   59 configd      0.0%  1:04.35   9   249+     0      0      0  2924K+  280M+</span>
+<span class="s">   58 AppleIDAut   0.0%  0:00.04   3    30+     0      0      0  1048K+  277M+</span>
+<span class="s">   56 fairplayd.   0.0%  0:06.59   2    32+     0      0      0  3400K+  285M+</span>
+<span class="s">   55 fseventsd    0.0%  0:03.50  18    67+     0      0      0  1308K+  284M+</span>
+<span class="s">   53 iaptranspo   0.0%  0:35.67   2    65+     0      0      0  1464K+  295M+</span>
+<span class="s">   52 imagent      0.0%  0:06.29   3    73+     0      0      0  2192K+  277M+</span>
+<span class="s">   50 locationd    0.0%  2:10.00   9   155+     0      0      0  5260K+  286M+</span>
+<span class="s">   48 mDNSRespon   0.0%  0:11.59   4    55+     0      0      0  1948K+  277M+</span>
+<span class="s">   46 mediaserve   0.0%  0:12.60  15   224+     0      0      0  5472K+  307M+</span>
+<span class="s">   42 deleted      0.0%  0:00.03   2    28+     0      0      0  1276K+  278M+</span>
+<span class="s">   41 backboardd   0.0%  2:07:12  12   577+     0      0      0  9884K+  406M+</span>
+<span class="s">   40 installd     0.0%  0:00.44   2    31+     0      0      0  1408K+  277M+</span>
+<span class="s">   38 lockdownd    0.0%  0:05.85   2    46+     0      0      0  1904K+  295M+</span>
+<span class="s">   31 powerd       0.0%  0:42.65   2    59+     0      0      0  1272K+  295M+</span>
+<span class="s">   29 timed        0.0%  0:05.93   3    49+     0      0      0  1908K+  295M+</span>
+<span class="s">   26 wifid        0.0%  7:10.17   4   106+     0      0      0  2484K+  296M+</span>
+<span class="s">   24 syslogd      0.0%  0:05.70   6    56+     0      0      0   852K+  279M+</span>
+<span class="s">   23 UserEventA   0.0% 23:15.66   9   214+     0      0      0  3468K+  300M+</span>
+<span class="s">    1 launchd      0.0%  1:10.80   3   330+     0      0      0  1140K+  277M+</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="n">sshd_line</span> <span class="o">=</span> <span class="s">&#39; 1152 sshd         0.0%  0:00.16   1    18+     0      0      0  1500K+  268M+&#39;</span>
+<span class="n">sshd_process</span> <span class="o">=</span> <span class="s">&#39;1152&#39;</span>
+<span class="n">sshd_name</span> <span class="o">=</span> <span class="s">&#39;sshd&#39;</span>
+
+<span class="n">process_output</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;1153 top          2.2%  3:00.03   1    20+     0      0      0   684K+  267M+</span>
+<span class="s"> 1152 sshd         0.0%  0:00.16   1    18+     0      0      0  1500K+  268M+</span>
+<span class="s"> 1151 launchprox   0.0%  0:00.01   1    18+     0      0      0   408K+  266M+</span>
+<span class="s">  952 geod         0.0%  0:00.08   2    30+     0      0      0  1456K+  295M+</span>
+<span class="s">  812 SCHelper     0.0%  0:26.09   4    34+     0      0      0   952K+  277M+</span>
+<span class="s">  748 iperf        0.0%  0:00.47   1     9+     0      0      0   228K+  267M+</span>
+<span class="s">  493 mediaremot   0.0%  0:04.89   3    47+     0      0      0  1636K+  278M+</span>
+<span class="s">  492 MobileTime   0.0%  0:01.60  11    93+     0      0      0    21M+  347M+</span>
+<span class="s">  489 AppStore     0.0%  0:03.40  14   156+     0      0      0    28M+  441M+</span>
+<span class="s">  275 coresymbol   0.0%  0:00.02   2    21+     0      0      0   660K+  277M+</span>
+<span class="s">  227 Preference   0.0%  0:33.08   4   111+     0      0      0    11M+  317M+</span>
+<span class="s">  184 filecoordi   0.0%  0:00.02   2    27+     0      0      0  1080K+  277M+</span>
+<span class="s">  177 accountsd    0.0%  0:00.11   2    36+     0      0      0  1716K+  276M+</span>
+<span class="s">  176 MobileMail   0.0%  0:13.02   6   125+     0      0      0  7312K+  315M+</span>
+<span class="s">  174 tccd         0.0%  0:00.18   2    27+     0      0      0   976K+  277M+</span>
+<span class="s">  172 assetsd      0.0%  0:05.93   3    47+     0      0      0  3996K+  298M+</span>
+<span class="s">  167 xpcd         0.0%  0:00.03   3    27+     0      0      0   788K+  277M+</span>
+<span class="s">   96 emacsclient  0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+</span>
+<span class="s">   98 emacs        0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+</span>
+<span class="s">   99 lsd          0.0%  0:06.18   2    31+     0      0      0  1964K+  295M+</span>
+<span class="s">   97 distnoted    0.0%  0:00.08   2    34+     0      0      0  1108K+  295M+</span>
+<span class="s">   87 apsd         0.0%  0:23.01   5   115+     0      0      0  2548K+  296M+</span>
+<span class="s">   85 CommCenter   0.0%  0:06.91   5   108+     0      0      0  2800K+  280M+</span>
+<span class="s">   84 itunesstor   0.0%  1:32.98   5   107+     0      0      0  7204K+  301M+</span>
+<span class="s">   83 aggregated   0.0%  0:01.34   2    36+     0      0      0   624K+  277M+</span>
+<span class="s">   82 BlueTool     0.0%  0:00.06   2    25+     0      0      0   900K+  278M+</span>
+<span class="s">   81 networkd_p   0.0%  0:00.03   2    26+     0      0      0   656K+  277M+</span>
+<span class="s">   80 networkd     0.0%  0:01.95   2    61+     0      0      0  1328K+  277M+</span>
+<span class="s">   79 SpringBoar   0.0%  7:10.45  12   293+     0      0      0    25M+  360M+</span>
+<span class="s">   71 notifyd      0.0%  0:19.31   4    62+     0      0      0   848K+  278M+</span>
+<span class="s">   70 BTServer     0.0%  0:38.28   6    73+     0      0      0  2868K+  282M+</span>
+<span class="s">   65 kbd          0.0%  0:00.48   2    37+     0      0      0  3272K+  296M+</span>
+<span class="s">   61 backboardd   0.0%  2:07:12  12   577+     0      0      0  9884K+  406M+</span>
+<span class="s">   59 configd      0.0%  1:04.35   9   249+     0      0      0  2924K+  280M+</span>
+<span class="s">   58 AppleIDAut   0.0%  0:00.04   3    30+     0      0      0  1048K+  277M+</span>
+<span class="s">   56 fairplayd.   0.0%  0:06.59   2    32+     0      0      0  3400K+  285M+</span>
+<span class="s">   55 fseventsd    0.0%  0:03.50  18    67+     0      0      0  1308K+  284M+</span>
+<span class="s">   53 iaptranspo   0.0%  0:35.67   2    65+     0      0      0  1464K+  295M+</span>
+<span class="s">   52 imagent      0.0%  0:06.29   3    73+     0      0      0  2192K+  277M+</span>
+<span class="s">   50 locationd    0.0%  2:10.00   9   155+     0      0      0  5260K+  286M+</span>
+<span class="s">   48 mDNSRespon   0.0%  0:11.59   4    55+     0      0      0  1948K+  277M+</span>
+<span class="s">   46 mediaserve   0.0%  0:12.60  15   224+     0      0      0  5472K+  307M+</span>
+<span class="s">   42 deleted      0.0%  0:00.03   2    28+     0      0      0  1276K+  278M+</span>
+<span class="s">   41 backboardd   0.0%  2:07:12  12   577+     0      0      0  9884K+  406M+</span>
+<span class="s">   40 installd     0.0%  0:00.44   2    31+     0      0      0  1408K+  277M+</span>
+<span class="s">   38 lockdownd    0.0%  0:05.85   2    46+     0      0      0  1904K+  295M+</span>
+<span class="s">   31 powerd       0.0%  0:42.65   2    59+     0      0      0  1272K+  295M+</span>
+<span class="s">   29 timed        0.0%  0:05.93   3    49+     0      0      0  1908K+  295M+</span>
+<span class="s">   26 wifid        0.0%  7:10.17   4   106+     0      0      0  2484K+  296M+</span>
+<span class="s">   24 syslogd      0.0%  0:05.70   6    56+     0      0      0   852K+  279M+</span>
+<span class="s">   23 UserEventA   0.0% 23:15.66   9   214+     0      0      0  3468K+  300M+</span>
+<span class="s">    1 launchd      0.0%  1:10.80   3   330+     0      0      0  1140K+  277M+&quot;&quot;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="n">process_list</span><span class="o">=</span><span class="s">&quot;&quot;&quot;1153</span>
+<span class="s">1152</span>
+<span class="s">1151</span>
+<span class="s">952</span>
+<span class="s">812</span>
+<span class="s">748</span>
+<span class="s">493</span>
+<span class="s">492</span>
+<span class="s">489</span>
+<span class="s">275</span>
+<span class="s">227</span>
+<span class="s">184</span>
+<span class="s">177</span>
+<span class="s">176</span>
+<span class="s">174</span>
+<span class="s">172</span>
+<span class="s">167</span>
+<span class="s">96</span>
+<span class="s">98</span>
+<span class="s">99</span>
+<span class="s">97</span>
+<span class="s">87</span>
+<span class="s">85</span>
+<span class="s">84</span>
+<span class="s">83</span>
+<span class="s">82</span>
+<span class="s">81</span>
+<span class="s">80</span>
+<span class="s">79</span>
+<span class="s">71</span>
+<span class="s">70</span>
+<span class="s">65</span>
+<span class="s">61</span>
+<span class="s">59</span>
+<span class="s">58</span>
+<span class="s">56</span>
+<span class="s">55</span>
+<span class="s">53</span>
+<span class="s">52</span>
+<span class="s">50</span>
+<span class="s">48</span>
+<span class="s">46</span>
+<span class="s">42</span>
+<span class="s">41</span>
+<span class="s">40</span>
+<span class="s">38</span>
+<span class="s">31</span>
+<span class="s">29</span>
+<span class="s">26</span>
+<span class="s">24</span>
+<span class="s">23</span>
+<span class="s">1&quot;&quot;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="n">process_names</span><span class="o">=</span><span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span><span class="s">&quot;&quot;&quot;top</span>
+<span class="s">sshd         </span>
+<span class="s">launchprox   </span>
+<span class="s">geod         </span>
+<span class="s">SCHelper     </span>
+<span class="s">iperf        </span>
+<span class="s">mediaremot   </span>
+<span class="s">MobileTime   </span>
+<span class="s">AppStore     </span>
+<span class="s">coresymbol   </span>
+<span class="s">Preference   </span>
+<span class="s">filecoordi   </span>
+<span class="s">accountsd    </span>
+<span class="s">MobileMail   </span>
+<span class="s">tccd         </span>
+<span class="s">assetsd      </span>
+<span class="s">xpcd</span>
+<span class="s">emacsclient</span>
+<span class="s">emacs</span>
+<span class="s">lsd          </span>
+<span class="s">distnoted    </span>
+<span class="s">apsd         </span>
+<span class="s">CommCenter   </span>
+<span class="s">itunesstor   </span>
+<span class="s">aggregated   </span>
+<span class="s">BlueTool     </span>
+<span class="s">networkd_p   </span>
+<span class="s">networkd     </span>
+<span class="s">SpringBoar   </span>
+<span class="s">notifyd      </span>
+<span class="s">BTServer     </span>
+<span class="s">kbd          </span>
+<span class="s">backboardd   </span>
+<span class="s">configd      </span>
+<span class="s">AppleIDAut   </span>
+<span class="s">fairplayd.   </span>
+<span class="s">fseventsd    </span>
+<span class="s">iaptranspo   </span>
+<span class="s">imagent      </span>
+<span class="s">locationd    </span>
+<span class="s">mDNSRespon   </span>
+<span class="s">mediaserve   </span>
+<span class="s">deleted      </span>
+<span class="s">backboardd   </span>
+<span class="s">installd     </span>
+<span class="s">lockdownd    </span>
+<span class="s">powerd       </span>
+<span class="s">timed        </span>
+<span class="s">wifid        </span>
+<span class="s">syslogd      </span>
+<span class="s">UserEventA   </span>
+<span class="s">launchd</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]</span>
+
+
+
+<span class="n">test_line</span> <span class="o">=</span> <span class="s">&#39;   61 backboardd   0.0%  2:07:12  12   577+     0      0      0  9884K+  406M+&#39;</span>
+<span class="n">test_pid</span> <span class="o">=</span> <span class="s">&#39;61&#39;</span>
+<span class="n">test_process</span> <span class="o">=</span> <span class="s">&#39;backboardd&#39;</span>
+<span class="n">test_pid_2</span> <span class="o">=</span> <span class="s">&#39;41&#39;</span>
+<span class="n">expected_pid</span> <span class="o">=</span> <span class="p">{</span><span class="n">test_pid</span><span class="p">:</span><span class="n">test_pid</span><span class="p">,</span>
+                <span class="n">test_pid_2</span><span class="p">:</span><span class="n">test_pid_2</span><span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">TestTop</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top</span> <span class="o">=</span> <span class="n">TopCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestTop.test_constructor"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_constructor.html#apetools.commands.topcommand.TestTop.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the constructor have the expected signature?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">connection</span><span class="o">=</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">top</span> <span class="o">=</span> <span class="n">TopCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">top</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">test_wrong_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestTop.test_wrong_command"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_wrong_command.html#apetools.commands.topcommand.TestTop.test_wrong_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the TopCommand raise a TopCommandError if top isn&#39;t installed?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="s">&#39;-sh: top: command not found&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">test_bad_argument</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestTop.test_bad_argument"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_bad_argument.html#apetools.commands.topcommand.TestTop.test_bad_argument">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does TopCommand raise a TopCommandError if a bad command is given?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;top: Unrecognized or missing option q&#39;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">error_expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="n">error_map</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestTop.test_standard_error"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_standard_error.html#apetools.commands.topcommand.TestTop.test_standard_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does an error from standard error get passed to the checker?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;-sh: top: command not found&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">return</span>
+
+
+<span class="k">class</span> <span class="nc">TestTopGrep</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span></div>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span> <span class="o">=</span> <span class="n">TopGrep</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="n">test_process</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestTopGrep.test_call"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_call.html#apetools.commands.topcommand.TestTopGrep.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the `__call__` return all the matching PIDs?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_output</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">])</span>
+        
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">pid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="n">test_process</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected_pid</span><span class="p">[</span><span class="n">pid</span><span class="p">],</span> <span class="n">pid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">expected_pid</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestTopGrep.test_constructor"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_constructor.html#apetools.commands.topcommand.TestTopGrep.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the constructor have the expected signature?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ascii_letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))])</span>
+        <span class="n">connection</span><span class="o">=</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">grep</span> <span class="o">=</span> <span class="n">TopGrep</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="n">process</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">grep</span><span class="o">.</span><span class="n">process</span><span class="p">,</span> <span class="n">process</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">grep</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestTopGrep.test_unmatched"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_unmatched.html#apetools.commands.topcommand.TestTopGrep.test_unmatched">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the expression not match lines similar to the process-lines?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">first_line</span><span class="p">))</span>
+        <span class="k">return</span>
+
+
+    <span class="k">def</span> <span class="nf">test_call_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestTopGrep.test_call_parameter"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_call_parameter.html#apetools.commands.topcommand.TestTopGrep.test_call_parameter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does passing in the name of the process override the process passed in on construction?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">process_output</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;sshd&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">sshd_process</span><span class="p">)</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestTopGrep.test_expression"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_expression.html#apetools.commands.topcommand.TestTopGrep.test_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the expression match the output lines correctly?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">process_output</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">process_names</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Line: `{0}` did not match&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+            <span class="n">pid_map</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">process_list</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">pid_map</span><span class="p">[</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">],</span>
+                             <span class="n">msg</span><span class="o">=</span><span class="s">&quot;expected: {0}, actual {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">process_list</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
+                                                                    <span class="n">pid_map</span><span class="p">[</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">]))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_name_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If the process-name-field is set, will it yield the names instead of PID?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">process_output</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span>
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;sshd&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">sshd_name</span><span class="p">)</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_change_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestTopGrep.test_change_connection"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTopGrep.test_change_connection.html#apetools.commands.topcommand.TestTopGrep.test_change_connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the TopCommand get a new connection if you change the TopGrep&#39;s connection?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                         <span class="n">msg</span><span class="o">=</span><span class="s">&quot;setUp connection not setting up&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process_query</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                         <span class="n">msg</span><span class="o">=</span><span class="s">&#39;setUp connection not passed to top&#39;</span><span class="p">)</span>
+        <span class="n">connection_2</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection_2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection_2</span><span class="p">,</span>
+                         <span class="n">msg</span><span class="o">=</span><span class="s">&quot;grep connection not set&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process_query</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                         <span class="n">connection_2</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_substring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestTopGrep.test_substring"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTopGrep.test_substring.html#apetools.commands.topcommand.TestTopGrep.test_substring">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does it only match complete strings, not substrings of other processes?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">test_output</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+        <span class="n">called</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;emacs&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="s">&#39;98&#39;</span><span class="p">)</span>
+            <span class="n">called</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">called</span><span class="p">)</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

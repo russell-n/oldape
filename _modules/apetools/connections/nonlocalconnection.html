@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.connections.nonlocalconnection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.connections.nonlocalconnection</h1><div class="highlight"><pre>
+<span class="c">#python Libraries</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="c"># apetools Libraries</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseThreadClass</span>
+<span class="kn">from</span> <span class="nn">localconnection</span> <span class="kn">import</span> <span class="n">OutputError</span> 
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">enumerations</span>
+
+
+<span class="n">SPACER</span> <span class="o">=</span> <span class="s">&#39;{0} {1} &#39;</span>
+<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s">&quot;Unknown command: &quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">NonLocalConnection</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span>
+<div class="viewcode-block" id="NonLocalConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A non-local connection is the base for non-local connections</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command_prefix</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
+<div class="viewcode-block" id="NonLocalConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.__init__">[docs]</a>                 <span class="n">operating_system</span><span class="o">=</span><span class="n">enumerations</span><span class="o">.</span><span class="n">OperatingSystem</span><span class="o">.</span><span class="n">linux</span><span class="p">,</span>
+                 <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">library_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        NonLocalConnection Constructor</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command_prefix`: A prefix to prepend to commands (e.g. &#39;adb shell&#39;)</span>
+<span class="sd">         - `lock` : A lock to acquire before calls</span>
+<span class="sd">         - `operating_system`: the operating system</span>
+<span class="sd">         - `path`: a path setting to add to the path (before :$PATH)</span>
+<span class="sd">         - `library_path`: a setting for LD_LIBRARY_PATH</span>
+<span class="sd">         - `identifier`: string to use to identify the connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">NonLocalConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c"># logger is defined in BaseClass but declared here for child-classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span> <span class="o">=</span> <span class="n">command_prefix</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">lock</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">library_path</span> <span class="o">=</span> <span class="n">library_path</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="n">identifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_system</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exc_info</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NonLocalConnection.identifier"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.identifier">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        an alternative identifier </span>
+<span class="sd">        Override to give a default id (see SSHConnection.identifier)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NonLocalConnection.lock"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.lock">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a re-entrant lock</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="NonLocalConnection.queue"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: Queue.Queue</span>
+<span class="sd">        :return: the local Queue</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span>
+
+    <span class="k">def</span> <span class="nf">add_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>        </div>
+<div class="viewcode-block" id="NonLocalConnection.add_path"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.add_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prepends any path additions passed in at instantiation to the command</span>
+
+<span class="sd">        :param:</span>
+<span class="sd">        </span>
+<span class="sd">         - `command`: the name of a command</span>
+<span class="sd">        :return: command with path additions if given</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;PATH={0}:$PATH;{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">library_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s">&quot;export LD_LIBRARY_PATH={0}:$LD_LIBRARY_PATH;{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">library_path</span><span class="p">,</span>
+                                                                        <span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">command</span>
+
+    <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NonLocalConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection._procedure_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is provided so it can be overriden by subclasses.</span>
+<span class="sd">        It is what&#39;s called directly by __getattr__ to support LocalConnection.command() calls</span>
+
+<span class="sd">        Otherwise it just returns _main()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_path</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NonLocalConnection._main"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: the command string to execute</span>
+<span class="sd">         - `arguments`: The arguments for the command</span>
+<span class="sd">         - `timeout`: A timeout for the queue when doing a get</span>
+
+<span class="sd">        :return: OutputError named tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;command: &#39;{0}&#39;, arguments: &#39;{1}&#39;, timeout: &#39;{2}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                                                                                    <span class="n">arguments</span><span class="p">,</span>
+                                                                                    <span class="n">timeout</span><span class="p">))</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">exc_info</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="bp">self</span><span class="o">.</span><span class="n">exc_info</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">exc_info</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Empty</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">thread</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="k">del</span><span class="p">(</span><span class="n">thread</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">),</span><span class="n">StringIO</span><span class="p">(</span> <span class="s">&quot;&#39;{0} {1}&#39; timed out&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NonLocalConnection.run"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Runs the command in a thread and puts the output and error on the queue</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: The shell command.</span>
+<span class="sd">         - `arguments`: A string of command arguments.</span>
+
+<span class="sd">        :postcondition: OutputError with output and error file-like objects</span>
+<span class="sd">        :raise: NotImplementedError if sub-class doesn&#39;t override this method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">(</span><span class="s">&quot;Sub-classes need to implement the run&quot;</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span></div>
+<div class="viewcode-block" id="NonLocalConnection.start"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        starts run in a thread</span>
+
+<span class="sd">        :return: the thread object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">((</span><span class="n">command</span><span class="p">,</span><span class="n">arguments</span><span class="p">)),</span>
+                             <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">threading</span><span class="o">.</span><span class="n">enumerate</span><span class="p">()</span> <span class="k">if</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s">&quot;MainThread&quot;</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="n">t</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The parameters are the same as _procedure_call()</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: The command to call.</span>
+
+<span class="sd">        :return: _procedure_call method called with passed-in args and kwargs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">procedure_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_procedure_call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">procedure_call</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A pass-through to the _main method to use when the dot-notation doesn&#39;t work</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: the command string to execute</span>
+<span class="sd">         - `arguments`: The arguments for the command</span>
+<span class="sd">         - `timeout`: A timeout for the queue when doing a get</span>
+
+<span class="sd">        :return: OutputError named tuple</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_procedure_call</span><span class="p">(</span><span class="n">command</span><span class="o">=</span><span class="n">command</span><span class="p">,</span> 
+                                    <span class="n">arguments</span><span class="o">=</span><span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>        
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+<span class="c"># end class NonLocalConnection</span>
+
+
+<span class="k">class</span> <span class="nc">DummyConnection</span><span class="p">(</span><span class="n">NonLocalConnection</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DummyConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A dummy connection is used to fake connections in commands.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">DummyConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_string</span> <span class="o">=</span> <span class="s">&quot;command={0}, arguments={1}, timeout={2}&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run_string</span> <span class="o">=</span> <span class="s">&quot;command={0}, arguments={1}&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;DummyConnection&#39;</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DummyConnection._main"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does nothing.</span>
+
+<span class="sd">        :return: OutputError with EOF in both</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                                                 <span class="n">arguments</span><span class="p">,</span>
+                                                 <span class="n">timeout</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">))</span>
+
+
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div></div>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="c">#third party</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+
+
+<span class="k">class</span> <span class="nc">TestDummyConnection</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dummy</span> <span class="o">=</span> <span class="n">DummyConnection</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dummy</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source_string</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">letters</span><span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span><span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">random_input</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: random string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_string</span><span class="p">,</span>
+                                          <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_string</span><span class="p">)))</span>
+        
+    <span class="k">def</span> <span class="nf">test_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestDummyConnection.test_call"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.nonlocalconnection.TestDummyConnection.test_call.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Can you call it and get no output or errors?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input</span><span class="p">()</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input</span><span class="p">()</span>
+        <span class="n">o</span><span class="p">,</span><span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dummy</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dummy</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dummy</span><span class="o">.</span><span class="n">main_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span>
+                                                           <span class="n">arguments</span><span class="p">,</span>
+                                                           <span class="bp">None</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span><span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">o</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">e</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_dot_notation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestDummyConnection.test_dot_notation"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the dot-notation work?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">arguments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input</span><span class="p">()</span>
+        <span class="n">o</span><span class="p">,</span> <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dummy</span><span class="o">.</span><span class="n">ummagumma</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dummy</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dummy</span><span class="o">.</span><span class="n">main_string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;ummagumma&#39;</span><span class="p">,</span>
+                                                                                 <span class="n">arguments</span><span class="p">,</span>
+                                                                                 <span class="bp">None</span><span class="p">))</span>
+        <span class="k">return</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

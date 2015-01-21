@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Config Fetcher &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Lexicographers" href="index.html" />
+    <link rel="next" title="apetools.lexicographers.configfetcher.ConfigFetcher" href="api/apetools.lexicographers.configfetcher.ConfigFetcher.html" />
+    <link rel="prev" title="ConfigOptions" href="config_options.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.lexicographers.configfetcher.ConfigFetcher.html" title="apetools.lexicographers.configfetcher.ConfigFetcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="config_options.html" title="ConfigOptions"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Lexicographers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="config-fetcher">
+<h1>Config Fetcher<a class="headerlink" href="#config-fetcher" title="Permalink to this headline">¶</a></h1>
+<p>A module to fetch config files.</p>
+<p>The ConfigFetcher copies the config file to the current working directory.</p>
+<p>It was built to be used to pick config files from a folder of different files, but if it gets no parameters, it will load whatever is set as the DEFAULTS in the <cite>config.constants</cite> module.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-bff0c2d58347f5581ae00d9e63e320bc3c45bb9f.png" alt="BaseClass &lt;|-- ConfigFetcher" />
+</p>
+<span class="target" id="module-apetools.lexicographers.configfetcher"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.configfetcher.ConfigFetcher.html#apetools.lexicographers.configfetcher.ConfigFetcher" title="apetools.lexicographers.configfetcher.ConfigFetcher"><tt class="xref py py-obj docutils literal"><span class="pre">ConfigFetcher</span></tt></a>([name,&nbsp;config_folder])</td>
+<td>A class to fetch config files.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.configfetcher.ConfigFetcher.folder_path.html#apetools.lexicographers.configfetcher.ConfigFetcher.folder_path" title="apetools.lexicographers.configfetcher.ConfigFetcher.folder_path"><tt class="xref py py-obj docutils literal"><span class="pre">ConfigFetcher.folder_path</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.configfetcher.ConfigFetcher.config_folder_path.html#apetools.lexicographers.configfetcher.ConfigFetcher.config_folder_path" title="apetools.lexicographers.configfetcher.ConfigFetcher.config_folder_path"><tt class="xref py py-obj docutils literal"><span class="pre">ConfigFetcher.config_folder_path</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.configfetcher.ConfigFetcher.config_names.html#apetools.lexicographers.configfetcher.ConfigFetcher.config_names" title="apetools.lexicographers.configfetcher.ConfigFetcher.config_names"><tt class="xref py py-obj docutils literal"><span class="pre">ConfigFetcher.config_names</span></tt></a>()</td>
+<td>generates config file names</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.configfetcher.ConfigFetcher.fetch_config.html#apetools.lexicographers.configfetcher.ConfigFetcher.fetch_config" title="apetools.lexicographers.configfetcher.ConfigFetcher.fetch_config"><tt class="xref py py-obj docutils literal"><span class="pre">ConfigFetcher.fetch_config</span></tt></a>()</td>
+<td>Copies the .ini file to the current working directory.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/lexicographers/configfetcher.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

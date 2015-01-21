@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.watchers.tsharkwatcher &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.watchers.tsharkwatcher">
+<span id="apetools-watchers-tsharkwatcher"></span><h1>apetools.watchers.tsharkwatcher<a class="headerlink" href="#module-apetools.watchers.tsharkwatcher" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">TimestampFormat</span></tt>([format_type])</td>
+<td>A class to hold timestampformats</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../../watchers/api/apetools.watchers.tsharkwatcher.TsharkWatcher.html#apetools.watchers.tsharkwatcher.TsharkWatcher" title="apetools.watchers.tsharkwatcher.TsharkWatcher"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher</span></tt></a>(connection[,&nbsp;output,&nbsp;interface])</td>
+<td>A class to watch bytes and frames using tshark</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.watchers.tsharkwatcher.TsharkWatcherEnum" title="apetools.watchers.tsharkwatcher.TsharkWatcherEnum"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcherEnum</span></tt></a></td>
+<td>A class to hold variable names</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher">
+<em class="property">class </em><tt class="descclassname">apetools.watchers.tsharkwatcher.</tt><tt class="descname">TsharkWatcher</tt><big>(</big><em>connection</em>, <em>output=None</em>, <em>interface='wlan0'</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/watchers/tsharkwatcher.html#TsharkWatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to watch bytes and frames using tshark</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>output</cite>: file to send output to</li>
+</ul>
+<p>-<cite>connection</cite>: connection to the device to run tshark
+- <cite>interface</cite>: network interface to monitor</p>
+<dl class="method">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher.call_once">
+<tt class="descname">call_once</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/watchers/tsharkwatcher.html#TsharkWatcher.call_once"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher.call_once" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher.stop">
+<tt class="descname">stop</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/watchers/tsharkwatcher.html#TsharkWatcher.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher.stop" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">self.stopped is True</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher.expression">
+<tt class="descname">expression</tt><a class="reference internal" href="../../../../_modules/apetools/watchers/tsharkwatcher.html#TsharkWatcher.expression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher.expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a regular expression to match tshark output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher.output">
+<tt class="descname">output</tt><a class="reference internal" href="../../../../_modules/apetools/watchers/tsharkwatcher.html#TsharkWatcher.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher.output" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">file object to write to</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcher.timestamp">
+<tt class="descname">timestamp</tt><a class="reference internal" href="../../../../_modules/apetools/watchers/tsharkwatcher.html#TsharkWatcher.timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcher.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">timestamper</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.watchers.tsharkwatcher.TsharkWatcherEnum">
+<em class="property">class </em><tt class="descclassname">apetools.watchers.tsharkwatcher.</tt><tt class="descname">TsharkWatcherEnum</tt><a class="reference internal" href="../../../../_modules/apetools/watchers/tsharkwatcher.html#TsharkWatcherEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.tsharkwatcher.TsharkWatcherEnum" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to hold variable names</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/watchers_api/apetools.watchers.tsharkwatcher.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

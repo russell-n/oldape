@@ -1,0 +1,431 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Proc Pollster &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Watchers" href="index.html" />
+    <link rel="next" title="apetools.watchers.procpollster.BaseProcPollster" href="api/apetools.watchers.procpollster.BaseProcPollster.html" />
+    <link rel="prev" title="apetools.watchers.pingwatcher.PingWatcher.run" href="api/apetools.watchers.pingwatcher.PingWatcher.run.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.watchers.procpollster.BaseProcPollster.html" title="apetools.watchers.procpollster.BaseProcPollster"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.watchers.pingwatcher.PingWatcher.run.html" title="apetools.watchers.pingwatcher.PingWatcher.run"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="proc-pollster">
+<h1>Proc Pollster<a class="headerlink" href="#proc-pollster" title="Permalink to this headline">¶</a></h1>
+<p>A module to watch packets and bytes received on an interface.</p>
+<p>This was originally for monitor-mode wlan interfaces but is now meant to look for errors</p>
+<div class="section" id="base-proc-pollster">
+<h2>Base Proc Pollster<a class="headerlink" href="#base-proc-pollster" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-67cdd36865dad43769963cc2c7d713bd917dd17e.png" alt="BasePollster &lt;|-- BaseProcPollster" />
+</p>
+<span class="target" id="module-apetools.watchers.procpollster"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.BaseProcPollster.html#apetools.watchers.procpollster.BaseProcPollster" title="apetools.watchers.procpollster.BaseProcPollster"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcPollster</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A base-class for polling proc-files</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.BaseProcPollster.connection.html#apetools.watchers.procpollster.BaseProcPollster.connection" title="apetools.watchers.procpollster.BaseProcPollster.connection"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcPollster.connection</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the node&#8217;s connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.BaseProcPollster.expression_keys.html#apetools.watchers.procpollster.BaseProcPollster.expression_keys" title="apetools.watchers.procpollster.BaseProcPollster.expression_keys"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcPollster.expression_keys</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the keys to the expression groupdict</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.BaseProcPollster.header.html#apetools.watchers.procpollster.BaseProcPollster.header" title="apetools.watchers.procpollster.BaseProcPollster.header"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcPollster.header</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">first line of output file</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.BaseProcPollster.stop.html#apetools.watchers.procpollster.BaseProcPollster.stop" title="apetools.watchers.procpollster.BaseProcPollster.stop"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcPollster.stop</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body"><cite>self.stopped</cite> is True</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.BaseProcPollster.run.html#apetools.watchers.procpollster.BaseProcPollster.run" title="apetools.watchers.procpollster.BaseProcPollster.run"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcPollster.run</span></tt></a>()</td>
+<td>The main loop</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.BaseProcPollster.start.html#apetools.watchers.procpollster.BaseProcPollster.start" title="apetools.watchers.procpollster.BaseProcPollster.start"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcPollster.start</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">run is running in a thread (self.thread)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="proc-net-dev-pollster">
+<h2>Proc Net Dev Pollster<a class="headerlink" href="#proc-net-dev-pollster" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="proc-net-dev-pollster-constants">
+<h3>Proc Net Dev Pollster Constants<a class="headerlink" href="#proc-net-dev-pollster-constants" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProcnetdevPollsterEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to hold constants</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="s">&#39;interface&#39;</span>
+
+    <span class="n">receive_bytes</span> <span class="o">=</span> <span class="s">&#39;receive_bytes&#39;</span>
+    <span class="n">receive_packets</span> <span class="o">=</span> <span class="s">&#39;receive_packets&#39;</span>
+    <span class="n">receive_errs</span> <span class="o">=</span> <span class="s">&#39;receive_errs&#39;</span>
+    <span class="n">receive_drop</span> <span class="o">=</span> <span class="s">&#39;receive_drop&#39;</span>
+    <span class="n">receive_fifo</span> <span class="o">=</span> <span class="s">&#39;receive_fifo&#39;</span>
+    <span class="n">receive_frame</span> <span class="o">=</span> <span class="s">&#39;receive_frame&#39;</span>
+    <span class="n">transmit_bytes</span> <span class="o">=</span> <span class="s">&#39;transmit_bytes&#39;</span>
+    <span class="n">transmit_packets</span> <span class="o">=</span> <span class="s">&#39;transmit_packets&#39;</span>
+    <span class="n">transmit_errs</span> <span class="o">=</span> <span class="s">&#39;transmit_errs&#39;</span>
+    <span class="n">transmit_drop</span> <span class="o">=</span> <span class="s">&#39;transmit_drop&#39;</span>
+    <span class="n">transmit_fifo</span> <span class="o">=</span> <span class="s">&#39;transmit_fifo&#39;</span>
+    <span class="n">transmit_colls</span> <span class="o">=</span> <span class="s">&#39;transmit_colls&#39;</span>
+    <span class="n">transmit_carrier</span> <span class="o">=</span> <span class="s">&#39;transmit_carrier&#39;</span>
+<span class="c">#end class ProcnetdevPollsterEnum</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ProcnetdevPollsterIndices</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to hold indices to place the values in order</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">rbytes</span><span class="p">,</span> <span class="n">rpackets</span><span class="p">,</span> <span class="n">rerrs</span><span class="p">,</span> <span class="n">rdrop</span><span class="p">,</span> <span class="n">rfifo</span><span class="p">,</span> <span class="n">rframe</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+    <span class="n">tbytes</span><span class="p">,</span> <span class="n">tpackets</span><span class="p">,</span> <span class="n">terrs</span><span class="p">,</span> <span class="n">tdrop</span><span class="p">,</span> <span class="n">tfifo</span><span class="p">,</span> <span class="n">tcolls</span><span class="p">,</span> <span class="n">tcarrier</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">13</span><span class="p">)</span>
+<span class="c"># end class ProcnetdevPollsterIndices</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="proc-net-dev-pollster-class">
+<h3>Proc Net Dev Pollster Class<a class="headerlink" href="#proc-net-dev-pollster-class" title="Permalink to this headline">¶</a></h3>
+<p class="plantuml">
+<img src="../_images/plantuml-0aea98e9e895f6d2fc07c674f676ae84f52a7b38.png" alt="BaseProcPollster &lt;|-- ProcnetdevPollster" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.ProcnetdevPollster.html#apetools.watchers.procpollster.ProcnetdevPollster" title="apetools.watchers.procpollster.ProcnetdevPollster"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollster</span></tt></a>(interface,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>A class to grab the bytes and packets received at timed intervals.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.ProcnetdevPollster.name.html#apetools.watchers.procpollster.ProcnetdevPollster.name" title="apetools.watchers.procpollster.ProcnetdevPollster.name"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollster.name</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the name for logging (or the name of the file)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.ProcnetdevPollster.expression_keys.html#apetools.watchers.procpollster.ProcnetdevPollster.expression_keys" title="apetools.watchers.procpollster.ProcnetdevPollster.expression_keys"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollster.expression_keys</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">keys for the regex groupdict</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.ProcnetdevPollster.rexpression_keys.html#apetools.watchers.procpollster.ProcnetdevPollster.rexpression_keys" title="apetools.watchers.procpollster.ProcnetdevPollster.rexpression_keys"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollster.rexpression_keys</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">subset of keys needed for receiving</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.ProcnetdevPollster.texpression_keys.html#apetools.watchers.procpollster.ProcnetdevPollster.texpression_keys" title="apetools.watchers.procpollster.ProcnetdevPollster.texpression_keys"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollster.texpression_keys</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">subset of keys needed for transmitting</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.ProcnetdevPollster.header.html#apetools.watchers.procpollster.ProcnetdevPollster.header" title="apetools.watchers.procpollster.ProcnetdevPollster.header"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollster.header</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the first line for the output file</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.ProcnetdevPollster.expression.html#apetools.watchers.procpollster.ProcnetdevPollster.expression" title="apetools.watchers.procpollster.ProcnetdevPollster.expression"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollster.expression</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match the interface output line</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="cpu-pollster">
+<h2>CPU Pollster<a class="headerlink" href="#cpu-pollster" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CpuPollsterEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__slots</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="s">&#39;user&#39;</span>
+    <span class="n">nice</span> <span class="o">=</span> <span class="s">&#39;nice&#39;</span>
+    <span class="n">system</span> <span class="o">=</span> <span class="s">&#39;system&#39;</span>
+    <span class="n">idle</span> <span class="o">=</span> <span class="s">&#39;idle&#39;</span>
+<span class="c"># end class CpuPollsterEnum</span>
+</pre></div>
+</div>
+<p class="plantuml">
+<img src="../_images/plantuml-8cf3da51b474d82570798297f34e29eecf28416b.png" alt="BaseProcPollster &lt;|-- CpuPollster" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.CpuPollster.html#apetools.watchers.procpollster.CpuPollster" title="apetools.watchers.procpollster.CpuPollster"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollster</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to grab the percent of CPU used.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.CpuPollster.name.html#apetools.watchers.procpollster.CpuPollster.name" title="apetools.watchers.procpollster.CpuPollster.name"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollster.name</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the name for logging (or the name of the file)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.CpuPollster.expression_keys.html#apetools.watchers.procpollster.CpuPollster.expression_keys" title="apetools.watchers.procpollster.CpuPollster.expression_keys"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollster.expression_keys</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">keys for the regex groupdict</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.CpuPollster.header.html#apetools.watchers.procpollster.CpuPollster.header" title="apetools.watchers.procpollster.CpuPollster.header"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollster.header</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the first line for the output file</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.procpollster.CpuPollster.expression.html#apetools.watchers.procpollster.CpuPollster.expression" title="apetools.watchers.procpollster.CpuPollster.expression"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollster.expression</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match the interface output line</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.procpollster.CpuPollster.run.html#apetools.watchers.procpollster.CpuPollster.run" title="apetools.watchers.procpollster.CpuPollster.run"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollster.run</span></tt></a>()</td>
+<td>The main loop</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="debug">
+<h2>Debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">apetools.connections.sshconnection</span> <span class="kn">import</span> <span class="n">SSHConnection</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&quot;portege&quot;</span><span class="p">,</span> <span class="s">&quot;portegeadmin&quot;</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">ProcnetdevPollster</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="s">&quot;wlan0&quot;</span><span class="p">)</span>
+    <span class="n">p</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Proc Pollster</a><ul>
+<li><a class="reference internal" href="#base-proc-pollster">Base Proc Pollster</a></li>
+<li><a class="reference internal" href="#proc-net-dev-pollster">Proc Net Dev Pollster</a><ul>
+<li><a class="reference internal" href="#proc-net-dev-pollster-constants">Proc Net Dev Pollster Constants</a></li>
+<li><a class="reference internal" href="#proc-net-dev-pollster-class">Proc Net Dev Pollster Class</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cpu-pollster">CPU Pollster</a></li>
+<li><a class="reference internal" href="#debug">Debug</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/watchers/procpollster.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

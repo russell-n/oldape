@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Test Operator &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="test-operator">
+<h1>Test Operator<a class="headerlink" href="#test-operator" title="Permalink to this headline">¶</a></h1>
+<p>An operator operates tests.</p>
+<p>For each configuration-file found an operator is created.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">OperatorStaticTestParameters</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;OperatorStaticTestParameters&quot;</span><span class="p">,</span>
+                                          <span class="p">[</span><span class="s">&#39;operator_parameters&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;static_parameters&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;test_parameters&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">TEST_TAG</span> <span class="o">=</span> <span class="s">&quot;**** {tag}: {s} Test {r} of {t} ****&quot;</span>
+
+<span class="n">TEST_POSTAMBLE</span> <span class="o">=</span> <span class="s">&quot;**** {tag}: Ending test - elapsed time = {t} ****&quot;</span>
+<span class="n">TEST_RESULT</span> <span class="o">=</span> <span class="s">&quot;**** {tag}: Test Result = {r} ****&quot;</span>
+</pre></div>
+</div>
+<p class="plantuml">
+<img src="../_images/plantuml-82e8420a04ff6328b3388a3e11dde7d3f269c881.png" alt="BaseClass &lt;|-- TestOperator" />
+</p>
+<span class="target" id="module-apetools.proletarians.testoperator"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.html#apetools.proletarians.testoperator.TestOperator" title="apetools.proletarians.testoperator.TestOperator"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator</span></tt></a>(test_parameters,&nbsp;...[,&nbsp;...])</td>
+<td>An operator runs the sequence of operations.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.countdown_timer.html#apetools.proletarians.testoperator.TestOperator.countdown_timer" title="apetools.proletarians.testoperator.TestOperator.countdown_timer"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator.countdown_timer</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">countdown-timer</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.sub_logger.html#apetools.proletarians.testoperator.TestOperator.sub_logger" title="apetools.proletarians.testoperator.TestOperator.sub_logger"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator.sub_logger</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">holder of sub-logger</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.sleep.html#apetools.proletarians.testoperator.TestOperator.sleep" title="apetools.proletarians.testoperator.TestOperator.sleep"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator.sleep</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">default Sleep object</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.one_repetition.html#apetools.proletarians.testoperator.TestOperator.one_repetition" title="apetools.proletarians.testoperator.TestOperator.one_repetition"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator.one_repetition</span></tt></a>(parameter,&nbsp;...)</td>
+<td>Holds the test algorithm for one repetition.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.log_info.html#apetools.proletarians.testoperator.TestOperator.log_info" title="apetools.proletarians.testoperator.TestOperator.log_info"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator.log_info</span></tt></a>(message,&nbsp;node)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.__call__.html#apetools.proletarians.testoperator.TestOperator.__call__" title="apetools.proletarians.testoperator.TestOperator.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator.__call__</span></tt></a>()</td>
+<td>This is the main operation method.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept.html#apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept" title="apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept"><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator.keyboard_interrupt_intercept</span></tt></a>()</td>
+<td>The watcher watches for signal interrupts and kills children.</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/proletarians/testoperator.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Setup Iperf Test Use Case &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Use Cases" href="index.html" />
+    <link rel="next" title="Run Iperf Traffic to DUT" href="run_to_dut.html" />
+    <link rel="prev" title="Path Additions To the DUT" href="path_additions.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="run_to_dut.html" title="Run Iperf Traffic to DUT"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="path_additions.html" title="Path Additions To the DUT"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The Old Ape&#8217;s Developer Documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Old Ape&#8217;s Design Documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Use Cases</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="setup-iperf-test-use-case">
+<h1>Setup Iperf Test Use Case<a class="headerlink" href="#setup-iperf-test-use-case" title="Permalink to this headline">¶</a></h1>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-82470bc43dcc954d5cd6dacaecbbaaec3989bd41.png" alt="left to right direction
+
+skinparam packageStyle rect
+APE -&gt; (Test Throughput)
+
+package TestSession {
+(Test Throughput) ..&gt; (Setup Session) : &lt;&lt;include&gt;&gt;
+(Test Throughput) ..&gt; (Run Test) : &lt;&lt;include&gt;&gt;
+(Test Throughput) ..&gt; (Cleanup Session) : &lt;&lt;include&gt;&gt;
+}
+(Run Test) ..&gt; (Setup Iperf Test) : &lt;&lt;include&gt;&gt;" />
+</p>
+<div class="section" id="related-requirements">
+<h2>Related Requirements<a class="headerlink" href="#related-requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><em>A.3.</em> System communicates with the <em>Device Under Test (DUT)</em> via <em>Android Debug Bridge (ADB)</em>.</li>
+<li><em>A.4.</em> System communicates with the <em>Traffic PC (TPC)</em> via <em>Secure Shell (SSH)</em>.</li>
+<li><em>A.5.</em> System kills <cite>iperf</cite> sessions on the <em>Device Under Test (DUT)</em> and <em>Traffic PC (TPC)</em>.</li>
+</ul>
+</div>
+<div class="section" id="preconditions">
+<h2>Preconditions<a class="headerlink" href="#preconditions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The <em>Control PC (CPC)</em> is connected to the DUT and communicating via ADB</li>
+<li>The <em>Traffic PC (TPC)</em> has a running SSH Server</li>
+<li>CPC and TPC are on the same subnet</li>
+</ul>
+</div>
+<div class="section" id="postcondition">
+<h2>Postcondition<a class="headerlink" href="#postcondition" title="Permalink to this headline">¶</a></h2>
+<p>DUT and TPC have no running <cite>iperf</cite> processes.</p>
+</div>
+<div class="section" id="trigger">
+<h2>Trigger<a class="headerlink" href="#trigger" title="Permalink to this headline">¶</a></h2>
+<p><em>All-In-One Performance Evaluation Tools (APETools)</em> requests throughput test.</p>
+</div>
+<div class="section" id="main-path">
+<h2>Main Path<a class="headerlink" href="#main-path" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>The system establishes connection to DUT and TPC</li>
+<li>The system kills all existing <cite>iperf</cite> processes on the TPC and DUT.</li>
+</ol>
+</div>
+<div class="section" id="alternate-paths">
+<h2>Alternate Paths<a class="headerlink" href="#alternate-paths" title="Permalink to this headline">¶</a></h2>
+<p>2.1. The system is unable to connect to the DUT or TPC.</p>
+<blockquote>
+<div>2.1.1. A <cite>ConnectionError</cite> or <cite>ConfigurationError</cite> is raised based on cause.
+2.1.2. The test exits.</div></blockquote>
+<p>3.1. Running <cite>iperf</cite> processes remain on the DUT or TPC.</p>
+<blockquote>
+<div>3.1.1. A <cite>CommandError</cite> is raised.
+3.1.2. The test exits.</div></blockquote>
+</div>
+</div>
+<div class="section" id="replacements">
+<h1>Replacements<a class="headerlink" href="#replacements" title="Permalink to this headline">¶</a></h1>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Setup Iperf Test Use Case</a><ul>
+<li><a class="reference internal" href="#related-requirements">Related Requirements</a></li>
+<li><a class="reference internal" href="#preconditions">Preconditions</a></li>
+<li><a class="reference internal" href="#postcondition">Postcondition</a></li>
+<li><a class="reference internal" href="#trigger">Trigger</a></li>
+<li><a class="reference internal" href="#main-path">Main Path</a></li>
+<li><a class="reference internal" href="#alternate-paths">Alternate Paths</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#replacements">Replacements</a></li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/design/usecases/setup_iperf_test.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

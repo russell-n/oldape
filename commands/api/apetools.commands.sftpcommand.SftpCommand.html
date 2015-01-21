@@ -1,0 +1,345 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.sftpcommand.SftpCommand &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="The SFTP Command" href="../sftpcommand.html" />
+    <link rel="next" title="apetools.commands.sftpcommand.TestSftpCommand.test_ssh" href="apetools.commands.sftpcommand.TestSftpCommand.test_ssh.html" />
+    <link rel="prev" title="apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter" href="apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apetools.commands.sftpcommand.TestSftpCommand.test_ssh.html" title="apetools.commands.sftpcommand.TestSftpCommand.test_ssh"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter.html" title="apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Commands</a> &raquo;</li>
+          <li><a href="../sftpcommand.html" accesskey="U">The SFTP Command</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="apetools-commands-sftpcommand-sftpcommand">
+<h1>apetools.commands.sftpcommand.SftpCommand<a class="headerlink" href="#apetools-commands-sftpcommand-sftpcommand" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="apetools.commands.sftpcommand.SftpCommand">
+<em class="property">class </em><tt class="descclassname">apetools.commands.sftpcommand.</tt><tt class="descname">SftpCommand</tt><big>(</big><em>connection=None</em>, <em>hostname=None</em>, <em>password=None</em>, <em>username=None</em>, <em>port=22</em>, <em>timeout=10</em><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>An interface to the SftpCommand</p>
+<p>Sftp Command Constructor</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>connection</cite> is the intended parameter, others are for building a connection if none given</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>connection</cite>: An SSHConnection</li>
+<li><cite>hostname</cite>: address of remote host</li>
+<li><cite>password</cite>: password of remote host</li>
+<li><a href="#id1"><span class="problematic" id="id2">`</span></a>username: user login to remote host</li>
+<li><cite>port</cite>:  ssh server port number</li>
+<li><cite>timeout</cite>: login timeout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>connection=None</em>, <em>hostname=None</em>, <em>password=None</em>, <em>username=None</em>, <em>port=22</em>, <em>timeout=10</em><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sftp Command Constructor</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>connection</cite> is the intended parameter, others are for building a connection if none given</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>connection</cite>: An SSHConnection</li>
+<li><cite>hostname</cite>: address of remote host</li>
+<li><cite>password</cite>: password of remote host</li>
+<li><a href="#id3"><span class="problematic" id="id4">`</span></a>username: user login to remote host</li>
+<li><cite>port</cite>:  ssh server port number</li>
+<li><cite>timeout</cite>: login timeout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.__init__" title="apetools.commands.sftpcommand.SftpCommand.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>([connection,&nbsp;hostname,&nbsp;password,&nbsp;...])</td>
+<td>Sftp Command Constructor</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.close" title="apetools.commands.sftpcommand.SftpCommand.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
+<td>Closes the sftp connection (not the ssh connection)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.get" title="apetools.commands.sftpcommand.SftpCommand.get"><tt class="xref py py-obj docutils literal"><span class="pre">get</span></tt></a>(remote,&nbsp;local)</td>
+<td>Get the remote file and put it in the local location</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.getcwd" title="apetools.commands.sftpcommand.SftpCommand.getcwd"><tt class="xref py py-obj docutils literal"><span class="pre">getcwd</span></tt></a>()</td>
+<td>Returns the remote current-working-directory</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.listdir" title="apetools.commands.sftpcommand.SftpCommand.listdir"><tt class="xref py py-obj docutils literal"><span class="pre">listdir</span></tt></a>([path])</td>
+<td>Returns list of files</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.mkdir" title="apetools.commands.sftpcommand.SftpCommand.mkdir"><tt class="xref py py-obj docutils literal"><span class="pre">mkdir</span></tt></a>(path[,&nbsp;mode])</td>
+<td>Makes the directory on the remote host</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.put" title="apetools.commands.sftpcommand.SftpCommand.put"><tt class="xref py py-obj docutils literal"><span class="pre">put</span></tt></a>(local,&nbsp;remote)</td>
+<td>Put the local file on the remote host</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.connection" title="apetools.commands.sftpcommand.SftpCommand.connection"><tt class="xref py py-obj docutils literal"><span class="pre">connection</span></tt></a></td>
+<td>The SSHConnection</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.logger" title="apetools.commands.sftpcommand.SftpCommand.logger"><tt class="xref py py-obj docutils literal"><span class="pre">logger</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.sftp" title="apetools.commands.sftpcommand.SftpCommand.sftp"><tt class="xref py py-obj docutils literal"><span class="pre">sftp</span></tt></a></td>
+<td>Sftp Client from the SSH client</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.sftpcommand.SftpCommand.ssh" title="apetools.commands.sftpcommand.SftpCommand.ssh"><tt class="xref py py-obj docutils literal"><span class="pre">ssh</span></tt></a></td>
+<td>The Paramiko client extracted from the connection.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes the sftp connection (not the ssh connection)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.get">
+<tt class="descname">get</tt><big>(</big><em>remote</em>, <em>local</em><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the remote file and put it in the local location</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>remote</cite>: path to file on remote host</li>
+<li><cite>local</cite>: path to create file on local host</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.getcwd">
+<tt class="descname">getcwd</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.getcwd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.getcwd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the remote current-working-directory</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.listdir">
+<tt class="descname">listdir</tt><big>(</big><em>path='.'</em><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.listdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.listdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns list of files</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.mkdir">
+<tt class="descname">mkdir</tt><big>(</big><em>path</em>, <em>mode=511</em><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.mkdir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.mkdir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes the directory on the remote host</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.sftpcommand.SftpCommand.put">
+<tt class="descname">put</tt><big>(</big><em>local</em>, <em>remote</em><big>)</big><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.put"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.put" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put the local file on the remote host</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>local</cite>: path to a local file</li>
+<li><cite>remote</cite>: path to put file on remote host</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.sftpcommand.SftpCommand.connection">
+<tt class="descname">connection</tt><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SSHConnection</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.sftpcommand.SftpCommand.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.sftpcommand.SftpCommand.sftp">
+<tt class="descname">sftp</tt><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.sftp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.sftp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sftp Client from the SSH client</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.sftpcommand.SftpCommand.ssh">
+<tt class="descname">ssh</tt><a class="reference internal" href="../../_modules/apetools/commands/sftpcommand.html#SftpCommand.ssh"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.sftpcommand.SftpCommand.ssh" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Paramiko client extracted from the connection.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/commands/api/apetools.commands.sftpcommand.SftpCommand.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

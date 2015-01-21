@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Main Function &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Parsers" href="index.html" />
+    <link rel="next" title="apetools.parsers.main.ArgumentError" href="api/apetools.parsers.main.ArgumentError.html" />
+    <link rel="prev" title="apetools.parsers.iperfparser.IperfParser.filename" href="api/apetools.parsers.iperfparser.IperfParser.filename.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.main.ArgumentError.html" title="apetools.parsers.main.ArgumentError"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.iperfparser.IperfParser.filename.html" title="apetools.parsers.iperfparser.IperfParser.filename"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Parsers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-main-function">
+<h1>The Main Function<a class="headerlink" href="#the-main-function" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="argument-error">
+<h2>Argument Error<a class="headerlink" href="#argument-error" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-153fc9cbd71d95355dd54dd39b68f71e18f599b7.png" alt="ArgumentError &lt;|-- Exception" />
+</p>
+<span class="target" id="module-apetools.parsers.main"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.main.ArgumentError.html#apetools.parsers.main.ArgumentError" title="apetools.parsers.main.ArgumentError"><tt class="xref py py-obj docutils literal"><span class="pre">ArgumentError</span></tt></a></td>
+<td>An exception to raise if there is a command-line argument error</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">UNITS</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;bits&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">bits</span><span class="p">,</span>
+         <span class="s">&#39;kbits&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">kbits</span><span class="p">,</span>
+         <span class="s">&#39;mbits&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">mbits</span><span class="p">,</span>
+         <span class="s">&#39;gbits&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">gbits</span><span class="p">,</span>
+         <span class="s">&#39;bytes&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">bytes</span><span class="p">,</span>
+         <span class="s">&#39;kbytes&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">kbytes</span><span class="p">,</span>
+         <span class="s">&#39;mbytes&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">mbytes</span><span class="p">,</span>
+         <span class="s">&#39;gbytes&#39;</span><span class="p">:</span> <span class="n">UnitNames</span><span class="o">.</span><span class="n">gbytes</span><span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.main.enable_debugging.html#apetools.parsers.main.enable_debugging" title="apetools.parsers.main.enable_debugging"><tt class="xref py py-obj docutils literal"><span class="pre">enable_debugging</span></tt></a>()</td>
+<td>enables the pudb debugger</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.main.pipe.html#apetools.parsers.main.pipe" title="apetools.parsers.main.pipe"><tt class="xref py py-obj docutils literal"><span class="pre">pipe</span></tt></a>(args[,&nbsp;infile,&nbsp;outfile])</td>
+<td>Reads input from standard in and sends output to standard out.</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.main.analyze.html#apetools.parsers.main.analyze" title="apetools.parsers.main.analyze"><tt class="xref py py-obj docutils literal"><span class="pre">analyze</span></tt></a>(args)</td>
+<td>Reads data from files and outputs to files</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.main.main.html#apetools.parsers.main.main" title="apetools.parsers.main.main"><tt class="xref py py-obj docutils literal"><span class="pre">main</span></tt></a>()</td>
+<td>parses the arguments and sends them to &#8216;pipe&#8217; or &#8216;analyze&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Main Function</a><ul>
+<li><a class="reference internal" href="#argument-error">Argument Error</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/parsers/main.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

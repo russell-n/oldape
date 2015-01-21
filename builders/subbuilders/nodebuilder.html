@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Node Builder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Sub-Builders" href="index.html" />
+    <link rel="next" title="apetools.builders.subbuilders.nodebuilder.NodeBuilder" href="api/apetools.builders.subbuilders.nodebuilder.NodeBuilder.html" />
+    <link rel="prev" title="apetools.builders.subbuilders.nersbuilder.NersBuilder.parameters" href="api/apetools.builders.subbuilders.nersbuilder.NersBuilder.parameters.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.builders.subbuilders.nodebuilder.NodeBuilder.html" title="apetools.builders.subbuilders.nodebuilder.NodeBuilder"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.builders.subbuilders.nersbuilder.NersBuilder.parameters.html" title="apetools.builders.subbuilders.nersbuilder.NersBuilder.parameters"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Builders</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Sub-Builders</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-node-builder">
+<h1>The Node Builder<a class="headerlink" href="#the-node-builder" title="Permalink to this headline">¶</a></h1>
+<p>A module to build nodes (devices) based on Operating System and connection type.</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li><em class="xref std std-ref">The BaseClass</em></li>
+<li><em class="xref std std-ref">ConfigurationError</em></li>
+<li><em class="xref std std-ref">The BaseDeviceEnum</em></li>
+<li><em class="xref std std-ref">The connection builders</em></li>
+<li><em class="xref std std-ref">The device builders</em></li>
+<li><em class="xref std std-ref">The ConfigOptions</em></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="the-nodebuilder-class">
+<span id="node-builder"></span><h2>The NodeBuilder Class<a class="headerlink" href="#the-nodebuilder-class" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/builders/api/apetools.builders.subbuilders.nodebuilder.NodeBuilder.html#apetools.builders.subbuilders.nodebuilder.NodeBuilder" title="apetools.builders.subbuilders.nodebuilder.NodeBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">NodeBuilder</span></tt></a>(parameters[,&nbsp;role])</td>
+<td>A class to build a device (node)</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../_images/plantuml-f9bedf911c63f677c1da04de702023e21feb52ec.png" alt="NodeBuilder -|&gt; BaseClass
+NodeBuilder : parameters
+NodeBuilder : role
+NodeBuilder : connection
+NodeBuilder : interface
+NodeBuilder : node
+NodeBuilder : address" />
+</p>
+</div>
+<div class="section" id="example-use">
+<h2>Example Use<a class="headerlink" href="#example-use" title="Permalink to this headline">¶</a></h2>
+<p>The expected way to use it (to build a traffic-PC node):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">nb</span> <span class="o">=</span> <span class="n">NodeBuilder</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">BaseDeviceEnum</span><span class="o">.</span><span class="n">tpc</span><span class="p">)</span>
+<span class="n">node</span> <span class="o">=</span> <span class="n">nb</span><span class="o">.</span><span class="n">node</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nodebuildertypes">
+<h2>NodeBuilderTypes<a class="headerlink" href="#nodebuildertypes" title="Permalink to this headline">¶</a></h2>
+<p>A holder of string constants to use for types of node-builders.</p>
+<p class="plantuml">
+<img src="../../_images/plantuml-204b9ecda0cb11cecbace01e8207142add2e34b8.png" alt="NodeBuilderTypes : windows
+NodeBuilderTypes : linux
+NodeBuilderTypes : android
+NodeBuilderTypes : ios" />
+</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Node Builder</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#the-nodebuilder-class">The NodeBuilder Class</a></li>
+<li><a class="reference internal" href="#example-use">Example Use</a></li>
+<li><a class="reference internal" href="#nodebuildertypes">NodeBuilderTypes</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/builders/subbuilders/nodebuilder.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

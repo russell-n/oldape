@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Time To Recovery Test &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Tools" href="index.html" />
+    <link rel="next" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.html" />
+    <link rel="prev" title="apetools.tools.timetorecovery.TimeToRecovery.__call__" href="api/apetools.tools.timetorecovery.TimeToRecovery.__call__.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.html" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.tools.timetorecovery.TimeToRecovery.__call__.html" title="apetools.tools.timetorecovery.TimeToRecovery.__call__"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="time-to-recovery-test">
+<h1>Time To Recovery Test<a class="headerlink" href="#time-to-recovery-test" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold the time-to-recovery test.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">TimeToRecoveryTestParameters</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;TimeToRecoveryTestParameters&quot;</span><span class="p">,</span>
+                                          <span class="p">[</span><span class="s">&#39;output&#39;</span><span class="p">,</span>
+                                          <span class="s">&#39;device&#39;</span><span class="p">,</span>
+                                           <span class="s">&#39;time_to_recovery&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">NEWLINE_STRING</span> <span class="o">=</span> <span class="s">&quot;{0}</span><span class="se">\n</span><span class="s">&quot;</span>
+</pre></div>
+</div>
+<p class="plantuml">
+<img src="../_images/plantuml-7f3fdbe5571dd1d029ed92b7874ce7ee3dabd1ff.png" alt="BaseClass &lt;|-- TimeToRecoveryTest" />
+</p>
+<span class="target" id="module-apetools.tools.timetorecoverytest"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.html#apetools.tools.timetorecoverytest.TimeToRecoveryTest" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest"><tt class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryTest</span></tt></a>(parameters,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>A time to recovery Test times how long it takes to recover.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.device.html#apetools.tools.timetorecoverytest.TimeToRecoveryTest.device" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.device"><tt class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryTest.device</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.output.html#apetools.tools.timetorecoverytest.TimeToRecoveryTest.output" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.output"><tt class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryTest.output</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.time_to_recovery.html#apetools.tools.timetorecoverytest.TimeToRecoveryTest.time_to_recovery" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.time_to_recovery"><tt class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryTest.time_to_recovery</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">The time-to-recovery measurer passed in as a parameter</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.run.html#apetools.tools.timetorecoverytest.TimeToRecoveryTest.run" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.run"><tt class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryTest.run</span></tt></a>(parameters)</td>
+<td>Runs a single time to recovery test.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.save_data.html#apetools.tools.timetorecoverytest.TimeToRecoveryTest.save_data" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.save_data"><tt class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryTest.save_data</span></tt></a>(elapsed,&nbsp;...)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.log_message.html#apetools.tools.timetorecoverytest.TimeToRecoveryTest.log_message" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.log_message"><tt class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryTest.log_message</span></tt></a>(message)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/tools/timetorecoverytest.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

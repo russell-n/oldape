@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.lexicographers.parametertree &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.lexicographers.parametertree">
+<span id="apetools-lexicographers-parametertree"></span><h1>apetools.lexicographers.parametertree<a class="headerlink" href="#module-apetools.lexicographers.parametertree" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">namedtuple</span></tt>(typename,&nbsp;field_names[,&nbsp;verbose,&nbsp;...])</td>
+<td>Returns a new subclass of tuple with named fields.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../../lexicographers/api/apetools.lexicographers.parametertree.ParameterTree.html#apetools.lexicographers.parametertree.ParameterTree" title="apetools.lexicographers.parametertree.ParameterTree"><tt class="xref py py-obj docutils literal"><span class="pre">ParameterTree</span></tt></a>(parameters)</td>
+<td>A class to build a tree from iterative parameters</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.lexicographers.parametertree.Parameters" title="apetools.lexicographers.parametertree.Parameters"><tt class="xref py py-obj docutils literal"><span class="pre">Parameters</span></tt></a></td>
+<td>Parameters(name, parameters)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../../lexicographers/api/apetools.lexicographers.parametertree.TreeNode.html#apetools.lexicographers.parametertree.TreeNode" title="apetools.lexicographers.parametertree.TreeNode"><tt class="xref py py-obj docutils literal"><span class="pre">TreeNode</span></tt></a>(cargo[,&nbsp;children])</td>
+<td>A Class to represent a node in a tree with arbitrary number of children</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.lexicographers.parametertree.ParameterTree">
+<em class="property">class </em><tt class="descclassname">apetools.lexicographers.parametertree.</tt><tt class="descname">ParameterTree</tt><big>(</big><em>parameters</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/lexicographers/parametertree.html#ParameterTree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.lexicographers.parametertree.ParameterTree" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to build a tree from iterative parameters</p>
+<p>The main product is the <cite>paths</cite> attribute which can be iterated over to get the parameters for a test.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>parameters</cite>: list of parameter objects with a <cite>name</cite> property</li>
+</ul>
+<dl class="method">
+<dt id="apetools.lexicographers.parametertree.ParameterTree._traverse">
+<tt class="descname">_traverse</tt><big>(</big><em>tree</em>, <em>path</em>, <em>paths</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/lexicographers/parametertree.html#ParameterTree._traverse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.lexicographers.parametertree.ParameterTree._traverse" title="Permalink to this definition">¶</a></dt>
+<dd><p>A depth-first traversal</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>tree</cite>: A Tree object to traverse</li>
+<li><cite>path</cite>: a name:parameter dict to contain a particular path</li>
+<li><cite>paths</cite>: The list to store all the paths</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><ul class="first last simple">
+<li>path holds tree&#8217;s cargo</li>
+<li>if tree is a leaf, return path</li>
+<li>if tree not leaf traverse children and traverse each child</li>
+<li>append path returned by leaf to self._paths</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.lexicographers.parametertree.ParameterTree.paths">
+<tt class="descname">paths</tt><a class="reference internal" href="../../../../_modules/apetools/lexicographers/parametertree.html#ParameterTree.paths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.lexicographers.parametertree.ParameterTree.paths" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of namedtuples</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.lexicographers.parametertree.ParameterTree.tree">
+<tt class="descname">tree</tt><a class="reference internal" href="../../../../_modules/apetools/lexicographers/parametertree.html#ParameterTree.tree"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.lexicographers.parametertree.ParameterTree.tree" title="Permalink to this definition">¶</a></dt>
+<dd><p>builds the tree bottoms-up from the parameters</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of trees (highest nodes are parameters[0], leaves are parameters[-1])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.lexicographers.parametertree.Parameters">
+<em class="property">class </em><tt class="descclassname">apetools.lexicographers.parametertree.</tt><tt class="descname">Parameters</tt><a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters(name, parameters)</p>
+<dl class="method">
+<dt id="apetools.lexicographers.parametertree.Parameters._asdict">
+<tt class="descname">_asdict</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters._asdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OrderedDict which maps field names to their values</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="apetools.lexicographers.parametertree.Parameters._make">
+<em class="property">classmethod </em><tt class="descname">_make</tt><big>(</big><em>iterable</em>, <em>new=&lt;built-in method __new__ of type object at 0x90aa40&gt;</em>, <em>len=&lt;built-in function len&gt;</em><big>)</big><a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters._make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new Parameters object from a sequence or iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.lexicographers.parametertree.Parameters._replace">
+<tt class="descname">_replace</tt><big>(</big><em>_self</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters._replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new Parameters object replacing specified fields with new values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.lexicographers.parametertree.Parameters.count">
+<tt class="descname">count</tt><big>(</big><em>value</em><big>)</big> &rarr; integer -- return number of occurrences of value<a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters.count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.lexicographers.parametertree.Parameters.index">
+<tt class="descname">index</tt><big>(</big><em>value</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>stop</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; integer -- return first index of value.<a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises ValueError if the value is not present.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.lexicographers.parametertree.Parameters.name">
+<tt class="descname">name</tt><a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.lexicographers.parametertree.Parameters.parameters">
+<tt class="descname">parameters</tt><a class="headerlink" href="#apetools.lexicographers.parametertree.Parameters.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.lexicographers.parametertree.TreeNode">
+<em class="property">class </em><tt class="descclassname">apetools.lexicographers.parametertree.</tt><tt class="descname">TreeNode</tt><big>(</big><em>cargo</em>, <em>children=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/lexicographers/parametertree.html#TreeNode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.lexicographers.parametertree.TreeNode" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Class to represent a node in a tree with arbitrary number of children</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>cargo</cite>: the data for this node</li>
+<li><cite>children</cite>: a list of TreeNodes</li>
+</ul>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/lexicographer_api/apetools.lexicographers.parametertree.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

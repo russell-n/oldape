@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.dumpsyswifi &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commands.dumpsyswifi</h1><div class="highlight"><pre>
+<span class="c"># python</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="kn">from</span> <span class="nn">apetools.connections</span> <span class="kn">import</span> <span class="n">adbconnection</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers</span> <span class="kn">import</span> <span class="n">oatbran</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+
+
+<span class="k">class</span> <span class="nc">DumpsysWifiEnumerations</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiEnumerations"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiEnumerations">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An enumerations object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="s">&quot;wifistate&quot;</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="s">&quot;interface&quot;</span>
+    <span class="n">ssid</span> <span class="o">=</span> <span class="s">&quot;ssid&quot;</span>
+    <span class="n">bssid</span> <span class="o">=</span> <span class="s">&quot;bssid&quot;</span>
+    <span class="n">mac_address</span> <span class="o">=</span> <span class="s">&quot;mac_address&quot;</span>
+    <span class="n">supplicant_state</span> <span class="o">=</span> <span class="s">&quot;supplicant_state&quot;</span>
+    <span class="n">rssi</span> <span class="o">=</span> <span class="s">&quot;rssi&quot;</span>
+    <span class="n">link_speed</span> <span class="o">=</span> <span class="s">&quot;link_speed&quot;</span>
+<span class="c"># end class DumpsysWifiEnumerations</span>
+
+
+<span class="k">class</span> <span class="nc">DumpsysWifiExpressions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DumpsysWifiExpressions"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to hold regular expressions to parse the `dumpsys wifi` output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.dumpsyswifi.DumpsysWifiExpressions.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_supplicant_state</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rssi</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_link_speed</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.state"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.state">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to match the wifi enabled/disabled states</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot;Wi-Fi is&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">state</span><span class="p">,</span>
+                                    <span class="n">e</span><span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot;enabling enabled disabled disabling&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_state</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.interface"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.interface">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: An expression to find the interface name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;[Ii]nterface&quot;</span> <span class="o">+</span> <span class="s">&quot;(Name:)&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">ZERO_OR_MORE</span>
+            <span class="n">expression</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">interface</span><span class="p">,</span>
+                                       <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">ALPHA_NUMS</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">ONE_OR_MORE</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">expression</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.ssid"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled expression to extract the ssid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;SSID:&quot;</span>
+            <span class="n">ssid</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span>
+                                 <span class="n">e</span><span class="o">=</span><span class="s">&quot;\S[^,]&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">ZERO_OR_MORE</span><span class="p">)</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span>  <span class="n">ssid</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.bssid"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled expression to extract the BSSID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;BSSID:&quot;</span>
+            <span class="n">bssid</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">bssid</span><span class="p">,</span>
+                                  <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">MAC_ADDRESS</span><span class="p">)</span>
+            <span class="n">suffix</span> <span class="o">=</span>  <span class="s">&quot;,&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bssid</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled expression to match the MAC Address of the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;MAC:&quot;</span>
+            <span class="n">mac</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">mac_address</span><span class="p">,</span>
+                                <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">MAC_ADDRESS</span><span class="p">)</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">mac</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">supplicant_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.supplicant_state"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.supplicant_state">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled expression to match the WPA Supplicant State</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supplicant_state</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;Supplicant state:&quot;</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">supplicant_state</span><span class="p">,</span>
+                                  <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">LETTERS</span><span class="p">)</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_supplicant_state</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">state</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_supplicant_state</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.rssi"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to extract the rssi</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rssi</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;RSSI:&quot;</span>
+            <span class="n">rssi</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">rssi</span><span class="p">,</span>
+                                 <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">)</span>
+            <span class="n">suffix</span><span class="o">=</span><span class="s">&quot;,&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_rssi</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">rssi</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rssi</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">link_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifiExpressions.link_speed"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.link_speed">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: compiled regular expression to extract the link speed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_link_speed</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">prefix</span> <span class="o">=</span> <span class="s">&quot;Link&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="s">&quot;speed:&quot;</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">DumpsysWifiEnumerations</span><span class="o">.</span><span class="n">link_speed</span><span class="p">,</span>
+                                 <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">)</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_link_speed</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">link</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_link_speed</span>
+<span class="c"># end class DumpsysWifiExpression</span>
+
+
+<span class="k">class</span> <span class="nc">DumpsysWifi</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="DumpsysWifi"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to query and interpret the dumpsys wifi command</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">service</span><span class="o">=</span><span class="s">&quot;wifi&quot;</span><span class="p">,</span> <span class="n">na</span><span class="o">=</span><span class="s">&quot;N/A&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.dumpsyswifi.DumpsysWifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection` : connection to the DUT</span>
+<span class="sd">         - `service`: the service to query</span>
+<span class="sd">         - `na`: token to use if not found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DumpsysWifi</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">service</span> <span class="o">=</span> <span class="n">service</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">na</span> <span class="o">=</span> <span class="n">na</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_state</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_supplicant_state</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rssi</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_link_speed</span> <span class="o">=</span> <span class="bp">None</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enums</span> <span class="o">=</span> <span class="n">DumpsysWifiEnumerations</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.expressions"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.expressions">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: DumpsysWifiExpressions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="o">=</span> <span class="n">DumpsysWifiExpressions</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.connection"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a connection to the android</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">adbconnection</span><span class="o">.</span><span class="n">ADBShellConnection</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.state"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.state">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        :return: The state of the WiFi Radio</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">state</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.interface"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.interface">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: name of the wifi interface</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">interface</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">interface</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.ssid"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: ssid of connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">ssid</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.bssid"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: bssid of the connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">bssid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">bssid</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: MAC Address of the Wifi Interface</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">mac_address</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">mac_address</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">supplicant_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.supplicant_state"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.supplicant_state">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: WPA Supplicant&#39;s state&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">supplicant_state</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">supplicant_state</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.rssi"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the Received Signal Strength Indicator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">rssi</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">rssi</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">link_speed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DumpsysWifi.link_speed"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.link_speed">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the link speed of the WiFi connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_match</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expressions</span><span class="o">.</span><span class="n">link_speed</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">link_speed</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">get_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DumpsysWifi.get_match"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.get_match">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `key`: the groupdict key to retrieve</span>
+<span class="sd">         - `expression`: compiled expression to match field</span>
+<span class="sd">        :return: the matching field in the output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">dumpsys</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">service</span><span class="p">)</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">na</span>
+    
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DumpsysWifi.__str__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.dumpsyswifi.DumpsysWifi.__str__.html#apetools.commands.dumpsyswifi.DumpsysWifi.__str__">[docs]</a>        <span class="k">return</span> <span class="s">&quot;&quot;&quot;State: {st}</span>
+<span class="s">Interface: {inter}</span>
+<span class="s">SSID: {ss}</span>
+<span class="s">BSSID: {bs}</span>
+<span class="s">MAC Address: {mac}</span>
+<span class="s">Supplicant State: {sup}</span>
+<span class="s">RSSI: {rs}</span>
+<span class="s">Link Speed: {ls}</span>
+<span class="s">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">st</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">,</span> <span class="n">inter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="p">,</span> <span class="n">ss</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span> <span class="n">bs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bssid</span><span class="p">,</span>
+           <span class="n">mac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mac_address</span><span class="p">,</span> <span class="n">sup</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">supplicant_state</span><span class="p">,</span> <span class="n">rs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rssi</span><span class="p">,</span>
+           <span class="n">ls</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">link_speed</span><span class="p">)</span>
+<span class="c"># end class DumpsysWifi</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

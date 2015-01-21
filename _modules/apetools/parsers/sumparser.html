@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.parsers.sumparser &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.parsers.sumparser</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">iperfparser</span> <span class="kn">import</span> <span class="n">IperfParser</span> 
+<span class="kn">from</span> <span class="nn">iperfexpressions</span> <span class="kn">import</span> <span class="n">HumanExpression</span><span class="p">,</span> <span class="n">ParserKeys</span><span class="p">,</span> <span class="n">CsvExpression</span>
+<span class="kn">import</span> <span class="nn">oatbran</span> <span class="kn">as</span> <span class="nn">bran</span>
+<span class="kn">from</span> <span class="nn">coroutine</span> <span class="kn">import</span> <span class="n">coroutine</span>
+
+
+<span class="n">BITS</span> <span class="o">=</span> <span class="s">&#39;bits&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">HumanExpressionSum</span><span class="p">(</span><span class="n">HumanExpression</span><span class="p">):</span>
+<div class="viewcode-block" id="HumanExpressionSum"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.HumanExpressionSum.html#apetools.parsers.sumparser.HumanExpressionSum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes the thread-column regular expression to match SUMS if needed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="HumanExpressionSum.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.HumanExpressionSum.html#apetools.parsers.sumparser.HumanExpressionSum.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `threads`: number of parallel threads</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HumanExpressionSum</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threads</span> <span class="o">=</span> <span class="n">threads</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">thread_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="HumanExpressionSum.thread_column"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.HumanExpressionSum.thread_column.html#apetools.parsers.sumparser.HumanExpressionSum.thread_column">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: expression to match the thread (sum) column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">threads</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">thread</span> <span class="o">=</span> <span class="s">&quot;SUM&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">thread</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">OPTIONAL_SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">INTEGER</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">L_BRACKET</span> <span class="o">+</span> <span class="n">thread</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">R_BRACKET</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span>
+<span class="c"># end class HumanExpressionSum</span>
+
+
+<span class="k">class</span> <span class="nc">CsvExpressionSum</span><span class="p">(</span><span class="n">CsvExpression</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="CsvExpressionSum"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.CsvExpressionSum.html#apetools.parsers.sumparser.CsvExpressionSum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Changes the thread column to look for -1 if needed</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="CsvExpressionSum.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.CsvExpressionSum.html#apetools.parsers.sumparser.CsvExpressionSum.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `threads`: the number of parallel threads</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CsvExpressionSum</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threads</span> <span class="o">=</span> <span class="n">threads</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">thread_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CsvExpressionSum.thread_column"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.CsvExpressionSum.thread_column.html#apetools.parsers.sumparser.CsvExpressionSum.thread_column">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the expression to match the thread (sum) column</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">threads</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">thread</span> <span class="o">=</span> <span class="s">&quot;-1&quot;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">thread</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">INTEGER</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">thread</span><span class="p">,</span> <span class="n">thread</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span>
+
+
+<span class="k">class</span> <span class="nc">SumParser</span><span class="p">(</span><span class="n">IperfParser</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="SumParser"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.SumParser.html#apetools.parsers.sumparser.SumParser">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The SumParser emits bandwidth sum lines</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SumParser.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.SumParser.html#apetools.parsers.sumparser.SumParser.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">SumParser</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_format</span> <span class="o">=</span> <span class="s">&quot;({0}) {1} {2}/sec&quot;</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="SumParser.regex"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.SumParser.regex.html#apetools.parsers.sumparser.SumParser.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a dictionary of compiled regular expressions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="o">=</span> <span class="p">{</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">human</span><span class="p">:</span><span class="n">HumanExpressionSum</span><span class="p">(</span><span class="n">threads</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="p">)</span><span class="o">.</span><span class="n">regex</span><span class="p">,</span>
+                           <span class="n">ParserKeys</span><span class="o">.</span><span class="n">csv</span><span class="p">:</span><span class="n">CsvExpressionSum</span><span class="p">(</span><span class="n">threads</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="p">)</span><span class="o">.</span><span class="n">regex</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SumParser.__call__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.SumParser.__call__.html#apetools.parsers.sumparser.SumParser.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `line`: a line of iperf output</span>
+
+<span class="sd">        :return: bandwidth or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="nb">type</span><span class="p">(</span><span class="n">match</span><span class="p">)</span> <span class="o">==</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="n">match</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">,</span> <span class="s">&quot;match: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">match</span><span class="p">))</span> 
+        <span class="n">bandwidth</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+            
+            <span class="n">bandwidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">])]</span> <span class="o">=</span> <span class="n">bandwidth</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">],</span>
+                                                        <span class="n">bandwidth</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_format</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">],</span>
+                                                        <span class="n">bandwidth</span><span class="p">,</span>
+                                                        <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">bandwidth</span>
+
+    <span class="nd">@coroutine</span></div>
+    <span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+<div class="viewcode-block" id="SumParser.pipe"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.sumparser.SumParser.pipe.html#apetools.parsers.sumparser.SumParser.pipe">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A coroutine to pipe output through</span>
+
+<span class="sd">        :warnings:</span>
+
+<span class="sd">         - For bad connections with threads this might break (as the threads die)</span>
+<span class="sd">         - Use for good connections or live data only (use `bandwidths` and completed data for greater fidelity)</span>
+<span class="sd">         </span>
+<span class="sd">        :parameters:</span>
+
+<span class="sd">         - `target`: a target to send matched output to</span>
+
+<span class="sd">        :send:</span>
+
+<span class="sd">         - bandwidth converted to self.units as a float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
+                <span class="c"># threads is a dict of interval:(thread_count, bandwidths)</span>
+                <span class="n">target</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">(</span><span class="n">match</span><span class="p">))</span>
+        <span class="k">return</span>
+<span class="c"># end class SumParser</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IPad Throughput Example &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="User Examples" href="index.html" />
+    <link rel="next" title="Read-Only Device, Non-Interactive PATH Not Complete" href="set_path_example.html" />
+    <link rel="prev" title="User Examples" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="set_path_example.html" title="Read-Only Device, Non-Interactive PATH Not Complete"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="User Examples"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Old Ape&#8217;s User Documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">User Examples</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ipad-throughput-example">
+<h1>IPad Throughput Example<a class="headerlink" href="#ipad-throughput-example" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note" id="ipad-example">
+<p class="first admonition-title">Note</p>
+<p class="last">To make it easier to read it will be assumed that there is an ssh-alias setup where <cite>IPAD</cite> is equivalent to <cite>&lt;login&gt;&#64;&lt;address&gt;</cite> for the Ipad (with the correct login and IP address substituted).</p>
+</div>
+<div class="section" id="unique-features">
+<h2>Unique Features<a class="headerlink" href="#unique-features" title="Permalink to this headline">¶</a></h2>
+<p>Devices meeting the following conditions should be able to use this example:</p>
+<blockquote>
+<div><ul class="simple">
+<li>no control of the device during testing</li>
+<li>iperf server started on the device external to the code</li>
+</ul>
+</div></blockquote>
+<div class="section" id="example-cases">
+<h3>Example Cases<a class="headerlink" href="#example-cases" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Ipad: only has wifi interface which we want to be reserved for the iperf traffic</li>
+<li>Embedded Devices: At least one device was shipped to us with an iperf server running continuously on it</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="the-pre-requisites">
+<h2>The Pre-Requisites<a class="headerlink" href="#the-pre-requisites" title="Permalink to this headline">¶</a></h2>
+<p>This assumes that the following are True with regards to the IPad:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">It has a running ssh-server</p>
+</li>
+<li><p class="first"><cite>iperf</cite> is installed on the non-interactive path. Check the path with:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh IPAD &#39;echo $PATH&#39;
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>Additionally it is helpful to have <cite>top</cite> installed on the IPad in case you want to stop the iperf server.</p>
+</div>
+<div class="section" id="the-process">
+<h2>The Process<a class="headerlink" href="#the-process" title="Permalink to this headline">¶</a></h2>
+<p>The first step might seem a little abstract so see <a class="reference internal" href="#example-ipad-config-file"><em>the example</em></a> below.</p>
+<ol class="arabic">
+<li><p class="first">Edit the config file:</p>
+<ol class="arabic simple">
+<li>The [TEST] section can only have <cite>iperf</cite> or other components that don&#8217;t interact with the Ipad</li>
+<li>The [NODE] option for the ipad need to have <cite>connection:dummy</cite> and <cite>test_address:&lt;ipad address&gt;</cite></li>
+<li>The [IPERF] section can only have <cite>directions = to_dut</cite> or <cite>rx</cite> or any other download equivalent</li>
+</ol>
+</li>
+<li><p class="first">Start the server on the ipad:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh IPAD &#39;iperf -sD &gt; /dev/null&#39;
+</pre></div>
+</div>
+</li>
+<li><p class="first">Run the APE:</p>
+<div class="highlight-python"><div class="highlight"><pre>ape run
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you find it hard to remember the iperf flags you can also use <tt class="docutils literal"><span class="pre">iperf</span> <span class="pre">--server</span> <span class="pre">--daemon</span> <span class="pre">&gt;</span> <span class="pre">/dev/null</span></tt></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to save the output replace <tt class="docutils literal"><span class="pre">/dev/null</span></tt> with a filename</p>
+</div>
+</div>
+<div class="section" id="killing-iperf">
+<h2>Killing Iperf<a class="headerlink" href="#killing-iperf" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;ve installed <cite>top</cite> then you should be able to kill it by doing the following:</p>
+<ol class="arabic">
+<li><p class="first">Get the process ID:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh IPAD &#39;top -l 1&#39; | grep iperf
+</pre></div>
+</div>
+</li>
+<li><p class="first">Note the <em>process ID</em> (the first number of the line).</p>
+</li>
+<li><p class="first">Kill the process:</p>
+<div class="highlight-python"><div class="highlight"><pre>ssh IPAD kill &lt;process id&gt;
+</pre></div>
+</div>
+</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">you could also do this interactively, this is just the way I work</p>
+</div>
+</div>
+<div class="section" id="example-config-file">
+<span id="example-ipad-config-file"></span><h2>Example Config File<a class="headerlink" href="#example-config-file" title="Permalink to this headline">¶</a></h2>
+<p>To setup a test that only ran traffic to the ipad you could use a configuration like the following:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[TEST]</span>
+<span class="na">execute_test</span> <span class="o">=</span> <span class="s">iperf</span>
+<span class="na">output_folder</span> <span class="o">=</span> <span class="s">iperf_hack_test_{t}</span>
+<span class="na">repeat</span> <span class="o">=</span> <span class="s">2</span>
+<span class="na">recovery_time</span> <span class="o">=</span> <span class="s">1 Second</span>
+
+<span class="k">[NODES]</span>
+<span class="na">ipad</span> <span class="o">=</span> <span class="s">operating_system:linux,connection:dummy,test_address:192.168.20.53</span>
+
+<span class="k">[TRAFFIC_PC]</span>
+<span class="na">tpc</span> <span class="o">=</span> <span class="s">operating_system:linux,connection:ssh,test_interface:eth3,hostname:localhost,login:allion</span>
+
+<span class="k">[IPERF]</span>
+<span class="na">directions</span> <span class="o">=</span> <span class="s">to_dut</span>
+
+<span class="na">time</span> <span class="o">=</span> <span class="s">1 Hour 5 Seconds</span>
+
+<span class="na">protocol</span> <span class="o">=</span> <span class="s">tcp</span>
+<span class="na">window</span> <span class="o">=</span> <span class="s">256K</span>
+<span class="na">len</span> <span class="o">=</span> <span class="s">1470</span>
+<span class="na">parallel</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">interval</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">format</span> <span class="o">=</span> <span class="s">b</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Although it might not be intuitive to set the operating-system to <strong>linux</strong> at the moment that&#8217;s just the one that has been implemented so far. Since we don&#8217;t interact with the device it doesn&#8217;t have to be something more sensible.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">IPad Throughput Example</a><ul>
+<li><a class="reference internal" href="#unique-features">Unique Features</a><ul>
+<li><a class="reference internal" href="#example-cases">Example Cases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-pre-requisites">The Pre-Requisites</a></li>
+<li><a class="reference internal" href="#the-process">The Process</a></li>
+<li><a class="reference internal" href="#killing-iperf">Killing Iperf</a></li>
+<li><a class="reference internal" href="#example-config-file">Example Config File</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/user/examples/ipad_example.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,84 @@
+Cube Turntable (Rotate Cube)
+============================
+
+This documents how to use the newer (November, 2014) turntables that have a plexiglass cube encasing the motor in order to raise the devices on the platform and reduce the effects of any electro-magnetic fields that the motor may produce.
+
+.. _rotate-cube-configuration:
+
+The Configuration
+-----------------
+
+Like the older :ref:`rotate command <rotate-configuration>` this command is enabled by referring to it in the ``[TEST]`` section of the configuration file. It should go in the `setup_test` option::
+
+   [TEST]
+   setup_test = rotate_cube
+
+This tells the APE to look for a section named ``ROTATE_CUBE`` which contains an option listing the sections (as a comma-separated list) with the turntable information::
+
+   [ROTATE_CUBE]
+   tables = table_1, table_2
+
+The command was called the `rotate_cube` so that the older `rotate` can still be used with the older turntables which have a slightly different interface::
+
+   [TEST]
+   setup_test = rotate_cube, rotate
+
+The Table Sections
+------------------
+
+The strings in the ``tables`` option are arbitrary so they should probably be set to something that's meaningful so it's easier to remember what each refers to  (e.g. ``tables = livingroom, masterbath``). There are three types of options that go into these sections:
+
+   * ssh-information for the turntable
+   * arguments for the `rotate` command
+   * a list of angles
+
+Rotate Arguments
+~~~~~~~~~~~~~~~~
+
+To get the arguments that the `rotate` command uses you should either look at the `online documentation <http://rallion.bitbucket.org/others/rotation_table/index.html>`_ , particularly the `main entry point <http://rallion.bitbucket.org/others/rotation_table/main.html>`_ which has a sample help string example, and the `Base Arguments page <http://rallion.bitbucket.org/others/rotation_table/base_arguments.html>`_ which explains what the valid values are for the arguments or ssh into the controller for the PC and look at the help string (``rotate -h``). To set an option that takes a value at the command-line you use the `<option>=<value>` format (e.g. `velocity = 20`) in the config file. To set an option that's boolean you use the `<option>=True` format (e.g. `clockwise=True`) you can use `<option>=False` but that's the default so you could leave it out instead.
+
+.. note:: The ``--set`` isn't supported here.
+
+SSH Information
+~~~~~~~~~~~~~~~
+
+Right now it only looks for `hostname`, `username` and (optionally) `password`. If you have public-keys set up you can leave the password out.
+
+Angles
+~~~~~~
+
+Although technically part of the arguments for the `rotate` command, this expects a list of angles (integers only) so that it can change in between executing whatever is in the TEST-section's `execute_test` option. By default the angles are interpreted as a counter-clockwise angle (looking down on the table) and bounded from 0 to 359 so if you put 720, the code will interpret it as 0. To rotate the table clockwise you can either put a negative sign in front of the angles or set the ``clockwise`` option. 
+
+.. note:: This table is currently set to not rotate beyond 359 degrees so the angles refer to where it stops, not an actual direction of rotation. If needed the table range can be changed but that requires changing some values in the controlling code attached to the device.
+
+The code assumes that the longest list of angles is the correct list and will repeat the last angle in a table's list if it runs out of angles to match the longest list (so if you want to set it only to 90 on one table and rotate more angles on another you can).
+
+Example
+~~~~~~~
+
+Going back to the two tables listed in the `ROTATE_CUBE` section, suppose we wanted to set one at 90 degrees clockwise and the other counter-clockwise, rotating at 90-degree intervals. We could do something like the following::
+
+   [table_1]
+   hostname = 192.168.10.20
+   username = root
+   password = testlabs
+   angles = 90
+   clockwise = True
+
+
+   [table_2]
+   hostname = 192.168.10.21
+   username = root
+   password = testlabs
+   angles = 0, 90, 180, 270
+
+If you just want to test the configuration you can add ``test=True`` to each table and the code will send the arguments to the table to be validated but not actually rotate the table (just log and print some information so you can see the values that the table is getting).
+
+Complete Example
+----------------
+
+This is a full-example using three tables (two new-ones and one old one) with correlating data being scraped in the background (log-watching). 
+
+.. literalinclude:: examples/rotate_cube.ini
+   :language: ini
+

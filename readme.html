@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>All-in-one Performance Evaluation Tools &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="index.html" />
+    <link rel="next" title="Affectors" href="affectors/index.html" />
+    <link rel="prev" title="apetools.main.main" href="api/apetools.main.main.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="affectors/index.html" title="Affectors"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.main.main.html" title="apetools.main.main"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="all-in-one-performance-evaluation-tools">
+<h1>All-in-one Performance Evaluation Tools<a class="headerlink" href="#all-in-one-performance-evaluation-tools" title="Permalink to this headline">¶</a></h1>
+<p>The <cite>APE</cite> is an attempt at a swiss-army knife style of test-runner, which uses a configuration file (<a class="reference external" href="http://en.wikipedia.org/wiki/INI_file">ini</a>) to declare both the parts of the test to be executed and the parameters those parts need. Additionally, it accepts a <a class="reference external" href="http://en.wikipedia.org/wiki/Glob_(programming)">glob</a> so that separate configurations can be executed in lexicographic order.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>APE</cite> isn&#8217;t on PyPi so you have to pull the repository and change into the top directory, then use pip to install it:</p>
+<div class="highlight-python"><div class="highlight"><pre>python setup.py install
+</pre></div>
+</div>
+</div>
+<div class="section" id="command-line-help">
+<h2>Command Line Help<a class="headerlink" href="#command-line-help" title="Permalink to this headline">¶</a></h2>
+<p>You Can Check out the help:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ape</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre>usage: ape [-h] [-d] [--pudb] [--pdb] [-s] {run,fetch,test} ...
+
+optional arguments:
+  -h, --help        show this help message and exit
+  -d, --debug       Display debugging messages.
+  --pudb            Enable pudb interactive debugging.
+  --pdb             Enable python&#39;s debugger
+  -s, --silent      Turn off screen output.
+
+Test Subcommands Help:
+  Available Subcommands
+
+  {run,fetch,test}  test subcommands
+    run             Run a Test
+    fetch           Fetch a sample config file.
+    test            Test your setup.
+</pre></div>
+</div>
+<p>There are three sub-commands &#8211; <cite>run</cite>, <cite>fetch</cite>, and <cite>test</cite>. Each sub-command also accepts a <cite>&#8211;help</cite> option.</p>
+<div class="section" id="the-run-sub-command">
+<h3>The Run Sub-Command<a class="headerlink" href="#the-run-sub-command" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>usage: ape run [-h] [&lt;config-file glob&gt;]
+
+positional arguments:
+  &lt;config-file glob&gt;  A file glob to match config files (default=&#39;*.ini&#39;).
+
+optional arguments:
+  -h, --help          show this help message and exit
+</pre></div>
+</div>
+<p>The <cite>run</cite> sub-command will read in the configuration and attempt to run the tests.</p>
+</div>
+<div class="section" id="the-fetch-sub-command">
+<h3>The Fetch Sub-Command<a class="headerlink" href="#the-fetch-sub-command" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>usage: ape fetch [-h]
+
+optional arguments:
+  -h, --help  show this help message and exit
+</pre></div>
+</div>
+<p>The <cite>fetch</cite> sub-command will retrieve a sample configuration.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This will retrieve a file named <cite>ape.ini</cite>. If there is already a file there by that name it will be replaced by the fresh copy.</p>
+</div>
+</div>
+<div class="section" id="the-test-sub-command">
+<h3>The Test Sub-Command<a class="headerlink" href="#the-test-sub-command" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre>usage: ape test [-h] [&lt;config-file glob&gt;]
+
+positional arguments:
+  &lt;config-file glob&gt;  A file glob to match config files (e.g. *.ini -
+                      default=&#39;*.ini&#39;).
+
+optional arguments:
+  -h, --help          show this help message and exit
+</pre></div>
+</div>
+<p>The intention is for the <cite>test</cite> sub-command to test your configuration but right now it&#8217;s broken.</p>
+</div>
+</div>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>It is currently being converted to a Literate Programming implementation. To build the documentation, make sure you have:</p>
+<blockquote>
+<div><ul class="simple">
+<li>sphinx</li>
+<li>sphinxcontrib-uml</li>
+</ul>
+</div></blockquote>
+<p>Then run <tt class="docutils literal"><span class="pre">make</span> <span class="pre">&lt;format&gt;</span></tt> in the same director as the <cite>Makefile</cite>. For example, to create html-documentation:</p>
+<div class="highlight-python"><div class="highlight"><pre>make html
+</pre></div>
+</div>
+<p>The documentation should then be in the folder <tt class="docutils literal"><span class="pre">build/html</span></tt>.</p>
+</div>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">requirements.txt</span></tt> file is built using <tt class="docutils literal"><span class="pre">pip</span> <span class="pre">freeze</span></tt>. It may have more than is needed (e.g. <cite>pep8</cite>) since it includes packages to help create the code, but it should have everything that&#8217;s needed. To install from the file:</p>
+<div class="highlight-python"><div class="highlight"><pre>pip install -r requirements.txt
+</pre></div>
+</div>
+</div>
+<div class="section" id="bugs">
+<h2>Bugs<a class="headerlink" href="#bugs" title="Permalink to this headline">¶</a></h2>
+<p>This code is currently in maintenance mode as the newer ape was meant to take its place. If you find a bug please file it through the bitbucket <a class="reference external" href="https://bitbucket.org/rallion/apetools/issues">issue tracker</a>. If you&#8217;re not sure what makes a good bug report, <a class="reference external" href="http://quaid.fedorapeople.org/TOS/Practical_Open_Source_Software_Exploration/html/sn-Debugging_the_Code-The_Anatomy_of_a_Good_Bug_Report.html">this description</a> from fedora might be helpful.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">All-in-one Performance Evaluation Tools</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#command-line-help">Command Line Help</a><ul>
+<li><a class="reference internal" href="#the-run-sub-command">The Run Sub-Command</a></li>
+<li><a class="reference internal" href="#the-fetch-sub-command">The Fetch Sub-Command</a></li>
+<li><a class="reference internal" href="#the-test-sub-command">The Test Sub-Command</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#documentation">Documentation</a></li>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#bugs">Bugs</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">The Main Module</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="_sources/readme.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.builders.subbuilders.pollerbuilders &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.builders.subbuilders.pollerbuilders</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.storageoutput</span> <span class="kn">import</span> <span class="n">APPEND</span>
+<span class="kn">from</span> <span class="nn">apetools.watchers.rssipoller</span> <span class="kn">import</span> <span class="n">RssiPoller</span>
+<span class="kn">from</span> <span class="nn">apetools.watchers.devicepoller</span> <span class="kn">import</span> <span class="n">DevicePoller</span>
+<span class="kn">from</span> <span class="nn">apetools.watchers.procpollster</span> <span class="kn">import</span> <span class="n">ProcnetdevPollster</span>
+<span class="kn">from</span> <span class="nn">apetools.watchers.procpollster</span> <span class="kn">import</span> <span class="n">CpuPollster</span>
+
+
+<span class="k">class</span> <span class="nc">PollerBuilderError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
+<div class="viewcode-block" id="PollerBuilderError"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.PollerBuilderError.html#apetools.builders.subbuilders.pollerbuilders.PollerBuilderError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An exception to raise of the poller can&#39;t be built</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end PollerBuilderError</span>
+
+
+<span class="k">class</span> <span class="nc">BasePollerBuilder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BasePollerBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to base other builders on</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span>
+<div class="viewcode-block" id="BasePollerBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.__init__">[docs]</a>                 <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `node`: device to watch</span>
+<span class="sd">         - `parameters`: named tuple built from config file</span>
+<span class="sd">         - `output`: storageobject to send output to</span>
+<span class="sd">         - `name`: a name to add to the output file</span>
+<span class="sd">         - `event`: event to watch to decide when to stop</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BasePollerBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="n">node</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="o">=</span> <span class="n">event</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output_file</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subdir</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_use_header</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasePollerBuilder.name"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.name.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.name">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A getter for name (identifier)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">use_header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasePollerBuilder.use_header"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.use_header.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.use_header">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: True if this is a new file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_header</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_use_header</span> <span class="o">=</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                                                       <span class="n">subdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">subdir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_use_header</span>
+
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">subdir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasePollerBuilder.subdir"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.subdir.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.subdir">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: name of subdirectory for output file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subdir</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="s">&#39;subdir&#39;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_subdir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">subdir</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_subdir</span> <span class="o">=</span> <span class="s">&#39;logs&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subdir</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasePollerBuilder.filename"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.filename.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: name for output file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;{0}_{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span>
+                              <span class="s">&quot;.log&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">output_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasePollerBuilder.output_file"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.output_file.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.output_file">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: opened file to send output to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                                                 <span class="n">subdir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">subdir</span><span class="p">,</span>
+                                                 <span class="n">mode</span><span class="o">=</span><span class="n">APPEND</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_file</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BasePollerBuilder.interval"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.interval.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.interval">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: time between polls</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="s">&quot;interval&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span>
+<span class="c"># end class BasePollerBuilder</span>
+
+
+<span class="k">class</span> <span class="nc">ProcnetdevPollsterBuilder</span><span class="p">(</span><span class="n">BasePollerBuilder</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="ProcnetdevPollsterBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.html#apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A builder of network interface pollers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ProcnetdevPollsterBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.html#apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ProcnetdevPollsterBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ProcnetdevPollsterBuilder.product"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: rssi-poller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># self.output_file creates it so this check has to come first</span>
+            <span class="n">use_header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_header</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">ProcnetdevPollster</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span>
+                                               <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span>
+                                               <span class="n">interval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">,</span>
+                                               <span class="n">interface</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">interface</span><span class="p">,</span>
+                                               <span class="n">use_header</span><span class="o">=</span><span class="n">use_header</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
+<span class="c"># end class ProcdevnetPollsterBuilder</span>
+
+
+<span class="k">class</span> <span class="nc">RssiPollerBuilder</span><span class="p">(</span><span class="n">BasePollerBuilder</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="RssiPollerBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A builder of rssi-pollers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="RssiPollerBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">RssiPollerBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RssiPollerBuilder.interval"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.interval.html#apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.interval">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: time between polls</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="s">&quot;interval&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">interval</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="RssiPollerBuilder.product"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: rssi-poller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">RssiPoller</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span>
+                                       <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span>
+                                       <span class="n">interval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">,</span>
+                                       <span class="n">use_header</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_header</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
+<span class="c"># end class RssiPollerBuilder</span>
+
+
+<span class="k">class</span> <span class="nc">DevicePollerBuilder</span><span class="p">(</span><span class="n">BasePollerBuilder</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="DevicePollerBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A builder of rssi-pollers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="DevicePollerBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">DevicePollerBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DevicePollerBuilder.product"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: device-poller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">DevicePoller</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span>
+                                         <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span>
+                                         <span class="n">interval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">,</span>
+                                         <span class="n">use_header</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">use_header</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
+<span class="c"># end class DevicePollerBuilder</span>
+
+
+<span class="k">class</span> <span class="nc">CpuPollsterBuilder</span><span class="p">(</span><span class="n">BasePollerBuilder</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="CpuPollsterBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.html#apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A builder of cpu pollers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="CpuPollsterBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.html#apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">CpuPollsterBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="CpuPollsterBuilder.product"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: cpu-poller</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># self.output_file creates it so this check has to come first</span>
+            <span class="n">use_header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">use_header</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">CpuPollster</span><span class="p">(</span><span class="n">device</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">node</span><span class="p">,</span>
+                                        <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_file</span><span class="p">,</span>
+                                        <span class="n">interval</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span><span class="p">,</span>
+                                        <span class="n">use_header</span><span class="o">=</span><span class="n">use_header</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
+<span class="c"># end class CpuPollsterBuilder</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

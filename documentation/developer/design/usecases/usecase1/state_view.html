@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>State View Translation of Use Case 1 &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="state-view-translation-of-use-case-1">
+<h1>State View Translation of Use Case 1<a class="headerlink" href="#state-view-translation-of-use-case-1" title="Permalink to this headline">¶</a></h1>
+<ol class="arabic simple">
+<li>The system gets the configuration from the APE.</li>
+</ol>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-3c0910b53a87da963a5a5a8a3d9662626d287dd2.png" alt="digraph Configuration {
+rankdir = LR
+&quot;Start&quot; -&gt; &quot;Parse Arguments&quot; [label=&quot;clargs&quot;] ;
+&quot;Parse Arguments&quot; -&gt; &quot;&quot; [label=&quot;args&quot;];
+}" />
+</p>
+<ol class="arabic simple" start="2">
+<li>The System translates the configuration to parameters</li>
+</ol>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-fc1f8625168eb763beb439c5037e89c3f1b1d1a5.png" alt="digraph Parse {
+rankdir = LR
+start [label=&quot;&quot;]
+start -&gt; &quot;Parse Configuration&quot; [label=&quot;args&quot;]
+&quot;Parse Configuration&quot; -&gt; &quot;Translate Configuration&quot; [label=&quot;parser&quot;]
+&quot;Translate Configuration&quot; -&gt; &quot;&quot; [label=&quot;parameter&quot;]
+}" />
+</p>
+<ol class="arabic simple" start="3">
+<li>The system builds Components baseed on the parameters.</li>
+</ol>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-19d6ec7ee2148c9a1ad0a3f370f1082f38ae2af5.png" alt="digraph Build {
+rankdir = LR
+start [label = &quot;&quot;]
+end [label=&quot;&quot;]
+start -&gt; &quot;Build Components&quot; [label=&quot;parameters&quot;]
+&quot;Build Components&quot; -&gt; end [label=&quot;component&quot;]
+}" />
+</p>
+<ol class="arabic simple" start="4">
+<li>The system connects to the devices.</li>
+</ol>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-341f72cf411bd9b53e681c637875b1d0c4cc4ac7.png" alt="digraph Connect {
+rankdir=LR
+start [label = &quot;&quot;]
+end [label=&quot;&quot;]
+start -&gt; &quot;Connect&quot; [label=&quot;connector&quot;]
+&quot;Connect&quot; -&gt; end [label=&quot;connection&quot;]
+}" />
+</p>
+<ol class="arabic simple" start="5">
+<li>The system runs throughput to the DUT.</li>
+</ol>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-67fd74764ff2316f204fd57508371c19fd83a399.png" alt="digraph Throughput {
+rankdir=LR
+start [label = &quot;&quot;]
+end [label=&quot;&quot;]
+start -&gt; &quot;Run Throughput&quot; [label=&quot;test parameter&quot;]
+&quot;Run Throughput&quot; -&gt; end [label=&quot;data&quot;]
+}" />
+</p>
+<ol class="arabic simple" start="6">
+<li>The data is saved to a file.</li>
+</ol>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-0fd30ad927441f642a1c4fcbc4c2527a5432d7d2.png" alt="digraph Store {
+rankdir=LR
+start [label = &quot;&quot;]
+end [label=&quot;Files&quot;]
+start -&gt; &quot;Store Data&quot; [label=&quot;data&quot;]
+&quot;Store Data&quot; -&gt; end [label=&quot;file&quot;]
+}" />
+</p>
+<ol class="arabic simple" start="7">
+<li>The logs are copied to the data folder.</li>
+</ol>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-9a9ee7ece1f51090111bc5317bc48b5e463e0776.png" alt="digraph Copy {
+rankdir=LR
+start [label = &quot;&quot;]
+end [label=&quot;Files&quot;]
+start -&gt; &quot;Copy Logs&quot; [label=&quot;log&quot;]
+&quot;Copy Logs&quot; -&gt; end [label=&quot;log'&quot;]
+}" />
+</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../../_sources/documentation/developer/design/usecases/usecase1/state_view.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Log Watcher &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Watchers" href="index.html" />
+    <link rel="next" title="apetools.watchers.logwatcher.LogWatcherError" href="api/apetools.watchers.logwatcher.LogWatcherError.html" />
+    <link rel="prev" title="apetools.watchers.logfollower.LogFollower" href="api/apetools.watchers.logfollower.LogFollower.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.watchers.logwatcher.LogWatcherError.html" title="apetools.watchers.logwatcher.LogWatcherError"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.watchers.logfollower.LogFollower.html" title="apetools.watchers.logfollower.LogFollower"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="log-watcher">
+<h1>Log Watcher<a class="headerlink" href="#log-watcher" title="Permalink to this headline">¶</a></h1>
+<p>A module for watchers of kmsg logs.</p>
+<div class="section" id="logwatchererror">
+<h2>LogWatcherError<a class="headerlink" href="#logwatchererror" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-435b6a075a41f3105ef2c30a4eb255d1fdb29814.png" alt="CommandError &lt;|-- LogWatcherError" />
+</p>
+<span class="target" id="module-apetools.watchers.logwatcher"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcherError.html#apetools.watchers.logwatcher.LogWatcherError" title="apetools.watchers.logwatcher.LogWatcherError"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcherError</span></tt></a></td>
+<td>An error to raise if something is wrong with the LogWatcher</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h2>Log Watcher<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-54cf0ffdf42e4dd2bd7ac420bbec7e395f7306bd.png" alt="BaseThreadClass &lt;|-- LogWatcher" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcher.html#apetools.watchers.logwatcher.LogWatcher" title="apetools.watchers.logwatcher.LogWatcher"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcher</span></tt></a>(output[,&nbsp;event,&nbsp;connection,&nbsp;...])</td>
+<td>A LogWatcher watches a log.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcher.timestamp.html#apetools.watchers.logwatcher.LogWatcher.timestamp" title="apetools.watchers.logwatcher.LogWatcher.timestamp"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcher.timestamp</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a time-stamper</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcher.stop.html#apetools.watchers.logwatcher.LogWatcher.stop" title="apetools.watchers.logwatcher.LogWatcher.stop"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcher.stop</span></tt></a></td>
+<td>This sets the event (to match the Watcher).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcher.stopped.html#apetools.watchers.logwatcher.LogWatcher.stopped" title="apetools.watchers.logwatcher.LogWatcher.stopped"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcher.stopped</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcher.execute.html#apetools.watchers.logwatcher.LogWatcher.execute" title="apetools.watchers.logwatcher.LogWatcher.execute"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcher.execute</span></tt></a>()</td>
+<td>This is a hack until the run can be generalized to accept the command (e.g.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcher.run.html#apetools.watchers.logwatcher.LogWatcher.run" title="apetools.watchers.logwatcher.LogWatcher.run"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcher.run</span></tt></a>(connection)</td>
+<td>Runs an infinite loop that executes cat on self.arguments</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.LogWatcher.start.html#apetools.watchers.logwatcher.LogWatcher.start" title="apetools.watchers.logwatcher.LogWatcher.start"><tt class="xref py py-obj docutils literal"><span class="pre">LogWatcher.start</span></tt></a>([connection])</td>
+<td>Runs self in a thread.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="safe-log-watcher">
+<h2>Safe Log Watcher<a class="headerlink" href="#safe-log-watcher" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-9f47387c232a2307b6bd4d37fb34d0d79c5036b1.png" alt="LogWatcher &lt;|-- SafeLogWatcher" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.SafeLogWatcher.html#apetools.watchers.logwatcher.SafeLogWatcher" title="apetools.watchers.logwatcher.SafeLogWatcher"><tt class="xref py py-obj docutils literal"><span class="pre">SafeLogWatcher</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A SafeLogWatcher uses the connection&#8217;s lock to protect calls to the connection.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.logwatcher.SafeLogWatcher.run.html#apetools.watchers.logwatcher.SafeLogWatcher.run" title="apetools.watchers.logwatcher.SafeLogWatcher.run"><tt class="xref py py-obj docutils literal"><span class="pre">SafeLogWatcher.run</span></tt></a>()</td>
+<td>Runs an infinite loop that reads the tail of the log.</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">kw</span> <span class="o">=</span> <span class="n">LogWatcher</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">kw</span><span class="o">.</span><span class="n">arguments</span>
+    <span class="n">kw</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Log Watcher</a><ul>
+<li><a class="reference internal" href="#logwatchererror">LogWatcherError</a></li>
+<li><a class="reference internal" href="#id1">Log Watcher</a></li>
+<li><a class="reference internal" href="#safe-log-watcher">Safe Log Watcher</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/watchers/logwatcher.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

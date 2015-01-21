@@ -1,0 +1,1363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.pscommand &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commands.pscommand</h1><div class="highlight"><pre>
+<span class="c"># python regular expressions</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c">#apetools</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">CommandError</span>
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">enumerations</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers</span> <span class="kn">import</span> <span class="n">oatbran</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.basecommand</span> <span class="kn">import</span> <span class="n">BaseProcessCommand</span><span class="p">,</span> <span class="n">ProcessCommandEnum</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.basecommand</span> <span class="kn">import</span> <span class="n">BaseProcessGrep</span><span class="p">,</span> <span class="n">ProcessGrepEnum</span>
+<span class="n">operating_systems</span> <span class="o">=</span> <span class="n">enumerations</span><span class="o">.</span><span class="n">OperatingSystem</span>
+
+
+<span class="k">class</span> <span class="nc">PsCommand</span><span class="p">(</span><span class="n">BaseProcessCommand</span><span class="p">):</span>
+<div class="viewcode-block" id="PsCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsCommand.html#apetools.commands.pscommand.PsCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Ps Command issues commands and watches for errors</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        PsCommand Constructor</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection`: A connection to the device</span>
+<span class="sd">         - `arguments`: the arguments to get output from ``ps``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PsCommand</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ``ps`` arguments based on the connection.operating_system</span>
+<span class="sd">        </span>
+<span class="sd">        :return: argument string for the ``ps`` call        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">os</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;setting the arguments for `{0}`&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">os</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">os</span> <span class="o">==</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">android</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Using the android arguments&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s">&quot;-e&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">error_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Holds the expression to match error messages</span>
+
+<span class="sd">        :return: compiled regular expression to match error messages</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># the only difference between the android and linux is the word `command`</span>
+            <span class="c"># sometimes there is a prefix referencing the shell, but this should still work</span>
+            <span class="n">missing</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessCommandEnum</span><span class="o">.</span><span class="n">missing</span><span class="p">,</span>
+                                    <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">command</span><span class="o">+</span><span class="s">&#39;:&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;(?:command\s+)*not&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;found&#39;</span><span class="p">]))</span>
+            <span class="c"># watch out-- android doesn&#39;t raise an error if you pass bad arguments</span>
+            <span class="c"># it just doesn&#39;t work</span>
+            <span class="n">bad_arg</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessCommandEnum</span><span class="o">.</span><span class="n">bad_arg</span><span class="p">,</span>
+                                    <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot;error:&quot;</span><span class="p">,</span>
+                                                           <span class="s">&quot;unsupported&quot;</span><span class="p">,</span>
+                                                           <span class="s">&#39;SysV&#39;</span><span class="p">,</span>
+                                                           <span class="s">&#39;option&#39;</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">missing</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="n">bad_arg</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls ``ps`` on the connection</span>
+
+<span class="sd">        :return: output from the connections call to ps (stdout, stderr)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        `ps`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="s">&#39;ps&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>
+
+
+<span class="c"># linux ps expressions</span>
+<span class="n">PID</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span></div>
+                           <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span><span class="p">)</span>
+<span class="n">TTY</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;\?&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s">&quot;pts/&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span> <span class="o">+</span>
+                    <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NOT_SPACES</span><span class="p">)</span>
+
+<span class="n">TWO_DIGITS</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">DIGIT</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">EXACTLY</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">TIME</span> <span class="o">=</span> <span class="s">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">TWO_DIGITS</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">MAC_TIME</span> <span class="o">=</span> <span class="p">(</span><span class="n">oatbran</span><span class="o">.</span><span class="n">DIGIT</span> <span class="o">+</span> <span class="s">r&quot;{1,2}&quot;</span> <span class="o">+</span> <span class="s">&#39;:&#39;</span> <span class="o">+</span> <span class="n">TWO_DIGITS</span> <span class="o">+</span> <span class="s">&#39;\.&#39;</span> <span class="o">+</span>
+            <span class="n">TWO_DIGITS</span><span class="p">)</span>
+
+<span class="c">#PROCESS = oatbran.NAMED(n=ProcessGrepEnum.process,</span>
+<span class="c">#                        e=&quot;{{{process_name}}}&quot;)</span>
+<span class="n">PSE_LINUX</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">PID</span><span class="p">,</span> <span class="n">TTY</span><span class="p">,</span> <span class="n">TIME</span><span class="p">])</span>
+<span class="n">PSE_MAC</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">PID</span><span class="p">,</span> <span class="n">TTY</span><span class="p">,</span> <span class="n">MAC_TIME</span><span class="p">])</span>
+
+<span class="c">#android ps</span>
+<span class="n">USER</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="n">oatbran</span><span class="o">.</span><span class="n">ALPHA_NUM</span> <span class="o">+</span> <span class="s">&#39;_&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">ONE_OR_MORE</span>
+<span class="n">PPID</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span>
+<span class="n">VSIZE</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span>
+<span class="n">RSS</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span>
+<span class="n">WCHAN</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">ALPHA_NUMS</span>
+<span class="n">PC</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">HEXADECIMALS</span>
+<span class="n">S_OR_R</span> <span class="o">=</span> <span class="s">&quot;(S&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s">&quot;R)&quot;</span>
+<span class="n">PS_ANDROID</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">USER</span><span class="p">,</span> <span class="n">PID</span><span class="p">,</span> <span class="n">PPID</span><span class="p">,</span> <span class="n">VSIZE</span><span class="p">,</span> <span class="n">RSS</span><span class="p">,</span> <span class="n">WCHAN</span><span class="p">,</span> <span class="n">PC</span><span class="p">,</span> <span class="n">S_OR_R</span><span class="p">))</span>
+
+<span class="c">#cygwin</span>
+<span class="c">#CYGWIN = oatbran.STRING_START + oatbran.SPACES + NAMED(n=expressions.PID_NAME,e=INTEGER)</span>
+
+
+<span class="k">class</span> <span class="nc">PsGrep</span><span class="p">(</span><span class="n">BaseProcessGrep</span><span class="p">):</span>
+<div class="viewcode-block" id="PsGrep"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsGrep.html#apetools.commands.pscommand.PsGrep">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Ps command adapted to extract process IDs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        PsGrep Constructon</span>
+
+<span class="sd">        :param:</span>
+<span class="sd">        </span>
+<span class="sd">         - `process`: The name of the process to get (if not set pass into call())</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PsGrep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+            
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">process_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The ``top`` command</span>
+
+<span class="sd">        :return: PsCommand to return output from the ``top`` command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Setting the PsCommand&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span> <span class="o">=</span> <span class="n">PsCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the regular expression to match output based on the connection.operating_system</span>
+<span class="sd">        </span>
+<span class="sd">        :return: compiled regular expression for the ps command</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">==</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">android</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Using Android Expression&quot;</span><span class="p">)</span>
+                <span class="n">expression</span> <span class="o">=</span> <span class="n">PS_ANDROID</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">==</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">windows</span><span class="p">:</span>
+                <span class="c">#self.logger.debug(&quot;Using Cygwin Expression&quot;)</span>
+                <span class="c">#expression = CYGWIN</span>
+                <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="s">&quot;Cygwin Expression not implemented&quot;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">==</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">mac</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Using Mac OS &#39;ps&#39; regular expression&quot;</span><span class="p">)</span>
+                <span class="n">expression</span> <span class="o">=</span> <span class="n">PSE_MAC</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c">#self.logger.debug(&quot;Using linux expression&quot;)</span>
+                <span class="n">expression</span> <span class="o">=</span> <span class="n">PSE_LINUX</span>
+            <span class="n">expression</span> <span class="o">=</span> <span class="p">(</span><span class="n">expression</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span>
+                          <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span><span class="p">,</span>
+                                        <span class="n">e</span><span class="o">=</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">))</span> <span class="o">+</span>
+                                        <span class="s">r&#39;(\b|$)&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Expression: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expression</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>       
+
+<span class="c"># end class PsGrep    </span>
+
+
+<span class="c">#python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">ascii_letters</span>
+
+<span class="c"># third-party</span>
+<span class="kn">from</span> <span class="nn">nose.tools</span> <span class="kn">import</span> <span class="n">raises</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+<span class="kn">import</span> <span class="nn">nose</span>
+<span class="c">#apetools</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.enumerations</span> <span class="kn">import</span> <span class="n">OperatingSystem</span>
+
+
+<span class="n">nexus_command_not_found</span> <span class="o">=</span> <span class="s">&#39;/system/bin/sh: ps: not found&#39;</span>
+<span class="n">first_ubuntu_line</span> <span class="o">=</span> <span class="s">&quot;  PID TTY          TIME CMD&quot;</span>
+<span class="n">getty_pids</span> <span class="o">=</span> <span class="s">&quot;1068 1075 1087 1089 1095  1629&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">ubuntu_lines</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;    1 ?        00:00:56 init</span>
+<span class="s">    2 ?        00:00:00 kthreadd</span>
+<span class="s">    3 ?        00:02:54 ksoftirqd/0</span>
+<span class="s">    5 ?        00:00:27 kworker/u:0</span>
+<span class="s">    6 ?        00:00:15 migration/0</span>
+<span class="s">    7 ?        00:00:03 watchdog/0</span>
+<span class="s">    8 ?        00:00:46 migration/1</span>
+<span class="s">   10 ?        00:03:25 ksoftirqd/1</span>
+<span class="s">   11 ?        00:00:04 watchdog/1</span>
+<span class="s">   12 ?        00:00:15 migration/2</span>
+<span class="s">   14 ?        00:02:56 ksoftirqd/2</span>
+<span class="s">   15 ?        00:00:04 watchdog/2</span>
+<span class="s">   16 ?        00:00:46 migration/3</span>
+<span class="s">   18 ?        00:03:29 ksoftirqd/3</span>
+<span class="s">   19 ?        00:00:04 watchdog/3</span>
+<span class="s">   20 ?        00:00:00 cpuset</span>
+<span class="s">   21 ?        00:00:00 khelper</span>
+<span class="s">   22 ?        00:00:00 kdevtmpfs</span>
+<span class="s">   23 ?        00:00:00 netns</span>
+<span class="s">   25 ?        00:00:02 sync_supers</span>
+<span class="s">   26 ?        00:00:00 bdi-default</span>
+<span class="s">   27 ?        00:00:00 kintegrityd</span>
+<span class="s">   28 ?        00:00:00 kblockd</span>
+<span class="s">   29 ?        00:00:00 ata_sff</span>
+<span class="s">   30 ?        00:00:00 khubd</span>
+<span class="s">   31 ?        00:00:00 md</span>
+<span class="s">   36 ?        00:00:00 khungtaskd</span>
+<span class="s">   37 ?        00:00:18 kswapd0</span>
+<span class="s">   38 ?        00:00:00 ksmd</span>
+<span class="s">   39 ?        00:00:00 khugepaged</span>
+<span class="s">   40 ?        00:00:00 fsnotify_mark</span>
+<span class="s">   41 ?        00:00:00 ecryptfs-kthrea</span>
+<span class="s">   42 ?        00:00:00 crypto</span>
+<span class="s">   51 ?        00:00:00 kthrotld</span>
+<span class="s">   52 ?        00:00:00 scsi_eh_0</span>
+<span class="s">   53 ?        00:00:00 scsi_eh_1</span>
+<span class="s">   56 ?        00:00:00 binder</span>
+<span class="s">   76 ?        00:00:00 deferwq</span>
+<span class="s">   77 ?        00:00:00 charger_manager</span>
+<span class="s">   78 ?        00:00:00 devfreq_wq</span>
+<span class="s">  295 ?        00:00:00 kdmflush</span>
+<span class="s">  296 ?        00:00:00 kcryptd_io</span>
+<span class="s">  297 ?        00:00:00 kcryptd</span>
+<span class="s">  310 ?        00:00:00 kdmflush</span>
+<span class="s">  313 ?        00:00:00 kdmflush</span>
+<span class="s">  335 ?        00:01:29 jbd2/dm-1-8</span>
+<span class="s">  336 ?        00:00:00 ext4-dio-unwrit</span>
+<span class="s">  355 ?        00:00:23 flush-252:1</span>
+<span class="s">  567 ?        00:00:00 upstart-udev-br</span>
+<span class="s">  569 ?        00:00:00 udevd</span>
+<span class="s">  664 ?        00:00:00 kpsmoused</span>
+<span class="s">  713 ?        00:00:00 hd-audio0</span>
+<span class="s">  787 ?        00:00:00 upstart-socket</span>
+<span class="s">  799 ?        00:00:00 kvm-irqfd-clean</span>
+<span class="s">  894 ?        00:00:00 aspell</span>
+<span class="s">  896 ?        00:02:57 sshd</span>
+<span class="s">  955 ?        00:00:06 dbus-daemon</span>
+<span class="s">  984 ?        00:00:00 modem-manager</span>
+<span class="s">  986 ?        00:00:00 bluetoothd</span>
+<span class="s"> 1007 ?        00:00:10 NetworkManager</span>
+<span class="s"> 1013 ?        00:00:15 avahi-daemon</span>
+<span class="s"> 1016 ?        00:00:00 avahi-daemon</span>
+<span class="s"> 1018 ?        00:00:13 polkitd</span>
+<span class="s"> 1052 ?        00:00:03 cupsd</span>
+<span class="s"> 1068 tty4     00:00:00 getty</span>
+<span class="s"> 1075 tty5     00:00:00 getty</span>
+<span class="s"> 1087 tty2     00:00:00 getty</span>
+<span class="s"> 1089 tty3     00:00:00 getty</span>
+<span class="s"> 1095 tty6     00:00:00 getty</span>
+<span class="s"> 1118 ?        00:00:00 acpid</span>
+<span class="s"> 1124 ?        00:00:00 lightdm</span>
+<span class="s"> 1126 ?        00:00:50 whoopsie</span>
+<span class="s"> 1131 ?        00:00:50 irqbalance</span>
+<span class="s"> 1141 ?        00:00:01 cron</span>
+<span class="s"> 1142 ?        00:00:00 atd</span>
+<span class="s"> 1147 ?        00:00:00 krfcommd</span>
+<span class="s"> 1163 tty7     03:19:43 Xorg</span>
+<span class="s"> 1197 ?        00:00:15 accounts-daemon</span>
+<span class="s"> 1241 ?        00:00:02 console-kit-dae</span>
+<span class="s"> 1329 ?        00:00:04 master</span>
+<span class="s"> 1368 ?        00:00:00 kworker/1:1</span>
+<span class="s"> 1417 ?        00:00:00 upowerd</span>
+<span class="s"> 1429 ?        00:22:43 nagios3</span>
+<span class="s"> 1494 ?        00:00:31 apache2</span>
+<span class="s"> 1548 ?        00:00:02 kworker/0:2</span>
+<span class="s"> 1629 tty1     00:00:00 getty</span>
+<span class="s"> 1643 ?        00:00:00 colord</span>
+<span class="s"> 1651 ?        00:00:00 lightdm</span>
+<span class="s"> 1706 ?        00:00:08 rtkit-daemon</span>
+<span class="s"> 1748 ?        00:00:06 dnsmasq</span>
+<span class="s"> 1944 ?        00:00:00 qmgr</span>
+<span class="s"> 2055 ?        00:00:04 gnome-keyring-d</span>
+<span class="s"> 2066 ?        00:00:16 gnome-session</span>
+<span class="s"> 2101 ?        00:00:03 ssh-agent</span>
+<span class="s"> 2104 ?        00:00:00 dbus-launch</span>
+<span class="s"> 2105 ?        00:01:02 dbus-daemon</span>
+<span class="s"> 2107 ?        00:00:00 at-spi-bus-laun</span>
+<span class="s"> 2111 ?        00:00:01 dbus-daemon</span>
+<span class="s"> 2114 ?        00:00:19 at-spi2-registr</span>
+<span class="s"> 2125 ?        00:03:05 gnome-settings-</span>
+<span class="s"> 2133 ?        00:00:03 gvfsd</span>
+<span class="s"> 2137 ?        00:00:00 gvfsd-fuse</span>
+<span class="s"> 2145 ?        02:41:39 compiz</span>
+<span class="s"> 2150 ?        00:00:00 dconf-service</span>
+<span class="s"> 2154 ?        00:00:11 nm-applet</span>
+<span class="s"> 2156 ?        00:00:09 gnome-fallback-</span>
+<span class="s"> 2157 ?        00:00:09 bluetooth-apple</span>
+<span class="s"> 2158 ?        00:00:08 polkit-gnome-au</span>
+<span class="s"> 2160 ?        00:00:52 nautilus</span>
+<span class="s"> 2174 ?        00:00:05 gvfs-udisks2-vo</span>
+<span class="s"> 2179 ?        00:05:50 udisksd</span>
+<span class="s"> 2191 ?        00:39:03 pulseaudio</span>
+<span class="s"> 2203 ?        00:00:00 gvfs-gphoto2-vo</span>
+<span class="s"> 2205 ?        00:00:02 gconfd-2</span>
+<span class="s"> 2209 ?        00:00:00 gvfs-afc-volume</span>
+<span class="s"> 2215 ?        00:00:00 gconf-helper</span>
+<span class="s"> 2218 ?        00:00:00 gvfsd-trash</span>
+<span class="s"> 2224 ?        00:01:50 bamfdaemon</span>
+<span class="s"> 2233 ?        00:00:00 gvfsd-metadata</span>
+<span class="s"> 2237 ?        00:00:00 gvfsd-burn</span>
+<span class="s"> 2241 ?        00:00:00 sh</span>
+<span class="s"> 2242 ?        00:01:36 gtk-window-deco</span>
+<span class="s"> 2254 ?        00:19:24 unity-panel-ser</span>
+<span class="s"> 2256 ?        00:06:21 hud-service</span>
+<span class="s"> 2269 ?        00:00:09 indicator-print</span>
+<span class="s"> 2271 ?        00:00:00 indicator-appli</span>
+<span class="s"> 2277 ?        00:00:00 indicator-sessi</span>
+<span class="s"> 2278 ?        00:00:05 indicator-datet</span>
+<span class="s"> 2284 ?        00:00:00 indicator-messa</span>
+<span class="s"> 2285 ?        00:00:08 indicator-sound</span>
+<span class="s"> 2302 ?        00:00:00 evolution-sourc</span>
+<span class="s"> 2322 ?        00:00:03 goa-daemon</span>
+<span class="s"> 2326 ?        00:00:00 geoclue-master</span>
+<span class="s"> 2338 ?        00:00:00 ubuntu-geoip-pr</span>
+<span class="s"> 2501 ?        00:26:15 screen</span>
+<span class="s"> 2721 ?        00:00:08 telepathy-indic</span>
+<span class="s"> 2727 ?        00:00:00 mission-control</span>
+<span class="s"> 2733 ?        00:00:01 signon-ui</span>
+<span class="s"> 2798 ?        00:00:54 gnome-screensav</span>
+<span class="s"> 2799 ?        00:00:16 zeitgeist-datah</span>
+<span class="s"> 2805 ?        00:00:01 zeitgeist-daemo</span>
+<span class="s"> 2812 ?        00:00:01 zeitgeist-fts</span>
+<span class="s"> 2817 ?        00:00:00 cat</span>
+<span class="s"> 3120 ?        00:00:25 unity-applicati</span>
+<span class="s"> 3122 ?        00:00:08 unity-files-dae</span>
+<span class="s"> 3128 ?        00:00:18 unity-music-dae</span>
+<span class="s"> 3130 ?        00:00:01 unity-shopping-</span>
+<span class="s"> 3131 ?        00:00:00 unity-gwibber-d</span>
+<span class="s"> 3132 ?        00:00:01 unity-lens-phot</span>
+<span class="s"> 3134 ?        00:00:02 unity-lens-vide</span>
+<span class="s"> 3222 ?        00:00:00 unity-musicstor</span>
+<span class="s"> 3224 ?        00:00:00 unity-scope-gdo</span>
+<span class="s"> 3258 ?        00:00:04 unity-scope-vid</span>
+<span class="s"> 3394 ?        00:00:30 udisks-daemon</span>
+<span class="s"> 3395 ?        00:00:00 udisks-daemon</span>
+<span class="s"> 3415 ?        00:00:01 python</span>
+<span class="s"> 3545 ?        00:00:00 dbus</span>
+<span class="s"> 3568 ?        00:00:27 update-notifier</span>
+<span class="s"> 3616 ?        00:00:00 system-service-</span>
+<span class="s"> 4084 ?        02:53:19 spotify</span>
+<span class="s"> 4578 ?        00:00:00 unity-webapps-s</span>
+<span class="s"> 4689 ?        00:00:00 kworker/3:0</span>
+<span class="s"> 5258 ?        00:00:44 deja-dup-monito</span>
+<span class="s"> 6325 pts/12   00:00:00 bash</span>
+<span class="s"> 7865 pts/9    00:00:00 bash</span>
+<span class="s"> 8045 ?        00:00:00 pickup</span>
+<span class="s">10192 ?        00:00:05 python</span>
+<span class="s">10334 pts/3    00:00:00 bash</span>
+<span class="s">10464 pts/3    00:02:47 irssi</span>
+<span class="s">10512 pts/6    00:00:00 bash</span>
+<span class="s">10746 ?        00:00:06 kworker/2:0</span>
+<span class="s">10879 ?        00:00:00 kworker/3:2</span>
+<span class="s">11424 pts/8    00:00:00 sudo</span>
+<span class="s">11463 pts/8    00:00:00 sh</span>
+<span class="s">12121 pts/6    00:00:00 emacsclient</span>
+<span class="s">12653 ?        00:00:00 kworker/0:0</span>
+<span class="s">13410 ?        00:00:01 apache2</span>
+<span class="s">13625 ?        03:32:55 firefox</span>
+<span class="s">13749 ?        00:00:00 python3</span>
+<span class="s">16114 ?        00:00:00 lightdm</span>
+<span class="s">16403 ?        00:28:06 firefox</span>
+<span class="s">16981 ?        00:00:00 kworker/0:1</span>
+<span class="s">17324 ?        00:02:10 rsyslogd</span>
+<span class="s">18088 pts/14   00:00:00 bash</span>
+<span class="s">18419 pts/14   00:00:00 ps</span>
+<span class="s">18502 pts/10   00:00:00 bash</span>
+<span class="s">18776 pts/11   00:00:00 python</span>
+<span class="s">18857 ?        00:00:00 sh</span>
+<span class="s">18858 ?        00:05:52 gnome-terminal</span>
+<span class="s">18865 ?        00:00:00 gnome-pty-helpe</span>
+<span class="s">18866 pts/0    00:00:00 bash</span>
+<span class="s">21609 pts/7    00:00:01 gtypist</span>
+<span class="s">22016 ?        00:00:01 gvfsd-http</span>
+<span class="s">22066 ?        00:00:07 update-manager</span>
+<span class="s">22165 ?        00:42:14 emacs</span>
+<span class="s">22302 pts/4    00:00:07 python</span>
+<span class="s">22760 ?        00:00:03 apache2</span>
+<span class="s">22947 ?        00:00:02 kworker/u:1</span>
+<span class="s">23714 ?        00:00:06 kworker/1:0</span>
+<span class="s">24007 pts/0    00:00:00 screen</span>
+<span class="s">26493 pts/7    00:00:00 bash</span>
+<span class="s">26780 ?        00:00:00 udevd</span>
+<span class="s">26781 ?        00:00:00 udevd</span>
+<span class="s">29452 ?        00:00:00 kworker/2:1</span>
+<span class="s">31106 ?        00:00:03 apache2</span>
+<span class="s">31107 ?        00:00:03 apache2</span>
+<span class="s">31108 ?        00:00:03 apache2</span>
+<span class="s">31109 ?        00:00:03 apache2</span>
+<span class="s">31110 ?        00:00:03 apache2</span>
+<span class="s">31692 ?        00:18:25 plugin-containe&#39;&#39;&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+<span class="n">ubuntu_process_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="s">&quot;&quot;&quot;init           </span>
+<span class="s">kthreadd       </span>
+<span class="s">ksoftirqd/0    </span>
+<span class="s">kworker/u:0    </span>
+<span class="s">migration/0    </span>
+<span class="s">watchdog/0     </span>
+<span class="s">migration/1    </span>
+<span class="s">ksoftirqd/1    </span>
+<span class="s">watchdog/1     </span>
+<span class="s">migration/2    </span>
+<span class="s">ksoftirqd/2    </span>
+<span class="s">watchdog/2     </span>
+<span class="s">migration/3    </span>
+<span class="s">ksoftirqd/3    </span>
+<span class="s">watchdog/3     </span>
+<span class="s">cpuset         </span>
+<span class="s">khelper        </span>
+<span class="s">kdevtmpfs      </span>
+<span class="s">netns          </span>
+<span class="s">sync_supers    </span>
+<span class="s">bdi-default    </span>
+<span class="s">kintegrityd    </span>
+<span class="s">kblockd        </span>
+<span class="s">ata_sff        </span>
+<span class="s">khubd          </span>
+<span class="s">md             </span>
+<span class="s">khungtaskd     </span>
+<span class="s">kswapd0        </span>
+<span class="s">ksmd           </span>
+<span class="s">khugepaged     </span>
+<span class="s">fsnotify_mark  </span>
+<span class="s">ecryptfs-kthrea</span>
+<span class="s">crypto         </span>
+<span class="s">kthrotld       </span>
+<span class="s">scsi_eh_0      </span>
+<span class="s">scsi_eh_1      </span>
+<span class="s">binder         </span>
+<span class="s">deferwq        </span>
+<span class="s">charger_manager</span>
+<span class="s">devfreq_wq     </span>
+<span class="s">kdmflush       </span>
+<span class="s">kcryptd_io     </span>
+<span class="s">kcryptd        </span>
+<span class="s">kdmflush       </span>
+<span class="s">kdmflush       </span>
+<span class="s">jbd2/dm-1-8    </span>
+<span class="s">ext4-dio-unwrit</span>
+<span class="s">flush-252:1    </span>
+<span class="s">upstart-udev-br</span>
+<span class="s">udevd          </span>
+<span class="s">kpsmoused      </span>
+<span class="s">hd-audio0      </span>
+<span class="s">upstart-socket</span>
+<span class="s">kvm-irqfd-clean</span>
+<span class="s">aspell         </span>
+<span class="s">sshd           </span>
+<span class="s">dbus-daemon    </span>
+<span class="s">modem-manager  </span>
+<span class="s">bluetoothd     </span>
+<span class="s">NetworkManager </span>
+<span class="s">avahi-daemon   </span>
+<span class="s">avahi-daemon   </span>
+<span class="s">polkitd        </span>
+<span class="s">cupsd          </span>
+<span class="s">getty          </span>
+<span class="s">getty          </span>
+<span class="s">getty          </span>
+<span class="s">getty          </span>
+<span class="s">getty          </span>
+<span class="s">acpid          </span>
+<span class="s">lightdm        </span>
+<span class="s">whoopsie       </span>
+<span class="s">irqbalance     </span>
+<span class="s">cron           </span>
+<span class="s">atd            </span>
+<span class="s">krfcommd       </span>
+<span class="s">Xorg           </span>
+<span class="s">accounts-daemon</span>
+<span class="s">console-kit-dae</span>
+<span class="s">master         </span>
+<span class="s">kworker/1:1    </span>
+<span class="s">upowerd        </span>
+<span class="s">nagios3        </span>
+<span class="s">apache2        </span>
+<span class="s">kworker/0:2    </span>
+<span class="s">getty          </span>
+<span class="s">colord         </span>
+<span class="s">lightdm        </span>
+<span class="s">rtkit-daemon   </span>
+<span class="s">dnsmasq        </span>
+<span class="s">qmgr           </span>
+<span class="s">gnome-keyring-d</span>
+<span class="s">gnome-session  </span>
+<span class="s">ssh-agent      </span>
+<span class="s">dbus-launch    </span>
+<span class="s">dbus-daemon    </span>
+<span class="s">at-spi-bus-laun</span>
+<span class="s">dbus-daemon    </span>
+<span class="s">at-spi2-registr</span>
+<span class="s">gnome-settings-</span>
+<span class="s">gvfsd          </span>
+<span class="s">gvfsd-fuse     </span>
+<span class="s">compiz         </span>
+<span class="s">dconf-service  </span>
+<span class="s">nm-applet      </span>
+<span class="s">gnome-fallback-</span>
+<span class="s">bluetooth-apple</span>
+<span class="s">polkit-gnome-au</span>
+<span class="s">nautilus       </span>
+<span class="s">gvfs-udisks2-vo</span>
+<span class="s">udisksd        </span>
+<span class="s">pulseaudio     </span>
+<span class="s">gvfs-gphoto2-vo</span>
+<span class="s">gconfd-2       </span>
+<span class="s">gvfs-afc-volume</span>
+<span class="s">gconf-helper   </span>
+<span class="s">gvfsd-trash    </span>
+<span class="s">bamfdaemon     </span>
+<span class="s">gvfsd-metadata </span>
+<span class="s">gvfsd-burn     </span>
+<span class="s">sh             </span>
+<span class="s">gtk-window-deco</span>
+<span class="s">unity-panel-ser</span>
+<span class="s">hud-service    </span>
+<span class="s">indicator-print</span>
+<span class="s">indicator-appli</span>
+<span class="s">indicator-sessi</span>
+<span class="s">indicator-datet</span>
+<span class="s">indicator-messa</span>
+<span class="s">indicator-sound</span>
+<span class="s">evolution-sourc</span>
+<span class="s">goa-daemon     </span>
+<span class="s">geoclue-master </span>
+<span class="s">ubuntu-geoip-pr</span>
+<span class="s">screen         </span>
+<span class="s">telepathy-indic</span>
+<span class="s">mission-control</span>
+<span class="s">signon-ui      </span>
+<span class="s">gnome-screensav</span>
+<span class="s">zeitgeist-datah</span>
+<span class="s">zeitgeist-daemo</span>
+<span class="s">zeitgeist-fts  </span>
+<span class="s">cat            </span>
+<span class="s">unity-applicati</span>
+<span class="s">unity-files-dae</span>
+<span class="s">unity-music-dae</span>
+<span class="s">unity-shopping-</span>
+<span class="s">unity-gwibber-d</span>
+<span class="s">unity-lens-phot</span>
+<span class="s">unity-lens-vide</span>
+<span class="s">unity-musicstor</span>
+<span class="s">unity-scope-gdo</span>
+<span class="s">unity-scope-vid</span>
+<span class="s">udisks-daemon  </span>
+<span class="s">udisks-daemon  </span>
+<span class="s">python         </span>
+<span class="s">dbus           </span>
+<span class="s">update-notifier</span>
+<span class="s">system-service-</span>
+<span class="s">spotify        </span>
+<span class="s">unity-webapps-s</span>
+<span class="s">kworker/3:0    </span>
+<span class="s">deja-dup-monito</span>
+<span class="s">bash           </span>
+<span class="s">bash           </span>
+<span class="s">pickup         </span>
+<span class="s">python         </span>
+<span class="s">bash           </span>
+<span class="s">irssi          </span>
+<span class="s">bash           </span>
+<span class="s">kworker/2:0    </span>
+<span class="s">kworker/3:2    </span>
+<span class="s">sudo           </span>
+<span class="s">sh             </span>
+<span class="s">emacsclient    </span>
+<span class="s">kworker/0:0    </span>
+<span class="s">apache2        </span>
+<span class="s">firefox        </span>
+<span class="s">python3        </span>
+<span class="s">lightdm        </span>
+<span class="s">firefox        </span>
+<span class="s">kworker/0:1    </span>
+<span class="s">rsyslogd       </span>
+<span class="s">bash           </span>
+<span class="s">ps             </span>
+<span class="s">bash           </span>
+<span class="s">python         </span>
+<span class="s">sh             </span>
+<span class="s">gnome-terminal </span>
+<span class="s">gnome-pty-helpe</span>
+<span class="s">bash           </span>
+<span class="s">gtypist        </span>
+<span class="s">gvfsd-http     </span>
+<span class="s">update-manager </span>
+<span class="s">emacs          </span>
+<span class="s">python         </span>
+<span class="s">apache2        </span>
+<span class="s">kworker/u:1    </span>
+<span class="s">kworker/1:0    </span>
+<span class="s">screen         </span>
+<span class="s">bash           </span>
+<span class="s">udevd          </span>
+<span class="s">udevd          </span>
+<span class="s">kworker/2:1    </span>
+<span class="s">apache2        </span>
+<span class="s">apache2        </span>
+<span class="s">apache2        </span>
+<span class="s">apache2        </span>
+<span class="s">apache2        </span>
+<span class="s">plugin-containe&quot;&quot;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]</span>
+
+<span class="n">ubuntu_process_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="s">&#39;&#39;&#39;1</span>
+<span class="s">    2</span>
+<span class="s">    3</span>
+<span class="s">    5</span>
+<span class="s">    6</span>
+<span class="s">    7</span>
+<span class="s">    8</span>
+<span class="s">   10</span>
+<span class="s">   11</span>
+<span class="s">   12</span>
+<span class="s">   14</span>
+<span class="s">   15</span>
+<span class="s">   16</span>
+<span class="s">   18</span>
+<span class="s">   19</span>
+<span class="s">   20</span>
+<span class="s">   21</span>
+<span class="s">   22</span>
+<span class="s">   23</span>
+<span class="s">   25</span>
+<span class="s">   26</span>
+<span class="s">   27</span>
+<span class="s">   28</span>
+<span class="s">   29</span>
+<span class="s">   30</span>
+<span class="s">   31</span>
+<span class="s">   36</span>
+<span class="s">   37</span>
+<span class="s">   38</span>
+<span class="s">   39</span>
+<span class="s">   40</span>
+<span class="s">   41</span>
+<span class="s">   42</span>
+<span class="s">   51</span>
+<span class="s">   52</span>
+<span class="s">   53</span>
+<span class="s">   56</span>
+<span class="s">   76</span>
+<span class="s">   77</span>
+<span class="s">   78</span>
+<span class="s">  295</span>
+<span class="s">  296</span>
+<span class="s">  297</span>
+<span class="s">  310</span>
+<span class="s">  313</span>
+<span class="s">  335</span>
+<span class="s">  336</span>
+<span class="s">  355</span>
+<span class="s">  567</span>
+<span class="s">  569</span>
+<span class="s">  664</span>
+<span class="s">  713</span>
+<span class="s">  787</span>
+<span class="s">  799</span>
+<span class="s">  894</span>
+<span class="s">  896</span>
+<span class="s">  955</span>
+<span class="s">  984</span>
+<span class="s">  986</span>
+<span class="s"> 1007</span>
+<span class="s"> 1013</span>
+<span class="s"> 1016</span>
+<span class="s"> 1018</span>
+<span class="s"> 1052</span>
+<span class="s"> 1068</span>
+<span class="s"> 1075</span>
+<span class="s"> 1087</span>
+<span class="s"> 1089</span>
+<span class="s"> 1095</span>
+<span class="s"> 1118</span>
+<span class="s"> 1124</span>
+<span class="s"> 1126</span>
+<span class="s"> 1131</span>
+<span class="s"> 1141</span>
+<span class="s"> 1142</span>
+<span class="s"> 1147</span>
+<span class="s"> 1163</span>
+<span class="s"> 1197</span>
+<span class="s"> 1241</span>
+<span class="s"> 1329</span>
+<span class="s"> 1368</span>
+<span class="s"> 1417</span>
+<span class="s"> 1429</span>
+<span class="s"> 1494</span>
+<span class="s"> 1548</span>
+<span class="s"> 1629</span>
+<span class="s"> 1643</span>
+<span class="s"> 1651</span>
+<span class="s"> 1706</span>
+<span class="s"> 1748</span>
+<span class="s"> 1944</span>
+<span class="s"> 2055</span>
+<span class="s"> 2066</span>
+<span class="s"> 2101</span>
+<span class="s"> 2104</span>
+<span class="s"> 2105</span>
+<span class="s"> 2107</span>
+<span class="s"> 2111</span>
+<span class="s"> 2114</span>
+<span class="s"> 2125</span>
+<span class="s"> 2133</span>
+<span class="s"> 2137</span>
+<span class="s"> 2145</span>
+<span class="s"> 2150</span>
+<span class="s"> 2154</span>
+<span class="s"> 2156</span>
+<span class="s"> 2157</span>
+<span class="s"> 2158</span>
+<span class="s"> 2160</span>
+<span class="s"> 2174</span>
+<span class="s"> 2179</span>
+<span class="s"> 2191</span>
+<span class="s"> 2203</span>
+<span class="s"> 2205</span>
+<span class="s"> 2209</span>
+<span class="s"> 2215</span>
+<span class="s"> 2218</span>
+<span class="s"> 2224</span>
+<span class="s"> 2233</span>
+<span class="s"> 2237</span>
+<span class="s"> 2241</span>
+<span class="s"> 2242</span>
+<span class="s"> 2254</span>
+<span class="s"> 2256</span>
+<span class="s"> 2269</span>
+<span class="s"> 2271</span>
+<span class="s"> 2277</span>
+<span class="s"> 2278</span>
+<span class="s"> 2284</span>
+<span class="s"> 2285</span>
+<span class="s"> 2302</span>
+<span class="s"> 2322</span>
+<span class="s"> 2326</span>
+<span class="s"> 2338</span>
+<span class="s"> 2501</span>
+<span class="s"> 2721</span>
+<span class="s"> 2727</span>
+<span class="s"> 2733</span>
+<span class="s"> 2798</span>
+<span class="s"> 2799</span>
+<span class="s"> 2805</span>
+<span class="s"> 2812</span>
+<span class="s"> 2817</span>
+<span class="s"> 3120</span>
+<span class="s"> 3122</span>
+<span class="s"> 3128</span>
+<span class="s"> 3130</span>
+<span class="s"> 3131</span>
+<span class="s"> 3132</span>
+<span class="s"> 3134</span>
+<span class="s"> 3222</span>
+<span class="s"> 3224</span>
+<span class="s"> 3258</span>
+<span class="s"> 3394</span>
+<span class="s"> 3395</span>
+<span class="s"> 3415</span>
+<span class="s"> 3545</span>
+<span class="s"> 3568</span>
+<span class="s"> 3616</span>
+<span class="s"> 4084</span>
+<span class="s"> 4578</span>
+<span class="s"> 4689</span>
+<span class="s"> 5258</span>
+<span class="s"> 6325</span>
+<span class="s"> 7865</span>
+<span class="s"> 8045</span>
+<span class="s">10192</span>
+<span class="s">10334</span>
+<span class="s">10464</span>
+<span class="s">10512</span>
+<span class="s">10746</span>
+<span class="s">10879</span>
+<span class="s">11424</span>
+<span class="s">11463</span>
+<span class="s">12121</span>
+<span class="s">12653</span>
+<span class="s">13410</span>
+<span class="s">13625</span>
+<span class="s">13749</span>
+<span class="s">16114</span>
+<span class="s">16403</span>
+<span class="s">16981</span>
+<span class="s">17324</span>
+<span class="s">18088</span>
+<span class="s">18419</span>
+<span class="s">18502</span>
+<span class="s">18776</span>
+<span class="s">18857</span>
+<span class="s">18858</span>
+<span class="s">18865</span>
+<span class="s">18866</span>
+<span class="s">21609</span>
+<span class="s">22016</span>
+<span class="s">22066</span>
+<span class="s">22165</span>
+<span class="s">22302</span>
+<span class="s">22760</span>
+<span class="s">22947</span>
+<span class="s">23714</span>
+<span class="s">24007</span>
+<span class="s">26493</span>
+<span class="s">26780</span>
+<span class="s">26781</span>
+<span class="s">29452</span>
+<span class="s">31106</span>
+<span class="s">31107</span>
+<span class="s">31108</span>
+<span class="s">31109</span>
+<span class="s">31110</span>
+<span class="s">31692&#39;&#39;&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)]</span>
+
+<span class="n">android_output</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME</span>
+<span class="s">root      1     0     276    264   80168c10 0000eccc S /init</span>
+<span class="s">root      2     0     0      0     800f3e24 00000000 S kthreadd</span>
+<span class="s">root      3     2     0      0     800e030c 00000000 S ksoftirqd/0</span>
+<span class="s">root      4     2     0      0     800f0434 00000000 S events/0</span>
+<span class="s">root      5     2     0      0     800f0434 00000000 S khelper</span>
+<span class="s">root      6     2     0      0     800fad2c 00000000 S async/mgr</span>
+<span class="s">root      7     2     0      0     800f0434 00000000 S suspend</span>
+<span class="s">root      8     2     0      0     80116bac 00000000 S irq/155-pm8058-</span>
+<span class="s">root      9     2     0      0     80142948 00000000 S sync_supers</span>
+<span class="s">root      10    2     0      0     801433ac 00000000 S bdi-default</span>
+<span class="s">root      11    2     0      0     800f0434 00000000 S kblockd/0</span>
+<span class="s">root      12    2     0      0     800f0434 00000000 S ksuspend_usbd</span>
+<span class="s">root      13    2     0      0     803134d4 00000000 S khubd</span>
+<span class="s">root      14    2     0      0     800f0434 00000000 S kmmcd</span>
+<span class="s">root      15    2     0      0     800f0434 00000000 S bluetooth</span>
+<span class="s">root      16    2     0      0     800f0434 00000000 S rpciod/0</span>
+<span class="s">root      17    2     0      0     800f0434 00000000 S modem_notifier</span>
+<span class="s">root      18    2     0      0     800f0434 00000000 S qmi</span>
+<span class="s">root      19    2     0      0     800f0434 00000000 S nmea</span>
+<span class="s">root      20    2     0      0     800f0434 00000000 S rpcrouter</span>
+<span class="s">root      21    2     0      0     8005b8d0 00000000 D rpcrotuer_smd_x</span>
+<span class="s">root      22    2     0      0     800f0434 00000000 S dalrpc_rcv_DAL0</span>
+<span class="s">root      23    2     0      0     8005fa84 00000000 S krpcserversd</span>
+<span class="s">root      24    2     0      0     8005dc34 00000000 D krmt_storagecln</span>
+<span class="s">root      25    2     0      0     80061314 00000000 D krmt_storagecln</span>
+<span class="s">root      26    2     0      0     8013a8dc 00000000 S kswapd0</span>
+<span class="s">root      27    2     0      0     800f0434 00000000 S aio/0</span>
+<span class="s">root      28    2     0      0     800f0434 00000000 S nfsiod</span>
+<span class="s">root      29    2     0      0     800f0434 00000000 S crypto/0</span>
+<span class="s">root      39    2     0      0     800f0434 00000000 S mdp_dma_wq</span>
+<span class="s">root      40    2     0      0     800f0434 00000000 S mdp_vsync_wq</span>
+<span class="s">root      41    2     0      0     800f0434 00000000 S mdp_pipe_ctrl_w</span>
+<span class="s">root      42    2     0      0     800f0434 00000000 S vidc_worker_que</span>
+<span class="s">root      43    2     0      0     800f0434 00000000 S vidc_timer_wq</span>
+<span class="s">root      44    2     0      0     800f0434 00000000 S diag_wq</span>
+<span class="s">root      45    2     0      0     800f0434 00000000 S scsi_tgtd/0</span>
+<span class="s">root      46    2     0      0     802ebb74 00000000 S mtdblockd</span>
+<span class="s">root      53    2     0      0     800f0434 00000000 S k_otg</span>
+<span class="s">root      54    2     0      0     803479e0 00000000 S usb_mass_storag</span>
+<span class="s">root      55    2     0      0     800f0434 00000000 S k_gserial</span>
+<span class="s">root      56    2     0      0     800f0434 00000000 S k_rmnet_work</span>
+<span class="s">root      57    2     0      0     800f0434 00000000 S headset_hook</span>
+<span class="s">root      58    2     0      0     800f0434 00000000 S fwupdate_wq</span>
+<span class="s">root      59    2     0      0     8005dc34 00000000 D krtcclntd</span>
+<span class="s">root      60    2     0      0     80061314 00000000 D krtcclntcbd</span>
+<span class="s">root      61    2     0      0     80399940 00000000 D mt9p111_flashle</span>
+<span class="s">root      62    2     0      0     8005dc34 00000000 D kbatteryclntd</span>
+<span class="s">root      63    2     0      0     80061314 00000000 D kbatteryclntcbd</span>
+<span class="s">root      64    2     0      0     800f0434 00000000 S kstriped</span>
+<span class="s">root      65    2     0      0     800f0434 00000000 S kondemand/0</span>
+<span class="s">root      66    2     0      0     800f0434 00000000 S kconservative/0</span>
+<span class="s">root      67    2     0      0     80116bac 00000000 S irq/270-msm-sdc</span>
+<span class="s">root      68    2     0      0     800f0434 00000000 S switch_gpio</span>
+<span class="s">root      69    2     0      0     800f0434 00000000 S usbhid_resumer</span>
+<span class="s">root      70    2     0      0     800f0434 00000000 S binder</span>
+<span class="s">root      71    2     0      0     805087c8 00000000 S krfcommd</span>
+<span class="s">root      72    2     0      0     8006b76c 00000000 D voice</span>
+<span class="s">root      73    2     0      0     800b5af4 00000000 S acdb_cb_thread</span>
+<span class="s">root      74    2     0      0     8005dc34 00000000 D khsclntd</span>
+<span class="s">root      75    2     0      0     803ce22c 00000000 S mmcqd</span>
+<span class="s">root      76    2     0      0     803ce22c 00000000 S mmcqd</span>
+<span class="s">root      77    2     0      0     801ca904 00000000 S kjournald</span>
+<span class="s">root      80    2     0      0     80178c20 00000000 S flush-179:0</span>
+<span class="s">root      81    2     0      0     801ca904 00000000 S kjournald</span>
+<span class="s">root      82    2     0      0     801ca904 00000000 S kjournald</span>
+<span class="s">root      83    2     0      0     801ca904 00000000 S kjournald</span>
+<span class="s">root      86    2     0      0     801ca904 00000000 S kjournald</span>
+<span class="s">system    88    1     700    252   803e14b4 6fd0dbbc S /system/bin/servicemanager</span>
+<span class="s">root      89    1     3636   408   ffffffff 6fd0e22c S /system/bin/vold</span>
+<span class="s">root      90    1     3960   608   ffffffff 6fd0e22c S /system/bin/netd</span>
+<span class="s">radio     92    1     8044   480   ffffffff 6fd0dce4 S /system/bin/qmuxd</span>
+<span class="s">radio     93    1     17996  2412  ffffffff ffff0520 S /system/bin/rild</span>
+<span class="s">root      95    1     146784 16620 80168c10 6fd0dce4 S zygote</span>
+<span class="s">media     96    1     34840  4296  ffffffff 6fd0dbbc S /system/bin/mediaserver</span>
+<span class="s">bluetooth 97    1     1164   332   80168c10 ffff0520 S /system/bin/dbus-daemon</span>
+<span class="s">root      98    1     704    276   804adb6c 6fd0d91c S /system/bin/installd</span>
+<span class="s">system    99    1     784    276   804108c8 6fd0e54c S /system/bin/fm_server</span>
+<span class="s">system    100   1     772    232   804108c8 6fd0e54c S /system/bin/runit</span>
+<span class="s">compass   101   1     712    264   80355d74 6fd0d91c S /system/bin/geomagneticd</span>
+<span class="s">compass   102   1     2744   272   ffffffff 6fd0eb8c S /system/bin/orientationd</span>
+<span class="s">compass   103   1     2744   276   ffffffff 6fd0eb8c S /system/bin/proximityd</span>
+<span class="s">compass   104   1     2748   292   ffffffff 6fd0eb8c S /system/bin/lightd</span>
+<span class="s">keystore  105   1     1512   236   804108c8 6fd0e54c S /system/bin/keystore</span>
+<span class="s">system    106   1     560    228   8010e8b4 6fd0d91c S /system/bin/logfile</span>
+<span class="s">root      108   1     2020   452   ffffffff 6fd0d91c S /system/bin/port-bridge</span>
+<span class="s">root      109   1     5348   676   ffffffff 6fd0eb8c S /system/bin/netmgrd</span>
+<span class="s">root      112   1     5808   268   ffffffff 6fd0dbbc S /system/bin/rmt_storage</span>
+<span class="s">root      113   1     4672   708   ffffffff 6fd0dbbc S /system/bin/hdmid</span>
+<span class="s">system    172   95    373280 42484 ffffffff 6fd0dbbc S system_server</span>
+<span class="s">app_91    264   95    221836 23160 ffffffff 6fd0eb8c S org.pocketworkstation.pckeyboard</span>
+<span class="s">radio     272   95    235036 24896 ffffffff 6fd0eb8c S com.android.phone</span>
+<span class="s">system    273   95    202460 14148 ffffffff 6fd0eb8c S com.fihtdc.batteryprotect</span>
+<span class="s">app_79    277   95    259180 36696 ffffffff 6fd0eb8c S com.android.launcher</span>
+<span class="s">system    281   95    207336 18228 ffffffff 6fd0eb8c S com.android.settings</span>
+<span class="s">app_19    310   95    236472 23296 ffffffff 6fd0eb8c S com.google.process.gapps</span>
+<span class="s">root      378   2     0      0     802c35f0 00000000 S loop1</span>
+<span class="s">system    380   1     636    232   80161874 6fd0d91c S /system/bin/sh</span>
+<span class="s">root      410   2     0      0     7f014060 00000000 S WD_Thread</span>
+<span class="s">root      411   2     0      0     803cc708 00000000 S ksdioirqd/mmc1</span>
+<span class="s">root      412   2     0      0     7f014858 00000000 S MC_Thread</span>
+<span class="s">root      413   2     0      0     7f014388 00000000 S TX_Thread</span>
+<span class="s">log       421   1     572    276   802895f0 6fd0d91c S /system/bin/logwrapper</span>
+<span class="s">wifi      422   421   2084   832   80168c10 6fd0dce4 S /system/bin/wpa_supplicant</span>
+<span class="s">app_88    430   95    214876 28036 ffffffff 6fd0eb8c S com.google.android.apps.listen</span>
+<span class="s">app_47    464   95    204016 16064 ffffffff 6fd0eb8c S android.process.media</span>
+<span class="s">root      505   2     0      0     802c35f0 00000000 S loop0</span>
+<span class="s">root      507   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      519   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      520   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">system    536   1     3604   764   ffffffff 6fd0e22c S /system/bin/icdr-auto</span>
+<span class="s">app_32    541   95    206572 17340 ffffffff 6fd0eb8c S android.process.acore</span>
+<span class="s">root      547   2     0      0     802c35f0 00000000 S loop2</span>
+<span class="s">root      550   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      551   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      552   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      640   2     0      0     802c35f0 00000000 S loop3</span>
+<span class="s">root      641   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      642   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      643   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      658   2     0      0     802c35f0 00000000 S loop4</span>
+<span class="s">root      659   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      660   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      661   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      665   2     0      0     802c35f0 00000000 S loop5</span>
+<span class="s">root      667   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      668   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      669   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      694   2     0      0     802c35f0 00000000 S loop6</span>
+<span class="s">root      695   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      696   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      697   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      715   2     0      0     802c35f0 00000000 S loop7</span>
+<span class="s">root      716   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      717   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      718   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      729   2     0      0     802c35f0 00000000 S loop8</span>
+<span class="s">root      730   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      731   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      732   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      733   2     0      0     802c35f0 00000000 S loop9</span>
+<span class="s">root      734   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      735   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      736   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      761   2     0      0     802c35f0 00000000 S loop10</span>
+<span class="s">root      762   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      763   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      764   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      793   2     0      0     802c35f0 00000000 S loop11</span>
+<span class="s">root      794   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      795   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      796   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      827   2     0      0     802c35f0 00000000 S loop12</span>
+<span class="s">root      830   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      831   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      832   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      834   2     0      0     802c35f0 00000000 S loop13</span>
+<span class="s">root      843   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      845   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      847   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      853   2     0      0     802c35f0 00000000 S loop14</span>
+<span class="s">root      857   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      859   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      860   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      878   2     0      0     802c35f0 00000000 S loop15</span>
+<span class="s">root      880   2     0      0     800f0434 00000000 S kdmflush</span>
+<span class="s">root      883   2     0      0     800f0434 00000000 S kcryptd_io</span>
+<span class="s">root      886   2     0      0     800f0434 00000000 S kcryptd</span>
+<span class="s">root      934   1     4344   204   ffffffff 000081e4 S emacsclient</span>
+<span class="s">root      935   1     4344   204   ffffffff 000081e4 S emacs</span>
+<span class="s">root      936   1     4344   204   ffffffff 000081e4 S /sbin/adbd</span>
+<span class="s">app_88    1462  95    258340 17052 ffffffff 6fd0eb8c S com.google.android.apps.listen:remote</span>
+<span class="s">root      1555  1     564    232   804108c8 6fd0e54c S /system/bin/debuggerd</span>
+<span class="s">app_76    1568  95    257376 18728 ffffffff 6fd0eb8c S com.google.android.apps.maps</span>
+<span class="s">app_102   1977  95    203256 16388 ffffffff 6fd0eb8c S com.googlecode.mindbell:remote</span>
+<span class="s">app_108   2349  95    203384 15984 ffffffff 6fd0eb8c S jp.gr.java_conf.wire_dev.UnKeyLockerService</span>
+<span class="s">system    2419  380   780    280   8010ff88 6fd0d91c S cat</span>
+<span class="s">app_80    2429  95    217660 20068 ffffffff 6fd0eb8c S net.artifix.pomodroido.free</span>
+<span class="s">app_19    3533  95    216128 17456 ffffffff 6fd0eb8c S com.google.android.gcm</span>
+<span class="s">app_70    3960  95    206252 16832 ffffffff 6fd0eb8c S com.android.providers.calendar</span>
+<span class="s">app_105   5190  95    219824 22112 ffffffff 6fd0eb8c S com.adylitica.android.DoItTomorrow</span>
+<span class="s">app_111   5343  95    244104 27132 ffffffff 6fd0eb8c S com.evernote</span>
+<span class="s">app_68    5359  95    243748 23112 ffffffff 6fd0eb8c S com.android.vending</span>
+<span class="s">app_76    5396  95    233592 25360 ffffffff 6fd0eb8c S com.google.android.apps.maps:GoogleLocationService</span>
+<span class="s">app_76    5411  95    223980 22636 ffffffff 6fd0eb8c S com.google.android.apps.maps:FriendService</span>
+<span class="s">app_76    5418  95    226228 24392 ffffffff 6fd0eb8c S com.google.android.apps.maps:LocationFriendService</span>
+<span class="s">app_118   5429  95    203108 14056 ffffffff 6fd0eb8c S com.robbieone.plum</span>
+<span class="s">app_107   5648  95    207148 16020 ffffffff 6fd0eb8c S com.caynax.hourlychime</span>
+<span class="s">dhcp      5724  1     744    384   80168c10 6fd0e9fc S /system/bin/dhcpcd</span>
+<span class="s">app_29    5752  95    205392 15348 ffffffff 6fd0eb8c S com.google.android.apps.uploader</span>
+<span class="s">app_112   5762  95    202988 15116 ffffffff 6fd0eb8c S ru.org.amip.ClockSync</span>
+<span class="s">app_74    5772  95    208904 19828 ffffffff 6fd0eb8c S com.android.email</span>
+<span class="s">app_99    5793  95    221152 22160 ffffffff 6fd0eb8c S com.wunderground.android.weather</span>
+<span class="s">root      5914  936   632    324   800dd0f0 6fd0e82c S /system/bin/sh</span>
+<span class="s">root      5916  5914  784    340   00000000 6fd0d91c R ps</span>
+<span class="s">app_64    14450 95    222352 22536 ffffffff 6fd0eb8c S com.google.android.gm</span>
+<span class="s">app_81    14458 95    215644 17360 ffffffff 6fd0eb8c S com.google.android.apps.unveil</span>
+<span class="s">app_115   22449 95    219336 21816 ffffffff 6fd0eb8c S im.doit.pro&quot;&quot;&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="n">android_line</span> <span class="o">=</span> <span class="s">&quot;app_115   22449 95    219336 21816 ffffffff 6fd0eb8c S im.doit.pro&quot;</span>
+<span class="n">android_process</span> <span class="o">=</span> <span class="s">&#39;im.doit.pro&#39;</span>
+<span class="n">android_pid</span> <span class="o">=</span> <span class="s">&#39;22449&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">TestPs</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps</span> <span class="o">=</span> <span class="n">PsCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the constructor have the expected signature?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">connection</span><span class="o">=</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">ps</span> <span class="o">=</span> <span class="n">PsCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_wrong_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the PsCommand raise a CommandError if ``ps`` isn&#39;t installed?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="s">&#39;ps: command not found&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_wrong_command_nexus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the wrong-command expression match a nexus 7 error message?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="s">&#39;/system/bin/sh: ps: not found&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_bad_argument</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does PsCommand raise a CommandError if a bad command is given?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;error: unsupported SysV option&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+    <span class="k">def</span> <span class="nf">test_bad_argument_android</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does PsCommand raise a CommandError if a bad command is given on an Android (no)&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does an error from standard error get passed to the checker?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;ps: command not found&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_no_processes_found</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is a warning raised if no processes are found?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">android</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="p">():</span>
+            <span class="k">pass</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="s">&quot;No processes found, check `ps `&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="s">&#39;USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="k">class</span> <span class="nc">TestPsGrep</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_process</span> <span class="o">=</span> <span class="s">&#39;spotify&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_pid</span> <span class="o">=</span> <span class="s">&#39;4084&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span> <span class="o">=</span> <span class="n">PsGrep</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_process</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the `__call__` return all the matching PIDs?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">ubuntu_lines</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">])</span>
+        
+        <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">pid</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;getty&#39;</span><span class="p">)):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">getty_pids</span><span class="p">[</span><span class="n">count</span><span class="p">],</span> <span class="n">pid</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">getty_pids</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the constructor have the expected signature?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ascii_letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))])</span>
+        <span class="n">connection</span><span class="o">=</span><span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">grep</span> <span class="o">=</span> <span class="n">PsGrep</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="n">process</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">grep</span><span class="o">.</span><span class="n">process</span><span class="p">,</span> <span class="n">process</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">grep</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the expression not match lines similar to the process-lines?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">first_ubuntu_line</span><span class="p">))</span>
+        <span class="k">return</span>
+
+
+    <span class="k">def</span> <span class="nf">test_call_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does passing in the name of the process override the process passed in on construction?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">ubuntu_lines</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;emacs&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="s">&#39;22165&#39;</span><span class="p">)</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the expression match the output lines correctly?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ubuntu_lines</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">ubuntu_process_names</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Line: `{0}` did not match process {1} with expression &#39;{2}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span>
+                                                                                           <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process</span><span class="p">,</span>
+                                                                                           <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">pattern</span><span class="p">))</span>
+            <span class="n">pid_map</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ubuntu_process_list</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">pid_map</span><span class="p">[</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">],</span>
+                             <span class="n">msg</span><span class="o">=</span><span class="s">&quot;expected: {0}, actual {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ubuntu_process_list</span><span class="p">[</span><span class="n">index</span><span class="p">],</span>
+                                                                    <span class="n">pid_map</span><span class="p">[</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">]))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_name_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If the process-name-field is set, will it yield the names instead of PID?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">ubuntu_lines</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">field</span> <span class="o">=</span> <span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span>
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_process</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_process</span><span class="p">,</span>
+                             <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Expected: {0}, Actual: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">test_process</span><span class="p">,</span>
+                                                                     <span class="n">pid</span><span class="p">))</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_change_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the PsCommand get a new connection if you change the PsGrep&#39;s connection?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                         <span class="n">msg</span><span class="o">=</span><span class="s">&quot;setUp connection not setting up&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process_query</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                         <span class="n">msg</span><span class="o">=</span><span class="s">&#39;setUp connection not passed to ps&#39;</span><span class="p">)</span>
+        <span class="n">connection_2</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection_2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection_2</span><span class="p">,</span>
+                         <span class="n">msg</span><span class="o">=</span><span class="s">&quot;grep connection not set&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process_query</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                         <span class="n">connection_2</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">def</span> <span class="nf">test_android_output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does it work with android output?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">android_output</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">android</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>
+        <span class="n">called</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="s">&#39;emacs&#39;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="s">&#39;935&#39;</span><span class="p">)</span>
+            <span class="n">called</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">called</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_android_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Can the expression get the PID?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">android</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process</span> <span class="o">=</span> <span class="n">android_process</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">android_line</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">match</span><span class="p">,</span>
+                             <span class="n">msg</span><span class="o">=</span><span class="s">&quot;Didn&#39;t match &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">android_line</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Do the arguments change when the connection changes?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># linux by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">linux</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;-e&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process_query</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+
+        <span class="c">#try android</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">OperatingSystem</span><span class="o">.</span><span class="n">android</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">process_query</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
+        <span class="k">return</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

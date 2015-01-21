@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Errors &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-errors">
+<h1>The Errors<a class="headerlink" href="#the-errors" title="Permalink to this headline">¶</a></h1>
+<p>These are Errors that are raised which can be caught by any class (as opposed to Infrastructure errors).</p>
+<div class="section" id="connection-error">
+<h2>Connection Error<a class="headerlink" href="#connection-error" title="Permalink to this headline">¶</a></h2>
+<p>This is raised when the connection is unable to communicate with a device. It should be a fatal error.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-8e14c0e8d0d7c276a220d3a59ea3221b29db30c5.png" alt="ConnectionError:" />
+</p>
+</div>
+<div class="section" id="connection-warning">
+<h2>Connection Warning<a class="headerlink" href="#connection-warning" title="Permalink to this headline">¶</a></h2>
+<p>These are errors which may not necessarily be fatal - e.g. trying to do something which is prohibited by permissions.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-eaa8e0f8ff995155712c3d904f58ebce7d48f552.png" alt="ConnectionWarning:" />
+</p>
+</div>
+<div class="section" id="timeouterror">
+<h2>TimeoutError<a class="headerlink" href="#timeouterror" title="Permalink to this headline">¶</a></h2>
+<p>The TimeoutError is a general error to be raised when a socket or file-like object times-out.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-cafc292d57790031f14fc2dfbbc31dee95035f52.png" alt="TimeoutError:" />
+</p>
+</div>
+<div class="section" id="commanderror">
+<h2>CommandError<a class="headerlink" href="#commanderror" title="Permalink to this headline">¶</a></h2>
+<p>The CommandError is an error that a command raises when something command-specific created an error. The severity of this error has to be determined by the user of the command.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-91fa813d857a3b07367954eff317f0d23aece97c.png" alt="CommandError:" />
+</p>
+</div>
+<div class="section" id="configurationerror">
+<h2>ConfigurationError<a class="headerlink" href="#configurationerror" title="Permalink to this headline">¶</a></h2>
+<p>Configuration Errors are raised if there was a problem with the user&#8217;s configuration. These should be fatal, as they indicated a disparity between what the user indicated was expected or desired and what was actually found.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-5b5207b461781b3b91f120fc2e5213a626c30727.png" alt="ConfigurationError:" />
+</p>
+</div>
+<div class="section" id="storageerror">
+<h2>StorageError<a class="headerlink" href="#storageerror" title="Permalink to this headline">¶</a></h2>
+<p>Storage Errors are raised by the StorageOutput on encountering errors writing to the output file.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-175670f14689eb31dcb4d188d7ea9921f7500dcb.png" alt="StorageOutput:" />
+</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Errors</a><ul>
+<li><a class="reference internal" href="#connection-error">Connection Error</a></li>
+<li><a class="reference internal" href="#connection-warning">Connection Warning</a></li>
+<li><a class="reference internal" href="#timeouterror">TimeoutError</a></li>
+<li><a class="reference internal" href="#commanderror">CommandError</a></li>
+<li><a class="reference internal" href="#configurationerror">ConfigurationError</a></li>
+<li><a class="reference internal" href="#storageerror">StorageError</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/commons/errors.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

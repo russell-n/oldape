@@ -1,0 +1,251 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.devices.dummydevice &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.devices.dummydevice</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.connections.localconnection</span> <span class="kn">import</span> <span class="n">OutputError</span>
+
+
+<span class="k">class</span> <span class="nc">DummyConnection</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyConnection"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to act as a fake connection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyConnection.__init__"><a class="viewcode-back" href="../../../devices/api/apetools.devices.dummydevice.DummyConnection.html#apetools.devices.dummydevice.DummyConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">DummyConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DummyConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyConnection._procedure_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs the command and arguments then returns empty strings</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: command to send to the connection</span>
+<span class="sd">         - `arguments`: arguments for the command</span>
+<span class="sd">         - `timeout`: readline timeout</span>
+
+<span class="sd">        :return: OutputError with empty strings as data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;DummyCall: {0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DummyConnection.__getattr__"><a class="viewcode-back" href="../../../devices/api/apetools.devices.dummydevice.DummyConnection.__getattr__.html#apetools.devices.dummydevice.DummyConnection.__getattr__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls _procedure call (enables the dot-notation calls)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">procedure_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_procedure_call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">procedure_call</span>
+<span class="c"># end class DummyConnection</span>
+
+
+<span class="k">class</span> <span class="nc">DummyDevice</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="DummyDevice"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to configure and query linux devices</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.__init__"><a class="viewcode-back" href="../../../devices/api/apetools.devices.dummydevice.DummyDevice.html#apetools.devices.dummydevice.DummyDevice.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DummyDevice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.connection"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a Dummy Connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">DummyConnection</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+        
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.address"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the address of the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;DummyAddress&quot;</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the MAC address of the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;DummyMac&quot;</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.bssid"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fake Basic service set identification </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;DummyBSSID&quot;</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">wifi_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.wifi_info"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.wifi_info">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a summary string of available wifi info.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;SSID:</span><span class="se">\t</span><span class="s">{ssid}</span><span class="se">\n</span><span class="s">BSSID:</span><span class="se">\t</span><span class="s">{bssid}</span><span class="se">\n</span><span class="s">RSSI:</span><span class="se">\t</span><span class="s">{rssi}</span><span class="se">\n</span><span class="s">IP Address:</span><span class="se">\t</span><span class="s">{ip}</span><span class="se">\n</span><span class="s">MAC:</span><span class="se">\t</span><span class="s">{mac}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ssid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span>
+                                                                                                        <span class="n">bssid</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bssid</span><span class="p">,</span>
+                                                                                                        <span class="n">rssi</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">rssi</span><span class="p">,</span>
+                                                                                                        <span class="n">ip</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">address</span><span class="p">,</span>
+                                                                                                        <span class="n">mac</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">mac_address</span><span class="p">)</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.ssid"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fake identifier for the AP</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;DummySSID&quot;</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="DummyDevice.rssi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: rssi from the wifi_query</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&quot;DummyRSSI&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">disable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DummyDevice.disable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs the fact that this method was called.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Disable WiFi Called&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">enable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DummyDevice.enable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs the fact that this method was called</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Enable WiFi Called&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
+<div class="viewcode-block" id="DummyDevice.log"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `message`: a string to send to the syslog</span>
+
+<span class="sd">        :postcondition: message sent to the syslog</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="c"># end class DummyDevice</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

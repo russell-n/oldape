@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Windows Device &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Devices" href="index.html" />
+    <link rel="next" title="apetools.devices.windowsdevice.WindowsDevice" href="api/apetools.devices.windowsdevice.WindowsDevice.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.devices.windowsdevice.WindowsDevice.html" title="apetools.devices.windowsdevice.WindowsDevice"
+             accesskey="N">next</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Devices</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="windows-device">
+<h1>Windows Device<a class="headerlink" href="#windows-device" title="Permalink to this headline">¶</a></h1>
+<p>A Windows Device controller and queryer.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-31a32fe2781d280e025e2ee45096d35b04b5f952.png" alt="BaseDevice &lt;|-- WindowsDevice
+WindowsDevice o- WindowsSSIDConnect
+WindowsDevice o- Ipconfig
+WindowsDevice o- WmicWin32NetworkAdapter
+WindowsDevice o- WinRssi
+WindowsDevice o- NetshWlan
+WindowsDevice o- SSHConnection" />
+</p>
+<span class="target" id="module-apetools.devices.windowsdevice"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice" title="apetools.devices.windowsdevice.WindowsDevice"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to control and query windows devices</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.ssid_connect" title="apetools.devices.windowsdevice.WindowsDevice.ssid_connect"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.ssid_connect</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a Windows SSID Connect command</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.ipconfig" title="apetools.devices.windowsdevice.WindowsDevice.ipconfig"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.ipconfig</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the Ipconfig</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wifi_control" title="apetools.devices.windowsdevice.WindowsDevice.wifi_control"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.wifi_control</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">WmicWin32NetworkAdapter</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.rssi_query" title="apetools.devices.windowsdevice.WindowsDevice.rssi_query"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.rssi_query</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">WinRssi querier</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.rssi" title="apetools.devices.windowsdevice.WindowsDevice.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.rssi</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current rssi on the device</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wifi_info" title="apetools.devices.windowsdevice.WindowsDevice.wifi_info"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.wifi_info</span></tt></a></td>
+<td>calls &#8216;wifi status&#8217;</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.wify_query</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.address" title="apetools.devices.windowsdevice.WindowsDevice.address"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the IP Address of the wireless interface</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.enable_wifi" title="apetools.devices.windowsdevice.WindowsDevice.enable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.enable_wifi</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body"><cite>wmic</cite> called to enable the radio</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.disable_wifi" title="apetools.devices.windowsdevice.WindowsDevice.disable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.disable_wifi</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body"><cite>wmic</cite> called to disable radio</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.display" title="apetools.devices.windowsdevice.WindowsDevice.display"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.display</span></tt></a>(message)</td>
+<td>Not implemented</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.log" title="apetools.devices.windowsdevice.WindowsDevice.log"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.log</span></tt></a>(message)</td>
+<td>Calls &#8216;eventcreate /l Sysytem /id 999 /d &#8220;&lt;message&gt;&#8221; /t Informateion /so Private&#8217;</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wake_screen" title="apetools.devices.windowsdevice.WindowsDevice.wake_screen"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.wake_screen</span></tt></a>()</td>
+<td>Not implemented</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.connect" title="apetools.devices.windowsdevice.WindowsDevice.connect"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.connect</span></tt></a>(ssid)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.disconnect" title="apetools.devices.windowsdevice.WindowsDevice.disconnect"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice.disconnect</span></tt></a>()</td>
+<td>Calls &#8216;netsh wlan disconnect&#8217;</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/devices/windowsdevice.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Local Connection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Connections" href="index.html" />
+    <link rel="next" title="apetools.connections.localconnection.LocalConnection" href="api/apetools.connections.localconnection.LocalConnection.html" />
+    <link rel="prev" title="apetools.connections.adbconnection.ADBShellSSHConnection" href="api/apetools.connections.adbconnection.ADBShellSSHConnection.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.connections.localconnection.LocalConnection.html" title="apetools.connections.localconnection.LocalConnection"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.connections.adbconnection.ADBShellSSHConnection.html" title="apetools.connections.adbconnection.ADBShellSSHConnection"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Connections</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="local-connection">
+<h1>Local Connection<a class="headerlink" href="#local-connection" title="Permalink to this headline">¶</a></h1>
+<p>a module to hold a local connection.</p>
+<p>The LocalConnection takes the command-line command as a property and
+the arguments to the command as parameters.</p>
+<p>e.g.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">lc</span> <span class="o">=</span> <span class="n">LocalConnection</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span>
+</pre></div>
+</div>
+<p>prints the output of the <cite>ls -l</cite> command line command</p>
+<p>This is using subprocess so anything with lots of iperf runs the risk of
+causing the output to block (i.e. it is file-buffered, not line or character buffered).</p>
+<p>In most cases it&#8217;s better to use the LocalNixConnection instead which uses Pexpect to avoid the block.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SPACER</span> <span class="o">=</span> <span class="s">&#39;{0} {1} &#39;</span>
+<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s">&quot;Unknown command: &quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">SPACE</span> <span class="o">=</span> <span class="s">&quot; &quot;</span>
+
+<span class="n">OutputError</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;OutputError&quot;</span><span class="p">,</span> <span class="s">&#39;output error&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="localconnection">
+<h2>LocalConnection<a class="headerlink" href="#localconnection" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-1462e4e51aeb3bb5c1b606e9166d33ec73e819a0.png" alt="BaseClass &lt;|-- LocalConnection" />
+</p>
+<span class="target" id="module-apetools.connections.localconnection"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection" title="apetools.connections.localconnection.LocalConnection"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection</span></tt></a>([command_prefix])</td>
+<td>A local connection talks to a local command-line shell.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection.queue" title="apetools.connections.localconnection.LocalConnection.queue"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection.queue</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Queue.Queue</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._procedure_call" title="apetools.connections.localconnection.LocalConnection._procedure_call"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection._procedure_call</span></tt></a>(command[,&nbsp;...])</td>
+<td>This is provided so it can be overriden by subclasses.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._main" title="apetools.connections.localconnection.LocalConnection._main"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection._main</span></tt></a>(command[,&nbsp;arguments,&nbsp;...])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.localconnection.LocalConnection.__getattr__.html#apetools.connections.localconnection.LocalConnection.__getattr__" title="apetools.connections.localconnection.LocalConnection.__getattr__"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection.__getattr__</span></tt></a>(command)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="localnixconnection">
+<h2>LocalNixConnection<a class="headerlink" href="#localnixconnection" title="Permalink to this headline">¶</a></h2>
+<p>Uses <cite>pexpect</cite> instead of sub-process.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-1c9229de4fb1e90983b16572e8db1a3be060589c.png" alt="LocalConnection &lt;|-- LocalNixConnection" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection" title="apetools.connections.localconnection.LocalNixConnection"><tt class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A Class that uses Pexpect to get around the problem of file-buffering</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection.run" title="apetools.connections.localconnection.LocalNixConnection.run"><tt class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection.run</span></tt></a>(command,&nbsp;arguments)</td>
+<td>runs the Pexpect command and puts lines of output on the Queue</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Local Connection</a><ul>
+<li><a class="reference internal" href="#localconnection">LocalConnection</a></li>
+<li><a class="reference internal" href="#localnixconnection">LocalNixConnection</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/connections/localconnection.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

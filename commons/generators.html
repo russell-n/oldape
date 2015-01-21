@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Generators &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commons" href="index.html" />
+    <link rel="next" title="apetools.commons.generators.find" href="api/apetools.commons.generators.find.html" />
+    <link rel="prev" title="apetools.commons.filterer.DummyEvent.is_set" href="api/apetools.commons.filterer.DummyEvent.is_set.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commons.generators.find.html" title="apetools.commons.generators.find"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commons.filterer.DummyEvent.is_set.html" title="apetools.commons.filterer.DummyEvent.is_set"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commons</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="generators">
+<h1>Generators<a class="headerlink" href="#generators" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold the generators for the concatenator.</p>
+<div class="section" id="module-apetools.commons.generators">
+<span id="the-find-generator"></span><h2>The <cite>find</cite> Generator<a class="headerlink" href="#module-apetools.commons.generators" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.find" title="apetools.commons.generators.find"><tt class="xref py py-obj docutils literal"><span class="pre">find</span></tt></a>(glob[,&nbsp;start])</td>
+<td>Matches all below cwd or start-directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-shallow-find-class">
+<h2>The Shallow Find Class<a class="headerlink" href="#the-shallow-find-class" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind" title="apetools.commons.generators.ShallowFind"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind</span></tt></a>(glob[,&nbsp;path])</td>
+<td>A finder of files that doesn&#8217;t traverse directories</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.path" title="apetools.commons.generators.ShallowFind.path"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.path</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the path to the directory to search</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.filenames" title="apetools.commons.generators.ShallowFind.filenames"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.filenames</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">all files found in the path</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_names" title="apetools.commons.generators.ShallowFind.matching_names"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.matching_names</span></tt></a></td>
+<td>Added so count could be given to hortator</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_count" title="apetools.commons.generators.ShallowFind.matching_count"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.matching_count</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">count of matching names</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.reset" title="apetools.commons.generators.ShallowFind.reset"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.reset</span></tt></a>()</td>
+<td>Sets all properties to None</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.__iter__.html#apetools.commons.generators.ShallowFind.__iter__" title="apetools.commons.generators.ShallowFind.__iter__"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.__iter__</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">yield:</th><td class="field-body">the matching filenames</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-shallow-find-generator">
+<h2>The <cite>shallow_find</cite> Generator<a class="headerlink" href="#the-shallow-find-generator" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.shallow_find" title="apetools.commons.generators.shallow_find"><tt class="xref py py-obj docutils literal"><span class="pre">shallow_find</span></tt></a>(glob[,&nbsp;start])</td>
+<td>Matches only in one directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-concantenate-generator">
+<h2>The <cite>concantenate</cite> Generator<a class="headerlink" href="#the-concantenate-generator" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.concatenate" title="apetools.commons.generators.concatenate"><tt class="xref py py-obj docutils literal"><span class="pre">concatenate</span></tt></a>(glob[,&nbsp;start])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Generators</a><ul>
+<li><a class="reference internal" href="#module-apetools.commons.generators">The <cite>find</cite> Generator</a></li>
+<li><a class="reference internal" href="#the-shallow-find-class">The Shallow Find Class</a></li>
+<li><a class="reference internal" href="#the-shallow-find-generator">The <cite>shallow_find</cite> Generator</a></li>
+<li><a class="reference internal" href="#the-concantenate-generator">The <cite>concantenate</cite> Generator</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commons/generators.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.parsers.iperfparser &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.parsers.iperfparser">
+<span id="apetools-parsers-iperfparser"></span><h1>apetools.parsers.iperfparser<a class="headerlink" href="#module-apetools.parsers.iperfparser" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">coroutine</span></tt>(func)</td>
+<td>A decorator to start coroutines</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">namedtuple</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BandwidthData</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpression</span></tt>()</td>
+<td>The Csv Expression holds the expression to match iperf&#8217;s csv format</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpression</span></tt>()</td>
+<td>The Human Expression matches the human-readable iperf output</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../../parsers/api/apetools.parsers.iperfparser.IperfParser.html#apetools.parsers.iperfparser.IperfParser" title="apetools.parsers.iperfparser.IperfParser"><tt class="xref py py-obj docutils literal"><span class="pre">IperfParser</span></tt></a>([expected_interval,&nbsp;...])</td>
+<td>The Iperf Parser extracts bandwidth and other information from the output</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ParserKeys</span></tt></td>
+<td>A holder of the keys to the groupdict</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">UnitConverter</span></tt>()</td>
+<td>The UnitConverter is a conversion lookup table.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">defaultdict</span></tt></td>
+<td>defaultdict(default_factory[, ...]) &#8211;&gt; dict with default factory</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.parsers.iperfparser.IperfParser">
+<em class="property">class </em><tt class="descclassname">apetools.parsers.iperfparser.</tt><tt class="descname">IperfParser</tt><big>(</big><em>expected_interval=1</em>, <em>interval_tolerance=0.1</em>, <em>units='Mbits'</em>, <em>threads=4</em>, <em>maximum=1000000000</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Iperf Parser extracts bandwidth and other information from the output</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>expected_interval</cite>: the seconds between sample reports</li>
+<li><cite>interval_tolerance</cite>: upper bound of difference between actual and expected</li>
+<li><cite>units</cite>: desired output units (must match iperf output case - e.g. MBytes)</li>
+<li><cite>threads</cite>: (number of threads) needed for coroutine and pipe</li>
+<li><cite>maximum</cite>: the max value (after conversion) allowed (if exceeded converts to 0)</li>
+</ul>
+<dl class="method">
+<dt id="apetools.parsers.iperfparser.IperfParser.bandwidth">
+<tt class="descname">bandwidth</tt><big>(</big><em>match</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.bandwidth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>match</cite>: A parsed match group dictionary</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">float</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the bandwidth in the self.units</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.iperfparser.IperfParser.filename">
+<tt class="descname">filename</tt><big>(</big><em>basename</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.filename" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>basename</cite>: a the raw-iperf filename (without path)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the filename with the extension changed to .csv</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.iperfparser.IperfParser.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.iperfparser.IperfParser.pipe">
+<tt class="descname">pipe</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.pipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.pipe" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Warnings:</th><td class="field-body"><ul class="first simple">
+<li>For bad connections with threads this might break (as the threads die)</li>
+<li>Use for good connections or live data only (use <cite>bandwidths</cite> and completed data for greater fidelity)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><cite>target</cite>: a target to send matched output to</li>
+</ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Send:</th><td class="field-body"><ul class="first last simple">
+<li>bandwidth converted to self.units as a float</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.iperfparser.IperfParser.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the attributes set during parsing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.iperfparser.IperfParser.search">
+<tt class="descname">search</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.search" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: a string of iperf output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">match dict or None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.iperfparser.IperfParser.valid">
+<tt class="descname">valid</tt><big>(</big><em>match</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.valid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.valid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>match</cite>: a groupdict containing parsed iperf fields</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if the end-start interval is valid (within tolerance)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parsers.iperfparser.IperfParser.bandwidths">
+<tt class="descname">bandwidths</tt><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.bandwidths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.bandwidths" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">iterator over the bandwidths</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parsers.iperfparser.IperfParser.conversion">
+<tt class="descname">conversion</tt><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.conversion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.conversion" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">UnitConveter nested dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parsers.iperfparser.IperfParser.intervals">
+<tt class="descname">intervals</tt><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.intervals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.intervals" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict with default values of 0</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">interval: bandwidth</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parsers.iperfparser.IperfParser.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parsers.iperfparser.IperfParser.regex">
+<tt class="descname">regex</tt><a class="reference internal" href="../../../../_modules/apetools/parsers/iperfparser.html#IperfParser.regex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.iperfparser.IperfParser.regex" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">format:regex dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/parsers_api/apetools.parsers.iperfparser.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

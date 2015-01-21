@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>List Strategy &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Proletarians" href="index.html" />
+    <link rel="next" title="apetools.proletarians.liststrategy.ListStrategy" href="api/apetools.proletarians.liststrategy.ListStrategy.html" />
+    <link rel="prev" title="apetools.proletarians.hortator.Hortator.__call__" href="api/apetools.proletarians.hortator.Hortator.__call__.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.proletarians.liststrategy.ListStrategy.html" title="apetools.proletarians.liststrategy.ListStrategy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.proletarians.hortator.Hortator.__call__.html" title="apetools.proletarians.hortator.Hortator.__call__"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Proletarians</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="list-strategy">
+<h1>List Strategy<a class="headerlink" href="#list-strategy" title="Permalink to this headline">¶</a></h1>
+<p>A Nonparametric strategy runs commands that don&#8217;t require parameters.</p>
+<div class="section" id="id1">
+<h2>List Strategy<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-a006ec9e2008ca60c9610bbf3bff807c4ba82d57.png" alt="list &lt;|-- ListStrategy" />
+</p>
+<span class="target" id="module-apetools.proletarians.liststrategy"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.ListStrategy.html#apetools.proletarians.liststrategy.ListStrategy" title="apetools.proletarians.liststrategy.ListStrategy"><tt class="xref py py-obj docutils literal"><span class="pre">ListStrategy</span></tt></a></td>
+<td>A List Strategy extends the list to use for executing commands.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.ListStrategy.remove.html#apetools.proletarians.liststrategy.ListStrategy.remove" title="apetools.proletarians.liststrategy.ListStrategy.remove"><tt class="xref py py-obj docutils literal"><span class="pre">ListStrategy.remove</span></tt></a>(command)</td>
+<td>This doesn&#8217;t raise an error so it can be called at any time</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.ListStrategy.purge.html#apetools.proletarians.liststrategy.ListStrategy.purge" title="apetools.proletarians.liststrategy.ListStrategy.purge"><tt class="xref py py-obj docutils literal"><span class="pre">ListStrategy.purge</span></tt></a>(command)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.ListStrategy.reset.html#apetools.proletarians.liststrategy.ListStrategy.reset" title="apetools.proletarians.liststrategy.ListStrategy.reset"><tt class="xref py py-obj docutils literal"><span class="pre">ListStrategy.reset</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">list is emptied</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="non-parametric-strategy">
+<h2>Non-Parametric Strategy<a class="headerlink" href="#non-parametric-strategy" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-7b64d9ca0ec607b71a7274d2daae74186cecf04c.png" alt="ListStrategy &lt;|-- NonparametricStrategy" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.NonparametricStrategy.html#apetools.proletarians.liststrategy.NonparametricStrategy" title="apetools.proletarians.liststrategy.NonparametricStrategy"><tt class="xref py py-obj docutils literal"><span class="pre">NonparametricStrategy</span></tt></a></td>
+<td>A nonparametric Strategy is a container and runner of commands</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.NonparametricStrategy.__call__.html#apetools.proletarians.liststrategy.NonparametricStrategy.__call__" title="apetools.proletarians.liststrategy.NonparametricStrategy.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">NonparametricStrategy.__call__</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">commands called in the order they were added</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parametric-strategy">
+<h2>Parametric Strategy<a class="headerlink" href="#parametric-strategy" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-ecfdf8e73355becef8ea2ebea519c217a3ecd237.png" alt="ListStrategy &lt;|-- ParametricStrategy" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.ParametricStrategy.html#apetools.proletarians.liststrategy.ParametricStrategy" title="apetools.proletarians.liststrategy.ParametricStrategy"><tt class="xref py py-obj docutils literal"><span class="pre">ParametricStrategy</span></tt></a></td>
+<td>A parametric strategy is a container and runner of commands.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.liststrategy.ParametricStrategy.__call__.html#apetools.proletarians.liststrategy.ParametricStrategy.__call__" title="apetools.proletarians.liststrategy.ParametricStrategy.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">ParametricStrategy.__call__</span></tt></a>(parameters)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">List Strategy</a><ul>
+<li><a class="reference internal" href="#id1">List Strategy</a></li>
+<li><a class="reference internal" href="#non-parametric-strategy">Non-Parametric Strategy</a></li>
+<li><a class="reference internal" href="#parametric-strategy">Parametric Strategy</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/proletarians/liststrategy.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Watch Logs Use Case &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Use Cases" href="index.html" />
+    <link rel="next" title="Time to Recovery Use Case" href="time_to_recovery.html" />
+    <link rel="prev" title="Run Traffic From Dut" href="run_from_dut.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="time_to_recovery.html" title="Time to Recovery Use Case"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="run_from_dut.html" title="Run Traffic From Dut"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The Old Ape&#8217;s Developer Documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Old Ape&#8217;s Design Documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Use Cases</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="watch-logs-use-case">
+<h1>Watch Logs Use Case<a class="headerlink" href="#watch-logs-use-case" title="Permalink to this headline">¶</a></h1>
+<p>The LogWatcher opens a connection to a device and consumer the log stream from the device, sending it to storage.</p>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-10783217e9cf62855634add3e3dc6320c7c07a16.png" alt="left to right direction
+Ape --&gt; (Request Log's Output Be Captured)" />
+</p>
+<div class="section" id="related-requirements">
+<h2>Related Requirements<a class="headerlink" href="#related-requirements" title="Permalink to this headline">¶</a></h2>
+<p><em>A.13</em> System captures device log output and sends it to storage.</p>
+</div>
+<div class="section" id="preconditions">
+<h2>Preconditions<a class="headerlink" href="#preconditions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Configuration specifies path to the log source</li>
+<li>DUT is connected to the CPC via ADB</li>
+<li>If required, DUT is rooted</li>
+</ul>
+</div>
+<div class="section" id="postconditions">
+<h2>Postconditions<a class="headerlink" href="#postconditions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Log output redirected to specified storage.</li>
+</ul>
+</div>
+<div class="section" id="failed-end-condition">
+<h2>Failed End Condition<a class="headerlink" href="#failed-end-condition" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>No, partial, or corrupted log output is saved.</li>
+</ul>
+</div>
+<div class="section" id="trigger">
+<h2>Trigger<a class="headerlink" href="#trigger" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>TestOperator has started session.</li>
+</ul>
+</div>
+<div class="section" id="main-path">
+<h2>Main Path<a class="headerlink" href="#main-path" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>The log watcher is started in a thread.</li>
+<li>The watcher cats the specified file (PATH)</li>
+<li>The watcher sends each line to the specified output as it&#8217;s produced by the log.</li>
+</ol>
+</div>
+<div class="section" id="extension-paths">
+<h2>Extension Paths<a class="headerlink" href="#extension-paths" title="Permalink to this headline">¶</a></h2>
+<p>2.1. The watcher detects a permission error
+2.1.1 The watcher emits an error
+2.1.2. The watcher dies</p>
+<p>2.2. The watcher detects a path error
+2.2.1. The watcher emits an error
+2.2.2. The watcher dies</p>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-203c0fc880c02ee02ee31736a97ae6d5302471f1.png" alt="(*) --&gt; &quot;Acquire Lock&quot;
+&quot;Acquire Lock&quot; --&gt; &quot;Cat File&quot;
+&quot;Cat File&quot; --&gt; &quot;Release Lock&quot;
+&quot;Release Lock&quot; --&gt; &quot;Read Line&quot;
+&quot;Read Line&quot; --&gt; [line] &quot;Write to Output&quot;
+&quot;Write to Output&quot; --&gt; &quot;Read Line&quot;
+if &quot;Detect Error&quot; then
+   --&gt; &quot;Emit Error&quot;
+&quot;Emit Error&quot; --&gt; &quot;Kill Self&quot;
+&quot;Kill Self&quot; --&gt; (*)" />
+</p>
+</div>
+<div class="section" id="adb-device-static-model">
+<h2>ADB Device Static Model<a class="headerlink" href="#adb-device-static-model" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-5a7bf80bc0dd80b6f72b4cda8f121271505c936d.png" alt="LogWatcher: String Path
+LogWatcher: Connection connection
+LogWatcher: Output output
+LogWatcher: RLock lock
+LogWatcher: run()
+LogWatcher: start()
+LogWatcher &lt;|-- ADBShellConnection
+
+ADBShellConnection: LocalConnection connection" />
+</p>
+</div>
+</div>
+<div class="section" id="replacements">
+<h1>Replacements<a class="headerlink" href="#replacements" title="Permalink to this headline">¶</a></h1>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Watch Logs Use Case</a><ul>
+<li><a class="reference internal" href="#related-requirements">Related Requirements</a></li>
+<li><a class="reference internal" href="#preconditions">Preconditions</a></li>
+<li><a class="reference internal" href="#postconditions">Postconditions</a></li>
+<li><a class="reference internal" href="#failed-end-condition">Failed End Condition</a></li>
+<li><a class="reference internal" href="#trigger">Trigger</a></li>
+<li><a class="reference internal" href="#main-path">Main Path</a></li>
+<li><a class="reference internal" href="#extension-paths">Extension Paths</a></li>
+<li><a class="reference internal" href="#adb-device-static-model">ADB Device Static Model</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#replacements">Replacements</a></li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/design/usecases/watch_logs.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

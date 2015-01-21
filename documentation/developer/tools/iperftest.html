@@ -1,0 +1,226 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Iperf Test &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-iperf-test">
+<h1>The Iperf Test<a class="headerlink" href="#the-iperf-test" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold an iperf test tool.</p>
+<div class="section" id="errors">
+<h2>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>IperfTestError</cite> is raised if there was an iperf-related error (as opposed to, say, a connection-related error).</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-f1a11238dadafabc111884009b74f17b92870056.png" alt="IperfTestError -|&gt; CommandError" />
+</p>
+</div>
+<div class="section" id="iperf-test">
+<span id="id1"></span><h2>The Iperf Test<a class="headerlink" href="#iperf-test" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>IperfTest</cite> runs a single test, taking care of both sides of the connection (client and server).</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../tools/api/apetools.tools.iperftest.IperfTest.html#apetools.tools.iperftest.IperfTest" title="apetools.tools.iperftest.IperfTest"><tt class="xref py py-obj docutils literal"><span class="pre">IperfTest</span></tt></a>([sender_command,&nbsp;...])</td>
+<td>The Iperf Test runs a single iperf test.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-786587c1eb93dfde7683d7ddcd5ff4c254392c2f.png" alt="IperfTest -|&gt; BaseClass
+IperfTest '1' o-- '2' IperfCommand
+IperfTest o-- Sleep
+IperfTest o-- Kill
+IperfTest : sender_command
+IperfTest : receiver_command
+IperfTest : sleep
+IperfTest : wait_events
+IperfTest : kill" />
+</p>
+<ul class="simple">
+<li>See <a class="reference internal" href="../commands/iperfcommand.html#iperf-command"><em>IperfCommand</em></a> runs the actual iperf-commands</li>
+<li><em class="xref std std-ref">Sleep</em> provides a sleep after the server is started so the client does not start too soon</li>
+<li><em class="xref std std-ref">Kill</em> is used to kill all pre-existing iperf-sessions.</li>
+</ul>
+</div>
+<div class="section" id="the-call">
+<h2>The Call<a class="headerlink" href="#the-call" title="Permalink to this headline">¶</a></h2>
+<p>The main interface with the <cite>IperfTest</cite> is its call-method:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">test</span> <span class="o">=</span> <span class="n">IperfTest</span><span class="p">(</span><span class="n">sender_command</span><span class="p">,</span> <span class="n">receiver_command</span><span class="p">)</span>
+<span class="n">test</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">receiver</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The process:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Set the target address in the iperf command to the receiver (server):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">sender_command</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">client</span> <span class="o">=</span> <span class="n">receiver</span><span class="o">.</span><span class="n">address</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Kill the existing iperf processes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">receiver</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Start the iperf-server and sleep to let it get set-up:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">receiver_command</span><span class="o">.</span><span class="n">start</span><span class="p">(</span><span class="n">receiver</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Allow other processes to block the iperf client-start</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if self.wait_events is not None:</dt>
+<dd><p class="first">time_out = self.sender_command.max_time
+if not self.wait_events.wait(time_out):</p>
+<blockquote class="last">
+<div><p>raise IperfTestError(&#8220;Timed out waiting for event.&#8221;)</p>
+</div></blockquote>
+</dd>
+</dl>
+</div></blockquote>
+</li>
+<li><p class="first">Run the client</p>
+<blockquote>
+<div><p>self.sender_command.run(sender, filename)</p>
+</div></blockquote>
+</li>
+<li><p class="first">Check if the server is still running and kill it if it is:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">receiver_command</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">receiver</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Iperf Test</a><ul>
+<li><a class="reference internal" href="#errors">Errors</a></li>
+<li><a class="reference internal" href="#iperf-test">The Iperf Test</a></li>
+<li><a class="reference internal" href="#the-call">The Call</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/tools/iperftest.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

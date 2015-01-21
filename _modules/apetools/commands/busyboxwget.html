@@ -1,0 +1,484 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.busyboxwget &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commands.busyboxwget</h1><div class="highlight"><pre>
+<span class="c">#python Libraries</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="c"># apetools Libraries</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers</span> <span class="kn">import</span> <span class="n">oatbran</span>
+
+
+<span class="n">EMPTY_STRING</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">NA</span> <span class="o">=</span> <span class="s">&#39;NA&#39;</span>
+<span class="n">UNKNOWN_HOST</span> <span class="o">=</span> <span class="s">&#39;unknown host&#39;</span>
+<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="c"># server was there, but now it stopped responding:</span>
+<span class="n">SERVER_DOWN</span> <span class="o">=</span> <span class="s">&#39;no response from server&#39;</span>
+<span class="c"># There&#39;s a server there but your path might be bad</span>
+<span class="n">BAD_URL</span> <span class="o">=</span> <span class="s">&#39;HTTP/1.1 404 Not Found&#39;</span>
+<span class="c"># the server isn&#39;t reachable</span>
+<span class="n">BAD_ADDRESS</span> <span class="o">=</span> <span class="s">&quot;No route to host&quot;</span>
+<span class="c"># server is there but it probably doesn&#39;t allow access</span>
+<span class="n">NO_RESPONSE</span> <span class="o">=</span> <span class="s">&quot;Connection timed out&quot;</span>
+<span class="c"># not a web-server</span>
+<span class="n">NOT_A_SERVER</span><span class="o">=</span> <span class="s">&quot;Connection refused&quot;</span>
+<span class="n">ERRORS</span> <span class="o">=</span> <span class="p">[</span><span class="n">SERVER_DOWN</span><span class="p">,</span> <span class="n">BAD_URL</span><span class="p">,</span>
+          <span class="n">BAD_ADDRESS</span><span class="p">,</span> <span class="n">NO_RESPONSE</span><span class="p">,</span> <span class="n">NOT_A_SERVER</span><span class="p">]</span>
+
+
+<span class="n">attributes</span> <span class="o">=</span> <span class="s">&#39;elapsed error percentage kbits&#39;</span>
+
+<span class="n">HEADER</span> <span class="o">=</span> <span class="s">&#39;Elapsed(seconds),Complete(%),Size,Error</span><span class="se">\n</span><span class="s">&#39;</span>
+
+<span class="k">class</span> <span class="nc">BusyboxWgetData</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&#39;BusyboxWgetData&#39;</span><span class="p">,</span> <span class="n">attributes</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A named-tuple to hold the data returned by the `run` call</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s">&quot;{elapsed},{complete},{kbits},{error}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">elapsed</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">elapsed</span><span class="p">,</span>
+                                                             <span class="n">complete</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">percentage</span><span class="p">,</span>
+                                                             <span class="n">kbits</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">kbits</span><span class="p">,</span>
+                                                             <span class="n">error</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+        
+
+
+<span class="k">class</span> <span class="nc">BusyboxEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A holder of constants</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">destination</span> <span class="o">=</span> <span class="s">&#39;destination&#39;</span>
+    <span class="n">percentage_completed</span> <span class="o">=</span> <span class="s">&#39;percentage&#39;</span>
+    <span class="n">kbits_transferred</span> <span class="o">=</span> <span class="s">&#39;kbits_transferred&#39;</span>
+<span class="c"># end BusyboxEnum        </span>
+
+
+<span class="k">class</span> <span class="nc">BusyboxWget</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWget"><a class="viewcode-back" href="../../../commands/api/apetools.commands.busyboxwget.BusyboxWget.html#apetools.commands.busyboxwget.BusyboxWget">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Does a wget and times it.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="s">&#39;/dev/null&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWget.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.busyboxwget.BusyboxWget.html#apetools.commands.busyboxwget.BusyboxWget.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        BusyboxWget Constructor</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `url`: A URL to pull from</span>
+<span class="sd">         - `connection`: A Connection to the device</span>
+<span class="sd">         - `timeout`: amount of time to wait before timing out</span>
+<span class="sd">         - `destination`: place to send the output (expects alpha-num+underscore with / for sub-folders)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BusyboxWget</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">destination</span> <span class="o">=</span> <span class="n">destination</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWget.expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.busyboxwget.BusyboxWget.expression.html#apetools.commands.busyboxwget.BusyboxWget.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A compiled regular expression to match the output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># wget seems to only show the file name, not the full path</span>
+            <span class="n">destination</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span>
+                                        <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">ALPHA_NUMS</span><span class="p">)</span>
+            <span class="c"># since the name of the group says percentage, the % is not included</span>
+            <span class="n">percentage</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">percentage_completed</span><span class="p">,</span>
+                                       <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;%&#39;</span> 
+            <span class="n">expression</span> <span class="o">=</span> <span class="n">destination</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">percentage</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span>
+            <span class="n">expression</span> <span class="o">+=</span> <span class="s">&#39;\|&#39;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="s">&#39;*\s&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">ZERO_OR_MORE</span> <span class="o">+</span> <span class="s">&#39;\|&#39;</span>
+            <span class="c"># busybox seems to change between k and M so units are included</span>
+            <span class="n">expression</span> <span class="o">+=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">kbits_transferred</span><span class="p">,</span>
+                                                         <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span> <span class="o">+</span> <span class="s">&#39;[kM]&#39;</span><span class="p">)</span>
+            <span class="n">expression</span> <span class="o">+=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span>
+
+            <span class="c"># elapsed time</span>
+            <span class="n">expression</span> <span class="o">+=</span> <span class="s">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">oatbran</span><span class="o">.</span><span class="n">DIGIT</span> <span class="o">*</span> <span class="mi">2</span><span class="p">]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="s">&#39;ETA&#39;</span>
+
+            <span class="c"># sometimes multiple data lines are concanetnated so we want the last one</span>
+            <span class="c"># but sometimes error strings are also concatenated so match that too</span>
+            <span class="n">expression</span> <span class="o">+=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="n">oatbran</span><span class="o">.</span><span class="n">STRING_END</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s">&#39;wget:&#39;</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">expression</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
+        
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWget.arguments"><a class="viewcode-back" href="../../../commands/api/apetools.commands.busyboxwget.BusyboxWget.arguments.html#apetools.commands.busyboxwget.BusyboxWget.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The busybox arguments to use</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s">&quot;wget {url} -O {output} -T {timeout}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                                                                           <span class="n">output</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span>
+                                                                           <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span>
+    
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BusyboxWget.run"><a class="viewcode-back" href="../../../commands/api/apetools.commands.busyboxwget.BusyboxWget.run.html#apetools.commands.busyboxwget.BusyboxWget.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes a single wget</span>
+
+<span class="sd">        :return: WgetData or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">data_match</span><span class="p">,</span> <span class="n">error_string</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">(),</span> <span class="bp">None</span><span class="p">,</span> <span class="n">EMPTY_STRING</span>
+        <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">busybox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">data_match</span> <span class="o">=</span> <span class="n">match</span>
+
+                <span class="k">if</span> <span class="s">&#39;wget:&#39;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span> <span class="c"># this seems to only show up on error</span>
+                    <span class="n">error_string</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;:&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error_string</span><span class="p">)</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Wget Elapsed Time: {0} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">elapsed</span><span class="p">))</span>
+        <span class="c"># if it&#39;s a busybox error it wil be in stdout, not stderr</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data_match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">BusyboxWgetData</span><span class="p">(</span><span class="n">elapsed</span><span class="o">=</span><span class="n">elapsed</span><span class="p">,</span>
+                                   <span class="n">percentage</span><span class="o">=</span><span class="n">data_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">percentage_completed</span><span class="p">),</span>
+                                   <span class="n">kbits</span><span class="o">=</span><span class="n">data_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">kbits_transferred</span><span class="p">),</span>
+                                   <span class="n">error</span><span class="o">=</span><span class="n">error_string</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">BusyboxWgetData</span><span class="p">(</span><span class="n">elapsed</span><span class="o">=</span><span class="n">elapsed</span><span class="p">,</span>
+                               <span class="n">percentage</span><span class="o">=</span><span class="n">NA</span><span class="p">,</span>
+                               <span class="n">kbits</span><span class="o">=</span><span class="n">NA</span><span class="p">,</span>
+                               <span class="n">error</span><span class="o">=</span><span class="n">error_string</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BusyboxWget.__call__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.busyboxwget.BusyboxWget.__call__.html#apetools.commands.busyboxwget.BusyboxWget.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes a single wget, checks for a success, returns data</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `parameters`: Not used -- set things up in the constructor (or assign values)</span>
+<span class="sd">        </span>
+<span class="sd">        :return: WgetData or None</span>
+<span class="sd">        :raise: ConfigurationError if the target is unknown</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<span class="c"># end class BusyboxWget</span>
+
+
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div></div>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="c"># third-party</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span>
+
+
+<span class="n">SAMPLE</span><span class="o">=</span><span class="s">&#39;&#39;&#39;</span>
+<span class="s">Connecting to 192.168.20.50:8000 (192.168.20.50:8000)</span>
+
+<span class="s">null                 100% |*******************************| 65536k 00:00:00 ETA</span>
+
+
+
+
+<span class="s">&#39;&#39;&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">NEWLINE</span><span class="p">)</span>
+<span class="n">COMPLETED_LINE</span> <span class="o">=</span> <span class="s">&#39;null                 100% |*******************************| 65536k 00:00:00 ETA&#39;</span>
+<span class="n">DESTINATION</span> <span class="o">=</span> <span class="s">&#39;null&#39;</span>
+<span class="n">PERCENTAGE</span> <span class="o">=</span> <span class="s">&#39;100&#39;</span>
+<span class="n">FILE_SIZE</span> <span class="o">=</span> <span class="s">&#39;65536k&#39;</span>
+
+<span class="n">KILLED_SERVER</span> <span class="o">=</span><span class="s">&#39;null                  22% |******                         | 14538k 00:00:10 ETA&#39;</span>
+<span class="n">CONCATENATED</span> <span class="o">=</span> <span class="s">&#39;null                  52% |****************               | 34564k 00:00:05 ETAwget: read error: Connection timed out&#39;</span>
+<span class="n">ERROR_ONLY</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">Connecting to 192.168.20.51:8000 (192.168.20.51:8000)</span>
+
+<span class="s">wget: can&#39;t connect to remote host (192.168.20.51): No route to host</span>
+
+
+
+
+<span class="s">&quot;&quot;&quot;</span>
+<span class="n">APE_LOG</span><span class="o">=</span><span class="s">&#39;null                  99% |****************************** |  1021M 00:00:00 ETA^Mnull                 100% |*******************************|  1024M 00:00:00 ETA&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">TestBusyboxWget</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://&#39;</span> <span class="o">+</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">destination</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">))])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wget</span> <span class="o">=</span> <span class="n">BusyboxWget</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                                <span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                                <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+                                <span class="n">destination</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">)</span>
+        <span class="c"># change this to None to use logger-debugging</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">logger</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;Does it set the expected values?&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">destination</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does it construct the proper argument string?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="s">&#39;wget {url} -O {destination} -T {timeout}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                                                                     <span class="n">destination</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span>
+                                                                     <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="n">actual</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">arguments</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">expected</span><span class="p">,</span> <span class="n">actual</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the expression extract the data?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">COMPLETED_LINE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNotNone</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
+        <span class="n">destination</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">destination</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">DESTINATION</span><span class="p">,</span> <span class="n">destination</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">PERCENTAGE</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">percentage_completed</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">kbits_transferred</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_killed_server</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the expression match if the server dies?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">KILLED_SERVER</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;null&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">destination</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;22&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">percentage_completed</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;14538k&#39;</span><span class="p">,</span> <span class="n">match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="n">BusyboxEnum</span><span class="o">.</span><span class="n">kbits_transferred</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does the run execute the correct sequence?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">busybox</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">SAMPLE</span><span class="p">,</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">time_time</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">def</span> <span class="nf">time_effects</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">times</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>        
+        <span class="n">time_time</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">time_effects</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&#39;time.time&#39;</span><span class="p">,</span> <span class="n">time_time</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">elapsed</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;100&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">percentage</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;65536k&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">kbits</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">busybox</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="s">&#39;wget {0} -O {1} -T {2}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                                                                                   <span class="bp">self</span><span class="o">.</span><span class="n">destination</span><span class="p">,</span>
+                                                                                   <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">),</span>
+                                                                                   <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_error_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does it work with partial transfers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">busybox</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">CONCATENATED</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="mi">1347</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="p">]</span>
+        <span class="n">time_effects</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">times</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">time_time</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">time_time</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">time_effects</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&#39;time.time&#39;</span><span class="p">,</span> <span class="n">time_time</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;52&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">percentage</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;34564k&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">kbits</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;Connection timed out&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">elapsed</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_error_only</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;Does it still return a BusyboxWgetData tuple even if there was no transfer?&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">busybox</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">ERROR_ONLY</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="c"># mock the time.time calls</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="p">]</span>
+        <span class="n">time_effects</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">times</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">time_time</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">time_time</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">time_effects</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&#39;time.time&#39;</span><span class="p">,</span> <span class="n">time_time</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">__call__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&#39;No route to host&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">NA</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">percentage</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">NA</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">kbits</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">end</span><span class="o">-</span><span class="n">start</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">elapsed</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_data_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s">&quot;Does the enum data-string match the expectation?&quot;</span>
+        <span class="n">random_string</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span>  <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">))])</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">random_string</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">percentage</span> <span class="o">=</span> <span class="n">random_string</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">kbits</span> <span class="o">=</span> <span class="n">random_string</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">random_string</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">BusyboxWgetData</span><span class="p">(</span><span class="n">elapsed</span><span class="o">=</span><span class="n">elapsed</span><span class="p">,</span>
+                               <span class="n">error</span><span class="o">=</span><span class="n">error</span><span class="p">,</span>
+                               <span class="n">percentage</span><span class="o">=</span><span class="n">percentage</span><span class="p">,</span>
+                               <span class="n">kbits</span><span class="o">=</span><span class="n">kbits</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">elapsed</span><span class="p">,</span><span class="n">percentage</span><span class="p">,</span><span class="n">kbits</span><span class="p">,</span><span class="n">error</span><span class="p">]),</span>
+                         <span class="nb">str</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_ape_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Can it get data from an actual output string from the log?</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">busybox</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">APE_LOG</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+                <span class="c"># mock the time.time calls</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">end</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="n">end</span><span class="p">,</span> <span class="n">start</span><span class="p">]</span>
+        <span class="n">time_effects</span> <span class="o">=</span> <span class="k">lambda</span> <span class="p">:</span> <span class="n">times</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+        <span class="n">time_time</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">time_time</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">time_effects</span>
+        <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&#39;time.time&#39;</span><span class="p">,</span> <span class="n">time_time</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wget</span><span class="o">.</span><span class="n">__call__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">percentage</span><span class="p">,</span> <span class="s">&#39;100&#39;</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">wget</span> <span class="o">=</span> <span class="n">BusyboxWget</span><span class="p">(</span><span class="s">&#39;abc&#39;</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
+    <span class="n">connection</span><span class="o">.</span><span class="n">busybox</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">APE_LOG</span><span class="p">),</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span><span class="c">#</span>
+    <span class="kn">import</span> <span class="nn">pudb</span><span class="p">;</span><span class="n">pudb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">wget</span><span class="o">.</span><span class="n">__call__</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

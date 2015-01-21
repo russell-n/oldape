@@ -1,0 +1,352 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RotateCommandUsurper – How to build a class for the user &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Case Studies" href="index.html" />
+    <link rel="next" title="apetools.commands.rotate.RotateCommandUsurper" href="api/apetools.commands.rotate.RotateCommandUsurper.html" />
+    <link rel="prev" title="Case Studies" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.rotate.RotateCommandUsurper.html" title="apetools.commands.rotate.RotateCommandUsurper"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Case Studies"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Old Ape&#8217;s Developer Documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Case Studies</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rotatecommandusurper-how-to-build-a-class-for-the-user">
+<h1>RotateCommandUsurper &#8211; How to build a class for the user<a class="headerlink" href="#rotatecommandusurper-how-to-build-a-class-for-the-user" title="Permalink to this headline">¶</a></h1>
+<p>This is a recollected case-study of building the <a class="reference internal" href="../../../commands/rotate.html#apetools-rotate-command-usurper"><em>RotateCommandUsurper</em></a>.  The RotateCommandUsurper was created to replace the RotateCommand in order to control a newer turntable. The request was made that one of the old tables be run alongside one of the new tables so the old RotateCommand was left in place and the Usurper created alongside it.</p>
+<p>The purpose of this document is not so much to explain how the RotateCommandUsurper works (that should be in the actual code-file) but rather to explain what had to be done to make it work as a declarable option in the user&#8217;s configuration file. That is to say to make is so that the user would be able to run it by putting the following in the config file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">setup_test</span> <span class="o">=</span> <span class="n">rotate_cube</span>
+</pre></div>
+</div>
+<p>As well as adding the &#8216;[ROTATE_CUBE]&#8217; section and other supporting sections to the configuration file.</p>
+<div class="section" id="the-remote-rotate-command">
+<h2>The Remote Rotate Command<a class="headerlink" href="#the-remote-rotate-command" title="Permalink to this headline">¶</a></h2>
+<p>This follows the basic command pattern. It assumes that there is a remote device attached to a turntable and that on this device there is a command called <tt class="docutils literal"><span class="pre">rotate</span></tt> that controls the turntable.</p>
+</div>
+<div class="section" id="creating-the-ape-s-command">
+<h2>Creating the Ape&#8217;s Command<a class="headerlink" href="#creating-the-ape-s-command" title="Permalink to this headline">¶</a></h2>
+<p>Two initial design decisions were made that changed the behavior of the usurper slightly from the RotateCommand. One was that all the behavior would be deferred to the controlling code for the device (the remote command) instead of trying to observe and interpert the string output of the turntable inside the APE, as was the case with the original RotateCommand. The second decision was that the parameters passed into the <tt class="docutils literal"><span class="pre">__call__</span></tt> would be assumed to be the string arguments to pass to the <tt class="docutils literal"><span class="pre">rotate</span></tt> command on the remote device, since the logic for interpreting the angles were already built into the <tt class="docutils literal"><span class="pre">rotate</span></tt> command line interface.</p>
+<p>To start with, a class was created that inherited from the RotateCommand so that only the <tt class="docutils literal"><span class="pre">__call__</span></tt> and <tt class="docutils literal"><span class="pre">rotate</span></tt> methods had to be updated.</p>
+<span class="target" id="module-apetools.commands.rotate"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateCommandUsurper.html#apetools.commands.rotate.RotateCommandUsurper" title="apetools.commands.rotate.RotateCommandUsurper"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommandUsurper</span></tt></a>(connections[,&nbsp;retries])</td>
+<td>Command to rotate turntables</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand" title="apetools.commands.rotate.RotateCommand"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand</span></tt></a>(connections[,&nbsp;retries])</td>
+<td>A class to issue a remote &#8216;rotate&#8217; command (older version for pre-Cameron turntables)</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-052bd66527a2e3cce243a75317b5b4c5e8bb9c3d.png" alt="RotateCommand &lt;|-- RotateCommandUsurper" />
+</p>
+<div class="section" id="the-call-method">
+<h3>The Call Method<a class="headerlink" href="#the-call-method" title="Permalink to this headline">¶</a></h3>
+<p>The __call__ method for classes that are declarable by the user in the configuration all share the same signature.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="o">&lt;</span><span class="n">do</span> <span class="n">something</span><span class="o">&gt;</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">parameters</span></tt> are a named-tuple (or something like that) that have the form:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">parameters</span><span class="o">.&lt;</span><span class="n">identifier</span><span class="o">&gt;.</span><span class="n">parameters</span>
+</pre></div>
+</div>
+<p>The &lt;identifier&gt; is a name unique to the class using the parameters so that they can find their parameters (the parameters named-tuple has the parameters for all the classes declared in the configuration). This was set in the <tt class="docutils literal"><span class="pre">rotate</span></tt> module to be &#8216;rotate_usurper&#8217; so in this case the RotateUsurperCommand accesses its parameters like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">parameters</span><span class="o">.</span><span class="n">rotate_usurper</span><span class="o">.</span><span class="n">parameters</span>
+</pre></div>
+</div>
+<p>Part of the change in behavior for the RotateUsurperCommand was a request that the tables it controls be given their own angles (rather than giving them all the same angles as it was done previously). To achieve this two design changes were made:</p>
+<blockquote>
+<div><ul class="simple">
+<li>The NonLocalConnection (parent to the SSHConnection) was given an &#8216;identifier&#8217; attribute</li>
+<li><tt class="docutils literal"><span class="pre">parameters.rotate_usurper.parameters</span></tt> was made a dictionary of &lt;connection.identifier&gt;: &lt;arguments string&gt; pairs</li>
+</ul>
+</div></blockquote>
+<p>The main thing to take away from this is that all classes created to be declarable by the user in the configuration should expect the parameters to be passed into them in this way. Additionally, if the <tt class="docutils literal"><span class="pre">__call__</span></tt> returns a string, it will be added to the file name so in this case the identifiers and arguments were concatenated into a string and returned. This could conceivably create a very big filename, but it seemed the field-expedient thing to do.</p>
+</div>
+</div>
+<div class="section" id="the-rotateusurperbuilder">
+<h2>The RotateUsurperBuilder<a class="headerlink" href="#the-rotateusurperbuilder" title="Permalink to this headline">¶</a></h2>
+<p>The next step in creating class that can be called in the configuration file is creating a builder for it. In this case the <em class="xref std std-ref">RotateUsurperBuilder</em> was created.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-3c8697016c93a9c4e5fce1f0c7fc46ff5788125b.png" alt="BaseToolBuilder &lt;|-- RotateUsurperBuilder
+RotateUsurperBuilder o- RotateUsurper
+RotateUsurperBuilder : RotateUsurper product
+RotateUsurperBuilder : List parameters" />
+</p>
+<span class="target" id="module-apetools.builders.subbuilders.rotatebuilder"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Builder of RotateUsurper object and parameters</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.parameters</span></tt></a></td>
+<td>for each angle, create a dict of &lt;table-name:arguments string&gt;</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.product</span></tt></a></td>
+<td>Built RotateUsurper object</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.connections_parameters</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of SSHParameters from tables sections</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections" title="apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections"><tt class="xref py py-obj docutils literal"><span class="pre">RotateUsurperBuilder.connections</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">SSHConnections</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<span class="target" id="module-apetools.builders.subbuilders.basetoolbuilder"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.basetoolbuilder.BaseToolBuilder.html#apetools.builders.subbuilders.basetoolbuilder.BaseToolBuilder" title="apetools.builders.subbuilders.basetoolbuilder.BaseToolBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">BaseToolBuilder</span></tt></a>(master,&nbsp;config_map,&nbsp;...)</td>
+<td>A Base class to build tool-builders around.</td>
+</tr>
+</tbody>
+</table>
+<p>To create a ToolBuilder there are two required properties that need to be implemented &#8211; <tt class="docutils literal"><span class="pre">parameters</span></tt>, the named tuples passed into the <cite>__call__</cite> method, and <tt class="docutils literal"><span class="pre">product</span></tt>, the built class (in this case the RotateUsurperBuilder).</p>
+<div class="section" id="the-parameters">
+<h3>The Parameters<a class="headerlink" href="#the-parameters" title="Permalink to this headline">¶</a></h3>
+<p>I won&#8217;t talk about the creation of the dictionaries used as the payload for the parameters, but there is a pattern to building the parameters that is pretty much the same for each ToolBuilder class.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Create a list</li>
+<li>Create the parameters that need to be passed in on each call &#8211; in this case each angle for the tables needs its own dictionary</li>
+<li>Put all the parameters you created in the list in the order of execution</li>
+<li>Create a basetoolbuilder.Parameters named tuple with the name set to the identifier the call expects (in this case &#8216;rotate_usurper&#8217;) and the parameters set to the list you created</li>
+<li>Append the Parameters named tuple to <tt class="docutils literal"><span class="pre">self.previous_parameters</span></tt> which was inherited from the <tt class="docutils literal"><span class="pre">BaseToolBuilder</span></tt></li>
+<li>Set <tt class="docutils literal"><span class="pre">self._parameters</span></tt> equal to <tt class="docutils literal"><span class="pre">self.previous_parameters</span></tt></li>
+<li>Return <tt class="docutils literal"><span class="pre">self._parameters</span></tt></li>
+</ol>
+</div></blockquote>
+<p>I think you could get away with just returning <tt class="docutils literal"><span class="pre">self.previous_parameters</span></tt> but since the <tt class="docutils literal"><span class="pre">RotateUsurperBuilder.parameters</span></tt> property is checking if <tt class="docutils literal"><span class="pre">self._parameters</span></tt> is None to decide whether to build the list I decide that it&#8217;s better to set it to something so if it gets called more than once it doesn&#8217;t rebuild everything all over again.</p>
+<p>To clarify a bit, the list in this case is named <tt class="docutils literal"><span class="pre">table_parameters</span></tt> and consists of <tt class="docutils literal"><span class="pre">&lt;table</span> <span class="pre">name</span> <span class="pre">using</span> <span class="pre">config</span> <span class="pre">section&gt;:&lt;arguments</span> <span class="pre">string</span> <span class="pre">for</span> <span class="pre">'rotate'&gt;</span></tt> dictionaries &#8211; one dictionary per angle and one entry in each dictionary for each table. Once this list is created the <tt class="docutils literal"><span class="pre">previous_parameters</span></tt> are set:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;rotate_usurper,</span>
+                                           <span class="n">parameters</span><span class="o">=</span><span class="n">table_parameters</span><span class="p">))</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span>
+</pre></div>
+</div>
+<p>This pattern is common to all the tool-builders</p>
+</div>
+<div class="section" id="the-product">
+<h3>The Product<a class="headerlink" href="#the-product" title="Permalink to this headline">¶</a></h3>
+<p>The product is an instance of the <tt class="docutils literal"><span class="pre">RotateCommandUsurper</span></tt> with the ssh-connections created from the configuration file passed into the constructor:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">RotateCommandUsurper</span><span class="p">(</span><span class="n">connections</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-toolbuilder">
+<h2>The ToolBuilder<a class="headerlink" href="#the-toolbuilder" title="Permalink to this headline">¶</a></h2>
+<p>The Old Ape didn&#8217;t have a plugin system like the <a class="reference external" href="http://acheron/~charon/hortators/ape/index.html">new APE</a> or <a class="reference external" href="http://acheron/~charon/hortators/the_tuna/index.html">the Tuna</a> so there&#8217;s a clunky module called the <tt class="docutils literal"><span class="pre">toolbuilder</span></tt> that holds the class definitions for classes that can be declared by the user in the configuration file.</p>
+<div class="section" id="toolbuilderenum">
+<h3>ToolBuilderEnum<a class="headerlink" href="#toolbuilderenum" title="Permalink to this headline">¶</a></h3>
+<p>The first thing that has to be done is to add the string that the user can use to declare the class in the configuration file. This is done by adding it to the <a class="reference internal" href="../../../builders/subbuilders/toolbuilder.html#apetools-tool-builder-enum"><em>ToolBuilderEnum</em></a>. In this case I used &#8216;rotate_cube&#8217; because I thought that it would be easier to remember than &#8216;rotate_usurper&#8217; (since the new turntable is cube-like).</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">rotate_cube</span> <span class="o">=</span> <span class="s">&#39;rotate_cube&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="toolbuilder">
+<h3>ToolBuilder<a class="headerlink" href="#toolbuilder" title="Permalink to this headline">¶</a></h3>
+<p>Next the class definition for the Builder has to be added to the <a class="reference internal" href="../../../builders/subbuilders/toolbuilder.html#apetools-tool-builder"><em>ToolBuilder Class</em></a> as a property:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@property</span>
+<span class="k">def</span> <span class="nf">rotate_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    :return: RotateUsurperBuilder</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">rotatebuilder</span> <span class="kn">import</span> <span class="n">RotateUsurperBuilder</span>
+    <span class="k">return</span> <span class="n">RotateUsurperBuilder</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="outcome">
+<h2>Outcome<a class="headerlink" href="#outcome" title="Permalink to this headline">¶</a></h2>
+<p>Now when the APE sees the &#8216;rotate_cube&#8217; declaration in the &#8216;[TEST]&#8217; section of the user&#8217;s configuration file:</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[TEST]</span>
+<span class="na">setup_test</span> <span class="o">=</span> <span class="s">rotate_cube</span>
+<span class="na">execute_test</span> <span class="o">=</span> <span class="s">iperf</span>
+</pre></div>
+</div>
+<p>It will import the <tt class="docutils literal"><span class="pre">RotateUsurperBuilder</span></tt> using the <tt class="docutils literal"><span class="pre">ToolBuilder</span></tt> and pass the <tt class="docutils literal"><span class="pre">RotateUsurperBuilder.product</span></tt> the <tt class="docutils literal"><span class="pre">RotateUsurperBuilder.parameters</span></tt> entries before running each test.</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>This was a description of how the <tt class="docutils literal"><span class="pre">RotateUsurperCommand</span></tt> was added to the APE, and more generally what has to be done to add classes that users can declare to the APE.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Create the class to execute with the <tt class="docutils literal"><span class="pre">__call__</span></tt> method expecting the <tt class="docutils literal"><span class="pre">parameters</span></tt> passed</li>
+<li>Create a builder class that will create your new class as well as the parameters to give it</li>
+<li>Register the name the user will use in the configuration file with the ToolBuilderEnum</li>
+<li>Register the builder&#8217;s class definition with the ToolBuilder</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RotateCommandUsurper &#8211; How to build a class for the user</a><ul>
+<li><a class="reference internal" href="#the-remote-rotate-command">The Remote Rotate Command</a></li>
+<li><a class="reference internal" href="#creating-the-ape-s-command">Creating the Ape&#8217;s Command</a><ul>
+<li><a class="reference internal" href="#the-call-method">The Call Method</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-rotateusurperbuilder">The RotateUsurperBuilder</a><ul>
+<li><a class="reference internal" href="#the-parameters">The Parameters</a></li>
+<li><a class="reference internal" href="#the-product">The Product</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-toolbuilder">The ToolBuilder</a><ul>
+<li><a class="reference internal" href="#toolbuilderenum">ToolBuilderEnum</a></li>
+<li><a class="reference internal" href="#toolbuilder">ToolBuilder</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#outcome">Outcome</a></li>
+<li><a class="reference internal" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/casestudies/rotateusurprecommand.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

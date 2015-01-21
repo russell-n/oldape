@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Cube Turntable (Rotate Cube) &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
+    <link rel="next" title="Sample Configuration" href="sample_configuration.html" />
+    <link rel="prev" title="Rotate Configuration" href="rotate.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="sample_configuration.html" title="Sample Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="rotate.html" title="Rotate Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Old Ape&#8217;s User Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="cube-turntable-rotate-cube">
+<h1>Cube Turntable (Rotate Cube)<a class="headerlink" href="#cube-turntable-rotate-cube" title="Permalink to this headline">¶</a></h1>
+<p>This documents how to use the newer (November, 2014) turntables that have a plexiglass cube encasing the motor in order to raise the devices on the platform and reduce the effects of any electro-magnetic fields that the motor may produce.</p>
+<div class="section" id="the-configuration">
+<span id="rotate-cube-configuration"></span><h2>The Configuration<a class="headerlink" href="#the-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Like the older <a class="reference internal" href="rotate.html#id1"><em>rotate command</em></a> this command is enabled by referring to it in the <tt class="docutils literal"><span class="pre">[TEST]</span></tt> section of the configuration file. It should go in the <cite>setup_test</cite> option:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<span class="n">setup_test</span> <span class="o">=</span> <span class="n">rotate_cube</span>
+</pre></div>
+</div>
+<p>This tells the APE to look for a section named <tt class="docutils literal"><span class="pre">ROTATE_CUBE</span></tt> which contains an option listing the sections (as a comma-separated list) with the turntable information:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">ROTATE_CUBE</span><span class="p">]</span>
+<span class="n">tables</span> <span class="o">=</span> <span class="n">table_1</span><span class="p">,</span> <span class="n">table_2</span>
+</pre></div>
+</div>
+<p>The command was called the <cite>rotate_cube</cite> so that the older <cite>rotate</cite> can still be used with the older turntables which have a slightly different interface:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<span class="n">setup_test</span> <span class="o">=</span> <span class="n">rotate_cube</span><span class="p">,</span> <span class="n">rotate</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-table-sections">
+<h2>The Table Sections<a class="headerlink" href="#the-table-sections" title="Permalink to this headline">¶</a></h2>
+<p>The strings in the <tt class="docutils literal"><span class="pre">tables</span></tt> option are arbitrary so they should probably be set to something that&#8217;s meaningful so it&#8217;s easier to remember what each refers to  (e.g. <tt class="docutils literal"><span class="pre">tables</span> <span class="pre">=</span> <span class="pre">livingroom,</span> <span class="pre">masterbath</span></tt>). There are three types of options that go into these sections:</p>
+<blockquote>
+<div><ul class="simple">
+<li>ssh-information for the turntable</li>
+<li>arguments for the <cite>rotate</cite> command</li>
+<li>a list of angles</li>
+</ul>
+</div></blockquote>
+<div class="section" id="rotate-arguments">
+<h3>Rotate Arguments<a class="headerlink" href="#rotate-arguments" title="Permalink to this headline">¶</a></h3>
+<p>To get the arguments that the <cite>rotate</cite> command uses you should either look at the <a class="reference external" href="http://rallion.bitbucket.org/others/rotation_table/index.html">online documentation</a> , particularly the <a class="reference external" href="http://rallion.bitbucket.org/others/rotation_table/main.html">main entry point</a> which has a sample help string example, and the <a class="reference external" href="http://rallion.bitbucket.org/others/rotation_table/base_arguments.html">Base Arguments page</a> which explains what the valid values are for the arguments or ssh into the controller for the PC and look at the help string (<tt class="docutils literal"><span class="pre">rotate</span> <span class="pre">-h</span></tt>). To set an option that takes a value at the command-line you use the <cite>&lt;option&gt;=&lt;value&gt;</cite> format (e.g. <cite>velocity = 20</cite>) in the config file. To set an option that&#8217;s boolean you use the <cite>&lt;option&gt;=True</cite> format (e.g. <cite>clockwise=True</cite>) you can use <cite>&lt;option&gt;=False</cite> but that&#8217;s the default so you could leave it out instead.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">--set</span></tt> isn&#8217;t supported here.</p>
+</div>
+</div>
+<div class="section" id="ssh-information">
+<h3>SSH Information<a class="headerlink" href="#ssh-information" title="Permalink to this headline">¶</a></h3>
+<p>Right now it only looks for <cite>hostname</cite>, <cite>username</cite> and (optionally) <cite>password</cite>. If you have public-keys set up you can leave the password out.</p>
+</div>
+<div class="section" id="angles">
+<h3>Angles<a class="headerlink" href="#angles" title="Permalink to this headline">¶</a></h3>
+<p>Although technically part of the arguments for the <cite>rotate</cite> command, this expects a list of angles (integers only) so that it can change in between executing whatever is in the TEST-section&#8217;s <cite>execute_test</cite> option. By default the angles are interpreted as a counter-clockwise angle (looking down on the table) and bounded from 0 to 359 so if you put 720, the code will interpret it as 0. To rotate the table clockwise you can either put a negative sign in front of the angles or set the <tt class="docutils literal"><span class="pre">clockwise</span></tt> option.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This table is currently set to not rotate beyond 359 degrees so the angles refer to where it stops, not an actual direction of rotation. If needed the table range can be changed but that requires changing some values in the controlling code attached to the device.</p>
+</div>
+<p>The code assumes that the longest list of angles is the correct list and will repeat the last angle in a table&#8217;s list if it runs out of angles to match the longest list (so if you want to set it only to 90 on one table and rotate more angles on another you can).</p>
+</div>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>Going back to the two tables listed in the <cite>ROTATE_CUBE</cite> section, suppose we wanted to set one at 90 degrees clockwise and the other counter-clockwise, rotating at 90-degree intervals. We could do something like the following:</p>
+<div class="highlight-python"><div class="highlight"><pre>[table_1]
+hostname = 192.168.10.20
+username = root
+password = testlabs
+angles = 90
+clockwise = True
+
+
+[table_2]
+hostname = 192.168.10.21
+username = root
+password = testlabs
+angles = 0, 90, 180, 270
+</pre></div>
+</div>
+<p>If you just want to test the configuration you can add <tt class="docutils literal"><span class="pre">test=True</span></tt> to each table and the code will send the arguments to the table to be validated but not actually rotate the table (just log and print some information so you can see the values that the table is getting).</p>
+</div>
+</div>
+<div class="section" id="complete-example">
+<h2>Complete Example<a class="headerlink" href="#complete-example" title="Permalink to this headline">¶</a></h2>
+<p>This is a full-example using three tables (two new-ones and one old one) with correlating data being scraped in the background (log-watching).</p>
+<div class="highlight-ini"><div class="highlight"><pre><span class="k">[TEST]</span>
+<span class="na">operation_setup</span> <span class="o">=</span> <span class="s">watchlogs</span>
+<span class="na">setup_test</span> <span class="o">=</span> <span class="s">rotate_cube, rotate</span>
+<span class="na">execute_test</span> <span class="o">=</span> <span class="s">sleep, iperf</span>
+<span class="na">output_folder</span> <span class="o">=</span> <span class="s">rotate_cube_test_{t}</span>
+
+<span class="na">repeat</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">tag</span> <span class="o">=</span> <span class="s">APE</span>
+<span class="na">recovery_time</span> <span class="o">=</span> <span class="s">1 Second</span>
+
+<span class="k">[ROTATE_CUBE]</span>
+<span class="na">tables</span> <span class="o">=</span> <span class="s">moira, moira_again</span>
+
+<span class="k">[moira]</span>
+<span class="na">hostname</span> <span class="o">=</span> <span class="s">moiragetes</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">tester</span>
+<span class="na">angles</span> <span class="o">=</span> <span class="s">0, 90, 180</span>
+<span class="na">velocity</span> <span class="o">=</span> <span class="s">500</span>
+<span class="na">clockwise</span> <span class="o">=</span> <span class="s">True</span>
+
+<span class="k">[moira_again]</span>
+<span class="na">hostname</span> <span class="o">=</span> <span class="s">moiragetes</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">tester</span>
+<span class="na">angles</span> <span class="o">=</span> <span class="s">10, 20</span>
+<span class="s">       </span>
+<span class="k">[SLEEP]</span>
+<span class="na">time</span> <span class="o">=</span> <span class="s">2 minutes</span>
+
+<span class="k">[NODES]</span>
+<span class="na">tate</span> <span class="o">=</span> <span class="s">hostname:phoridfly,login:root,operating_system:android,connection:adbshellssh,test_interface:wlan0</span>
+
+<span class="k">[ROTATE]</span>
+<span class="na">node1</span> <span class="o">=</span> <span class="s">hostname:phoridfly, username:root, password:testlabs</span>
+<span class="na">angles</span> <span class="o">=</span> <span class="s">180,0:50,45,90:100,270:10</span>
+
+<span class="k">[TRAFFIC_PC]</span>
+<span class="na">tpc</span> <span class="o">=</span> <span class="s">operating_system:linux,connection:ssh,test_interface:eth3,hostname:lancet,login:allion</span>
+
+<span class="k">[WATCHLOGS]</span>
+<span class="na">logcat</span> <span class="o">=</span> <span class="s">type:adblogcat, buffers:all</span>
+<span class="na">kmsg</span> <span class="o">=</span> <span class="s">type:logcat,command:cat,arguments:/proc/kmsg</span>
+<span class="na">battery</span> <span class="o">=</span> <span class="s">type:battery,name:/sys/class/power_supply/bq27541/uevent</span>
+<span class="na">proc</span> <span class="o">=</span> <span class="s">type:procnetdev,interface:wlan0</span>
+<span class="na">device</span> <span class="o">=</span> <span class="s">type:device</span>
+<span class="na">cpu</span> <span class="o">=</span> <span class="s">type:cpu</span>
+
+<span class="k">[IPERF]</span>
+<span class="na">directions</span> <span class="o">=</span> <span class="s">from_dut, to_dut</span>
+<span class="na">time</span> <span class="o">=</span> <span class="s">10 Seconds</span>
+<span class="na">protocol</span> <span class="o">=</span> <span class="s">tcp</span>
+<span class="na">window</span> <span class="o">=</span> <span class="s">256K</span>
+<span class="na">len</span> <span class="o">=</span> <span class="s">1470</span>
+<span class="na">parallel</span> <span class="o">=</span> <span class="s">4</span>
+<span class="na">interval</span> <span class="o">=</span> <span class="s">1</span>
+<span class="na">format</span> <span class="o">=</span> <span class="s">b</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cube Turntable (Rotate Cube)</a><ul>
+<li><a class="reference internal" href="#the-configuration">The Configuration</a></li>
+<li><a class="reference internal" href="#the-table-sections">The Table Sections</a><ul>
+<li><a class="reference internal" href="#rotate-arguments">Rotate Arguments</a></li>
+<li><a class="reference internal" href="#ssh-information">SSH Information</a></li>
+<li><a class="reference internal" href="#angles">Angles</a></li>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#complete-example">Complete Example</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/documentation/user/rotate_cube.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.watchers.fileexpressionwatcher &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.watchers.fileexpressionwatcher</h1><div class="highlight"><pre>
+<span class="c">#python standard library</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractproperty</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span><span class="p">,</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+
+<span class="c">#apetools</span>
+<span class="kn">from</span> <span class="nn">basepollster</span> <span class="kn">import</span> <span class="n">BasePollster</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers</span> <span class="kn">import</span> <span class="n">oatbran</span>
+
+
+<span class="n">NOT_AVAILABLE</span> <span class="o">=</span> <span class="s">&#39;NA&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">BaseFileexpressionwatcher</span><span class="p">(</span><span class="n">BasePollster</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFileexpressionwatcher"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to repeatedly cat a file and output a csv-line. Unlike regular pollster, does no calculation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFileexpressionwatcher.__init__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">        - `output`: A writeable file-like object</span>
+<span class="sd">        - `interface`: The name of the interface to watch</span>
+<span class="sd">        - `interval`: seconds between samples</span>
+<span class="sd">        - `connection`: the connection to the device to watch</span>
+<span class="sd">        - `name`: the name of the file to watch</span>
+<span class="sd">        - `expression`: A regular expression with groups to match the output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseFileexpressionwatcher</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expression_keys</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stopped</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_header</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFileexpressionwatcher.stopped"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.stopped.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.stopped">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        :return: True if self.stop is set.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">False</span>
+
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the path to the file to cat</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_name</span>
+
+    <span class="nd">@name.setter</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_name</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFileexpressionwatcher.name"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.name.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.name">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `new_name`: path of the file to cat</span>
+
+<span class="sd">        :raise: ConfigurationError if the new_name is none</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">new_name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;FileExpression watcher requires the name parameter&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@abstractproperty</span></div>
+    <span class="k">def</span> <span class="nf">expression_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFileexpressionwatcher.expression_keys"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.expression_keys.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.expression_keys">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of group-keys to order the output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression_keys</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseFileexpressionwatcher.connection"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.connection.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the node connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">connection</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BaseFileexpressionwatcher.run"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.run.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Repeatedly cats file self.name and saves matching output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#if self.use_header:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+       
+        <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>                
+            <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span><span class="n">NOT_AVAILABLE</span><span class="p">)</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+                <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">match</span><span class="p">:</span>                    
+                    <span class="n">match</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+                    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">match</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+                        <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                            <span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+            <span class="n">data_out</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">expression_keys</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;{0},{1}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">data_out</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interval</span> <span class="o">-</span> <span class="p">(</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;cat {0} took more than one second&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span>
+<span class="c"># end class BaseFileexpressionWatcher</span>
+
+
+<span class="k">class</span> <span class="nc">BatteryWatcher</span><span class="p">(</span><span class="n">BaseFileexpressionwatcher</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="BatteryWatcher"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BatteryWatcher.html#apetools.watchers.fileexpressionwatcher.BatteryWatcher">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Watches the battery data from a proc file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BatteryWatcher.__init__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BatteryWatcher.html#apetools.watchers.fileexpressionwatcher.BatteryWatcher.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">BatteryWatcher</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">header</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BatteryWatcher.header"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BatteryWatcher.header.html#apetools.watchers.fileexpressionwatcher.BatteryWatcher.header">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the header to use in files</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_header</span> <span class="o">=</span> <span class="s">&quot;timestamp,status,voltage,current,temp,charge,health,capacity&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_header</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">expression_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BatteryWatcher.expression_keys"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression_keys.html#apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression_keys">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of group-dict keys in order </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression_keys</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expression_keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression_keys</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BatteryWatcher.expression"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression.html#apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: regular expression to match the output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">status</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;STATUS=&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="s">&#39;status&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">LETTERS</span><span class="p">))</span>
+            <span class="n">voltage</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;VOLTAGE_NOW=&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="s">&quot;voltage&quot;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">))</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;CURRENT_NOW=&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="s">&#39;current&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">))</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;TEMP=&quot;</span><span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="s">&#39;temp&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">))</span>
+            <span class="n">charge</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;CHARGE_NOW=&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="s">&#39;charge&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">))</span>
+            <span class="n">health</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;HEALTH=&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="s">&#39;health&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">LETTERS</span><span class="p">))</span>
+            <span class="n">capacity</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;CAPACITY=&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="s">&#39;capacity&#39;</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">status</span><span class="p">,</span> <span class="n">voltage</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">temp</span><span class="p">,</span> <span class="n">charge</span><span class="p">,</span> <span class="n">health</span><span class="p">,</span>
+                                                <span class="n">capacity</span><span class="p">])</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
+<span class="c">#end class BatteryWatcher       </span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

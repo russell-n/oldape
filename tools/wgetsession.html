@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Wget Session &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Tools" href="index.html" />
+    <link rel="next" title="apetools.tools.wgetsession.BusyboxWgetSession" href="api/apetools.tools.wgetsession.BusyboxWgetSession.html" />
+    <link rel="prev" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.log_message" href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.log_message.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.tools.wgetsession.BusyboxWgetSession.html" title="apetools.tools.wgetsession.BusyboxWgetSession"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.tools.timetorecoverytest.TimeToRecoveryTest.log_message.html" title="apetools.tools.timetorecoverytest.TimeToRecoveryTest.log_message"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Tools</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.tools.wgetsession">
+<span id="wget-session"></span><h1>Wget Session<a class="headerlink" href="#module-apetools.tools.wgetsession" title="Permalink to this headline">¶</a></h1>
+<p>The Wget Session repeatedly calls the <cite>wget</cite> command and monitors the outcome. The initial implementation will be for the <a class="reference internal" href="../commands/busyboxwget.html#id1"><em>BusyboxWget</em></a> because it is being created for an emergency android-based project.</p>
+<div class="section" id="busyboxwget-session">
+<span id="busybox-wget-session"></span><h2>BusyboxWget Session<a class="headerlink" href="#busyboxwget-session" title="Permalink to this headline">¶</a></h2>
+<p>For the constructor, if only one of <cite>max_time</cite> or <cite>repetitions</cite> is given then that will be used to decide when to stop. If both are given, whichever is reached first will cause the session to end.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-cde4cf5e7d49e92d223389de0f35d519edceabdc.png" alt="BusyboxWgetSession -|&gt; BaseClass" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.wgetsession.BusyboxWgetSession.html#apetools.tools.wgetsession.BusyboxWgetSession" title="apetools.tools.wgetsession.BusyboxWgetSession"><tt class="xref py py-obj docutils literal"><span class="pre">BusyboxWgetSession</span></tt></a>(url,&nbsp;connection,&nbsp;storage)</td>
+<td>A busybox-based wget monitor</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.wgetsession.BusyboxWgetSession.wget.html#apetools.tools.wgetsession.BusyboxWgetSession.wget" title="apetools.tools.wgetsession.BusyboxWgetSession.wget"><tt class="xref py py-obj docutils literal"><span class="pre">BusyboxWgetSession.wget</span></tt></a></td>
+<td>A busy box wget command</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.wgetsession.BusyboxWgetSession.data_file.html#apetools.tools.wgetsession.BusyboxWgetSession.data_file" title="apetools.tools.wgetsession.BusyboxWgetSession.data_file"><tt class="xref py py-obj docutils literal"><span class="pre">BusyboxWgetSession.data_file</span></tt></a></td>
+<td>Name to use for data-file</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.wgetsession.BusyboxWgetSession.time_remains.html#apetools.tools.wgetsession.BusyboxWgetSession.time_remains" title="apetools.tools.wgetsession.BusyboxWgetSession.time_remains"><tt class="xref py py-obj docutils literal"><span class="pre">BusyboxWgetSession.time_remains</span></tt></a></td>
+<td>Checks if time is remaining</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.tools.wgetsession.BusyboxWgetSession.start_timer.html#apetools.tools.wgetsession.BusyboxWgetSession.start_timer" title="apetools.tools.wgetsession.BusyboxWgetSession.start_timer"><tt class="xref py py-obj docutils literal"><span class="pre">BusyboxWgetSession.start_timer</span></tt></a>()</td>
+<td>Initializes the timer</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.tools.wgetsession.BusyboxWgetSession.__call__.html#apetools.tools.wgetsession.BusyboxWgetSession.__call__" title="apetools.tools.wgetsession.BusyboxWgetSession.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">BusyboxWgetSession.__call__</span></tt></a>([parameters,&nbsp;...])</td>
+<td>calls wget  until we are out of time or repetitions</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Wget Session</a><ul>
+<li><a class="reference internal" href="#busyboxwget-session">BusyboxWget Session</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/tools/wgetsession.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

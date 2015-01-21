@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.tools.killall &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.tools.killall</h1><div class="highlight"><pre>
+<span class="c">#python</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c"># apetools</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.tools</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">enumerations</span><span class="p">,</span> <span class="n">expressions</span><span class="p">,</span> <span class="n">errors</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers.oatbran</span> <span class="kn">import</span> <span class="n">NAMED</span><span class="p">,</span> <span class="n">STRING_START</span><span class="p">,</span><span class="n">SPACES</span><span class="p">,</span> <span class="n">INTEGER</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.pscommand</span> <span class="kn">import</span> <span class="n">PsGrep</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.topcommand</span> <span class="kn">import</span> <span class="n">TopGrep</span>
+
+
+<span class="n">CYGWIN</span> <span class="o">=</span> <span class="n">STRING_START</span> <span class="o">+</span> <span class="n">SPACES</span> <span class="o">+</span> <span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">expressions</span><span class="o">.</span><span class="n">PID_NAME</span><span class="p">,</span><span class="n">e</span><span class="o">=</span><span class="n">INTEGER</span><span class="p">)</span>
+
+<span class="n">operating_systems</span> <span class="o">=</span> <span class="n">enumerations</span><span class="o">.</span><span class="n">OperatingSystem</span>
+
+
+
+<span class="k">class</span> <span class="nc">KillAllError</span><span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">CommandError</span><span class="p">):</span>
+<div class="viewcode-block" id="KillAllError"><a class="viewcode-back" href="../../../documentation/developer/api/tools_api/apetools.tools.killall.html#apetools.tools.killall.KillAllError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A KillAllError is raised if the kill didn&#39;t succeed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">KillAll</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="KillAll"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A killall kills processes. The default operating system is linux</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">time_to_sleep</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="KillAll.__init__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `name`: The name of a process to kill</span>
+<span class="sd">         - `time_to_sleep`: The number of seconds to wait for a process to die.</span>
+<span class="sd">         - `connection`: A connection to a device</span>
+<span class="sd">         - `level`: the signal level (as a positive integer)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">time_to_sleep</span> <span class="o">=</span> <span class="n">time_to_sleep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The signal level for ``kill``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_level</span>
+
+    <span class="nd">@level.setter</span>
+    <span class="k">def</span> <span class="nf">level</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">):</span>
+<div class="viewcode-block" id="KillAll.level"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll.level">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the signal level (use None to reset it to the default)</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `level`: positive integer or None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">level</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="o">=</span> <span class="s">&quot;-{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A connection to the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+
+    <span class="nd">@connection.setter</span>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+<div class="viewcode-block" id="KillAll.connection"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the connection, resets the grep (since the OS may have changed)</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection` : a connection to the device (e.g. `SSHConnection`)</span>
+
+<span class="sd">        :postcondition: self._grep is None, self._connection is `connection`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">grep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="KillAll.grep"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll.grep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        the parser for the process id&#39;s</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">==</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">ios</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="n">TopGrep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="n">PsGrep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_grep</span>
+
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="KillAll.sleep"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll.sleep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A sleep object to pace the execution of commands on the device</span>
+<span class="sd">        </span>
+<span class="sd">        :return: A sleep timer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="o">=</span> <span class="n">sleep</span><span class="o">.</span><span class="n">Sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">time_to_sleep</span><span class="p">)</span><span class="o">.</span><span class="n">run</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span>
+
+    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="KillAll.kill"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll.kill">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tries to kill all matching processes</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `name`: the name of the process</span>
+<span class="sd">         - `level`: a signal level to override the set level</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">level</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span>
+        <span class="n">kill_count</span> <span class="o">=</span> <span class="mi">0</span>
+                
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;killing: &quot;</span> <span class="o">+</span> <span class="n">pid</span><span class="p">)</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="s">&quot; {0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="n">pid</span><span class="p">)</span>
+            <span class="n">kill_count</span><span class="o">+=</span> <span class="mi">1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;kill &quot;</span> <span class="o">+</span> <span class="n">command</span><span class="p">)</span>
+            <span class="n">k_output</span><span class="p">,</span> <span class="n">k_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k_line</span> <span class="ow">in</span> <span class="n">k_error</span><span class="p">:</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">k_line</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">k_line</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">kill_count</span>
+    
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">time_to_sleep</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="KillAll.run"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.html#apetools.tools.killall.KillAll.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Executes the kill</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `name`: The process to kill</span>
+<span class="sd">         - `time_to_sleep`: Seconds between calls to the device</span>
+
+<span class="sd">        :raise: KillAllError if the process is still alive at the end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        
+        <span class="k">if</span> <span class="n">time_to_sleep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">time_to_sleep</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_to_sleep</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;process to kill: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="n">kill_count</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">kill_count</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;No &#39;{p}&#39; processes found on {h}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
+                                                                        <span class="n">p</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">time_to_sleep</span><span class="p">)</span>
+
+        <span class="c"># double-check to see if the process is dead</span>
+        <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">KillAllError</span><span class="p">(</span><span class="s">&quot;Unable to kill {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Killed {k} &#39;{p}&#39; processes on {h}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">kill_count</span><span class="p">,</span> 
+                                                                    <span class="n">h</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
+                                                                    <span class="n">p</span><span class="o">=</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">time_to_sleep</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="KillAll.__call__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.KillAll.__call__.html#apetools.tools.killall.KillAll.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is an alias to ``run`` to match the newer-style</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `name`: The process to kill</span>
+<span class="sd">         - `time_to_sleep`: Seconds between calls to the device</span>
+
+<span class="sd">        :raise: KillAllError if the process is still alive at the end</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">time_to_sleep</span><span class="o">=</span><span class="n">time_to_sleep</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+        <span class="k">return</span> <span class="s">&quot;{0} ({2}):{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+<span class="c"># end class KillAll</span>
+
+
+<span class="c">#python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">randrange</span><span class="p">,</span> <span class="n">choice</span>
+<span class="c">#third-party</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span><span class="p">,</span> <span class="n">patch</span><span class="p">,</span> <span class="n">call</span>
+<span class="kn">from</span> <span class="nn">nose.tools</span> <span class="kn">import</span> <span class="n">raises</span>
+
+
+<span class="k">class</span> <span class="nc">TestKillAll</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span> <span class="o">=</span> <span class="n">KillAll</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">test_set_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestKillAll.test_set_connection"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.TestKillAll.test_set_connection.html#apetools.tools.killall.TestKillAll.test_set_connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does setting the connection re-set the grep?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">ios</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">grep</span><span class="p">,</span> <span class="n">TopGrep</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">android</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">grep</span><span class="p">,</span> <span class="n">PsGrep</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_kill_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestKillAll.test_kill_command"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.TestKillAll.test_kill_command.html#apetools.tools.killall.TestKillAll.test_kill_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Will the correct kill command be called?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pgrep</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">linux</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+        <span class="c"># pids[0] is the first traversal over pids , pids[1] is the check for unkilled pids</span>
+        <span class="n">pids</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">))]]</span> <span class="o">+</span> <span class="p">[[]]</span>
+        <span class="k">def</span> <span class="nf">side_effects</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pids</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pgrep</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effects</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;  {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="p">))</span> <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">pids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="n">pgrep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;emacs&#39;</span><span class="p">,</span>
+                    <span class="n">time_to_sleep</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">KillAllError</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">test_failed_kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestKillAll.test_failed_kill"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.TestKillAll.test_failed_kill.html#apetools.tools.killall.TestKillAll.test_failed_kill">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Will a failed kill raise an error?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pgrep</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">linux</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+
+        <span class="n">pids</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">))]</span>
+        <span class="n">pgrep</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">pids</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="n">pgrep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;emacs&#39;</span><span class="p">,</span>
+                    <span class="n">time_to_sleep</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestKillAll.test_call"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.TestKillAll.test_call.html#apetools.tools.killall.TestKillAll.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dose `__call__` do the same thing as `run`?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pgrep</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_systems</span><span class="o">.</span><span class="n">linux</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+
+        <span class="c"># pids[0] is the first traversal over pids , pids[1] is the check for unkilled pids</span>
+        <span class="n">pids</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">))]]</span> <span class="o">+</span> <span class="p">[[]]</span>
+        <span class="k">def</span> <span class="nf">side_effects</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pids</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pgrep</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effects</span>
+
+        <span class="c"># use the default kill level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;  {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="p">))</span> <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">pids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="n">pgrep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;emacs&#39;</span><span class="p">,</span>
+                  <span class="n">time_to_sleep</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_set_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestKillAll.test_set_level"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.TestKillAll.test_set_level.html#apetools.tools.killall.TestKillAll.test_set_level">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If you set the level, will the command change?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pgrep</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="s">&quot;-{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+        <span class="c"># pids[0] is the first traversal over pids , pids[1] is the check for unkilled pids</span>
+        <span class="n">pids</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">))]]</span> <span class="o">+</span> <span class="p">[[]]</span>
+        <span class="k">def</span> <span class="nf">side_effects</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pids</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pgrep</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effects</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="n">call</span><span class="p">(</span><span class="s">&quot; -{1} {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="p">,</span> <span class="n">level</span><span class="p">))</span> <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">pids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="n">pgrep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;emacs&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_reset_level</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestKillAll.test_reset_level"><a class="viewcode-back" href="../../../tools/api/apetools.tools.killall.TestKillAll.test_reset_level.html#apetools.tools.killall.TestKillAll.test_reset_level">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Can you go back to the default level?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pgrep</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">],</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">]</span>
+        <span class="n">level</span> <span class="o">=</span> <span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="c"># reset here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">level</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="c"># pids[0] is the first traversal over pids , pids[1] is the check for unkilled pids</span>
+        <span class="n">pids</span> <span class="o">=</span> <span class="p">[[</span><span class="s">&#39;{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1000</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">randrange</span><span class="p">(</span><span class="mi">100</span><span class="p">))]]</span> <span class="o">+</span> <span class="p">[[]]</span>
+        <span class="k">def</span> <span class="nf">side_effects</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pids</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pgrep</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effects</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="n">call</span><span class="p">(</span><span class="s">&quot;  {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pid</span><span class="p">))</span> <span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">pids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">_grep</span> <span class="o">=</span> <span class="n">pgrep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;emacs&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">kill</span><span class="o">.</span><span class="n">call_args_list</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
+        <span class="k">return</span>
+
+        
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

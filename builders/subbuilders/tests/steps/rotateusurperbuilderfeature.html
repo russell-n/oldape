@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>RotateUsurper Builder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Sub-Builder Tests" href="index.html" />
+    <link rel="next" title="Commands" href="../../../../commands/index.html" />
+    <link rel="prev" title="Sub-Builder Tests" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../../../commands/index.html" title="Commands"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Sub-Builder Tests"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" >Builders</a> &raquo;</li>
+          <li><a href="../../index.html" >Sub-Builders</a> &raquo;</li>
+          <li><a href="../index.html" >Sub-Builder Tests</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Sub-Builder Tests</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rotateusurper-builder">
+<h1>RotateUsurper Builder<a class="headerlink" href="#rotateusurper-builder" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-gherkin"><div class="highlight"><pre><span class="k">Feature:</span><span class="nf"> RotateUsurper Builder</span>
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> User builds the RotateUsurperBuilder</span>
+<span class="k">  Given </span><span class="nf">a RotateUsurperBuilder </span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the rotate usurper builder is checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">it is a sub-class of the BaseToolBuilder</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> User checks the tables_sections property</span>
+<span class="k">  Given </span><span class="nf">a RotateUsurperBuilder</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the tables_sections is checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">it is a list built from the &#39;ROTATE_CUBE&#39; section</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> User checks the tables_sections property and it is missing</span>
+<span class="k">  Given </span><span class="nf">a RotateUsurperBuilder</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">a missing tables_sections is checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">it raises a ConfigurationError</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> User checks the connections_parameters property</span>
+<span class="k">  Given </span><span class="nf">a RotateUsurperBuilder</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the connections_parameters are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">they are a list of SSHParameters</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> User checks the connections property</span>
+<span class="k">  Given </span><span class="nf">a RotateUsurperBuilder</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the connections are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">they are a list of SSHConnections</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> User checks the parameters</span>
+<span class="k">  Given </span><span class="nf">a RotateUsurperBuilder</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the parameters are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">they are a list of Parameters</span>
+</pre></div>
+</div>
+<div class="section" id="scenario-user-builds-the-rotateusurperbuilder">
+<h2>Scenario: User builds the RotateUsurperBuilder<a class="headerlink" href="#scenario-user-builds-the-rotateusurperbuilder" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@given</span><span class="p">(</span><span class="s">&quot;a RotateUsurperBuilder&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">rotate_usurper_builder</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+    <span class="n">tables</span> <span class="o">=</span> <span class="s">&#39;able,baker&#39;</span> <span class="c">#,charley&#39;</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">tables_sections</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+
+    <span class="c"># setup table sections</span>
+    <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">tables_sections</span><span class="p">:</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+    <span class="n">able_angles</span> <span class="o">=</span> <span class="s">&#39;0 45 180&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">able_ssh</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hostname&#39;</span><span class="p">:</span><span class="s">&#39;unable&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">:</span><span class="s">&#39;cable&#39;</span><span class="p">}</span>
+    <span class="n">able_table</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;angles&#39;</span><span class="p">:</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">able_angles</span><span class="p">),</span> <span class="s">&#39;velocity&#39;</span><span class="p">:</span><span class="s">&#39;400&#39;</span><span class="p">}</span>
+
+    <span class="n">baker_ssh</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hostname&#39;</span><span class="p">:</span><span class="s">&#39;bakery&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">:</span><span class="s">&#39;broker&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">:</span><span class="s">&#39;broken&#39;</span><span class="p">}</span>
+    <span class="n">baker_table</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;angles&#39;</span><span class="p">:</span> <span class="s">&#39;90&#39;</span><span class="p">}</span>
+
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">able_angles</span><span class="p">:</span>
+        <span class="n">parameters</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;able&#39;</span><span class="p">:</span><span class="s">&#39; --velocity 400 {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span>
+                          <span class="s">&#39;baker&#39;</span><span class="p">:</span> <span class="s">&#39; 90&#39;</span><span class="p">})</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">Parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                     <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">)]</span>
+
+    <span class="n">ssh_values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">tables_sections</span><span class="p">,</span> <span class="p">(</span><span class="n">able_ssh</span><span class="p">,</span> <span class="n">baker_ssh</span><span class="p">)))</span>
+    <span class="n">table_values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">tables_sections</span><span class="p">,</span> <span class="p">(</span><span class="n">able_table</span><span class="p">,</span> <span class="n">baker_table</span><span class="p">)))</span>
+
+    <span class="c"># add table-control parameters</span>
+    <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">options</span> <span class="ow">in</span> <span class="n">table_values</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+
+    <span class="c"># add table-ssh parameters</span>
+    <span class="n">sshparameters</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">options</span> <span class="ow">in</span> <span class="n">ssh_values</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+            <span class="n">context</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">SSHParameters</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
+        <span class="n">parameters</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">table</span>
+        <span class="n">sshparameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">sshparameters</span> <span class="o">=</span> <span class="n">sshparameters</span>
+    <span class="n">sshconnections</span> <span class="o">=</span> <span class="p">[</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">SSHConnectionBuilder</span><span class="p">)</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">sshparameters</span><span class="p">]</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">connections</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ssh_values</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sshconnections</span><span class="p">))</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
+                       <span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">tables_option</span><span class="p">,</span>
+                       <span class="n">tables</span><span class="p">)</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">master</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">config_map</span> <span class="o">=</span> <span class="n">ConfigurationMap</span><span class="p">(</span><span class="s">&#39;fakefile&#39;</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">parser</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">previous_parameters</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">builder</span> <span class="o">=</span> <span class="n">RotateUsurperBuilder</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">master</span><span class="p">,</span>
+                                           <span class="n">config_map</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">config_map</span><span class="p">,</span>
+                                           <span class="n">previous_parameters</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">previous_parameters</span><span class="p">)</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@when</span><span class="p">(</span><span class="s">&quot;the rotate usurper builder is checked&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">check_builder_parent</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;it is a sub-class of the BaseToolBuilder&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_rotate_parent</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">builder</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">instance_of</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">)))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-user-checks-the-tables-sections-property">
+<h2>Scenario: User checks the tables_sections property<a class="headerlink" href="#scenario-user-checks-the-tables-sections-property" title="Permalink to this headline">¶</a></h2>
+<p>Given a RotateUserperBuilder</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@when</span><span class="p">(</span><span class="s">&quot;the tables_sections is checked&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">check_tables_section</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">outcome</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">tables_sections</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;it is a list built from the &#39;ROTATE_CUBE&#39; section&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_tables_section</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">outcome</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">tables_sections</span><span class="p">)))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-user-checks-the-tables-sections-property-and-it-is-missing">
+<h2>Scenario: User checks the tables_sections property and it is missing<a class="headerlink" href="#scenario-user-checks-the-tables-sections-property-and-it-is-missing" title="Permalink to this headline">¶</a></h2>
+<p>Given a RotateUsurperBuilder</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@when</span><span class="p">(</span><span class="s">&quot;a missing tables_sections is checked&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">missing_tables_section</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">remove_option</span><span class="p">(</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
+                                 <span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">tables_option</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">call</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">context</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">tables_sections</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;it raises a ConfigurationError&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">raise_configuration_error</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">calling</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">call</span><span class="p">),</span>
+                <span class="n">raises</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-user-checks-the-connections-parameters-property">
+<h2>Scenario: User checks the connections_parameters property<a class="headerlink" href="#scenario-user-checks-the-connections-parameters-property" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Given a RotateUsurperBuilder</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@when</span><span class="p">(</span><span class="s">&quot;the connections_parameters are checked&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">check_connections_parameters</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">outcome</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">connections_parameters</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;they are a list of SSHParameters&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_ssh_parameters</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">outcome</span><span class="p">,</span>
+                <span class="n">has_items</span><span class="p">(</span><span class="o">*</span><span class="n">context</span><span class="o">.</span><span class="n">sshparameters</span><span class="p">))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-user-checks-the-connections-property">
+<h2>Scenario: User checks the connections property<a class="headerlink" href="#scenario-user-checks-the-connections-property" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Given a RotateUsurperBuilder</div></blockquote>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@when</span><span class="p">(</span><span class="s">&quot;the connections are checked&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">check_connections</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">builder_dict</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">sshbuilder</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+    <span class="n">builders</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;ssh&#39;</span><span class="p">:</span> <span class="n">sshbuilder</span><span class="p">}</span>
+    <span class="k">def</span> <span class="nf">getitem</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">builders</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="n">builder_dict</span><span class="o">.</span><span class="n">__getitem__</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">getitem</span>
+
+    <span class="k">def</span> <span class="nf">builder_effect</span><span class="p">(</span><span class="n">parameters</span><span class="p">):</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">builder</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">connections</span><span class="p">[</span><span class="n">parameters</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">builder</span>
+    <span class="n">sshbuilder</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">builder_effect</span>
+
+    <span class="k">with</span> <span class="n">patch</span><span class="p">(</span><span class="s">&#39;apetools.builders.subbuilders.connectionbuilder.connection_builders&#39;</span><span class="p">,</span> <span class="n">builder_dict</span><span class="p">):</span>
+        <span class="n">context</span><span class="o">.</span><span class="n">outcome</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">connections</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;they are a list of SSHConnections&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_connections</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">outcome</span><span class="p">,</span>
+                <span class="n">has_items</span><span class="p">(</span><span class="o">*</span><span class="n">context</span><span class="o">.</span><span class="n">connections</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-user-checks-the-parameters">
+<h2>Scenario: User checks the parameters<a class="headerlink" href="#scenario-user-checks-the-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Given a RotateUsurperBuilder</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@when</span><span class="p">(</span><span class="s">&quot;the parameters are checked&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">check_parameters</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">outcome</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">parameters</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;they are a list of Parameters&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_parameters</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">outcome</span><span class="p">,</span>
+                <span class="n">has_items</span><span class="p">(</span><span class="o">*</span><span class="n">context</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">RotateUsurper Builder</a><ul>
+<li><a class="reference internal" href="#scenario-user-builds-the-rotateusurperbuilder">Scenario: User builds the RotateUsurperBuilder</a></li>
+<li><a class="reference internal" href="#scenario-user-checks-the-tables-sections-property">Scenario: User checks the tables_sections property</a></li>
+<li><a class="reference internal" href="#scenario-user-checks-the-tables-sections-property-and-it-is-missing">Scenario: User checks the tables_sections property and it is missing</a></li>
+<li><a class="reference internal" href="#scenario-user-checks-the-connections-parameters-property">Scenario: User checks the connections_parameters property</a></li>
+<li><a class="reference internal" href="#scenario-user-checks-the-connections-property">Scenario: User checks the connections property</a></li>
+<li><a class="reference internal" href="#scenario-user-checks-the-parameters">Scenario: User checks the parameters</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../../index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/builders/subbuilders/tests/steps/rotateusurperbuilderfeature.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

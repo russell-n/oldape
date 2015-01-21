@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commons.storageoutput &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.commons.storageoutput">
+<span id="apetools-commons-storageoutput"></span><h1>apetools.commons.storageoutput<a class="headerlink" href="#module-apetools.commons.storageoutput" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commons.storageoutput.StorageOutput" title="apetools.commons.storageoutput.StorageOutput"><tt class="xref py py-obj docutils literal"><span class="pre">StorageOutput</span></tt></a>(output_folder[,&nbsp;timestamp_format])</td>
+<td>A StorageOutput maintains an output file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">StorageError</span></tt></td>
+<td>An StoragError is raised by the StorageOutput</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.commons.storageoutput.StorageOutput">
+<em class="property">class </em><tt class="descclassname">apetools.commons.storageoutput.</tt><tt class="descname">StorageOutput</tt><big>(</big><em>output_folder</em>, <em>timestamp_format='%Y%m%d%H%M%S'</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>A StorageOutput maintains an output file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>output_folder</cite>: name of (path to) the output folder to use.</li>
+<li><cite>timestamp_format</cite>: strftime timestamp format</li>
+</ul>
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput._fix_duplicate_names">
+<tt class="descname">_fix_duplicate_names</tt><big>(</big><em>name</em>, <em>extension</em>, <em>subdir=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput._fix_duplicate_names"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput._fix_duplicate_names" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the name exists as a prefix and adds a number if it does.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">uniqued name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the output filen
+:postcondition:</p>
+<blockquote>
+<div><ul class="simple">
+<li>self.output_file is flushed</li>
+<li>self.output_file is closed</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.copy">
+<tt class="descname">copy</tt><big>(</big><em>source</em>, <em>subdir=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy the file to a subdirectory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>source</cite>: The path to a file.</li>
+<li><cite>subdir</cite>: subfolder in the output folder</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">file in path is copied to output folder.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.extend_path">
+<tt class="descname">extend_path</tt><big>(</big><em>subdirectory</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.extend_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.extend_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends the current path with the given sub-directory.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>subdirectory</cite>: a path to add to the current path</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">-<cite>self.output_folder</cite> extended with subdirectory
+- <cite>self._path</cite> is None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.get_filename">
+<tt class="descname">get_filename</tt><big>(</big><em>filename</em>, <em>subdir=None</em>, <em>mode='w'</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.get_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.get_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a super-filename with the path and numbering</p>
+<blockquote>
+<div><ul class="simple">
+<li>This was broken out so that other file-related classes can use it</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>filename</cite>: a filename around which to build the new name</li>
+<li><cite>subdir</cite>: A sub-directory of self.path</li>
+<li><cite>mode</cite>: file-mode (writeable or appendable)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the path to the output file</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.get_full_path">
+<tt class="descname">get_full_path</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.get_full_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.get_full_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the filename with the (relative) path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>filename</cite>: name of file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">path to filename in output folder</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">output folder exists</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.is_file">
+<tt class="descname">is_file</tt><big>(</big><em>filename</em>, <em>subdir=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.is_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.is_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the file exists within the known path</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>filename</cite>: The name of the file to open</li>
+<li><cite>subdir</cite>: A subdirectory whithin the output folder to put the file in.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if file exists, False otherwise</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.move">
+<tt class="descname">move</tt><big>(</big><em>source</em>, <em>subdir=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the file to a subdirectory.
+:param:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>source</cite>: The path to a file or directory to move to the output folder.</li>
+<li><cite>subdir</cite>: a subdirectory to make within the output folder.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.open">
+<tt class="descname">open</tt><big>(</big><em>filename</em>, <em>subdir=None</em>, <em>mode='w'</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Opens a writeable file using the stored path information</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>filename</cite>: The name of the file to open</li>
+<li><cite>subdir</cite>: A subdirectory whithin the output folder to put the file in.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A clone of this object with a new file opened.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.timestamp">
+<tt class="descname">timestamp</tt><big>(</big><em>name</em>, <em>timestamp_format=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for a &#8216;{t}&#8217; in the string for a placeholder</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">name with timestamp</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.write">
+<tt class="descname">write</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a line to the file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>line</cite>: A string to send to the output_file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.writeline">
+<tt class="descname">writeline</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.writeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.writeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Coerces the line to a string and adds a newline.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>line</cite>: string to add to (if it doesn&#8217;t have one) then send to output</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storageoutput.StorageOutput.writelines">
+<tt class="descname">writelines</tt><big>(</big><em>lines</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.writelines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.writelines" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write all the lines to the output file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>lines</cite>: iterable of strings to send to the file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commons.storageoutput.StorageOutput.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commons.storageoutput.StorageOutput.path">
+<tt class="descname">path</tt><a class="reference internal" href="../../../../_modules/apetools/commons/storageoutput.html#StorageOutput.path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storageoutput.StorageOutput.path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a timestamp if there&#8217;s a {t} in the name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Precondition:</th><td class="field-body">self.output_folder is a valid file name</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body">there exists a folder with the name in self.path</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">StringType</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the path-prefix for the file output.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/commons_api/apetools.commons.storageoutput.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

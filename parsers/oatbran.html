@@ -1,0 +1,311 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Oat Bran &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Parsers" href="index.html" />
+    <link rel="next" title="apetools.parsers.oatbran.GROUP" href="api/apetools.parsers.oatbran.GROUP.html" />
+    <link rel="prev" title="apetools.parsers.main.main" href="api/apetools.parsers.main.main.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.oatbran.GROUP.html" title="apetools.parsers.oatbran.GROUP"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.main.main.html" title="apetools.parsers.main.main"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Parsers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="oat-bran">
+<h1>Oat Bran<a class="headerlink" href="#oat-bran" title="Permalink to this headline">¶</a></h1>
+<p>Oat Bran helps with regular expressions.</p>
+<p>Names are uppercased to avoid keyword clashes.</p>
+<div class="section" id="module-apetools.parsers.oatbran">
+<span id="groups"></span><h2>Groups<a class="headerlink" href="#module-apetools.parsers.oatbran" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.oatbran.GROUP.html#apetools.parsers.oatbran.GROUP" title="apetools.parsers.oatbran.GROUP"><tt class="xref py py-obj docutils literal"><span class="pre">GROUP</span></tt></a>(e)</td>
+<td>puts the argument in a group</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.oatbran.NAMED.html#apetools.parsers.oatbran.NAMED" title="apetools.parsers.oatbran.NAMED"><tt class="xref py py-obj docutils literal"><span class="pre">NAMED</span></tt></a>(n,&nbsp;e)</td>
+<td>Puts the expression in a named-group</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.oatbran.CLASS.html#apetools.parsers.oatbran.CLASS" title="apetools.parsers.oatbran.CLASS"><tt class="xref py py-obj docutils literal"><span class="pre">CLASS</span></tt></a>(e)</td>
+<td>puts e in a character class</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.oatbran.NOT.html#apetools.parsers.oatbran.NOT" title="apetools.parsers.oatbran.NOT"><tt class="xref py py-obj docutils literal"><span class="pre">NOT</span></tt></a>(e)</td>
+<td>match only if none of the characters in e are there</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.oatbran.NOT_FOLLOWED_BY.html#apetools.parsers.oatbran.NOT_FOLLOWED_BY" title="apetools.parsers.oatbran.NOT_FOLLOWED_BY"><tt class="xref py py-obj docutils literal"><span class="pre">NOT_FOLLOWED_BY</span></tt></a>(e)</td>
+<td>look-ahead group</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.oatbran.NOT_PRECEDED_BY.html#apetools.parsers.oatbran.NOT_PRECEDED_BY" title="apetools.parsers.oatbran.NOT_PRECEDED_BY"><tt class="xref py py-obj docutils literal"><span class="pre">NOT_PRECEDED_BY</span></tt></a>(e)</td>
+<td>look-behind group</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cardinality">
+<h2>Cardinality<a class="headerlink" href="#cardinality" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ONE_OR_MORE</span> <span class="o">=</span> <span class="s">&quot;+&quot;</span>
+<span class="n">ZERO_OR_MORE</span> <span class="o">=</span> <span class="s">&#39;*&#39;</span>
+<span class="n">ZERO_OR_ONE</span> <span class="o">=</span> <span class="s">&quot;?&quot;</span>
+<span class="n">EXACTLY</span> <span class="o">=</span> <span class="s">&quot;{{{0}}}&quot;</span>
+</pre></div>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.oatbran.M_TO_N.html#apetools.parsers.oatbran.M_TO_N" title="apetools.parsers.oatbran.M_TO_N"><tt class="xref py py-obj docutils literal"><span class="pre">M_TO_N</span></tt></a>(m,&nbsp;n,&nbsp;e)</td>
+<td>match from m to n occurences of e</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">M_to_N_ONLY</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="escapes">
+<h2>Escapes<a class="headerlink" href="#escapes" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DECIMAL_POINT</span> <span class="o">=</span> <span class="s">r&#39;\.&#39;</span>
+<span class="n">L_BRACKET</span> <span class="o">=</span> <span class="s">r&quot;\[&quot;</span>
+<span class="n">R_BRACKET</span> <span class="o">=</span> <span class="s">r&quot;\]&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="operators">
+<h2>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">OR</span> <span class="o">=</span> <span class="s">&quot;|&quot;</span>
+</pre></div>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.oatbran.WORD_BOUNDARY.html#apetools.parsers.oatbran.WORD_BOUNDARY" title="apetools.parsers.oatbran.WORD_BOUNDARY"><tt class="xref py py-obj docutils literal"><span class="pre">WORD_BOUNDARY</span></tt></a>(e)</td>
+<td>adds word-boundaries</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.oatbran.STRING_BOUNDARY.html#apetools.parsers.oatbran.STRING_BOUNDARY" title="apetools.parsers.oatbran.STRING_BOUNDARY"><tt class="xref py py-obj docutils literal"><span class="pre">STRING_BOUNDARY</span></tt></a>(e)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">expr that matches an entire line</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="string-help">
+<h2>String Help<a class="headerlink" href="#string-help" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">STRING_START</span> <span class="o">=</span> <span class="s">&quot;^&quot;</span>
+<span class="n">STRING_END</span> <span class="o">=</span> <span class="s">&quot;$&quot;</span>
+<span class="n">ALPHA_NUM</span> <span class="o">=</span> <span class="s">r&quot;\w&quot;</span>
+<span class="n">ALPHA_NUMS</span> <span class="o">=</span> <span class="n">ALPHA_NUM</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="anything-and-everything">
+<h2>Anything And Everything<a class="headerlink" href="#anything-and-everything" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ANYTHING</span> <span class="o">=</span> <span class="s">r&quot;.&quot;</span>
+<span class="n">EVERYTHING</span> <span class="o">=</span> <span class="n">ANYTHING</span> <span class="o">+</span> <span class="n">ZERO_OR_MORE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="numbers">
+<h2>Numbers<a class="headerlink" href="#numbers" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DIGIT</span> <span class="o">=</span> <span class="s">r&quot;\d&quot;</span>
+<span class="n">NOT_DIGIT</span> <span class="o">=</span> <span class="s">r&quot;\D&quot;</span>
+<span class="n">NON_ZERO</span> <span class="o">=</span> <span class="n">CLASS</span><span class="p">(</span><span class="s">&quot;1-9&quot;</span><span class="p">)</span>
+<span class="n">SINGLE_DIGIT</span> <span class="o">=</span> <span class="n">WORD_BOUNDARY</span><span class="p">(</span><span class="n">DIGIT</span><span class="p">)</span>
+<span class="n">TWO_DIGITS</span> <span class="o">=</span> <span class="n">WORD_BOUNDARY</span><span class="p">(</span><span class="n">NON_ZERO</span> <span class="o">+</span> <span class="n">DIGIT</span><span class="p">)</span>
+<span class="n">ONE_HUNDREDS</span> <span class="o">=</span> <span class="n">WORD_BOUNDARY</span><span class="p">(</span><span class="s">&quot;1&quot;</span> <span class="o">+</span> <span class="n">DIGIT</span> <span class="o">+</span> <span class="n">DIGIT</span><span class="p">)</span>
+<span class="n">NATURAL</span> <span class="o">=</span> <span class="n">DIGIT</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+
+<span class="n">INTEGER</span> <span class="o">=</span> <span class="p">(</span><span class="n">NOT_PRECEDED_BY</span><span class="p">(</span><span class="n">DECIMAL_POINT</span><span class="p">)</span> <span class="o">+</span>  <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">ZERO_OR_ONE</span> <span class="o">+</span>
+           <span class="n">NATURAL</span> <span class="o">+</span> <span class="n">NOT_FOLLOWED_BY</span><span class="p">(</span><span class="n">DECIMAL_POINT</span><span class="p">))</span>
+
+<span class="n">FLOAT</span> <span class="o">=</span> <span class="s">&quot;-&quot;</span> <span class="o">+</span> <span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="n">NATURAL</span> <span class="o">+</span> <span class="n">DECIMAL_POINT</span> <span class="o">+</span> <span class="n">NATURAL</span>
+<span class="n">REAL</span> <span class="o">=</span> <span class="n">GROUP</span><span class="p">(</span><span class="n">FLOAT</span> <span class="o">+</span> <span class="n">OR</span> <span class="o">+</span> <span class="n">INTEGER</span><span class="p">)</span>
+<span class="n">HEX</span> <span class="o">=</span> <span class="n">CLASS</span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">hexdigits</span><span class="p">)</span>
+<span class="n">HEXADECIMALS</span> <span class="o">=</span> <span class="n">HEX</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="spaces">
+<h2>Spaces<a class="headerlink" href="#spaces" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SPACE</span> <span class="o">=</span> <span class="s">r&quot;\s&quot;</span>
+<span class="n">SPACES</span> <span class="o">=</span> <span class="n">SPACE</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+<span class="n">NOT_SPACE</span> <span class="o">=</span> <span class="s">r&#39;\S&#39;</span>
+<span class="n">NOT_SPACES</span> <span class="o">=</span> <span class="n">NOT_SPACE</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+<span class="n">OPTIONAL_SPACES</span> <span class="o">=</span> <span class="n">SPACE</span> <span class="o">+</span> <span class="n">ZERO_OR_MORE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-constants">
+<h2>Common Constants<a class="headerlink" href="#common-constants" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DASH</span> <span class="o">=</span> <span class="s">&quot;-&quot;</span>
+<span class="n">LETTER</span> <span class="o">=</span> <span class="n">CLASS</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span><span class="p">)</span>
+<span class="n">LETTERS</span> <span class="o">=</span> <span class="n">LETTER</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+<span class="n">OPTIONAL_LETTERS</span> <span class="o">=</span> <span class="n">LETTER</span> <span class="o">+</span> <span class="n">ZERO_OR_MORE</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="networking">
+<h2>Networking<a class="headerlink" href="#networking" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">DOT</span> <span class="o">=</span> <span class="n">DECIMAL_POINT</span>
+<span class="n">OCTET</span> <span class="o">=</span> <span class="n">GROUP</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="n">OR</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">SINGLE_DIGIT</span><span class="p">,</span> <span class="n">TWO_DIGITS</span><span class="p">,</span> <span class="n">ONE_HUNDREDS</span><span class="p">,</span>
+                         <span class="n">WORD_BOUNDARY</span><span class="p">(</span><span class="s">&quot;2[0-4][0-9]&quot;</span><span class="p">),</span> <span class="n">WORD_BOUNDARY</span><span class="p">(</span><span class="s">&quot;25[0-5]&quot;</span><span class="p">)]))</span>
+
+<span class="n">IP_ADDRESS</span> <span class="o">=</span> <span class="n">DOT</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">OCTET</span><span class="p">]</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="c"># from commons.expressions</span>
+<span class="n">MAC_ADDRESS_NAME</span> <span class="o">=</span> <span class="s">&quot;mac_address&quot;</span>
+<span class="n">HEX_PAIR</span> <span class="o">=</span> <span class="n">HEX</span> <span class="o">+</span> <span class="n">EXACTLY</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">MAC_ADDRESS</span> <span class="o">=</span> <span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">MAC_ADDRESS_NAME</span><span class="p">,</span>
+                    <span class="n">e</span><span class="o">=</span><span class="s">&quot;:&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">HEX_PAIR</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Oat Bran</a><ul>
+<li><a class="reference internal" href="#module-apetools.parsers.oatbran">Groups</a></li>
+<li><a class="reference internal" href="#cardinality">Cardinality</a></li>
+<li><a class="reference internal" href="#escapes">Escapes</a></li>
+<li><a class="reference internal" href="#operators">Operators</a></li>
+<li><a class="reference internal" href="#string-help">String Help</a></li>
+<li><a class="reference internal" href="#anything-and-everything">Anything And Everything</a></li>
+<li><a class="reference internal" href="#numbers">Numbers</a></li>
+<li><a class="reference internal" href="#spaces">Spaces</a></li>
+<li><a class="reference internal" href="#common-constants">Common Constants</a></li>
+<li><a class="reference internal" href="#networking">Networking</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/parsers/oatbran.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.tools.iperfsession &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.tools.iperfsession</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+
+
+<span class="n">SenderReceiver</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;SenderReceiver&quot;</span><span class="p">,</span> <span class="s">&quot;sender receiver&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+
+
+<span class="k">class</span> <span class="nc">IperfConfigurationError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfConfigurationError"><a class="viewcode-back" href="../../../documentation/developer/api/tools_api/apetools.tools.iperfsession.html#apetools.tools.iperfsession.IperfConfigurationError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An exception to raise if the direction is unknown.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class IperfConfigurationError</span>
+
+
+<span class="k">class</span> <span class="nc">IperfSession</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfSession"><a class="viewcode-back" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.html#apetools.tools.iperfsession.IperfSession">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A bundler of nodes and the iperftest</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iperf_test</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">tpc</span><span class="p">,</span> <span class="n">filename_base</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfSession.__init__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.html#apetools.tools.iperfsession.IperfSession.__init__">[docs]</a>      <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">      IperfSession Constructor</span>
+<span class="sd">      </span>
+<span class="sd">      :param:</span>
+
+<span class="sd">       - `iperf_test`: a bundle of parameters and storage</span>
+<span class="sd">       - `nodes`: id:device pairs</span>
+<span class="sd">       - `tpc`: traffic PC device</span>
+<span class="sd">       - `filename_base`: An optional string to add to the filename</span>
+<span class="sd">      &quot;&quot;&quot;</span>
+      <span class="nb">super</span><span class="p">(</span><span class="n">IperfSession</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">iperf_test</span> <span class="o">=</span> <span class="n">iperf_test</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span> <span class="o">=</span> <span class="n">nodes</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">filename_base</span> <span class="o">=</span> <span class="n">filename_base</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">tpc</span> <span class="o">=</span> <span class="n">tpc</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_to_node_expression</span> <span class="o">=</span> <span class="bp">None</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">_from_node_expression</span> <span class="o">=</span> <span class="bp">None</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">poll</span> <span class="o">=</span> <span class="bp">None</span>
+      <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">from_node_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfSession.from_node_expression"><a class="viewcode-back" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.from_node_expression.html#apetools.tools.iperfsession.IperfSession.from_node_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Regular expression to determine if it is an upload.</span>
+<span class="sd">        </span>
+<span class="sd">        Expects `from_node`, `uplink`, `send`, `transmit`, `tx`</span>
+<span class="sd">        </span>
+<span class="sd">        :return: compiled regex to match TPC &lt;-- Node        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_from_node_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_from_node_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;f.*|s.*|t[rx].*|u.*&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_from_node_expression</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">to_node_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfSession.to_node_expression"><a class="viewcode-back" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.to_node_expression.html#apetools.tools.iperfsession.IperfSession.to_node_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Regular expression to determine if it is a download</span>
+<span class="sd">        </span>
+<span class="sd">        Assumes something like `to_node`, `downlink`, `receive`, `rx`</span>
+<span class="sd">        </span>
+<span class="sd">        :return: compiled regex to match direction of traffic TPC --&gt; Node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_node_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_to_node_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;to.*|d.*|r.*&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_to_node_expression</span>
+
+    <span class="k">def</span> <span class="nf">particpants</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfSession.particpants"><a class="viewcode-back" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.html#apetools.tools.iperfsession.IperfSession.particpants">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Decides which node is participating and whether it is client or server</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `parameters`: namedtuple passed in to call</span>
+
+<span class="sd">        :return: SenderReceiver for this set of parameters</span>
+<span class="sd">        :raises: IperfConfigurationError if traffic direction or node isn&#39;t known or parameters missing node</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">node</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">parameters</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">parameters</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IperfConfigurationError</span><span class="p">(</span><span class="s">&quot;unknown node id: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IperfConfigurationError</span><span class="p">(</span><span class="s">&quot;{0} doesn&#39;t have .nodes.parameters&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">iperf_directions</span><span class="o">.</span><span class="n">parameters</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_node_expression</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">direction</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SenderReceiver</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tpc</span><span class="p">,</span> <span class="n">receiver</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">from_node_expression</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">direction</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SenderReceiver</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">receiver</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tpc</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">IperfConfigurationError</span><span class="p">(</span><span class="s">&quot;Unknown traffic direction: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfSession.filename"><a class="viewcode-back" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.filename.html#apetools.tools.iperfsession.IperfSession.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds extra tags to the filename to make identifying them easier</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `parameters`: Namedtuple passed in to __call__      </span>
+<span class="sd">         - `filename_prefix`: a prefix (not really) to add to the name</span>
+<span class="sd">        :return: filename derived from the parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename_prefix</span><span class="p">:</span>
+            <span class="n">name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filename_prefix</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename_base</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">name</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename_base</span><span class="p">)</span>                    
+        <span class="k">return</span> <span class="s">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;.iperf&quot;</span>
+    
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">filename_prefix</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfSession.__call__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.__call__.html#apetools.tools.iperfsession.IperfSession.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Retrieves the participating node and runs the iperf_test</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `parameters`: namedtuple with nodes and direction parameters</span>
+<span class="sd">         - `filename_prefix`: prefix to prepend to the filename</span>
+
+<span class="sd">        :return: output of IperfTest</span>
+<span class="sd">        :postcondition: self.poll set to whatever the IperfTest returned</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">sender_receiver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particpants</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">poll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iperf_test</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="n">sender_receiver</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span>
+                                    <span class="n">receiver</span><span class="o">=</span><span class="n">sender_receiver</span><span class="o">.</span><span class="n">receiver</span><span class="p">,</span>
+                                    <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">poll</span>
+<span class="c"># end class IperfSession</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.builders.subbuilders.busyboxwgetbuilder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.builders.subbuilders.busyboxwgetbuilder</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">apetools.lexicographers.config_options</span> <span class="kn">import</span> <span class="n">ConfigOptions</span>
+<span class="kn">from</span> <span class="nn">apetools.tools.wgetsession</span> <span class="kn">import</span> <span class="n">BusyboxWgetSession</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+
+<span class="kn">from</span> <span class="nn">basetoolbuilder</span> <span class="kn">import</span> <span class="n">BaseToolBuilder</span><span class="p">,</span> <span class="n">Parameters</span>
+<span class="kn">from</span> <span class="nn">builderenums</span> <span class="kn">import</span> <span class="n">BuilderParameterEnums</span>
+
+
+<span class="k">class</span> <span class="nc">WgetSessionBuilderError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
+<div class="viewcode-block" id="WgetSessionBuilderError"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.WgetSessionBuilderError.html#apetools.builders.subbuilders.busyboxwgetbuilder.WgetSessionBuilderError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An error to raise if the config file has an error</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class WgetSessionBuilderError</span>
+
+
+<span class="k">class</span> <span class="nc">BusyboxWgetBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BusyboxWgetBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to build a wget session</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `master`: The Master Builder</span>
+<span class="sd">         - `config_map`: a pre-loaded configuration map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BusyboxWgetBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_repetitions</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data_file</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">data_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.data_file"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.data_file.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.data_file">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the filename given by the user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_file</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ConfigOptions</span><span class="o">.</span><span class="n">busyboxwget_section</span><span class="p">,</span>
+                                                  <span class="n">ConfigOptions</span><span class="o">.</span><span class="n">data_file_option</span><span class="p">,</span>
+                                                  <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                                  <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data_file</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">url</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.url"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.url.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.url">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The URL of the http (or ftp) server and file</span>
+<span class="sd">        </span>
+<span class="sd">        :return: URL</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ConfigOptions</span><span class="o">.</span><span class="n">busyboxwget_section</span><span class="p">,</span>
+                                            <span class="n">ConfigOptions</span><span class="o">.</span><span class="n">url_option</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_url</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.connection.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is a hack that ignores the possibility of multiple nodes</span>
+<span class="sd">        </span>
+<span class="sd">        :return: connection to the device to run wget on</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">values</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">connection</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">storage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.storage"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.storage.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.storage">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Storage to send output to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">storage</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">repetitions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.repetitions"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.repetitions.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.repetitions">[docs]</a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repetitions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_repetitions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get_int</span><span class="p">(</span><span class="n">ConfigOptions</span><span class="o">.</span><span class="n">busyboxwget_section</span><span class="p">,</span>
+                                                        <span class="n">ConfigOptions</span><span class="o">.</span><span class="n">repetitions_option</span><span class="p">,</span>
+                                                        <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                                        <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repetitions</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">max_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.max_time"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.max_time.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.max_time">[docs]</a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get_time</span><span class="p">(</span><span class="n">ConfigOptions</span><span class="o">.</span><span class="n">busyboxwget_section</span><span class="p">,</span>
+                                                      <span class="n">ConfigOptions</span><span class="o">.</span><span class="n">time_option</span><span class="p">,</span>
+                <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span>   
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.product"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.product.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: A Busybox Wget Session</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">BusyboxWgetSession</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+                                               <span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span>
+                                               <span class="n">storage</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">master</span><span class="o">.</span><span class="n">storage</span><span class="p">,</span>
+                                               <span class="n">data_file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">,</span>
+                                               <span class="n">repetitions</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">repetitions</span><span class="p">,</span>
+                                               <span class="n">max_time</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_time</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BusyboxWgetBuilder.parameters"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.parameters.html#apetools.builders.subbuilders.busyboxwgetbuilder.BusyboxWgetBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of namedtuples</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
+<span class="c"># end class BusyboxWgetSessionBuilder</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ConfigOptions &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Lexicographers" href="index.html" />
+    <link rel="next" title="Config Fetcher" href="configfetcher.html" />
+    <link rel="prev" title="Lexicographers" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="configfetcher.html" title="Config Fetcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Lexicographers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Lexicographers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="configoptions">
+<h1>ConfigOptions<a class="headerlink" href="#configoptions" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ConfigOptions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An enumeration of sorts to hold the section and option names for the co</span>
+<span class="sd">nfig file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># sections</span>
+    <span class="n">test_section</span> <span class="o">=</span> <span class="s">&#39;TEST&#39;</span>
+    <span class="n">poweron_section</span> <span class="o">=</span> <span class="s">&quot;POWERON&quot;</span>
+    <span class="n">oscillate_section</span> <span class="o">=</span> <span class="s">&#39;OSCILLATE&#39;</span>
+    <span class="n">watchlogs_section</span> <span class="o">=</span> <span class="s">&quot;WATCHLOGS&quot;</span>
+    <span class="n">sleep_section</span> <span class="o">=</span> <span class="s">&quot;SLEEP&quot;</span>
+    <span class="n">naxxx_section</span> <span class="o">=</span> <span class="s">&#39;NAXXX&#39;</span>
+    <span class="n">busyboxwget_section</span> <span class="o">=</span> <span class="s">&#39;BUSYBOXWGET&#39;</span>
+
+    <span class="c">#options</span>
+    <span class="n">target_option</span> <span class="o">=</span> <span class="s">&#39;target&#39;</span>
+    <span class="n">output_option</span> <span class="o">=</span> <span class="s">&#39;output&#39;</span>
+
+    <span class="n">tag_option</span> <span class="o">=</span> <span class="s">&quot;tag&quot;</span>
+    <span class="n">operation_setup_option</span> <span class="o">=</span> <span class="s">&quot;operation_setup&quot;</span>
+    <span class="n">operation_teardown_option</span> <span class="o">=</span> <span class="s">&quot;operation_teardown&quot;</span>
+    <span class="n">test_setup_option</span> <span class="o">=</span> <span class="s">&quot;setup_test&quot;</span>
+    <span class="n">execute_test_option</span> <span class="o">=</span> <span class="s">&quot;execute_test&quot;</span>
+    <span class="n">teardown_test_option</span> <span class="o">=</span> <span class="s">&quot;teardown_test&quot;</span>
+
+    <span class="n">output_folder_option</span> <span class="o">=</span> <span class="s">&#39;output_folder&#39;</span>
+    <span class="n">data_file_option</span> <span class="o">=</span> <span class="s">&quot;data_file&quot;</span>
+    <span class="n">url_option</span> <span class="o">=</span> <span class="s">&#39;url&#39;</span>
+    <span class="n">repetitions_option</span>  <span class="o">=</span> <span class="s">&quot;repetitions&quot;</span>
+    <span class="n">repeat_option</span> <span class="o">=</span> <span class="s">&#39;repeat&#39;</span>
+    <span class="n">recovery_time_option</span> <span class="o">=</span> <span class="s">&quot;recovery_time&quot;</span>
+
+    <span class="n">test_interface_option</span> <span class="o">=</span> <span class="s">&quot;test_interface&quot;</span>
+    <span class="n">operating_system_option</span> <span class="o">=</span> <span class="s">&quot;operating_system&quot;</span>
+    <span class="n">control_ip_option</span> <span class="o">=</span> <span class="s">&quot;hostname&quot;</span>
+    <span class="n">test_ip_option</span> <span class="o">=</span> <span class="s">&quot;test_ip&quot;</span>
+    <span class="n">connection_option</span> <span class="o">=</span> <span class="s">&#39;connection&#39;</span>
+    <span class="n">traffic_pc_section</span> <span class="o">=</span> <span class="s">&quot;TRAFFIC_PC&quot;</span>
+    <span class="n">login_option</span> <span class="o">=</span> <span class="s">&quot;login&quot;</span>
+    <span class="n">password_option</span> <span class="o">=</span> <span class="s">&quot;password&quot;</span>
+
+    <span class="n">apconnect_section</span> <span class="o">=</span> <span class="s">&quot;APCONNECT&quot;</span>
+    <span class="n">ssids_option</span> <span class="o">=</span> <span class="s">&quot;ssids&quot;</span>
+    <span class="n">paths_option</span> <span class="o">=</span> <span class="s">&quot;paths&quot;</span>
+    <span class="n">port_option</span> <span class="o">=</span> <span class="s">&#39;port&#39;</span>
+
+    <span class="n">nodes_section</span> <span class="o">=</span> <span class="s">&quot;NODES&quot;</span>
+
+    <span class="n">iperf_section</span> <span class="o">=</span> <span class="s">&quot;IPERF&quot;</span>
+    <span class="n">directions_option</span> <span class="o">=</span> <span class="s">&quot;directions&quot;</span>
+    <span class="n">window_option</span> <span class="o">=</span> <span class="s">&quot;window&quot;</span>
+    <span class="n">length_option</span> <span class="o">=</span> <span class="s">&quot;length&quot;</span>
+    <span class="n">parallel_option</span> <span class="o">=</span> <span class="s">&quot;parallel&quot;</span>
+    <span class="n">interval_option</span> <span class="o">=</span> <span class="s">&quot;interval&quot;</span>
+    <span class="n">format_option</span> <span class="o">=</span> <span class="s">&quot;format&quot;</span>
+    <span class="n">time_option</span> <span class="o">=</span> <span class="s">&quot;time&quot;</span>
+    <span class="n">protocol_option</span> <span class="o">=</span> <span class="s">&quot;protocol&quot;</span>
+
+    <span class="n">time_to_recovery_section</span> <span class="o">=</span> <span class="s">&quot;TIMETORECOVERY&quot;</span>
+    <span class="n">threshold_option</span> <span class="o">=</span> <span class="s">&quot;threshold&quot;</span>
+    <span class="n">timeout_option</span> <span class="o">=</span> <span class="s">&quot;timeout&quot;</span>
+    <span class="n">affector_section</span> <span class="o">=</span> <span class="s">&quot;AFFECTOR&quot;</span>
+    <span class="n">affector_type_option</span> <span class="o">=</span> <span class="s">&quot;type&quot;</span>
+    <span class="n">switches_option</span> <span class="o">=</span> <span class="s">&quot;switches&quot;</span>
+    <span class="n">hostname_option</span> <span class="o">=</span> <span class="s">&quot;hostname&quot;</span>
+    <span class="n">username_option</span> <span class="o">=</span> <span class="s">&#39;username&#39;</span>
+    <span class="n">rotate_section</span> <span class="o">=</span> <span class="s">&quot;ROTATE&quot;</span>
+    <span class="n">angles_option</span> <span class="o">=</span> <span class="s">&quot;angles&quot;</span>
+
+    <span class="n">start_option</span> <span class="o">=</span> <span class="s">&quot;start&quot;</span>
+    <span class="n">arc_option</span> <span class="o">=</span> <span class="s">&quot;arc&quot;</span>
+    <span class="n">noise_start_option</span> <span class="o">=</span> <span class="s">&quot;noise_start&quot;</span>
+    <span class="n">noise_end_option</span> <span class="o">=</span> <span class="s">&quot;noise_end&quot;</span>
+
+    <span class="n">block_option</span> <span class="o">=</span> <span class="s">&quot;block&quot;</span>
+    <span class="n">no_cleanup_option</span> <span class="o">=</span> <span class="s">&quot;no_cleanup&quot;</span>
+
+    <span class="n">anti_adjustment_option</span> <span class="o">=</span> <span class="s">&#39;anti_adjustment&#39;</span>
+    <span class="n">clockwise_adjustment_option</span> <span class="o">=</span> <span class="s">&#39;clockwise_adjustment&#39;</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/lexicographers/config_options.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Top Command &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="apetools.commands.topcommand.TopCommand" href="api/apetools.commands.topcommand.TopCommand.html" />
+    <link rel="prev" title="apetools.commands.svc.Svc.validate" href="api/apetools.commands.svc.Svc.validate.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.topcommand.TopCommand.html" title="apetools.commands.topcommand.TopCommand"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.svc.Svc.validate.html" title="apetools.commands.svc.Svc.validate"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commands</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-top-command">
+<h1>The Top Command<a class="headerlink" href="#the-top-command" title="Permalink to this headline">¶</a></h1>
+<p>This is a substitute for the <cite>ps</cite> command in the cases where it is not available. The device for which it is intially being built is an <cite>iPad</cite>.</p>
+<div class="section" id="top-requirements">
+<h2>Top Requirements<a class="headerlink" href="#top-requirements" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>top</cite> command on the iPad does not behave exactly like the GNU top and so anyone using this must make sure that:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">The syntax for getting a single (non-interactive) output (the flag below is an &#8216;l&#8217; as in &#8216;larry&#8217;):</p>
+<div class="highlight-python"><div class="highlight"><pre>top -l 1
+</pre></div>
+</div>
+</li>
+<li><p class="first">The <cite>top</cite> command outputs all the processes (some versions of <cite>top</cite> will only output what fits on the screen)</p>
+</li>
+<li><p class="first">The <cite>top</cite> command does not need the <tt class="docutils literal"><span class="pre">TERM</span></tt> variable set when run via non-interactive ssh</p>
+</li>
+<li><p class="first">The first two columns of output are <em>PID</em> and <em>COMMAND</em></p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="top-command">
+<span id="id1"></span><h2>The Top Command<a class="headerlink" href="#top-command" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand" title="apetools.commands.topcommand.TopCommand"><tt class="xref py py-obj docutils literal"><span class="pre">TopCommand</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>The Top Command issues commands and watches for errors</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.topcommand.TopCommandError.html#apetools.commands.topcommand.TopCommandError" title="apetools.commands.topcommand.TopCommandError"><tt class="xref py py-obj docutils literal"><span class="pre">TopCommandError</span></tt></a></td>
+<td>A command to raise if there is a problem with the top command.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-351d2ac5b6272dc1e0d4b56ecd2f05108b96b711.png" alt="TopCommand -|&gt; BaseProcessCommand
+TopCommand : connection
+TopCommand : __call__()" />
+</p>
+<p class="plantuml">
+<img src="../_images/plantuml-2428e4ec8eae9d5493011ebdca706430b574b1f9.png" alt="TopCommandError -|&gt; CommandError" />
+</p>
+<ul class="simple">
+<li>Parent: <cite>BaseProcessCommand &lt;base-process-command&gt;</cite></li>
+</ul>
+<div class="section" id="subclasses">
+<h3>Subclasses<a class="headerlink" href="#subclasses" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>None</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="responsibilities">
+<h3>Responsibilities<a class="headerlink" href="#responsibilities" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Sends <tt class="docutils literal"><span class="pre">top</span></tt> command to a connection to a device</li>
+<li>Checks for error-messages specific to the <tt class="docutils literal"><span class="pre">top</span></tt> command.</li>
+<li>Generates output from the <tt class="docutils literal"><span class="pre">top</span></tt> command</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="collaborators">
+<h3>Collaborators<a class="headerlink" href="#collaborators" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Connection</li>
+</ul>
+</div></blockquote>
+<p>Example Use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;elin&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">top</span> <span class="o">=</span> <span class="n">TopCommand</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">top</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="the-topgrep">
+<span id="top-grep"></span><h2>The TopGrep<a class="headerlink" href="#the-topgrep" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep" title="apetools.commands.topcommand.TopGrep"><tt class="xref py py-obj docutils literal"><span class="pre">TopGrep</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>The Top command adapted to extract process IDs.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">TopGrepError</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-1e3453986a05b7443283ecb7109ffa840d7316e4.png" alt="TopGrep -|&gt; BaseProcessGrep
+TopGrep : process
+TopGrep : expression" />
+</p>
+<ul class="simple">
+<li>Parent: <cite>BaseProcessGrep &lt;base-process-grep&gt;</cite></li>
+</ul>
+<div class="section" id="id2">
+<h3>Subclasses<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>None</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id3">
+<h3>Responsibilities<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Calls the TopCommand and traverses its output</li>
+<li>Extracts fields from lines that match the indicated process-names</li>
+<li>Yields all extracted fields</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="id4">
+<h3>Collaborators<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><cite>TopCommand</cite></li>
+</ul>
+</div></blockquote>
+<p>Example Use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;elin&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">grep</span> <span class="o">=</span> <span class="n">TopGrep</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="s">&#39;iperf&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">grep</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">pid</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Since the <cite>TopGrep</cite> is implemented in this case to directly use the <cite>TopCommand</cite> it acts as a <cite>Builder</cite> for it, making the collaboration with the <cite>TopCommand</cite> somewhat obscure.</p>
+</div>
+<p>The advantage in having this relationship is that you can change the <cite>TopCommand</cite> by changing the <cite>TopGrep</cite> connection:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connection_1</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;elin&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">connection_2</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;bob&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">grep</span> <span class="o">=</span> <span class="n">TopGrep</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">grep</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">pid</span>
+
+<span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection_2</span>
+<span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">grep</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">pid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="testing-the-top">
+<h2>Testing the Top<a class="headerlink" href="#testing-the-top" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_constructor.html#apetools.commands.topcommand.TestTop.test_constructor" title="apetools.commands.topcommand.TestTop.test_constructor"><tt class="xref py py-obj docutils literal"><span class="pre">TestTop.test_constructor</span></tt></a>()</td>
+<td>Does the constructor have the expected signature?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_wrong_command.html#apetools.commands.topcommand.TestTop.test_wrong_command" title="apetools.commands.topcommand.TestTop.test_wrong_command"><tt class="xref py py-obj docutils literal"><span class="pre">TestTop.test_wrong_command</span></tt></a>(*arg,&nbsp;**kw)</td>
+<td>Does the TopCommand raise a TopCommandError if top isn&#8217;t installed?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_bad_argument.html#apetools.commands.topcommand.TestTop.test_bad_argument" title="apetools.commands.topcommand.TestTop.test_bad_argument"><tt class="xref py py-obj docutils literal"><span class="pre">TestTop.test_bad_argument</span></tt></a>(*arg,&nbsp;**kw)</td>
+<td>Does TopCommand raise a TopCommandError if a bad command is given?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_standard_error.html#apetools.commands.topcommand.TestTop.test_standard_error" title="apetools.commands.topcommand.TestTop.test_standard_error"><tt class="xref py py-obj docutils literal"><span class="pre">TestTop.test_standard_error</span></tt></a>(*arg,&nbsp;**kw)</td>
+<td>Does an error from standard error get passed to the checker?</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_constructor.html#apetools.commands.topcommand.TestTopGrep.test_constructor" title="apetools.commands.topcommand.TestTopGrep.test_constructor"><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_constructor</span></tt></a>()</td>
+<td>Does the constructor have the expected signature?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_call.html#apetools.commands.topcommand.TestTopGrep.test_call" title="apetools.commands.topcommand.TestTopGrep.test_call"><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_call</span></tt></a>()</td>
+<td>Does the <cite>__call__</cite> return all the matching PIDs?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_expression.html#apetools.commands.topcommand.TestTopGrep.test_expression" title="apetools.commands.topcommand.TestTopGrep.test_expression"><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_expression</span></tt></a>()</td>
+<td>Does the expression match the output lines correctly?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_unmatched.html#apetools.commands.topcommand.TestTopGrep.test_unmatched" title="apetools.commands.topcommand.TestTopGrep.test_unmatched"><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_unmatched</span></tt></a>()</td>
+<td>Does the expression not match lines similar to the process-lines?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_call_parameter.html#apetools.commands.topcommand.TestTopGrep.test_call_parameter" title="apetools.commands.topcommand.TestTopGrep.test_call_parameter"><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_call_parameter</span></tt></a>()</td>
+<td>Does passing in the name of the process override the process passed in on construction?</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_cpu_field</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.topcommand.TestTopGrep.test_change_connection.html#apetools.commands.topcommand.TestTopGrep.test_change_connection" title="apetools.commands.topcommand.TestTopGrep.test_change_connection"><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_change_connection</span></tt></a>()</td>
+<td>Does the TopCommand get a new connection if you change the TopGrep&#8217;s connection?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.topcommand.TestTopGrep.test_substring.html#apetools.commands.topcommand.TestTopGrep.test_substring" title="apetools.commands.topcommand.TestTopGrep.test_substring"><tt class="xref py py-obj docutils literal"><span class="pre">TestTopGrep.test_substring</span></tt></a>()</td>
+<td>Does it only match complete strings, not substrings of other processes?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Top Command</a><ul>
+<li><a class="reference internal" href="#top-requirements">Top Requirements</a></li>
+<li><a class="reference internal" href="#top-command">The Top Command</a><ul>
+<li><a class="reference internal" href="#subclasses">Subclasses</a></li>
+<li><a class="reference internal" href="#responsibilities">Responsibilities</a></li>
+<li><a class="reference internal" href="#collaborators">Collaborators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-topgrep">The TopGrep</a><ul>
+<li><a class="reference internal" href="#id2">Subclasses</a></li>
+<li><a class="reference internal" href="#id3">Responsibilities</a></li>
+<li><a class="reference internal" href="#id4">Collaborators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#testing-the-top">Testing the Top</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commands/topcommand.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

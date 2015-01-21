@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Lexicographer Parameters &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="lexicographer-parameters">
+<h1>Lexicographer Parameters<a class="headerlink" href="#lexicographer-parameters" title="Permalink to this headline">¶</a></h1>
+<p>The Lexicographer generates <cite>StaticParameter</cite> objects from it&#8217;s <cite>parameters</cite> attribute.</p>
+<p class="graphviz">
+<img src="../../../../../_images/graphviz-ee44e16feb0c0f9f5e3b34c08a9ceda1f3b9f115.png" alt="digraph parameters {
+rankdir=LR
+end [label=&quot;&quot;]
+&quot;&quot; -&gt; &quot;Lexicographer.init()&quot; [label=&quot;args.glob&quot;]
+&quot;Lexicographer.init()&quot; -&gt; &quot;Lexicographer.parameters&quot; [label=&quot;file_name&quot;]
+&quot;Lexicographer.parameters&quot; -&gt; end [label=&quot;StaticParameters&quot;]
+}" />
+</p>
+<div class="section" id="static-parameters">
+<h2>Static Parameters<a class="headerlink" href="#static-parameters" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../../../_images/plantuml-80c6f66216326aca8b3362f9ed7f6f8e57803efc.png" alt="StaticParameters: config_file_name
+StaticParameters: output_folder
+StaticParameters: data_file_name
+StaticParameters: repetitions
+StaticParameters: tpc_parameters
+StaticParameters: dut_Parameters
+StaticParameters: iperf_client_parameters
+StaticParameters: iperf_server_parameters
+StaticParameters: String __str__()" />
+</p>
+</div>
+<div class="section" id="sub-parameters">
+<h2>Sub-Parameters<a class="headerlink" href="#sub-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The attributes of the StaticParameters that have the suffix <em>parameters</em> are themselves parameter objects.</p>
+<div class="section" id="connection-parameters">
+<h3>Connection Parameters<a class="headerlink" href="#connection-parameters" title="Permalink to this headline">¶</a></h3>
+<p>The following parameters are meant for information about the Traffic PC (TPC) and the Device Under Test (DUT).</p>
+<p class="plantuml">
+<img src="../../../../../_images/plantuml-426e44eba2d13a357aee8b22aa278b0139ef219f.png" alt="TpcParameters: hostname
+TpcParameters: test_ip
+TpcParameters: username
+TpcParameters: password
+TpcParameters: String __str__()" />
+</p>
+<p>The <cite>hostname</cite> is meant to be the IP address or resolvable name used to connect to the TPC (likely on the control network). While the <cite>test_ip</cite> is used by the iperf commands. Since this is downlink only, the <cite>test_ip</cite> is never actually used, but that didn&#8217;t occur to me until after I set it up.</p>
+<p class="plantuml">
+<img src="../../../../../_images/plantuml-3fed4d5d3f437e1a806d2cb5d375e8e02eb3466d.png" alt="DutParameters: test_ip
+DutParameters: String __str__()" />
+</p>
+</div>
+<div class="section" id="iperf-parameters">
+<h3>Iperf Parameters<a class="headerlink" href="#iperf-parameters" title="Permalink to this headline">¶</a></h3>
+<p>The following parameters are meant for building a <cite>traffic-to-the-dut</cite> test.</p>
+<p class="plantuml">
+<img src="../../../../../_images/plantuml-7414261295e9968806ed56404db4134d755c6a28.png" alt="IperfClientParameters: client
+IperfClientParameters: window
+IperfClientParameters: len
+IperfClientParameters: parallel
+IperfClientParameters: interval
+IperfClientParameters: format
+IperfClientParameters: time
+IperfClientParameters: String __str__()" />
+</p>
+<p class="plantuml">
+<img src="../../../../../_images/plantuml-aa9ede2e50c867c6e822e77869607ef591a3a23f.png" alt="IperfServerParameters: window
+IperfServerParameters: String __str__()" />
+</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Lexicographer Parameters</a><ul>
+<li><a class="reference internal" href="#static-parameters">Static Parameters</a></li>
+<li><a class="reference internal" href="#sub-parameters">Sub-Parameters</a><ul>
+<li><a class="reference internal" href="#connection-parameters">Connection Parameters</a></li>
+<li><a class="reference internal" href="#iperf-parameters">Iperf Parameters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../../_sources/documentation/developer/design/usecases/usecase1/lexicographer_parameters.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

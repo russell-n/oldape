@@ -1,0 +1,242 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.affectors.apconnect &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.affectors.apconnect">
+<span id="apetools-affectors-apconnect"></span><h1>apetools.affectors.apconnect<a class="headerlink" href="#module-apetools.affectors.apconnect" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">namedtuple</span></tt>(typename,&nbsp;field_names[,&nbsp;verbose,&nbsp;...])</td>
+<td>Returns a new subclass of tuple with named fields.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.affectors.apconnect.APConnect" title="apetools.affectors.apconnect.APConnect"><tt class="xref py py-obj docutils literal"><span class="pre">APConnect</span></tt></a>(nodes)</td>
+<td>A class to connect a device to an AP</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.affectors.apconnect.APParameters" title="apetools.affectors.apconnect.APParameters"><tt class="xref py py-obj docutils literal"><span class="pre">APParameters</span></tt></a></td>
+<td>APParameters(name, node, ssid)</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.affectors.apconnect.APConnect">
+<em class="property">class </em><tt class="descclassname">apetools.affectors.apconnect.</tt><tt class="descname">APConnect</tt><big>(</big><em>nodes</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/affectors/apconnect.html#APConnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.apconnect.APConnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to connect a device to an AP</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>nodes</cite>: dictionary of id:device pairs</li>
+</ul>
+<dl class="method">
+<dt id="apetools.affectors.apconnect.APConnect.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.affectors.apconnect.APConnect.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.apconnect.APConnect.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.affectors.apconnect.APConnect.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.affectors.apconnect.APParameters">
+<em class="property">class </em><tt class="descclassname">apetools.affectors.apconnect.</tt><tt class="descname">APParameters</tt><a class="headerlink" href="#apetools.affectors.apconnect.APParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>APParameters(name, node, ssid)</p>
+<dl class="method">
+<dt id="apetools.affectors.apconnect.APParameters._asdict">
+<tt class="descname">_asdict</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.affectors.apconnect.APParameters._asdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OrderedDict which maps field names to their values</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="apetools.affectors.apconnect.APParameters._make">
+<em class="property">classmethod </em><tt class="descname">_make</tt><big>(</big><em>iterable</em>, <em>new=&lt;built-in method __new__ of type object at 0x90aa40&gt;</em>, <em>len=&lt;built-in function len&gt;</em><big>)</big><a class="headerlink" href="#apetools.affectors.apconnect.APParameters._make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new APParameters object from a sequence or iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.apconnect.APParameters._replace">
+<tt class="descname">_replace</tt><big>(</big><em>_self</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#apetools.affectors.apconnect.APParameters._replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new APParameters object replacing specified fields with new values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.apconnect.APParameters.count">
+<tt class="descname">count</tt><big>(</big><em>value</em><big>)</big> &rarr; integer -- return number of occurrences of value<a class="headerlink" href="#apetools.affectors.apconnect.APParameters.count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.apconnect.APParameters.index">
+<tt class="descname">index</tt><big>(</big><em>value</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>stop</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; integer -- return first index of value.<a class="headerlink" href="#apetools.affectors.apconnect.APParameters.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises ValueError if the value is not present.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.apconnect.APParameters.name">
+<tt class="descname">name</tt><a class="headerlink" href="#apetools.affectors.apconnect.APParameters.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.apconnect.APParameters.node">
+<tt class="descname">node</tt><a class="headerlink" href="#apetools.affectors.apconnect.APParameters.node" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.apconnect.APParameters.ssid">
+<tt class="descname">ssid</tt><a class="headerlink" href="#apetools.affectors.apconnect.APParameters.ssid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/other_affectors_api/apetools.affectors.apconnect.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

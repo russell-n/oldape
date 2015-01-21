@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Non-Local Connection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-non-local-connection">
+<h1>The Non-Local Connection<a class="headerlink" href="#the-non-local-connection" title="Permalink to this headline">¶</a></h1>
+<p>The Non-Local Connection is a Base for non-local connectionS (e.g. SSH or Telnet).</p>
+<p>Calls to a NonLocalConnection takes the command-line command as a property and the arguments to the command as parameters.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection" title="apetools.connections.nonlocalconnection.NonLocalConnection"><tt class="xref py py-obj docutils literal"><span class="pre">NonLocalConnection</span></tt></a>([command_prefix,&nbsp;lock,&nbsp;...])</td>
+<td>A non-local connection is the base for non-local connections</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection" title="apetools.connections.nonlocalconnection.DummyConnection"><tt class="xref py py-obj docutils literal"><span class="pre">DummyConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A dummy connection is used to fake connections in commands.</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="the-nonlocalconnection">
+<span id="non-local-connection"></span><h2>The NonLocalConnection<a class="headerlink" href="#the-nonlocalconnection" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../_images/plantuml-63a89c1d090100b49df6fee2fd87ea0d30f0c5bf.png" alt="NonLocalConnection -|&gt; BaseThreadClass
+NonLocalConnection : lock
+NonLocalConnection o-- threading.RLock
+NonLocalConnection o-- Queue.Queue
+NonLocalConnection : __getattr__(command)
+NonLocalConnection : __call__(command, arguments)" />
+</p>
+</div>
+<div class="section" id="the-dummyconnection">
+<h2>The DummyConnection<a class="headerlink" href="#the-dummyconnection" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../../_images/plantuml-836e1d089817ffcddf6e4a8456ebe6ea9e4e0d60.png" alt="DummyConnection -|&gt; NonLocalConnection
+DummyConnection -|&gt; hostname" />
+</p>
+</div>
+<div class="section" id="testing-the-dummyconnection">
+<h2>Testing the DummyConnection<a class="headerlink" href="#testing-the-dummyconnection" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">TestDummyConnection.test_constructor</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.connections.nonlocalconnection.TestDummyConnection.test_call.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_call" title="apetools.connections.nonlocalconnection.TestDummyConnection.test_call"><tt class="xref py py-obj docutils literal"><span class="pre">TestDummyConnection.test_call</span></tt></a>()</td>
+<td>Can you call it and get no output or errors?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation" title="apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation"><tt class="xref py py-obj docutils literal"><span class="pre">TestDummyConnection.test_dot_notation</span></tt></a>()</td>
+<td>Does the dot-notation work?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Non-Local Connection</a><ul>
+<li><a class="reference internal" href="#the-nonlocalconnection">The NonLocalConnection</a></li>
+<li><a class="reference internal" href="#the-dummyconnection">The DummyConnection</a></li>
+<li><a class="reference internal" href="#testing-the-dummyconnection">Testing the DummyConnection</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/connections/nonlocalconnection.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

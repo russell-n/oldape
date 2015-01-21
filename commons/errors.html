@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Errors &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commons" href="index.html" />
+    <link rel="next" title="apetools.commons.errors.ConnectionError" href="api/apetools.commons.errors.ConnectionError.html" />
+    <link rel="prev" title="Enumerations" href="enumerations.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commons.errors.ConnectionError.html" title="apetools.commons.errors.ConnectionError"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="enumerations.html" title="Enumerations"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commons</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="errors">
+<h1>Errors<a class="headerlink" href="#errors" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold common exceptions.</p>
+<p>These are made sub-classes of the OperatorError so that the hortator can recover and move on to the next hortator.</p>
+<p>Any exception raised that isn&#8217;t a sub-class of the OperatorError is unexpected and will crash the program (to make it obvious).</p>
+<p class="plantuml">
+<img src="../_images/plantuml-460219e4c0b043389dd92b6403f6638f4c8e7e45.png" alt="OperatorError &lt;|-- ConnectionError" />
+</p>
+<span class="target" id="module-apetools.commons.errors"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ConnectionError" title="apetools.commons.errors.ConnectionError"><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionError</span></tt></a></td>
+<td>A ConnectionError is raised by connectinos to indicate a problem.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-0502adb03053ef474037403afc69def75ea124a5.png" alt="OperatorError &lt;|-- ConnectionWarning" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ConnectionWarning" title="apetools.commons.errors.ConnectionWarning"><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionWarning</span></tt></a></td>
+<td>A connection warning is a non-fatal connection-related error.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-4237d229387f7ed294e20ab738426bb89fab5788.png" alt="OperatorError &lt;|-- TimeoutError" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.TimeoutError" title="apetools.commons.errors.TimeoutError"><tt class="xref py py-obj docutils literal"><span class="pre">TimeoutError</span></tt></a></td>
+<td>A TimeoutError is a generic Timeout exception to wrap the various timeout</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-0b207c6b92c7b265d7fc53f4f9920d2a7c187ec9.png" alt="OperatorError &lt;|-- CommandError" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.CommandError" title="apetools.commons.errors.CommandError"><tt class="xref py py-obj docutils literal"><span class="pre">CommandError</span></tt></a></td>
+<td>A CommandError reflects a problem with the command on the Device-side</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-f5d39645826eecfe4492f0e72186539fb5a69365.png" alt="OperatorError &lt;|-- ConfigurationError" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ConfigurationError" title="apetools.commons.errors.ConfigurationError"><tt class="xref py py-obj docutils literal"><span class="pre">ConfigurationError</span></tt></a></td>
+<td>A ConfigurationError is raised if there is an error in the configuration file</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-d7e3b1dac750acb8bd796c05b61ba19a4ef13fbd.png" alt="OperatorError &lt;|-- StorageError" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.StorageError" title="apetools.commons.errors.StorageError"><tt class="xref py py-obj docutils literal"><span class="pre">StorageError</span></tt></a></td>
+<td>An StoragError is raised by the StorageOutput</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-0e86d88a76c57d61393fbac4a22d437122b87e15.png" alt="OperatorError &lt;|-- AffectorError" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.AffectorError" title="apetools.commons.errors.AffectorError"><tt class="xref py py-obj docutils literal"><span class="pre">AffectorError</span></tt></a></td>
+<td>An Affector Error is raised for non-recoverable affector errors</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-1da4e58d6a0531ab43b6d25680b67bb5dd29d5ee.png" alt="OperatorError &lt;|-- ArgumentError" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ArgumentError" title="apetools.commons.errors.ArgumentError"><tt class="xref py py-obj docutils literal"><span class="pre">ArgumentError</span></tt></a></td>
+<td>raised if command-line arguments don&#8217;t produce valid output</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commons/errors.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

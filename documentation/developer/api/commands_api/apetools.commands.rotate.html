@@ -1,0 +1,442 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.rotate &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.commands.rotate">
+<span id="apetools-commands-rotate"></span><h1>apetools.commands.rotate<a class="headerlink" href="#module-apetools.commands.rotate" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">KillAll</span></tt>([connection,&nbsp;name,&nbsp;time_to_sleep,&nbsp;level])</td>
+<td>A killall kills processes.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.rotate.RotateCommand" title="apetools.commands.rotate.RotateCommand"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand</span></tt></a>(connections[,&nbsp;retries])</td>
+<td>A class to issue a remote &#8216;rotate&#8217; command (older version for pre-Cameron turntables)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">CommandError</span></tt></td>
+<td>A CommandError reflects a problem with the command on the Device-side</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConfigurationError</span></tt></td>
+<td>A ConfigurationError is raised if there is an error in the configuration file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.rotate.RotateError" title="apetools.commands.rotate.RotateError"><tt class="xref py py-obj docutils literal"><span class="pre">RotateError</span></tt></a></td>
+<td>An error in the rotation</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="apetools.commands.rotate.RotateError">
+<em class="property">exception </em><tt class="descclassname">apetools.commands.rotate.</tt><tt class="descname">RotateError</tt><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An error in the rotation</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commands.rotate.RotateArgumentsGenerator">
+<em class="property">class </em><tt class="descclassname">apetools.commands.rotate.</tt><tt class="descname">RotateArgumentsGenerator</tt><big>(</big><em>configuration</em>, <em>section</em>, <em>infinite=False</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateArgumentsGenerator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateArgumentsGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>RotateArgumentsGenerator for the rotate command</p>
+<p>RotateParameters constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>configuration</cite>: Configuration Map with settings</li>
+<li><cite>section</cite>: section header in configuration file</li>
+<li><cite>infinite</cite>: If true, repeats last argument string forever</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateArgumentsGenerator.angles">
+<tt class="descname">angles</tt><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateArgumentsGenerator.angles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateArgumentsGenerator.angles" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of angles from the configuration</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateArgumentsGenerator.argument_strings">
+<tt class="descname">argument_strings</tt><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateArgumentsGenerator.argument_strings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateArgumentsGenerator.argument_strings" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of argument strings for each angle</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateArgumentsGenerator.base_arguments">
+<tt class="descname">base_arguments</tt><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateArgumentsGenerator.base_arguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateArgumentsGenerator.base_arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Rotate BaseArguments object</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateArgumentsGenerator.booleans_string">
+<tt class="descname">booleans_string</tt><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateArgumentsGenerator.booleans_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateArgumentsGenerator.booleans_string" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string of boolean options</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateArgumentsGenerator.values_string">
+<tt class="descname">values_string</tt><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateArgumentsGenerator.values_string"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateArgumentsGenerator.values_string" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string of options with values</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commands.rotate.RotateCommand">
+<em class="property">class </em><tt class="descclassname">apetools.commands.rotate.</tt><tt class="descname">RotateCommand</tt><big>(</big><em>connections</em>, <em>retries=2</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to issue a remote &#8216;rotate&#8217; command (older version for pre-Cameron turntables)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>connections</cite>: list of connections to turntable controls</li>
+<li><cite>retries</cite>: The number of times to retry</li>
+</ul>
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommand.check_errors">
+<tt class="descname">check_errors</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateCommand.check_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateCommand.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: line of output from the rotate command</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">CommandError if a known fatal error is detected</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommand.kill_process">
+<tt class="descname">kill_process</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateCommand.kill_process"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateCommand.kill_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kills rotate processes over the connection</p>
+<blockquote>
+<div><ul class="simple">
+<li>If the default level fails, tries a -9</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommand.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commands.rotate.RotateCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommand.rotate">
+<tt class="descname">rotate</tt><big>(</big><em>connection</em>, <em>arguments</em>, <em>timeout=120</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateCommand.rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateCommand.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>sends the arguments to the connection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>connection</cite>: connection to the turntable controller</li>
+<li><cite>arguments</cite>: string of arguments for rotate command</li>
+<li><cite>timeout</cite>: time to wait for the table to finish</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first">ConfigurationError if table complains about arguments</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">RotateError if timeout reached before table finishes</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateCommand.killers">
+<tt class="descname">killers</tt><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateCommand.killers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateCommand.killers" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">rotate process killer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateCommand.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commands.rotate.RotateCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commands.rotate.RotateCommandUsurper">
+<em class="property">class </em><tt class="descclassname">apetools.commands.rotate.</tt><tt class="descname">RotateCommandUsurper</tt><big>(</big><em>connections</em>, <em>retries=2</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateCommandUsurper"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateCommandUsurper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Command to rotate turntables</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>connections</cite>: list of connections to turntable controls</li>
+<li><cite>retries</cite>: The number of times to retry</li>
+</ul>
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommandUsurper.check_errors">
+<tt class="descname">check_errors</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#apetools.commands.rotate.RotateCommandUsurper.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: line of output from the rotate command</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">CommandError if a known fatal error is detected</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommandUsurper.kill_process">
+<tt class="descname">kill_process</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.commands.rotate.RotateCommandUsurper.kill_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kills rotate processes over the connection</p>
+<blockquote>
+<div><ul class="simple">
+<li>If the default level fails, tries a -9</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommandUsurper.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commands.rotate.RotateCommandUsurper.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.rotate.RotateCommandUsurper.rotate">
+<tt class="descname">rotate</tt><big>(</big><em>connection</em>, <em>arguments=''</em>, <em>timeout=600</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/rotate.html#RotateCommandUsurper.rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.rotate.RotateCommandUsurper.rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assumes that the command will block until done and nothing unusual happens</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>connection</cite>: connection to the table (ssh)</li>
+<li><cite>arguments</cite>: string to pass to the command</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">CommandError if error-level message is emitted</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateCommandUsurper.killers">
+<tt class="descname">killers</tt><a class="headerlink" href="#apetools.commands.rotate.RotateCommandUsurper.killers" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">rotate process killer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.rotate.RotateCommandUsurper.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commands.rotate.RotateCommandUsurper.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/commands_api/apetools.commands.rotate.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

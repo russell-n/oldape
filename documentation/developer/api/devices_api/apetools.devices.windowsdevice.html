@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.devices.windowsdevice &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.devices.windowsdevice">
+<span id="apetools-devices-windowsdevice"></span><h1>apetools.devices.windowsdevice<a class="headerlink" href="#module-apetools.devices.windowsdevice" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice</span></tt>([connection,&nbsp;interface,&nbsp;address,&nbsp;...])</td>
+<td>An abstract base class for devices</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Ipconfig</span></tt>(connection[,&nbsp;interface,&nbsp;...])</td>
+<td>A class to interpret the <cite>ipconfig</cite> output</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">NetshWlan</span></tt>(connection[,&nbsp;separator,&nbsp;not_available])</td>
+<td>A querier for basic netsh information</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">WinRssi</span></tt>(connection)</td>
+<td>A class to get the rssi via an installed version of miller&#8217;s rssi puller.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.windowsdevice.WindowsDevice" title="apetools.devices.windowsdevice.WindowsDevice"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDevice</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to control and query windows devices</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">WindowsSSIDConnect</span></tt>(connection)</td>
+<td>A class to associate a windows device with a known wifi profile</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">WmicWin32NetworkAdapter</span></tt>([connection,&nbsp;...])</td>
+<td>Window&#8217;s wmic win32_networkadapter command (wifi only).</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.devices.windowsdevice.WindowsDevice">
+<em class="property">class </em><tt class="descclassname">apetools.devices.windowsdevice.</tt><tt class="descname">WindowsDevice</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to control and query windows devices</p>
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.connect">
+<tt class="descname">connect</tt><big>(</big><em>ssid</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.connect" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>ssid</cite>: The SSID and Profile name to connect to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.disable_wifi">
+<tt class="descname">disable_wifi</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.disable_wifi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.disable_wifi" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body"><cite>wmic</cite> called to disable radio</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.disconnect">
+<tt class="descname">disconnect</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.disconnect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls &#8216;netsh wlan disconnect&#8217;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">the device is disconnected from the AP but no disabled</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.display">
+<tt class="descname">display</tt><big>(</big><em>message</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not implemented</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.enable_wifi">
+<tt class="descname">enable_wifi</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.enable_wifi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.enable_wifi" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body"><cite>wmic</cite> called to enable the radio</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.log">
+<tt class="descname">log</tt><big>(</big><em>message</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls &#8216;eventcreate /l Sysytem /id 999 /d &#8220;&lt;message&gt;&#8221; /t Informateion /so Private&#8217;</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.poll">
+<tt class="descname">poll</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.poll" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">rssi,noise,bitrate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.wake_screen">
+<tt class="descname">wake_screen</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.wake_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.wake_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not implemented</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.address">
+<tt class="descname">address</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the IP Address of the wireless interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.bitrate">
+<tt class="descname">bitrate</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.bitrate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the current bitrate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.bssid">
+<tt class="descname">bssid</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.bssid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the MAC address of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.channel">
+<tt class="descname">channel</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.channel" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the channel for the wifi connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.connection">
+<tt class="descname">connection</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.connection" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A connection to the device.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.ipconfig">
+<tt class="descname">ipconfig</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.ipconfig"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.ipconfig" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the Ipconfig</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.mac_address">
+<tt class="descname">mac_address</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.mac_address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the mac address of the device</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.noise">
+<tt class="descname">noise</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.noise" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the current reported noise for the wifi channel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.rssi">
+<tt class="descname">rssi</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.rssi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.rssi" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the current rssi on the device</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.rssi_query">
+<tt class="descname">rssi_query</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.rssi_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.rssi_query" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">WinRssi querier</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.ssid">
+<tt class="descname">ssid</tt><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.ssid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the SSID of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.ssid_connect">
+<tt class="descname">ssid_connect</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.ssid_connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.ssid_connect" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a Windows SSID Connect command</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.wifi_control">
+<tt class="descname">wifi_control</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.wifi_control"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.wifi_control" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">WmicWin32NetworkAdapter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.wifi_info">
+<tt class="descname">wifi_info</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.wifi_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.wifi_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>calls &#8216;wifi status&#8217;</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String containing the wifi info</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.windowsdevice.WindowsDevice.wifi_query">
+<tt class="descname">wifi_query</tt><a class="reference internal" href="../../../../_modules/apetools/devices/windowsdevice.html#WindowsDevice.wifi_query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.windowsdevice.WindowsDevice.wifi_query" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a NetshWlan query</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/devices_api/apetools.devices.windowsdevice.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

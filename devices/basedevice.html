@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Base Device &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Devices" href="index.html" />
+    <link rel="next" title="apetools.devices.basedevice.BaseDevice" href="api/apetools.devices.basedevice.BaseDevice.html" />
+    <link rel="prev" title="apetools.devices.adbdevice.AdbWifiCommandFinder.__call__" href="api/apetools.devices.adbdevice.AdbWifiCommandFinder.__call__.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.devices.basedevice.BaseDevice.html" title="apetools.devices.basedevice.BaseDevice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.devices.adbdevice.AdbWifiCommandFinder.__call__.html" title="apetools.devices.adbdevice.AdbWifiCommandFinder.__call__"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Devices</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="base-device">
+<h1>Base Device<a class="headerlink" href="#base-device" title="Permalink to this headline">¶</a></h1>
+<p>The Abstract Base for devices</p>
+<div class="section" id="basedevice-constants">
+<h2>BaseDevice Constants<a class="headerlink" href="#basedevice-constants" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">BaseDeviceEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">tpc</span> <span class="o">=</span> <span class="s">&quot;tpc&quot;</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="s">&quot;node&quot;</span>
+<span class="c"># end class BaseDeviceEnum</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">CSV_OUTPUT</span> <span class="o">=</span> <span class="s">&quot;{ssid},{bssid},{channel},{ip},{mac},{rssi},{noise}</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="n">HUMAN_OUTPUT</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;</span>
+<span class="s">SSID        = {ssid}</span>
+<span class="s">BSSID       = {bssid}</span>
+<span class="s">Channel     = {channel}</span>
+<span class="s">IP Address  = {ip}</span>
+<span class="s">MAC Address = {mac}</span>
+<span class="s">RSSI        = {rssi}</span>
+<span class="s">Noise       = {noise}</span>
+<span class="s">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-base-device">
+<h2>The Base Device<a class="headerlink" href="#the-base-device" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-af2ff62f56cfd98ff3d84c808b1dd0e427447479.png" alt="BaseClass &lt;|-- BaseDevice" />
+</p>
+<span class="target" id="module-apetools.devices.basedevice"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice" title="apetools.devices.basedevice.BaseDevice"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice</span></tt></a>([connection,&nbsp;interface,&nbsp;address,&nbsp;...])</td>
+<td>An abstract base class for devices</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.connection" title="apetools.devices.basedevice.BaseDevice.connection"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.connection</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A connection to the device.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.bitrate" title="apetools.devices.basedevice.BaseDevice.bitrate"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.bitrate</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current bitrate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.disable_wifi" title="apetools.devices.basedevice.BaseDevice.disable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.disable_wifi</span></tt></a>()</td>
+<td>Disable the WiFi Radio</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.enable_wifi" title="apetools.devices.basedevice.BaseDevice.enable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.enable_wifi</span></tt></a>()</td>
+<td>Enable the WiFi radio.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.wifi_info" title="apetools.devices.basedevice.BaseDevice.wifi_info"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.wifi_info</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">wifi info summary</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.address" title="apetools.devices.basedevice.BaseDevice.address"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.ssid" title="apetools.devices.basedevice.BaseDevice.ssid"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.ssid</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the SSID of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.bssid" title="apetools.devices.basedevice.BaseDevice.bssid"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.bssid</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the MAC address of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.channel" title="apetools.devices.basedevice.BaseDevice.channel"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.channel</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the channel for the wifi connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.noise" title="apetools.devices.basedevice.BaseDevice.noise"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.noise</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current reported noise for the wifi channel</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.mac_address" title="apetools.devices.basedevice.BaseDevice.mac_address"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.mac_address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the mac address of the device</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.rssi" title="apetools.devices.basedevice.BaseDevice.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.rssi</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the RSSI for the wifi signal</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.log" title="apetools.devices.basedevice.BaseDevice.log"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.log</span></tt></a>(message)</td>
+<td>Send a message to the device&#8217;s log.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.poll" title="apetools.devices.basedevice.BaseDevice.poll"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.poll</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">rssi,noise,bitrate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.basedevice.BaseDevice.__str__.html#apetools.devices.basedevice.BaseDevice.__str__" title="apetools.devices.basedevice.BaseDevice.__str__"><tt class="xref py py-obj docutils literal"><span class="pre">BaseDevice.__str__</span></tt></a>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Base Device</a><ul>
+<li><a class="reference internal" href="#basedevice-constants">BaseDevice Constants</a></li>
+<li><a class="reference internal" href="#the-base-device">The Base Device</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/devices/basedevice.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

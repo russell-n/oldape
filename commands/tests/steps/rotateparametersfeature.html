@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Rotate ArgumentsGenerator &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="rotate-argumentsgenerator">
+<h1>Rotate ArgumentsGenerator<a class="headerlink" href="#rotate-argumentsgenerator" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-gherkin"><div class="highlight"><pre><span class="k">Feature:</span><span class="nf"> Rotate ArgumentsGenerator</span>
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with only angles</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments are the angles</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and test set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with test flag</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles and test</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and section set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with a section</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles and section</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and velocity set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with a velocity</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles and velocity</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and acceleration set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with an acceleration</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles and acceleration</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and deceleration set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with an deceleration</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles and deceleration</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and multiple booleans set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with boolean options</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles and boolean options</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and multiple values set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with value options</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles and values options</span>
+
+<span class="nf"> </span><span class="k">Scenario:</span><span class="nf"> Rotate angles and multiple values and booleans set</span>
+<span class="k">  Given </span><span class="nf">Rotate ArgumentsGenerator built with value and boolean options</span>
+<span class="nf">  </span><span class="k">When </span><span class="nf">the Rotate ArgumentsGenerator arguments are checked</span>
+<span class="nf">  </span><span class="k">Then </span><span class="nf">the Rotate ArgumentsGenerator arguments have angles, boolean and value options</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">base_arguments</span> <span class="o">=</span> <span class="n">BaseArguments</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="p">[])</span>
+
+<span class="k">def</span> <span class="nf">get_angles</span><span class="p">():</span>
+    <span class="n">angles</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">360</span><span class="p">))</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="n">angles</span><span class="p">)]</span>
+</pre></div>
+</div>
+<div class="section" id="scenario-rotate-angles-set">
+<h2>Scenario: Rotate angles set<a class="headerlink" href="#scenario-rotate-angles-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@given</span><span class="p">(</span><span class="s">&quot;Rotate ArgumentsGenerator built with only angles&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">only_angles</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">get_angles</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">ConfigurationMap</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">section</span> <span class="o">=</span> <span class="s">&#39;lrcgaoe098u7&#39;</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span>
+                                          <span class="n">section</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_ints</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_boolean</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@when</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments are checked&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">check_parameters_arguments</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span> <span class="o">=</span> <span class="p">[</span><span class="n">arguments</span> <span class="k">for</span> <span class="n">arguments</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">]</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments are the angles&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">arguments_are_angles</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-test-set">
+<h2>Scenario: Rotate angles and test set<a class="headerlink" href="#scenario-rotate-angles-and-test-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>  @given(&quot;Rotate ArgumentsGenerator built with test flag&quot;)
+  def configuration_setting(context):
+      context.angles = get_angles()
+      context.configuration = MagicMock(spec=ConfigurationMap)
+      context.section = &#39;lrcgaoeunth&#39;
+      context.configuration.get_ints.return_value = context.angles
+      context.parameters = RotateArgumentsGenerator(configuration=context.configuration,
+                                            section=context.section)
+      context.configuration.get.return_value = None
+      results = {&#39;test&#39;: True}
+      def side_effect(section, option, optional, default):
+          if option in results:
+              return str(results[option])
+      context.configuration.get_boolean.side_effect = side_effect
+      return
+
+
+
+
+When the Rotate ArgumentsGenerator arguments are checked
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles and test&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">check_configuration</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; --test {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-section-set">
+<h2>Scenario: Rotate angles and section set<a class="headerlink" href="#scenario-rotate-angles-and-section-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>  @given(&quot;Rotate ArgumentsGenerator built with a section&quot;)
+  def section_parameter(context):
+      context.angles = get_angles()
+      context.configuration = MagicMock(spec=ConfigurationMap)
+      context.section = &#39;pdbdipbdubpdu&#39;
+      context.parameters = RotateArgumentsGenerator(section=context.section,
+                                            configuration=context.configuration)
+      return
+
+
+
+When the Rotate ArgumentsGenerator arguments are checked
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles and section&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_section</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-velocity-set">
+<h2>Scenario: Rotate angles and velocity set<a class="headerlink" href="#scenario-rotate-angles-and-velocity-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>  @given(&quot;Rotate ArgumentsGenerator built with a velocity&quot;)
+  def velocity_parameter(context):
+      context.angles = get_angles()
+      context.velocity = random.randrange(100)
+      context.configuration = MagicMock(spec=ConfigurationMap)
+      context.section = &#39;sthtnh&#39;
+      context.parameters = RotateArgumentsGenerator(configuration=context.configuration,
+                                            section=context.section)
+
+      context.configuration.get_ints.return_value = context.angles
+      results = {&#39;velocity&#39;: context.velocity}
+      def side_effect(section, option, optional):
+          if option in results:
+              return str(results[option])
+      context.configuration.get.side_effect = side_effect
+      context.configuration.get_boolean.return_value = False
+      return
+
+
+
+When the Rotate ArgumentsGenerator arguments are checked
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles and velocity&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_velocity</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; --velocity {0} {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">velocity</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-acceleration-set">
+<h2>Scenario: Rotate angles and acceleration set<a class="headerlink" href="#scenario-rotate-angles-and-acceleration-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@given</span><span class="p">(</span><span class="s">&quot;Rotate ArgumentsGenerator built with an acceleration&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">acceleration_option</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">get_angles</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">ConfigurationMap</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">section</span> <span class="o">=</span> <span class="s">&#39;aoeu&#39;</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_ints</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span>
+                                          <span class="n">section</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;acceleration&#39;</span><span class="p">:</span> <span class="n">context</span><span class="o">.</span><span class="n">acceleration</span><span class="p">}</span>
+    <span class="k">def</span> <span class="nf">side_effect</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effect</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_boolean</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>When the Rotate ArgumentsGenerator arguments are checked</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles and acceleration&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_acceleration</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; --acceleration {0} {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">acceleration</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-deceleration-set">
+<h2>Scenario: Rotate angles and deceleration set<a class="headerlink" href="#scenario-rotate-angles-and-deceleration-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@given</span><span class="p">(</span><span class="s">&quot;Rotate ArgumentsGenerator built with an deceleration&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">deceleration_parameter</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">get_angles</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">deceleration</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">ConfigurationMap</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_ints</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">section</span> <span class="o">=</span> <span class="s">&#39;lcgfshtsaoeun&#39;</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;deceleration&#39;</span><span class="p">:</span> <span class="n">context</span><span class="o">.</span><span class="n">deceleration</span><span class="p">}</span>
+    <span class="k">def</span> <span class="nf">side_effect</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effect</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_boolean</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span>
+                                          <span class="n">section</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>When the Rotate ArgumentsGenerator arguments are checked</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles and deceleration&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_deceleration</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39; --deceleration {0} {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">deceleration</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-multiple-booleans-set">
+<h2>Scenario: Rotate angles and multiple booleans set<a class="headerlink" href="#scenario-rotate-angles-and-multiple-booleans-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre>  @given(&quot;Rotate ArgumentsGenerator built with boolean options&quot;)
+  def boolean_options(context):
+      context.angles = get_angles()
+      context.configuration = MagicMock(spec=ConfigurationMap)
+      context.section = &#39;lrcgaoeunth&#39;
+      context.configuration.get_ints.return_value = context.angles
+      context.parameters = RotateArgumentsGenerator(configuration=context.configuration,
+                                            section=context.section)
+      context.configuration.get.return_value = None
+
+      context.booleans = [option for option in base_arguments.boolean_options
+                                        if random.randrange(2)]
+      results = dict(zip(context.booleans,
+                         len(context.booleans) * [True]))
+      def side_effect(section, option, optional, default):
+          if option in results:
+              return str(results[option])
+      context.configuration.get_boolean.side_effect = side_effect
+
+      return
+
+
+
+When the Rotate ArgumentsGenerator arguments are checked
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles and boolean options&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_booleans</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">boolean_expected</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot; --{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">booleans</span><span class="p">])</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;{0} {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">boolean_expected</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-multiple-values-set">
+<h2>Scenario: Rotate angles and multiple values set<a class="headerlink" href="#scenario-rotate-angles-and-multiple-values-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@given</span><span class="p">(</span><span class="s">&quot;Rotate ArgumentsGenerator built with value options&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">value_options</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">get_angles</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">ConfigurationMap</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">section</span> <span class="o">=</span> <span class="s">&#39;lrcgaoeunth&#39;</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_ints</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span>
+                                          <span class="n">section</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_boolean</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">option</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">base_arguments</span><span class="o">.</span><span class="n">value_options</span>
+                                      <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">((</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">))]</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                       <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">values</span><span class="p">))]))</span>
+    <span class="k">def</span> <span class="nf">side_effect</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effect</span>
+
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>When the Rotate ArgumentsGenerator arguments are checked</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles and values options&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_values</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">value_string</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot; --{0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;{0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value_string</span><span class="p">,</span> <span class="n">angle</span><span class="p">)</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scenario-rotate-angles-and-multiple-values-and-booleans-set">
+<h2>Scenario: Rotate angles and multiple values and booleans set<a class="headerlink" href="#scenario-rotate-angles-and-multiple-values-and-booleans-set" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@given</span><span class="p">(</span><span class="s">&quot;Rotate ArgumentsGenerator built with value and boolean options&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">values_booleans_options</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="n">get_angles</span><span class="p">()</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">ConfigurationMap</span><span class="p">)</span>
+
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_ints</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span>
+
+
+    <span class="n">context</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="p">,</span>
+                                          <span class="n">section</span><span class="o">=</span><span class="s">&#39;ammagamma&#39;</span><span class="p">)</span>
+
+    <span class="c"># setup the options that use values</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">option</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">base_arguments</span><span class="o">.</span><span class="n">value_options</span>
+                                      <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">((</span><span class="bp">True</span><span class="p">,</span> <span class="bp">False</span><span class="p">))]</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                       <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">values</span><span class="p">))]))</span>
+    <span class="k">def</span> <span class="nf">side_effect</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">results</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">side_effect</span>
+
+    <span class="c"># setup the boolean options</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">booleans</span> <span class="o">=</span> <span class="p">[</span><span class="n">option</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">base_arguments</span><span class="o">.</span><span class="n">boolean_options</span>
+                                      <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">booleans</span><span class="p">,</span>
+                       <span class="nb">len</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">booleans</span><span class="p">)</span> <span class="o">*</span> <span class="p">[</span><span class="bp">True</span><span class="p">]))</span>
+    <span class="k">def</span> <span class="nf">boolean_side_effect</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">results</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get_boolean</span><span class="o">.</span><span class="n">side_effect</span> <span class="o">=</span> <span class="n">boolean_side_effect</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+<p>When the Rotate ArgumentsGenerator arguments are checked</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nd">@then</span><span class="p">(</span><span class="s">&quot;the Rotate ArgumentsGenerator arguments have angles, boolean and value options&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">assert_angles_booleans_values</span><span class="p">(</span><span class="n">context</span><span class="p">):</span>
+    <span class="n">boolean_string</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot; --{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">)</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">booleans</span><span class="p">])</span>
+    <span class="n">value_string</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&quot; --{0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">results</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
+                            <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">values</span><span class="p">])</span>
+    <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;{0}{1} {2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">boolean_string</span><span class="p">,</span>
+                                    <span class="n">value_string</span><span class="p">,</span>
+                                    <span class="n">angle</span><span class="p">)</span> <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
+    <span class="n">assert_that</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">,</span>
+                <span class="n">is_</span><span class="p">(</span><span class="n">equal_to</span><span class="p">(</span><span class="n">expected</span><span class="p">)))</span>
+
+    <span class="k">return</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Rotate ArgumentsGenerator</a><ul>
+<li><a class="reference internal" href="#scenario-rotate-angles-set">Scenario: Rotate angles set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-test-set">Scenario: Rotate angles and test set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-section-set">Scenario: Rotate angles and section set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-velocity-set">Scenario: Rotate angles and velocity set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-acceleration-set">Scenario: Rotate angles and acceleration set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-deceleration-set">Scenario: Rotate angles and deceleration set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-multiple-booleans-set">Scenario: Rotate angles and multiple booleans set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-multiple-values-set">Scenario: Rotate angles and multiple values set</a></li>
+<li><a class="reference internal" href="#scenario-rotate-angles-and-multiple-values-and-booleans-set">Scenario: Rotate angles and multiple values and booleans set</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/commands/tests/steps/rotateparametersfeature.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

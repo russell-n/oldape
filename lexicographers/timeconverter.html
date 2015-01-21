@@ -1,0 +1,374 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Time Converter &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Lexicographers" href="index.html" />
+    <link rel="next" title="apetools.lexicographers.timeconverter.TimeConverter" href="api/apetools.lexicographers.timeconverter.TimeConverter.html" />
+    <link rel="prev" title="The Fetched Files" href="readme_useme_loveme.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.lexicographers.timeconverter.TimeConverter.html" title="apetools.lexicographers.timeconverter.TimeConverter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="readme_useme_loveme.html" title="The Fetched Files"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Lexicographers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="time-converter">
+<h1>Time Converter<a class="headerlink" href="#time-converter" title="Permalink to this headline">¶</a></h1>
+<p>A place for a time-converter.</p>
+<div class="section" id="time-conversions">
+<h2>Time Conversions<a class="headerlink" href="#time-conversions" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">TimeConversions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class in hold the multiplers for conversion</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">same</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">seconds_per_minute</span> <span class="o">=</span> <span class="mi">60</span>
+    <span class="n">seconds_per_hour</span> <span class="o">=</span> <span class="n">seconds_per_minute</span> <span class="o">*</span> <span class="mi">60</span>
+    <span class="n">seconds_per_day</span> <span class="o">=</span> <span class="n">seconds_per_hour</span> <span class="o">*</span> <span class="mi">24</span>
+<span class="c"># end class TimeConversions</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="time-units">
+<h2>Time Units<a class="headerlink" href="#time-units" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">TimeUnits</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An enumerator of sorts for time-units</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="s">&quot;d&quot;</span>
+    <span class="n">hours</span> <span class="o">=</span> <span class="s">&quot;h&quot;</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="s">&quot;m&quot;</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="s">&quot;s&quot;</span>
+<span class="c"># end class TimeUnits</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Time Converter<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-76bd2a02341b0d59b1e2ba47d95925d4e2bde19a.png" alt="BaseClass &lt;|-- TimeConverter
+TimeConverter o- TimeConverterExpressions" />
+</p>
+<span class="target" id="module-apetools.lexicographers.timeconverter"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverter.html#apetools.lexicographers.timeconverter.TimeConverter" title="apetools.lexicographers.timeconverter.TimeConverter"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverter</span></tt></a>([units])</td>
+<td>The Time Converter converts times</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverter.expressions.html#apetools.lexicographers.timeconverter.TimeConverter.expressions" title="apetools.lexicographers.timeconverter.TimeConverter.expressions"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverter.expressions</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">expression-based time-tokenizer</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverter.converter.html#apetools.lexicographers.timeconverter.TimeConverter.converter" title="apetools.lexicographers.timeconverter.TimeConverter.converter"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverter.converter</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">&lt;time-prefix&gt;&lt;units-prefix&gt;:conversion-factor dictionary</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverter.__call__.html#apetools.lexicographers.timeconverter.TimeConverter.__call__" title="apetools.lexicographers.timeconverter.TimeConverter.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverter.__call__</span></tt></a>(source)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="time-converter-expressions">
+<h2>Time Converter Expressions<a class="headerlink" href="#time-converter-expressions" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-f44e255938dcfeab790707eb626233267019eae3.png" alt="BaseClass &lt;|-- TimeConverterExpressions" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.html#apetools.lexicographers.timeconverter.TimeConverterExpressions" title="apetools.lexicographers.timeconverter.TimeConverterExpressions"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions</span></tt></a>([source])</td>
+<td>A class to hold the regular expressions for the TimeConverter</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.float.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.float" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.float"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.float</span></tt></a></td>
+<td>This requires a value after the decimal point:</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.integer.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.integer" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.integer"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.integer</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">expression that matches entire line as integer</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.units.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.units" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.units"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.units</span></tt></a>(prefix)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.unitless.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.unitless" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.unitless"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.unitless</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">RegexObject</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.seconds.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.seconds" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.seconds"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.seconds</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">RegexObject</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.minutes.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.minutes" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.minutes"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.minutes</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">RegexObject</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.hours.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.hours" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.hours"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.hours</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">RegexObject</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.days.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.days" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.days"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.days</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">RegexObject</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.times.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.times" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.times"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.times</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.enums.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.enums" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.enums"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.enums</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">SublexicographerEnums</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.tokens.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.tokens" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.tokens"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.tokens</span></tt></a>(source)</td>
+<td>Tokenizes a source stream based on <cite>times</cite> property.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.lexicographers.timeconverter.TimeConverterExpressions.__iter__.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.__iter__" title="apetools.lexicographers.timeconverter.TimeConverterExpressions.__iter__"><tt class="xref py py-obj docutils literal"><span class="pre">TimeConverterExpressions.__iter__</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">yield:</th><td class="field-body">groupdict for time and units</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="time-converter-enums">
+<h2>Time Converter Enums<a class="headerlink" href="#time-converter-enums" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">TimeConverterEnums</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to hold some constants</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">integer</span> <span class="o">=</span> <span class="s">&quot;integer&quot;</span>
+    <span class="nb">float</span> <span class="o">=</span> <span class="s">&quot;float&quot;</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="s">&quot;time&quot;</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="s">&#39;units&#39;</span>
+<span class="c"># end class TimeConverterEnums</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Time Converter</a><ul>
+<li><a class="reference internal" href="#time-conversions">Time Conversions</a></li>
+<li><a class="reference internal" href="#time-units">Time Units</a></li>
+<li><a class="reference internal" href="#id1">Time Converter</a></li>
+<li><a class="reference internal" href="#time-converter-expressions">Time Converter Expressions</a></li>
+<li><a class="reference internal" href="#time-converter-enums">Time Converter Enums</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/lexicographers/timeconverter.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

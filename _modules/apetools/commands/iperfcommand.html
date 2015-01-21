@@ -1,0 +1,614 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.iperfcommand &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commands.iperfcommand</h1><div class="highlight"><pre>
+<span class="c">#python standard library</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c">#apetools</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseThreadClass</span>
+<span class="kn">from</span> <span class="nn">apetools.devices.basedevice</span> <span class="kn">import</span> <span class="n">BaseDeviceEnum</span>
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span>
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">readoutput</span>
+<span class="kn">from</span> <span class="nn">apetools.pipes.storagepipe</span> <span class="kn">import</span> <span class="n">StoragePipe</span><span class="p">,</span> <span class="n">StoragePipeEnum</span>
+<span class="kn">from</span> <span class="nn">apetools.parsers.sumparser</span> <span class="kn">import</span> <span class="n">SumParser</span>
+<span class="kn">from</span> <span class="nn">apetools.parameters.iperf_common_parameters</span> <span class="kn">import</span> <span class="n">IperfParametersEnum</span>
+
+<span class="n">ConfigurationError</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span>
+<span class="n">CommandError</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">CommandError</span>
+
+
+<span class="k">class</span> <span class="nc">IperfError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfError"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfError.html#apetools.commands.iperfcommand.IperfError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An IperfError indicates a connection problem between the client and server.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class IperfError</span>
+
+
+<span class="k">class</span> <span class="nc">IperfCommandError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommandError"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommandError.html#apetools.commands.iperfcommand.IperfCommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    an error to raise if the settings are unknown</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class IperfCommandError</span>
+
+
+<span class="k">class</span> <span class="nc">IperfCommandEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">client</span> <span class="o">=</span> <span class="s">&quot;client&quot;</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="s">&quot;server&quot;</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="s">&#39;time&#39;</span>
+    <span class="n">eof</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+    <span class="n">newline</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+    <span class="n">udp</span> <span class="o">=</span> <span class="s">&#39;udp&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">&#39;path&#39;</span>
+    <span class="n">iperf</span> <span class="o">=</span> <span class="s">&#39;iperf&#39;</span>
+<span class="c"># end IperfCommandEnum</span>
+
+
+<span class="k">class</span> <span class="nc">IperfCommand</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An Iperf Command executes iperf commands</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">base_filename</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">subdirectory</span><span class="o">=</span><span class="s">&quot;raw_iperf&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand.__init__"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `parameters`: An IperfParameter to use</span>
+<span class="sd">         - `output`: A Storage Pipe</span>
+<span class="sd">         - `role`: client or server</span>
+<span class="sd">         - `base_filename`: string to add to all filenames</span>
+<span class="sd">         - `subdirectory`: A folder to put the iperf files intn</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IperfCommand</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">=</span> <span class="n">role</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span>  <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">base_filename</span> <span class="o">=</span> <span class="n">base_filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="n">subdirectory</span><span class="p">)</span> 
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_now</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_daemon</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">get_output_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.get_output_filename"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.get_output_filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns self.last_filename extended by the StorageOutput</span>
+
+<span class="sd">         * This is another ipad hack</span>
+
+<span class="sd">        :return: output-file name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span><span class="p">)</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The iperf parameters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
+
+    <span class="nd">@parameters.setter</span>
+    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand.parameters"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the parameters and re-sets is_daemon</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_is_daemon</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="k">return</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">is_daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand.is_daemon"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.is_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If this is run is a server, will it be a daemon?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_daemon</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_is_daemon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">daemon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_daemon</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand.parser"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.parser">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: SumParser pipeline (if this is the client)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">threads</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">parallel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">threads</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">parallel</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">parser</span> <span class="o">=</span> <span class="n">SumParser</span><span class="p">(</span><span class="n">threads</span><span class="o">=</span><span class="n">threads</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">StoragePipe</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="n">StoragePipeEnum</span><span class="o">.</span><span class="n">sink</span><span class="p">,</span>
+                                       <span class="n">transform</span><span class="o">=</span><span class="n">parser</span><span class="p">,</span>
+                <span class="n">add_timestamp</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>            
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the storage pipeline for raw iperf output</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output</span>
+
+    <span class="nd">@output.setter</span>
+    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand.output"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `out`: an output pipeline object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">out</span><span class="o">.</span><span class="n">path</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="s">&quot;parsed&quot;</span><span class="p">)</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">role</span> <span class="o">=</span> <span class="n">StoragePipeEnum</span><span class="o">.</span><span class="n">start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="n">out</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand.now"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.now">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: time-function to check for timeouts</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_now</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_now</span> <span class="o">=</span> <span class="k">lambda</span><span class="p">:</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_now</span>
+
+    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">node_type</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.filename"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `filename`: base filename to add prefix to</span>
+<span class="sd">         - `node_type`: the device.role</span>
+<span class="sd">         </span>
+<span class="sd">        :return: a prefix to add to the filename given</span>
+<span class="sd">        :raise: ConfigurationError if self.role or node_type are unknown</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">IperfParametersEnum</span><span class="o">.</span><span class="n">udp</span><span class="p">):</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;udp_&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="s">&quot;tcp_&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">client</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">base_filename</span> <span class="o">+</span> <span class="n">filename</span>
+            <span class="k">if</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">BaseDeviceEnum</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s">&quot;upstream_tx_&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+            <span class="k">elif</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">BaseDeviceEnum</span><span class="o">.</span><span class="n">tpc</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s">&quot;downstream_tx_&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">IperfCommandError</span><span class="p">(</span><span class="s">&quot;Unknown device.role: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_type</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">server</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">BaseDeviceEnum</span><span class="o">.</span><span class="n">node</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s">&quot;downstream_rx_&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+            <span class="k">elif</span> <span class="n">node_type</span> <span class="o">==</span> <span class="n">BaseDeviceEnum</span><span class="o">.</span><span class="n">tpc</span><span class="p">:</span>
+                <span class="k">return</span> <span class="s">&quot;upstream_rx_&quot;</span> <span class="o">+</span> <span class="n">filename</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">IperfCommandError</span><span class="p">(</span><span class="s">&quot;Unknown device.role: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">node_type</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">IperfCommandError</span><span class="p">(</span><span class="s">&quot;Unknown Iperf Role: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">role</span><span class="p">))</span>
+        <span class="k">return</span> 
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">max_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfCommand.max_time"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.max_time">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the maximum amount of time to run</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">time</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">120</span><span class="p">,</span> <span class="mf">1.5</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">time</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span>
+    
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.validate"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.validate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `line`: a line of output</span>
+
+<span class="sd">        :raise: IperfError if an error is detected</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#self.logger.debug(&quot;Validating: &quot; + line)</span>
+        <span class="k">if</span> <span class="s">&quot;No route to host&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IperfError</span><span class="p">(</span><span class="s">&quot;Unable to connect to host&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s">&quot;Connection refused&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IperfError</span><span class="p">(</span><span class="s">&quot;Iperf server not running on remote host&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s">&quot;Address already in use&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="c">#raise IperfError(&quot;Another server is already running.&quot;)</span>
+        <span class="k">elif</span> <span class="s">&quot;connect failed&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">IperfError</span><span class="p">(</span><span class="s">&quot;Client Unable to connect ({0})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.abort"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.abort">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: self.stop is True      </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">send_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.send_line"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.send_line">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the line to the pipeline output. Traps StopIteration exceptions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;End of file reached&quot;</span><span class="p">)</span>
+            <span class="k">pass</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">run_daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.run_daemon"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.run_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the iperf command as a daemon, redirecting output to a file and detaching</span>
+
+<span class="sd">        * This was specifically created for the ipad, probably won&#39;t work otherwise</span>
+
+<span class="sd">        * The user of this method is responsible for getting the file from the device</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `device`: A device to issue the command on</span>
+<span class="sd">         - `filename`: a base-name to use for the output file.</span>
+
+<span class="sd">        :postcondition: self.last_filename is path to remote output file</span>
+<span class="sd">        :postcondition: self.device = device (this is another ipad thin)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">device</span><span class="o">.</span><span class="n">role</span><span class="p">)</span>
+        <span class="c"># the output is really a storage pipe, not a storage output</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="c">#self.output.unset_emit()</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; &gt; &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">last_filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Executing parameters: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span>
+        
+        <span class="k">with</span> <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Waiting for the connection lock&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;running iperf {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameters</span><span class="p">))</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Closing the connection to the device&#39;</span><span class="p">)</span>
+            <span class="c"># don&#39;t use connection.close(), it looks like you&#39;re running `sh close`</span>
+            <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Out of the connection lock&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c">#file_output = self.output.open(filename=filename)</span>
+        <span class="c">#for line in readoutput.ValidatingOutput(output, self.validate):</span>
+        <span class="c">#    if len(line.strip()):</span>
+        <span class="c">#        self.logger.debug(line.rstrip(newline))</span>
+        <span class="c">#    self.send_line(file_output, line)</span>
+        <span class="c">#    </span>
+        <span class="c">#    if self.now() &gt; abort_time:</span>
+        <span class="c">#        # We&#39;ve run too long, something is wrong (abort path)</span>
+        <span class="c">#        self.send_line(end_of_file)</span>
+        <span class="c">#        self.abort = False</span>
+        <span class="c">#        self.running = False</span>
+        <span class="c">#        raise IperfError(&quot;Expected runtime: {0} Actual: {1} (aborting)&quot;.format(self.parameters.time,</span>
+        <span class="c">#                                                                               self.now() - start_time))</span>
+        <span class="c">#    if self.stop:</span>
+        <span class="c">#        # someone has asked us to stop (stop path)</span>
+        <span class="c">#        self.send_line(end_of_file)</span>
+        <span class="c">#        self.stop = False</span>
+        <span class="c">#        self.logger.debug(&quot;Aborting&quot;)</span>
+        <span class="c">#        break</span>
+        
+        <span class="n">err</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.run"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run the iperf command and send to the output</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `device`: A device to issue the command on</span>
+<span class="sd">         - `filename`: a base-name to use for the output file.</span>
+
+<span class="sd">        :raise: IperfError if runtime is greater than self.parameters.time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">device</span><span class="o">.</span><span class="n">role</span><span class="p">)</span>
+        <span class="n">is_udp</span> <span class="o">=</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">,</span> <span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">udp</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">unset_emit</span><span class="p">()</span>        
+        <span class="c">#if not server:</span>
+        <span class="c">#    if not is_udp:</span>
+        <span class="c">#        self.output.set_emit()</span>
+        <span class="c">#    else:</span>
+        <span class="c">#        self.output.unset_emit()</span>
+        <span class="c">#else:</span>
+        <span class="c">#    if is_udp:</span>
+        <span class="c">#        self.output.set_emit()</span>
+        <span class="c">#    else:</span>
+        <span class="c">#        self.output.unset_emit()</span>
+        <span class="c">#</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Executing parameters: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
+        
+        <span class="k">with</span> <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Waiting for the connection lock&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;running iperf {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
+            <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Out of the connection lock&quot;</span><span class="p">)</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">abort_time</span> <span class="o">=</span> <span class="n">start_time</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">newline</span> <span class="o">=</span> <span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">newline</span>
+        <span class="n">end_of_file</span> <span class="o">=</span> <span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">eof</span>
+        
+        <span class="n">file_output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">readoutput</span><span class="o">.</span><span class="n">ValidatingOutput</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="n">newline</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">send_line</span><span class="p">(</span><span class="n">file_output</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+            
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">abort_time</span><span class="p">:</span>
+                <span class="c"># We&#39;ve run too long, something is wrong (abort path)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">send_line</span><span class="p">(</span><span class="n">file_output</span><span class="p">,</span> <span class="n">end_of_file</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">abort</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="k">raise</span> <span class="n">IperfError</span><span class="p">(</span><span class="s">&quot;Expected runtime: {0} Actual: {1} (aborting)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
+                                                                                       <span class="bp">self</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">:</span>
+                <span class="c"># someone has asked us to stop (stop path)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">send_line</span><span class="p">(</span><span class="n">file_output</span><span class="p">,</span> <span class="n">end_of_file</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stop</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Aborting&quot;</span><span class="p">)</span>
+                <span class="k">break</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="bp">False</span>
+
+        <span class="c"># checking stderr will raise an exception because we&#39;re always closing the connection</span>
+        <span class="c">#self.logger.debug(&quot;Checking stderr&quot;)</span>
+        <span class="c">#err = error.readline(timeout=1)</span>
+        <span class="c">#</span>
+        <span class="c">#if len(err):</span>
+        <span class="c">#    self.validate(err)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IperfCommand.start"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This runs the iperf command in a thread so it won&#39;t block execution.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `device`: device to issue the iperf command</span>
+<span class="sd">         - `filename`: base filename to use for output file</span>
+
+<span class="sd">        :postcondition: iperf command started in self.thread</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">daemon</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">run_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run_daemon</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">run_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">run_method</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;IperfCommand&#39;</span><span class="p">,</span>
+                                       <span class="n">kwargs</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;device&#39;</span><span class="p">:</span><span class="n">device</span><span class="p">,</span>
+                                               <span class="s">&#39;filename&#39;</span><span class="p">:</span><span class="n">filename</span><span class="p">,</span>
+                                               <span class="s">&#39;server&#39;</span><span class="p">:</span><span class="n">server</span><span class="p">})</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is a pass-through to ``run`` to make it match the newer classes</span>
+<span class="sd">    </span>
+<span class="sd">        Run the iperf command and send to the output</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `device`: A device to issue the command on</span>
+<span class="sd">         - `filename`: a base-name to use for the output file.</span>
+
+<span class="sd">        :raise: IperfError if runtime is greater than self.parameters.time</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="p">)</span>
+    
+<span class="c"># end IperfCommand</span>
+
+
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span></div>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Lock</span>
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="c"># third-party</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+
+<span class="c">#ape</span>
+<span class="kn">from</span> <span class="nn">apetools.parameters.iperf_udp_server_parameters</span> <span class="kn">import</span> <span class="n">IperfUdpServerParameters</span>
+
+
+<span class="k">class</span> <span class="nc">TestIperfCommand</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">test_daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestIperfCommand.test_daemon"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.TestIperfCommand.test_daemon.html#apetools.commands.iperfcommand.TestIperfCommand.test_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If the parameters.daemon is set, will the run_daemon be called?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">IperfUdpServerParameters</span><span class="p">()</span>
+        <span class="n">parameters</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">IperfCommand</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                               <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+                               <span class="n">role</span><span class="o">=</span><span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="n">BaseDeviceEnum</span><span class="o">.</span><span class="n">node</span><span class="p">)</span>
+        <span class="n">output</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">filename</span>
+
+        <span class="n">device</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">Lock</span><span class="p">()</span>
+        <span class="n">device</span><span class="o">.</span><span class="n">role</span> <span class="o">=</span> <span class="n">BaseDeviceEnum</span><span class="o">.</span><span class="n">node</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">error</span><span class="o">.</span><span class="n">readline</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">iperf</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;&quot;</span><span class="p">],</span> <span class="n">error</span>
+        <span class="n">command</span><span class="o">.</span><span class="n">run_daemon</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="s">&#39;test&#39;</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="c">#command.start(device, &#39;test&#39;, server=True)</span>
+
+        <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">close</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">()</span>
+        <span class="n">device</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">iperf</span><span class="o">.</span><span class="n">assert_called_with</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39; &gt; &#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">last_filename</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_is_daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestIperfCommand.test_is_daemon"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.TestIperfCommand.test_is_daemon.html#apetools.commands.iperfcommand.TestIperfCommand.test_is_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        If the daemon parameter is set, does the command know it&#39;s a daemon?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">IperfUdpServerParameters</span><span class="p">()</span>
+        <span class="n">parameters</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">IperfCommand</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                               <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+                               <span class="n">role</span><span class="o">=</span><span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">is_daemon</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">test_set_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TestIperfCommand.test_set_parameters"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.TestIperfCommand.test_set_parameters.html#apetools.commands.iperfcommand.TestIperfCommand.test_set_parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does setting the parameters reset the is_daemon property?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">IperfUdpServerParameters</span><span class="p">()</span>
+        <span class="n">parameters</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">IperfCommand</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                               <span class="n">output</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+                               <span class="n">role</span><span class="o">=</span><span class="n">IperfCommandEnum</span><span class="o">.</span><span class="n">server</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">is_daemon</span><span class="p">)</span>
+        <span class="n">parameters</span><span class="o">.</span><span class="n">_daemon</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">command</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">_is_daemon</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertFalse</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">is_daemon</span><span class="p">)</span>
+        <span class="k">return</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

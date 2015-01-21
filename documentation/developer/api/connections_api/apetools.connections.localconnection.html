@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.connections.localconnection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.connections.localconnection">
+<span id="apetools-connections-localconnection"></span><h1>apetools.connections.localconnection<a class="headerlink" href="#module-apetools.connections.localconnection" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">namedtuple</span></tt>(typename,&nbsp;field_names[,&nbsp;verbose,&nbsp;...])</td>
+<td>Returns a new subclass of tuple with named fields.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.connections.localconnection.LocalConnection" title="apetools.connections.localconnection.LocalConnection"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection</span></tt></a>([command_prefix])</td>
+<td>A local connection talks to a local command-line shell.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.connections.localconnection.LocalNixConnection" title="apetools.connections.localconnection.LocalNixConnection"><tt class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A Class that uses Pexpect to get around the problem of file-buffering</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.connections.localconnection.OutputError" title="apetools.connections.localconnection.OutputError"><tt class="xref py py-obj docutils literal"><span class="pre">OutputError</span></tt></a></td>
+<td>OutputError(output, error)</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">PopenProducer</span></tt>(command[,&nbsp;timeout])</td>
+<td>The subprocess.Popen Producer executes a command when its process or one of its files is requested</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">StandardOutput</span></tt>(source,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>A class to act as a file (read-only)</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">StringIO</span></tt>([buf])</td>
+<td>class StringIO([buffer])</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionError</span></tt></td>
+<td>A ConnectionError is raised by connectinos to indicate a problem.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.connections.localconnection.LocalConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.localconnection.</tt><tt class="descname">LocalConnection</tt><big>(</big><em>command_prefix=''</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/localconnection.html#LocalConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.localconnection.LocalConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A local connection talks to a local command-line shell.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>command_prefix</cite>: A prefix to prepend to commands (e.g. &#8216;adb shell&#8217;)</li>
+</ul>
+<dl class="method">
+<dt id="apetools.connections.localconnection.LocalConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/localconnection.html#LocalConnection._main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.localconnection.LocalConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the command string to execute</li>
+<li><cite>arguments</cite>: The arguments for the command</li>
+<li><cite>timeout</cite>: if <cite>block</cite>, wait until timeout for output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError named tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.LocalConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/localconnection.html#LocalConnection._procedure_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.localconnection.LocalConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is provided so it can be overriden by subclasses.</p>
+<p>Otherwise it just returns _main()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.LocalConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.localconnection.LocalConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.localconnection.LocalConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.localconnection.LocalConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.localconnection.LocalConnection.queue">
+<tt class="descname">queue</tt><a class="reference internal" href="../../../../_modules/apetools/connections/localconnection.html#LocalConnection.queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.localconnection.LocalConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.localconnection.LocalNixConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.localconnection.</tt><tt class="descname">LocalNixConnection</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/localconnection.html#LocalNixConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.localconnection.LocalNixConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Class that uses Pexpect to get around the problem of file-buffering</p>
+<p>So far as I know, Pexpect only works on <a href="#id1"><span class="problematic" id="id2">*</span></a>nix-based systems.</p>
+<dl class="method">
+<dt id="apetools.connections.localconnection.LocalNixConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.localconnection.LocalNixConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the command string to execute</li>
+<li><cite>arguments</cite>: The arguments for the command</li>
+<li><cite>timeout</cite>: if <cite>block</cite>, wait until timeout for output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError named tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.LocalNixConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.localconnection.LocalNixConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is provided so it can be overriden by subclasses.</p>
+<p>Otherwise it just returns _main()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.LocalNixConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.localconnection.LocalNixConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.LocalNixConnection.run">
+<tt class="descname">run</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/localconnection.html#LocalNixConnection.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.localconnection.LocalNixConnection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>runs the Pexpect command and puts lines of output on the Queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.localconnection.LocalNixConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.localconnection.LocalNixConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.localconnection.LocalNixConnection.queue">
+<tt class="descname">queue</tt><a class="headerlink" href="#apetools.connections.localconnection.LocalNixConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.localconnection.OutputError">
+<em class="property">class </em><tt class="descclassname">apetools.connections.localconnection.</tt><tt class="descname">OutputError</tt><a class="headerlink" href="#apetools.connections.localconnection.OutputError" title="Permalink to this definition">¶</a></dt>
+<dd><p>OutputError(output, error)</p>
+<dl class="method">
+<dt id="apetools.connections.localconnection.OutputError._asdict">
+<tt class="descname">_asdict</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.connections.localconnection.OutputError._asdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OrderedDict which maps field names to their values</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="apetools.connections.localconnection.OutputError._make">
+<em class="property">classmethod </em><tt class="descname">_make</tt><big>(</big><em>iterable</em>, <em>new=&lt;built-in method __new__ of type object at 0x90aa40&gt;</em>, <em>len=&lt;built-in function len&gt;</em><big>)</big><a class="headerlink" href="#apetools.connections.localconnection.OutputError._make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new OutputError object from a sequence or iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.OutputError._replace">
+<tt class="descname">_replace</tt><big>(</big><em>_self</em>, <em>**kwds</em><big>)</big><a class="headerlink" href="#apetools.connections.localconnection.OutputError._replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OutputError object replacing specified fields with new values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.OutputError.count">
+<tt class="descname">count</tt><big>(</big><em>value</em><big>)</big> &rarr; integer -- return number of occurrences of value<a class="headerlink" href="#apetools.connections.localconnection.OutputError.count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.localconnection.OutputError.index">
+<tt class="descname">index</tt><big>(</big><em>value</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>stop</em><span class="optional">]</span><span class="optional">]</span><big>)</big> &rarr; integer -- return first index of value.<a class="headerlink" href="#apetools.connections.localconnection.OutputError.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises ValueError if the value is not present.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.localconnection.OutputError.error">
+<tt class="descname">error</tt><a class="headerlink" href="#apetools.connections.localconnection.OutputError.error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.localconnection.OutputError.output">
+<tt class="descname">output</tt><a class="headerlink" href="#apetools.connections.localconnection.OutputError.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/connections_api/apetools.connections.localconnection.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

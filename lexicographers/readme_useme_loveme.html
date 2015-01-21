@@ -1,0 +1,192 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Fetched Files &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Lexicographers" href="index.html" />
+    <link rel="next" title="Time Converter" href="timeconverter.html" />
+    <link rel="prev" title="apetools.lexicographers.parametertree.ParameterTree._traverse" href="api/apetools.lexicographers.parametertree.ParameterTree._traverse.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="timeconverter.html" title="Time Converter"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.lexicographers.parametertree.ParameterTree._traverse.html" title="apetools.lexicographers.parametertree.ParameterTree._traverse"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Lexicographers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-fetched-files">
+<h1>The Fetched Files<a class="headerlink" href="#the-fetched-files" title="Permalink to this headline">¶</a></h1>
+<p>The two files that were fetched were the <cite>ttr.ini</cite> file and the <cite>source_this_for_sl4a</cite> files.</p>
+<div class="section" id="source-this-for-sl4a">
+<h2>source_this_for_sl4a<a class="headerlink" href="#source-this-for-sl4a" title="Permalink to this headline">¶</a></h2>
+<p>This is a fairly crude file to enable SL4a and forward the ports. It assumes that there is no server currently running and grabs the first port that shows up in the output. To use it:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Make sure there isn&#8217;t a currently running SL4a server on the DUT</li>
+<li>Enable the ADB Server if it isn&#8217;t already running</li>
+<li>source this file:
+<cite>source source_this_for_sl4a</cite></li>
+</ol>
+</div></blockquote>
+<p>For those not familiar with the <cite>source</cite> command, Unix doesn&#8217;t allow a running program to change the state of its parents variables, so if you want to change an environment variable (in this case <cite>AP_PORT</cite>, which android.py uses to find the SL4a server), you need to use the <cite>source</cite> command to get around this.</p>
+<p>The <cite>source_this_for_sl4a</cite> file:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># This will find the sl4a server port and forward it.</span>
+<span class="c"># Due to permission restrictions, you can&#39;t run this as a script.</span>
+<span class="c"># instead use source:</span>
+<span class="c"># bash_prompt&gt; source source_this_for_sl4a</span>
+<span class="c"># Warning: this is a work in progress. In particular, netstat doesn&#39;t have a way to idendtify what the meaning of the ports are</span>
+<span class="c"># So the port-forwarding might not work. On recently started machines, it usually works.</span>
+
+<span class="c">#echo  &quot;the Happy Path : kill all the servers in the SL4A GUI then source this.&quot;</span>
+
+<span class="nv">PREFIX</span><span class="o">=</span><span class="s2">&quot;::ffff:127\.0\.0\.1:&quot;</span>
+<span class="nv">PORT</span><span class="o">=</span><span class="s2">&quot;[0-9]\{5\}&quot;</span>
+<span class="nv">SUFFIX</span><span class="o">=</span><span class="s2">&quot; :::\\*&quot;</span>
+<span class="nv">LOCAL_ADDRESS</span><span class="o">=</span><span class="nv">$PREFIX$PORT</span>
+
+
+<span class="c"># check if the server has been started</span>
+<span class="nv">SL4A</span><span class="o">=</span><span class="sb">`</span>adb shell netstat | grep -o <span class="nv">$LOCAL_ADDRESS</span> | grep -o <span class="nv">$PORT</span><span class="sb">`</span>
+
+<span class="c">#start the server</span>
+<span class="k">if</span> <span class="o">[</span> -z <span class="nv">$SL4A</span> <span class="o">]</span>
+    <span class="k">then</span>
+<span class="k">        </span>adb shell am start -a com.googlecode.android_scripting.action.LAUNCH_SERVER -n com.googlecode.android_scripting/.activity.ScriptingLayerServiceLauncher
+        <span class="nb">echo</span> <span class="s2">&quot;Sleeping for a second to let the server start.&quot;</span>
+        sleep 1
+<span class="k">fi</span>
+
+<span class="nv">SL4A</span><span class="o">=</span><span class="sb">`</span>adb shell netstat | grep -o <span class="nv">$LOCAL_ADDRESS</span> | grep -o <span class="nv">$PORT</span><span class="sb">`</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Forwarding to port: &quot;</span><span class="nv">$SL4A</span>
+
+<span class="nb">echo</span> <span class="nv">$SL4A</span>
+adb forward tcp:9999 tcp:<span class="nv">$SL4A</span>
+
+<span class="nb">export </span><span class="nv">AP_PORT</span><span class="o">=</span>9999
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Fetched Files</a><ul>
+<li><a class="reference internal" href="#source-this-for-sl4a">source_this_for_sl4a</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/lexicographers/readme_useme_loveme.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

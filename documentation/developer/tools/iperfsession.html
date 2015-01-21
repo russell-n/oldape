@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The IperfSession &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-iperfsession">
+<h1>The IperfSession<a class="headerlink" href="#the-iperfsession" title="Permalink to this headline">¶</a></h1>
+<p>An adapter to make the tools match the use of multiple nodes. It extracts the correct node and determines if it is acting as the client or server based on the parameters passed in, then calls on the <a class="reference internal" href="../../../tools/iperftest.html#iperf-test"><em>IperfTest</em></a> to run the test.</p>
+<div class="section" id="parameters">
+<h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>SenderReceiver</cite> parameters are used to bundle two nodes and identify their role.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-7ecee3be28c1b27d2e02857b5cb6dd88423282e1.png" alt="SenderReceiver -|&gt; collections.namedtuple
+SenderReceiver : sender
+SenderReceiver : receiver" />
+</p>
+</div>
+<div class="section" id="the-errors">
+<h2>The Errors<a class="headerlink" href="#the-errors" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>IperfConfigurationError</cite> is raised if an error in the parameters is detected.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-e5e3771a91ce131d7c109ba26ab8470dc0a24fbb.png" alt="IperfConfigurationError -|&gt; ConfigurationError" />
+</p>
+</div>
+<div class="section" id="the-iperf-session">
+<span id="iperf-session"></span><h2>The Iperf Session<a class="headerlink" href="#the-iperf-session" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>IperfSession</cite> bundles nodes and the Iperf Test.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.html#apetools.tools.iperfsession.IperfSession" title="apetools.tools.iperfsession.IperfSession"><tt class="xref py py-obj docutils literal"><span class="pre">IperfSession</span></tt></a>(iperf_test,&nbsp;nodes,&nbsp;tpc[,&nbsp;...])</td>
+<td>A bundler of nodes and the iperftest</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-8bf0e359f496e73193aae795a090a3a19c8fbb81.png" alt="IperfSession -|&gt; BaseClass
+IperfSession o-- IperfTest
+IperfSession : nodes
+IperfSession : tpc
+IperfSession : filename_base
+IperfSession : __call__(parameters, filename_prefix)" />
+</p>
+<ul class="simple">
+<li>See <a class="reference internal" href="../../../tools/iperftest.html#iperf-test"><em>IperfTest</em></a></li>
+<li><tt class="docutils literal"><span class="pre">nodes</span></tt> is a dictionary of <cite>id</cite> (key`) to <cite>device</cite> (value) mappings.</li>
+<li><tt class="docutils literal"><span class="pre">tpc</span></tt> is a built <cite>device</cite> for the traffic-generating PC</li>
+</ul>
+</div>
+<div class="section" id="the-call">
+<h2>The Call<a class="headerlink" href="#the-call" title="Permalink to this headline">¶</a></h2>
+<p>The <tt class="docutils literal"><span class="pre">__call__</span></tt> takes a namedtuple (<cite>parameters</cite>) and an optional filename-prefix that it will add to the output file (if given):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">sender_receiver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particpants</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+<span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">poll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iperf_test</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="n">sender_receiver</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span>
+                            <span class="n">receiver</span><span class="o">=</span><span class="n">sender_receiver</span><span class="o">.</span><span class="n">receiver</span><span class="p">,</span>
+                            <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">self.participants</span></tt> gets the <cite>node</cite> and direction from the parameters and returns a <cite>SenderReceiver</cite></li>
+<li><tt class="docutils literal"><span class="pre">self.filename</span></tt> creates a string with the suffix <cite>.iperf</cite></li>
+<li><tt class="docutils literal"><span class="pre">self.poll</span></tt> is set in case meaningful output is returned and a user of the <cite>IperfSession</cite> wanted to retrieve it later</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The IperfSession</a><ul>
+<li><a class="reference internal" href="#parameters">Parameters</a></li>
+<li><a class="reference internal" href="#the-errors">The Errors</a></li>
+<li><a class="reference internal" href="#the-iperf-session">The Iperf Session</a></li>
+<li><a class="reference internal" href="#the-call">The Call</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/tools/iperfsession.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

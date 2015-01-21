@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Synaxxx &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Synaxxx" href="index.html" />
+    <link rel="next" title="apetools.affectors.synaxxx.synaxxx.SynaxxxError" href="api/apetools.affectors.synaxxx.synaxxx.SynaxxxError.html" />
+    <link rel="prev" title="apetools.affectors.synaxxx.main.parse_args" href="api/apetools.affectors.synaxxx.main.parse_args.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.affectors.synaxxx.synaxxx.SynaxxxError.html" title="apetools.affectors.synaxxx.synaxxx.SynaxxxError"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.affectors.synaxxx.main.parse_args.html" title="apetools.affectors.synaxxx.main.parse_args"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Affectors</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Synaxxx</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-synaxxx">
+<h1>The Synaxxx<a class="headerlink" href="#the-synaxxx" title="Permalink to this headline">¶</a></h1>
+<p>A module to adapt the Synaccess network controller.</p>
+<p class="plantuml">
+<img src="../../_images/plantuml-2f6327a46c3c311ca48d2efa17a0813953791a6b.png" alt="CommandError &lt;|-- SynaxxxError" />
+</p>
+<span class="target" id="module-apetools.affectors.synaxxx.synaxxx"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.SynaxxxError" title="apetools.affectors.synaxxx.synaxxx.SynaxxxError"><tt class="xref py py-obj docutils literal"><span class="pre">SynaxxxError</span></tt></a></td>
+<td>An error to raise if a command doesn&#8217;t execute properly.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../_images/plantuml-9129c5e217ebecb7b569bb013f14cbc5b5b37235.png" alt="BaseClass &lt;|-- Synaxxx
+Synaxxx o- Sleep
+Synaxxx o- Telnet" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx" title="apetools.affectors.synaxxx.synaxxx.Synaxxx"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx</span></tt></a>(host[,&nbsp;port,&nbsp;timeout,&nbsp;sleep,&nbsp;debug])</td>
+<td>A class to control the Synaxxx</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.sleeper" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.sleeper"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.sleeper</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a sleeper</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.client" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.client"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.client</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the telnetlib client</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.status" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.status"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.status</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">dict of &lt;switch id&gt;:&lt;state&gt;</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.exec_command" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.exec_command"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.exec_command</span></tt></a>(command[,&nbsp;attempts])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.lines" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.lines"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.lines</span></tt></a>([timeout])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.validate" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.validate"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.validate</span></tt></a>(line,&nbsp;command)</td>
+<td>Checks the line for errors.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.all_off" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.all_off"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.all_off</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">all outlets turned off</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.all_on" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.all_on"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.all_on</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">all outlets turned off</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.turn_on" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.turn_on"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.turn_on</span></tt></a>(switch)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.affectors.synaxxx.synaxxx.Synaxxx.__call__.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.__call__" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.__call__</span></tt></a>([switches])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.increment_sleep" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.increment_sleep"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.increment_sleep</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">sleep increased by one second</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.show_status" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.show_status"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.show_status</span></tt></a>()</td>
+<td>print switch states to stdout</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.close" title="apetools.affectors.synaxxx.synaxxx.Synaxxx.close"><tt class="xref py py-obj docutils literal"><span class="pre">Synaxxx.close</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">connection closed, client deleted</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/affectors/synaxxx/synaxxx.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

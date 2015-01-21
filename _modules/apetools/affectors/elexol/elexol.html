@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.affectors.elexol.elexol &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.affectors.elexol.elexol</h1><div class="highlight"><pre>
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+
+
+<span class="k">class</span> <span class="nc">elexol24</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="elexol24"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class for UDP socket communication with the Elexol24 Ethernet I/O board. </span>
+<span class="sd">    </span>
+<span class="sd">    The class must be instantiated using the IP address as an argument, for example::</span>
+<span class="sd">        a = elexol.elexol24(&quot;192.168.20.68&quot;)</span>
+<span class="sd">        </span>
+<span class="sd">    The UDP port is set at 2424 (the Elexol default).  After connecting with the device all pins are set to output mode and cleared (set to zero).</span>
+<span class="sd">    The most useful methods are probably ``setpin24()``, ``setxpin24()``, and ``getpin24()``, as they don&#39;t require any messing with the ports on the Elexol board.</span>
+<span class="sd">     </span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">UDP_PORT</span> <span class="o">=</span> <span class="mi">2424</span>
+    <span class="n">HOST</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IP</span><span class="p">,</span> <span class="n">clear</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ports</span><span class="o">=</span><span class="s">&quot;ABC&quot;</span><span class="p">,</span> <span class="n">pins</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+<div class="viewcode-block" id="elexol24.__init__"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.elexol.elexol24.html#apetools.affectors.elexol.elexol.elexol24.__init__">[docs]</a>    
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Constructor - Establishes communication with the Elexol24 and by default sets all pins to output mode.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;IP&#39; : a string containing the IP address of the Elexol24.  Connection is made on port 2424.</span>
+<span class="sd">            - `ports`: The Identifier for the serial port on the elexol</span>
+<span class="sd">            - `pins`: The number of pins per port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">closed</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">IP</span> <span class="o">=</span> <span class="n">IP</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">MAX_RETRY</span> <span class="o">=</span> <span class="n">retry</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ports</span> <span class="o">=</span> <span class="n">ports</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pins</span> <span class="o">=</span> <span class="n">pins</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clear</span> <span class="o">=</span> <span class="n">clear</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_socket</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">socket</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="elexol24.socket"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.socket">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: UPD socket</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_socket</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+            <span class="c"># set up socket</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_socket</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+            <span class="c"># bind to port</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_socket</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">HOST</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">UDP_PORT</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_socket</span><span class="o">.</span><span class="n">settimeout</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+            
+            <span class="c"># set port directions to output by default</span>
+                <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">setportdirection</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            
+            <span class="c"># set all output to zero</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">clearall</span><span class="p">()</span>
+
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;elexol24: &quot;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_socket</span>
+    
+    <span class="k">def</span> <span class="nf">tryrecv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.tryrecv"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.elexol.elexol24.tryrecv.html#apetools.affectors.elexol.elexol.elexol24.tryrecv">[docs]</a>        <span class="n">try_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">try_num</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_RETRY</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">trysend</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">try_num</span> <span class="o">=</span> <span class="n">try_num</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;elexol24.getport: socket timeout&quot;</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;elexol24.getport: &quot;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span>
+        <span class="k">return</span> <span class="n">msg</span>
+
+    <span class="k">def</span> <span class="nf">trysend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.trysend"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.elexol.elexol24.trysend.html#apetools.affectors.elexol.elexol.elexol24.trysend">[docs]</a>        <span class="n">try_num</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">try_num</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_RETRY</span><span class="p">):</span>
+            <span class="n">try_num</span> <span class="o">=</span> <span class="n">try_num</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IP</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">UDP_PORT</span><span class="p">))</span>
+                <span class="k">break</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;elexol24.trysend: socket timeout&quot;</span>
+            <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">:</span>
+                <span class="k">print</span> <span class="s">&quot;elexol24.trysend: &quot;</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span>
+                
+            
+    <span class="c"># set port direction</span>
+    <span class="k">def</span> <span class="nf">setportdirection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">direction</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.setportdirection"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.setportdirection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the desired I/O pin direction for a particular Elexol24 port</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39; to indicate the desired port.</span>
+<span class="sd">            - &#39;direction&#39; : A byte containing binary pin direction settings for that particular port, where binary 0 is input and binary 1 is output.  ex: setting direction to 255 will set all pins to &#39;1&#39; and thus set the entire port to input.</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">trysend</span><span class="p">(</span><span class="s">&quot;!&quot;</span> <span class="o">+</span> <span class="n">port</span> <span class="o">+</span> <span class="nb">chr</span><span class="p">(</span><span class="n">direction</span><span class="p">))</span>
+        
+        
+    <span class="c"># set entire port at once</span>
+    <span class="k">def</span> <span class="nf">setport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.setport"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.setport">[docs]</a>        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Writes values to a single port</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39; to indicate desired port.</span>
+<span class="sd">            - &#39;value&#39; : A byte containing binary values to write to the port.  ex: 255 will write all 1&#39;s to the port.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trysend</span><span class="p">(</span><span class="n">port</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">+</span><span class="nb">chr</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+    <span class="c"># get port value</span>
+    <span class="k">def</span> <span class="nf">getport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.getport"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.getport">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets current values on a particular port.</span>
+<span class="sd">        </span>
+<span class="sd">        :param: </span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39;.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: Byte</span>
+<span class="sd">        :return: A byte containing the current status of the desired port.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#self.trysend(port.lower())</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tryrecv</span><span class="p">(</span><span class="n">port</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+        <span class="c"># return the value from the device</span>
+        <span class="k">return</span> <span class="nb">ord</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            
+    <span class="c"># clear all values of individual port</span>
+    <span class="k">def</span> <span class="nf">clearport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.clearport"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.clearport">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears all values on given port</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39;.</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">setport</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        
+    
+    <span class="c"># clear entire device</span>
+    <span class="k">def</span> <span class="nf">clearall</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.clearall"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.clearall">[docs]</a>        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Clears all pins on the device.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clearport</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">return</span>
+        
+                        
+    <span class="c"># set individual pin value, keeping existing values (logical OR)</span>
+    <span class="k">def</span> <span class="nf">setpin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.setpin"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.setpin">[docs]</a>        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Sets an individual pin value, but leaves all other pins untouched.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39;.</span>
+<span class="sd">            - &#39;pin&#39; : A zero-indexed value specifying the desired pin. Valid range is 0-7.</span>
+
+<span class="sd">        :raise: AssertionError if pin is out of range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">assert</span><span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;elexol24.setpin: pin out of range&quot;</span>
+        
+        <span class="c"># get existing port status and OR the result</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getport</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">|</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">pin</span><span class="p">)</span>
+            
+        <span class="c"># write it back to device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trysend</span><span class="p">(</span><span class="n">port</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">+</span><span class="nb">chr</span><span class="p">(</span><span class="n">b</span><span class="p">))</span> 
+            
+    <span class="c"># set individual pin value, with all else zero</span>
+    <span class="k">def</span> <span class="nf">setxpin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.setxpin"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.setxpin">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets an individual pin on a specified port, and clears the rest.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39;.</span>
+<span class="sd">            - &#39;pin&#39; : A zero-indexed value specifying the desired pin. Valid range is 0-7.</span>
+<span class="sd">            </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">trysend</span><span class="p">(</span><span class="n">port</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">+</span><span class="nb">chr</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">pin</span><span class="p">))</span>
+            
+    <span class="c"># get status of individual pin</span>
+    <span class="k">def</span> <span class="nf">getpin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.getpin"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.getpin">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the status of an individual pin on a specified port. </span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39;.</span>
+<span class="sd">            - &#39;pin&#39; : A zero-indexed value specifying the desired pin. Valid range is 0-7.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        :return: The value of the specified pin.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    
+        <span class="c"># get current port value and AND with desired bit</span>
+        <span class="k">assert</span><span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;elexol24.getpin: pin out of range&quot;</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getport</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">bool</span><span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">pin</span><span class="p">))</span>
+            
+            
+    <span class="c"># clear one individual pin, keeping existing values</span>
+    <span class="k">def</span> <span class="nf">clearpin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.clearpin"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.clearpin">[docs]</a>        <span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Clears an individual pin on a specified port.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;port&#39; : A string containing either &#39;A&#39;, &#39;B&#39;, or &#39;C&#39;.</span>
+<span class="sd">            - &#39;pin&#39; : A zero-indexed value specifying the desired pin. Valid range is 0-7.          </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">assert</span><span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">8</span> <span class="ow">and</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;elexol24.clearpin: pin out of range&quot;</span>
+        <span class="c"># get port status, AND with inverted pin value</span>
+        <span class="n">a</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getport</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="o">~</span><span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">pin</span><span class="p">)</span>
+        
+        <span class="c"># write back to device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trysend</span><span class="p">(</span><span class="n">port</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="o">+</span><span class="nb">chr</span><span class="p">(</span><span class="n">b</span><span class="p">))</span>
+        
+    <span class="c"># set one pin in entire 24 pin bank </span>
+    <span class="k">def</span> <span class="nf">setpin24</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.setpin24"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.setpin24">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets an individual pin across the entire device, and leaves all other untouched.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;pin&#39; : A zero-indexed value specifying the desired pin.  Valid range is 0-23</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">24</span> <span class="ow">and</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;elexol24.setpin24: Pin input outside of range.&quot;</span>
+        
+        <span class="c"># determine port</span>
+        <span class="n">port</span><span class="p">,</span> <span class="n">pin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">[</span><span class="n">pin</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">],</span> <span class="n">pin</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span>
+        <span class="c"># perform operation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setpin</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
+        <span class="k">return</span>
+        
+    
+    <span class="c"># set one pin in entire 24 pin bank, keeping all else zero</span>
+    <span class="k">def</span> <span class="nf">setxpin24</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.setxpin24"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.setxpin24">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets an individual pin across the entire device. All other pins are cleared.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - `pin` : A zero-indexed value specifying the desired pin. Valid range is 0-23.</span>
+
+<span class="sd">        :raise: AssertionError if pin out of range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">assert</span> <span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">24</span> <span class="ow">and</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;elexol24.setxpin24: Pin input outside of range.&quot;</span>
+        
+        <span class="c"># determine port</span>
+        <span class="n">port</span><span class="p">,</span> <span class="n">pin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">[</span><span class="n">pin</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">],</span> <span class="n">pin</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span>
+        
+        <span class="c"># perform operation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearall</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setpin</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">getpin24</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.getpin24"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.getpin24">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the value of an individual pin across the entire device.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - &#39;pin&#39; : A zero-indexed value specifying the desired pin. Valid range is 0-23.</span>
+<span class="sd">        </span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        :return: The value of the specified pin.</span>
+
+<span class="sd">        :raise: AssertionError if ping out of range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">assert</span> <span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">24</span> <span class="ow">and</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;elexol24.getpin24: Pin input outside of range.&quot;</span>
+        
+        <span class="c"># determine port</span>
+        <span class="n">port</span><span class="p">,</span> <span class="n">pin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">[</span><span class="n">pin</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">],</span> <span class="n">pin</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span>
+            
+        <span class="c"># perform operation</span>
+        <span class="k">return</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getpin</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">))</span>
+        
+        
+    <span class="c"># clear one individual pin in entire 24 pin bank, keeping existing values</span>
+    <span class="k">def</span> <span class="nf">clearpin24</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.clearpin24"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.clearpin24">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clears an individual pin across the entire device, leaving all other untouched.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+<span class="sd">            - `pin` : A zero-indexed value specifying the desired pin. Valid range is 0-23.</span>
+
+<span class="sd">        :raise: AssertionError if `pin` out of range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="p">(</span><span class="n">pin</span> <span class="o">&lt;</span> <span class="mi">24</span> <span class="ow">and</span> <span class="n">pin</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">),</span> <span class="s">&quot;elexol24.clearpin24: Pin input outside of range.&quot;</span>
+        
+        <span class="c"># determine port</span>
+        <span class="n">port</span><span class="p">,</span> <span class="n">pin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">[</span><span class="n">pin</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">],</span> <span class="n">pin</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span>
+            
+        <span class="c"># perform operation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearpin</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">pin</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="c"># cleanup</span>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.close"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.elexol.html#apetools.affectors.elexol.elexol.elexol24.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Closes open sockets. Automatically called by destructor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">closed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">socket</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    
+    <span class="c"># destructor</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="elexol24.__del__"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.elexol.elexol24.__del__.html#apetools.affectors.elexol.elexol.elexol24.__del__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Calls self.close</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="c"># end elexol24        </span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

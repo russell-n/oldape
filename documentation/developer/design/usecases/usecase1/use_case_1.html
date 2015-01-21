@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Use Case 1 &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="use-case-1">
+<h1>Use Case 1<a class="headerlink" href="#use-case-1" title="Permalink to this headline">¶</a></h1>
+<p>This is the base case to get the product line tested.</p>
+<div class="section" id="preconditions">
+<h2>Preconditions<a class="headerlink" href="#preconditions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The Device Under Test (DUT) is an <cite>Android</cite> device with an ADB connection on the PC Running the test (Control PC)</li>
+<li>The Control PC is running linux</li>
+<li>The DUT is connected to the proper AP</li>
+<li>The Traffic PC (TPC) is connected to the same subnet as the DUT</li>
+<li>Both devices have iperf in their <cite>PATH</cite> variable</li>
+<li>The TPC has an SSH Server running on it</li>
+<li>The Allion Performance Evaluator (APE) has set the values in the configuration file</li>
+<li>The configuration file is in the directory where the test is started</li>
+</ul>
+</div>
+<div class="section" id="main-path">
+<h2>Main Path<a class="headerlink" href="#main-path" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">The system gets the configuration from the APE:</p>
+<blockquote>
+<div><ul class="simple">
+<li>DUT&#8217;s Test IP Address (or resolvable host name)</li>
+<li>TPC&#8217;s Test IP Address</li>
+<li>TPC&#8217;s Control IP Address</li>
+<li>TPC&#8217;s Username</li>
+<li>TPC&#8217;s password (if needed)</li>
+<li>The duration of the test</li>
+<li>The base name for the data file</li>
+<li>The base folder name for the files</li>
+<li>The number of times to repeat the test</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">The system translates the declared configuration to parameters for the system&#8217;s components.</p>
+</li>
+<li><p class="first">The system builds the components based on the parameters.</p>
+</li>
+<li><p class="first">The system connects to the devices.</p>
+</li>
+<li><p class="first">The system runs throughput to the DUT.</p>
+</li>
+<li><p class="first">The throughput data is saved to a file.</p>
+</li>
+<li><p class="first">The generated logs are put in the data folder.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="alternate-paths">
+<h2>Alternate Paths<a class="headerlink" href="#alternate-paths" title="Permalink to this headline">¶</a></h2>
+<p>2.1. An option error or missing (required) option is detected.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>A <cite>ConfigurationError</cite> is raised.</li>
+<li>A Crash Report is generated.</li>
+<li>The system exits.</li>
+</ol>
+</div></blockquote>
+<p>4.1. The system is unable to connect to a device.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>a <cite>ConnectionError</cite> is raised.</li>
+<li>A Crash Report is generated.</li>
+<li>The system exits.</li>
+</ol>
+</div></blockquote>
+<p>5.1. The test commands detect errors.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>A <cite>CommandError</cite> is raised.</li>
+<li>The <cite>TestOperator</cite> logs the error<ol class="arabic">
+<li>If the error is non-fatal, the operator moves to the next operation</li>
+<li>If the error is fatal, an <cite>OperatorError</cite> is raised.<ol class="arabic">
+<li><cite>Hortator</cite> notes the death of the Operator.</li>
+<li>The Hortator moves on to exhort the next Operator.</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</div></blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Use Case 1</a><ul>
+<li><a class="reference internal" href="#preconditions">Preconditions</a></li>
+<li><a class="reference internal" href="#main-path">Main Path</a></li>
+<li><a class="reference internal" href="#alternate-paths">Alternate Paths</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../../_sources/documentation/developer/design/usecases/usecase1/use_case_1.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

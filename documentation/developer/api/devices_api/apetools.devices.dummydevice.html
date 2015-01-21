@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.devices.dummydevice &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.devices.dummydevice">
+<span id="apetools-devices-dummydevice"></span><h1>apetools.devices.dummydevice<a class="headerlink" href="#module-apetools.devices.dummydevice" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.devices.dummydevice.DummyConnection" title="apetools.devices.dummydevice.DummyConnection"><tt class="xref py py-obj docutils literal"><span class="pre">DummyConnection</span></tt></a>()</td>
+<td>A class to act as a fake connection.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.dummydevice.DummyDevice" title="apetools.devices.dummydevice.DummyDevice"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to configure and query linux devices</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">OutputError</span></tt></td>
+<td>OutputError(output, error)</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.devices.dummydevice.DummyConnection">
+<em class="property">class </em><tt class="descclassname">apetools.devices.dummydevice.</tt><tt class="descname">DummyConnection</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to act as a fake connection.</p>
+<dl class="method">
+<dt id="apetools.devices.dummydevice.DummyConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments</em>, <em>timeout</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyConnection._procedure_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the command and arguments then returns empty strings</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: command to send to the connection</li>
+<li><cite>arguments</cite>: arguments for the command</li>
+<li><cite>timeout</cite>: readline timeout</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError with empty strings as data</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.dummydevice.DummyConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.devices.dummydevice.DummyConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.devices.dummydevice.DummyConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.devices.dummydevice.DummyDevice">
+<em class="property">class </em><tt class="descclassname">apetools.devices.dummydevice.</tt><tt class="descname">DummyDevice</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to configure and query linux devices</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.devices.dummydevice.DummyDevice.disable_wifi">
+<tt class="descname">disable_wifi</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.disable_wifi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.disable_wifi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the fact that this method was called.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.dummydevice.DummyDevice.enable_wifi">
+<tt class="descname">enable_wifi</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.enable_wifi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.enable_wifi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the fact that this method was called</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.dummydevice.DummyDevice.log">
+<tt class="descname">log</tt><big>(</big><em>message</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.log" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>message</cite>: a string to send to the syslog</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">message sent to the syslog</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.dummydevice.DummyDevice.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.address">
+<tt class="descname">address</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the address of the device</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.bssid">
+<tt class="descname">bssid</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.bssid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.bssid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fake Basic service set identification</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.connection">
+<tt class="descname">connection</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.connection" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a Dummy Connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.mac_address">
+<tt class="descname">mac_address</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.mac_address"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.mac_address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the MAC address of the device</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.rssi">
+<tt class="descname">rssi</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.rssi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.rssi" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">rssi from the wifi_query</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.ssid">
+<tt class="descname">ssid</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.ssid"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.ssid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fake identifier for the AP</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.dummydevice.DummyDevice.wifi_info">
+<tt class="descname">wifi_info</tt><a class="reference internal" href="../../../../_modules/apetools/devices/dummydevice.html#DummyDevice.wifi_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.dummydevice.DummyDevice.wifi_info" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a summary string of available wifi info.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/devices_api/apetools.devices.dummydevice.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

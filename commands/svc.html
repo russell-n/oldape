@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SVC &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="apetools.commands.svc.ToggleWifiBase" href="api/apetools.commands.svc.ToggleWifiBase.html" />
+    <link rel="prev" title="apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.svc.ToggleWifiBase.html" title="apetools.commands.svc.ToggleWifiBase"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter.html" title="apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commands</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="svc">
+<h1>SVC<a class="headerlink" href="#svc" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold a front for android&#8217;s <cite>svc</cite> command.</p>
+<div class="section" id="toggle-wifi-base">
+<h2>Toggle WiFi Base<a class="headerlink" href="#toggle-wifi-base" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-6759e3e9b704f419b998e61f2178f67c713a5707.png" alt="BaseClass &lt;|-- ToggleWifiBase" />
+</p>
+<span class="target" id="module-apetools.commands.svc"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.ToggleWifiBase" title="apetools.commands.svc.ToggleWifiBase"><tt class="xref py py-obj docutils literal"><span class="pre">ToggleWifiBase</span></tt></a>([connection,&nbsp;command])</td>
+<td>A callable class to enable or disable wifi</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.ToggleWifiBase.command" title="apetools.commands.svc.ToggleWifiBase.command"><tt class="xref py py-obj docutils literal"><span class="pre">ToggleWifiBase.command</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a command with a <cite>enable_wifi</cite> method</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.svc.ToggleWifiBase.__call__.html#apetools.commands.svc.ToggleWifiBase.__call__" title="apetools.commands.svc.ToggleWifiBase.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">ToggleWifiBase.__call__</span></tt></a>([parameters])</td>
+<td>Calls the command&#8217;s &lt;enable|disable&gt;_wifi method</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="enable-wifi">
+<h2>Enable Wifi<a class="headerlink" href="#enable-wifi" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-2f6aff751f4072ff2c58457b6954ef255cab4523.png" alt="ToggleWifiBase &lt;|-- EnableWifi" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.EnableWifi" title="apetools.commands.svc.EnableWifi"><tt class="xref py py-obj docutils literal"><span class="pre">EnableWifi</span></tt></a>([connection,&nbsp;command])</td>
+<td>A callable class to enable wifi</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.svc.EnableWifi.__call__.html#apetools.commands.svc.EnableWifi.__call__" title="apetools.commands.svc.EnableWifi.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">EnableWifi.__call__</span></tt></a>([parameters])</td>
+<td>Calls the command&#8217;s <cite>enable_wifi</cite> method</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="disable-wifi">
+<h2>Disable Wifi<a class="headerlink" href="#disable-wifi" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-b156373882b7493afba7272694cc40be5e775069.png" alt="ToggleWifiBase &lt;|-- DisableWifi" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.DisableWifi" title="apetools.commands.svc.DisableWifi"><tt class="xref py py-obj docutils literal"><span class="pre">DisableWifi</span></tt></a>([connection,&nbsp;command])</td>
+<td>A callable class to disable wifi</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.svc.DisableWifi.__call__.html#apetools.commands.svc.DisableWifi.__call__" title="apetools.commands.svc.DisableWifi.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">DisableWifi.__call__</span></tt></a>([parameters])</td>
+<td>Calls the command&#8217;s <cite>disable_wifi</cite> method</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h2>SVC<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-6845315287dff19174cddada4fd97b1f72c23d34.png" alt="BaseClass &lt;|-- Svc" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.Svc" title="apetools.commands.svc.Svc"><tt class="xref py py-obj docutils literal"><span class="pre">Svc</span></tt></a>([connection,&nbsp;enable_wifi_command,&nbsp;...])</td>
+<td>The Android&#8217;s SVC command (wifi only).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.Svc.connection" title="apetools.commands.svc.Svc.connection"><tt class="xref py py-obj docutils literal"><span class="pre">Svc.connection</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">connection to the device</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.Svc.call_svc" title="apetools.commands.svc.Svc.call_svc"><tt class="xref py py-obj docutils literal"><span class="pre">Svc.call_svc</span></tt></a>(command)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.Svc.enable_wifi" title="apetools.commands.svc.Svc.enable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">Svc.enable_wifi</span></tt></a>()</td>
+<td>Enable the WiFi radio</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.Svc.disable_wifi" title="apetools.commands.svc.Svc.disable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">Svc.disable_wifi</span></tt></a>()</td>
+<td>Disable the wifi radio</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.svc.html#apetools.commands.svc.Svc.validate" title="apetools.commands.svc.Svc.validate"><tt class="xref py py-obj docutils literal"><span class="pre">Svc.validate</span></tt></a>(output,&nbsp;subcommand)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">raise:</th><td class="field-body">CommandError if there is an error in the output</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">SVC</a><ul>
+<li><a class="reference internal" href="#toggle-wifi-base">Toggle WiFi Base</a></li>
+<li><a class="reference internal" href="#enable-wifi">Enable Wifi</a></li>
+<li><a class="reference internal" href="#disable-wifi">Disable Wifi</a></li>
+<li><a class="reference internal" href="#id1">SVC</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commands/svc.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

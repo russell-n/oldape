@@ -1,0 +1,645 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>rotation_table.base_arguments &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for rotation_table.base_arguments</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;rotate (a turntable controller)</span>
+
+<span class="sd">Usage: rotate -h | -v</span>
+<span class="sd">       rotate [options] &lt;angle&gt;</span>
+<span class="sd">       </span>
+<span class="sd">Help Options:</span>
+
+<span class="sd">    -h, --help     Display this help message and quit.</span>
+<span class="sd">    -v, --version  Display the version number and quit.</span>
+
+<span class="sd">Configuration File:</span>
+
+<span class="sd">    --configuration=&lt;path&gt;  Path to (optional) configuration file.</span>
+<span class="sd">    --section=&lt;section&gt;     Section name in configuration file [default: rotator]</span>
+
+<span class="sd">Logging Options:</span>
+
+<span class="sd">    --debug   Set logging level to DEBUG.</span>
+<span class="sd">    --silent  Set logging level to ERROR.</span>
+
+<span class="sd">Debugging Options:</span>
+
+<span class="sd">    --pudb       Enable the `pudb` debugger (if installed)</span>
+<span class="sd">    --pdb        Enable the `pdb` (python&#39;s default) debugger</span>
+
+<span class="sd">Orientation Options:</span>
+
+<span class="sd">    -k --clockwise     Rotate clockwise instead of anti-clockwise</span>
+
+<span class="sd">Test Options:</span>
+
+<span class="sd">    --test   Use a Mock Rotator to check the arguments</span>
+<span class="sd">    --crash  Make the MockRotator raise an exception</span>
+
+<span class="sd">Rotation Arguments:</span>
+
+<span class="sd">    -r, --velocity=&lt;rate&gt;           Rate at which to rotate (from 1.512 to 720) [default: 50].</span>
+<span class="sd">    -a, --acceleration=&lt;accel&gt;      Rate at which to accelerate to velocity (0.167 to 5461.167) [default: 100].</span>
+<span class="sd">    -d, --deceleration=&lt;decel&gt;      Rate at which to decelerate to stop (0.167 to 5461.167) [default: 100].</span>
+<span class="sd">    -t, --timeout=&lt;seconds&gt;         Time to wait for table to reach target angle [default: 10]</span>
+<span class="sd">    &lt;angle&gt;                         Angle to rotate table to (0 to 359) [default: 0].</span>
+
+<span class="sd">Set Table Angle:</span>
+<span class="sd">    The table doesn&#39;t have a sensor to tell it where it&#39;s at when it&#39;s turned on.</span>
+<span class="sd">    Whenever it is powered up, you should tell it what angle it&#39;s at.</span>
+
+<span class="sd">    --set  If set, calls set_angle instead of rotate function</span>
+<span class="sd">&quot;&quot;&quot;</span>     
+
+
+<span class="c"># python standard library</span>
+<span class="kn">from</span> <span class="nn">argparse</span> <span class="kn">import</span> <span class="n">ArgumentParser</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="c"># third-party</span>
+<span class="kn">from</span> <span class="nn">schema</span> <span class="kn">import</span> <span class="n">Schema</span><span class="p">,</span> <span class="n">Or</span><span class="p">,</span> <span class="n">And</span><span class="p">,</span> <span class="n">Use</span><span class="p">,</span> <span class="n">SchemaError</span>
+
+<span class="c"># this package</span>
+<span class="kn">from</span> <span class="nn">rotation_table</span> <span class="kn">import</span> <span class="n">VERSION</span><span class="p">,</span> <span class="n">BaseClass</span>
+
+
+<span class="n">DEGREES_IN_CIRCLE</span> <span class="o">=</span> <span class="mi">360</span>
+
+<span class="c"># from ht.cfg [rotator]</span>
+<span class="n">MIN_ACCELERATION</span> <span class="o">=</span> <span class="mf">0.167</span>
+<span class="n">MAX_ACCELERATION</span> <span class="o">=</span> <span class="mf">5461.167</span>
+
+<span class="c"># calculated from the ht.cfg velocity range</span>
+<span class="n">MIN_VELOCITY</span> <span class="o">=</span> <span class="mf">1.512</span>
+<span class="n">MAX_VELOCITY</span> <span class="o">=</span> <span class="mi">720</span>
+
+
+<span class="k">class</span> <span class="nc">ArgumentsConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Constants for the arguments</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="c">#options</span>
+    <span class="n">acceleration</span> <span class="o">=</span> <span class="s">&quot;--acceleration&quot;</span>    
+    <span class="n">angle</span> <span class="o">=</span> <span class="s">&quot;&lt;angle&gt;&quot;</span>
+    <span class="n">clockwise</span> <span class="o">=</span> <span class="s">&quot;--clockwise&quot;</span>
+    <span class="n">configuration</span> <span class="o">=</span> <span class="s">&#39;--configuration&#39;</span>
+    <span class="n">crash</span> <span class="o">=</span> <span class="s">&#39;--crash&#39;</span>
+    <span class="n">debug</span> <span class="o">=</span> <span class="s">&quot;--debug&quot;</span>
+    <span class="n">deceleration</span> <span class="o">=</span> <span class="s">&#39;--deceleration&#39;</span>
+    <span class="n">pdb</span> <span class="o">=</span> <span class="s">&#39;--pdb&#39;</span>
+    <span class="n">pudb</span> <span class="o">=</span> <span class="s">&quot;--pudb&quot;</span>
+    <span class="n">section</span> <span class="o">=</span> <span class="s">&#39;--section&#39;</span>
+    <span class="n">set_option</span> <span class="o">=</span> <span class="s">&#39;--set&#39;</span>
+    <span class="n">silent</span> <span class="o">=</span> <span class="s">&#39;--silent&#39;</span>
+    <span class="n">velocity</span> <span class="o">=</span> <span class="s">&#39;--velocity&#39;</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="s">&#39;--timeout&#39;</span>
+
+    <span class="c">#defaults</span>
+    <span class="n">default_configuration</span> <span class="o">=</span> <span class="s">&quot;rotator.ini&quot;</span>
+    <span class="n">default_angle</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">default_section</span> <span class="o">=</span> <span class="s">&#39;rotator&#39;</span>
+    <span class="n">default_velocity</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">default_timeout</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">default_acceleration</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">default_deceleration</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="c"># end ArgumentConstants    </span>
+
+
+<span class="n">args_schema</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+<span class="n">acceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">acceleration</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">acceleration</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s">&#39;acceleration must be float&#39;</span><span class="p">),</span>
+                                       <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">,</span>
+                                       <span class="n">error</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;acceleration out of range: &quot;</span>
+                                              <span class="s">&quot;({0} &lt;= accel &lt;= {1})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_ACCELERATION</span><span class="p">,</span>
+                                                                              <span class="n">MAX_ACCELERATION</span><span class="p">)))</span>
+
+
+<span class="n">deceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">deceleration</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">deceleration</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s">&#39;deceleration must be float&#39;</span><span class="p">),</span>
+                                       <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">,</span>
+                                       <span class="n">error</span><span class="o">=</span><span class="p">(</span><span class="s">&quot;deceleration out of range: &quot;</span>
+                                              <span class="s">&quot;({0} &lt;= accel &lt;= {1})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_ACCELERATION</span><span class="p">,</span>
+                                                                              <span class="n">MAX_ACCELERATION</span><span class="p">)))</span>
+
+
+<span class="n">angle</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">angle</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>
+                                    <span class="n">error</span><span class="o">=</span><span class="s">&#39;Angle must be an integer&#39;</span><span class="p">),</span>
+                                <span class="n">Use</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">%</span> <span class="n">DEGREES_IN_CIRCLE</span><span class="p">)))</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__builtin__&#39;</span><span class="p">:</span>
+    <span class="k">print</span> <span class="s">&quot;.. csv-table:: Modulo Example&quot;</span>
+    <span class="k">print</span> <span class="s">&quot;   :header: Angle, Angle % 360</span><span class="se">\n</span><span class="s">&quot;</span>
+    <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">360</span><span class="p">,</span> <span class="o">-</span><span class="mi">45</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;   {0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">angle</span> <span class="o">%</span> <span class="mi">360</span><span class="p">)</span>
+
+
+<span class="n">velocity</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">velocity</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">velocity</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span>
+                                       <span class="n">error</span><span class="o">=</span><span class="s">&quot;&#39;velocity&#39; must be a real number&quot;</span><span class="p">),</span>
+                                        <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">MIN_VELOCITY</span> <span class="o">&lt;=</span> <span class="n">v</span> <span class="o">&lt;=</span> <span class="n">MAX_VELOCITY</span><span class="p">,</span>
+                                        <span class="n">error</span><span class="o">=</span><span class="s">&quot;velocity out of range ({0} &lt;= v &lt; {1})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_VELOCITY</span><span class="p">,</span>
+                                                                                             <span class="n">MAX_VELOCITY</span> <span class="p">)))</span>
+
+
+<span class="n">config</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">configuration</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">config</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
+                                <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
+                                <span class="n">error</span><span class="o">=</span><span class="s">&quot;File not found&quot;</span><span class="p">))</span>
+
+
+<span class="n">timeout</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">timeout</span>
+<span class="n">args_schema</span><span class="p">[</span><span class="n">timeout</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
+                                  <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span>
+                                  <span class="n">error</span><span class="o">=</span><span class="s">&#39;timeout must be a non-negative float&#39;</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">ArgumentError</span><span class="p">(</span><span class="n">SchemaError</span><span class="p">):</span>
+<div class="viewcode-block" id="ArgumentError"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.ArgumentError.html#rotation_table.base_arguments.ArgumentError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Error to raise if the schema validation fails</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">BaseArguments</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BaseArguments"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.html#rotation_table.base_arguments.BaseArguments">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.__init__"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.html#rotation_table.base_arguments.BaseArguments.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        BaseArguments constructor</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `args`: list of arguments for ArgumentParser</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BaseArguments</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_debug</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_silent</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pudb</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pdb</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_section</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_velocity</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clockwise</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deceleration</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_test</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_crash</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_boolean_options</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_value_options</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">value_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.value_options"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.value_options.html#rotation_table.base_arguments.BaseArguments.value_options">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of value-option names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_options</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_value_options</span> <span class="o">=</span> <span class="p">[</span><span class="n">option</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+                                   <span class="k">if</span> <span class="n">option</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">boolean_options</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_value_options</span>                                   
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">boolean_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.boolean_options"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.boolean_options.html#rotation_table.base_arguments.BaseArguments.boolean_options">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: List of boolean-option names</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boolean_options</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_boolean_options</span> <span class="o">=</span> <span class="p">[</span><span class="n">option</span> <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">options</span>
+                                     <span class="k">if</span> <span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">True</span> <span class="ow">or</span>
+                                         <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span> <span class="ow">is</span> <span class="bp">False</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_boolean_options</span>                                         
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.options"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.options.html#rotation_table.base_arguments.BaseArguments.options">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of options</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_options</span> <span class="o">=</span> <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_options</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">crash</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.crash"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.crash.html#rotation_table.base_arguments.BaseArguments.crash">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: --crash option</span>
+<span class="sd">        :rtype: boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crash</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_crash</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">crash</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crash</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.test"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.test.html#rotation_table.base_arguments.BaseArguments.test">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: --test option</span>
+<span class="sd">        :rtype: bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">test</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_test</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.timeout"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.timeout.html#rotation_table.base_arguments.BaseArguments.timeout">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The time (seconds) to wait for the table to reach position</span>
+
+<span class="sd">        :rtype: float</span>
+<span class="sd">        :return: argument for Rotator.waitForPosition</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">validate</span> <span class="o">=</span> <span class="n">args_schema</span><span class="p">[</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">timeout</span><span class="p">]</span><span class="o">.</span><span class="n">validate</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="n">autos</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                    <span class="n">errors</span><span class="o">=</span><span class="s">&quot;Invalid Timeout: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">timeout</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.parser"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.parser.html#rotation_table.base_arguments.BaseArguments.parser">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        ArgParse argument parser</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">ArgumentParser</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">&#39;A turntable control&#39;</span><span class="p">,</span>
+                                          <span class="n">version</span><span class="o">=</span><span class="n">VERSION</span><span class="p">)</span>
+            <span class="n">log_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
+            <span class="n">log_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--debug&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span>
+                                   <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;Change logging to DEBUG level (noisier).&#39;</span><span class="p">)</span>
+            <span class="n">log_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--silent&quot;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span>
+                                   <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Change logging to ERROR level (quieter).&quot;</span><span class="p">)</span>
+
+            <span class="n">debugger_group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_mutually_exclusive_group</span><span class="p">()</span>
+            <span class="n">debugger_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--pudb&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span>
+                                        <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;Enable pudb debugger&#39;</span><span class="p">)</span>
+            <span class="n">debugger_group</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--pdb&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                                        <span class="n">help</span><span class="o">=</span><span class="s">&#39;Enable pdb debugger&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--configuration&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&#39;Path to configuration file to override table defaults&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--section&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;rotator&#39;</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;Section name within config file with values (default=</span><span class="si">%(default)s</span><span class="s">)&#39;</span><span class="p">)</span>
+                                      
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-r&#39;</span><span class="p">,</span> <span class="s">&#39;--velocity&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">default_velocity</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;velocity (rate) at which to spin table (1.512 to 720 deg/second) (default=</span><span class="si">%(default)s</span><span class="s">)&#39;</span><span class="p">)</span>
+                                      
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-a&#39;</span><span class="p">,</span> <span class="s">&#39;--acceleration&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">default_acceleration</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;Rate at which to speed up to velocity (0.167 to 5,461.176).&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-d&#39;</span><span class="p">,</span> <span class="s">&#39;--deceleration&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">default_deceleration</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span>
+                                      
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;Rate at which to slow down to 0 (0.167 to 5,461.176).&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-k&#39;</span><span class="p">,</span> <span class="s">&#39;--clockwise&#39;</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;spin clockwise instead of anti-clockwise (the default)&#39;</span><span class="p">,</span>
+                                      <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;angle&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">default_angle</span><span class="p">,</span>
+                                      <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">nargs</span><span class="o">=</span><span class="s">&#39;?&#39;</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;Angle to rotate to in degrees (default=</span><span class="si">%(default)s</span><span class="s">)&#39;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--set&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span>
+                                      <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&quot;Tell the table its current angle instead of rotating (to zero it out when it&#39;s turned on).&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-t&quot;</span><span class="p">,</span> <span class="s">&#39;--timeout&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">default_timeout</span><span class="p">,</span>
+                                      <span class="nb">type</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Seconds to wait for table to reach position (default=</span><span class="si">%(default)s</span><span class="s">)&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--test&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&quot;Use Mock Rotator to test the configuration&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;--crash&#39;</span><span class="p">,</span> <span class="n">action</span><span class="o">=</span><span class="s">&#39;store_true&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                                      <span class="n">help</span><span class="o">=</span><span class="s">&#39;Tell the MockRotator to raise an Exception&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span>
+        
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">deceleration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.deceleration"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.deceleration.html#rotation_table.base_arguments.BaseArguments.deceleration">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The turntable&#39;s deceleration</span>
+
+<span class="sd">        :return: steps/second/second (default None)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deceleration</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">validate</span> <span class="o">=</span> <span class="n">args_schema</span><span class="p">[</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">deceleration</span><span class="p">]</span><span class="o">.</span><span class="n">validate</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_deceleration</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">deceleration</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="n">autos</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                    <span class="n">errors</span><span class="o">=</span><span class="s">&quot;Invalid Deceleration: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">deceleration</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_deceleration</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">acceleration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.acceleration"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.acceleration.html#rotation_table.base_arguments.BaseArguments.acceleration">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The turntable acceleration</span>
+
+<span class="sd">        :return: steps/second/second (default None)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">validate</span> <span class="o">=</span> <span class="n">args_schema</span><span class="p">[</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">acceleration</span><span class="p">]</span><span class="o">.</span><span class="n">validate</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">acceleration</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="n">errors</span><span class="o">=</span><span class="s">&quot;Invalid Acceleration: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">acceleration</span><span class="p">),</span>
+                                    <span class="n">autos</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+                
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">angle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.angle"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.angle.html#rotation_table.base_arguments.BaseArguments.angle">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The angle to rotate to (converts to anticlockwise if --clockwise not set)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">validate</span> <span class="o">=</span> <span class="n">args_schema</span><span class="p">[</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">angle</span><span class="p">]</span><span class="o">.</span><span class="n">validate</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">angle</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">adjust_angle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_angle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">clockwise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.clockwise"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.clockwise.html#rotation_table.base_arguments.BaseArguments.clockwise">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Flag to indicate clockwise rotation instead of anti-clockwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clockwise</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_clockwise</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">clockwise</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clockwise</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.set"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.set.html#rotation_table.base_arguments.BaseArguments.set">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        if true, set the table&#39;s current angle instead of rotating</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">set</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_set</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.velocity"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.velocity.html#rotation_table.base_arguments.BaseArguments.velocity">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The rate at which to spin (from 20 to 720 Degrees/Revolution)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_velocity</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">validate</span> <span class="o">=</span> <span class="n">args_schema</span><span class="p">[</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">velocity</span><span class="p">]</span><span class="o">.</span><span class="n">validate</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_velocity</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">velocity</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="n">errors</span><span class="o">=</span><span class="s">&quot;Invalid Velocity: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">velocity</span><span class="p">),</span>
+                                    <span class="n">autos</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+                <span class="k">raise</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_velocity</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">section</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.section"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.section.html#rotation_table.base_arguments.BaseArguments.section">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The configuration section name with rotator settings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_section</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_section</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">section</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_section</span>    
+
+    <span class="k">def</span> <span class="nf">adjust_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BaseArguments.adjust_angle"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.adjust_angle.html#rotation_table.base_arguments.BaseArguments.adjust_angle">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks if the &#39;clockwise&#39; flag set, converts to anticlockwise if not</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `angle`: angle in degrees to convert (if needed)</span>
+
+<span class="sd">        :return: angle</span>
+<span class="sd">        :rtype: IntegerType</span>
+<span class="sd">        :raise: TypeError if angle can&#39;t be cast to an integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># the previous turntable used anti-clockwise rotation</span>
+        <span class="c"># and Henry asked that this be made the default</span>
+        <span class="c"># so this will only turn clockwise if explicitly asked</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">clockwise</span><span class="p">:</span>
+            <span class="c"># if angle is 0 it needs to be modded to avoid 360</span>
+            <span class="n">angle</span> <span class="o">=</span> <span class="p">(</span><span class="n">DEGREES_IN_CIRCLE</span> <span class="o">-</span> <span class="n">angle</span><span class="p">)</span> <span class="o">%</span> <span class="n">DEGREES_IN_CIRCLE</span>
+        <span class="k">return</span> <span class="n">angle</span>
+        
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">configuration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.configuration"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.configuration.html#rotation_table.base_arguments.BaseArguments.configuration">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Path to the configuration file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">validate</span> <span class="o">=</span> <span class="n">args_schema</span><span class="p">[</span><span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">configuration</span><span class="p">]</span><span class="o">.</span><span class="n">validate</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">configuration</span><span class="p">)</span>
+            <span class="k">except</span> <span class="n">SchemaError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="n">ArgumentError</span><span class="p">(</span><span class="n">autos</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                    <span class="n">errors</span><span class="o">=</span><span class="s">&quot;Invalid Configuration File Path: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">configuration</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="c"># use the file in this package</span>
+                <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s">&#39;rotation_table&#39;</span><span class="p">)</span>
+                <span class="n">path_to_module</span> <span class="o">=</span> <span class="n">module</span><span class="o">.</span><span class="n">__path__</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_to_module</span><span class="p">,</span>
+                                                   <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">default_configuration</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span>
+        
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.arguments"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.arguments.html#rotation_table.base_arguments.BaseArguments.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Namespace of parsed arguments</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">debug</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.debug"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.debug.html#rotation_table.base_arguments.BaseArguments.debug">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Option to change logging level to debug</span>
+
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_debug</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_debug</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">debug</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_debug</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">silent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.silent"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.silent.html#rotation_table.base_arguments.BaseArguments.silent">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Option to change logging level to error</span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_silent</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_silent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">silent</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_silent</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">pudb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.pudb"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.pudb.html#rotation_table.base_arguments.BaseArguments.pudb">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Option to enable pudb debugger</span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pudb</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pudb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">pudb</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pudb</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">pdb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="BaseArguments.pdb"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.pdb.html#rotation_table.base_arguments.BaseArguments.pdb">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Option to enable the python debugger</span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdb</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pdb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="o">.</span><span class="n">pdb</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdb</span>
+
+    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BaseArguments.reset"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.reset.html#rotation_table.base_arguments.BaseArguments.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        resets the properties to None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_angle</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clockwise</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_configuration</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_debug</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_deceleration</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pdb</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pudb</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_section</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_silent</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_velocity</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">check_rep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BaseArguments.check_rep"><a class="viewcode-back" href="../../commands/api/rotation_table.base_arguments.BaseArguments.check_rep.html#rotation_table.base_arguments.BaseArguments.check_rep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        tries to get all the parameters (relies on the validators)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">attributes</span><span class="o">=</span> <span class="p">(</span><span class="s">&quot;acceleration angle clockwise configuration&quot;</span>
+                     <span class="s">&quot; debug deceleration pdb pudb section set &quot;</span>
+                     <span class="s">&quot;silent timeout velocity&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">attribute</span> <span class="ow">in</span> <span class="n">attributes</span><span class="p">:</span>
+            <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attribute</span><span class="p">)</span>
+<span class="c"># end class BaseArguments    </span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

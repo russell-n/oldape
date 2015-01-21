@@ -1,0 +1,283 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Network Topology &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
+    <link rel="next" title="PowerOn Configuration" href="poweron.html" />
+    <link rel="prev" title="Iperf Configuration" href="iperf.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="poweron.html" title="PowerOn Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="iperf.html" title="Iperf Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Old Ape&#8217;s User Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-network-topology">
+<h1>The Network Topology<a class="headerlink" href="#the-network-topology" title="Permalink to this headline">¶</a></h1>
+<p>This is an abstracted map of the network:</p>
+<p class="graphviz">
+<img src="../../_images/graphviz-b2af5402743b36d366cc93bbbc9c04de41fcfa06.png" alt="digraph BaseTopology {
+C -&gt; N
+C -&gt; T
+N -&gt; A [style=&quot;dotted&quot;, dir=&quot;both&quot;]
+A -&gt; T [dir=&quot;both&quot;]
+}" />
+</p>
+<table border="1" class="docutils">
+<caption>Base Legend</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Label</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>C</strong></td>
+<td>the <em>Control PC</em> (where the <em>ape</em> is run and the configuration file is located)</td>
+</tr>
+<tr class="row-odd"><td><strong>N</strong></td>
+<td>a <em>Node</em> (e.g. a tablet or PC configured in the <a class="reference internal" href="configuration_file.html#node-configuration"><em>NODES</em></a> section)</td>
+</tr>
+<tr class="row-even"><td><strong>T</strong></td>
+<td>the <em>Traffic PC</em> (used to generate traffic configured in the <a class="reference internal" href="configuration_file.html#traffic-pc"><em>TRAFFIC_PC</em></a> section)</td>
+</tr>
+<tr class="row-odd"><td><strong>A</strong></td>
+<td>The Wireless Access Point</td>
+</tr>
+<tr class="row-even"><td>&#8211;</td>
+<td>Cabled Ethernet connection</td>
+</tr>
+<tr class="row-odd"><td>. .</td>
+<td>Wireless Ethernet connection</td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="adding-rotation">
+<h2>Adding Rotation<a class="headerlink" href="#adding-rotation" title="Permalink to this headline">¶</a></h2>
+<p>To add rotations the topology is extended:</p>
+<p class="graphviz">
+<img src="../../_images/graphviz-b941479c0980a306253b57f67f87f50a942868b1.png" alt="digraph RotationTopology {
+C -&gt; N
+C -&gt; T
+C -&gt; R
+N -&gt; A [style=&quot;dotted&quot;, dir=&quot;both&quot;]
+A -&gt; T [dir=&quot;both&quot;]
+}" />
+</p>
+<table border="1" class="docutils">
+<caption>Rotation Legend</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Label</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>C</strong></td>
+<td>the <em>Control PC</em> (where the <em>ape</em> is run and the config-file is located)</td>
+</tr>
+<tr class="row-odd"><td><strong>N</strong></td>
+<td>a <em>Node</em> (e.g. a tablet or PC configured in the <a class="reference internal" href="configuration_file.html#node-configuration"><em>NODES</em></a> section)</td>
+</tr>
+<tr class="row-even"><td><strong>T</strong></td>
+<td>the <em>Traffic PC</em> (used to generate traffic configured in the <a class="reference internal" href="configuration_file.html#traffic-pc"><em>TRAFFIC_PC</em></a> section)</td>
+</tr>
+<tr class="row-odd"><td><strong>R</strong></td>
+<td>The <em>Rotation Control</em> (PC attached to the turntable configured in the <a class="reference internal" href="rotate.html#id1"><em>ROTATE</em></a> section)</td>
+</tr>
+<tr class="row-even"><td><strong>A</strong></td>
+<td>Wireless Access Point</td>
+</tr>
+<tr class="row-odd"><td>&#8211;</td>
+<td>Cabled Ethernet connection</td>
+</tr>
+<tr class="row-even"><td>. .</td>
+<td>Wireless Ethernet connection</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="adding-power-switching">
+<h2>Adding Power-Switching<a class="headerlink" href="#adding-power-switching" title="Permalink to this headline">¶</a></h2>
+<p>To add power-switching the topology is extended:</p>
+<p class="graphviz">
+<img src="../../_images/graphviz-60105879895573ba96699921f9f1054aad3cd7ff.png" alt="digraph RotationTopology {
+C -&gt; N
+C -&gt; T
+C -&gt; R
+C -&gt; P
+N -&gt; A [style=&quot;dotted&quot;, dir=&quot;both&quot;]
+A -&gt; T [dir=&quot;both&quot;]
+}" />
+</p>
+<table border="1" class="docutils">
+<caption>Rotation Legend</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Label</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><strong>C</strong></td>
+<td>the <em>Control PC</em> (where the <em>ape</em> is run and the config-file is located)</td>
+</tr>
+<tr class="row-odd"><td><strong>N</strong></td>
+<td>a <em>Node</em> (e.g. a tablet or PC configured in the <a class="reference internal" href="configuration_file.html#node-configuration"><em>NODES</em></a> section)</td>
+</tr>
+<tr class="row-even"><td><strong>T</strong></td>
+<td>the <em>Traffic PC</em> (used to generate traffic configured in the <a class="reference internal" href="configuration_file.html#traffic-pc"><em>TRAFFIC_PC</em></a> section)</td>
+</tr>
+<tr class="row-odd"><td><strong>R</strong></td>
+<td>The <em>Rotation Control</em> (PC attached to the turntable configured in the <a class="reference internal" href="rotate.html#id1"><em>ROTATE</em></a> section)</td>
+</tr>
+<tr class="row-even"><td><strong>P</strong></td>
+<td>set of <em>Power Switches</em> (configured in the <a class="reference internal" href="poweron.html#id1"><em>POWERON</em></a>)</td>
+</tr>
+<tr class="row-odd"><td><strong>A</strong></td>
+<td>Wireless Access point</td>
+</tr>
+<tr class="row-even"><td>&#8211;</td>
+<td>Cabled Ethernet connection</td>
+</tr>
+<tr class="row-odd"><td>. .</td>
+<td>Wireless Ethernet connection</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Network Topology</a><ul>
+<li><a class="reference internal" href="#adding-rotation">Adding Rotation</a></li>
+<li><a class="reference internal" href="#adding-power-switching">Adding Power-Switching</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/documentation/user/network_topology.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

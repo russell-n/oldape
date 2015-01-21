@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Ping Command &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="apetools.commands.ping.PingData" href="api/apetools.commands.ping.PingData.html" />
+    <link rel="prev" title="apetools.commands.oscillate.OscillateStop.__call__" href="api/apetools.commands.oscillate.OscillateStop.__call__.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.ping.PingData.html" title="apetools.commands.ping.PingData"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.oscillate.OscillateStop.__call__.html" title="apetools.commands.oscillate.OscillateStop.__call__"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commands</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-ping-command">
+<h1>The Ping Command<a class="headerlink" href="#the-ping-command" title="Permalink to this headline">¶</a></h1>
+<p>A Ping command pings and checks the response.</p>
+<div class="section" id="the-pingdata">
+<h2>The PingData<a class="headerlink" href="#the-pingdata" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>PingData</cite> class is a namedtuple that holds the address that was pinged and the round-trip time for the ping.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.ping.PingData.html#apetools.commands.ping.PingData" title="apetools.commands.ping.PingData"><tt class="xref py py-obj docutils literal"><span class="pre">PingData</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-c064bafe391721aa907502eb5b90b02f7fe1bc6a.png" alt="PingData -|&gt; collections.namedtuple
+PingData : target
+PingData : rtt
+PingData : __str__()" />
+</p>
+</div>
+<div class="section" id="pingarguments">
+<h2>PingArguments<a class="headerlink" href="#pingarguments" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>PingArguments</cite> class holds string constants for the ping-command.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-7dddd3d6b1ff12e117f83b1cf398ce6ae9964afa.png" alt="PingArguments : arguments" />
+</p>
+<p>The keys to the <cite>arguments</cite> dictionary are the values in <cite>apetools.commons.enumerations.OperatingSystem</cite>.</p>
+<p>Example Use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ping_args</span> <span class="o">=</span> <span class="n">PingArguments</span><span class="o">.</span><span class="n">arguments</span><span class="p">[</span><span class="s">&#39;android&#39;</span><span class="p">]</span>  <span class="o">+</span> <span class="s">&#39;192.168.10.12&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-pingcommand">
+<h2>The PingCommand<a class="headerlink" href="#the-pingcommand" title="Permalink to this headline">¶</a></h2>
+<p>The <cite>PingCommand</cite> issues the ping command and checks the outcome</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ping.html#apetools.commands.ping.PingCommand" title="apetools.commands.ping.PingCommand"><tt class="xref py py-obj docutils literal"><span class="pre">PingCommand</span></tt></a>([target,&nbsp;connection,&nbsp;...])</td>
+<td>A ping is a simple ping-command.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ping.html#apetools.commands.ping.PingCommand.arguments" title="apetools.commands.ping.PingCommand.arguments"><tt class="xref py py-obj docutils literal"><span class="pre">PingCommand.arguments</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">The ping arguments to use</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ping.html#apetools.commands.ping.PingCommand.expression" title="apetools.commands.ping.PingCommand.expression"><tt class="xref py py-obj docutils literal"><span class="pre">PingCommand.expression</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression matching a successful ping.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ping.html#apetools.commands.ping.PingCommand.run" title="apetools.commands.ping.PingCommand.run"><tt class="xref py py-obj docutils literal"><span class="pre">PingCommand.run</span></tt></a>([target])</td>
+<td>Executes a single ping, checks for a success, returns ping data if it succeeds.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.ping.PingCommand.__call__.html#apetools.commands.ping.PingCommand.__call__" title="apetools.commands.ping.PingCommand.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">PingCommand.__call__</span></tt></a>(target,&nbsp;connection)</td>
+<td>Executes a single ping, checks for a success, returns ping data if it succeeds.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-1b113ac4824a9b9467b0dff2a746a9bcc155c469.png" alt="BaseClass &lt;|-- PingCommand" />
+</p>
+<p>Example Use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ping</span> <span class="o">=</span> <span class="n">PingCommand</span><span class="p">(</span><span class="s">&#39;192.168.20.1&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">ping</span><span class="o">.</span><span class="n">run</span><span class="p">())</span>
+
+<span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&#39;192.168.10.23&#39;</span><span class="p">,</span> <span class="s">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="s">&quot;192.168.30.1&quot;</span>
+<span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">ping</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">connection</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Ping Command</a><ul>
+<li><a class="reference internal" href="#the-pingdata">The PingData</a></li>
+<li><a class="reference internal" href="#pingarguments">PingArguments</a></li>
+<li><a class="reference internal" href="#the-pingcommand">The PingCommand</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commands/ping.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

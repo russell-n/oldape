@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.parameters.iperf_client_parameters &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.parameters.iperf_client_parameters</h1><div class="highlight"><pre>
+<span class="c">#python</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">BooleanType</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c"># apetools</span>
+<span class="kn">from</span> <span class="nn">iperf_common_tcp_parameters</span> <span class="kn">import</span> <span class="n">IperfCommonTcpParameters</span>
+<span class="kn">from</span> <span class="nn">iperf_common_parameters</span> <span class="kn">import</span> <span class="n">VALID_BUFFER_LENGTHS</span> <span class="k">as</span> <span class="n">VALID_BYTES</span>
+<span class="kn">from</span> <span class="nn">iperf_common_parameters</span> <span class="kn">import</span> <span class="n">MAXIMUM_PORT</span><span class="p">,</span> <span class="n">MINIMUM_PORT</span><span class="p">,</span> <span class="n">LOWEST_PORT</span><span class="p">,</span> <span class="n">IperfParametersEnum</span>
+
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span><span class="p">,</span> <span class="n">expressions</span>
+
+
+<span class="n">ConfigurationError</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span>
+
+<span class="n">VALID_TIME_INTEGER</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">INTEGER</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">WORD_ENDING</span> <span class="o">+</span>
+                                <span class="n">expressions</span><span class="o">.</span><span class="n">SPACES_OPTIONAL</span> <span class="o">+</span>
+                                <span class="n">expressions</span><span class="o">.</span><span class="n">LINE_ENDING</span><span class="p">)</span>
+<span class="n">VALID_TIME_FLOAT</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">FLOAT</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">WORD_ENDING</span> <span class="o">+</span>
+                              <span class="n">expressions</span><span class="o">.</span><span class="n">SPACES_OPTIONAL</span><span class="o">+</span>
+                              <span class="n">expressions</span><span class="o">.</span><span class="n">LINE_ENDING</span><span class="p">)</span>
+
+<span class="n">VALID_BANDWIDTHS</span> <span class="o">=</span> <span class="n">VALID_BYTES</span>
+
+<span class="n">SPACE</span> <span class="o">=</span> <span class="s">&#39; &#39;</span>
+
+
+<span class="k">class</span> <span class="nc">IperfTcpClientParameters</span><span class="p">(</span><span class="n">IperfCommonTcpParameters</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    IperfTcpClientParameters holds parameters used by Iperf TCP clients</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.__init__"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">IperfTcpClientParameters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_attributes</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dualtest</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fileinput</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="c">#self._linux_congestion = None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_listenport</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parallel</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="c">#self._stdin = None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_tradeoff</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ttl</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_attributes</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: client flag (-c &lt;hostname&gt;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
+
+    <span class="nd">@client.setter</span>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.client"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.client.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `hostname`: The hostname of the server</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">((</span><span class="n">hostname</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">,</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">hostname</span><span class="p">),</span> <span class="n">SPACE</span> <span class="ow">in</span> <span class="n">hostname</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Invalid hostname: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hostname</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="s">&quot;--client {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hostname</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">dualtest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The dualtest flag (-d)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dualtest</span>
+
+    <span class="nd">@dualtest.setter</span>
+    <span class="k">def</span> <span class="nf">dualtest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_dualtest</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.dualtest"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.dualtest.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.dualtest">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `set_dualtest`: A boolean which if True sets the dualtest flag</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">set_dualtest</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">BooleanType</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;set_dualtest must be boolean, not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_dualtest</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">set_dualtest</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_dualtest</span> <span class="o">=</span> <span class="s">&quot;--dualtest&quot;</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">fileinput</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: &#39;--fileinput &lt;filename&gt;&#39; </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fileinput</span>
+
+    <span class="nd">@fileinput.setter</span>
+    <span class="k">def</span> <span class="nf">fileinput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.fileinput"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.fileinput.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.fileinput">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `filename`: The name of the file to use as input</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">SPACE</span> <span class="ow">in</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;No spaces allowed in filename - {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fileinput</span> <span class="o">=</span> <span class="s">&quot;--fileinput {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">listenport</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The listenport flag (-L &lt;port&gt;)  </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_listenport</span>
+
+    <span class="nd">@listenport.setter</span>
+    <span class="k">def</span> <span class="nf">listenport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.listenport"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.listenport.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.listenport">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `port`: A network port to listen on for bidirectional test.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;{0} not castable to an integer&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">MAXIMUM_PORT</span> <span class="o">&lt;</span> <span class="n">port</span> <span class="ow">or</span> <span class="n">port</span> <span class="o">&lt;</span> <span class="n">MINIMUM_PORT</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;{0} outside of valid port range ({1} to {2})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">MINIMUM_PORT</span><span class="p">,</span> <span class="n">MAXIMUM_PORT</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">port</span> <span class="o">&lt;</span> <span class="n">LOWEST_PORT</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;{0} is within the well-known ports range ({1} to {2})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">MINIMUM_PORT</span><span class="p">,</span> <span class="n">LOWEST_PORT</span><span class="p">))</span>
+            
+        <span class="bp">self</span><span class="o">.</span><span class="n">_listenport</span> <span class="o">=</span> <span class="s">&quot;--listenport {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">port</span><span class="p">))</span>
+        <span class="k">return</span> 
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">num</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The number of bytes to send flag (-n &lt;bytes&gt;[KM])</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_num</span>
+
+    <span class="nd">@num.setter</span>
+    <span class="k">def</span> <span class="nf">num</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.num"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.num.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.num">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `num_bytes`: Number of bytes to send</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">VALID_BYTES</span><span class="p">,</span> <span class="n">num_bytes</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;num_bytes must be formatted n[KM], not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_num</span> <span class="o">=</span> <span class="s">&quot;--num {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">num_bytes</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The time flag (-t &lt;seconds&gt;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>    
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time</span>
+
+    <span class="nd">@time.setter</span>
+    <span class="k">def</span> <span class="nf">time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_time</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.time"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.time.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.time">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `new_time`: time in seconds (floats are rounded to 1 decimal place)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_time</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">VALID_TIME_INTEGER</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">new_time</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">=</span> <span class="s">&quot;--time {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_time</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">VALID_TIME_FLOAT</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">new_time</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_time</span> <span class="o">=</span> <span class="s">&quot;--time {0:.1f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">new_time</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Time must be an integer or float not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_time</span><span class="p">))</span>
+        <span class="k">return</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">tradeoff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the Tradeoff flag (-r)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tradeoff</span>
+
+    <span class="nd">@tradeoff.setter</span>
+    <span class="k">def</span> <span class="nf">tradeoff</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_tradeoff</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.tradeoff"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.tradeoff.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.tradeoff">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `set_tradeoff`: A Boolean which if True sets the tradeoff flag.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">set_tradeoff</span><span class="p">)</span> <span class="ow">is</span> <span class="n">BooleanType</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;set_tradeoff must be boolean, not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_tradeoff</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">set_tradeoff</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_tradeoff</span> <span class="o">=</span> <span class="s">&quot;--tradeoff&quot;</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ttl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The time-to-live flag (-T &lt;hops&gt;)</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ttl</span>
+
+    <span class="nd">@ttl.setter</span>
+    <span class="k">def</span> <span class="nf">ttl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hops</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfTcpClientParameters.ttl"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.ttl.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.ttl">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `hops`: The time-to-live</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">hops</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">hops</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;ttl must be an integer, not &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hops</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ttl</span> <span class="o">=</span> <span class="s">&quot;--ttl {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hops</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="c"># end class IperfTcpClientParameters</span>
+
+
+<span class="k">class</span> <span class="nc">IperfUdpClientParameters</span><span class="p">(</span><span class="n">IperfTcpClientParameters</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="IperfUdpClientParameters"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.html#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    IperfUdpClientParameters is a superset of the IperfTcpClientParameters.</span>
+<span class="sd">    Adds udp and bandwidth.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfUdpClientParameters.__init__"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.html#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">IperfUdpClientParameters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_attributes</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bandwidth</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">udp</span> <span class="o">=</span> <span class="s">&quot;--udp&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_block_attributes</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The udp bandwidth flag (-b n[KM])</span>
+<span class="sd">        &quot;&quot;&quot;</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bandwidth</span>
+
+    <span class="nd">@bandwidth.setter</span>
+    <span class="k">def</span> <span class="nf">bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_bandwidth</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfUdpClientParameters.bandwidth"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.bandwidth.html#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.bandwidth">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `new_bandwidth`: the bandwidth to set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">VALID_BANDWIDTHS</span><span class="p">,</span> <span class="n">new_bandwidth</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Invalid Bandwidth: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_bandwidth</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bandwidth</span> <span class="o">=</span> <span class="s">&quot;--bandwidth {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_bandwidth</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="c"># end class IperfUdpClientParameters</span>
+
+
+<span class="n">client_parameters</span> <span class="o">=</span> <span class="p">{</span><span class="n">IperfParametersEnum</span><span class="o">.</span><span class="n">tcp</span><span class="p">:</span> <span class="n">IperfTcpClientParameters</span><span class="p">,</span></div></div>
+                     <span class="n">IperfParametersEnum</span><span class="o">.</span><span class="n">udp</span><span class="p">:</span> <span class="n">IperfUdpClientParameters</span><span class="p">}</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

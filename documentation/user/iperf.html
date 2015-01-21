@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Iperf Configuration &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
+    <link rel="next" title="The Network Topology" href="network_topology.html" />
+    <link rel="prev" title="PowerOn Configuration" href="poweron.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="network_topology.html" title="The Network Topology"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="poweron.html" title="PowerOn Configuration"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Old Ape&#8217;s User Documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="iperf-configuration">
+<h1>Iperf Configuration<a class="headerlink" href="#iperf-configuration" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>The Iperf Configuration section begins with the <cite>[IPERF]</cite> header (case-sensitive) and generally uses the long-parameter names for iperf as the names of the options. For example, to set the target ip you might use:</p>
+<div class="highlight-python"><div class="highlight"><pre>iperf --client 192.168.10.25
+</pre></div>
+</div>
+<p>This would correspond to an option:</p>
+<div class="highlight-python"><div class="highlight"><pre>client = 192.168.10.25
+</pre></div>
+</div>
+</div>
+<div class="section" id="directions">
+<h2>Directions<a class="headerlink" href="#directions" title="Permalink to this headline">¶</a></h2>
+<p>The only non-iperf options are the <cite>directions</cite>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">directions</span> <span class="o">=</span> <span class="n">from_dut</span><span class="p">,</span> <span class="n">to_dut</span>
+</pre></div>
+</div>
+<p>Only the first letter is checked (except for <cite>t</cite> as it&#8217;s ambiguous) so you can use whatever mnemonics help (e.g. &#8216;receive&#8217; will only be read as &#8216;r&#8217;).</p>
+<p>This means that traffic from the TPC -&gt; DUT can start with one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>to</li>
+<li>d</li>
+<li>r</li>
+</ul>
+</div></blockquote>
+<p>(e.g <cite>to_dut</cite>, <cite>downlink</cite>, <cite>receive</cite>, <cite>rx</cite> will all do the same thing.)</p>
+<p>Traffic from the DUT -&gt; TPC can start with one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>f</li>
+<li>u</li>
+<li>tr</li>
+<li>tx</li>
+<li>s</li>
+</ul>
+</div></blockquote>
+<p>(e.g. <cite>from_dut</cite>, <cite>uplink</cite>, <cite>transmit</cite>, <cite>tx</cite>, <cite>send</cite> are all equivalente).</p>
+<p>This is a plural property so you can have more than one if you use comma-separation (e.g. &#8216;tx, rx&#8217;, will run traffic from the Node to the Traffic PC then reverse directions).</p>
+</div>
+<div class="section" id="the-common-options">
+<h2>The Common Options<a class="headerlink" href="#the-common-options" title="Permalink to this headline">¶</a></h2>
+<p>These are generally the most common settings of what I have seen being changed.</p>
+<blockquote>
+<div>time = &lt;time&gt;</div></blockquote>
+<p>The default here is seconds, but you can use suffixes to change it (days, hours, minutes, or seconds). e.g. to run it for 2 days, 3 hours and 22 minutes you could use:</p>
+<div class="highlight-python"><div class="highlight"><pre>time = 2 days 3 hours 22 minutes
+</pre></div>
+</div>
+<blockquote>
+<div><p>protocol = tcp
+window = 256K
+len = 1470</p>
+<p>parallel = 4</p>
+<p>interval = 1
+format = b</p>
+</div></blockquote>
+<p>The last flag can be one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>b (for bits/second)</li>
+<li>k (for kilobits/second)</li>
+<li>m (for megabits/second)</li>
+<li>K (for KiloBytes/second)</li>
+<li>M (for MegaBytes/second)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="iperf-s-help">
+<h2>Iperf&#8217;s Help<a class="headerlink" href="#iperf-s-help" title="Permalink to this headline">¶</a></h2>
+<p>This is a dump of iperf&#8217;s  help string (version 2.0.5).</p>
+<div class="highlight-python"><div class="highlight"><pre>Usage: iperf [-s|-c host] [options]
+       iperf [-h|--help] [-v|--version]
+
+Client/Server:
+  -f, --format    [kmKM]   format to report: Kbits, Mbits, KBytes, MBytes
+  -i, --interval  #        seconds between periodic bandwidth reports
+  -l, --len       #[KM]    length of buffer to read or write (default 8 KB)
+  -m, --print_mss          print TCP maximum segment size (MTU - TCP/IP header)
+  -o, --output    &lt;filename&gt; output the report or error message to this specified file
+  -p, --port      #        server port to listen on/connect to
+  -u, --udp                use UDP rather than TCP
+  -w, --window    #[KM]    TCP window size (socket buffer size)
+  -B, --bind      &lt;host&gt;   bind to &lt;host&gt;, an interface or multicast address
+  -C, --compatibility      for use with older versions does not sent extra msgs
+  -M, --mss       #        set TCP maximum segment size (MTU - 40 bytes)
+  -N, --nodelay            set TCP no delay, disabling Nagle&#39;s Algorithm
+  -V, --IPv6Version        Set the domain to IPv6
+
+Server specific:
+  -s, --server             run in server mode
+  -U, --single_udp         run in single threaded UDP mode
+  -D, --daemon             run the server as a daemon
+
+Client specific:
+  -b, --bandwidth #[KM]    for UDP, bandwidth to send at in bits/sec
+                           (default 1 Mbit/sec, implies -u)
+  -c, --client    &lt;host&gt;   run in client mode, connecting to &lt;host&gt;
+  -d, --dualtest           Do a bidirectional test simultaneously
+  -n, --num       #[KM]    number of bytes to transmit (instead of -t)
+  -r, --tradeoff           Do a bidirectional test individually
+  -t, --time      #        time in seconds to transmit for (default 10 secs)
+  -F, --fileinput &lt;name&gt;   input the data to be transmitted from a file
+  -I, --stdin              input the data to be transmitted from stdin
+  -L, --listenport #       port to receive bidirectional tests back on
+  -P, --parallel  #        number of parallel client threads to run
+  -T, --ttl       #        time-to-live, for multicast (default 1)
+  -Z, --linux-congestion &lt;algo&gt;  set TCP congestion control algorithm (Linux only)
+
+Miscellaneous:
+  -x, --reportexclude [CDMSV]   exclude C(connection) D(data) M(multicast) S(settings) V(server) reports
+  -y, --reportstyle C      report as a Comma-Separated Values
+  -h, --help               print this message and quit
+  -v, --version            print version information and quit
+
+[KM] Indicates options that support a K or M suffix for kilo- or mega-
+
+The TCP window size option can be set by the environment variable
+TCP_WINDOW_SIZE. Most other options can be set by an environment variable
+IPERF_&lt;long option name&gt;, such as IPERF_BANDWIDTH.
+
+Report bugs to &lt;iperf-users@lists.sourceforge.net&gt;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Iperf Configuration</a><ul>
+<li><a class="reference internal" href="#basics">Basics</a></li>
+<li><a class="reference internal" href="#directions">Directions</a></li>
+<li><a class="reference internal" href="#the-common-options">The Common Options</a></li>
+<li><a class="reference internal" href="#iperf-s-help">Iperf&#8217;s Help</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/documentation/user/iperf.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

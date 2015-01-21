@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.builders.subbuilders.toolbuilder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.builders.subbuilders.toolbuilder</h1><div class="highlight"><pre>
+<span class="k">class</span> <span class="nc">ToolBuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">ners</span> <span class="o">=</span> <span class="s">&quot;ners&quot;</span>
+    <span class="n">apconnect</span> <span class="o">=</span> <span class="s">&quot;apconnect&quot;</span>
+    <span class="n">timetorecovery</span> <span class="o">=</span> <span class="s">&quot;timetorecovery&quot;</span>
+    <span class="n">dumpdevicestatebuilder</span> <span class="o">=</span> <span class="s">&quot;dumpdevicestatebuilder&quot;</span>
+    <span class="n">iperf</span> <span class="o">=</span> <span class="s">&quot;iperf&quot;</span>
+    <span class="n">rotate</span> <span class="o">=</span> <span class="s">&#39;rotate&#39;</span>
+    <span class="n">poweron</span> <span class="o">=</span> <span class="s">&#39;poweron&#39;</span>
+    <span class="n">oscillate</span> <span class="o">=</span> <span class="s">&#39;oscillate&#39;</span>
+    <span class="n">oscillatestop</span> <span class="o">=</span> <span class="s">&#39;oscillatestop&#39;</span>
+    <span class="n">sleep</span> <span class="o">=</span> <span class="s">&#39;sleep&#39;</span>
+    <span class="n">naxxx</span> <span class="o">=</span> <span class="s">&#39;naxxx&#39;</span>
+    <span class="n">busyboxwget</span> <span class="o">=</span> <span class="s">&#39;busyboxwget&#39;</span>
+    <span class="n">rotate_cube</span> <span class="o">=</span> <span class="s">&#39;rotate_cube&#39;</span>
+<span class="c"># end class ToolBuilderEnum</span>
+
+
+<span class="k">class</span> <span class="nc">ToolBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An aggregator of tool builders</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">_apconnect</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_busyboxwget</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_commandwatch</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_dumpdevicestate</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_iperf</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_naxxx</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ners</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_oscillate</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_oscillatestop</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_poweroff</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_poweron</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rotate</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rotate_cube</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="o">=</span> <span class="bp">None</span>        
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timetorecovery</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_watchlogs</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">rotate_cube</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.rotate_cube"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate_cube.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate_cube">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: RotateUsurperBuilder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">rotatebuilder</span> <span class="kn">import</span> <span class="n">RotateUsurperBuilder</span>
+        <span class="k">return</span> <span class="n">RotateUsurperBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">busyboxwget</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.busyboxwget"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget">[docs]</a>        <span class="kn">from</span> <span class="nn">busyboxwgetbuilder</span> <span class="kn">import</span> <span class="n">BusyboxWgetBuilder</span>
+        <span class="k">return</span> <span class="n">BusyboxWgetBuilder</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.sleep"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: class to build sleep</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sleepbuilder</span> <span class="kn">import</span> <span class="n">SleepBuilder</span> 
+        <span class="k">return</span> <span class="n">SleepBuilder</span>
+        
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">watchlogs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.watchlogs"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: TheWatcher builder</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">watcherbuilder</span> <span class="kn">import</span> <span class="n">WatcherBuilder</span>
+        <span class="k">return</span> <span class="n">WatcherBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">oscillatestop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.oscillatestop"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop">[docs]</a>        <span class="kn">from</span> <span class="nn">oscillatebuilder</span> <span class="kn">import</span> <span class="n">OscillateStopBuilder</span>
+        <span class="k">return</span> <span class="n">OscillateStopBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">oscillate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.oscillate"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">oscillatebuilder</span> <span class="kn">import</span> <span class="n">OscillateBuilder</span>
+        <span class="k">return</span> <span class="n">OscillateBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">commandwatch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.commandwatch"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch">[docs]</a>        <span class="kn">from</span> <span class="nn">commandwatchbuilder</span> <span class="kn">import</span> <span class="n">CommandWatchBuilder</span>
+        <span class="k">return</span> <span class="n">CommandWatchBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.rotate"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate">[docs]</a>        <span class="kn">from</span> <span class="nn">rotatebuilder</span> <span class="kn">import</span> <span class="n">RotateBuilder</span>
+        <span class="k">return</span> <span class="n">RotateBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">poweron</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.poweron"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: A builder for the Synaxxx power on</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">poweronbuilder</span> <span class="kn">import</span> <span class="n">PowerOnBuilder</span>
+        <span class="k">return</span> <span class="n">PowerOnBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">poweroff</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.poweroff"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">poweroffbuilder</span> <span class="kn">import</span> <span class="n">PowerOffBuilder</span>
+        <span class="k">return</span> <span class="n">PowerOffBuilder</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ners</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.ners"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners">[docs]</a>        <span class="kn">from</span> <span class="nn">nersbuilder</span> <span class="kn">import</span> <span class="n">NersBuilder</span>
+        <span class="k">return</span> <span class="n">NersBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">apconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.apconnect"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect">[docs]</a>        <span class="kn">from</span> <span class="nn">apconnectbuilder</span> <span class="kn">import</span> <span class="n">APConnectBuilder</span>
+        <span class="k">return</span> <span class="n">APConnectBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">timetorecovery</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.timetorecovery"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery">[docs]</a>        <span class="kn">from</span> <span class="nn">timetorecoverybuilder</span> <span class="kn">import</span> <span class="n">TimeToRecoveryBuilder</span>
+        <span class="k">return</span> <span class="n">TimeToRecoveryBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">dumpdevicestate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.dumpdevicestate"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate">[docs]</a>        <span class="kn">from</span> <span class="nn">dumpdevicestatebuilder</span> <span class="kn">import</span> <span class="n">DumpDeviceStateBuilder</span>
+        <span class="k">return</span> <span class="n">DumpDeviceStateBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">iperf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.iperf"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf">[docs]</a>        <span class="kn">from</span> <span class="nn">iperfsessionbuilder</span> <span class="kn">import</span> <span class="n">IperfSessionBuilder</span>
+        <span class="k">return</span> <span class="n">IperfSessionBuilder</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">naxxx</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ToolBuilder.naxxx"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx">[docs]</a>        <span class="kn">from</span> <span class="nn">naxxxbuilder</span> <span class="kn">import</span> <span class="n">NaxxxBuilder</span>
+        <span class="k">return</span> <span class="n">NaxxxBuilder</span>
+<span class="c"># end class ToolBuilder</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

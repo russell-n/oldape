@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The SFTP Command &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="apetools.commands.sftpcommand.SftpCommand" href="api/apetools.commands.sftpcommand.SftpCommand.html" />
+    <link rel="prev" title="The Screen Command" href="screencommand.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.sftpcommand.SftpCommand.html" title="apetools.commands.sftpcommand.SftpCommand"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="screencommand.html" title="The Screen Command"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commands</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-sftp-command">
+<h1>The SFTP Command<a class="headerlink" href="#the-sftp-command" title="Permalink to this headline">¶</a></h1>
+<p>Since the paramiko <a class="reference internal" href="../documentation/developer/connections/sshconnection.html#ssh-client"><em>SSHClient</em></a> is somewhat buried within the <em class="xref std std-ref">SSHConnection</em> this class was created to hide the need to pull it out and work with it directly. It is a convenience class to create the <cite>SFTPClient</cite> from the connection and only provides a sub-set of the client commands, the rest if desired would need to be passed to the client itself.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.SftpCommand.html#apetools.commands.sftpcommand.SftpCommand" title="apetools.commands.sftpcommand.SftpCommand"><tt class="xref py py-obj docutils literal"><span class="pre">SftpCommand</span></tt></a>([connection,&nbsp;hostname,&nbsp;...])</td>
+<td>An interface to the SftpCommand</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-6cc56a5456216093e92433c579dde04545e4787e.png" alt="SftpCommand -|&gt; BaseClass
+SftpCommand o-- SSHConnection
+SftpCommand o-- SSHClient
+SftpCommand o-- paramiko.SftpClient
+SftpCommand : SSHConnection connection
+SftpCommand : SSHClient ssh
+SftpCommand : SftpClient sftp
+SftpCommand : __init__(connection)
+SftpCommand : close()
+SftpCommand : getcwd()
+SftpCommand : listdir(path)
+SftpCommand : mkdir(path, mode)
+SftpCommand : get(remote, local)
+SftpCommand : put(local, remote)" />
+</p>
+<p>Example Use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">sftp</span> <span class="o">=</span> <span class="n">SftpCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
+<span class="n">sftp</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;data.txt&#39;</span><span class="p">,</span> <span class="s">&#39;remote_data.txt&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="testing-the-sftpcommand">
+<h2>Testing the SftpCommand<a class="headerlink" href="#testing-the-sftpcommand" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_ssh.html#apetools.commands.sftpcommand.TestSftpCommand.test_ssh" title="apetools.commands.sftpcommand.TestSftpCommand.test_ssh"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_ssh</span></tt></a>()</td>
+<td>Does the ssh property return the paramiko client?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_sftp.html#apetools.commands.sftpcommand.TestSftpCommand.test_sftp" title="apetools.commands.sftpcommand.TestSftpCommand.test_sftp"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_sftp</span></tt></a>()</td>
+<td>Does the sftp property return the output of an open_sftp() call?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_close.html#apetools.commands.sftpcommand.TestSftpCommand.test_close" title="apetools.commands.sftpcommand.TestSftpCommand.test_close"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_close</span></tt></a>()</td>
+<td>Does close() call on the sftp-client&#8217;s close?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_getcwd.html#apetools.commands.sftpcommand.TestSftpCommand.test_getcwd" title="apetools.commands.sftpcommand.TestSftpCommand.test_getcwd"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_getcwd</span></tt></a>()</td>
+<td>Does the getcwd call return the output of the sftp getcwd()?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_listdir.html#apetools.commands.sftpcommand.TestSftpCommand.test_listdir" title="apetools.commands.sftpcommand.TestSftpCommand.test_listdir"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_listdir</span></tt></a>()</td>
+<td>Does the listdir method call the sftp method and return its output?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_mkdir.html#apetools.commands.sftpcommand.TestSftpCommand.test_mkdir" title="apetools.commands.sftpcommand.TestSftpCommand.test_mkdir"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_mkdir</span></tt></a>()</td>
+<td>Does the <cite>mkdir</cite> properly call the sftp <cite>mkdir</cite>?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_get.html#apetools.commands.sftpcommand.TestSftpCommand.test_get" title="apetools.commands.sftpcommand.TestSftpCommand.test_get"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_get</span></tt></a>()</td>
+<td>Does the get call the sftp-get?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_put.html#apetools.commands.sftpcommand.TestSftpCommand.test_put" title="apetools.commands.sftpcommand.TestSftpCommand.test_put"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_put</span></tt></a>()</td>
+<td>Does the <cite>put</cite> method call the sftp <cite>put</cite> method?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_connection_builder.html#apetools.commands.sftpcommand.TestSftpCommand.test_connection_builder" title="apetools.commands.sftpcommand.TestSftpCommand.test_connection_builder"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_connection_builder</span></tt></a>()</td>
+<td>Does the sftp create an SSHConnection if given the right parameters?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter.html#apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter" title="apetools.commands.sftpcommand.TestSftpCommand.test_connection_setter"><tt class="xref py py-obj docutils literal"><span class="pre">TestSftpCommand.test_connection_setter</span></tt></a>()</td>
+<td>Does setting the connection re-set the sftp and ssh?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The SFTP Command</a><ul>
+<li><a class="reference internal" href="#testing-the-sftpcommand">Testing the SftpCommand</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commands/sftpcommand.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

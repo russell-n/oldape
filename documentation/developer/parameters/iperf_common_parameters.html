@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Common Iperf Parameters &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="common-iperf-parameters">
+<h1>Common Iperf Parameters<a class="headerlink" href="#common-iperf-parameters" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold iperf parameter classes.</p>
+<p>Names of parameters match the long-options given to iperf:</p>
+<blockquote>
+<div>e.g. <tt class="docutils literal"><span class="pre">--port</span></tt> becomes <tt class="docutils literal"><span class="pre">IperfCommonParameters.port</span></tt></div></blockquote>
+<p>and the doc-strings cross-reference them as the short form (<tt class="docutils literal"><span class="pre">-p</span></tt>).</p>
+<div class="section" id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="iperfparametersenum">
+<span id="iperf-parameters-enum"></span><h2>IperfParametersEnum<a class="headerlink" href="#iperfparametersenum" title="Permalink to this headline">¶</a></h2>
+<p>Holds constants for the Iperf Parameters.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-95b5a0000e83837642732848db20b2017950533b.png" alt="IperfParametersEnum : udp
+IperfParametersEnum : tcp" />
+</p>
+</div>
+<div class="section" id="iperfcommonparameters">
+<span id="iperf-common-parameters"></span><h2>IperfCommonParameters<a class="headerlink" href="#iperfcommonparameters" title="Permalink to this headline">¶</a></h2>
+<p>The parameters common to all Iperf command-types.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters" title="apetools.parameters.iperf_common_parameters.IperfCommonParameters"><tt class="xref py py-obj docutils literal"><span class="pre">IperfCommonParameters</span></tt></a>()</td>
+<td>Iperf Common Parameters are common to all Iperf commands.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-92967369cf76c449c626e486ccdf510aa85e2d2d.png" alt="IperfCommonParameters -|&gt; BaseClass
+IperfCommonParameters : format
+IperfCommonParameters : interval
+IperfCommonParameters : len
+IperfCommonParameters : output
+IperfCommonParameters : port
+IperfCommonParameters : bind
+IperfCommonParameters : compatibility
+IperfCommonParameters : ipv6version
+IperfCommonParameters : reportexclude
+IperfCommonParameters : reportstyle
+IperfCommonParameters : parameter_names
+IperfCommonParameters : parallel
+IperfCommonParameters : path
+IperfCommonParameters : String parameter_names" />
+</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">the parameter names attribute is there to get a list of the parameters names (presumably for the builder).</p>
+</div>
+</div>
+<div class="section" id="iperf-extra-parameters">
+<h2>Iperf Extra Parameters<a class="headerlink" href="#iperf-extra-parameters" title="Permalink to this headline">¶</a></h2>
+<p>This is a holder of valid non-iperf parameters.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfExtraParameters.html#apetools.parameters.iperf_common_parameters.IperfExtraParameters" title="apetools.parameters.iperf_common_parameters.IperfExtraParameters"><tt class="xref py py-obj docutils literal"><span class="pre">IperfExtraParameters</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-22bdf152bfd792532118fdb0e156b9e290904d9b.png" alt="IperfExtraParameters : directions
+IperfExtraParameters : parameters" />
+</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">IperfExtraParameters.parameters</span></tt> is a collection of the parameters so you can check membership.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Common Iperf Parameters</a><ul>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#iperfparametersenum">IperfParametersEnum</a></li>
+<li><a class="reference internal" href="#iperfcommonparameters">IperfCommonParameters</a></li>
+<li><a class="reference internal" href="#iperf-extra-parameters">Iperf Extra Parameters</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/parameters/iperf_common_parameters.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

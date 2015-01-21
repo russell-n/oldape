@@ -1,0 +1,244 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.devices.iosdevice &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.devices.iosdevice</h1><div class="highlight"><pre>
+<span class="c">#from apetools.commands.ifconfig import IfconfigCommand</span>
+<span class="c">#from apetools.commands.iwconfig import Iwconfig</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.enumerations</span> <span class="kn">import</span> <span class="n">OperatingSystem</span>
+<span class="kn">from</span> <span class="nn">apetools.devices.basedevice</span> <span class="kn">import</span> <span class="n">BaseDevice</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+
+
+<span class="k">class</span> <span class="nc">IosDevice</span><span class="p">(</span><span class="n">BaseDevice</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.html#apetools.devices.iosdevice.IosDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to query ios devices (pretty much nothing is implemented on the ipad).</span>
+
+<span class="sd">     * this is mostly a dummy to hold settings</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.__init__"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.html#apetools.devices.iosdevice.IosDevice.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `connection`: a connection to the device</span>
+<span class="sd">         - `interface`: the name of the test interface (to get the ip address)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IosDevice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.address.html#apetools.devices.iosdevice.IosDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the address of the device</span>
+<span class="sd">        :raise: ConfigurationError if not set by user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;&#39;test_address&#39; must be set in config for IOS devices&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.mac_address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.mac_address.html#apetools.devices.iosdevice.IosDevice.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        </span>
+<span class="sd">        :return: the MAC address of the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;mac address query not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;NA&#39;</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.bssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.bssid.html#apetools.devices.iosdevice.IosDevice.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;bssid query not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;NA&#39;</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.ssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.ssid.html#apetools.devices.iosdevice.IosDevice.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;ssid query not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;NA&#39;</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">noise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.noise"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.noise.html#apetools.devices.iosdevice.IosDevice.noise">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not Implemented</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;noise query not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&#39;NA&#39;</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">channel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.channel"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.channel.html#apetools.devices.iosdevice.IosDevice.channel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;channel not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;NA&quot;</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.rssi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.rssi.html#apetools.devices.iosdevice.IosDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        </span>
+<span class="sd">        :return: rssi from the wifi_query</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;rssi query not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;NA&quot;</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">bitrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="IosDevice.bitrate"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.bitrate.html#apetools.devices.iosdevice.IosDevice.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        </span>
+<span class="sd">        :return: NA</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;bitrate query not implemented&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s">&quot;NA&quot;</span>
+
+    <span class="k">def</span> <span class="nf">disable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IosDevice.disable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.disable_wifi.html#apetools.devices.iosdevice.IosDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;disable wifi not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">enable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IosDevice.enable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.enable_wifi.html#apetools.devices.iosdevice.IosDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Not implemented</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;enable wifi not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
+<div class="viewcode-block" id="IosDevice.log"><a class="viewcode-back" href="../../../devices/api/apetools.devices.iosdevice.IosDevice.log.html#apetools.devices.iosdevice.IosDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the message to the syslog (Not implemented)</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `message`: a string to send to the syslog</span>
+
+<span class="sd">        :postcondition: message sent to the syslog</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># This uses the call interface because the connection has its own logger property </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;log not implemented&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="c"># end IosDevice</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Parameters &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="parameters">
+<h1>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h1>
+<p>Parameters are objects passed to an object&#8217;s constructor which contain the parameters that define the initial conditions for the object.</p>
+<div class="section" id="testoperator-parameters">
+<h2>TestOperator Parameters<a class="headerlink" href="#testoperator-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../infrastructure/testoperator.html#testoperatoruml"><em>TestOperator</em></a> defines two parameters - <cite>OperatorParameters</cite> and <cite>OperatorStaticParameters</cite>.</p>
+<div class="section" id="operatorparameters">
+<h3>OperatorParameters<a class="headerlink" href="#operatorparameters" title="Permalink to this headline">¶</a></h3>
+<p class="plantuml">
+<img src="../../../_images/plantuml-4062607b5a1032c57a8116b70e7fe7cad5ea3f66.png" alt="OperatorParameters: SetupIteration setup
+OperatorParameters: TeardownIteration teardown
+OperatorParameters: TimeToRecoveryTest test
+OperatorParameters: Device.log device_log" />
+</p>
+<p>The OperatorParameters contain the objects that the TestOperator needs to call in its run method.</p>
+</div>
+<div class="section" id="operatorstaticparameters">
+<h3>OperatorStaticParameters<a class="headerlink" href="#operatorstaticparameters" title="Permalink to this headline">¶</a></h3>
+<p class="plantuml">
+<img src="../../../_images/plantuml-5256be8e6da4a4889339b08467c355c4d5068427.png" alt="OperatorStaticParameters: OperatorParameters operator_parameters
+OperatorStaticParameters: StaticParameters static_parameters
+OperatorStaticParameters: ParameterGenerator test_parameters" />
+</p>
+<p>The <cite>operator_parameters</cite> are described in the previous section. <cite>StaticParameters</cite> are the mapping the <a class="reference internal" href="../config/lexicographer.html#lexicographeruml"><em>Lexicographer</em></a> creates from the config-file to python-values. the <cite>test_parameters</cite> is a <a class="reference internal" href="../config/parametergenerator.html#parametergeneratoruml"><em>ParameterGenerator</em></a> iterator.</p>
+</div>
+</div>
+<div class="section" id="lexicographer-parameters">
+<h2>Lexicographer Parameters<a class="headerlink" href="#lexicographer-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="../config/lexicographer.html#lexicographeruml"><em>Lexicographer</em></a> generates <cite>StaticParameters</cite>.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-915aa8394b00c5d9e34fa33fc18ca916a98af167.png" alt="StaticParameters: String output_folder
+StaticParameters: String data_file
+StaticParameters: Integer repetitions
+StaticParameters: Float recovery_time
+StaticParameters: Float timeout
+StaticParameters: Integer threshold
+StaticParameters: String target
+StaticParameters: String wifi_interface" />
+</p>
+<p>These parameters map to the values declared by the APE when creating the config-file. They are provided to allow the builder to use them in creating objects for the <a class="reference internal" href="../infrastructure/testoperator.html#testoperatoruml"><em>TestOperator</em></a>.</p>
+</div>
+<div class="section" id="timetorecoverytest-parameters">
+<h2>TimeToRecoveryTest Parameters<a class="headerlink" href="#timetorecoverytest-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The <em class="xref std std-ref">timetorecoverytestuml</em> requires <cite>TimeToRecoveryTestParameters</cite>.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-b9d7b1da1cfa217346a2b0ef6129fb86100dbbeb.png" alt="TimeToRecoveryTestParameters: Device device
+TimeToRecoveryTestParameters: TimeToRecovery time_to_recovery
+TimeToRecoveryTestParameters: FileOutput output" />
+</p>
+<ul class="simple">
+<li>The <cite>device</cite> is used to enable the radio on the DUT.</li>
+<li>The <cite>time_to_recovery</cite> returns the amount of time it took for the radio to work</li>
+<li>The output is a writeable file-like object to send the data to.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Parameters</a><ul>
+<li><a class="reference internal" href="#testoperator-parameters">TestOperator Parameters</a><ul>
+<li><a class="reference internal" href="#operatorparameters">OperatorParameters</a></li>
+<li><a class="reference internal" href="#operatorstaticparameters">OperatorStaticParameters</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lexicographer-parameters">Lexicographer Parameters</a></li>
+<li><a class="reference internal" href="#timetorecoverytest-parameters">TimeToRecoveryTest Parameters</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/parameters/parameters.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

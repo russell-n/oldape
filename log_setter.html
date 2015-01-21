@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Log Setter &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="index.html" />
+    <link rel="next" title="apetools.log_setter.cleanup" href="api/apetools.log_setter.cleanup.html" />
+    <link rel="prev" title="apetools.baseclass.BaseThreadClass.run_thread" href="api/apetools.baseclass.BaseThreadClass.run_thread.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.log_setter.cleanup.html" title="apetools.log_setter.cleanup"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.baseclass.BaseThreadClass.run_thread.html" title="apetools.baseclass.BaseThreadClass.run_thread"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-log-setter">
+<h1>The Log Setter<a class="headerlink" href="#the-log-setter" title="Permalink to this headline">¶</a></h1>
+<p>A place to hold the set_logger function. This has to be at the top-level so that modules in sub-folders can use it.</p>
+<div class="highlight-python"><div class="highlight"><pre>logger = logging.getLogger(__package__)
+SMALL_TIMESTAMP = &quot;%H:%M:%S&quot;
+SCREEN_FORMAT = &quot;%(levelname)s: %(name)s.%(funcName)s, Line: %(lineno)d [%(
+asctime)s] -- %(message)s&quot;
+SCREEN_FORMAT_QUIET = &quot;%(levelname)s: [%(asctime)s] -- %(message)s&quot;
+DATA_FRIENDLY_FORMAT = &quot;%(levelname)s,%(asctime)s,%(message)s&quot;
+LOG_FORMAT = &quot;%(levelname)s,%(module)s,%(threadName)s,%(funcName)s,Line: %(
+lineno)d,%(asctime)s,%(message)s&quot;
+LOG_TIMESTAMP = &quot;%Y-%m-%d %H:%M:%S&quot;
+
+GIGABYTE = 1073741824
+BACKUP_LOGS = 5
+
+LOGNAME = &quot;{0}.log&quot;.format(__package__)
+</pre></div>
+</div>
+<div class="section" id="module-apetools.log_setter">
+<span id="the-cleanup-function"></span><h2>The cleanup Function<a class="headerlink" href="#module-apetools.log_setter" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">cleanup</span></tt>([log_directory])</td>
+<td>Saves the last log to sub-directory</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-set-logger-function">
+<h2>The set_logger Function<a class="headerlink" href="#the-set-logger-function" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+<div class="highlight-python"><div class="highlight"><pre>def set_logger(args):
+    &quot;&quot;&quot;
+    Creates a logger and sets the level based on args.
+
+    :param:
+
+     - `args`: args with debug and silent attributes
+    &quot;&quot;&quot;
+    cleanup()
+    stderr = logging.StreamHandler()
+    if args.debug:
+        screen_format = SCREEN_FORMAT
+    else:
+        screen_format = SCREEN_FORMAT_QUIET
+
+    screen_format = logging.Formatter(screen_format, datefmt=SMALL_TIMESTAM
+P)
+    stderr.setFormatter(screen_format)
+
+    log_file = logging.handlers.RotatingFileHandler(LOGNAME,
+                                           maxBytes=GIGABYTE, backupCount=B
+ACKUP_LOGS)
+    file_format = logging.Formatter(LOG_FORMAT, datefmt=LOG_TIMESTAMP)
+    log_file.setFormatter(file_format)
+
+    logger.setLevel(logging.DEBUG)
+    log_file.setLevel(logging.DEBUG)
+
+    if args.debug:
+        stderr.setLevel(logging.DEBUG)
+    elif args.silent:
+        stderr.setLevel(logging.ERROR)
+    else:
+        stderr.setLevel(logging.INFO)
+
+    logger.addHandler(stderr)
+    logger.addHandler(log_file)
+    return
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Log Setter</a><ul>
+<li><a class="reference internal" href="#module-apetools.log_setter">The cleanup Function</a></li>
+<li><a class="reference internal" href="#the-set-logger-function">The set_logger Function</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="_sources/log_setter.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TimeToRecoveryTest Algorithms &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="timetorecoverytest-algorithms">
+<h1>TimeToRecoveryTest Algorithms<a class="headerlink" href="#timetorecoverytest-algorithms" title="Permalink to this headline">¶</a></h1>
+<p>The TimeToRecoveryTest contains the algorithm for a single test to determine the length of time it takes for a device to recover its connection.</p>
+<div class="section" id="the-timetorecoverytest-algorithms">
+<span id="timetorecoverytestalgorithms"></span><h2>The TimeToRecoveryTest Algorithms<a class="headerlink" href="#the-timetorecoverytest-algorithms" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="timetorecoverytest-run-parameters">
+<h3>TimeToRecoveryTest.run(parameters)<a class="headerlink" href="#timetorecoverytest-run-parameters" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><img class="math" src="../../../../_images/math/3a0ca6bbc52d73043a0fd945a2deb90db0b4885e.png" alt="device.enable\_wifi()"/></li>
+<li><img class="math" src="../../../../_images/math/4c96cfaf4169bff4a077e2b69c76bc80ad67d79b.png" alt="elapsed\_time \gets time\_to\_recovery.run()"/></li>
+<li><img class="math" src="../../../../_images/math/282b0acf585e417e8c006473074965c6f0e75e76.png" alt="save\_data(elapsed\_time, failure\_threshold, repetition)"/></li>
+</ol>
+</div>
+<div class="section" id="timetorecoverytest-save-data-elapsed-threshold-repetition">
+<h3>TimeToRecoveryTest.save_data(elapsed, threshold, repetition)<a class="headerlink" href="#timetorecoverytest-save-data-elapsed-threshold-repetition" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic">
+<li><p class="first"><img class="math" src="../../../../_images/math/7a5bfc9ccd052bb39f54f57f00651c5cb00f98b4.png" alt="\textit{if }(elapsed &gt; threshold) \vee (\textit{elapsed is None}):"/></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><img class="math" src="../../../../_images/math/83f066f463985cc8600779d36a4ef3d459f8bc4c.png" alt="log\_message(FAIL\_MESSAGE.format(repetition,elapsed,threshold))"/></li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first"><img class="math" src="../../../../_images/math/4945e88970fc7fd0df7b2b79ab55eccf37526037.png" alt="log\_message(TTR\_MESSAGE.format(elapsed))"/></p>
+</li>
+<li><p class="first"><img class="math" src="../../../../_images/math/d4bd2ba0fa476b8727d69e9d692adf5df6d3fcbd.png" alt="output.write(elapsed)"/></p>
+</li>
+</ol>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-c3ec0b1a34dd56f339532ae47ccd19c2fdaee8dc.png" alt="(*) --&gt; if &quot;failed&quot; then
+    -&gt;[True] &quot;log failure&quot;
+    --&gt; &quot;record TTR&quot;
+
+    else
+        --&gt;[False] &quot;record TTR&quot;
+        --&gt; (*)
+    endif" />
+</p>
+</div>
+<div class="section" id="timetorecoverytest-log-message-message">
+<h3>TimeToRecoveryTest.log_message(message)<a class="headerlink" href="#timetorecoverytest-log-message-message" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><img class="math" src="../../../../_images/math/bd6596d0361d3a164d71359417d4ca82ea6f944e.png" alt="device.log(message)"/></li>
+<li><img class="math" src="../../../../_images/math/ea79af5e9750ce85894d784263fcb874fd6cf110.png" alt="logger.log(message)"/></li>
+</ol>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">TimeToRecoveryTest Algorithms</a><ul>
+<li><a class="reference internal" href="#the-timetorecoverytest-algorithms">The TimeToRecoveryTest Algorithms</a><ul>
+<li><a class="reference internal" href="#timetorecoverytest-run-parameters">TimeToRecoveryTest.run(parameters)</a></li>
+<li><a class="reference internal" href="#timetorecoverytest-save-data-elapsed-threshold-repetition">TimeToRecoveryTest.save_data(elapsed, threshold, repetition)</a></li>
+<li><a class="reference internal" href="#timetorecoverytest-log-message-message">TimeToRecoveryTest.log_message(message)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/design/algorithms/timetorecoverytest.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

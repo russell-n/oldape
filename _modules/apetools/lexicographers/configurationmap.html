@@ -1,0 +1,664 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.lexicographers.configurationmap &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.lexicographers.configurationmap</h1><div class="highlight"><pre>
+<span class="c">#python</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">ConfigParser</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">whitespace</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">BooleanType</span>
+
+<span class="c"># apetools Libraries</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
+<span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">expressions</span>
+<span class="kn">from</span> <span class="nn">timeconverter</span> <span class="kn">import</span> <span class="n">TimeConverter</span>
+
+
+<span class="n">STRIP_LIST</span> <span class="o">=</span> <span class="s">&quot;&#39;</span><span class="se">\&quot;</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">whitespace</span>
+<span class="n">EMPTY_STRING</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">DAY_STRING</span> <span class="o">=</span> <span class="s">&#39;day&#39;</span>
+<span class="n">MINUTE_STRING</span> <span class="o">=</span> <span class="s">&#39;m&#39;</span>
+<span class="n">HOUR_STRING</span> <span class="o">=</span> <span class="s">&#39;h&#39;</span>
+<span class="n">SECOND_STRING</span> <span class="o">=</span> <span class="s">&#39;second&#39;</span>
+<span class="n">COMMA</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span>
+<span class="n">FORWARD_SLASH</span> <span class="o">=</span> <span class="s">&#39;/&#39;</span>
+<span class="n">SEMICOLON</span> <span class="o">=</span> <span class="s">&quot;;&quot;</span>
+
+<span class="n">MINUTES</span> <span class="o">=</span> <span class="mi">60</span>
+<span class="n">HOURS</span> <span class="o">=</span> <span class="mi">60</span> <span class="o">*</span> <span class="n">MINUTES</span>
+<span class="n">DAYS</span> <span class="o">=</span> <span class="mi">24</span> <span class="o">*</span> <span class="n">HOURS</span>
+
+<span class="n">INTEGER</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">INTEGER</span>
+<span class="n">NAMED</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">NAMED</span>
+<span class="n">SPACES_OPTIONAL</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">SPACES_OPTIONAL</span>
+<span class="n">DASH</span> <span class="o">=</span> <span class="s">&#39;-&#39;</span>
+
+<span class="n">START_GROUP</span> <span class="o">=</span> <span class="s">&quot;start&quot;</span>
+<span class="n">END_GROUP</span> <span class="o">=</span> <span class="s">&quot;end&quot;</span>
+<span class="n">RANGE</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">NAMED</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">START_GROUP</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">INTEGER</span><span class="p">)</span> <span class="o">+</span> <span class="n">SPACES_OPTIONAL</span> <span class="o">+</span>
+                   <span class="n">DASH</span> <span class="o">+</span> <span class="n">SPACES_OPTIONAL</span> <span class="o">+</span> <span class="n">NAMED</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">END_GROUP</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">INTEGER</span><span class="p">))</span>
+
+
+<span class="k">class</span> <span class="nc">ConfigurationSectionError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigurationSectionError"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationSectionError.html#apetools.lexicographers.configurationmap.ConfigurationSectionError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An error to raise if a section is missing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class ConfigurationSectionError</span>
+
+
+<span class="k">class</span> <span class="nc">ConfigurationOptionError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationOptionError"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationOptionError.html#apetools.lexicographers.configurationmap.ConfigurationOptionError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An error to raise if an option is missing</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class ConfigurationOptionError</span>
+
+
+<span class="k">class</span> <span class="nc">BooleanValues</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+<div class="viewcode-block" id="BooleanValues"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.BooleanValues.html#apetools.lexicographers.configurationmap.BooleanValues">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to hold the valid booleans.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">true</span> <span class="o">=</span> <span class="s">&quot;y yes 1 true t on&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">false</span> <span class="o">=</span> <span class="s">&quot;n no 0 false f off&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="nb">map</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">t</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">true</span><span class="p">]</span> <span class="o">+</span> <span class="p">[(</span><span class="n">f</span><span class="p">,</span> <span class="bp">False</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">false</span><span class="p">])</span>
+<span class="c"># end class Booleans</span>
+
+
+<span class="k">class</span> <span class="nc">ConfigurationMap</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.html#apetools.lexicographers.configurationmap.ConfigurationMap">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The ConfigurationMap is a variant of SafeConfigParser that adds some extra methods</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigurationMap.__init__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.html#apetools.lexicographers.configurationmap.ConfigurationMap.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `filename`: The name of the config file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ConfigurationMap</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_time_converter</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">time_converter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigurationMap.time_converter"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.time_converter.html#apetools.lexicographers.configurationmap.ConfigurationMap.time_converter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: Converter for space-separated time stream</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_converter</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_time_converter</span> <span class="o">=</span> <span class="n">TimeConverter</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_time_converter</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">sections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigurationMap.sections"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.sections.html#apetools.lexicographers.configurationmap.ConfigurationMap.sections">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :rtype: List</span>
+<span class="sd">        :return: sections headings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">sections</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sections</span>
+
+    <span class="k">def</span> <span class="nf">options</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.options"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.options.html#apetools.lexicographers.configurationmap.ConfigurationMap.options">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: the section in the config file to check</span>
+<span class="sd">         - `optional`: if True, returns default instead of raising an error</span>
+<span class="sd">         - `default`: value to return if section doesn&#39;t exist and is optional</span>
+<span class="sd">        </span>
+<span class="sd">        :return: list of options in the section</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">section</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoSectionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Unknown Section: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">section</span><span class="p">))</span>
+    
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigurationMap.parser"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.parser.html#apetools.lexicographers.configurationmap.ConfigurationMap.parser">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: SafeConfigParser</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">SafeConfigParser</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span><span class="o">.</span><span class="n">readfp</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span>
+
+    <span class="k">def</span> <span class="nf">raise_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.raise_error"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.raise_error.html#apetools.lexicographers.configurationmap.ConfigurationMap.raise_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Logs then raises a configuration error </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">ConfigurationOptionError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get.html#apetools.lexicographers.configurationmap.ConfigurationMap.get">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Eventually this will be a type-discovering method, but for now is a pass-through to _get</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap._get"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap._get.html#apetools.lexicographers.configurationmap.ConfigurationMap._get">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convenience function:strip off extra quotes and whitespace after &#39;get&#39;.</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] name</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `default`: returns default on error</span>
+<span class="sd">         - `optional`: If True, return default if option not found</span>
+
+<span class="sd">        :raise: ConfigurationError if the section or option doesn&#39;t exist and not optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">STRIP_LIST</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoSectionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ConfigurationSectionError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">get_boolean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_boolean"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_boolean.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_boolean">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        True = t, true, 1, y, yes, or on</span>
+<span class="sd">        False = f, false, 0, n, no, or off</span>
+
+<span class="sd">        Case-insensitive</span>
+<span class="sd">        </span>
+<span class="sd">        :raise: ConfigurationError if ConfigParser raises error or can&#39;t be coerced to boolean and not optional</span>
+<span class="sd">        :return: section:option value cast to an boolean or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">BooleanValues</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="n">value</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="n">BooleanType</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="p">(</span><span class="s">&quot;Unknown Boolean: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">get_booleans</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_booleans"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_booleans.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_booleans">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        True = t, true, 1, y, yes, or on</span>
+<span class="sd">        False = f, false, 0, n, no, or off</span>
+
+<span class="sd">        Case-insensitive</span>
+<span class="sd">        </span>
+<span class="sd">        :raise: ConfigurationError if ConfigParser raises error or can&#39;t be coerced to boolean and not optional</span>
+<span class="sd">        :return: section:option value cast to an boolean or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">BooleanValues</span><span class="o">.</span><span class="n">map</span><span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Unknown Boolean in: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">get_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_int"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_int.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_int">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :raise: ConfigurationError if ConfigParser raises error or can&#39;t be coerced to int and not optional</span>
+<span class="sd">        :return: section:option value cast to an int or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">Error</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationMap</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_ints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_ints"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_ints.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_ints">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: the config file section name</span>
+<span class="sd">         - `option` : the section-option name</span>
+<span class="sd">         - `default`: value to return if not found and optional</span>
+<span class="sd">         - `optional`: if True and not found, return default</span>
+<span class="sd">         - `delimiter`: the separator for the integer values</span>
+<span class="sd">         </span>
+<span class="sd">        :raise: ConfigurationError if ConfigParser raises error or can&#39;t be coerced to int and not optional</span>
+<span class="sd">        :return: List of section:option values cast to integers or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                                    <span class="n">converter</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+            
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Unable to cast &#39;{0}&#39; to integers&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">get_float</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_float"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_float.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_float">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :raise: ConfigurationError if ConfigParser raises error or can&#39;t be coerced to float and not optional        </span>
+<span class="sd">        :return: section:option value cast to a float or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="o">.</span><span class="n">getfloat</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">ValueError</span><span class="p">,</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">Error</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_floats</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_floats"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_floats.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_floats">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: the config file section name</span>
+<span class="sd">         - `option` : the section-option name</span>
+<span class="sd">         - `default`: value to return if not found and optional</span>
+<span class="sd">         - `optional`: if True and not found, return default</span>
+<span class="sd">         - `delimiter`: the separator for the integer values</span>
+<span class="sd">         </span>
+<span class="sd">        :raise: ConfigurationError if ConfigParser raises error or can&#39;t be coerced to float and not optional</span>
+<span class="sd">        :return: List of section:option values cast to floats or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                                    <span class="n">converter</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Unable to cast &#39;{0}&#39; to floats&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">get_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">EMPTY_STRING</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_string"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_string.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_string">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This returns what a ConfigParser.get returns</span>
+<span class="sd">        </span>
+<span class="sd">        :return: value string or default</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_strings</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_strings"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_strings.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_strings">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This is the same thing as get_list</span>
+<span class="sd">        </span>
+<span class="sd">        :return: list of strings</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="n">optional</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">get_list</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="nb">str</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_list"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_list.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_list">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] in the config file.</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `delimiter`: the value separator</span>
+<span class="sd">         - `optional`: if True, returns default instead of raising an error</span>
+<span class="sd">        :return: list of strings stripped of whitespace</span>
+
+<span class="sd">        :raises: ConfigurationError if not optional and not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;get_list converting: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">converter</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">raise</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+        <span class="k">return</span>
+        
+    <span class="k">def</span> <span class="nf">get_lists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_lists"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_lists.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_lists">[docs]</a>                  <span class="n">list_separator</span><span class="o">=</span><span class="n">SEMICOLON</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Don&#39;t make the delimiter and separator the same or you&#39;ll end up with each item in its own list</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] in the config file.</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `default`: value to return if optional and no value found</span>
+<span class="sd">         - `optional`: if True, returns default instead of raising an error</span>
+<span class="sd">         - `delimiter`: the value separator</span>
+<span class="sd">         - `converter`: function to apply to the values</span>
+<span class="sd">         - `separator`: delimiter between lists</span>
+
+<span class="sd">        :return: list of list of strings stripped of whitespace (converted if `converter` supplied)</span>
+
+<span class="sd">        :raises: ConfigurationError if not optional and not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;get_list converting: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="k">return</span> <span class="p">[[</span><span class="n">converter</span><span class="p">(</span><span class="n">subvalue</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">subvalue</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">)]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">list_separator</span><span class="p">)]</span>
+    
+    <span class="k">def</span> <span class="nf">get_dictionary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_dictionary"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionary.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionary">[docs]</a>                       <span class="n">key_value_separator</span><span class="o">=</span><span class="s">&quot;:&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This expects a format of `{key:value, key:value}`</span>
+
+<span class="sd">        The &quot;{}&quot; brackets are optional.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] in the config file.</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `default`: what to return if fails and optional</span>
+<span class="sd">         - `optional`: if True, returns defauln instead of raising an error</span>
+<span class="sd">         - `delimiter`: what separates the different key:value pairs</span>
+<span class="sd">         - `converter`: a function to apply to the value</span>
+<span class="sd">         - `key_value_separator`: Token to separate key-value pairs</span>
+<span class="sd">         </span>
+<span class="sd">        :return: dictionary of key:value pairings</span>
+
+<span class="sd">        :raises: ConfigurationError if not optional and not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;get_dictionary converting: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">)</span>
+        <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;}&quot;</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">converter</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">values</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_dictionaries</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_dictionaries"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionaries.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionaries">[docs]</a>                         <span class="n">key_value_separator</span><span class="o">=</span><span class="s">&quot;:&quot;</span><span class="p">,</span> <span class="n">dictionary_separator</span><span class="o">=</span><span class="n">SEMICOLON</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This expects a format of `{key:value, key:value}`</span>
+
+<span class="sd">        For clarity dictionaries can be enclosed in braces ({}) but only the dictionary_separator is used</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] in the config file.</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `default`: what to return if fails and optional</span>
+<span class="sd">         - `optional`: if True, returns defauln instead of raising an error</span>
+<span class="sd">         - `delimiter`: what separates the different key:value pairs</span>
+<span class="sd">         - `converter`: a function to apply to the value</span>
+<span class="sd">         - `key_value_separator`: Token to separate key-value pairs</span>
+<span class="sd">         - `dictionary_separator`: what separates the different dictionaries</span>
+<span class="sd">         </span>
+<span class="sd">        :return: list of dictionaries of key:value pairings</span>
+
+<span class="sd">        :raises: ConfigurationError if not optional and not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_lists</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span> <span class="n">list_separator</span><span class="o">=</span><span class="n">dictionary_separator</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;get_dictionary converting: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+        <span class="n">dictionaries</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s">&quot;{&quot;</span><span class="p">)</span>
+            <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&quot;}&quot;</span><span class="p">)</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;:&quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="p">[(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">converter</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span> <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">line</span><span class="p">]</span>
+            <span class="n">dictionaries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dictionaries</span>
+
+    <span class="k">def</span> <span class="nf">get_namedtuple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">,</span> <span class="n">converter</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_namedtuple"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_namedtuple.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_namedtuple">[docs]</a>                       <span class="n">key_value_separator</span><span class="o">=</span><span class="s">&quot;:&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This expects a format of `{key:value, key:value}`</span>
+
+<span class="sd">        For clarity named-tuples can be enclosed in braces ({}) but only the dictionary_separator is used</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] in the config file.</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `default`: what to return if fails and optional</span>
+<span class="sd">         - `optional`: if True, returns default instead of raising an error</span>
+<span class="sd">         - `delimiter`: what separates the different key:value pairs</span>
+<span class="sd">         - `converter`: a function to apply to the value</span>
+<span class="sd">         - `key_value_separator`: Token to separate key-value pairs</span>
+<span class="sd">         - `dictionary_separator`: what separates the different dictionaries</span>
+<span class="sd">         </span>
+<span class="sd">        :return: namedtuple with keys as properties and values as matching values</span>
+
+<span class="sd">        :raises: ConfigurationError if not optional and not found.</span>
+<span class="sd">    </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dictionary</span><span class="p">(</span><span class="n">section</span><span class="o">=</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="o">=</span><span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">default</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">delimiter</span><span class="p">,</span>
+                                     <span class="n">converter</span><span class="o">=</span><span class="n">converter</span><span class="p">,</span> <span class="n">key_value_separator</span><span class="o">=</span><span class="n">key_value_separator</span><span class="p">)</span>
+        <span class="n">tuple_constructor</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="n">source</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">tuple_constructor</span><span class="p">(</span><span class="o">**</span><span class="n">source</span><span class="p">)</span>
+                       
+    <span class="k">def</span> <span class="nf">get_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">DASH</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_range"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_range.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_range">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts values from `start - end` to [start...end] (expects integers)</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] in the config file.</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `delimiter`: the value separator</span>
+<span class="sd">         - `optional`: if True, returns default instead of raising an error</span>
+
+<span class="sd">        :return: list of values</span>
+
+<span class="sd">        :raises: ConfigurationError if not optional and not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+        <span class="n">start_end</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">delimiter</span><span class="p">)</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_end</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_end</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">get_ranges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="n">COMMA</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">start_end_delimiter</span><span class="o">=</span><span class="n">DASH</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_ranges"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_ranges.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_ranges">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts a comma-delimited set of ranges (start-finish) to a list of integers.</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: The [section] in the config file.</span>
+<span class="sd">         - `option`: the option in the section</span>
+<span class="sd">         - `delimiter`: the value separator</span>
+<span class="sd">         - `optional`: if True, returns default instead of raising an error</span>
+<span class="sd">         - `start_end_delimiter`: the token to separate the start and end of each range</span>
+<span class="sd">        :return: list of values</span>
+
+<span class="sd">        :raises: ConfigurationError if not optional and not found.</span>
+
+<span class="sd">        :return: List of integers or None if optional is True and section not found.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">delimiter</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">values</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">values</span>
+        <span class="n">values_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+            <span class="n">start_end</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">start_end_delimiter</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>            
+                <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_end</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_end</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">start</span> <span class="o">=</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">start_end</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">values_list</span> <span class="o">+=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">values_list</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Pass-through to the SafeConfigParser</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parser</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">get_times</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">):</span>
+<div class="viewcode-block" id="ConfigurationMap.get_times"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_times.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_times">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets a list then converts the values to times.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">times</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">time_converter</span><span class="p">(</span><span class="n">time_with_units</span><span class="p">)</span> <span class="k">for</span> <span class="n">time_with_units</span> <span class="ow">in</span> <span class="n">times</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">get_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.get_time"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.get_time.html#apetools.lexicographers.configurationmap.ConfigurationMap.get_time">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: A section in the config file (e.g. TEST)</span>
+<span class="sd">         - `option`: An option in the section in the config file.</span>
+<span class="sd">         - `default`: A default value to return if the option isn&#39;t in the file</span>
+<span class="sd">         - `optional`: if True and time not found, return default</span>
+
+<span class="sd">        :rtype: int or float</span>
+<span class="sd">        :return: Value in the option (in seconds) or 0 if not present.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">default</span><span class="p">,</span> <span class="n">optional</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">source</span> <span class="o">==</span> <span class="n">default</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">source</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_converter</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="nf">time_in_seconds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_with_units</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationMap.time_in_seconds"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.configurationmap.ConfigurationMap.time_in_seconds.html#apetools.lexicographers.configurationmap.ConfigurationMap.time_in_seconds">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: time_with_units converted to seconds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">time_with_units</span> <span class="o">=</span> <span class="n">time_with_units</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="n">time_with_units</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">DAY_STRING</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">DAYS</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">HOUR_STRING</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">HOURS</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">MINUTE_STRING</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="n">MINUTES</span>
+                <span class="k">continue</span>
+
+            <span class="k">elif</span> <span class="n">SECOND_STRING</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="nb">float</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">total</span>
+<span class="c"># end ConfigurationMap</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

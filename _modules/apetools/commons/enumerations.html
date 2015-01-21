@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commons.enumerations &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commons.enumerations</h1><div class="highlight"><pre>
+<span class="k">class</span> <span class="nc">OperatingSystem</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="OperatingSystem"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.enumerations.html#apetools.commons.enumerations.OperatingSystem">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The Operating System holds constant names for operating systems</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">linux</span> <span class="o">=</span> <span class="s">&quot;linux&quot;</span>
+    <span class="n">android</span> <span class="o">=</span> <span class="s">&quot;android&quot;</span>
+    <span class="n">windows</span> <span class="o">=</span> <span class="s">&quot;windows&quot;</span>
+    <span class="n">mac</span> <span class="o">=</span> <span class="s">&#39;mac&#39;</span>
+    <span class="n">macintosh</span> <span class="o">=</span> <span class="s">&#39;mac&#39;</span>
+    <span class="n">osx</span> <span class="o">=</span> <span class="s">&#39;mac&#39;</span>
+    <span class="n">ios</span> <span class="o">=</span> <span class="s">&#39;ios&#39;</span>
+<span class="c"># end class OperatingSystem</span>
+
+
+<span class="n">TO_DUT</span> <span class="o">=</span> <span class="s">&#39;t&#39;</span></div>
+<span class="n">FROM_DUT</span> <span class="o">=</span> <span class="s">&#39;f&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">IperfDirection</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfDirection"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.enumerations.html#apetools.commons.enumerations.IperfDirection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    The IperfDirection holds constant values for the direction of iperf traffic.</span>
+
+<span class="sd">    To accomodate the confusing number of terms people use at allion, the following are aliased:</span>
+
+<span class="sd">     * to_dut = downlink = receive = rx</span>
+<span class="sd">     * from_dut = uplink = transmit = tx = send</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">to_dut</span> <span class="o">=</span> <span class="n">TO_DUT</span>
+    <span class="n">downlink</span> <span class="o">=</span> <span class="n">TO_DUT</span>
+    <span class="n">receieve</span> <span class="o">=</span> <span class="n">TO_DUT</span>
+    <span class="n">rx</span> <span class="o">=</span> <span class="n">TO_DUT</span>
+    
+    <span class="n">from_dut</span> <span class="o">=</span> <span class="n">FROM_DUT</span>
+    <span class="n">uplink</span> <span class="o">=</span> <span class="n">FROM_DUT</span>
+    <span class="n">transmit</span> <span class="o">=</span> <span class="n">FROM_DUT</span>
+    <span class="n">tx</span> <span class="o">=</span> <span class="n">FROM_DUT</span>
+    <span class="n">send</span> <span class="o">=</span> <span class="n">FROM_DUT</span>
+<span class="c"># end class IperfDirection</span>
+
+
+<span class="k">class</span> <span class="nc">IperfDefaults</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="s">&quot;256K&quot;</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="s">&quot;1470&quot;</span>
+    <span class="n">parallel</span> <span class="o">=</span> <span class="s">&#39;4&#39;</span>
+    <span class="n">interval</span> <span class="o">=</span> <span class="s">&#39;1&#39;</span>
+    <span class="n">format</span> <span class="o">=</span> <span class="s">&#39;m&#39;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="c"># end class IperfDefaults</span>
+
+
+<span class="k">class</span> <span class="nc">AffectorTypes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="AffectorTypes"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.enumerations.html#apetools.commons.enumerations.AffectorTypes">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    AffectorTypes hold the names of affectors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">naxxx</span> <span class="o">=</span> <span class="s">&quot;naxxx&quot;</span>
+    <span class="n">attenuator</span> <span class="o">=</span> <span class="s">&quot;attenuator&quot;</span>
+    <span class="n">buttonpusher</span> <span class="o">=</span> <span class="s">&quot;buttonpusher&quot;</span>
+<span class="c"># end class AffectorTypes</span>
+
+
+<span class="k">class</span> <span class="nc">ConnectionTypes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConnectionTypes"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.enumerations.html#apetools.commons.enumerations.ConnectionTypes">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    ConnectionTypes holds the connection names</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">ssh</span> <span class="o">=</span> <span class="s">&quot;ssh&quot;</span>
+    <span class="n">adblocal</span> <span class="o">=</span> <span class="s">&quot;adblocal&quot;</span>
+    <span class="n">serial</span> <span class="o">=</span> <span class="s">&quot;serial&quot;</span>
+    <span class="n">telnet</span> <span class="o">=</span> <span class="s">&quot;telnet&quot;</span>
+
+<span class="c"># end class ConnectionTypes</span>
+</pre></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

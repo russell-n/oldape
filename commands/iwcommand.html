@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IW Command &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="apetools.commands.iwcommand.IwCommand" href="api/apetools.commands.iwcommand.IwCommand.html" />
+    <link rel="prev" title="The Iperf Screen Command" href="iperfscreencommand.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.iwcommand.IwCommand.html" title="apetools.commands.iwcommand.IwCommand"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="iperfscreencommand.html" title="The Iperf Screen Command"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commands</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="iw-command">
+<h1>IW Command<a class="headerlink" href="#iw-command" title="Permalink to this headline">¶</a></h1>
+<p>A module to query the device for interface information.</p>
+<div class="section" id="the-iw-command">
+<h2>The Iw Command<a class="headerlink" href="#the-iw-command" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-b4722b4f8e57a6eedcf050cd96b9a4e28110b6ed.png" alt="BaseClass &lt;|-- IwCommand" />
+</p>
+<span class="target" id="module-apetools.commands.iwcommand"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand" title="apetools.commands.iwcommand.IwCommand"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand</span></tt></a>(connection[,&nbsp;interface,&nbsp;...])</td>
+<td>The IwCommand interprets iw</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand.operating_system" title="apetools.commands.iwcommand.IwCommand.operating_system"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand.operating_system</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the operating system for the device to query</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand.interface" title="apetools.commands.iwcommand.IwCommand.interface"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand.interface</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the name of the wireless interface</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand.ssid" title="apetools.commands.iwcommand.IwCommand.ssid"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand.ssid</span></tt></a></td>
+<td>The ssid of the attached ap</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand.channel" title="apetools.commands.iwcommand.IwCommand.channel"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand.channel</span></tt></a></td>
+<td>The channel of the attached ap (actually frequency right now)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand.rssi" title="apetools.commands.iwcommand.IwCommand.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand.rssi</span></tt></a></td>
+<td>This is dynamically generated</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand.mac_address" title="apetools.commands.iwcommand.IwCommand.mac_address"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand.mac_address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">MAC Address of the interface</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.iwcommand.html#apetools.commands.iwcommand.IwCommand._match" title="apetools.commands.iwcommand.IwCommand._match"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand._match</span></tt></a>(expression,&nbsp;name,&nbsp;command)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.iwcommand.IwCommand.__str__.html#apetools.commands.iwcommand.IwCommand.__str__" title="apetools.commands.iwcommand.IwCommand.__str__"><tt class="xref py py-obj docutils literal"><span class="pre">IwCommand.__str__</span></tt></a>()</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">IW Command</a><ul>
+<li><a class="reference internal" href="#the-iw-command">The Iw Command</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commands/iwcommand.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

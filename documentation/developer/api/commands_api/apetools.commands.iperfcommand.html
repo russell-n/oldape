@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commands.iperfcommand &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.commands.iperfcommand">
+<span id="apetools-commands-iperfcommand"></span><h1>apetools.commands.iperfcommand<a class="headerlink" href="#module-apetools.commands.iperfcommand" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseDeviceEnum</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseThreadClass</span></tt>()</td>
+<td>Extends the base-class with a run_thread method that logs the traceback on error.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand" title="apetools.commands.iperfcommand.IperfCommand"><tt class="xref py py-obj docutils literal"><span class="pre">IperfCommand</span></tt></a>(parameters,&nbsp;output,&nbsp;role[,&nbsp;...])</td>
+<td>An Iperf Command executes iperf commands</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">IperfCommandEnum</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">IperfParametersEnum</span></tt></td>
+<td>A holder for Iperf Parameter Constants</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipe</span></tt>([path,&nbsp;role,&nbsp;target,&nbsp;...])</td>
+<td>A class to add a pipe interface to the Storage Output</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">StoragePipeEnum</span></tt></td>
+<td>A holder of constants for the StoragePipe</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">SumParser</span></tt>(*args,&nbsp;**kwargs)</td>
+<td>The SumParser emits bandwidth sum lines</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">CommandError</span></tt></td>
+<td>A CommandError reflects a problem with the command on the Device-side</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConfigurationError</span></tt></td>
+<td>A ConfigurationError is raised if there is an error in the configuration file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../commands/api/apetools.commands.iperfcommand.IperfCommandError.html#apetools.commands.iperfcommand.IperfCommandError" title="apetools.commands.iperfcommand.IperfCommandError"><tt class="xref py py-obj docutils literal"><span class="pre">IperfCommandError</span></tt></a></td>
+<td>an error to raise if the settings are unknown</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../commands/api/apetools.commands.iperfcommand.IperfError.html#apetools.commands.iperfcommand.IperfError" title="apetools.commands.iperfcommand.IperfError"><tt class="xref py py-obj docutils literal"><span class="pre">IperfError</span></tt></a></td>
+<td>An IperfError indicates a connection problem between the client and server.</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="apetools.commands.iperfcommand.IperfCommandError">
+<em class="property">exception </em><tt class="descclassname">apetools.commands.iperfcommand.</tt><tt class="descname">IperfCommandError</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommandError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommandError" title="Permalink to this definition">¶</a></dt>
+<dd><p>an error to raise if the settings are unknown</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="apetools.commands.iperfcommand.IperfError">
+<em class="property">exception </em><tt class="descclassname">apetools.commands.iperfcommand.</tt><tt class="descname">IperfError</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfError" title="Permalink to this definition">¶</a></dt>
+<dd><p>An IperfError indicates a connection problem between the client and server.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commands.iperfcommand.IperfCommand">
+<em class="property">class </em><tt class="descclassname">apetools.commands.iperfcommand.</tt><tt class="descname">IperfCommand</tt><big>(</big><em>parameters</em>, <em>output</em>, <em>role</em>, <em>base_filename=''</em>, <em>subdirectory='raw_iperf'</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>An Iperf Command executes iperf commands</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>parameters</cite>: An IperfParameter to use</li>
+<li><cite>output</cite>: A Storage Pipe</li>
+<li><cite>role</cite>: client or server</li>
+<li><cite>base_filename</cite>: string to add to all filenames</li>
+<li><cite>subdirectory</cite>: A folder to put the iperf files intn</li>
+</ul>
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.abort">
+<tt class="descname">abort</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.abort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.abort" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">self.stop is True</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.filename">
+<tt class="descname">filename</tt><big>(</big><em>filename</em>, <em>node_type</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.filename" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>filename</cite>: base filename to add prefix to</li>
+<li><cite>node_type</cite>: the device.role</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a prefix to add to the filename given</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ConfigurationError if self.role or node_type are unknown</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.get_output_filename">
+<tt class="descname">get_output_filename</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.get_output_filename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.get_output_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns self.last_filename extended by the StorageOutput</p>
+<blockquote>
+<div><ul class="simple">
+<li>This is another ipad hack</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">output-file name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.run">
+<tt class="descname">run</tt><big>(</big><em>device</em>, <em>filename</em>, <em>server=False</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the iperf command and send to the output</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>device</cite>: A device to issue the command on</li>
+<li><cite>filename</cite>: a base-name to use for the output file.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">IperfError if runtime is greater than self.parameters.time</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.run_daemon">
+<tt class="descname">run_daemon</tt><big>(</big><em>device</em>, <em>filename</em>, <em>server=False</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.run_daemon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.run_daemon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the iperf command as a daemon, redirecting output to a file and detaching</p>
+<ul class="simple">
+<li>This was specifically created for the ipad, probably won&#8217;t work otherwise</li>
+<li>The user of this method is responsible for getting the file from the device</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>device</cite>: A device to issue the command on</li>
+<li><cite>filename</cite>: a base-name to use for the output file.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">self.last_filename is path to remote output file</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">self.device = device (this is another ipad thin)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.run_thread">
+<tt class="descname">run_thread</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.send_line">
+<tt class="descname">send_line</tt><big>(</big><em>output</em>, <em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.send_line"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.send_line" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends the line to the pipeline output. Traps StopIteration exceptions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.start">
+<tt class="descname">start</tt><big>(</big><em>device</em>, <em>filename</em>, <em>server=True</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>This runs the iperf command in a thread so it won&#8217;t block execution.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>device</cite>: device to issue the iperf command</li>
+<li><cite>filename</cite>: base filename to use for output file</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">iperf command started in self.thread</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.iperfcommand.IperfCommand.validate">
+<tt class="descname">validate</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.validate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.validate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: a line of output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">IperfError if an error is detected</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.iperfcommand.IperfCommand.is_daemon">
+<tt class="descname">is_daemon</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.is_daemon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.is_daemon" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this is run is a server, will it be a daemon?</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.iperfcommand.IperfCommand.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.iperfcommand.IperfCommand.max_time">
+<tt class="descname">max_time</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.max_time"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.max_time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the maximum amount of time to run</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.iperfcommand.IperfCommand.now">
+<tt class="descname">now</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.now"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.now" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">time-function to check for timeouts</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.iperfcommand.IperfCommand.output">
+<tt class="descname">output</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.output" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the storage pipeline for raw iperf output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.iperfcommand.IperfCommand.parameters">
+<tt class="descname">parameters</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>The iperf parameters</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.iperfcommand.IperfCommand.parser">
+<tt class="descname">parser</tt><a class="reference internal" href="../../../../_modules/apetools/commands/iperfcommand.html#IperfCommand.parser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.iperfcommand.IperfCommand.parser" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">SumParser pipeline (if this is the client)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/commands_api/apetools.commands.iperfcommand.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

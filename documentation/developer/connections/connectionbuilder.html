@@ -1,0 +1,333 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The ConnectionBuilder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-connectionbuilder">
+<h1>The ConnectionBuilder<a class="headerlink" href="#the-connectionbuilder" title="Permalink to this headline">¶</a></h1>
+<p>A module to build the connections.</p>
+<ul class="simple">
+<li>Each expects only a <cite>parameters</cite> named-tuple on initiation.</li>
+<li>Each has a connection parameter</li>
+</ul>
+<div class="section" id="sshparameters">
+<h2>SSHParameters<a class="headerlink" href="#sshparameters" title="Permalink to this headline">¶</a></h2>
+<p>This is a named-tuple to pass parameters to the ssh-connection.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters" title="apetools.builders.subbuilders.connectionbuilder.SSHParameters"><tt class="xref py py-obj docutils literal"><span class="pre">SSHParameters</span></tt></a>(hostname,&nbsp;username[,&nbsp;...])</td>
+<td>To make the parameters optional this is changed to a class</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-d042f60beb605f584c846d972c283ce7414b4e13.png" alt="SSHParameters -|&gt; namedtuple
+SSHParameters : hostname
+SSHParameters : username
+SSHParameters : password" />
+</p>
+</div>
+<div class="section" id="connectionbuilderbase">
+<span id="connection-builder-base"></span><h2>ConnectionBuilderBase<a class="headerlink" href="#connectionbuilderbase" title="Permalink to this headline">¶</a></h2>
+<p>A base class for connection builders.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase" title="apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase"><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionBuilderBase</span></tt></a>(parameters)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-c86d96f98f9a248e8c2eef1271d2dccb97a510f3.png" alt="ConnectionBuilderBase -|&gt; BaseClass
+ConnectionBuilderBase : abstractproperty connection" />
+</p>
+</div>
+<div class="section" id="dummyconnectionbuilder">
+<h2>DummyConnectionBuilder<a class="headerlink" href="#dummyconnectionbuilder" title="Permalink to this headline">¶</a></h2>
+<p>This is for the odd cases where we need a fake connection that does not actually connect to anything. In particular this was created for the screen-iperf-hack for iPads.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="1/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder" title="apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">DummyConnectionBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Builds a Dummy Connection</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-80bd71bd524fca8976cb6c3edceca3ed4e589add.png" alt="DummyConnectionBuilder -|&gt; ConnectionBuilderBase" />
+</p>
+</div>
+<div class="section" id="adbshellconnectionbuilder">
+<h2>AdbShellConnectionBuilder<a class="headerlink" href="#adbshellconnectionbuilder" title="Permalink to this headline">¶</a></h2>
+<p>A builder for a <em class="xref std std-ref">local adb-shell connection</em>. In this case the connection is a sub-process of the computer running the APE (it is assumed that the android is directly connected to the PC via an ADB USB bridge) so it doesn&#8217;t use the parameters, but to make the signatures the same across the builders, something is expected (even if it&#8217;s just None) on construction.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder" title="apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">AdbShellConnectionBuilder</span></tt></a>([parameters])</td>
+<td>Use this to get an adb shell connection</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-0a6fb0211aa5e60ae8e350ad77532094b34944f5.png" alt="AdbShellConnectionBuilder -|&gt; BaseClass
+AdbShellConnectionBuilder : ADBShellConnection connection" />
+</p>
+</div>
+<div class="section" id="sshconnectionbuilder">
+<h2>SSHConnectionBuilder<a class="headerlink" href="#sshconnectionbuilder" title="Permalink to this headline">¶</a></h2>
+<p>A Builder of <em class="xref std std-ref">SSHConnections</em>.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder" title="apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">SSHConnectionBuilder</span></tt></a>(parameters)</td>
+<td>Use this to get an ssh connection</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-18a92469f1247d85deb5290a3db0fb676204ab5f.png" alt="SSHConnectionBuilder -|&gt; BaseClass
+SSHConnectionBuilder : SSHConnection connection" />
+</p>
+</div>
+<div class="section" id="adbshellsshconnectionbuilder">
+<h2>AdbShellSshConnectionBuilder<a class="headerlink" href="#adbshellsshconnectionbuilder" title="Permalink to this headline">¶</a></h2>
+<p>A builder of <em class="xref std std-ref">remote (SSH-based) connections</em> for an ADB shell.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder" title="apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">AdbShellSshConnectionBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to build an adb-shell connection over ssh</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-4b1a9189d7d2df6f2b93d969b0544623e4d5ba22.png" alt="AdbShellSshConnectionBuilder -|&gt; SSHConnectionBuilder
+AdbShellSshConnectionBuilder : ADBShellSSHConnection Connection" />
+</p>
+</div>
+<div class="section" id="connectionbuildertypes">
+<h2>ConnectionBuilderTypes<a class="headerlink" href="#connectionbuildertypes" title="Permalink to this headline">¶</a></h2>
+<p>A holder of string constants for the types of connections that can be built.</p>
+<p class="plantuml">
+<img src="../../../_images/plantuml-f585f0eb186525cf2236fff97f2ce56ac359c81b.png" alt="ConnectionBuilderTypes : ssh
+ConnectionBuilderTypes : adbshellssh
+ConnectionBuilderTypes : adbshell" />
+</p>
+</div>
+<div class="section" id="connectionbuilders">
+<h2>ConnectionBuilders<a class="headerlink" href="#connectionbuilders" title="Permalink to this headline">¶</a></h2>
+<p>The connection builders can be retrieved by a dictionary named <cite>connection_builders</cite>.</p>
+<p>For example, to retrieve an SSHConnection from this module (connectionbuilder):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">connectionbuilder</span> <span class="kn">import</span> <span class="n">connection_builders</span><span class="p">,</span> <span class="n">ConnectionBuilderTypes</span><span class="p">,</span> <span class="n">SSHParameters</span>
+<span class="n">ssh_builder</span> <span class="o">=</span> <span class="n">connection_builders</span><span class="p">[</span><span class="n">ConnectionBuilderTypes</span><span class="o">.</span><span class="n">ssh</span><span class="p">]</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">SSHParameters</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;allion&#39;</span><span class="p">)</span>
+<span class="n">ssh_builder</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+<span class="n">ssh_connection</span> <span class="o">=</span> <span class="n">ssh_builder</span><span class="o">.</span><span class="n">connection</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The import here assumes you are in the same working directly, a more realistic one would use the package path.</p>
+</div>
+<table border="1" class="docutils">
+<caption>connection_builders</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">key</th>
+<th class="head">value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>ConnectionBuilderTypes.adbshell</td>
+<td>AdbShellConnectionBuilder</td>
+</tr>
+<tr class="row-odd"><td>ConnectionBuilderTypes.adbshellssh</td>
+<td>AdbShellSshConnectionBuilder</td>
+</tr>
+<tr class="row-even"><td>ConnectionBuilderTypes.ssh</td>
+<td>SSHConnectionBuilder</td>
+</tr>
+<tr class="row-odd"><td>ConnectionBuilderTypes.dummy</td>
+<td>DummyConnection</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="testing-the-builders">
+<h2>Testing the Builders<a class="headerlink" href="#testing-the-builders" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilders.test_valid_keys.html#apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilders.test_valid_keys" title="apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilders.test_valid_keys"><tt class="xref py py-obj docutils literal"><span class="pre">TestConnectionBuilders.test_valid_keys</span></tt></a>()</td>
+<td>Are all the keys in the ConnectionBuilderTypes?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestDummyConnectionBuilder.test_connection.html#apetools.builders.subbuilders.connectionbuilder.TestDummyConnectionBuilder.test_connection" title="apetools.builders.subbuilders.connectionbuilder.TestDummyConnectionBuilder.test_connection"><tt class="xref py py-obj docutils literal"><span class="pre">TestDummyConnectionBuilder.test_connection</span></tt></a>()</td>
+<td>Is the connection a Dummy Connection?</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_parameters.html#apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_parameters" title="apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_parameters"><tt class="xref py py-obj docutils literal"><span class="pre">TestConnectionBuilderBase.test_parameters</span></tt></a>()</td>
+<td>Does ConnectionBuilderBase take a <cite>parameters</cite> argument on construction?</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_no_connection.html#apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_no_connection" title="apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_no_connection"><tt class="xref py py-obj docutils literal"><span class="pre">TestConnectionBuilderBase.test_no_connection</span></tt></a>(...)</td>
+<td>Does a child that hasn&#8217;t implemented the connection raise an error?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The ConnectionBuilder</a><ul>
+<li><a class="reference internal" href="#sshparameters">SSHParameters</a></li>
+<li><a class="reference internal" href="#connectionbuilderbase">ConnectionBuilderBase</a></li>
+<li><a class="reference internal" href="#dummyconnectionbuilder">DummyConnectionBuilder</a></li>
+<li><a class="reference internal" href="#adbshellconnectionbuilder">AdbShellConnectionBuilder</a></li>
+<li><a class="reference internal" href="#sshconnectionbuilder">SSHConnectionBuilder</a></li>
+<li><a class="reference internal" href="#adbshellsshconnectionbuilder">AdbShellSshConnectionBuilder</a></li>
+<li><a class="reference internal" href="#connectionbuildertypes">ConnectionBuilderTypes</a></li>
+<li><a class="reference internal" href="#connectionbuilders">ConnectionBuilders</a></li>
+<li><a class="reference internal" href="#testing-the-builders">Testing the Builders</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/connections/connectionbuilder.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

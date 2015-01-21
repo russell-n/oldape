@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Test Throughput Using Multiple APs Use Case &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Use Cases" href="index.html" />
+    <link rel="next" title="Setup Session" href="setup_testing.html" />
+    <link rel="prev" title="Test Throughput To and From DUT Use Case" href="test_throughput_to_and_from_dut.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="setup_testing.html" title="Setup Session"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="test_throughput_to_and_from_dut.html" title="Test Throughput To and From DUT Use Case"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" >The Old Ape&#8217;s Developer Documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Old Ape&#8217;s Design Documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Use Cases</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="test-throughput-using-multiple-aps-use-case">
+<h1>Test Throughput Using Multiple APs Use Case<a class="headerlink" href="#test-throughput-using-multiple-aps-use-case" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="narrative-description">
+<h2>Narrative Description<a class="headerlink" href="#narrative-description" title="Permalink to this headline">¶</a></h2>
+<p>The <em>All-In-One Performance Evaluation Tools (APETools)</em> sets up a <em>Control PC (CPC)</em>, <em>Device Under Test (DUT)</em>, <em>Traffic PC (TPC)</em>, <em>Networked Power Switch (NAXXX)</em>, and multiple <em>Access Points (APs)</em> attached to the NAXXX. The DUT is associated to each AP so that it will re-connect to each of them automatically if there is only one AP available. After setting up the physical system, the APE will create or alter a configuration file which specifies the parameters for the test. Once the setup is complete, the APE sends the <cite>run</cite> command to the system.</p>
+<p>The system translates the configuration file into a set of runtime parameters, builds the necessary components using the parameters, and proceeds to the testing.</p>
+<p>The system starts the testing by connecting to the DUT via the CPC and begins capturing the specified logs&#8217; output in background processes. It also inserts a message indicating that a test session is starting.</p>
+<p>The system starts each individual test (1 per AP) by inserting a message into the DUT&#8217;s log indicating that a new test is being started. It also inserts a message indicating that the pre-test setup is beginning. The system next identifies the next AP to test the DUT with and enables it via the Naxxx, disabling all of the other APs. The system then waits for the DUT to successfully ping the TPC, inserts a message into the log indicating the time to recover, then proceeds to the throughput tests.</p>
+<p>Before running the throughput tests, the system inserts a message into the DUT&#8217;s log indicating that the throughput tests will be starting. For each direction specified the system starts by killing any pre-existing <cite>iperf</cite> processes on the DUT and TPC. Once the <cite>iperf</cite> processes are dead, the system starts the <cite>iperf</cite> server on the receiving device, sleeps for a brief period while the server starts, then starts the client on the sending device. The system opens a file for each device using names based on the switch identifier, the direction of traffic relative to the DUT, the repetition number, and the protocol (i.e. <em>tcp</em> or <em>udp</em>). As the traffic is sent between the two devices, the standard output of each is captured in their respective files.</p>
+<p>When the traffic is completed, output summarizing the outcome of the test is recorded by the system in the DUT&#8217;s log. The system then sleeps for a brief recovery period before continuing with the next test.</p>
+<p>When all the tests specified in the configuration are completed the system inserts a closing message into the DUT&#8217;s log, waits for a brief period to allow the logs to complete, then copies the system log and configuration file to the data folder in order to enable reconstructing the test at a later date if it&#8217;s needed.</p>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-bd7d76c03429a6fa92f08a916c87320c25830370.png" alt="left to right direction
+APE --&gt; (&quot;Test Throughput Using Multiple APs&quot;)
+(&quot;Test Throughput Using Multiple APs&quot;) ..&gt; (&quot;Cleanup Session&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Test Throughput Using Multiple APs&quot;) ..&gt; (&quot;Setup Session&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Test Throughput Using Multiple APs&quot;) ..&gt; (&quot;Run Test&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Run Test&quot;) ..&gt; (&quot;Measure Throughput&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Measure Throughput&quot;) &lt;|-- (&quot;Run Traffic From DUT&quot;)
+(&quot;Measure Throughput&quot;) &lt;|-- (&quot;Run Traffic To DUT&quot;)
+(&quot;Measure Throughput&quot;) &lt;|-- (&quot;Run Traffic To and From DUT&quot;)
+(&quot;Run Test&quot;) ..&gt; (&quot;Setup Iteration&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Setup Iteration&quot;) ..&gt; (&quot;Environmental Affector&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Setup Iteration&quot;) ..&gt; (&quot;Wait For Device&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Environmental Affector&quot;) &lt;|-- (&quot;Naxxx&quot;)
+(&quot;Wait For Device&quot;) &lt;|-- (&quot;Time To Recovery&quot;)" />
+</p>
+</div>
+<div class="section" id="preconditions">
+<h2>Preconditions<a class="headerlink" href="#preconditions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>The <em>All-In-One Performance Evaluation Tools (APETools)</em> has set up a <em>Control PC (CPC)</em></li>
+<li>The <em>Device Under Test (DUT)</em> is connected to the <em>Control PC (CPC)</em> via <em>Android Debug Bridge (ADB)</em></li>
+<li>The <em>Traffic PC (TPC)</em> is on the same subnet as the DUT</li>
+<li>The TPC is on the same subnet as the CPC</li>
+<li>The <em>Networked Power Switch (NAXXX)</em> is on the same subnet as the CPC</li>
+<li>The  <em>Access Points (APs)</em>  are plugged into the NAXXX.</li>
+<li>The DUT is associated with each AP so that it will re-connect to each of them automatically if there is only one AP available.</li>
+<li>A well-formed configuration file specifying the parameters for the test has been created.</li>
+</ul>
+</div>
+<div class="section" id="main-path">
+<h2>Main Path<a class="headerlink" href="#main-path" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<caption>Main Path</caption>
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Action</th>
+<th class="head">Requirement</th>
+<th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>APE sends <cite>run</cite> command to system</li>
+</ol>
+</td>
+<td><em>A.2.</em> System is invoked via the command line.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System translates configuration file into set of runtime parameters</li>
+</ol>
+</td>
+<td><em>A.1.</em> System interprets Configuration Files.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System builds necessary components using parameters</li>
+</ol>
+</td>
+<td><em>A.16</em> System interprets parameters to build components at runtime.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System precedes testing by connecting to the DUT via the CPC and starting to capture  specified logs&#8217; output in background</li>
+</ol>
+</td>
+<td><em>A.13</em> System captures device log output and sends it to storage.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System inserts a message into DUT&#8217;s log indicating that test session is starting</li>
+</ol>
+</td>
+<td><em>A.17</em> System inserts messages into the <em>Device Under Test (DUT)</em> log.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System starts each test (1 per AP) by inserting a message into the DUT&#8217;s log indicating that a new test is being started</li>
+</ol>
+</td>
+<td><em>A.17</em> System inserts messages into the <em>Device Under Test (DUT)</em> log.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System inserts a message indicating that the pre-test setup is beginning</li>
+</ol>
+</td>
+<td><em>A.17</em> System inserts messages into the <em>Device Under Test (DUT)</em> log.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System identifies next AP to test  DUT with and enables it via <em>Networked Power Switch (NAXXX)</em></li>
+</ol>
+</td>
+<td><em>A.12</em> System uses Naxxx environmental affector to change <em>Access Point (AP)</em>.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System uses NAXXX to disable  all of other APs</li>
+</ol>
+</td>
+<td><em>A.12</em> System uses Naxxx environmental affector to change <em>Access Point (AP)</em>.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System waits for DUT to successfully ping TPC</li>
+</ol>
+</td>
+<td><em>A.14</em> System waits for <em>Device Under Test (DUT)</em> to have network connection to the <em>Traffic PC (TPC)</em>.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System inserts time to recover into DUT log</li>
+</ol>
+</td>
+<td><em>A.17</em> System inserts messages into the <em>Device Under Test (DUT)</em> log.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System inserts a message into the DUT&#8217;s log indicating that throughput tests starting</li>
+</ol>
+</td>
+<td><em>A.17</em> System inserts messages into the <em>Device Under Test (DUT)</em> log.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>For each traffic direction specified System kills pre-existing <cite>iperf</cite> processes on DUT and TPC</li>
+</ol>
+</td>
+<td><em>A.5.</em> System kills <cite>iperf</cite> sessions on the <em>Device Under Test (DUT)</em> and <em>Traffic PC (TPC)</em>.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System starts <cite>iperf</cite> server on the receiving device</li>
+</ol>
+</td>
+<td><em>A.18</em> System starts <cite>iperf</cite> server on device.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System sleeps for a brief period while the server starts</li>
+</ol>
+</td>
+<td><em>A.22</em> System pauses between key changes to allow devices to stabilize.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System starts the client on the sending device</li>
+</ol>
+</td>
+<td><em>A.19</em> System starts <cite>iperf</cite> client on device.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System opens file for each device using names based on switch ID</li>
+</ol>
+</td>
+<td>traffic direction relative to DUT</td>
+<td>repetition</td>
+<td>and protocol</td>
+<td><em>A.20</em> System creates standardized names for files that map to their test.</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>As traffic is sent between devices</li>
+</ol>
+</td>
+<td>standard output of each is captured in their respective files</td>
+<td><em>A.8.</em> System saves <cite>iperf</cite> data for both <em>Device Under Test (DUT)</em> and <em>Traffic PC (TPC)</em>.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>summary of test outcome is recorded by the system in the DUT&#8217;s log</li>
+</ol>
+</td>
+<td><em>A.21</em> System creates summary value for each test.</td>
+<td><em>A.17</em> System inserts messages into the <em>Device Under Test (DUT)</em> log.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System sleeps for brief recovery period before continuing with next test</li>
+</ol>
+</td>
+<td><em>A.22</em> System pauses between key changes to allow devices to stabilize.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System inserts closing message into  DUT&#8217;s log</li>
+</ol>
+</td>
+<td><em>A.17</em> System inserts messages into the <em>Device Under Test (DUT)</em> log.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td><ol class="first last arabic simple">
+<li>System waits for a brief period to allow the logs to complete</li>
+</ol>
+</td>
+<td><em>A.22</em> System pauses between key changes to allow devices to stabilize.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-even"><td><ol class="first last arabic simple">
+<li>System  copies its log and configuration file to data folder <em>A.9.</em> System copies its log file to the data folder.</li>
+</ol>
+</td>
+<td><em>A.10</em> System copies the configuration file to the data folder.</td>
+<td><em>A.23</em> System preserves supporting information to reconstruct circumstances of each test.</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="related-requirements">
+<h2>Related Requirements<a class="headerlink" href="#related-requirements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><em>A.11</em> System runs throughput tests.</li>
+<li><em>A.12</em> System uses Naxxx environmental affector to change <em>Access Point (AP)</em>.</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2>Preconditions<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>The APE has created a well-formed configuration file.</li>
+<li>The naxxx is on the same subnet as the control pc.</li>
+<li>The AP&#8217;s are plugged into the naxxx.</li>
+<li>The AP&#8217;s have been previously connected to the DUT.</li>
+<li>The DUT has been confirmed to roam to AP&#8217;s.</li>
+<li>The Control PC is connected to the DUT and communicating via ADB.</li>
+<li>The TPC has a running SSH Server.</li>
+<li>CPC and TPC are on the same (control) subnet.</li>
+<li>DUT, AP, and TPC are on the same (test) subnet.</li>
+<li>TPC and DUT have iperf installed on their <cite>PATH</cite>.</li>
+</ol>
+</div>
+<div class="section" id="postconditions">
+<h2>Postconditions<a class="headerlink" href="#postconditions" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>Data from the iperf sessions has been stored to files.</li>
+<li>Configuration file and logs are saved to the data files.</li>
+</ol>
+</div>
+<div class="section" id="id2">
+<h2>Main Path<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>(:include: <cite>Setup Session</cite>) The test components are set up.</li>
+<li>The naxxx enables the participating <em>Access Point (AP)</em>.</li>
+<li>The naxxx disables all non-participating APs.</li>
+<li>(:include: <cite>Time To Recovery</cite>) The system waits for the DUT to re-join the system.</li>
+<li>(:include: <cite>Run Iperf Traffic to DUT</cite>) If configured, measure throughput to DUT.</li>
+<li>(:include: <cite>Run Iperf Traffic from DUT</cite>) If configured, measure throughput from DUT.</li>
+<li>(:include: <cite>Cleanup Session</cite>) Log and configuration files are copied to the DUT.</li>
+</ol>
+</div>
+<div class="section" id="alternative-paths">
+<h2>Alternative Paths<a class="headerlink" href="#alternative-paths" title="Permalink to this headline">¶</a></h2>
+<p>2.1. The Naxxx raises a ConnnectionError.</p>
+<blockquote>
+<div><p>2.1.1. The system emits an error</p>
+<p>2.1.2. The system exits.</p>
+</div></blockquote>
+<p>2.2. The Naxxx raises a NaxxxError.</p>
+<blockquote>
+<div><p>2.2.1. The system emits an error</p>
+<p>2.2.2. The current test iteration is exited.</p>
+</div></blockquote>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-9a5ce5575f7ba2453b6ac664e66d03e9ecc28541.png" alt="(*) -right-&gt; &quot;Setup Session&quot;
+&quot;Setup Session&quot; -right-&gt; &quot;Start Test&quot;
+&quot;Start Test&quot; -right-&gt; &quot;Enable AP&quot;
+if &quot;&quot; then
+   -right-&gt; &quot;Disable Other APs&quot;
+   if &quot;&quot; then
+      -right-&gt; &quot;Wait For Dut&quot;
+      if &quot;&quot; then
+         -right-&gt; &quot;Measure Throughput&quot;
+      else
+         --&gt; [error] &quot;Emit Error&quot; as emit
+      endif
+   else
+      --&gt; [error] emit
+   endif
+else
+   --&gt; [error] emit
+   if &quot;ConfigurationError&quot; then
+      --&gt; &quot;Start Test&quot;
+   else
+      --&gt; [NaxxxError] (*)
+   endif
+endif
+&quot;Measure Throughput&quot; --&gt; (*)" />
+</p>
+</div>
+</div>
+<div class="section" id="replacements">
+<h1>Replacements<a class="headerlink" href="#replacements" title="Permalink to this headline">¶</a></h1>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Test Throughput Using Multiple APs Use Case</a><ul>
+<li><a class="reference internal" href="#narrative-description">Narrative Description</a></li>
+<li><a class="reference internal" href="#preconditions">Preconditions</a></li>
+<li><a class="reference internal" href="#main-path">Main Path</a></li>
+<li><a class="reference internal" href="#related-requirements">Related Requirements</a></li>
+<li><a class="reference internal" href="#id1">Preconditions</a></li>
+<li><a class="reference internal" href="#postconditions">Postconditions</a></li>
+<li><a class="reference internal" href="#id2">Main Path</a></li>
+<li><a class="reference internal" href="#alternative-paths">Alternative Paths</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#replacements">Replacements</a></li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/design/usecases/test_throughput_using_naxxx.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

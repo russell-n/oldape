@@ -1,0 +1,78 @@
+Tool Builder
+============
+
+A module to aggregate the tool-builders.
+
+.. note:: This will eventually be replaced by the importer class(es)
+
+.. _apetools-tool-builder-enum:
+
+The Tool Builder Enum
+---------------------
+
+It looks like the Enum is a red-herring. The *BaseOperationBuilder* is just getting properties from the *ToolBuilder* (using *gettattr*).
+
+::
+
+    class ToolBuilderEnum(object):
+        __slots__ = ()
+        ners = "ners"
+        apconnect = "apconnect"
+        timetorecovery = "timetorecovery"
+        dumpdevicestatebuilder = "dumpdevicestatebuilder"
+        iperf = "iperf"
+        rotate = 'rotate'
+        poweron = 'poweron'
+        oscillate = 'oscillate'
+        oscillatestop = 'oscillatestop'
+        sleep = 'sleep'
+        naxxx = 'naxxx'
+        busyboxwget = 'busyboxwget'
+        rotate_cube = 'rotate_cube'
+    # end class ToolBuilderEnum
+    
+    
+
+
+
+.. _apetools-tool-builder:
+
+The Tool Builder
+----------------
+
+The `ToolBuilder` is used by the :ref:`BaseOperationBuilder <apetools-baseoperationbuilder>` to find the classes that build the code the user has requested in the configuration file. The names of the properties are what should be in the configuration file's [TEST] section.
+
+.. '
+
+For example, the `dumpdevicestate` is meant to run in the `operation_setup` phase, and `iperf` in the `execute_test section`, so the configuration file that declares it would have this in it (along with other things).
+ 
+.. code-block:: ini
+
+   [TEST]
+   operation_setup = dumpdevicestate
+   execute_test = iperf
+
+With the values corresponding to `ToolBuilder.dumpdevicestate` and `ToolBuilder.iperf`.   
+
+.. module:: apetools.builders.subbuilders.toolbuilder
+.. autosummary:: 
+   :toctree: api
+
+   ToolBuilder
+   ToolBuilder.apconnect
+   ToolBuilder.busyboxwget
+   ToolBuilder.commandwatch
+   ToolBuilder.dumpdevicestate
+   ToolBuilder.iperf
+   ToolBuilder.naxxx
+   ToolBuilder.ners
+   ToolBuilder.oscillate
+   ToolBuilder.oscillatestop
+   ToolBuilder.poweroff
+   ToolBuilder.poweron
+   ToolBuilder.rotate
+   ToolBuilder.rotate_cube
+   ToolBuilder.sleep
+   ToolBuilder.timetorecovery
+   ToolBuilder.watchlogs
+

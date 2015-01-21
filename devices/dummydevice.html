@@ -1,0 +1,261 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Dummy Device &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Devices" href="index.html" />
+    <link rel="next" title="apetools.devices.dummydevice.DummyConnection" href="api/apetools.devices.dummydevice.DummyConnection.html" />
+    <link rel="prev" title="apetools.devices.basedevice.BaseDevice.__str__" href="api/apetools.devices.basedevice.BaseDevice.__str__.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.devices.dummydevice.DummyConnection.html" title="apetools.devices.dummydevice.DummyConnection"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.devices.basedevice.BaseDevice.__str__.html" title="apetools.devices.basedevice.BaseDevice.__str__"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Devices</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-dummy-device">
+<h1>The Dummy Device<a class="headerlink" href="#the-dummy-device" title="Permalink to this headline">¶</a></h1>
+<p>A Dummy to stand in for a real device.</p>
+<div class="section" id="the-dummy-connection">
+<h2>The Dummy Connection<a class="headerlink" href="#the-dummy-connection" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-1b9fbb6b832588a1ed5b7df30dee498e8a9e4ccc.png" alt="BaseClass &lt;|-- DummyConnection" />
+</p>
+<span class="target" id="module-apetools.devices.dummydevice"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyConnection" title="apetools.devices.dummydevice.DummyConnection"><tt class="xref py py-obj docutils literal"><span class="pre">DummyConnection</span></tt></a>()</td>
+<td>A class to act as a fake connection.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyConnection._procedure_call" title="apetools.devices.dummydevice.DummyConnection._procedure_call"><tt class="xref py py-obj docutils literal"><span class="pre">DummyConnection._procedure_call</span></tt></a>(command,&nbsp;...)</td>
+<td>Logs the command and arguments then returns empty strings</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.dummydevice.DummyConnection.__getattr__.html#apetools.devices.dummydevice.DummyConnection.__getattr__" title="apetools.devices.dummydevice.DummyConnection.__getattr__"><tt class="xref py py-obj docutils literal"><span class="pre">DummyConnection.__getattr__</span></tt></a>(command)</td>
+<td>Calls _procedure call (enables the dot-notation calls)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h2>The Dummy Device<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-fbf09145fb09893bbb2b223f57fcedc19a5f2cb3.png" alt="BaseClass &lt;|-- DummyDevice" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice" title="apetools.devices.dummydevice.DummyDevice"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to configure and query linux devices</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.connection" title="apetools.devices.dummydevice.DummyDevice.connection"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.connection</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a Dummy Connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.address" title="apetools.devices.dummydevice.DummyDevice.address"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the address of the device</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.mac_address" title="apetools.devices.dummydevice.DummyDevice.mac_address"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.mac_address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the MAC address of the device</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.bssid" title="apetools.devices.dummydevice.DummyDevice.bssid"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.bssid</span></tt></a></td>
+<td>Fake Basic service set identification</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.wifi_info" title="apetools.devices.dummydevice.DummyDevice.wifi_info"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.wifi_info</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a summary string of available wifi info.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.ssid" title="apetools.devices.dummydevice.DummyDevice.ssid"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.ssid</span></tt></a></td>
+<td>Fake identifier for the AP</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.rssi" title="apetools.devices.dummydevice.DummyDevice.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.rssi</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">rssi from the wifi_query</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.disable_wifi" title="apetools.devices.dummydevice.DummyDevice.disable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.disable_wifi</span></tt></a>()</td>
+<td>Logs the fact that this method was called.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.enable_wifi" title="apetools.devices.dummydevice.DummyDevice.enable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.enable_wifi</span></tt></a>()</td>
+<td>Logs the fact that this method was called</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/devices_api/apetools.devices.dummydevice.html#apetools.devices.dummydevice.DummyDevice.log" title="apetools.devices.dummydevice.DummyDevice.log"><tt class="xref py py-obj docutils literal"><span class="pre">DummyDevice.log</span></tt></a>(message)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Dummy Device</a><ul>
+<li><a class="reference internal" href="#the-dummy-connection">The Dummy Connection</a></li>
+<li><a class="reference internal" href="#id1">The Dummy Device</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/devices/dummydevice.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,1117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.connections.adbconnection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.connections.adbconnection">
+<span id="apetools-connections-adbconnection"></span><h1>apetools.connections.adbconnection<a class="headerlink" href="#module-apetools.connections.adbconnection" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../connections/api/apetools.connections.adbconnection.ADBBlockingConnection.html#apetools.connections.adbconnection.ADBBlockingConnection" title="apetools.connections.adbconnection.ADBBlockingConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBBlockingConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Like the ADBConnection but waits for a device to come online</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection" title="apetools.connections.adbconnection.ADBConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnection</span></tt></a>([serial_number])</td>
+<td>An ADB Connection sends commands to the Android Debug Bridge</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.connections.adbconnection.ADBSSHConnection" title="apetools.connections.adbconnection.ADBSSHConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBSSHConnection</span></tt></a>([serial_number])</td>
+<td>An ADB Connection sends commands to the Android Debug Bridge</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../connections/api/apetools.connections.adbconnection.ADBShellBlockingConnection.html#apetools.connections.adbconnection.ADBShellBlockingConnection" title="apetools.connections.adbconnection.ADBShellBlockingConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellBlockingConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection" title="apetools.connections.adbconnection.ADBShellConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>An ADBShellConnection connects to the adb shell.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../connections/1/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection" title="apetools.connections.adbconnection.ADBShellSSHConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellSSHConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to talk to the shell, note the adb-server</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection</span></tt>(*args,&nbsp;**kwargs)</td>
+<td>A Class that uses Pexpect to get around the problem of file-buffering</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">OperatingSystem</span></tt></td>
+<td>The Operating System holds constant names for operating systems</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">OutputError</span></tt></td>
+<td>OutputError(output, error)</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">SSHConnection</span></tt>(hostname,&nbsp;username[,&nbsp;...])</td>
+<td>An SSHConnection executes commands over an SSHConnection</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">StringIO</span></tt>([buf])</td>
+<td>class StringIO([buffer])</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ValidatingOutput</span></tt>(lines,&nbsp;validate,&nbsp;*args,&nbsp;...)</td>
+<td>A ValidatingOutput reads from an iterable and validates the lines.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../connections/api/apetools.connections.adbconnection.ADBCommandError.html#apetools.connections.adbconnection.ADBCommandError" title="apetools.connections.adbconnection.ADBCommandError"><tt class="xref py py-obj docutils literal"><span class="pre">ADBCommandError</span></tt></a></td>
+<td>Raise if there is a problem with an ADB command</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../connections/api/apetools.connections.adbconnection.ADBConnectionError.html#apetools.connections.adbconnection.ADBConnectionError" title="apetools.connections.adbconnection.ADBConnectionError"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnectionError</span></tt></a></td>
+<td>Raise if there is a problem with the ADB Connection</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../connections/api/apetools.connections.adbconnection.ADBConnectionWarning.html#apetools.connections.adbconnection.ADBConnectionWarning" title="apetools.connections.adbconnection.ADBConnectionWarning"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnectionWarning</span></tt></a></td>
+<td>A warning to raise if something non-fatal but bad happens</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">CommandError</span></tt></td>
+<td>A CommandError reflects a problem with the command on the Device-side</td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionError</span></tt></td>
+<td>A ConnectionError is raised by connectinos to indicate a problem.</td>
+</tr>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionWarning</span></tt></td>
+<td>A connection warning is a non-fatal connection-related error.</td>
+</tr>
+</tbody>
+</table>
+<dl class="exception">
+<dt id="apetools.connections.adbconnection.ADBCommandError">
+<em class="property">exception </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBCommandError</tt><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBCommandError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBCommandError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise if there is a problem with an ADB command</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="apetools.connections.adbconnection.ADBConnectionError">
+<em class="property">exception </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBConnectionError</tt><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBConnectionError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnectionError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raise if there is a problem with the ADB Connection</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="apetools.connections.adbconnection.ADBConnectionWarning">
+<em class="property">exception </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBConnectionWarning</tt><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBConnectionWarning"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnectionWarning" title="Permalink to this definition">¶</a></dt>
+<dd><p>A warning to raise if something non-fatal but bad happens</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBBlockingConnection</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBBlockingConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like the ADBConnection but waits for a device to come online</p>
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the command string to execute</li>
+<li><cite>arguments</cite>: The arguments for the command</li>
+<li><cite>timeout</cite>: if <cite>block</cite>, wait until timeout for output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError named tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is provided so it can be overriden by subclasses.</p>
+<p>Otherwise it just returns _main()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection._rpc">
+<tt class="descname">_rpc</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection._rpc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the LocalConnection._rpc to check for errors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection.check_base_errors">
+<tt class="descname">check_base_errors</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection.check_base_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: A string of output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first">ADBConnectionError if connection fails</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ADBConnectionWarning if the Android isn&#8217;t running as root</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection.check_errors">
+<tt class="descname">check_errors</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is here so that children can override it.
+:param:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>output</cite>: OutputError tuple</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection.run">
+<tt class="descname">run</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>runs the Pexpect command and puts lines of output on the Queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection.operating_system">
+<tt class="descname">operating_system</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection.operating_system" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">enumeration for android</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBBlockingConnection.queue">
+<tt class="descname">queue</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBBlockingConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.adbconnection.ADBConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBConnection</tt><big>(</big><em>serial_number=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ADB Connection sends commands to the Android Debug Bridge</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>serial_number</cite>: An optional serial number to specify the device.</li>
+</ul>
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the command string to execute</li>
+<li><cite>arguments</cite>: The arguments for the command</li>
+<li><cite>timeout</cite>: if <cite>block</cite>, wait until timeout for output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError named tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is provided so it can be overriden by subclasses.</p>
+<p>Otherwise it just returns _main()</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBConnection._rpc">
+<tt class="descname">_rpc</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>timeout=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBConnection._rpc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection._rpc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the LocalConnection._rpc to check for errors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBConnection.check_base_errors">
+<tt class="descname">check_base_errors</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBConnection.check_base_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection.check_base_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: A string of output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first">ADBConnectionError if connection fails</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ADBConnectionWarning if the Android isn&#8217;t running as root</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBConnection.check_errors">
+<tt class="descname">check_errors</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBConnection.check_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is here so that children can override it.
+:param:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>output</cite>: OutputError tuple</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBConnection.run">
+<tt class="descname">run</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>runs the Pexpect command and puts lines of output on the Queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBConnection.operating_system">
+<tt class="descname">operating_system</tt><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBConnection.operating_system"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection.operating_system" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">enumeration for android</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBConnection.queue">
+<tt class="descname">queue</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBSSHConnection</tt><big>(</big><em>serial_number=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBSSHConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ADB Connection sends commands to the Android Debug Bridge</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>serial_number</cite>: An optional serial number to specify the device.</li>
+</ul>
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection._check_errors">
+<tt class="descname">_check_errors</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBSSHConnection._check_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection._check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks connection-related errors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body">ADBConnectionError if the device isn&#8217;t detected</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body">ADBConnectionWarning if the device isn&#8217;t rooted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments</em>, <em>timeout</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><p>This isn&#8217;t intended to be run.
+The . notation is the expected interface.</p>
+<p>runs the SimpleClient exec_command</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+<li><cite>timeout</cite>: readline timeout for the SSHConnection</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>timeout=10</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBSSHConnection._procedure_call"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the SSHConnection._procedure_call to check for errors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.add_path">
+<tt class="descname">add_path</tt><big>(</big><em>command</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.add_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepends any path additions passed in at instantiation to the command</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the name of a command</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">command with path additions if given</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.check_errors">
+<tt class="descname">check_errors</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBSSHConnection.check_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is here so that children can override it.
+:param:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>line</cite>: a line of output</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.run">
+<tt class="descname">run</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the command in a thread and puts the output and error on the queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">NotImplementedError if sub-class doesn&#8217;t override this method</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.run_thread">
+<tt class="descname">run_thread</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.start">
+<tt class="descname">start</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>starts run in a thread</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the thread object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.client">
+<tt class="descname">client</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.client" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">SimpleClient for the SSHConnection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.identifier">
+<tt class="descname">identifier</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>an alternative string identifier (defaults to hostname)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.lock">
+<tt class="descname">lock</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.lock" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a re-entrant lock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBSSHConnection.queue">
+<tt class="descname">queue</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBSSHConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.adbconnection.ADBShellConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBShellConnection</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBShellConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>An ADBShellConnection connects to the adb shell.</p>
+<p>If you use a timeout parameter on method calls, the output acts line-buffered.
+If you leave the timeout as None, it acts file-buffered</p>
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>path=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the command string to execute</li>
+<li><cite>arguments</cite>: The arguments for the command</li>
+<li><cite>timeout</cite>: if <cite>block</cite>, wait until timeout for output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError named tuple</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellConnection._rpc">
+<tt class="descname">_rpc</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection._rpc" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the LocalConnection._rpc to check for errors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.check_base_errors">
+<tt class="descname">check_base_errors</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.check_base_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: A string of output</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first">ADBConnectionError if connection fails</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ADBConnectionWarning if the Android isn&#8217;t running as root</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.check_errors">
+<tt class="descname">check_errors</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBShellConnection.check_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the line to see if the line has an unknow command error</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.run">
+<tt class="descname">run</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>runs the Pexpect command and puts lines of output on the Queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.operating_system">
+<tt class="descname">operating_system</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.operating_system" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">enumeration for android</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.queue">
+<tt class="descname">queue</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellConnection.unknown_command">
+<tt class="descname">unknown_command</tt><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBShellConnection.unknown_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellConnection.unknown_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>A regular expression to match unknown command errors.</p>
+<p>Uses:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">SRE_Pattern</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">regex to match unknown_command error.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection">
+<em class="property">class </em><tt class="descclassname">apetools.connections.adbconnection.</tt><tt class="descname">ADBShellSSHConnection</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBShellSSHConnection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to talk to the shell, note the adb-server</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">(see the ADBSSHConnection)</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection._check_errors">
+<tt class="descname">_check_errors</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection._check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks connection-related errors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body">ADBConnectionError if the device isn&#8217;t detected</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body">ADBConnectionWarning if the device isn&#8217;t rooted</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection._main">
+<tt class="descname">_main</tt><big>(</big><em>command</em>, <em>arguments</em>, <em>timeout</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection._main" title="Permalink to this definition">¶</a></dt>
+<dd><p>This isn&#8217;t intended to be run.
+The . notation is the expected interface.</p>
+<p>runs the SimpleClient exec_command</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+<li><cite>timeout</cite>: readline timeout for the SSHConnection</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection._procedure_call">
+<tt class="descname">_procedure_call</tt><big>(</big><em>command</em>, <em>arguments=''</em>, <em>timeout=10</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection._procedure_call" title="Permalink to this definition">¶</a></dt>
+<dd><p>Overrides the SSHConnection._procedure_call to check for errors</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.add_path">
+<tt class="descname">add_path</tt><big>(</big><em>command</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.add_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prepends any path additions passed in at instantiation to the command</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: the name of a command</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">command with path additions if given</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.check_errors">
+<tt class="descname">check_errors</tt><big>(</big><em>line</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBShellSSHConnection.check_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Line:</th><td class="field-body">line of standard output</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body">ADBCommandError if the command issued wasn&#8217;t recognized</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.run">
+<tt class="descname">run</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the command in a thread and puts the output and error on the queue</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The shell command.</li>
+<li><cite>arguments</cite>: A string of command arguments.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">OutputError with output and error file-like objects</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">NotImplementedError if sub-class doesn&#8217;t override this method</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.run_thread">
+<tt class="descname">run_thread</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.start">
+<tt class="descname">start</tt><big>(</big><em>command</em>, <em>arguments</em><big>)</big><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>starts run in a thread</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the thread object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.client">
+<tt class="descname">client</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.client" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">SimpleClient for the SSHConnection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.identifier">
+<tt class="descname">identifier</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.identifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>an alternative string identifier (defaults to hostname)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.lock">
+<tt class="descname">lock</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.lock" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a re-entrant lock</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.queue">
+<tt class="descname">queue</tt><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.queue" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Queue.Queue</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the local Queue</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.adbconnection.ADBShellSSHConnection.unknown_command">
+<tt class="descname">unknown_command</tt><a class="reference internal" href="../../../../_modules/apetools/connections/adbconnection.html#ADBShellSSHConnection.unknown_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.adbconnection.ADBShellSSHConnection.unknown_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>A regular expression to match unknown command errors.</p>
+<p>Uses:</p>
+<blockquote>
+<div>&#8216;w+/sh: <em>.</em> <a href="#id9"><span class="problematic" id="id10">*</span></a>not <a href="#id11"><span class="problematic" id="id12">*</span></a>found&#8217;</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">SRE_Pattern</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">regex to match unknown_command error.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/connections_api/apetools.connections.adbconnection.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

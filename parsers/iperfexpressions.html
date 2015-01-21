@@ -1,0 +1,351 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Iperf Expressions &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Parsers" href="index.html" />
+    <link rel="next" title="apetools.parsers.iperfexpressions.ExpressionBase" href="api/apetools.parsers.iperfexpressions.ExpressionBase.html" />
+    <link rel="prev" title="apetools.parsers.finder.line_counter" href="api/apetools.parsers.finder.line_counter.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.iperfexpressions.ExpressionBase.html" title="apetools.parsers.iperfexpressions.ExpressionBase"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.parsers.finder.line_counter.html" title="apetools.parsers.finder.line_counter"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Parsers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="iperf-expressions">
+<h1>Iperf Expressions<a class="headerlink" href="#iperf-expressions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="expression-base">
+<h2>Expression Base<a class="headerlink" href="#expression-base" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-630e135df66eea6505cdd9386eda0248fc58d729.png" alt="BaseClass &lt;|-- ExpressionBase" />
+</p>
+<span class="target" id="module-apetools.parsers.iperfexpressions"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.ExpressionBase.html#apetools.parsers.iperfexpressions.ExpressionBase" title="apetools.parsers.iperfexpressions.ExpressionBase"><tt class="xref py py-obj docutils literal"><span class="pre">ExpressionBase</span></tt></a>()</td>
+<td>An Abstract Base class for regular expression containers</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.ExpressionBase.expression.html#apetools.parsers.iperfexpressions.ExpressionBase.expression" title="apetools.parsers.iperfexpressions.ExpressionBase.expression"><tt class="xref py py-obj docutils literal"><span class="pre">ExpressionBase.expression</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.ExpressionBase.regex.html#apetools.parsers.iperfexpressions.ExpressionBase.regex" title="apetools.parsers.iperfexpressions.ExpressionBase.regex"><tt class="xref py py-obj docutils literal"><span class="pre">ExpressionBase.regex</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">re.RegexObject</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="human-expression">
+<h2>Human Expression<a class="headerlink" href="#human-expression" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-02ae27a17e8f83fdcba0aee8a0971e5a3555444f.png" alt="ExpressionBase &lt;|-- HumanExpression" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.html#apetools.parsers.iperfexpressions.HumanExpression" title="apetools.parsers.iperfexpressions.HumanExpression"><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpression</span></tt></a>()</td>
+<td>The Human Expression matches the human-readable iperf output</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.thread_column.html#apetools.parsers.iperfexpressions.HumanExpression.thread_column" title="apetools.parsers.iperfexpressions.HumanExpression.thread_column"><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpression.thread_column</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the expression to match the thread column</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.expression.html#apetools.parsers.iperfexpressions.HumanExpression.expression" title="apetools.parsers.iperfexpressions.HumanExpression.expression"><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpression.expression</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.regex.html#apetools.parsers.iperfexpressions.HumanExpression.regex" title="apetools.parsers.iperfexpressions.HumanExpression.regex"><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpression.regex</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regex object</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="csv-expression">
+<h2>Csv Expression<a class="headerlink" href="#csv-expression" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-4481fbde0c1d99590cec7023c0b65dc731981453.png" alt="ExpressionBase &lt;|- CsvExpression" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.html#apetools.parsers.iperfexpressions.CsvExpression" title="apetools.parsers.iperfexpressions.CsvExpression"><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpression</span></tt></a>()</td>
+<td>The Csv Expression holds the expression to match iperf&#8217;s csv format</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.thread_column.html#apetools.parsers.iperfexpressions.CsvExpression.thread_column" title="apetools.parsers.iperfexpressions.CsvExpression.thread_column"><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpression.thread_column</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the expression to match the thread id</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.expression.html#apetools.parsers.iperfexpressions.CsvExpression.expression" title="apetools.parsers.iperfexpressions.CsvExpression.expression"><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpression.expression</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">string regular expression to match csv-format</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.regex.html#apetools.parsers.iperfexpressions.CsvExpression.regex" title="apetools.parsers.iperfexpressions.CsvExpression.regex"><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpression.regex</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match csv-format</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="combined-expression">
+<h2>Combined Expression<a class="headerlink" href="#combined-expression" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../_images/plantuml-670b4343f58fbcbf3524dd0d56c89fe179bc06f0.png" alt="ExpressionBase &lt;|-- CombinedExpression" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CombinedExpression.html#apetools.parsers.iperfexpressions.CombinedExpression" title="apetools.parsers.iperfexpressions.CombinedExpression"><tt class="xref py py-obj docutils literal"><span class="pre">CombinedExpression</span></tt></a>()</td>
+<td>A Combined expression matches either case (but doesn&#8217;t break up the line).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CombinedExpression.expression.html#apetools.parsers.iperfexpressions.CombinedExpression.expression" title="apetools.parsers.iperfexpressions.CombinedExpression.expression"><tt class="xref py py-obj docutils literal"><span class="pre">CombinedExpression.expression</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CombinedExpression.regex.html#apetools.parsers.iperfexpressions.CombinedExpression.regex" title="apetools.parsers.iperfexpressions.CombinedExpression.regex"><tt class="xref py py-obj docutils literal"><span class="pre">CombinedExpression.regex</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regex that matches both formats</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="parser-keys">
+<h2>Parser Keys<a class="headerlink" href="#parser-keys" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ParserKeys</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A holder of the keys to the groupdict</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="s">&quot;units&quot;</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="s">&quot;thread&quot;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="s">&quot;start&quot;</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="s">&quot;end&quot;</span>
+    <span class="n">transfer</span> <span class="o">=</span> <span class="s">&quot;transfer&quot;</span>
+    <span class="n">bandwidth</span> <span class="o">=</span> <span class="s">&#39;bandwidth&#39;</span>
+
+    <span class="c">#csv-only</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="s">&quot;timestamp&quot;</span>
+    <span class="n">sender_ip</span> <span class="o">=</span> <span class="s">&quot;sender_ip&quot;</span>
+    <span class="n">sender_port</span> <span class="o">=</span> <span class="s">&quot;sender_port&quot;</span>
+    <span class="n">receiver_ip</span> <span class="o">=</span> <span class="s">&quot;receiver_ip&quot;</span>
+    <span class="n">receiver_port</span> <span class="o">=</span> <span class="s">&quot;receiver_port&quot;</span>
+
+    <span class="c"># combined</span>
+    <span class="n">human</span> <span class="o">=</span> <span class="s">&quot;human&quot;</span>
+    <span class="n">csv</span> <span class="o">=</span> <span class="s">&quot;csv&quot;</span>
+<span class="c"># end class ParserKeys</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Iperf Expressions</a><ul>
+<li><a class="reference internal" href="#expression-base">Expression Base</a></li>
+<li><a class="reference internal" href="#human-expression">Human Expression</a></li>
+<li><a class="reference internal" href="#csv-expression">Csv Expression</a></li>
+<li><a class="reference internal" href="#combined-expression">Combined Expression</a></li>
+<li><a class="reference internal" href="#parser-keys">Parser Keys</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/parsers/iperfexpressions.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The SSHConnection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-sshconnection">
+<h1>The SSHConnection<a class="headerlink" href="#the-sshconnection" title="Permalink to this headline">¶</a></h1>
+<p>Encapsulates the Paramiko <a class="reference external" href="http://www.lag.net/paramiko/docs/paramiko.SSHClient-class.html">SSHClient</a> to provide a common interface with the other connection types.</p>
+<div class="section" id="ssh-client">
+<span id="id1"></span><h2>SSHClient<a class="headerlink" href="#ssh-client" title="Permalink to this headline">¶</a></h2>
+<p>This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used or with the added <tt class="docutils literal"><span class="pre">timeout</span></tt> parameter.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient" title="apetools.connections.sshconnection.SSHClient"><tt class="xref py py-obj docutils literal"><span class="pre">SSHClient</span></tt></a>()</td>
+<td>Subclasses paramiko&#8217;s SSHClient to add a timeout.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-1b98981c469e226bcf8a9aba88e21f33eb4f236d.png" alt="SSHClient -|&gt; paramiko.SSHClient
+SSHClient : exec_command(command, timeout, bufsize, combine_stderr)
+SSHClient : invoke_shell(term, width, Height, timeout, bufsize)
+SSHClient : invoke_shell_rw(term, width, Height, timeout, bufsize)" />
+</p>
+</div>
+<div class="section" id="simpleclient">
+<span id="simple-client"></span><h2>SimpleClient<a class="headerlink" href="#simpleclient" title="Permalink to this headline">¶</a></h2>
+<p>This is a wrapper around the <a class="reference internal" href="#ssh-client"><em>SSHClient</em></a> that sets some flags to avoid host-key errors. The following are (roughly) equivalent.</p>
+<p>SSHClient:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">c</span> <span class="o">=</span> <span class="n">SSHClient</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
+<span class="n">c</span><span class="o">.</span><span class="n">load_system_host_keys</span><span class="p">()</span>
+<span class="n">c</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;allion&#39;</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderror</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">&#39;ls&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>SimpleClient:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">c</span> <span class="o">=</span> <span class="n">SimpleClient</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;allion&#39;</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">&#39;ls&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient" title="apetools.connections.sshconnection.SimpleClient"><tt class="xref py py-obj docutils literal"><span class="pre">SimpleClient</span></tt></a>(hostname,&nbsp;username[,&nbsp;password,&nbsp;...])</td>
+<td>A simple wrapper around paramiko&#8217;s SSHClient.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-1e8a7b3c350f6642b2372c49c00367e650b60fe9.png" alt="SimpleClient -|&gt; BaseClass
+SimpleClient o-- SSHClient
+SimpleClient : client
+SimpleClient : hostname
+SimpleClient : username
+SimpleClient : password
+SimpleClient : port
+SimpleClient : timeout
+SimpleClient : exec_command(command, timeout)
+SimpleClient : __str__()
+SimpleClient : close()" />
+</p>
+</div>
+<div class="section" id="ssh-connecton">
+<span id="id2"></span><h2>The SSHConnection<a class="headerlink" href="#ssh-connecton" title="Permalink to this headline">¶</a></h2>
+<p>This class uses the <a class="reference internal" href="#simple-client"><em>SimpleClient</em></a> to implement the <a class="reference internal" href="nonlocalconnection.html#non-local-connection"><em>NonLocalConnection</em></a> interface.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection" title="apetools.connections.sshconnection.SSHConnection"><tt class="xref py py-obj docutils literal"><span class="pre">SSHConnection</span></tt></a>(hostname,&nbsp;username[,&nbsp;...])</td>
+<td>An SSHConnection executes commands over an SSHConnection</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-7eda5f50fdbe029feaf78ac32e1f72e56dc2e480.png" alt="SSHConnection -|&gt; NonLocalConnection
+SSHConnection o-- SimpleClient
+SSHConnection : hostname
+SSHConnection : username
+SSHConnection : password
+SSHConnection : port
+SSHConnection : timeout" />
+</p>
+<p>SimpleClient Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SimpleClient</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;allion&#39;</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">&#39;ls -l&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">error</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
+</pre></div>
+</div>
+<p>Equivalent SSHConnection Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&quot;allion&quot;</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="s">&quot;192.168.10.24&quot;</span><span class="p">)</span>
+<span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
+
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="outputfile">
+<span id="output-file"></span><h2>OutputFile<a class="headerlink" href="#outputfile" title="Permalink to this headline">¶</a></h2>
+<p>This acts as a file-like object that traps socket timeouts so that users do not have to know that it contains a networked connection. To prevent blocking the socket-timeout causes it to return a SPACE.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile" title="apetools.connections.sshconnection.OutputFile"><tt class="xref py py-obj docutils literal"><span class="pre">OutputFile</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to handle the ssh output files</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../../../_images/plantuml-1baf773d62feeab0552372f35b2277cd40eeb659.png" alt="OutputFile -|&gt; ValidatingOutput
+OutputFile : readline(timeout)" />
+</p>
+</div>
+<div class="section" id="another-example">
+<h2>Another Example<a class="headerlink" href="#another-example" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&#39;igor&#39;</span><span class="p">,</span> <span class="s">&#39;developer&#39;</span><span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">wmic</span><span class="p">(</span><span class="s">&#39;path win32_networkadapter where netconnectionid=&quot;</span><span class="se">\&#39;</span><span class="s">Wireless Network Connection</span><span class="se">\&#39;</span><span class="s">&quot; call enable&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">output</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The SSHConnection</a><ul>
+<li><a class="reference internal" href="#ssh-client">SSHClient</a></li>
+<li><a class="reference internal" href="#simpleclient">SimpleClient</a></li>
+<li><a class="reference internal" href="#ssh-connecton">The SSHConnection</a></li>
+<li><a class="reference internal" href="#outputfile">OutputFile</a></li>
+<li><a class="reference internal" href="#another-example">Another Example</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/developer/connections/sshconnection.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

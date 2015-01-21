@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Countdown Timer II &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Proletarians" href="index.html" />
+    <link rel="next" title="apetools.proletarians.countdowntimer.CountdownTimer" href="api/apetools.proletarians.countdowntimer.CountdownTimer.html" />
+    <link rel="prev" title="apetools.proletarians.countdown.CountDown.to_time" href="api/apetools.proletarians.countdown.CountDown.to_time.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.proletarians.countdowntimer.CountdownTimer.html" title="apetools.proletarians.countdowntimer.CountdownTimer"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.proletarians.countdown.CountDown.to_time.html" title="apetools.proletarians.countdown.CountDown.to_time"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Proletarians</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="countdown-timer-ii">
+<h1>Countdown Timer II<a class="headerlink" href="#countdown-timer-ii" title="Permalink to this headline">¶</a></h1>
+<p>A module to hold yet another countdown-timer.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-2fe5e40e52a027ac093437957dd2e3893f22dd11.png" alt="BaseClass &lt;|-- CountdownTimer" />
+</p>
+<span class="target" id="module-apetools.proletarians.countdowntimer"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.html#apetools.proletarians.countdowntimer.CountdownTimer" title="apetools.proletarians.countdowntimer.CountdownTimer"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer</span></tt></a>(repetitions,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>A countdown timer keeps track of time Remaining.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.lap_times.html#apetools.proletarians.countdowntimer.CountdownTimer.lap_times" title="apetools.proletarians.countdowntimer.CountdownTimer.lap_times"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer.lap_times</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Data</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.remaining_time.html#apetools.proletarians.countdowntimer.CountdownTimer.remaining_time" title="apetools.proletarians.countdowntimer.CountdownTimer.remaining_time"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer.remaining_time</span></tt></a></td>
+<td>calls next_laptime(), calculates remaining time</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.total_time.html#apetools.proletarians.countdowntimer.CountdownTimer.total_time" title="apetools.proletarians.countdowntimer.CountdownTimer.total_time"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer.total_time</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">datetime.timedelta</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.median_laptime.html#apetools.proletarians.countdowntimer.CountdownTimer.median_laptime" title="apetools.proletarians.countdowntimer.CountdownTimer.median_laptime"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer.median_laptime</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">datetime.timedelta</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.remaining_repetitions.html#apetools.proletarians.countdowntimer.CountdownTimer.remaining_repetitions" title="apetools.proletarians.countdowntimer.CountdownTimer.remaining_repetitions"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer.remaining_repetitions</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">IntegerType</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.next_laptime.html#apetools.proletarians.countdowntimer.CountdownTimer.next_laptime" title="apetools.proletarians.countdowntimer.CountdownTimer.next_laptime"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer.next_laptime</span></tt></a>()</td>
+<td><ol class="arabic simple">
+<li>appends a timedelta for now-lap_start to lap_times</li>
+</ol>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.proletarians.countdowntimer.CountdownTimer.start_timer.html#apetools.proletarians.countdowntimer.CountdownTimer.start_timer" title="apetools.proletarians.countdowntimer.CountdownTimer.start_timer"><tt class="xref py py-obj docutils literal"><span class="pre">CountdownTimer.start_timer</span></tt></a>()</td>
+<td>Sets the lap_start and start to now() and current_repetition to 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/proletarians/countdowntimer.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Poller Builders &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Sub-Builders" href="index.html" />
+    <link rel="next" title="apetools.builders.subbuilders.pollerbuilders.PollerBuilderError" href="api/apetools.builders.subbuilders.pollerbuilders.PollerBuilderError.html" />
+    <link rel="prev" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.builders.subbuilders.pollerbuilders.PollerBuilderError.html" title="apetools.builders.subbuilders.pollerbuilders.PollerBuilderError"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters.html" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Builders</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Sub-Builders</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="poller-builders">
+<h1>Poller Builders<a class="headerlink" href="#poller-builders" title="Permalink to this headline">¶</a></h1>
+<p>A module to build device pollers.</p>
+<div class="section" id="the-poller-builder-error">
+<h2>The Poller Builder Error<a class="headerlink" href="#the-poller-builder-error" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../_images/plantuml-2c602c0ad5ef2fd0199d5de2aeec78190e5b6260.png" alt="ConfigurationError &lt;|-- PollerBuilderError" />
+</p>
+<span class="target" id="module-apetools.builders.subbuilders.pollerbuilders"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.PollerBuilderError.html#apetools.builders.subbuilders.pollerbuilders.PollerBuilderError" title="apetools.builders.subbuilders.pollerbuilders.PollerBuilderError"><tt class="xref py py-obj docutils literal"><span class="pre">PollerBuilderError</span></tt></a></td>
+<td>An exception to raise of the poller can&#8217;t be built</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-base-poller-builder">
+<h2>The Base Poller Builder<a class="headerlink" href="#the-base-poller-builder" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../_images/plantuml-3a10613b142d70b98271f6bd4f66ae5dfebe68ec.png" alt="BaseClass &lt;|-- BasePollerBuilder" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder" title="apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">BasePollerBuilder</span></tt></a>(node,&nbsp;parameters,&nbsp;output)</td>
+<td>A class to base other builders on</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.name.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.name" title="apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.name"><tt class="xref py py-obj docutils literal"><span class="pre">BasePollerBuilder.name</span></tt></a></td>
+<td>A getter for name (identifier)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.use_header.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.use_header" title="apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.use_header"><tt class="xref py py-obj docutils literal"><span class="pre">BasePollerBuilder.use_header</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">True if this is a new file</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.subdir.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.subdir" title="apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.subdir"><tt class="xref py py-obj docutils literal"><span class="pre">BasePollerBuilder.subdir</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">name of subdirectory for output file</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.filename.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.filename" title="apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.filename"><tt class="xref py py-obj docutils literal"><span class="pre">BasePollerBuilder.filename</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">name for output file</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.output_file.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.output_file" title="apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.output_file"><tt class="xref py py-obj docutils literal"><span class="pre">BasePollerBuilder.output_file</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">opened file to send output to</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.interval.html#apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.interval" title="apetools.builders.subbuilders.pollerbuilders.BasePollerBuilder.interval"><tt class="xref py py-obj docutils literal"><span class="pre">BasePollerBuilder.interval</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">time between polls</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-proc-net-dev-pollster-builder">
+<h2>The Proc Net Dev Pollster Builder<a class="headerlink" href="#the-proc-net-dev-pollster-builder" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../_images/plantuml-ddf57cd36a5b3529eb6d07e661cd3e14994f3324.png" alt="BasePollerBuilder &lt;|-- ProcnetdevPollsterBuilder
+ProcnetdevPollsterBuilder o- ProcnetdevPollster" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.html#apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder" title="apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollsterBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A builder of network interface pollers</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.product" title="apetools.builders.subbuilders.pollerbuilders.ProcnetdevPollsterBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">ProcnetdevPollsterBuilder.product</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">rssi-poller</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-rssi-poller-builder">
+<h2>The RSSI Poller Builder<a class="headerlink" href="#the-rssi-poller-builder" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../_images/plantuml-3aee40270f024754bd46de8cb4903295dfd2e8b2.png" alt="BasePollerBuilder &lt;|-- RssiPollerBuilder
+RssiPollerBuilder o- RssiPoller" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder" title="apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">RssiPollerBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A builder of rssi-pollers</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.interval.html#apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.interval" title="apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.interval"><tt class="xref py py-obj docutils literal"><span class="pre">RssiPollerBuilder.interval</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">time between polls</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.product" title="apetools.builders.subbuilders.pollerbuilders.RssiPollerBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">RssiPollerBuilder.product</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">rssi-poller</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-device-poller-builder">
+<h2>The Device Poller Builder<a class="headerlink" href="#the-device-poller-builder" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../_images/plantuml-480c5257ae4f19ead7a2bdf93c208aefc881518f.png" alt="BasePollerBuilder &lt;|-- DevicePollerBuilder" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.html#apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder" title="apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">DevicePollerBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A builder of rssi-pollers</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.product" title="apetools.builders.subbuilders.pollerbuilders.DevicePollerBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">DevicePollerBuilder.product</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">device-poller</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="the-cpu-pollster-builder">
+<h2>The CPU Pollster Builder<a class="headerlink" href="#the-cpu-pollster-builder" title="Permalink to this headline">¶</a></h2>
+<p class="plantuml">
+<img src="../../_images/plantuml-2005dd14a0eac15901fc12822357036b0b0e9438.png" alt="BasePollerBuilder &lt;|-- CpuPollsterBuilder" />
+</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.html#apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder" title="apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollsterBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A builder of cpu pollers</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.product.html#apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.product" title="apetools.builders.subbuilders.pollerbuilders.CpuPollsterBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">CpuPollsterBuilder.product</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">cpu-poller</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Poller Builders</a><ul>
+<li><a class="reference internal" href="#the-poller-builder-error">The Poller Builder Error</a></li>
+<li><a class="reference internal" href="#the-base-poller-builder">The Base Poller Builder</a></li>
+<li><a class="reference internal" href="#the-proc-net-dev-pollster-builder">The Proc Net Dev Pollster Builder</a></li>
+<li><a class="reference internal" href="#the-rssi-poller-builder">The RSSI Poller Builder</a></li>
+<li><a class="reference internal" href="#the-device-poller-builder">The Device Poller Builder</a></li>
+<li><a class="reference internal" href="#the-cpu-pollster-builder">The CPU Pollster Builder</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/builders/subbuilders/pollerbuilders.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

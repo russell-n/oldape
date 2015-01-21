@@ -1,0 +1,948 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>rotation_table.AMPStepperController &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for rotation_table.AMPStepperController</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Wed Dec 18 16:34:20 2013</span>
+
+<span class="sd">@author: cameron</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">threading</span><span class="o">,</span> <span class="nn">ConfigParser</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="c"># third party</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+
+<span class="c"># what is this?</span>
+<span class="c">#from Exceptions import NoEncoderException</span>
+
+<span class="c"># this package</span>
+<span class="kn">from</span> <span class="nn">rotation_table</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+
+
+<span class="n">MAX_CURRENT</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">NOT_FOUND</span> <span class="o">=</span> <span class="s">&quot;Option: {0} not found in section: {1}&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">NoEncoderException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An error to raise of there&#39;s no encoder</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">AMPStepperConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="c"># config options</span>
+    <span class="n">baudrate</span> <span class="o">=</span> <span class="s">&#39;baudrate&#39;</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="s">&#39;timeout&#39;</span>
+    <span class="n">velocity_range</span> <span class="o">=</span> <span class="s">&#39;velocity_range&#39;</span>
+    <span class="n">acceleration_range</span> <span class="o">=</span> <span class="s">&#39;accel_range&#39;</span>
+    <span class="n">ppr</span> <span class="o">=</span> <span class="s">&#39;ppr&#39;</span>
+    <span class="n">encoder_resolution</span> <span class="o">=</span> <span class="s">&#39;encoder_resolution&#39;</span>
+    <span class="n">step_range</span> <span class="o">=</span> <span class="s">&#39;step_range&#39;</span>
+    <span class="n">max_continuous_current</span> <span class="o">=</span> <span class="s">&#39;max_continuous_current&#39;</span>
+    <span class="n">continuous_current</span> <span class="o">=</span> <span class="s">&quot;continuous_current&quot;</span>
+    <span class="n">port</span> <span class="o">=</span> <span class="s">&#39;port&#39;</span>
+
+    <span class="c"># defaults</span>
+    <span class="c"># these are based on the ht.cfg file found in the package</span>
+    <span class="n">default_baudrate</span> <span class="o">=</span> <span class="mi">57600</span>
+    <span class="n">default_timeout</span> <span class="o">=</span> <span class="mf">0.05</span>
+    <span class="n">default_velocity_range</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.0042</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>
+    <span class="n">default_acceleration_range</span> <span class="o">=</span>  <span class="p">(</span><span class="mf">0.167</span><span class="p">,</span> <span class="mf">5461.167</span><span class="p">)</span>
+    <span class="n">default_ppr</span> <span class="o">=</span> <span class="mi">2880</span>
+    <span class="n">default_encoder_resolution</span> <span class="o">=</span> <span class="mi">4000</span>
+    <span class="n">default_step_range</span> <span class="o">=</span> <span class="mi">2880</span>
+    <span class="n">default_max_continuous_current</span> <span class="o">=</span> <span class="mf">2.0</span>
+    <span class="n">default_continuous_current</span> <span class="o">=</span> <span class="mf">1.0</span>
+    <span class="n">default_port</span> <span class="o">=</span> <span class="bp">None</span>
+
+
+<span class="k">class</span> <span class="nc">AMPStepperConfiguration</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Converts a ConfigParser to AMPStepper controller values</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">configuration</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        AMPStepperConfiguration Constructor</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `section`: name of section header in configuration</span>
+<span class="sd">         - `configuration`: loaded ConfigParser</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">section</span> <span class="o">=</span> <span class="n">section</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_baudrate</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_range</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration_range</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_encoder_resolution</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_step_range</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_max_continuous_current</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_continuous_current</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">baudrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: serial baudrate</span>
+<span class="sd">        :rtype: integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_baudrate</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_baudrate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">baudrate</span><span class="p">,</span>
+                                          <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                          <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_baudrate</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_baudrate</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: serial connection timeout</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_float</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+                                           <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                           <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timeout</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">velocity_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: min and max velocity</span>
+<span class="sd">        :rtype: tuple of floats</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_range</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_float_tuples</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">velocity_range</span><span class="p">,</span>
+                                                     <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                                     <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_velocity_range</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_velocity_range</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">acceleration_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: min and max velocity</span>
+<span class="sd">        :rtype: tuple of floats</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration_range</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_float_tuples</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">acceleration_range</span><span class="p">,</span>
+                                                         <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                                         <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_acceleration_range</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_acceleration_range</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ppr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the PPR (whatever that is)</span>
+<span class="sd">        :rtype: integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">ppr</span><span class="p">,</span>
+                                     <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                     <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_ppr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">encoder_resolution</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: encoder_resolution (beats me...)</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoder_resolution</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_encoder_resolution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_float</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">encoder_resolution</span><span class="p">,</span>
+                                                      <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                                      <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_encoder_resolution</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_encoder_resolution</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">step_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the step-range</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step_range</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_step_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">step_range</span><span class="p">,</span>
+                                            <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                            <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_step_range</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_step_range</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">max_continuous_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the max continuous current</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_continuous_current</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_max_continuous_current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_float</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">max_continuous_current</span><span class="p">,</span>
+                                                          <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_max_continuous_current</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_continuous_current</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">continuous_current</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: continuous current setting</span>
+<span class="sd">        :rtype: float        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_continuous_current</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_continuous_current</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_float</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">continuous_current</span><span class="p">,</span>
+                                                      <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                <span class="n">default</span><span class="o">=</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">default_continuous_current</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_continuous_current</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        The serial port (e.g. /dev/ttyUSB0)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get</span><span class="p">(</span><span class="n">AMPStepperConstants</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                                  <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port</span>
+        
+    <span class="k">def</span> <span class="nf">_float_tuples</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        converts config value with form `[&lt;float&gt;, &lt;float&gt;]`</span>
+
+<span class="sd">        :param:</span>
+<span class="sd">        </span>
+<span class="sd">         - `option`: option in the configuration to check</span>
+<span class="sd">         - `optional`: if True, catch NoOptionError</span>
+<span class="sd">         - `default`: value to return if NoOptionError caught</span>
+<span class="sd">         </span>
+<span class="sd">        :return: configuration option values</span>
+<span class="sd">        :rtype: tuple of floats</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
+                                       <span class="n">option</span><span class="p">)</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s">&#39;[&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="k">print</span> <span class="n">NOT_FOUND</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">raise</span>
+
+    <span class="k">def</span> <span class="nf">_get_int</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        convenience method to save some typing (maybe)</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `option`: option within the config-section</span>
+<span class="sd">         - `optional`: if True, don&#39;t raise missing option error</span>
+<span class="sd">         - `default`: value to return for missing option</span>
+
+<span class="sd">        :return: value matching the section-option</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">getint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
+                                            <span class="n">option</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="k">print</span> <span class="n">NOT_FOUND</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_get_float</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        convenience method to save some typing (maybe)</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `option`: option within the config-section</span>
+<span class="sd">         - `optional`: if True, NoOptionError is trapped</span>
+<span class="sd">         - `default`: value to return if NoOption trapped</span>
+
+<span class="sd">        :return: value matching the section-option</span>
+<span class="sd">        :rtype: float</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">getfloat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
+                                            <span class="n">option</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="k">print</span> <span class="n">NOT_FOUND</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">option</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">_get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        gets a string</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `option`: name of option in the section</span>
+<span class="sd">         - `optional`: if True, trap NoOptionError</span>
+<span class="sd">         - `default`: value to return if NoOptionError is trapped</span>
+
+<span class="sd">        :return: value for the option</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
+                                          <span class="n">option</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">ConfigParser</span><span class="o">.</span><span class="n">NoOptionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="k">print</span> <span class="n">NOT_FOUND</span><span class="p">(</span><span class="n">option</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
+            <span class="k">raise</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>        
+        <span class="k">return</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s">&#39;{0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">name</span><span class="p">))</span>
+                         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">)])</span>
+<span class="c"># end class AMPStepperConfiguration</span>
+
+
+<span class="k">class</span> <span class="nc">AMPStepperController</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A controller for an AMPStepper...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span>
+                 <span class="n">lock</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">address</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">encoder</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                 <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        AMPStepperController constructor</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `configuration`: AMPStepperConfiguration</span>
+<span class="sd">         - `address`: not sure, output of sending &#39;DA&#39; command to the device</span>
+<span class="sd">         - `lock`: re-entrant lock to block serial calls</span>
+<span class="sd">         - `encoder`: boolean,  if False causes some methods to raise error</span>
+<span class="sd">         - `debug`: boolean, if True sends print messages to std out</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AMPStepperController</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">configuration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_targetPositionSteps</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="n">address</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span> <span class="o">=</span> <span class="n">encoder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">lock</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instantPositionSteps</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ppr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the ppr, calls _setPPR</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">ppr</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_setPPR</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        re-entrant lock</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">RLock</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        connection to the serial port</span>
+
+<span class="sd">        If self.port not set, trys to find it.</span>
+
+<span class="sd">        :postcondition: self.serial is Serial connection and self._setPPR called</span>
+<span class="sd">        :raise: Exception if unable to find the right port</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">port</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span> <span class="s">&quot;Creating Serial connection - port: {0}, baud: {1}, timeout: {2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                                                                                                   <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">baudrate</span><span class="p">,</span>
+                                                                                                   <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">timeout</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                                             <span class="n">baudrate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">baudrate</span><span class="p">,</span>
+                                             <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s">&#39;win&#39;</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
+                    <span class="n">port</span> <span class="o">=</span> <span class="s">&#39;COM&#39;</span>
+                    <span class="n">port_number</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">port</span> <span class="o">=</span> <span class="s">&#39;/dev/ttyUSB&#39;</span>
+                    <span class="n">port_number</span> <span class="o">=</span> <span class="mi">0</span>
+    
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="k">while</span> <span class="n">port_number</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Trying {0}{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">port</span><span class="p">,</span> <span class="n">port_number</span><span class="p">))</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="n">port</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">port_number</span><span class="p">),</span>
+                                                  <span class="n">baudrate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">baudrate</span><span class="p">,</span>
+                                                  <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+                            <span class="k">break</span>
+                        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span> <span class="n">error</span><span class="p">)</span>
+                            <span class="n">port_number</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Error connecting to stepper controller&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span>
+    
+    <span class="k">def</span> <span class="nf">_setBaud</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">baud</span><span class="p">):</span> <span class="c"># 1 = 9600 2 = 19200 3 = 38400 4 = 57600 5 = 115200</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        translates the baud to a baudIndex and sends to device</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `baud`: integer baud rate (e.g. 115200)</span>
+
+<span class="sd">        :raise: Exception if baud not recognized</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">baud</span> <span class="o">==</span> <span class="mi">9600</span><span class="p">:</span>
+            <span class="n">baudIndex</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">baud</span> <span class="o">==</span> <span class="mi">19200</span><span class="p">:</span>
+            <span class="n">baudIndex</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">elif</span> <span class="n">baud</span> <span class="o">==</span> <span class="mi">38400</span><span class="p">:</span>
+            <span class="n">baudIndex</span> <span class="o">=</span> <span class="mi">3</span>
+        <span class="k">elif</span> <span class="n">baud</span> <span class="o">==</span> <span class="mi">57600</span><span class="p">:</span>
+            <span class="n">baudIndex</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="k">elif</span> <span class="n">baud</span> <span class="o">==</span> <span class="mi">115200</span><span class="p">:</span>
+            <span class="n">baudIndex</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Baud not supported - supported values: 9600, 19200, 38400, 57600, 115200&quot;</span><span class="p">)</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;PB&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">baudIndex</span><span class="p">)</span>                       
+        
+    <span class="k">def</span> <span class="nf">_saveParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;SA&quot;</span><span class="p">)</span>
+    
+    
+    <span class="k">def</span> <span class="nf">_setAddress</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">address</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DA&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">address</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">_getAddress</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DA&quot;</span><span class="p">)</span>
+        
+    
+    <span class="k">def</span> <span class="nf">_checkAck</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=.</span><span class="mi">4</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        checks the serial output for &#39;(%|\*)\\r&#39;</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `timeout`: seconds to look for output</span>
+<span class="sd">        </span>
+<span class="sd">        :return: False if timed-out, True otherwise</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">dur</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="k">while</span> <span class="p">(</span><span class="n">data</span> <span class="o">!=</span> <span class="s">&#39;%</span><span class="se">\r</span><span class="s">&#39;</span> <span class="ow">or</span> <span class="n">data</span> <span class="o">!=</span> <span class="s">&#39;*</span><span class="se">\r</span><span class="s">&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">dur</span> <span class="o">&lt;=</span> <span class="n">timeout</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">dur</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;read from serial: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">dur</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">True</span>
+                
+    <span class="k">def</span> <span class="nf">_getOutput</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        reads input until carriage return, splits on &#39;=&#39;</span>
+
+<span class="sd">        :return: second token if it exists, first if only one token</span>
+<span class="sd">        :raise: Exception if carriage return not reached by timeout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">dur</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">curData</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="n">allData</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+        <span class="k">while</span> <span class="n">curData</span> <span class="o">!=</span> <span class="s">&#39;</span><span class="se">\r</span><span class="s">&#39;</span><span class="p">:</span>
+            <span class="n">curData</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+            <span class="n">allData</span> <span class="o">+=</span> <span class="n">curData</span>
+            <span class="n">dur</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+            <span class="k">if</span> <span class="n">dur</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Timed out waiting for output&quot;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">001</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;{0} bytes received: &#39;{1}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">allData</span><span class="p">),</span>
+                                                           <span class="n">allData</span><span class="p">))</span>
+        <span class="n">dataLst</span> <span class="o">=</span> <span class="n">allData</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\r</span><span class="s">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;=&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataLst</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">dataLst</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">dataLst</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dataLst</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    
+    <span class="k">def</span> <span class="nf">_rawCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nack</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">parseInt</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the command to the serial connection</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `cmd`: string to send to serial connection (will add carriage return)</span>
+<span class="sd">         - `retries`: number of times to catch exceptions and recursively call _rawCommand</span>
+<span class="sd">         - `timeout`: _getOutput parameter</span>
+<span class="sd">         - `nack`: if True, return output of _checkAck instead of _getOutput</span>
+<span class="sd">         - `parseInt`: if True, cast output to integer</span>
+
+<span class="sd">        :return: output of _checkAck if nack, else output of _getOutput</span>
+<span class="sd">        :raises: error from _getOutput if retries exceeded, ValueError if parseInt and not integer output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Flushing serial input&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">flushInput</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Writing {0} to serial connection&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serial</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\r</span><span class="s">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nack</span><span class="p">:</span>
+            <span class="n">responded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_checkAck</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">responded</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getOutput</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">parseInt</span><span class="p">:</span>
+                    <span class="n">output</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">retries</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;error: &#39;{0}&#39; caught, retrying&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+                    <span class="n">numRetries</span> <span class="o">=</span> <span class="n">retries</span> <span class="o">-</span> <span class="mi">1</span>
+                    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rawCommand</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="n">numRetries</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">nack</span><span class="o">=</span><span class="n">nack</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span>
+            <span class="k">return</span> <span class="n">output</span>
+            
+            
+    <span class="k">def</span> <span class="nf">_enableHomeSensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DL&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        
+
+    <span class="k">def</span> <span class="nf">_disableHomeSensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DL&quot;</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">_setPPR</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ppr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;EG&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">ppr</span><span class="p">)</span>        
+        
+    <span class="k">def</span> <span class="nf">_getStepperPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;IP&quot;</span><span class="p">,</span> <span class="n">parseInt</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">_setContinuousCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;setting continuous current to {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;CC&quot;</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">_getContinuousCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;CC&quot;</span><span class="p">))</span>
+        
+        
+    <span class="k">def</span> <span class="nf">_setIdleCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;setting idle current to {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">current</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;CI&quot;</span><span class="p">,</span> <span class="n">current</span><span class="p">)</span>        
+        
+    <span class="k">def</span> <span class="nf">_getIdleCurrent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;CI&quot;</span><span class="p">))</span>
+
+
+    <span class="k">def</span> <span class="nf">_getBufferFree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;BS&quot;</span><span class="p">,</span> <span class="n">parseInt</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span> <span class="c"># return number of free command locations</span>
+    
+    
+    <span class="k">def</span> <span class="nf">sendCommand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">[],</span> <span class="n">retries</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">parseInt</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the command and parameters to rawCommand</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `cmd`: command to give to rawCommand</span>
+<span class="sd">         - `paramval`: parameter to append to the cmd before sending to rawCommand</span>
+<span class="sd">         - `bounds`: upper and lower bounds to validate the paramval</span>
+<span class="sd">         - `retries`: rawCommand parameter</span>
+<span class="sd">         - `timeout`: rawCommand parameter</span>
+<span class="sd">         - `parseInt`: rawCommand parameter</span>
+<span class="sd">        :return: output of rawCommand if output not &#39;*&#39; and paramval is None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;sending: {0}{1} from motor {2}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span>
+                                                                  <span class="n">paramval</span><span class="p">,</span>
+                                                                  <span class="bp">self</span><span class="o">.</span><span class="n">_address</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">paramval</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="c"># read command (no parameter command)</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rawCommand</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="n">retries</span><span class="p">,</span>
+                                          <span class="n">nack</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span>
+                                          <span class="n">parseInt</span><span class="o">=</span><span class="n">parseInt</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">output</span> <span class="o">==</span> <span class="s">&#39;*&#39;</span><span class="p">:</span>
+                    <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">parseInt</span><span class="o">=</span><span class="n">parseInt</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">output</span>
+            <span class="k">else</span><span class="p">:</span>               <span class="c"># write command (command with parameter)</span>
+                <span class="n">cmd</span> <span class="o">=</span> <span class="s">&quot;{}{}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">paramval</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">bounds</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">paramval</span> <span class="o">&lt;=</span> <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">_rawCommand</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="n">retries</span><span class="p">,</span> <span class="n">nack</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">((</span><span class="s">&#39;Value out of bounds - valid range:&#39;</span>
+                                         <span class="s">&#39; [{0}, {1}]&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                                                               <span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_rawCommand</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="n">retries</span><span class="p">,</span> <span class="n">nack</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+                    
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+            <span class="k">raise</span> 
+        <span class="k">finally</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;releasing lock&#39;</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">025</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+                
+    <span class="k">def</span> <span class="nf">restart</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;RE&quot;</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">setMoveDistanceSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DI&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">dist</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">setChangeDistance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dist</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DC&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">dist</span><span class="p">)</span>
+        
+        
+    <span class="c"># velocity in steps per second</span>
+    <span class="k">def</span> <span class="nf">setRevsPerSec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">revs_per_sec</span><span class="p">):</span>
+<div class="viewcode-block" id="AMPStepperController.setRevsPerSec"><a class="viewcode-back" href="../../commands/api/rotation_table.AMPStepperController.AMPStepperController.setRevsPerSec.html#rotation_table.AMPStepperController.AMPStepperController.setRevsPerSec">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the table&#39;s velocity in steps per second</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;setting rps to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">revs_per_sec</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;VE&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">revs_per_sec</span><span class="p">,</span>
+                         <span class="n">bounds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">velocity_range</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">setChangeVelocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vel</span><span class="p">):</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;VC&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">vel</span><span class="p">,</span>
+                         <span class="n">bounds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">velocity_range</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">setEncoderResolution</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;ER&quot;</span><span class="p">,</span> <span class="n">res</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NoEncoderException</span><span class="p">()</span>
+        
+        
+    <span class="k">def</span> <span class="nf">_getPPR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;EG&quot;</span><span class="p">,</span> <span class="n">parseInt</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span>
+        
+        
+    <span class="k">def</span> <span class="nf">getPPR</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ppr</span>                       
+        
+    <span class="k">def</span> <span class="nf">stopMotion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;ST&quot;</span><span class="p">)</span>        
+        
+    <span class="k">def</span> <span class="nf">stopAndClearBuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;SK&quot;</span><span class="p">)</span>
+                
+    <span class="k">def</span> <span class="nf">setRawMotionProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">accel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">decel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">vel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setRevsPerSec</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">accel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setRotationalAccel</span><span class="p">(</span><span class="n">accel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">decel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setRotationalDecel</span><span class="p">(</span><span class="n">decel</span><span class="p">)</span>            
+            
+    <span class="k">def</span> <span class="nf">getRotationalAccel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;AC&quot;</span><span class="p">))</span>    
+    
+    <span class="k">def</span> <span class="nf">getRotationalDecel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DE&quot;</span><span class="p">))</span>
+        
+        
+    <span class="c"># acceleration in steps/sec^2</span>
+    <span class="k">def</span> <span class="nf">setRotationalAccel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;AC&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">accel</span><span class="p">,</span>
+                         <span class="n">bounds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">acceleration_range</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">setRotationalDecel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decel</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;DE&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">decel</span><span class="p">,</span>
+                         <span class="n">bounds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">acceleration_range</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">getRevsPerSec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;VE&quot;</span><span class="p">))</span>
+        
+        
+    <span class="k">def</span> <span class="nf">getCurrentVelocity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;IV&quot;</span><span class="p">))</span>
+        
+        
+    <span class="k">def</span> <span class="nf">getPositionSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">steps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getStepperPosition</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_instantPositionSteps</span> <span class="o">=</span> <span class="n">steps</span>
+        <span class="k">return</span> <span class="n">steps</span>
+        
+        
+    <span class="k">def</span> <span class="nf">getInstantPositionSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instantPositionSteps</span>
+        
+        
+    <span class="k">def</span> <span class="nf">getRawMotionProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">vel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRevsPerSec</span><span class="p">()</span>
+        <span class="n">accel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRotationalAccel</span><span class="p">()</span>
+        <span class="n">decel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRotationalDecel</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;vel&#39;</span><span class="p">:</span><span class="n">vel</span><span class="p">,</span> <span class="s">&#39;accel&#39;</span><span class="p">:</span><span class="n">accel</span><span class="p">,</span> <span class="s">&#39;decel&#39;</span><span class="p">:</span><span class="n">decel</span><span class="p">}</span>            
+
+    <span class="k">def</span> <span class="nf">setDrivePosition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the set position command to sendCommand</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;sending set position command with position {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;SP&quot;</span><span class="p">,</span> <span class="n">pos</span><span class="p">)</span> <span class="c"># set drive position to 0</span>
+        
+        
+    <span class="k">def</span> <span class="nf">setPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias for setDrivePosition</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Calling setDrivePosition with position {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setDrivePosition</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+                
+    <span class="k">def</span> <span class="nf">setSpinRevsPerSec</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">revs_per_sec</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&#39;JS&#39;</span><span class="p">,</span> <span class="n">revs_per_sec</span><span class="p">)</span>        
+                
+    <span class="k">def</span> <span class="nf">spin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&#39;CJ&#39;</span><span class="p">)</span>
+                
+    <span class="k">def</span> <span class="nf">moveAbsoluteSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">vel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">step_range</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">pos</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">pos</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">step_range</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Position out of bounds - valid range: [0, {0}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">step_range</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">vel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setLinearVelocity</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+        <span class="c">#if pos == 0:</span>
+        <span class="c">#    self.moveHome()</span>
+        <span class="c">#else:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_targetPositionSteps</span> <span class="o">=</span> <span class="n">pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;FP&quot;</span><span class="p">,</span> <span class="n">paramval</span><span class="o">=</span><span class="n">pos</span><span class="p">)</span>
+        <span class="c">#self.targetPosition = pos</span>
+        
+        
+    <span class="k">def</span> <span class="nf">moveRelativeSteps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">steps</span><span class="p">,</span> <span class="n">vel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">validateRange</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">steps</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Moving {0} steps&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">steps</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">vel</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setLinearVelocity</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_targetPositionSteps</span> <span class="o">+=</span> <span class="n">steps</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;FL&quot;</span><span class="p">,</span> <span class="n">steps</span><span class="p">)</span>
+            
+            
+    <span class="k">def</span> <span class="nf">waitForPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        waits until target position (or timeout) is reached</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `timeout`: seconds to wait before giving up</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Waiting up to {0} seconds for table to reach position&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timeout</span><span class="p">))</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_instantPositionSteps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getStepperPosition</span><span class="p">()</span>
+
+            <span class="c"># targetPositionSteps is set in the &#39;move&#39; methods</span>
+            <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">_instantPositionSteps</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_targetPositionSteps</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">timeout</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;timed out waiting for position&#39;</span><span class="p">)</span>
+                    <span class="k">return</span>
+                <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">05</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_instantPositionSteps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getStepperPosition</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span>
+            
+            
+    <span class="k">def</span> <span class="nf">waitForSpeed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="o">.</span><span class="mo">01</span><span class="p">)</span>
+        <span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">getCurrentVelocity</span><span class="p">())</span> <span class="o">!=</span> <span class="n">speed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">timeout</span> <span class="ow">and</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">timeout</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span> <span class="s">&#39;timed out waiting for speed&#39;</span><span class="p">)</span>
+                <span class="k">return</span>
+    
+            
+    <span class="k">def</span> <span class="nf">fixPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">encoder</span><span class="p">:</span>
+            <span class="n">stepPos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getStepPosition</span><span class="p">()</span>
+            <span class="n">encoderPos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPosition</span><span class="p">()</span>
+            <span class="n">ratio</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_getEncoderToStepRatio</span><span class="p">()</span>
+            
+            <span class="n">dif</span> <span class="o">=</span> <span class="n">stepPos</span> <span class="o">-</span> <span class="nb">round</span><span class="p">(</span><span class="n">encoderPos</span><span class="o">/</span><span class="nb">float</span><span class="p">(</span><span class="n">ratio</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;dif = {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dif</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setEncoderPosition</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">encoderPos</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">moveRelative</span><span class="p">(</span><span class="n">dif</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">NoEncoderException</span><span class="p">()</span>
+        
+    
+    <span class="k">def</span> <span class="nf">saveParameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;SA&quot;</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">disableMotor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;MD&quot;</span><span class="p">)</span>
+        
+        
+    <span class="k">def</span> <span class="nf">enableMotor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;ME&quot;</span><span class="p">)</span>
+        
+
+    <span class="k">def</span> <span class="nf">getAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;AL&quot;</span><span class="p">)</span>        
+        
+
+    <span class="k">def</span> <span class="nf">resetAlarm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;AR&quot;</span><span class="p">)</span>
+
+        
+    <span class="k">def</span> <span class="nf">getMinDecelDist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">vel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getVelocity</span><span class="p">()</span>
+        <span class="n">decel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRotationalDecel</span><span class="p">()</span>
+        
+        <span class="n">minDist</span> <span class="o">=</span> <span class="p">(</span><span class="n">vel</span><span class="o">*</span><span class="n">vel</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">decel</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">minDist</span>
+<span class="c"># end class AMPStepperController    </span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

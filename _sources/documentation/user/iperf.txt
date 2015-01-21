@@ -1,0 +1,139 @@
+Iperf Configuration
+===================
+
+
+Basics
+------
+
+The Iperf Configuration section begins with the `[IPERF]` header (case-sensitive) and generally uses the long-parameter names for iperf as the names of the options. For example, to set the target ip you might use::
+
+   iperf --client 192.168.10.25
+
+This would correspond to an option::
+
+    client = 192.168.10.25
+
+Directions
+----------
+
+The only non-iperf options are the `directions`::
+
+   directions = from_dut, to_dut
+
+Only the first letter is checked (except for `t` as it's ambiguous) so you can use whatever mnemonics help (e.g. 'receive' will only be read as 'r').
+
+This means that traffic from the TPC -> DUT can start with one of:
+
+   * to
+   * d
+   * r  
+
+(e.g `to_dut`, `downlink`, `receive`, `rx` will all do the same thing.)
+
+Traffic from the DUT -> TPC can start with one of:
+
+    * f
+    * u
+    * tr
+    * tx
+    * s  
+
+(e.g. `from_dut`, `uplink`, `transmit`, `tx`, `send` are all equivalente).
+
+This is a plural property so you can have more than one if you use comma-separation (e.g. 'tx, rx', will run traffic from the Node to the Traffic PC then reverse directions).
+
+The Common Options
+------------------
+
+These are generally the most common settings of what I have seen being changed.
+
+..
+
+   time = <time>
+
+The default here is seconds, but you can use suffixes to change it (days, hours, minutes, or seconds). e.g. to run it for 2 days, 3 hours and 22 minutes you could use::
+
+   time = 2 days 3 hours 22 minutes
+
+..
+
+   protocol = tcp
+   window = 256K
+   len = 1470
+
+   parallel = 4
+
+   interval = 1
+   format = b
+
+The last flag can be one of:
+
+   * b (for bits/second)
+   * k (for kilobits/second)
+   * m (for megabits/second)
+   * K (for KiloBytes/second)
+   * M (for MegaBytes/second)
+
+Iperf's Help
+------------
+
+This is a dump of iperf's  help string (version 2.0.5).
+
+.. '
+
+::
+
+    Usage: iperf [-s|-c host] [options]
+           iperf [-h|--help] [-v|--version]
+    
+    Client/Server:
+      -f, --format    [kmKM]   format to report: Kbits, Mbits, KBytes, MBytes
+      -i, --interval  #        seconds between periodic bandwidth reports
+      -l, --len       #[KM]    length of buffer to read or write (default 8 KB)
+      -m, --print_mss          print TCP maximum segment size (MTU - TCP/IP header)
+      -o, --output    <filename> output the report or error message to this specified file
+      -p, --port      #        server port to listen on/connect to
+      -u, --udp                use UDP rather than TCP
+      -w, --window    #[KM]    TCP window size (socket buffer size)
+      -B, --bind      <host>   bind to <host>, an interface or multicast address
+      -C, --compatibility      for use with older versions does not sent extra msgs
+      -M, --mss       #        set TCP maximum segment size (MTU - 40 bytes)
+      -N, --nodelay            set TCP no delay, disabling Nagle's Algorithm
+      -V, --IPv6Version        Set the domain to IPv6
+    
+    Server specific:
+      -s, --server             run in server mode
+      -U, --single_udp         run in single threaded UDP mode
+      -D, --daemon             run the server as a daemon
+    
+    Client specific:
+      -b, --bandwidth #[KM]    for UDP, bandwidth to send at in bits/sec
+                               (default 1 Mbit/sec, implies -u)
+      -c, --client    <host>   run in client mode, connecting to <host>
+      -d, --dualtest           Do a bidirectional test simultaneously
+      -n, --num       #[KM]    number of bytes to transmit (instead of -t)
+      -r, --tradeoff           Do a bidirectional test individually
+      -t, --time      #        time in seconds to transmit for (default 10 secs)
+      -F, --fileinput <name>   input the data to be transmitted from a file
+      -I, --stdin              input the data to be transmitted from stdin
+      -L, --listenport #       port to receive bidirectional tests back on
+      -P, --parallel  #        number of parallel client threads to run
+      -T, --ttl       #        time-to-live, for multicast (default 1)
+      -Z, --linux-congestion <algo>  set TCP congestion control algorithm (Linux only)
+    
+    Miscellaneous:
+      -x, --reportexclude [CDMSV]   exclude C(connection) D(data) M(multicast) S(settings) V(server) reports
+      -y, --reportstyle C      report as a Comma-Separated Values
+      -h, --help               print this message and quit
+      -v, --version            print version information and quit
+    
+    [KM] Indicates options that support a K or M suffix for kilo- or mega-
+    
+    The TCP window size option can be set by the environment variable
+    TCP_WINDOW_SIZE. Most other options can be set by an environment variable
+    IPERF_<long option name>, such as IPERF_BANDWIDTH.
+    
+    Report bugs to <iperf-users@lists.sourceforge.net>
+    
+    
+

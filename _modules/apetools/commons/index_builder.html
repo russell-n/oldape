@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.commons.index_builder &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.commons.index_builder</h1><div class="highlight"><pre>
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+
+<span class="n">RST_EXTENSION</span> <span class="o">=</span> <span class="s">&#39;.rst&#39;</span>
+<span class="n">INDEX</span> <span class="o">=</span> <span class="s">&#39;index.rst&#39;</span>
+<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+<span class="n">TOCTREE</span> <span class="o">=</span> <span class="n">NEWLINE</span> <span class="o">+</span> <span class="s">&#39;.. toctree::&#39;</span>
+<span class="n">MAXDEPTH</span> <span class="o">=</span> <span class="s">&#39;   :maxdepth: {0}&#39;</span> <span class="o">+</span> <span class="n">NEWLINE</span>
+<span class="n">HEADER</span> <span class="o">=</span> <span class="n">TOCTREE</span> <span class="o">+</span> <span class="n">NEWLINE</span> <span class="o">+</span> <span class="n">MAXDEPTH</span>
+<span class="n">CONTENTS</span> <span class="o">=</span> <span class="s">&#39;   {0} &lt;{1}&gt;&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">grab_headline</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="grab_headline"><a class="viewcode-back" href="../../../commons/api/apetools.commons.index_builder.grab_headline.html#apetools.commons.index_builder.grab_headline">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A convenience function to grab the first non-empty line</span>
+
+<span class="sd">    :param:</span>
+
+<span class="sd">     - `filename`: path to a file reachable from this directory</span>
+
+<span class="sd">    :return: First non-empty line stripped (or None if all are empty)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
+                <span class="k">return</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">create_toctree</span><span class="p">(</span><span class="n">maxdepth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">subfolders</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">add_headers</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="create_toctree"><a class="viewcode-back" href="../../../commons/api/apetools.commons.index_builder.create_toctree.html#apetools.commons.index_builder.create_toctree">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sends a toctree to standard out</span>
+
+<span class="sd">    :param:</span>
+
+<span class="sd">     - `maxdepth`: the depth for the tree (1=module, 2=headings, etc.)</span>
+<span class="sd">     - `subfolders`: subfolders to add (adds all if None)</span>
+<span class="sd">     - `add_folders`: use folder names to separate sub-folders</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span>
+    <span class="n">join</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span>
+    
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+    <span class="n">filenames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">contents</span> <span class="k">if</span> <span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">RST_EXTENSION</span><span class="p">)</span>
+                 <span class="ow">and</span> <span class="n">name</span> <span class="o">!=</span> <span class="n">INDEX</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="n">HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">maxdepth</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">filenames</span><span class="p">:</span>
+        <span class="n">pretty_name</span> <span class="o">=</span> <span class="n">grab_headline</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">print</span> <span class="n">CONTENTS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pretty_name</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+    <span class="n">subfolder_toctree</span><span class="p">(</span><span class="n">maxdepth</span><span class="p">,</span> <span class="n">subfolders</span><span class="p">,</span> <span class="n">add_headers</span><span class="p">)</span>
+    <span class="k">print</span>
+    <span class="k">return</span>
+
+
+<span class="k">def</span> <span class="nf">subfolder_toctree</span><span class="p">(</span><span class="n">maxdepth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">subfolders</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">add_headers</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
+<div class="viewcode-block" id="subfolder_toctree"><a class="viewcode-back" href="../../../commons/api/apetools.commons.index_builder.subfolder_toctree.html#apetools.commons.index_builder.subfolder_toctree">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates the toctree for sub-folder indices</span>
+
+<span class="sd">    :param:</span>
+
+<span class="sd">     - `maxdepth`: Level of sub-headings to include</span>
+<span class="sd">     - `subfolders`: iterable of sub-folders with index.rst</span>
+<span class="sd">     - `add_headers`: True- use folder names as separators</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">exists</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span>
+    <span class="n">join</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span>
+    
+    <span class="n">contents</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="n">subfolders</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">add_headers</span><span class="p">:</span>
+        <span class="n">name_indices</span> <span class="o">=</span> <span class="p">((</span><span class="n">name</span><span class="p">,</span> <span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">INDEX</span><span class="p">))</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">contents</span> <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">INDEX</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">name_indices</span><span class="p">:</span>
+            <span class="k">print</span> <span class="n">name</span> <span class="o">+</span> <span class="s">&quot;:&quot;</span>
+            <span class="k">print</span> <span class="n">HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">maxdepth</span><span class="p">)</span>
+            <span class="n">pretty_name</span> <span class="o">=</span> <span class="n">grab_headline</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">CONTENTS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pretty_name</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">print</span> <span class="n">HEADER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">maxdepth</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">subfolders</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">sub_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">subfolder</span><span class="p">,</span> <span class="n">INDEX</span><span class="p">)</span> <span class="k">for</span> <span class="n">subfolder</span> <span class="ow">in</span> <span class="n">subfolders</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">sub_indices</span> <span class="o">=</span> <span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">INDEX</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">contents</span> <span class="k">if</span> <span class="n">exists</span><span class="p">(</span><span class="n">join</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">INDEX</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">sub_index</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sub_indices</span><span class="p">):</span>
+            <span class="n">pretty_name</span> <span class="o">=</span> <span class="n">grab_headline</span><span class="p">(</span><span class="n">sub_index</span><span class="p">)</span>
+            <span class="k">print</span> <span class="n">CONTENTS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pretty_name</span><span class="p">,</span> <span class="n">sub_index</span><span class="p">)</span>
+    
+    <span class="k">return</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span></div>
+    <span class="kn">import</span> <span class="nn">pudb</span>
+    <span class="n">pudb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+    <span class="n">create_toctree</span><span class="p">()</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.connections.telnetconnection &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.connections.telnetconnection</h1><div class="highlight"><pre>
+<span class="c">#python Libraries</span>
+
+<span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">os.path</span>
+
+<span class="c"># apetools Libraries</span>
+<span class="c">#commands</span>
+
+<span class="kn">from</span> <span class="nn">apetools.commands</span> <span class="kn">import</span> <span class="n">changeprompt</span>
+
+<span class="c"># connections</span>
+<span class="kn">from</span> <span class="nn">sshconnection</span> <span class="kn">import</span> <span class="n">OutputFile</span>
+<span class="kn">from</span> <span class="nn">nonlocalconnection</span> <span class="kn">import</span> <span class="n">NonLocalConnection</span>
+<span class="kn">from</span> <span class="nn">localconnection</span> <span class="kn">import</span> <span class="n">OutputError</span>
+<span class="kn">from</span> <span class="nn">telnetadapter</span> <span class="kn">import</span> <span class="n">TelnetAdapter</span>
+
+
+<span class="n">SPACER</span> <span class="o">=</span> <span class="s">&#39;{0} {1}&#39;</span>
+<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s">&quot;Unknown command: &quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">TelnetConnection</span><span class="p">(</span><span class="n">NonLocalConnection</span><span class="p">):</span>
+<div class="viewcode-block" id="TelnetConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A TelnetConnection executes commands over a Telnet Connection</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&quot;root&quot;</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">end_of_line</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">,</span>
+<div class="viewcode-block" id="TelnetConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.telnetconnection.TelnetConnection.html#apetools.connections.telnetconnection.TelnetConnection.__init__">[docs]</a>                 <span class="n">mangle_prompt</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                 <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `hostname`: The IP Address or hostname</span>
+<span class="sd">         - `port`: The telnet port </span>
+<span class="sd">         - `username`: The login name</span>
+<span class="sd">         - `prompt`: The prompt to expect</span>
+<span class="sd">         - `timeout`: The readline timeout</span>
+<span class="sd">         - `end_of_line`: The string indicating the end of a line.</span>
+<span class="sd">         - `mangle_prompt`: If True, change the prompt</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TelnetConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">prompt</span> <span class="o">=</span> <span class="n">prompt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">end_of_line</span> <span class="o">=</span> <span class="n">end_of_line</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mangle_prompt</span> <span class="o">=</span> <span class="n">mangle_prompt</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TelnetConnection.client"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: TelnetAdapter for the telnet connection</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">TelnetAdapter</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span> 
+                                         <span class="n">login</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span>
+                                         <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+                                         <span class="n">end_of_line</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">end_of_line</span><span class="p">,</span>
+                                         <span class="n">prompt</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">prompt</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">mangle_prompt</span><span class="p">:</span>
+                <span class="n">changer</span> <span class="o">=</span> <span class="n">changeprompt</span><span class="o">.</span><span class="n">ChangePrompt</span><span class="p">(</span><span class="n">adapter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">changer</span><span class="o">.</span><span class="n">run</span><span class="p">())</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
+    
+    <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span></div>
+<div class="viewcode-block" id="TelnetConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.telnetconnection.html#apetools.connections.telnetconnection.TelnetConnection._procedure_call">[docs]</a>                        <span class="n">path</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Despite its name, this isn&#39;t intended to be run.</span>
+<span class="sd">        The . notation is the expected interface.</span>
+<span class="sd">        </span>
+<span class="sd">        runs the SimpleClient exec_command and puts lines of output on the Queue</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: The shell command.</span>
+<span class="sd">         - `arguments`: A string of command arguments.</span>
+<span class="sd">         - `path`: an optional path to add to the command</span>
+<span class="sd">         - `timeout`: readline timeout</span>
+
+<span class="sd">        :postcondition: OutputError with output and error file-like objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">command</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span><span class="p">):</span>
+            <span class="n">command</span> <span class="o">=</span> <span class="n">SPACER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span><span class="p">,</span>
+                                    <span class="n">command</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;calling &#39;client.exec_command({0})&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+        <span class="n">stdout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">SPACER</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">),</span>
+                                          <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Completed &#39;client.exec_command({0})&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+
+        
+
+        <span class="n">stderr</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">OutputFile</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">),</span> <span class="n">stderr</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TelnetConnection.validate"><a class="viewcode-back" href="../../../connections/api/apetools.connections.telnetconnection.TelnetConnection.validate.html#apetools.connections.telnetconnection.TelnetConnection.validate">[docs]</a>        <span class="k">return</span>
+<span class="c"># end class TelnetConnection</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
+    <span class="kn">import</span> <span class="nn">curses.ascii</span>
+    <span class="n">arguments</span> <span class="o">=</span> <span class="s">&quot;-l&quot;</span>
+    <span class="n">sc</span> <span class="o">=</span> <span class="n">TelnetConnection</span><span class="p">(</span><span class="s">&quot;192.168.10.172&quot;</span><span class="p">)</span>
+    <span class="n">sc</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="n">curses</span><span class="o">.</span><span class="n">ascii</span><span class="o">.</span><span class="n">crtl</span><span class="p">(</span><span class="s">&quot;c&quot;</span><span class="p">))</span>
+    <span class="k">print</span> <span class="s">&quot;Testing &#39;ls -l&#39;&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">x</span>
+
+    <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Testing ping&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="s">&quot;-c 10 192.168.10.1&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">x</span>
+
+    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Testing iperf&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="s">&#39;-i 1 -c 192.168.10.51&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">line</span>
+
+    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Checking iperf version&quot;</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="s">&#39;-v&#39;</span><span class="p">)</span>
+
+    <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>    
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

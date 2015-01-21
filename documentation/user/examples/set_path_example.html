@@ -1,0 +1,224 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Read-Only Device, Non-Interactive PATH Not Complete &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="up" title="User Examples" href="index.html" />
+    <link rel="next" title="The Old Ape’s Developer Documentation" href="../../developer/index.html" />
+    <link rel="prev" title="IPad Throughput Example" href="ipad_example.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="../../developer/index.html" title="The Old Ape’s Developer Documentation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="ipad_example.html" title="IPad Throughput Example"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Old Ape&#8217;s User Documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">User Examples</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="read-only-device-non-interactive-path-not-complete">
+<h1>Read-Only Device, Non-Interactive PATH Not Complete<a class="headerlink" href="#read-only-device-non-interactive-path-not-complete" title="Permalink to this headline">¶</a></h1>
+<p>This the case where the PATH doesn&#8217;t contain the executable that you want to run (e.g. <cite>iperf</cite>) and you can&#8217;t change it.</p>
+<div class="section" id="unique-features">
+<span id="no-path-unique-features"></span><h2>Unique Features<a class="headerlink" href="#unique-features" title="Permalink to this headline">¶</a></h2>
+<p>Devices that meet the following conditions should find this example applicable:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Commands needed aren&#8217;t on the PATH</li>
+<li>Device is read-only (or you lack permissions to move, link, or edit files to locations set in its <tt class="docutils literal"><span class="pre">PATH</span></tt> variable)</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="example-assumptions">
+<span id="no-path-example-assumptions"></span><h2>Example Assumptions<a class="headerlink" href="#example-assumptions" title="Permalink to this headline">¶</a></h2>
+<p>To make the example concrete, we&#8217;ll assume that the device has an ssh-connection, is linux-based, and is missing the following directories on its PATH:</p>
+<blockquote>
+<div><ul class="simple">
+<li>/sbin</li>
+<li>/opt/wifi</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="adding-the-path">
+<span id="no-path-adding-the-path"></span><h2>Adding the PATH<a class="headerlink" href="#adding-the-path" title="Permalink to this headline">¶</a></h2>
+<p>To add the <tt class="docutils literal"><span class="pre">PATH</span></tt> to the DUT&#8217;s commands you would add a <tt class="docutils literal"><span class="pre">path</span></tt> sub-option to the Node information in the configuration file:</p>
+<div class="highlight-python"><div class="highlight"><pre>[NODES]
+hr44 = hostname:hr44, login:root, password:happy2code, operating_system:linux, connection:ssh, test_interface:eth1, path:/opt/wifi /sbin
+</pre></div>
+</div>
+<table border="1" class="docutils">
+<caption>Example Notes</caption>
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Item</th>
+<th class="head">Explanation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>hr44</td>
+<td>A user-created identifier used to name the files and log-entries</td>
+</tr>
+<tr class="row-odd"><td>hostname</td>
+<td>IP address or hostname of the node&#8217;s network interface to send control commands to</td>
+</tr>
+<tr class="row-even"><td>login</td>
+<td>Login user-name for the node</td>
+</tr>
+<tr class="row-odd"><td>password</td>
+<td>Password (if needed) to log into the node</td>
+</tr>
+<tr class="row-even"><td>operating_system</td>
+<td>OS used to interpret the output of command-line commands</td>
+</tr>
+<tr class="row-odd"><td>connection</td>
+<td>Type of connection (serial, local, ssh, adbssh, etc.) <strong>Use SSH whenever possible</strong></td>
+</tr>
+<tr class="row-even"><td>test_interface</td>
+<td>The name of the network interface on the node to use for test-traffic</td>
+</tr>
+<tr class="row-odd"><td>path</td>
+<td>Space-separated directories to add to the node&#8217;s PATH</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="notes-on-the-notation">
+<span id="no-path-notes-on-notation"></span><h2>Notes on the notation<a class="headerlink" href="#notes-on-the-notation" title="Permalink to this headline">¶</a></h2>
+<p>The basic format for a line in an <tt class="docutils literal"><span class="pre">ini</span></tt> file is:</p>
+<div class="highlight-python"><div class="highlight"><pre>&lt;option&gt; = &lt;value&gt;
+</pre></div>
+</div>
+<p>Because it uses an equal sign (<tt class="docutils literal"><span class="pre">=</span></tt>) to separate options and values you can&#8217;t use it within a value. This, for example won&#8217;t work:</p>
+<blockquote>
+<div>hr44 = hostname:hr44, login:root, connection:ssh, test_interface:eth1, path = /opt/wifi /sbin</div></blockquote>
+<p>The second equal-sign confuses the parser, which is why I used a <tt class="docutils literal"><span class="pre">&lt;sub-option&gt;:&lt;value&gt;</span></tt> format. Additionally, I had already decided to use comma-separated lists to bundle sub-options with options so adding a list as a sub-option (in this case a list of <cite>path</cite> directories) couldn&#8217;t use commas so I went with space-separated lists for lists within option lists.</p>
+<p>You don&#8217;t really need to know this, but because the <tt class="docutils literal"><span class="pre">ini</span></tt> format is so free, when errors do occur they are hard to interpret, so I thought I&#8217;d emphasize that the format for the <cite>NODE</cite> options isn&#8217;t necessarily what you might expect.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Read-Only Device, Non-Interactive PATH Not Complete</a><ul>
+<li><a class="reference internal" href="#unique-features">Unique Features</a></li>
+<li><a class="reference internal" href="#example-assumptions">Example Assumptions</a></li>
+<li><a class="reference internal" href="#adding-the-path">Adding the PATH</a></li>
+<li><a class="reference internal" href="#notes-on-the-notation">Notes on the notation</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../_sources/documentation/user/examples/set_path_example.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

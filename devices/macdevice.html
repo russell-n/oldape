@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mac OS device &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Devices" href="index.html" />
+    <link rel="next" title="apetools.devices.macdevice.MacDevice" href="api/apetools.devices.macdevice.MacDevice.html" />
+    <link rel="prev" title="apetools.devices.linuxdevice.LinuxDevice.log" href="api/apetools.devices.linuxdevice.LinuxDevice.log.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.devices.macdevice.MacDevice.html" title="apetools.devices.macdevice.MacDevice"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.devices.linuxdevice.LinuxDevice.log.html" title="apetools.devices.linuxdevice.LinuxDevice.log"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Devices</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mac-os-device">
+<h1>Mac OS device<a class="headerlink" href="#mac-os-device" title="Permalink to this headline">¶</a></h1>
+<p>A Mac OS device. Assumes that a symlink (or alias) has been setup so that you can call the &#8216;airport&#8217; command (rather than passing in the full path).</p>
+<p class="plantuml">
+<img src="../_images/plantuml-12db22e04df2e5fca5064a428269484a98984e05.png" alt="BaseDevice &lt;|-- MacDevice
+MacDevice o- AirportCommand
+MacDevice o- Svc" />
+</p>
+<span class="target" id="module-apetools.devices.macdevice"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.html#apetools.devices.macdevice.MacDevice" title="apetools.devices.macdevice.MacDevice"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to bundle commands to control a mac os device</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.airport.html#apetools.devices.macdevice.MacDevice.airport" title="apetools.devices.macdevice.MacDevice.airport"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.airport</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">AirportCommand built with self.connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.channel.html#apetools.devices.macdevice.MacDevice.channel" title="apetools.devices.macdevice.MacDevice.channel"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.channel</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the channel for the current wifi connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.rssi.html#apetools.devices.macdevice.MacDevice.rssi" title="apetools.devices.macdevice.MacDevice.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.rssi</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current RSSI</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.bitrate.html#apetools.devices.macdevice.MacDevice.bitrate" title="apetools.devices.macdevice.MacDevice.bitrate"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.bitrate</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current bitrate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.noise.html#apetools.devices.macdevice.MacDevice.noise" title="apetools.devices.macdevice.MacDevice.noise"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.noise</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current noise</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.ssid.html#apetools.devices.macdevice.MacDevice.ssid" title="apetools.devices.macdevice.MacDevice.ssid"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.ssid</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the ssid of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.bssid.html#apetools.devices.macdevice.MacDevice.bssid" title="apetools.devices.macdevice.MacDevice.bssid"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.bssid</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the MAC address of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.mac_address.html#apetools.devices.macdevice.MacDevice.mac_address" title="apetools.devices.macdevice.MacDevice.mac_address"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.mac_address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">device mac address</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.wifi_control.html#apetools.devices.macdevice.MacDevice.wifi_control" title="apetools.devices.macdevice.MacDevice.wifi_control"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.wifi_control</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">Svc command (enable disable radio)</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.connection.html#apetools.devices.macdevice.MacDevice.connection" title="apetools.devices.macdevice.MacDevice.connection"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.connection</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">connection passed in</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.wake_screen.html#apetools.devices.macdevice.MacDevice.wake_screen" title="apetools.devices.macdevice.MacDevice.wake_screen"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.wake_screen</span></tt></a>()</td>
+<td>Wake the screen (not implemented)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.display.html#apetools.devices.macdevice.MacDevice.display" title="apetools.devices.macdevice.MacDevice.display"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.display</span></tt></a>(message)</td>
+<td>Display a message on the screen (not implemented)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.disable_wifi.html#apetools.devices.macdevice.MacDevice.disable_wifi" title="apetools.devices.macdevice.MacDevice.disable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.disable_wifi</span></tt></a>()</td>
+<td>Sends &#8216;networksetup -setairportpower airport off&#8217; command</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.enable_wifi.html#apetools.devices.macdevice.MacDevice.enable_wifi" title="apetools.devices.macdevice.MacDevice.enable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.enable_wifi</span></tt></a>()</td>
+<td>Sends &#8216;networksetup -setairport airport on&#8217; command</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.get_wifi_info.html#apetools.devices.macdevice.MacDevice.get_wifi_info" title="apetools.devices.macdevice.MacDevice.get_wifi_info"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.get_wifi_info</span></tt></a>()</td>
+<td>gets the &#8216;airpor status&#8217; command output</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.devices.macdevice.MacDevice.log.html#apetools.devices.macdevice.MacDevice.log" title="apetools.devices.macdevice.MacDevice.log"><tt class="xref py py-obj docutils literal"><span class="pre">MacDevice.log</span></tt></a>(message)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">message sent to the connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/devices/macdevice.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

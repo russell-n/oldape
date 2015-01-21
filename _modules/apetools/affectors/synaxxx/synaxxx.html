@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.affectors.synaxxx.synaxxx &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for apetools.affectors.synaxxx.synaxxx</h1><div class="highlight"><pre>
+<span class="c">#python standard library</span>
+<span class="kn">import</span> <span class="nn">telnetlib</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c">#apetools library</span>
+<span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
+<span class="kn">from</span> <span class="nn">apetools.tools.sleep</span> <span class="kn">import</span> <span class="n">Sleep</span>
+<span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">CommandError</span>
+
+
+<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\r</span><span class="s">&quot;</span>
+<span class="n">INVALID</span> <span class="o">=</span> <span class="s">&quot;Invalid command&quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">SWITCH_ON</span> <span class="o">=</span> <span class="s">&#39;pset {0} 1&#39;</span>
+<span class="n">ALL_OFF</span> <span class="o">=</span> <span class="s">&#39;ps 0&#39;</span>
+<span class="n">ALL_ON</span> <span class="o">=</span> <span class="s">&#39;ps 1&#39;</span>
+<span class="n">SHOW_STATUSES</span> <span class="o">=</span> <span class="s">&#39;pshow&#39;</span>
+
+<span class="n">ON</span> <span class="o">=</span> <span class="s">&#39;ON&#39;</span>
+<span class="n">OFF</span> <span class="o">=</span> <span class="s">&quot;OFF&quot;</span>
+
+<span class="n">ZERO_OR_MORE</span> <span class="o">=</span> <span class="s">r&quot;*&quot;</span>
+<span class="n">ONE_OR_MORE</span> <span class="o">=</span> <span class="s">r&#39;+&#39;</span>
+<span class="n">DIGIT</span> <span class="o">=</span> <span class="s">r&#39;\d&#39;</span>
+<span class="n">INTEGER</span> <span class="o">=</span> <span class="n">DIGIT</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+<span class="n">STATE</span> <span class="o">=</span> <span class="s">&#39;(?P&lt;state&gt;ON|OFF)&#39;</span>
+<span class="n">SWITCH</span> <span class="o">=</span> <span class="s">&#39;(?P&lt;switch&gt;{0})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">INTEGER</span><span class="p">)</span>
+<span class="n">ANYTHING</span> <span class="o">=</span> <span class="s">&#39;.&#39;</span>
+<span class="n">EVERYTHING</span> <span class="o">=</span> <span class="n">ANYTHING</span> <span class="o">+</span> <span class="n">ONE_OR_MORE</span>
+<span class="n">SEPARATOR</span> <span class="o">=</span> <span class="s">r&#39;\|&#39;</span>
+<span class="n">SPACE</span> <span class="o">=</span> <span class="s">r&#39;\s&#39;</span>
+<span class="n">SPACES</span> <span class="o">=</span> <span class="n">SPACE</span> <span class="o">+</span> <span class="n">ZERO_OR_MORE</span>
+<span class="n">state_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">SWITCH</span> <span class="o">+</span> <span class="n">SPACES</span> <span class="o">+</span> <span class="n">SEPARATOR</span> <span class="o">+</span> <span class="n">SPACES</span> <span class="o">+</span> <span class="s">&quot;Outlet&quot;</span> <span class="o">+</span>
+                              <span class="n">INTEGER</span> <span class="o">+</span> <span class="n">SPACES</span> <span class="o">+</span> <span class="n">SEPARATOR</span> <span class="o">+</span> <span class="n">SPACES</span> <span class="o">+</span> <span class="n">STATE</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">SynaxxxError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
+<div class="viewcode-block" id="SynaxxxError"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.SynaxxxError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An error to raise if a command doesn&#39;t execute properly.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class SynaxxxError</span>
+
+
+<span class="k">class</span> <span class="nc">Synaxxx</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to control the Synaxxx</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sleep</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Synaxxx.__init__"><a class="viewcode-back" href="../../../../affectors/synaxxx/api/apetools.affectors.synaxxx.synaxxx.Synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `host`: the hostname or IP of the target</span>
+<span class="sd">         - `port`: the port number for the telnet service</span>
+<span class="sd">         - `timeout`: the login and read timeout in seconds</span>
+<span class="sd">         - `sleep`: time to sleep between changing the state of the same switch</span>
+<span class="sd">         - `debug`: If true, show synaccess output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Synaxxx</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">host</span> <span class="o">=</span> <span class="n">host</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sleep</span> <span class="o">=</span> <span class="n">sleep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span> <span class="o">=</span> <span class="n">debug</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sleeper</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">sleeper</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Synaxxx.sleeper"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.sleeper">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: a sleeper</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleeper</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sleeper</span> <span class="o">=</span> <span class="n">Sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sleep</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleeper</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Synaxxx.client"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: the telnetlib client</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Opening telnet connection: {0}@{1}&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+                                             <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">telnetlib</span><span class="o">.</span><span class="n">Telnet</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Synaxxx.status"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.status">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: dict of &lt;switch id&gt;:&lt;state&gt;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">statuses</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">SHOW_STATUSES</span><span class="p">):</span>
+            <span class="n">match</span> <span class="o">=</span> <span class="n">state_expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">match</span><span class="p">:</span>
+                <span class="n">states</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
+                <span class="n">statuses</span><span class="p">[</span><span class="n">states</span><span class="p">[</span><span class="s">&#39;switch&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="s">&#39;state&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">statuses</span>
+
+    <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">attempts</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.exec_command"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `command`: a string to send to the device</span>
+<span class="sd">         - `attempts`: number of times to try (the server tends to die)</span>
+
+<span class="sd">        :postcondition: command string sent to the device</span>
+<span class="sd">        :yield: line of output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">attempts</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">read_very_eager</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">NEWLINE</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">command</span> <span class="o">+</span> <span class="n">NEWLINE</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">lines</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
+                    <span class="k">yield</span> <span class="n">line</span>
+            <span class="k">except</span> <span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Telnet Error: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">error</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">attempt</span> <span class="o">==</span> <span class="n">attempts</span> <span class="o">-</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Error with: ip: {0} port: {1}&quot;</span>
+                    <span class="k">raise</span> <span class="n">SynaxxxError</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">lines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">120</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.lines"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.lines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `timeout`: maximum time to yield lines</span>
+
+<span class="sd">        :yield: each line of output</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">+</span> <span class="n">timeout</span>
+
+        <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">read_until</span><span class="p">(</span><span class="n">NEWLINE</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="k">yield</span> <span class="n">line</span>
+            <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">end_time</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">SynaxxxError</span><span class="p">(</span><span class="s">&quot;time exceeded {0} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timeout</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.validate"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.validate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Checks the line for errors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">INVALID</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Error executing: &#39;{0}&#39;&quot;</span>
+            <span class="k">raise</span> <span class="n">SynaxxxError</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">all_off</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.all_off"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.all_off">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: all outlets turned off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Turning all switches off&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">ALL_OFF</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">all_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.all_on"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.all_on">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: all outlets turned off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">ALL_ON</span><span class="p">):</span>
+            <span class="k">pass</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.turn_on"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.turn_on">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `switch`: a switch identifier</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="n">SWITCH_ON</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">)):</span>
+            <span class="k">pass</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switches</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.__call__"><a class="viewcode-back" href="../../../../affectors/synaxxx/api/apetools.affectors.synaxxx.synaxxx.Synaxxx.__call__.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `switches`: a list of switches (integers)</span>
+
+<span class="sd">        :postcondition: switches in list on, all others off, self.close called</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">all_off</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sleeper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">switches</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="n">switches</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Turning on switch {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">switch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">increment_sleep</span><span class="p">()</span>
+                <span class="k">raise</span> <span class="n">SynaxxxError</span><span class="p">(</span><span class="s">&quot;Invalid Switch: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">turn_on</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Validating switch states&quot;</span><span class="p">)</span>
+        <span class="n">statuses</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span>
+        <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="n">switches</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">statuses</span><span class="p">[</span><span class="n">switch</span><span class="p">]</span> <span class="o">==</span> <span class="n">ON</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AssertionError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">increment_sleep</span><span class="p">()</span>
+                <span class="n">SynaxxxError</span><span class="p">(</span><span class="s">&quot;Unable to turn on switch &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="p">[</span><span class="n">switch</span> <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="n">statuses</span>
+                       <span class="k">if</span> <span class="n">switch</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">switches</span><span class="p">]:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">assert</span> <span class="n">statuses</span><span class="p">[</span><span class="n">switch</span><span class="p">]</span> <span class="o">==</span> <span class="n">OFF</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AssertionError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">increment_sleep</span><span class="p">()</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Unable to turn off switch &#39;{0}&#39;&quot;</span>
+                <span class="k">raise</span> <span class="n">SynaxxxError</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_status</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">increment_sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.increment_sleep"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.increment_sleep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: sleep increased by one second</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sleep</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sleeper</span><span class="o">.</span><span class="n">sleep_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sleep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Sleep time increased to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sleep</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">show_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.show_status"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.show_status">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        print switch states to stdout</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;{0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">status</span><span class="p">[</span><span class="n">switch</span><span class="p">]))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Synaxxx.close"><a class="viewcode-back" href="../../../../documentation/developer/api/synaxxx_api/apetools.affectors.synaxxx.synaxxx.html#apetools.affectors.synaxxx.synaxxx.Synaxxx.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :postcondition: connection closed, client deleted</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">except</span> <span class="n">socket</span><span class="o">.</span><span class="n">error</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+<span class="c"># end class Synaxxx</span>
+</pre></div></div></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

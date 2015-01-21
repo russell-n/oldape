@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.threads.threads &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-apetools.threads.threads">
+<span id="apetools-threads-threads"></span><h1>apetools.threads.threads<a class="headerlink" href="#module-apetools.threads.threads" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../../threads/api/apetools.threads.threads.Thread.html#apetools.threads.threads.Thread" title="apetools.threads.threads.Thread"><tt class="xref py py-obj docutils literal"><span class="pre">Thread</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Calls start in the constructor and sets daemonic.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.threads.threads.Thread">
+<em class="property">class </em><tt class="descclassname">apetools.threads.threads.</tt><tt class="descname">Thread</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/threads/threads.html#Thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.threads.threads.Thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls start in the constructor and sets daemonic.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>target</cite>: The function pointer to run in the thread.</li>
+<li><cite>name</cite>: Name of the thread to use.</li>
+</ul>
+<dl class="method">
+<dt id="apetools.threads.threads.Thread._Thread__delete">
+<tt class="descname">_Thread__delete</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread._Thread__delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove current thread from the dict of currently running threads.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.threads.threads.Thread._Thread__exc_clear">
+<tt class="descname">_Thread__exc_clear</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread._Thread__exc_clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>exc_clear() -&gt; None</p>
+<p>Clear global information on the current exception.  Subsequent calls to
+exc_info() will return (None,None,None) until another exception is raised
+in the current thread or the execution stack returns to a frame where
+another exception is being handled.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.threads.threads.Thread._Thread__exc_info">
+<tt class="descname">_Thread__exc_info</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread._Thread__exc_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>exc_info() -&gt; (type, value, traceback)</p>
+<p>Return information about the most recent exception caught by an except
+clause in the current stack frame or in an older stack frame.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.threads.threads.Thread.isAlive">
+<tt class="descname">isAlive</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread.isAlive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether the thread is alive.</p>
+<p>This method returns True just before the run() method starts until just
+after the run() method terminates. The module function enumerate()
+returns a list of all alive threads.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.threads.threads.Thread.is_alive">
+<tt class="descname">is_alive</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread.is_alive" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether the thread is alive.</p>
+<p>This method returns True just before the run() method starts until just
+after the run() method terminates. The module function enumerate()
+returns a list of all alive threads.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.threads.threads.Thread.join">
+<tt class="descname">join</tt><big>(</big><em>timeout=None</em><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wait until the thread terminates.</p>
+<p>This blocks the calling thread until the thread whose join() method is
+called terminates &#8211; either normally or through an unhandled exception
+or until the optional timeout occurs.</p>
+<p>When the timeout argument is present and not None, it should be a
+floating point number specifying a timeout for the operation in seconds
+(or fractions thereof). As join() always returns None, you must call
+isAlive() after join() to decide whether a timeout happened &#8211; if the
+thread is still alive, the join() call timed out.</p>
+<p>When the timeout argument is not present or None, the operation will
+block until the thread terminates.</p>
+<p>A thread can be join()ed many times.</p>
+<p>join() raises a RuntimeError if an attempt is made to join the current
+thread as that would cause a deadlock. It is also an error to join() a
+thread before it has been started and attempts to do so raises the same
+exception.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.threads.threads.Thread.run">
+<tt class="descname">run</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method representing the thread&#8217;s activity.</p>
+<p>You may override this method in a subclass. The standard run() method
+invokes the callable object passed to the object&#8217;s constructor as the
+target argument, if any, with sequential and keyword arguments taken
+from the args and kwargs arguments, respectively.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.threads.threads.Thread.start">
+<tt class="descname">start</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.threads.threads.Thread.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start the thread&#8217;s activity.</p>
+<p>It must be called at most once per thread object. It arranges for the
+object&#8217;s run() method to be invoked in a separate thread of control.</p>
+<p>This method will raise a RuntimeError if called more than once on the
+same thread object.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.threads.threads.Thread.daemon">
+<tt class="descname">daemon</tt><a class="headerlink" href="#apetools.threads.threads.Thread.daemon" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean value indicating whether this thread is a daemon thread (True) or not (False).</p>
+<p>This must be set before start() is called, otherwise RuntimeError is
+raised. Its initial value is inherited from the creating thread; the
+main thread is not a daemon thread and therefore all threads created in
+the main thread default to daemon = False.</p>
+<p>The entire Python program exits when no alive non-daemon threads are
+left.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.threads.threads.Thread.ident">
+<tt class="descname">ident</tt><a class="headerlink" href="#apetools.threads.threads.Thread.ident" title="Permalink to this definition">¶</a></dt>
+<dd><p>Thread identifier of this thread or None if it has not been started.</p>
+<p>This is a nonzero integer. See the thread.get_ident() function. Thread
+identifiers may be recycled when a thread exits and another thread is
+created. The identifier is available even after the thread has exited.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.threads.threads.Thread.name">
+<tt class="descname">name</tt><a class="headerlink" href="#apetools.threads.threads.Thread.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string used for identification purposes only.</p>
+<p>It has no semantics. Multiple threads may be given the same name. The
+initial name is set by the constructor.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../../../_sources/documentation/developer/api/threads_api/apetools.threads.threads.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

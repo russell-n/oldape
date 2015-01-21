@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>apetools.connections.sshconnection.SimpleClient &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="The SSHConnection" href="../sshconnection.html" />
+    <link rel="next" title="apetools.connections.sshconnection.SSHConnection" href="apetools.connections.sshconnection.SSHConnection.html" />
+    <link rel="prev" title="apetools.connections.sshconnection.SSHClient" href="apetools.connections.sshconnection.SSHClient.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apetools.connections.sshconnection.SSHConnection.html" title="apetools.connections.sshconnection.SSHConnection"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apetools.connections.sshconnection.SSHClient.html" title="apetools.connections.sshconnection.SSHClient"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Connections</a> &raquo;</li>
+          <li><a href="../sshconnection.html" accesskey="U">The SSHConnection</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="apetools-connections-sshconnection-simpleclient">
+<h1>apetools.connections.sshconnection.SimpleClient<a class="headerlink" href="#apetools-connections-sshconnection-simpleclient" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="apetools.connections.sshconnection.SimpleClient">
+<em class="property">class </em><tt class="descclassname">apetools.connections.sshconnection.</tt><tt class="descname">SimpleClient</tt><big>(</big><em>hostname</em>, <em>username</em>, <em>password=None</em>, <em>port=22</em>, <em>timeout=5</em><big>)</big><a class="reference internal" href="../../_modules/apetools/connections/sshconnection.html#SimpleClient"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.sshconnection.SimpleClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple wrapper around paramiko&#8217;s SSHClient.</p>
+<p>The only intended public interface is exec_command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>hostname</cite>: ip address or resolvable hostname.</li>
+<li><cite>username</cite>: the login name.</li>
+<li><cite>password</cite>: optional if ssh-keys are set up.</li>
+<li><cite>port</cite>: The port for the ssh process.</li>
+<li><cite>timeout</cite>: Time to give the client to connect</li>
+</ul>
+<dl class="method">
+<dt id="apetools.connections.sshconnection.SimpleClient.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>hostname</em>, <em>username</em>, <em>password=None</em>, <em>port=22</em>, <em>timeout=5</em><big>)</big><a class="reference internal" href="../../_modules/apetools/connections/sshconnection.html#SimpleClient.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.sshconnection.SimpleClient.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>hostname</cite>: ip address or resolvable hostname.</li>
+<li><cite>username</cite>: the login name.</li>
+<li><cite>password</cite>: optional if ssh-keys are set up.</li>
+<li><cite>port</cite>: The port for the ssh process.</li>
+<li><cite>timeout</cite>: Time to give the client to connect</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.__init__" title="apetools.connections.sshconnection.SimpleClient.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>(hostname,&nbsp;username[,&nbsp;password,&nbsp;...])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.close" title="apetools.connections.sshconnection.SimpleClient.close"><tt class="xref py py-obj docutils literal"><span class="pre">close</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">client&#8217;s connection is closed and self._client is None</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.exec_command" title="apetools.connections.sshconnection.SimpleClient.exec_command"><tt class="xref py py-obj docutils literal"><span class="pre">exec_command</span></tt></a>(command[,&nbsp;timeout])</td>
+<td>A pass-through to the SSHClient&#8217;s exec_command.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.client" title="apetools.connections.sshconnection.SimpleClient.client"><tt class="xref py py-obj docutils literal"><span class="pre">client</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">paramiko.SSHClient</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.logger" title="apetools.connections.sshconnection.SimpleClient.logger"><tt class="xref py py-obj docutils literal"><span class="pre">logger</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.connections.sshconnection.SimpleClient.close">
+<tt class="descname">close</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/apetools/connections/sshconnection.html#SimpleClient.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.sshconnection.SimpleClient.close" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">client&#8217;s connection is closed and self._client is None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.sshconnection.SimpleClient.exec_command">
+<tt class="descname">exec_command</tt><big>(</big><em>command</em>, <em>timeout=10</em><big>)</big><a class="reference internal" href="../../_modules/apetools/connections/sshconnection.html#SimpleClient.exec_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.sshconnection.SimpleClient.exec_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>A pass-through to the SSHClient&#8217;s exec_command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: A string to send to the client.</li>
+<li><cite>timeout</cite>: Set non-blocking timeout.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">tuple</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">stdin, stdout, stderr</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ConnectionError for paramiko or socket exceptions</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.sshconnection.SimpleClient.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.connections.sshconnection.SimpleClient.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.sshconnection.SimpleClient.client">
+<tt class="descname">client</tt><a class="reference internal" href="../../_modules/apetools/connections/sshconnection.html#SimpleClient.client"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.sshconnection.SimpleClient.client" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">paramiko.SSHClient</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">An instance of SSHClient connected to remote host.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body">ClientError if the connection fails.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.sshconnection.SimpleClient.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.connections.sshconnection.SimpleClient.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../../_sources/connections/api/apetools.connections.sshconnection.SimpleClient.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

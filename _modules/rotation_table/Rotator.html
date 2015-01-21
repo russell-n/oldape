@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>rotation_table.Rotator &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for rotation_table.Rotator</h1><div class="highlight"><pre>
+<span class="c"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Created on Thu May  1 10:43:49 2014</span>
+
+<span class="sd">@author: cameron</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="c"># python standard library</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">NoOptionError</span>
+<span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">FloatType</span><span class="p">,</span> <span class="n">IntType</span>
+
+<span class="c"># this package</span>
+<span class="kn">from</span> <span class="nn">AMPStepperController</span> <span class="kn">import</span> <span class="n">AMPStepperController</span>
+<span class="kn">from</span> <span class="nn">AMPStepperController</span> <span class="kn">import</span> <span class="n">AMPStepperConfiguration</span>
+<span class="kn">import</span> <span class="nn">rotation_table</span> 
+<span class="kn">from</span> <span class="nn">rotation_table.base_arguments</span> <span class="kn">import</span> <span class="n">MIN_VELOCITY</span><span class="p">,</span> <span class="n">MAX_VELOCITY</span>
+<span class="kn">from</span> <span class="nn">rotation_table.base_arguments</span> <span class="kn">import</span> <span class="n">MIN_ACCELERATION</span><span class="p">,</span> <span class="n">MAX_ACCELERATION</span>
+
+<span class="kn">from</span> <span class="nn">rotation_table</span> <span class="kn">import</span> <span class="n">CREATION</span><span class="p">,</span> <span class="n">ARGS</span><span class="p">,</span> <span class="n">KWARGS</span><span class="p">,</span> <span class="n">CALLED_WITH</span>
+
+
+<span class="n">REVS_PER_DEGREE</span> <span class="o">=</span> <span class="mf">0.002777777777777778</span>
+<span class="n">DEGREES_PER_REV</span> <span class="o">=</span> <span class="mf">360.</span>
+<span class="n">DEGREES_MIN</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">DEGREES_MAX</span> <span class="o">=</span> <span class="mi">360</span>
+
+
+<span class="k">class</span> <span class="nc">RotatorConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Holder of Rotator Configuration constants</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="c"># options</span>
+    <span class="n">home_sensor</span> <span class="o">=</span> <span class="s">&#39;home_sensor&#39;</span>
+    <span class="n">home_offset</span> <span class="o">=</span> <span class="s">&#39;home_offset&#39;</span>
+    <span class="n">home_velocity</span> <span class="o">=</span> <span class="s">&#39;home_velocity&#39;</span>
+
+    <span class="c"># defaults</span>
+    <span class="n">default_home_sensor</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="n">default_home_offset</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span>
+    <span class="n">default_home_velocity</span> <span class="o">=</span> <span class="mi">20</span>
+
+
+<span class="k">class</span> <span class="nc">RotatorConfiguration</span><span class="p">(</span><span class="n">AMPStepperConfiguration</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Configuration for the rotator</span>
+
+<span class="sd">    :param:</span>
+
+<span class="sd">     - `section`: name of section in configuration</span>
+<span class="sd">     - `configuration`: ConfigParser with section</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RotatorConfiguration</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_home_sensor</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_home_offset</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_home_velocity</span> <span class="o">=</span> <span class="bp">None</span>        
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">home_velocity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: `home_velocity` value</span>
+<span class="sd">        :rtype: integer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_home_velocity</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_home_velocity</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int</span><span class="p">(</span><span class="n">RotatorConstants</span><span class="o">.</span><span class="n">home_velocity</span><span class="p">,</span>
+                                               <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                               <span class="n">default</span><span class="o">=</span><span class="n">RotatorConstants</span><span class="o">.</span><span class="n">default_home_velocity</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_home_velocity</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">home_offset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: `home_offset` value</span>
+<span class="sd">        :rtype: int</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_home_offset</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_home_offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int</span><span class="p">(</span><span class="n">RotatorConstants</span><span class="o">.</span><span class="n">home_offset</span><span class="p">,</span>
+                                             <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                             <span class="n">default</span><span class="o">=</span><span class="n">RotatorConstants</span><span class="o">.</span><span class="n">default_home_offset</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_home_offset</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">home_sensor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: whether to use a home sensor or not</span>
+<span class="sd">        :rtype: Boolean</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_home_sensor</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_home_sensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_boolean</span><span class="p">(</span><span class="n">RotatorConstants</span><span class="o">.</span><span class="n">home_sensor</span><span class="p">,</span>
+                                                 <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                                                 <span class="n">default</span><span class="o">=</span><span class="n">RotatorConstants</span><span class="o">.</span><span class="n">default_home_sensor</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_home_sensor</span>
+
+    <span class="k">def</span> <span class="nf">_get_boolean</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Gets the option&#39;s value as a boolean</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `option`: option in rotator section with desired value</span>
+<span class="sd">         - `optional`: if True, trap NoOptionErrors</span>
+<span class="sd">         - `default`: value to return if optional and not found</span>
+<span class="sd">         </span>
+<span class="sd">        :raise: NoOptionError if option isn&#39;t in section and not optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">getboolean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
+                                                 <span class="n">option</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">NoOptionError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">optional</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+            <span class="k">raise</span>
+        <span class="k">return</span>
+
+
+<span class="k">class</span> <span class="nc">Rotator</span><span class="p">(</span><span class="n">AMPStepperController</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Turntable controller</span>
+<span class="sd">    &quot;&quot;&quot;</span>    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rotator constructor</span>
+
+<span class="sd">        :param:</span>
+<span class="sd">        </span>
+<span class="sd">         - `configuration`: RotatorConfiguration</span>
+<span class="sd">         - `address`: not sure, output of sending &#39;DA&#39; command to the device</span>
+<span class="sd">         - `lock`: re-entrant lock to block serial calls</span>
+<span class="sd">         - `encoder`: boolean,  if False causes some methods to raise error</span>
+<span class="sd">         - `debug`: boolean, if True sends print messages to std out</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">AMPStepperController</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stepRange</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_targetAngle</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stepsPerDegree</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">stepsPerDegree</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stepsPerDegree</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_stepsPerDegree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">ppr</span><span class="o">/</span><span class="n">DEGREES_PER_REV</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stepsPerDegree</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">targetAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Current angle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_targetAngle</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_targetAngle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentAngle</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_targetAngle</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">serial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        serial connection to the device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">Rotator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">serial</span>
+
+            <span class="c"># side-effects</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_homeSensorEnabled</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">home_sensor</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">home_sensor</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_enableHomeSensor</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_disableHomeSensor</span><span class="p">()</span>
+                                            
+            <span class="c"># sendCommand defined in AMPStepperController</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;EF&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>   <span class="c"># enable stall prevention with timeout</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial</span>        
+        
+    <span class="k">def</span> <span class="nf">rotateAbsolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degrees</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rotates the table to an angle (0 &lt;= degrees &lt; 360)</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `degrees`: angle to rotate table to</span>
+
+<span class="sd">        :raise: Exception if angle is out of bounds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">DEGREES_MIN</span> <span class="o">&lt;=</span> <span class="n">degrees</span> <span class="o">&lt;</span> <span class="n">DEGREES_MAX</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Rotating to {0} degrees (clockwise)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_targetAngle</span> <span class="o">=</span> <span class="n">degrees</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">moveAbsoluteSteps</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">degrees</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsPerDegree</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Angle out of bounds [{0},{1})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">DEGREES_MIN</span><span class="p">,</span>
+                                                                   <span class="n">DEGREES_MAX</span><span class="p">))</span>
+            
+            
+    <span class="k">def</span> <span class="nf">rotateRelative</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rotate to degrees relative to current angle</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `degrees`: angle to rotate</span>
+<span class="sd">         - `validate`: if True, raise exception if target angle out of range</span>
+
+<span class="sd">        :raise: Exception if `validate` and target out of range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">curAngle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">currentAngle</span><span class="p">()</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">curAngle</span> <span class="o">+</span> <span class="n">degrees</span>
+        <span class="k">if</span> <span class="n">validate</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">DEGREES_MIN</span> <span class="o">&lt;=</span> <span class="n">target</span> <span class="o">&lt;</span> <span class="n">DEGREES_MAX</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_targetAngle</span> <span class="o">=</span> <span class="n">target</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">moveRelativeSteps</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">degrees</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsPerDegree</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Angle out of bounds [{0}, {1})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">DEGREES_MIN</span><span class="p">,</span>
+                                                                        <span class="n">DEGREES_MAX</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_targetAngle</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">moveRelativeSteps</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">degrees</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsPerDegree</span><span class="p">))</span>
+        <span class="k">return</span>
+            
+            
+    <span class="k">def</span> <span class="nf">currentAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get the current angle</span>
+
+<span class="sd">        :return: current angle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">getPositionSteps</span><span class="p">()</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsPerDegree</span>
+                                
+    <span class="k">def</span> <span class="nf">setAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degrees</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the table&#39;s current angle</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `degrees`: angle to tell the table it&#39;s currently at</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Setting table&#39;s current position to {0} degrees&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setPosition</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">degrees</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">stepsPerDegree</span><span class="p">)))</span>
+        <span class="k">return</span>
+            
+    <span class="k">def</span> <span class="nf">setMotionProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">accel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">decel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets Angular Velocity, Acceleration, and Decceleration</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `vel`: angular velocity</span>
+<span class="sd">         - `accel`: angular acceleration</span>
+<span class="sd">         - `decel`: angular deceleration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">vel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Setting angular velocity to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vel</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setAngularVelocity</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">accel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Setting angular acceleration to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accel</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setAngularAccel</span><span class="p">(</span><span class="n">accel</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">decel</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Setting angular deceleration to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">decel</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setAngularDecel</span><span class="p">(</span><span class="n">decel</span><span class="p">)</span>
+        <span class="k">return</span>
+       
+       
+    <span class="k">def</span> <span class="nf">setAngularVelocity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vel</span><span class="p">):</span>
+<div class="viewcode-block" id="Rotator.setAngularVelocity"><a class="viewcode-back" href="../../commands/api/rotation_table.Rotator.Rotator.setAngularVelocity.html#rotation_table.Rotator.Rotator.setAngularVelocity">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        converts vel to angular velocity, calls parent&#39;s setRevsPerSec</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `vel`: angular velocity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angularVel</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">vel</span><span class="o">/</span><span class="n">DEGREES_PER_REV</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRevsPerSec</span><span class="p">(</span><span class="n">angularVel</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">setAngularAccel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">accel</span><span class="p">):</span></div>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set the angular acceleration</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `accel`: angular acceleration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angularAccel</span><span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">accel</span><span class="o">/</span><span class="n">DEGREES_PER_REV</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRotationalAccel</span><span class="p">(</span><span class="n">angularAccel</span><span class="p">)</span>
+        <span class="k">return</span>        
+        
+    <span class="k">def</span> <span class="nf">setAngularDecel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">decel</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets the angular deceleration</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `decel`: angular deceleration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angularDecel</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">decel</span><span class="o">/</span><span class="n">DEGREES_PER_REV</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setRotationalDecel</span><span class="p">(</span><span class="n">angularDecel</span><span class="p">)</span>
+        <span class="k">return</span>        
+        
+    <span class="k">def</span> <span class="nf">getAngularVelocity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Converts Revs per second to angular velocity</span>
+
+<span class="sd">        :return: angular velocity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angularVel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRevsPerSec</span><span class="p">()</span><span class="o">*</span><span class="n">DEGREES_PER_REV</span>
+        <span class="k">return</span> <span class="n">angularVel</span>
+    
+    
+    <span class="k">def</span> <span class="nf">getAngularAccel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: angular acceleration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angularAccel</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRotationalAccel</span><span class="p">()</span><span class="o">*</span><span class="n">DEGREES_PER_REV</span>
+        <span class="k">return</span> <span class="n">angularAccel</span>
+        
+        
+    <span class="k">def</span> <span class="nf">getMotionProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        puts angular velocity, acceleration, deceleration in a dict</span>
+
+<span class="sd">        :return: `vel`, `accel`, `decel` dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s">&#39;vel&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">getAngularVelocity</span><span class="p">(),</span>
+                <span class="s">&#39;accel&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">getAngularAccel</span><span class="p">(),</span>
+                <span class="s">&#39;decel&#39;</span><span class="p">:</span><span class="bp">self</span><span class="o">.</span><span class="n">getAngularDecel</span><span class="p">()}</span>        
+        
+        
+    <span class="k">def</span> <span class="nf">getAngularDecel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: angular deceleration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">angularDecel</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getRotationalDecel</span><span class="p">()</span><span class="o">*</span><span class="n">DEGREES_PER_REV</span>
+        <span class="k">return</span> <span class="n">angularDecel</span>
+    
+    
+    <span class="k">def</span> <span class="nf">moveHome</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        returns the turntable to angle 0</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">home_sensor</span><span class="p">:</span>
+            <span class="c">#self._setPPR(self._ppr)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setMoveDistanceSteps</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c"># set up jogging to move in negative direction</span>
+            <span class="n">vel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">home_velocity</span>
+            <span class="k">if</span> <span class="n">vel</span><span class="p">:</span>            
+                <span class="n">prevVel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getAngularVelocity</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setAngularVelocity</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_enableHomeSensor</span><span class="p">()</span>
+            <span class="n">jogSpeed</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">home_velocity</span><span class="o">*</span><span class="n">REVS_PER_DEGREE</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;JS&quot;</span><span class="p">,</span> <span class="n">jogSpeed</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sendCommand</span><span class="p">(</span><span class="s">&quot;CJ&quot;</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">waitForSpeed</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> <span class="c"># timeout=vel/(self._stepRange/float(self._stepsPerMM)) + 1</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rotateRelative</span><span class="p">(</span><span class="mi">180</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span><span class="o">.</span><span class="n">home_offset</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">waitForSpeed</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setAngle</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">vel</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">setAngularVelocity</span><span class="p">(</span><span class="n">prevVel</span><span class="p">)</span>
+            
+            <span class="c">#self.fixPosition()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&#39;Cannot move home with disabled home sensor&#39;</span><span class="p">)</span>
+        <span class="k">return</span>
+<span class="c"># end class Rotator    </span>
+
+
+<span class="k">class</span> <span class="nc">MockRotator</span><span class="p">(</span><span class="n">rotation_table</span><span class="o">.</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A class to test the command-line command</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">address</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        MockRotator constructor</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `configuration`: RotatorConfiguration</span>
+<span class="sd">         - `address`: not sure, output of sending &#39;DA&#39; command to the device</span>
+<span class="sd">         - `lock`: re-entrant lock to block serial calls</span>
+<span class="sd">         - `encoder`: boolean,  if False causes some methods to raise error</span>
+<span class="sd">         - `debug`: boolean, if True sends print messages to std out</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MockRotator</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">CREATION</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thing</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n\t</span><span class="s">configuration={0}</span><span class="se">\n\t</span><span class="s">lock={1}</span><span class="se">\n\t</span><span class="s">address={0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span>
+                                                                   <span class="n">lock</span><span class="p">,</span>
+                                                                   <span class="n">address</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">CALLED_WITH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="o">=</span><span class="s">&#39;MockRotator.__init__&#39;</span><span class="p">,</span>
+                                            <span class="n">values</span><span class="o">=</span><span class="n">values</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">args</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">ARGS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">args</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">KWARGS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_valid_names</span> <span class="o">=</span> <span class="bp">None</span>        
+        <span class="k">return</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">valid_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List of non-magic names in the Rotator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_names</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_valid_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">Rotator</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;__&#39;</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_valid_names</span>
+        
+    <span class="k">def</span> <span class="nf">setAngle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degrees</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        tell the table what angle it&#39;s at</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `degrees`: angle to tell the table it&#39;s currently at</span>
+
+<span class="sd">        :raise: Exception if degrees out of range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">CALLED_WITH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="o">=</span><span class="s">&quot;MockRotator.setAngle&quot;</span><span class="p">,</span>
+                                            <span class="n">values</span><span class="o">=</span><span class="s">&quot;degrees=&#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">DEGREES_MIN</span> <span class="o">&lt;=</span> <span class="n">degrees</span> <span class="o">&lt;</span> <span class="n">DEGREES_MAX</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;degrees={0} out of bounds ({1} &lt;= degrees &lt; {2})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span>
+                                                                                      <span class="n">DEGREES_MIN</span><span class="p">,</span>
+                                                                                      <span class="n">DEGREES_MAX</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">setMotionProfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">accel</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">decel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sets Angular Velocity, Acceleration, and Decceleration</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `vel`: angular velocity</span>
+<span class="sd">         - `accel`: angular acceleration</span>
+<span class="sd">         - `decel`: angular deceleration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">CALLED_WITH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="o">=</span><span class="s">&#39;MockRotator.setMotionProfile&#39;</span><span class="p">,</span>
+                                            <span class="n">values</span><span class="o">=</span><span class="s">&#39;vel={0}, accel={1}, decel={2}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vel</span><span class="p">,</span>
+                                                                                          <span class="n">accel</span><span class="p">,</span>
+                                                                                          <span class="n">decel</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">vel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">MIN_VELOCITY</span> <span class="o">&lt;=</span> <span class="n">vel</span> <span class="o">&lt;=</span> <span class="n">MAX_VELOCITY</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;vel out of range ({0})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vel</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">accel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">accel</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;accel out of range ({0})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">accel</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">decel</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">decel</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;decel out of range ({0})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">decel</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">rotateAbsolute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">degrees</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rotates the table to an angle (0 &lt;= degrees &lt; 360)</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `degrees`: angle to rotate table to</span>
+
+<span class="sd">        :raise: Exception if angle is out of bounds</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">CALLED_WITH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="o">=</span><span class="s">&#39;MockRotator.rotateAbsolute&#39;</span><span class="p">,</span>
+                                            <span class="n">values</span><span class="o">=</span><span class="s">&#39;degrees={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">)))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">DEGREES_MIN</span> <span class="o">&lt;=</span> <span class="n">degrees</span> <span class="o">&lt;</span> <span class="n">DEGREES_MAX</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;{0} degrees is out of range&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">degrees</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">waitForPosition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        waits until target position (or timeout) is reached</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `timeout`: seconds to wait before giving up</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">CALLED_WITH</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attribute</span><span class="o">=</span><span class="s">&#39;MockRotator.waitForPosition&#39;</span><span class="p">,</span>
+                                            <span class="n">values</span><span class="o">=</span><span class="s">&#39;timeout={0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timeout</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">timeout</span><span class="p">)</span> <span class="ow">in</span> <span class="p">(</span><span class="n">FloatType</span><span class="p">,</span> <span class="n">IntType</span><span class="p">)</span> <span class="ow">or</span> <span class="n">timeout</span> <span class="o">&lt;</span><span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Invalid timeout -- {0} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timeout</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        A cleanup to get the stuff not implemented</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid_names</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;unexpected method call: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="n">Rotator</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s">&quot;Unknown Rotator attribute: &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="k">return</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

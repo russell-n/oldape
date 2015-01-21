@@ -1,0 +1,239 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Base Command &mdash; APETools 2014.09.18 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2014.09.18',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="apetools.commands.basecommand.BaseThreadedCommand" href="api/apetools.commands.basecommand.BaseThreadedCommand.html" />
+    <link rel="prev" title="Commands" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api/apetools.commands.basecommand.BaseThreadedCommand.html" title="apetools.commands.basecommand.BaseThreadedCommand"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Commands"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Commands</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-base-command">
+<h1>The Base Command<a class="headerlink" href="#the-base-command" title="Permalink to this headline">¶</a></h1>
+<p>A base for certain (simple) commands.</p>
+<div class="section" id="the-basethreadedcommand">
+<span id="base-threade-command"></span><h2>The BaseThreadedCommand<a class="headerlink" href="#the-basethreadedcommand" title="Permalink to this headline">¶</a></h2>
+<p>This is an abstract base class for threaded commands. Children of it will raise an exception on instantiation if the <cite>run</cite> and <cite>stop</cite> methods are not defined. The main interface to it is the <cite>__call__</cite> which will pass in any arguments given to the <cite>run_thread</cite> method (inherited from the <cite>BaseThreadClass</cite>).</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseThreadedCommand" title="apetools.commands.basecommand.BaseThreadedCommand"><tt class="xref py py-obj docutils literal"><span class="pre">BaseThreadedCommand</span></tt></a>()</td>
+<td>An abstract base-class for simple commands to run in a thread</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-e0420dccfe64896169ed0a4827ad6d30b411b4ca.png" alt="BaseThreadedCommand -|&gt; BaseThreadClass
+BaseThreadedCommand : logger
+BaseThreadedCommand : stopped
+BaseThreadedCommand : thread
+BaseThreadedCommand : run()
+BaseThreadedCommand : stop()
+BaseThreadedCommand : __call__(*args, **kwargs)" />
+</p>
+<ul class="simple">
+<li>To understand the <cite>run_thread</cite> see <em class="xref std std-ref">BaseThreadClass</em>.</li>
+</ul>
+</div>
+<div class="section" id="base-process-command">
+<span id="id1"></span><h2>Base Process Command<a class="headerlink" href="#base-process-command" title="Permalink to this headline">¶</a></h2>
+<p>This is a base-class for commands that retrieve process-information.</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand" title="apetools.commands.basecommand.BaseProcessCommand"><tt class="xref py py-obj docutils literal"><span class="pre">BaseProcessCommand</span></tt></a>([connection])</td>
+<td>A parent class for process-commands (e.g.</td>
+</tr>
+</tbody>
+</table>
+<p class="plantuml">
+<img src="../_images/plantuml-352b934d39dd7b7084e5486807160b1f27443f18.png" alt="BaseProcessCommand -|&gt; BaseClass
+BaseProcessCommand : field
+BaseProcessCommand : error_expression
+BaseProcessCommand : error_messages
+BaseProcessCommand : command
+BaseProcessCommand : check_errors(line)
+BaseProcessCommand : run()
+BaseProcessCommand : __str__()
+BaseProcessCommand : process
+BaseProcessCommand : __call__()
+
+TopCommand -|&gt; BaseProcessCommand
+PsCommand -|&gt; BaseProcessCommand" />
+</p>
+<div class="section" id="subclasses">
+<h3>Subclasses<a class="headerlink" href="#subclasses" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>TopCommand</li>
+<li>PsCommand</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="responsibilities">
+<h3>Responsibilities<a class="headerlink" href="#responsibilities" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Sends the command over its connection</li>
+<li>Traverses the output</li>
+<li>Interprets errors</li>
+<li>Yields output</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="collaborators">
+<h3>Collaborators<a class="headerlink" href="#collaborators" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Connections</li>
+</ul>
+</div></blockquote>
+<p>This is an Abstract Class that should not be instantiated.</p>
+</div>
+</div>
+<div class="section" id="the-baseprocessgrep">
+<span id="base-process-grep"></span><h2>The BaseProcessGrep<a class="headerlink" href="#the-baseprocessgrep" title="Permalink to this headline">¶</a></h2>
+<p>A base class to search for processes in the output of the BaseProcessCommand children.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Base Command</a><ul>
+<li><a class="reference internal" href="#the-basethreadedcommand">The BaseThreadedCommand</a></li>
+<li><a class="reference internal" href="#base-process-command">Base Process Command</a><ul>
+<li><a class="reference internal" href="#subclasses">Subclasses</a></li>
+<li><a class="reference internal" href="#responsibilities">Responsibilities</a></li>
+<li><a class="reference internal" href="#collaborators">Collaborators</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-baseprocessgrep">The BaseProcessGrep</a></li>
+</ul>
+</li>
+</ul>
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+
+
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2014, russelln.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
+      
+      |
+      <a href="../_sources/commands/basecommand.txt"
+          rel="nofollow">Page source</a></li>
+    </div>
+
+    
+
+    
+  </body>
+</html>

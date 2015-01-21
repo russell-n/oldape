@@ -1,0 +1,225 @@
+RotateUsurper Builder
+=====================
+
+.. literalinclude:: ../rotateusurperbuilder.feature
+   :language: gherkin
+
+
+
+Scenario: User builds the RotateUsurperBuilder
+----------------------------------------------
+
+::
+
+    @given("a RotateUsurperBuilder")
+    def rotate_usurper_builder(context):
+        context.parser = SafeConfigParser()
+        context.parser.add_section(RotateUsurperConstants.section)
+        tables = 'able,baker' #,charley'
+        context.tables_sections = tables.split(',')
+        
+        # setup table sections
+        for table in context.tables_sections:
+            context.parser.add_section(table)
+    
+        able_angles = '0 45 180'.split()
+        able_ssh = {'hostname':'unable', 'username':'cable'}
+        able_table = {'angles':','.join(able_angles), 'velocity':'400'}
+        
+        baker_ssh = {'hostname':'bakery', 'username':'broker', 'password':'broken'}
+        baker_table = {'angles': '90'}
+    
+        parameters = []
+        for angle in able_angles:
+            parameters.append({'able':' --velocity 400 {0}'.format(angle),
+                              'baker': ' 90'})
+        context.parameters = [Parameters(name=RotateUsurperConstants.name,
+                                         parameters=parameters)]
+    
+        ssh_values = dict(zip(context.tables_sections, (able_ssh, baker_ssh)))
+        table_values = dict(zip(context.tables_sections, (able_table, baker_table)))
+    
+        # add table-control parameters
+        for table, options in table_values.iteritems():
+            for option in options:
+                context.parser.set(table, option, options[option])
+    
+        # add table-ssh parameters
+        sshparameters = []
+        for table, options in ssh_values.iteritems():
+            for option in options:
+                context.parser.set(table, option, options[option])
+            parameters = SSHParameters(**options)
+            parameters.identifier = table
+            sshparameters.append(parameters)
+        context.sshparameters = sshparameters
+        sshconnections = [MagicMock(spec=SSHConnectionBuilder) for parameter in sshparameters]
+        context.connections = dict(zip(ssh_values.keys(), sshconnections))
+        
+        context.parser.set(RotateUsurperConstants.section,
+                           RotateUsurperConstants.tables_option,
+                           tables)
+    
+        context.master = MagicMock()
+        context.config_map = ConfigurationMap('fakefile')
+        context.config_map._parser = context.parser
+        
+        context.previous_parameters = []
+        context.builder = RotateUsurperBuilder(master=context.master,
+                                               config_map=context.config_map,
+                                               previous_parameters=context.previous_parameters)
+        return
+    
+
+::
+
+    @when("the rotate usurper builder is checked")
+    def check_builder_parent(context):
+        return
+    
+
+::
+
+    @then("it is a sub-class of the BaseToolBuilder")
+    def assert_rotate_parent(context):
+        assert_that(context.builder,
+                    is_(instance_of(BaseToolBuilder)))
+        return
+    
+
+
+
+Scenario: User checks the tables_sections property
+--------------------------------------------------
+
+Given a RotateUserperBuilder
+
+::
+
+    @when("the tables_sections is checked")
+    def check_tables_section(context):
+        context.outcome = context.builder.tables_sections
+        return
+    
+
+::
+
+    @then("it is a list built from the 'ROTATE_CUBE' section")
+    def assert_tables_section(context):
+        assert_that(context.outcome,
+                    is_(equal_to(context.tables_sections)))
+        return
+    
+
+
+
+Scenario: User checks the tables_sections property and it is missing
+--------------------------------------------------------------------
+
+Given a RotateUsurperBuilder
+
+::
+
+    @when("a missing tables_sections is checked")
+    def missing_tables_section(context):
+        context.parser.remove_option(RotateUsurperConstants.section,
+                                     RotateUsurperConstants.tables_option)
+        context.call = lambda: context.builder.tables_sections
+        return
+    
+
+::
+
+    @then("it raises a ConfigurationError")
+    def raise_configuration_error(context):
+        assert_that(calling(context.call),
+                    raises(ConfigurationError))
+        return
+    
+
+
+
+Scenario: User checks the connections_parameters property
+---------------------------------------------------------
+
+  Given a RotateUsurperBuilder
+
+::
+
+    @when("the connections_parameters are checked")
+    def check_connections_parameters(context):
+        context.outcome = context.builder.connections_parameters
+        return
+    
+
+::
+
+    @then("they are a list of SSHParameters")
+    def assert_ssh_parameters(context):
+        assert_that(context.outcome,
+                    has_items(*context.sshparameters))
+        return
+    
+
+
+
+Scenario: User checks the connections property
+----------------------------------------------
+
+  Given a RotateUsurperBuilder
+
+::
+
+    @when("the connections are checked")
+    def check_connections(context):
+        builder_dict = MagicMock()
+        sshbuilder = MagicMock()
+        builders = {'ssh': sshbuilder}
+        def getitem(name):
+            return builders[name]
+        builder_dict.__getitem__.side_effect = getitem
+    
+        def builder_effect(parameters):
+            builder = MagicMock()
+            builder.connection = context.connections[parameters.identifier]
+            return builder
+        sshbuilder.side_effect = builder_effect
+        
+        with patch('apetools.builders.subbuilders.connectionbuilder.connection_builders', builder_dict):
+            context.outcome = context.builder.connections
+        return
+    
+
+::
+
+    @then("they are a list of SSHConnections")
+    def assert_connections(context):
+        assert_that(context.outcome,
+                    has_items(*context.connections.values()))
+        return
+    
+
+
+
+Scenario: User checks the parameters
+------------------------------------
+
+Given a RotateUsurperBuilder
+
+::
+
+    @when("the parameters are checked")
+    def check_parameters(context):
+        context.outcome = context.builder.parameters
+        return
+    
+
+::
+
+    @then("they are a list of Parameters")
+    def assert_parameters(context):
+        assert_that(context.outcome,
+                    has_items(*context.parameters))
+        return
+    
+
