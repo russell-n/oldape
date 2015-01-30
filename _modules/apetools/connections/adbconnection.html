@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>apetools.connections.adbconnection &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,33 +24,119 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <h1>Source code for apetools.connections.adbconnection</h1><div class="highlight"><pre>
 <span class="c"># python standard library</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -93,32 +180,32 @@
 
 
 <span class="k">class</span> <span class="nc">ADBConnectionError</span><span class="p">(</span><span class="n">ConnectionError</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBConnectionError"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnectionError.html#apetools.connections.adbconnection.ADBConnectionError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnectionError"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnectionError.html#apetools.connections.adbconnection.ADBConnectionError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Raise if there is a problem with the ADB Connection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="c"># end class ADBConnectionError</span>
 
 
 <span class="k">class</span> <span class="nc">ADBCommandError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBCommandError"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBCommandError.html#apetools.connections.adbconnection.ADBCommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBCommandError"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBCommandError.html#apetools.connections.adbconnection.ADBCommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Raise if there is a problem with an ADB command</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="c"># end class ADBCommandError</span>
 
 
 <span class="k">class</span> <span class="nc">ADBConnectionWarning</span><span class="p">(</span><span class="n">ConnectionWarning</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBConnectionWarning"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnectionWarning.html#apetools.connections.adbconnection.ADBConnectionWarning">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnectionWarning"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnectionWarning.html#apetools.connections.adbconnection.ADBConnectionWarning">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A warning to raise if something non-fatal but bad happens</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="c"># end class ADBConnectionWarning</span>
 
 
 <span class="k">class</span> <span class="nc">ADBConnection</span><span class="p">(</span><span class="n">LocalNixConnection</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An ADB Connection sends commands to the Android Debug Bridge</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serial_number</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `serial_number`: An optional serial number to specify the device.</span>
@@ -133,7 +220,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">operating_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBConnection.operating_system"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnection.operating_system"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: enumeration for android</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -141,7 +228,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span>
 
     <span class="k">def</span> <span class="nf">_rpc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBConnection._rpc"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection._rpc">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnection._rpc"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection._rpc">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides the LocalConnection._rpc to check for errors</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
@@ -149,7 +236,7 @@
 
 
     <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBConnection.check_errors"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnection.check_errors"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is here so that children can override it.</span>
 <span class="sd">        :param:</span>
 
@@ -159,7 +246,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">check_base_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBConnection.check_base_errors"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.check_base_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBConnection.check_base_errors"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection.check_base_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `line`: A string of output</span>
@@ -183,25 +270,25 @@
 
 
 <span class="k">class</span> <span class="nc">ADBBlockingConnection</span><span class="p">(</span><span class="n">ADBConnection</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBBlockingConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBBlockingConnection.html#apetools.connections.adbconnection.ADBBlockingConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBBlockingConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBBlockingConnection.html#apetools.connections.adbconnection.ADBBlockingConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Like the ADBConnection but waits for a device to come online</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBBlockingConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBBlockingConnection.html#apetools.connections.adbconnection.ADBBlockingConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ADBBlockingConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="ADBBlockingConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBBlockingConnection.html#apetools.connections.adbconnection.ADBBlockingConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ADBBlockingConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span> <span class="o">+=</span> <span class="s">&quot; wait-for-device&quot;</span>
         <span class="k">return</span>
 <span class="c"># end class ADBConnection</span>
 
 
 <span class="k">class</span> <span class="nc">ADBShellConnection</span><span class="p">(</span><span class="n">ADBConnection</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="ADBShellConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBShellConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An ADBShellConnection connects to the adb shell.</span>
 
 <span class="sd">    If you use a timeout parameter on method calls, the output acts line-buffered.</span>
 <span class="sd">    If you leave the timeout as None, it acts file-buffered</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBShellConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ADBShellConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="ADBShellConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ADBShellConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span> <span class="o">+=</span> <span class="s">&quot; shell&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unknown_command</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
@@ -209,7 +296,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">unknown_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBShellConnection.unknown_command"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection.unknown_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBShellConnection.unknown_command"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection.unknown_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A regular expression to match unknown command errors.</span>
 
 <span class="sd">        Uses:</span>
@@ -229,7 +316,7 @@
                            <span class="n">output</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBShellConnection.check_errors"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBShellConnection.check_errors"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks the line to see if the line has an unknow command error</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">check_base_errors</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
@@ -240,15 +327,15 @@
 
 
 <span class="k">class</span> <span class="nc">ADBShellBlockingConnection</span><span class="p">(</span><span class="n">ADBShellConnection</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="ADBShellBlockingConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellBlockingConnection.html#apetools.connections.adbconnection.ADBShellBlockingConnection">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBShellBlockingConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellBlockingConnection.html#apetools.connections.adbconnection.ADBShellBlockingConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ADBShellBlockingConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="ADBShellBlockingConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellBlockingConnection.html#apetools.connections.adbconnection.ADBShellBlockingConnection">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="ADBShellBlockingConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellBlockingConnection.html#apetools.connections.adbconnection.ADBShellBlockingConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ADBShellBlockingConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span> <span class="o">=</span> <span class="s">&quot;adb wait-for-device shell&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_unknown_command</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
 
 <span class="k">class</span> <span class="nc">ADBSSHConnection</span><span class="p">(</span><span class="n">SSHConnection</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="ADBSSHConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.adbconnection.html#apetools.connections.adbconnection.ADBSSHConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An ADB Connection sends commands to the Android Debug Bridge</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serial_number</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -266,7 +353,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span>
-<div class="viewcode-block" id="ADBSSHConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.adbconnection.html#apetools.connections.adbconnection.ADBSSHConnection._procedure_call">[docs]</a>                        <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+                        <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Overrides the SSHConnection._procedure_call to check for errors</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -275,8 +362,8 @@
         <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">ValidatingOutput</span><span class="p">(</span><span class="n">lines</span><span class="o">=</span><span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">validate</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">),</span> <span class="n">output</span><span class="o">.</span><span class="n">error</span><span class="p">)</span>
 
 
-    <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBSSHConnection.check_errors"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.adbconnection.html#apetools.connections.adbconnection.ADBSSHConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is here so that children can override it.</span>
 <span class="sd">        :param:</span>
 
@@ -285,8 +372,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_errors</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">return</span>
     
-    <span class="k">def</span> <span class="nf">_check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBSSHConnection._check_errors"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.adbconnection.html#apetools.connections.adbconnection.ADBSSHConnection._check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks connection-related errors</span>
 
 <span class="sd">        :raise: ADBConnectionError if the device isn&#39;t detected</span>
@@ -302,12 +389,12 @@
 <span class="c"># end class ADBSSHConnection</span>
 
 
-<span class="k">class</span> <span class="nc">ADBShellSSHConnection</span><span class="p">(</span><span class="n">ADBSSHConnection</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="ADBShellSSHConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/1/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">ADBShellSSHConnection</span><span class="p">(</span><span class="n">ADBSSHConnection</span><span class="p">):</span>
+<div class="viewcode-block" id="ADBShellSSHConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to talk to the shell, note the adb-server</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBShellSSHConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/1/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBShellSSHConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param: (see the ADBSSHConnection)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">ADBShellSSHConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
@@ -317,7 +404,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">unknown_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ADBShellSSHConnection.unknown_command"><a class="viewcode-back" href="../../../documentation/developer/connections/1/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection.unknown_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBShellSSHConnection.unknown_command"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection.unknown_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A regular expression to match unknown command errors.</span>
 
 <span class="sd">        Uses:</span>
@@ -334,7 +421,7 @@
 
 
     <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ADBShellSSHConnection.check_errors"><a class="viewcode-back" href="../../../documentation/developer/connections/1/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ADBShellSSHConnection.check_errors"><a class="viewcode-back" href="../../../connections/api/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :line: line of standard output</span>
 
 <span class="sd">        :raise: ADBCommandError if the command issued wasn&#39;t recognized</span>
@@ -357,69 +444,21 @@
     
 </pre></div>
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2014, russelln.
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-    </div>
-
-    
-
-    
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

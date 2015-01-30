@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>SL4A Connection &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,149 +24,49 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
     <link rel="up" title="Connections" href="index.html" />
+    <link rel="next" title="apetools.connections.sl4aconnection.SL4AConnection" href="api/apetools.connections.sl4aconnection.SL4AConnection.html" />
     <link rel="prev" title="apetools.connections.sharedcounter.SharedCounter.__eq__" href="api/apetools.connections.sharedcounter.SharedCounter.__eq__.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="api/apetools.connections.sharedcounter.SharedCounter.__eq__.html" title="apetools.connections.sharedcounter.SharedCounter.__eq__"
-             accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Connections</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
-  <div class="section" id="sl4a-connection">
-<h1>SL4A Connection<a class="headerlink" href="#sl4a-connection" title="Permalink to this headline">¶</a></h1>
-<p>An SL4a connection communicates with an Android device.</p>
-<p class="plantuml">
-<img src="../_images/plantuml-58bf3da1f327a23507674236b28ede881f366a69.png" alt="android.Android &lt;|-- SL4AConnection" />
-</p>
-<span class="target" id="module-apetools.connections.sl4aconnection"></span><table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection</span></tt></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.__getattr__</span></tt></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.check_error</span></tt></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<p>&lt;&lt;name=&#8217;SL4AConnection&#8217;, echo=False&gt;&gt;+
-class SL4AConnection(android.Android):</p>
-<blockquote>
-<div><p>&#8220;&#8221;&#8221;
-Adapter to the SL4A class to behave like the other connections
-&#8220;&#8221;&#8221;
-def __init__(self, <a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>try:</dt>
-<dd><p class="first">super(SL4AConnection, self).__init__(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs)
-self.logger = logging.getLogger(&#8220;{0}.{1}&#8221;.format(self.__module__,</p>
-<blockquote class="last">
-<div>self.__class__.__name__))</div></blockquote>
-</dd>
-<dt>except (socket.error,socket.gaierror) as error:</dt>
-<dd>raise ConnectionError(&#8220;Unable to create an SL4A connection: {0}&#8221;.format(error))</dd>
-</dl>
-<p>return</p>
-</div></blockquote>
-<dl class="docutils">
-<dt>def __getattr__(self, method):</dt>
-<dd><p class="first">&#8220;&#8221;&#8221;
-:param:</p>
-<blockquote>
-<div><ul class="simple">
-<li><cite>method</cite>: The name of an SL4a method</li>
-</ul>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">Whatever result.result is</td>
-</tr>
-<tr class="field-even field"><th class="field-name">raise:</th><td class="field-body">CommandError if result.error is not None</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">raise:</th><td class="field-body">ConnectionError if the SL4a server returns an error.</td>
-</tr>
-</tbody>
-</table>
-<p>&#8220;&#8221;&#8221;
-def rpc_call(<a href="#id9"><span class="problematic" id="id10">*</span></a>args):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>try:</dt>
-<dd>result = self._rpc(method, <a href="#id11"><span class="problematic" id="id12">*</span></a>args)</dd>
-<dt>except ValueError as error:</dt>
-<dd>self.logger.error(error)
-raise ConnectionError(&#8220;Unable to connect to the SL4a server. Check your connection.&#8221;)</dd>
-<dt>if result.error is not None:</dt>
-<dd>self.check_error(result.error, method)</dd>
-</dl>
-<p>return result.result</p>
-</div></blockquote>
-<p class="last">return rpc_call</p>
-</dd>
-<dt>def check_error(self, error, method):</dt>
-<dd><p class="first">&#8220;&#8221;&#8221;
-Checks the result for errors
-&#8220;&#8221;&#8221;
-if error.startswith(&#8216;com.googlecode.android_scripting.rpc.RpcError:&#8217;):</p>
-<blockquote>
-<div><dl class="docutils">
-<dt>if error.endswith(&#8220;Unkown RPC.&#8221;):</dt>
-<dd>raise CommandError(&#8220;Unknown SL4a Command: &#8221; + method)</dd>
-<dt>else:</dt>
-<dd>message = error.split(&#8221;:&#8221;, 1)[-1]
-raise CommandError(&#8220;SL4a command error: {0}({1}) &#8221;.format(method,message))</dd>
-</dl>
-</div></blockquote>
-<dl class="docutils">
-<dt>else:</dt>
-<dd>raise CommandError(error)</dd>
-</dl>
-<p class="last">return</p>
-</dd>
-</dl>
-</div></blockquote>
-<p># end class SL4aConnection</p>
-</div>
-
-
-          </div>
-        </div>
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
 </ul>
@@ -173,6 +74,7 @@ raise CommandError(&#8220;SL4a command error: {0}({1}) &#8221;.format(method,mes
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -192,39 +94,115 @@ raise CommandError(&#8220;SL4a command error: {0}({1}) &#8221;.format(method,mes
 <li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
 </ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">SL4A Connection</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="api/apetools.connections.sharedcounter.SharedCounter.__eq__.html" title="Previous Chapter: apetools.connections.sharedcounter.SharedCounter.__eq__"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.connect...</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/apetools.connections.sl4aconnection.SL4AConnection.html" title="Next Chapter: apetools.connections.sl4aconnection.SL4AConnection"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.connect... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/connections/sl4aconnection.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
 
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2014, russelln.
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-      |
-      <a href="../_sources/connections/sl4aconnection.txt"
-          rel="nofollow">Page source</a></li>
+  <div class="section" id="sl4a-connection">
+<h1>SL4A Connection<a class="headerlink" href="#sl4a-connection" title="Permalink to this headline">¶</a></h1>
+<p>An SL4a connection communicates with an Android device.</p>
+<p class="plantuml">
+<img src="../_images/plantuml-58bf3da1f327a23507674236b28ede881f366a69.png" alt="android.Android &lt;|-- SL4AConnection" />
+</p>
+<span class="target" id="module-apetools.connections.sl4aconnection"></span><table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sl4aconnection.SL4AConnection.html#apetools.connections.sl4aconnection.SL4AConnection" title="apetools.connections.sl4aconnection.SL4AConnection"><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Adapter to the SL4A class to behave like the other connections</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.connections.sl4aconnection.SL4AConnection.__getattr__.html#apetools.connections.sl4aconnection.SL4AConnection.__getattr__" title="apetools.connections.sl4aconnection.SL4AConnection.__getattr__"><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.__getattr__</span></tt></a>(method)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sl4aconnection.SL4AConnection.check_error.html#apetools.connections.sl4aconnection.SL4AConnection.check_error" title="apetools.connections.sl4aconnection.SL4AConnection.check_error"><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.check_error</span></tt></a>(error,&nbsp;method)</td>
+<td>Checks the result for errors</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
     </div>
-
-    
-
-    
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

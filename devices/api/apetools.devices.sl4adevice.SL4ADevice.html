@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>apetools.devices.sl4adevice.SL4ADevice &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,42 +24,49 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+    <link rel="up" title="SL4A Device" href="../sl4adevice.html" />
+    <link rel="next" title="apetools.devices.sl4adevice.SL4ADevice.connection" href="apetools.devices.sl4adevice.SL4ADevice.connection.html" />
+    <link rel="prev" title="apetools.devices.sl4adevice.SL4ADevice.get_wifi_info" href="apetools.devices.sl4adevice.SL4ADevice.get_wifi_info.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../index.html">APETools documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
-  <div class="section" id="apetools-devices-sl4adevice-sl4adevice">
-<h1>apetools.devices.sl4adevice.SL4ADevice<a class="headerlink" href="#apetools-devices-sl4adevice-sl4adevice" title="Permalink to this headline">¶</a></h1>
-</div>
-
-
-          </div>
-        </div>
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
 </ul>
@@ -66,15 +74,15 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Devices</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Devices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
@@ -86,39 +94,532 @@
 <li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
 </ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">apetools.devices.sl4adevice.SL4ADevice</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="apetools.devices.sl4adevice.SL4ADevice.get_wifi_info.html" title="Previous Chapter: apetools.devices.sl4adevice.SL4ADevice.get_wifi_info"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.devices...</span>
+    </a>
+  </li>
+  <li>
+    <a href="apetools.devices.sl4adevice.SL4ADevice.connection.html" title="Next Chapter: apetools.devices.sl4adevice.SL4ADevice.connection"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.devices... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../../_sources/devices/api/apetools.devices.sl4adevice.SL4ADevice.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
 
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2014, russelln.
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-      |
-      <a href="../../_sources/devices/api/apetools.devices.sl4adevice.SL4ADevice.txt"
-          rel="nofollow">Page source</a></li>
+  <div class="section" id="apetools-devices-sl4adevice-sl4adevice">
+<h1>apetools.devices.sl4adevice.SL4ADevice<a class="headerlink" href="#apetools-devices-sl4adevice-sl4adevice" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="apetools.devices.sl4adevice.SL4ADevice">
+<em class="property">class </em><tt class="descclassname">apetools.devices.sl4adevice.</tt><tt class="descname">SL4ADevice</tt><big>(</big><em>connection=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>connection</cite>: An SL4AConnection</li>
+</ul>
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.__init__">
+<tt class="descname">__init__</tt><big>(</big><em>connection=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>connection</cite>: An SL4AConnection</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.__init__" title="apetools.devices.sl4adevice.SL4ADevice.__init__"><tt class="xref py py-obj docutils literal"><span class="pre">__init__</span></tt></a>([connection])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="apetools.devices.sl4adevice.SL4ADevice.disable_wifi.html#apetools.devices.sl4adevice.SL4ADevice.disable_wifi" title="apetools.devices.sl4adevice.SL4ADevice.disable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">disable_wifi</span></tt></a>()</td>
+<td>Turns off the radio</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="apetools.devices.sl4adevice.SL4ADevice.display.html#apetools.devices.sl4adevice.SL4ADevice.display" title="apetools.devices.sl4adevice.SL4ADevice.display"><tt class="xref py py-obj docutils literal"><span class="pre">display</span></tt></a>(message)</td>
+<td>Displays the message on the device screen</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="apetools.devices.sl4adevice.SL4ADevice.enable_wifi.html#apetools.devices.sl4adevice.SL4ADevice.enable_wifi" title="apetools.devices.sl4adevice.SL4ADevice.enable_wifi"><tt class="xref py py-obj docutils literal"><span class="pre">enable_wifi</span></tt></a>()</td>
+<td>Turns on the radio</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="apetools.devices.sl4adevice.SL4ADevice.get_wifi_info.html#apetools.devices.sl4adevice.SL4ADevice.get_wifi_info" title="apetools.devices.sl4adevice.SL4ADevice.get_wifi_info"><tt class="xref py py-obj docutils literal"><span class="pre">get_wifi_info</span></tt></a>()</td>
+<td>On SL4a, this returns:</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="apetools.devices.sl4adevice.SL4ADevice.log.html#apetools.devices.sl4adevice.SL4ADevice.log" title="apetools.devices.sl4adevice.SL4ADevice.log"><tt class="xref py py-obj docutils literal"><span class="pre">log</span></tt></a>(message)</td>
+<td>Send the message to the logcat log.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.log_error" title="apetools.devices.sl4adevice.SL4ADevice.log_error"><tt class="xref py py-obj docutils literal"><span class="pre">log_error</span></tt></a>(message)</td>
+<td>Logs the message as an error, adding extra formatting</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.poll" title="apetools.devices.sl4adevice.SL4ADevice.poll"><tt class="xref py py-obj docutils literal"><span class="pre">poll</span></tt></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">rssi,noise,bitrate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.wake_screen" title="apetools.devices.sl4adevice.SL4ADevice.wake_screen"><tt class="xref py py-obj docutils literal"><span class="pre">wake_screen</span></tt></a>()</td>
+<td>Acquires the wake lock then makes toast</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.address" title="apetools.devices.sl4adevice.SL4ADevice.address"><tt class="xref py py-obj docutils literal"><span class="pre">address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.bitrate" title="apetools.devices.sl4adevice.SL4ADevice.bitrate"><tt class="xref py py-obj docutils literal"><span class="pre">bitrate</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current bitrate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.bssid" title="apetools.devices.sl4adevice.SL4ADevice.bssid"><tt class="xref py py-obj docutils literal"><span class="pre">bssid</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the MAC address of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.channel" title="apetools.devices.sl4adevice.SL4ADevice.channel"><tt class="xref py py-obj docutils literal"><span class="pre">channel</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the channel for the wifi connection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="apetools.devices.sl4adevice.SL4ADevice.connection.html#apetools.devices.sl4adevice.SL4ADevice.connection" title="apetools.devices.sl4adevice.SL4ADevice.connection"><tt class="xref py py-obj docutils literal"><span class="pre">connection</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">An SL4AConnection</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.logger" title="apetools.devices.sl4adevice.SL4ADevice.logger"><tt class="xref py py-obj docutils literal"><span class="pre">logger</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.mac_address" title="apetools.devices.sl4adevice.SL4ADevice.mac_address"><tt class="xref py py-obj docutils literal"><span class="pre">mac_address</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the mac address of the device</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.noise" title="apetools.devices.sl4adevice.SL4ADevice.noise"><tt class="xref py py-obj docutils literal"><span class="pre">noise</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the current reported noise for the wifi channel</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.rssi" title="apetools.devices.sl4adevice.SL4ADevice.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">rssi</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the RSSI for the wifi signal</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.ssid" title="apetools.devices.sl4adevice.SL4ADevice.ssid"><tt class="xref py py-obj docutils literal"><span class="pre">ssid</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the SSID of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.devices.sl4adevice.SL4ADevice.wifi_info" title="apetools.devices.sl4adevice.SL4ADevice.wifi_info"><tt class="xref py py-obj docutils literal"><span class="pre">wifi_info</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">wifi info summary</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.disable_wifi">
+<tt class="descname">disable_wifi</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.disable_wifi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.disable_wifi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns off the radio</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.display">
+<tt class="descname">display</tt><big>(</big><em>message</em><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.display"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Displays the message on the device screen</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>message</cite>: message to display in GUI</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.enable_wifi">
+<tt class="descname">enable_wifi</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.enable_wifi"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.enable_wifi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Turns on the radio</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.get_wifi_info">
+<tt class="descname">get_wifi_info</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.get_wifi_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.get_wifi_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>On SL4a, this returns:</p>
+<blockquote>
+<div><ul class="simple">
+<li>ssid</li>
+<li>bssid</li>
+<li>network_id</li>
+<li>supplicant_state</li>
+<li>link_speed</li>
+<li>mac_address</li>
+<li>rssi</li>
+<li>ip_address</li>
+<li>hidden_ssid</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The wifi information as a single csv line</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.log">
+<tt class="descname">log</tt><big>(</big><em>message</em><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the message to the logcat log.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.log_error">
+<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.poll">
+<tt class="descname">poll</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.poll" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">rssi,noise,bitrate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.wake_screen">
+<tt class="descname">wake_screen</tt><big>(</big><big>)</big><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.wake_screen"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.wake_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Acquires the wake lock then makes toast</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.address">
+<tt class="descname">address</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">String</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the address (presumably) IP for the test-interface for the device</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.bitrate">
+<tt class="descname">bitrate</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.bitrate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the current bitrate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.bssid">
+<tt class="descname">bssid</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.bssid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the MAC address of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.channel">
+<tt class="descname">channel</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.channel" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the channel for the wifi connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.connection">
+<tt class="descname">connection</tt><a class="reference internal" href="../../_modules/apetools/devices/sl4adevice.html#SL4ADevice.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.connection" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">An SL4AConnection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.logger">
+<tt class="descname">logger</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.mac_address">
+<tt class="descname">mac_address</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.mac_address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the mac address of the device</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.noise">
+<tt class="descname">noise</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.noise" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the current reported noise for the wifi channel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.rssi">
+<tt class="descname">rssi</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.rssi" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the RSSI for the wifi signal</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.ssid">
+<tt class="descname">ssid</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.ssid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the SSID of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.devices.sl4adevice.SL4ADevice.wifi_info">
+<tt class="descname">wifi_info</tt><a class="headerlink" href="#apetools.devices.sl4adevice.SL4ADevice.wifi_info" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">wifi info summary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
     </div>
-
-    
-
-    
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

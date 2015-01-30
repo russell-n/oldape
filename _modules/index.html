@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>Overview: module code &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,40 +24,127 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../index.html">APETools documentation</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <h1>All modules for which code is available</h1>
 <ul><li><a href="apetools/affectors/apconnect.html">apetools.affectors.apconnect</a></li>
 <li><a href="apetools/affectors/elexol/elexol.html">apetools.affectors.elexol.elexol</a></li>
-<li><a href="apetools/affectors/elexol/errors.html">apetools.affectors.elexol.errors</a></li>
 <li><a href="apetools/affectors/elexol/main.html">apetools.affectors.elexol.main</a></li>
 <li><a href="apetools/affectors/elexol/naxxx.html">apetools.affectors.elexol.naxxx</a></li>
 <li><a href="apetools/affectors/elexol/networkedpowersupply.html">apetools.affectors.elexol.networkedpowersupply</a></li>
 <li><a href="apetools/affectors/ners.html">apetools.affectors.ners</a></li>
 <li><a href="apetools/affectors/rotator/main.html">apetools.affectors.rotator.main</a></li>
+<li><a href="apetools/affectors/rotator/ratetable.html">apetools.affectors.rotator.ratetable</a></li>
 <li><a href="apetools/affectors/rotator/rotator.html">apetools.affectors.rotator.rotator</a></li>
 <li><a href="apetools/affectors/synaxxx/main.html">apetools.affectors.synaxxx.main</a></li>
 <li><a href="apetools/affectors/synaxxx/synaxxx.html">apetools.affectors.synaxxx.synaxxx</a></li>
@@ -67,7 +155,6 @@
 <li><a href="apetools/builders/subbuilders/basedevicebuilder.html">apetools.builders.subbuilders.basedevicebuilder</a></li>
 <li><a href="apetools/builders/subbuilders/baseoperationbuilder.html">apetools.builders.subbuilders.baseoperationbuilder</a></li>
 <li><a href="apetools/builders/subbuilders/basetoolbuilder.html">apetools.builders.subbuilders.basetoolbuilder</a></li>
-<li><a href="apetools/builders/subbuilders/builderenums.html">apetools.builders.subbuilders.builderenums</a></li>
 <li><a href="apetools/builders/subbuilders/busyboxwgetbuilder.html">apetools.builders.subbuilders.busyboxwgetbuilder</a></li>
 <li><a href="apetools/builders/subbuilders/commandwatchbuilder.html">apetools.builders.subbuilders.commandwatchbuilder</a></li>
 <li><a href="apetools/builders/subbuilders/connectionbuilder.html">apetools.builders.subbuilders.connectionbuilder</a></li>
@@ -136,7 +223,6 @@
 <li><a href="apetools/commons/coroutine.html">apetools.commons.coroutine</a></li>
 <li><a href="apetools/commons/datacounter.html">apetools.commons.datacounter</a></li>
 <li><a href="apetools/commons/dummy.html">apetools.commons.dummy</a></li>
-<li><a href="apetools/commons/enumerations.html">apetools.commons.enumerations</a></li>
 <li><a href="apetools/commons/errors.html">apetools.commons.errors</a></li>
 <li><a href="apetools/commons/events.html">apetools.commons.events</a></li>
 <li><a href="apetools/commons/filterer.html">apetools.commons.filterer</a></li>
@@ -156,6 +242,7 @@
 <li><a href="apetools/connections/serialadapter.html">apetools.connections.serialadapter</a></li>
 <li><a href="apetools/connections/serialconnection.html">apetools.connections.serialconnection</a></li>
 <li><a href="apetools/connections/sharedcounter.html">apetools.connections.sharedcounter</a></li>
+<li><a href="apetools/connections/sl4aconnection.html">apetools.connections.sl4aconnection</a></li>
 <li><a href="apetools/connections/sshconnection.html">apetools.connections.sshconnection</a></li>
 <li><a href="apetools/connections/telnetadapter.html">apetools.connections.telnetadapter</a></li>
 <li><a href="apetools/connections/telnetconnection.html">apetools.connections.telnetconnection</a></li>
@@ -165,8 +252,8 @@
 <li><a href="apetools/devices/iosdevice.html">apetools.devices.iosdevice</a></li>
 <li><a href="apetools/devices/linuxdevice.html">apetools.devices.linuxdevice</a></li>
 <li><a href="apetools/devices/macdevice.html">apetools.devices.macdevice</a></li>
+<li><a href="apetools/devices/sl4adevice.html">apetools.devices.sl4adevice</a></li>
 <li><a href="apetools/devices/windowsdevice.html">apetools.devices.windowsdevice</a></li>
-<li><a href="apetools/lexicographers/config_options.html">apetools.lexicographers.config_options</a></li>
 <li><a href="apetools/lexicographers/configfetcher.html">apetools.lexicographers.configfetcher</a></li>
 <li><a href="apetools/lexicographers/configurationmap.html">apetools.lexicographers.configurationmap</a></li>
 <li><a href="apetools/lexicographers/lexicographer.html">apetools.lexicographers.lexicographer</a></li>
@@ -185,7 +272,6 @@
 <li><a href="apetools/parameters/iperf_common_parameters.html">apetools.parameters.iperf_common_parameters</a></li>
 <li><a href="apetools/parameters/iperf_common_tcp_parameters.html">apetools.parameters.iperf_common_tcp_parameters</a></li>
 <li><a href="apetools/parameters/iperf_server_parameters.html">apetools.parameters.iperf_server_parameters</a></li>
-<li><a href="apetools/parameters/iperf_test_parameters.html">apetools.parameters.iperf_test_parameters</a></li>
 <li><a href="apetools/parameters/iperf_udp_server_parameters.html">apetools.parameters.iperf_udp_server_parameters</a></li>
 <li><a href="apetools/parsers/argumentparser.html">apetools.parsers.argumentparser</a></li>
 <li><a href="apetools/parsers/coroutine.html">apetools.parsers.coroutine</a></li>
@@ -203,7 +289,6 @@
 <li><a href="apetools/proletarians/crashhandler.html">apetools.proletarians.crashhandler</a></li>
 <li><a href="apetools/proletarians/data.html">apetools.proletarians.data</a></li>
 <li><a href="apetools/proletarians/enabledebugging.html">apetools.proletarians.enabledebugging</a></li>
-<li><a href="apetools/proletarians/errors.html">apetools.proletarians.errors</a></li>
 <li><a href="apetools/proletarians/hortator.html">apetools.proletarians.hortator</a></li>
 <li><a href="apetools/proletarians/liststrategy.html">apetools.proletarians.liststrategy</a></li>
 <li><a href="apetools/proletarians/setuprun.html">apetools.proletarians.setuprun</a></li>
@@ -214,7 +299,6 @@
 <li><a href="apetools/threads/lock.html">apetools.threads.lock</a></li>
 <li><a href="apetools/threads/semaphore.html">apetools.threads.semaphore</a></li>
 <li><a href="apetools/threads/threads.html">apetools.threads.threads</a></li>
-<li><a href="apetools/tools/copyfiles.html">apetools.tools.copyfiles</a></li>
 <li><a href="apetools/tools/dumpdevicestate.html">apetools.tools.dumpdevicestate</a></li>
 <li><a href="apetools/tools/getipaddress.html">apetools.tools.getipaddress</a></li>
 <li><a href="apetools/tools/iperfsession.html">apetools.tools.iperfsession</a></li>
@@ -231,7 +315,6 @@
 <li><a href="apetools/tools/timetorecoverytest.html">apetools.tools.timetorecoverytest</a></li>
 <li><a href="apetools/tools/wgetsession.html">apetools.tools.wgetsession</a></li>
 <li><a href="apetools/tools/wifitool.html">apetools.tools.wifitool</a></li>
-<li><a href="apetools/watchers/basedevicepoller.html">apetools.watchers.basedevicepoller</a></li>
 <li><a href="apetools/watchers/basepollster.html">apetools.watchers.basepollster</a></li>
 <li><a href="apetools/watchers/commandwatcher.html">apetools.watchers.commandwatcher</a></li>
 <li><a href="apetools/watchers/devicepoller.html">apetools.watchers.devicepoller</a></li>
@@ -249,69 +332,21 @@
 <li><a href="rotation_table/base_arguments.html">rotation_table.base_arguments</a></li>
 </ul>
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2014, russelln.
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-    </div>
-
-    
-
-    
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>apetools.connections.serialadapter &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,89 +24,47 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
-  <h1>Source code for apetools.connections.serialadapter</h1><div class="highlight"><pre>
-<span class="c"># third party libraries</span>
-<span class="kn">import</span> <span class="nn">serial</span>
-
-<span class="c">#apetools libraries</span>
-<span class="c">#from apetools.baseclass import BaseClass</span>
-
-
-<span class="n">EMPTY_STRING</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
-
-
-<span class="k">class</span> <span class="nc">SerialAdapter</span><span class="p">(</span><span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">):</span>
-<div class="viewcode-block" id="SerialAdapter"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.serialadapter.html#apetools.connections.serialadapter.SerialAdapter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A SerialAdapter adapts pyserial to this librarys&#39; style.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="SerialAdapter.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialadapter.SerialAdapter.html#apetools.connections.serialadapter.SerialAdapter.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Takes the same parameters as serial.Serial</span>
-
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SerialAdapter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">return</span>
-    
-    <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SerialAdapter.exec_command"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.serialadapter.html#apetools.connections.serialadapter.SerialAdapter.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Sends the command to the device.</span>
-<span class="sd">        </span>
-<span class="sd">        :return: self.client (a file-like object)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span>
-
-    <span class="k">def</span> <span class="nf">writeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">EMPTY_STRING</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SerialAdapter.writeline"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.serialadapter.html#apetools.connections.serialadapter.SerialAdapter.writeline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Adds a newline and sends the message to the device.</span>
-<span class="sd">        </span>
-<span class="sd">        :param:</span>
-
-<span class="sd">         - `message`: The message to send to the device.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="n">NEWLINE</span><span class="p">)</span> <span class="o">+</span> <span class="n">NEWLINE</span><span class="p">)</span>
-        <span class="k">return</span>                                   
-<span class="c"># end class SerialAdapter</span>
-</pre></div></div></div>
-
-          </div>
-        </div>
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
 </ul>
@@ -113,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -133,36 +92,116 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
 </ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
 
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2014, russelln.
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
+  <h1>Source code for apetools.connections.serialadapter</h1><div class="highlight"><pre>
+<span class="c"># third party libraries</span>
+<span class="kn">import</span> <span class="nn">serial</span>
+
+<span class="c">#apetools libraries</span>
+<span class="c">#from apetools.baseclass import BaseClass</span>
+
+
+<span class="n">EMPTY_STRING</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+
+
+<span class="k">class</span> <span class="nc">SerialAdapter</span><span class="p">(</span><span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">):</span>
+<div class="viewcode-block" id="SerialAdapter"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialadapter.SerialAdapter.html#apetools.connections.serialadapter.SerialAdapter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A SerialAdapter adapts pyserial to this librarys&#39; style.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="SerialAdapter.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialadapter.SerialAdapter.html#apetools.connections.serialadapter.SerialAdapter.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Takes the same parameters as serial.Serial</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SerialAdapter</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+    
+    <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SerialAdapter.exec_command"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialadapter.SerialAdapter.exec_command.html#apetools.connections.serialadapter.SerialAdapter.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sends the command to the device.</span>
+<span class="sd">        </span>
+<span class="sd">        :return: self.client (a file-like object)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">timeout</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">writeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="n">EMPTY_STRING</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SerialAdapter.writeline"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialadapter.SerialAdapter.writeline.html#apetools.connections.serialadapter.SerialAdapter.writeline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Adds a newline and sends the message to the device.</span>
+<span class="sd">        </span>
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `message`: The message to send to the device.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">message</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="n">NEWLINE</span><span class="p">)</span> <span class="o">+</span> <span class="n">NEWLINE</span><span class="p">)</span>
+        <span class="k">return</span>                                   
+<span class="c"># end class SerialAdapter</span>
+</pre></div></div></div>
+
     </div>
-
-    
-
-    
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

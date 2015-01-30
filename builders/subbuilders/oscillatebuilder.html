@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>Oscillate Builder &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,42 +24,141 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
     <link rel="up" title="Sub-Builders" href="index.html" />
     <link rel="next" title="apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError.html" />
     <link rel="prev" title="apetools.builders.subbuilders.operationteardownbuilder.OperationTeardownBuilder.section" href="api/apetools.builders.subbuilders.operationteardownbuilder.OperationTeardownBuilder.section.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="api/apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError.html" title="apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="api/apetools.builders.subbuilders.operationteardownbuilder.OperationTeardownBuilder.section.html" title="apetools.builders.subbuilders.operationteardownbuilder.OperationTeardownBuilder.section"
-             accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Builders</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Sub-Builders</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Oscillate Builder</a><ul>
+<li><a class="reference internal" href="#the-oscillatorconfigurationerror">The OscillatorConfigurationError</a></li>
+<li><a class="reference internal" href="#the-oscillate-builder">The Oscillate Builder</a></li>
+<li><a class="reference internal" href="#the-oscillate-stop-builder">The Oscillate Stop Builder</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="api/apetools.builders.subbuilders.operationteardownbuilder.OperationTeardownBuilder.section.html" title="Previous Chapter: apetools.builders.subbuilders.operationteardownbuilder.OperationTeardownBuilder.section"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.builder...</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError.html" title="Next Chapter: apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.builder... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../../_sources/builders/subbuilders/oscillatebuilder.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <div class="section" id="oscillate-builder">
 <h1>Oscillate Builder<a class="headerlink" href="#oscillate-builder" title="Permalink to this headline">¶</a></h1>
 <p>A module to build a rotate object.</p>
@@ -73,7 +173,7 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError" title="apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError"><tt class="xref py py-obj docutils literal"><span class="pre">OscillatorConfigurationError</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError.html#apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError" title="apetools.builders.subbuilders.oscillatebuilder.OscillatorConfigurationError"><tt class="xref py py-obj docutils literal"><span class="pre">OscillatorConfigurationError</span></tt></a></td>
 <td>An error to raise if the user&#8217;s configuration is wrong</td>
 </tr>
 </tbody>
@@ -93,10 +193,10 @@ OscillateBuilder o- Oscillate" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>A networked oscillator builder</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.semaphore" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.semaphore"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.semaphore</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.semaphore.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.semaphore" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.semaphore"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.semaphore</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -107,7 +207,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.block" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.block"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.block</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.block.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.block" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.block"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.block</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -118,7 +218,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.get_option" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.get_option"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.get_option</span></tt></a>(option[,&nbsp;optional])</td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.get_option.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.get_option" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.get_option"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.get_option</span></tt></a>(option[,&nbsp;optional])</td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -129,7 +229,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.output" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.output"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.output</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.output.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.output" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.output"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.output</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -140,7 +240,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.arguments" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.arguments"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.arguments</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.arguments.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.arguments" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.arguments"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.arguments</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -151,7 +251,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.hostname" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.hostname"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.hostname</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.hostname.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.hostname" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.hostname"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.hostname</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -162,7 +262,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.username" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.username"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.username</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.username.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.username" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.username"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.username</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -173,7 +273,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.password" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.password"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.password</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.password.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.password" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.password"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.password</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -184,7 +284,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.connection" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.connection"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.connection</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.connection.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.connection" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.connection"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.connection</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -195,7 +295,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.product" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.product</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.product.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.product" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.product</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -206,7 +306,7 @@ OscillateBuilder o- Oscillate" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.parameters" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.parameters"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.parameters</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.parameters.html#apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.parameters" title="apetools.builders.subbuilders.oscillatebuilder.OscillateBuilder.parameters"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateBuilder.parameters</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -233,10 +333,10 @@ OscillateStopBuilder o- SSHConnection" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>A networked oscillator stopper builder</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.get_option" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.get_option"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.get_option</span></tt></a>(option[,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.get_option.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.get_option" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.get_option"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.get_option</span></tt></a>(option[,&nbsp;...])</td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -247,7 +347,7 @@ OscillateStopBuilder o- SSHConnection" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.hostname" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.hostname"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.hostname</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.hostname.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.hostname" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.hostname"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.hostname</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -258,7 +358,7 @@ OscillateStopBuilder o- SSHConnection" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.username" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.username"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.username</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.username.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.username" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.username"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.username</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -269,7 +369,7 @@ OscillateStopBuilder o- SSHConnection" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.password" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.password"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.password</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.password.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.password" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.password"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.password</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -280,7 +380,7 @@ OscillateStopBuilder o- SSHConnection" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.connection" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.connection"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.connection</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.connection.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.connection" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.connection"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.connection</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -291,7 +391,7 @@ OscillateStopBuilder o- SSHConnection" />
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.product" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.product</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.product.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.product" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.product"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.product</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -302,7 +402,7 @@ OscillateStopBuilder o- SSHConnection" />
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.oscillatebuilder.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.parameters</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters.html#apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters" title="apetools.builders.subbuilders.oscillatebuilder.OscillateStopBuilder.parameters"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStopBuilder.parameters</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -319,81 +419,21 @@ OscillateStopBuilder o- SSHConnection" />
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Oscillate Builder</a><ul>
-<li><a class="reference internal" href="#the-oscillatorconfigurationerror">The OscillatorConfigurationError</a></li>
-<li><a class="reference internal" href="#the-oscillate-builder">The Oscillate Builder</a></li>
-<li><a class="reference internal" href="#the-oscillate-stop-builder">The Oscillate Stop Builder</a></li>
-</ul>
-</li>
-</ul>
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../documentation/user/index.html">User Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../documentation/developer/index.html">Developer Documentation</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-</ul>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Builders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../lexicographers/index.html">Lexicographers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../pipes/index.html">Pipes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../proletarians/index.html">Proletarians</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../threads/index.html">Threads</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../tools/index.html">Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../watchers/index.html">Watchers</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2014, russelln.
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-      |
-      <a href="../../_sources/builders/subbuilders/oscillatebuilder.txt"
-          rel="nofollow">Page source</a></li>
-    </div>
-
-    
-
-    
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

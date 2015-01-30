@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>apetools.builders.subbuilders.connectionbuilder &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,33 +24,119 @@
     <script type="text/javascript" src="../../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../../../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">APE Readme</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <h1>Source code for apetools.builders.subbuilders.connectionbuilder</h1><div class="highlight"><pre>
 <span class="c">#python standard library</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
@@ -68,13 +155,13 @@
 <span class="sd">    To make the parameters optional this is changed to a class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
+<div class="viewcode-block" id="SSHParameters.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">identifier</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
 <div class="viewcode-block" id="SSHParameters.__eq__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.__eq__.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters.__eq__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks that all the attributes are the same</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -86,19 +173,19 @@
 <span class="k">class</span> <span class="nc">ConnectionBuilderBase</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
 <div class="viewcode-block" id="ConnectionBuilderBase"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase">[docs]</a>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+<div class="viewcode-block" id="ConnectionBuilderBase.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
-    <span class="nd">@abstractproperty</span>
+    <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ConnectionBuilderBase.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The built connection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>        
 
 
-<span class="k">class</span> <span class="nc">DummyConnectionBuilder</span><span class="p">(</span><span class="n">ConnectionBuilderBase</span><span class="p">):</span></div>
+<span class="k">class</span> <span class="nc">DummyConnectionBuilder</span><span class="p">(</span><span class="n">ConnectionBuilderBase</span><span class="p">):</span></div></div>
 <div class="viewcode-block" id="DummyConnectionBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Builds a Dummy Connection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -123,7 +210,7 @@
 <span class="sd">    Use this to get an adb shell connection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        AdbShellConnectionBuilder Constructor</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -134,9 +221,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellConnectionBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The ADB Shell Connection</span>
 <span class="sd">        </span>
 <span class="sd">        :rtype: ADBShellConnection</span>
@@ -149,12 +236,12 @@
 <span class="c"># end class AdbShellConnectionBuilder</span>
 
 
-<span class="k">class</span> <span class="nc">SSHConnectionBuilder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<span class="k">class</span> <span class="nc">SSHConnectionBuilder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
 <div class="viewcode-block" id="SSHConnectionBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use this to get an ssh connection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `parameters`: An object with `hostname`, `username`, and `password` attributes</span>
@@ -172,18 +259,18 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.identifier"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.identifier">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: Connection identifier</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">operating_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.operating_system"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: parameters.operating_system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -194,9 +281,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Operating System not found in: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">library_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.library_path"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.library_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: LD_LIBRARY_PATH value(s) or None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_library_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -206,9 +293,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_library_path</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.path"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: additions to the PATH</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -218,9 +305,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span>
     
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.hostname"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.hostname">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: StringType</span>
 <span class="sd">        :return: The hostname (I.P.) to connect to</span>
 <span class="sd">        :raise: ConfigurationError if not set</span>
@@ -237,9 +324,9 @@
                     <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;`hostname` is a required parameter for the SSHConnection&quot;</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hostname</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.username"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.username">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: StringType</span>
 <span class="sd">        :return: user login name</span>
 <span class="sd">        :raise: ConfigurationError if not found</span>
@@ -256,9 +343,9 @@
                     <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;`username` is a required parameter for the SSHConnection&quot;</span><span class="p">)</span>                
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_username</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.password"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.password">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the password for the connection (sets to None if not given in the parameters)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -269,9 +356,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span>
     
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: an SSHConnection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -287,12 +374,12 @@
 <span class="c"># end class SshConnectionBuilder</span>
 
 
-<span class="k">class</span> <span class="nc">AdbShellSshConnectionBuilder</span><span class="p">(</span><span class="n">SSHConnectionBuilder</span><span class="p">):</span></div>
+<span class="k">class</span> <span class="nc">AdbShellSshConnectionBuilder</span><span class="p">(</span><span class="n">SSHConnectionBuilder</span><span class="p">):</span></div></div>
 <div class="viewcode-block" id="AdbShellSshConnectionBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to build an adb-shell connection over ssh</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellSshConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `parameters`: An object with `hostname`, `username`, and `password` attributes</span>
@@ -301,9 +388,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_serial_number</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">serial_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellSshConnectionBuilder.serial_number"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.serial_number">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A serial number for the USB connection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial_number</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -311,9 +398,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_serial_number</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">serial_number</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial_number</span>
     
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellSshConnectionBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: ADBShellSSHConnection instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -329,7 +416,7 @@
 <span class="c"># end class AdbShellSshConnectionBuilder</span>
 
 
-<span class="k">class</span> <span class="nc">ConnectionBuilderTypes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+<span class="k">class</span> <span class="nc">ConnectionBuilderTypes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div></div>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
     <span class="n">ssh</span> <span class="o">=</span> <span class="s">&#39;ssh&#39;</span>
     <span class="n">adbshellssh</span> <span class="o">=</span> <span class="s">&quot;adbshellssh&quot;</span>
@@ -344,69 +431,21 @@
                        <span class="n">ConnectionBuilderTypes</span><span class="o">.</span><span class="n">dummy</span><span class="p">:</span> <span class="n">DummyConnectionBuilder</span><span class="p">}</span>
 </pre></div>
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/user/index.html">User Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../documentation/developer/index.html">Developer Documentation</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../builders/index.html">Builders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../commands/index.html">Commands</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../commons/index.html">Commons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../connections/index.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../devices/index.html">Devices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../informants/index.html">Informants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../lexicographers/index.html">Lexicographers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../operations/index.html">Operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../parameters/index.html">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../parsers/index.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../pipes/index.html">Pipes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../proletarians/index.html">Proletarians</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../threads/index.html">Threads</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../tools/index.html">Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../watchers/index.html">Watchers</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2014, russelln.
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-    </div>
-
-    
-
-    
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

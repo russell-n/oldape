@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>apetools.commons.errors &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,105 +24,47 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
-            
-  <h1>Source code for apetools.commons.errors</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">apetools.proletarians.errors</span> <span class="kn">import</span> <span class="n">OperatorError</span>
-
-
-<span class="k">class</span> <span class="nc">ConnectionError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span>
-<div class="viewcode-block" id="ConnectionError"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ConnectionError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A ConnectionError is raised by connectinos to indicate a problem.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-<span class="c"># end class ConnectionError</span>
-
-
-<span class="k">class</span> <span class="nc">ConnectionWarning</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ConnectionWarning"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ConnectionWarning">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A connection warning is a non-fatal connection-related error.</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-<span class="c"># end class ConnectionWarning</span>
-
-
-<span class="k">class</span> <span class="nc">TimeoutError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeoutError"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.TimeoutError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A TimeoutError is a generic Timeout exception to wrap the various timeout</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-<span class="c"># end class TimeoutError</span>
-
-
-<span class="k">class</span> <span class="nc">CommandError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CommandError"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.CommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A CommandError reflects a problem with the command on the Device-side</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-<span class="c"># end class CommandError</span>
-
-
-<span class="k">class</span> <span class="nc">ConfigurationError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ConfigurationError"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ConfigurationError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    A ConfigurationError is raised if there is an error in the configuration file</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-<span class="c"># end class ConfigurationError</span>
-
-
-<span class="k">class</span> <span class="nc">StorageError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageError"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.StorageError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    An StoragError is raised by the StorageOutput</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">pass</span>
-<span class="c"># end class StorageError</span>
-
-
-<span class="k">class</span> <span class="nc">AffectorError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="AffectorError"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.AffectorError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    An Affector Error is raised for non-recoverable affector errors</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-<span class="c"># end class AffectorError</span>
-
-
-<span class="k">class</span> <span class="nc">ArgumentError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ArgumentError"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.errors.html#apetools.commons.errors.ArgumentError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    raised if command-line arguments don&#39;t produce valid output</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-<span class="c"># end class InvocationError</span>
-</pre></div></div>
-
-          </div>
-        </div>
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
       </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
 </ul>
@@ -129,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -149,36 +92,132 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
 </ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
 
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
         </div>
-      </div>
-      <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2014, russelln.
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
+  <h1>Source code for apetools.commons.errors</h1><div class="highlight"><pre>
+<span class="kn">from</span> <span class="nn">apetools.proletarians.errors</span> <span class="kn">import</span> <span class="n">OperatorError</span>
+
+
+<span class="k">class</span> <span class="nc">ConnectionError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span>
+<div class="viewcode-block" id="ConnectionError"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.ConnectionError.html#apetools.commons.errors.ConnectionError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A ConnectionError is raised by connectinos to indicate a problem.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class ConnectionError</span>
+
+
+<span class="k">class</span> <span class="nc">ConnectionWarning</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConnectionWarning"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.ConnectionWarning.html#apetools.commons.errors.ConnectionWarning">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A connection warning is a non-fatal connection-related error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class ConnectionWarning</span>
+
+
+<span class="k">class</span> <span class="nc">TimeoutError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TimeoutError"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.TimeoutError.html#apetools.commons.errors.TimeoutError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A TimeoutError is a generic Timeout exception to wrap the various timeout</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class TimeoutError</span>
+
+
+<span class="k">class</span> <span class="nc">CommandError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="CommandError"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.CommandError.html#apetools.commons.errors.CommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A CommandError reflects a problem with the command on the Device-side</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class CommandError</span>
+
+
+<span class="k">class</span> <span class="nc">ConfigurationError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ConfigurationError"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.ConfigurationError.html#apetools.commons.errors.ConfigurationError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A ConfigurationError is raised if there is an error in the configuration file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class ConfigurationError</span>
+
+
+<span class="k">class</span> <span class="nc">StorageError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="StorageError"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.StorageError.html#apetools.commons.errors.StorageError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An StoragError is raised by the StorageOutput</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+<span class="c"># end class StorageError</span>
+
+
+<span class="k">class</span> <span class="nc">AffectorError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="AffectorError"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.AffectorError.html#apetools.commons.errors.AffectorError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    An Affector Error is raised for non-recoverable affector errors</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class AffectorError</span>
+
+
+<span class="k">class</span> <span class="nc">ArgumentError</span><span class="p">(</span><span class="n">OperatorError</span><span class="p">):</span></div>
+<div class="viewcode-block" id="ArgumentError"><a class="viewcode-back" href="../../../commons/api/apetools.commons.errors.ArgumentError.html#apetools.commons.errors.ArgumentError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    raised if command-line arguments don&#39;t produce valid output</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="c"># end class InvocationError</span>
+</pre></div></div>
+
     </div>
-
-    
-
-    
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

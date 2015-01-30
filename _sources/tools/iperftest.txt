@@ -33,7 +33,7 @@ The `IperfTest` runs a single test, taking care of both sides of the connection 
 .. uml::
 
    IperfTest -|> BaseClass
-   IperfTest '1' o-- '2' IperfCommand
+   IperfTest o--  IperfCommand
    IperfTest o-- Sleep
    IperfTest o-- Kill
    IperfTest : sender_command
@@ -42,11 +42,11 @@ The `IperfTest` runs a single test, taking care of both sides of the connection 
    IperfTest : wait_events
    IperfTest : kill
    
-* See :ref:`IperfCommand <iperf-command>` runs the actual iperf-commands
+* :ref:`IperfCommand <iperf-command>` runs the actual iperf-commands
 
-* :ref:`Sleep <sleep-command>` provides a sleep after the server is started so the client does not start too soon
+* :ref:`Sleep <apetools-tools-sleep>` provides a sleep after the server is started so the client does not start too soon
 
-* :ref:`Kill <kill-command>` is used to kill all pre-existing iperf-sessions.
+* :ref:`Kill <apetools-tools-killall>` is used to kill all pre-existing iperf-sessions.
 
 Example Use::
 

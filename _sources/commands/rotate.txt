@@ -62,7 +62,7 @@ The basic idea (assuming you only have one table) is that you would traverse the
     rotate = RotateCommand(connections=connection)
     parameters = RotateArgumentsGenerator(configuration, section='table1')
     for arguments in parameters.argument_strings:
-        command(arguments)
+        rotate(arguments)
 
 This is not nearly so straight-forward in the builders themselves since the rotate is called in between the iperf calls... how does this work?
 

@@ -22,6 +22,8 @@ The only non-iperf options are the `directions`::
 
 Only the first letter is checked (except for `t` as it's ambiguous) so you can use whatever mnemonics help (e.g. 'receive' will only be read as 'r').
 
+.. '
+
 This means that traffic from the TPC -> DUT can start with one of:
 
    * to
@@ -55,7 +57,7 @@ The default here is seconds, but you can use suffixes to change it (days, hours,
 
    time = 2 days 3 hours 22 minutes
 
-..
+The rest of the more common options (note that the buffer-length is set using ``len`` not ``length`` to match the iperf option)::
 
    protocol = tcp
    window = 256K
@@ -76,6 +78,8 @@ The last flag can be one of:
 
 Iperf's Help
 ------------
+
+.. '
 
 This is a dump of iperf's  help string (version 2.0.5).
 

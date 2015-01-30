@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>The ADB Connections &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,41 +24,146 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
     <link rel="up" title="Connections" href="index.html" />
     <link rel="next" title="apetools.connections.adbconnection.ADBConnectionError" href="api/apetools.connections.adbconnection.ADBConnectionError.html" />
     <link rel="prev" title="Connections" href="index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="api/apetools.connections.adbconnection.ADBConnectionError.html" title="apetools.connections.adbconnection.ADBConnectionError"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="Connections"
-             accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Connections</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">The ADB Connections</a><ul>
+<li><a class="reference internal" href="#errors">Errors</a></li>
+<li><a class="reference internal" href="#adbconnection">ADBConnection</a></li>
+<li><a class="reference internal" href="#adbblockingconnection">ADBBlockingConnection</a></li>
+<li><a class="reference internal" href="#adbshellconnection">ADBShellConnection</a></li>
+<li><a class="reference internal" href="#adbshellblockingconnection">ADBShellBlockingConnection</a></li>
+<li><a class="reference internal" href="#adbsshconnection">ADBSSHConnection</a></li>
+<li><a class="reference internal" href="#adbshellsshconnection">ADBShellSSHConnection</a></li>
+<li><a class="reference internal" href="#a-usage-example">A Usage Example</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: Connections"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Connections</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/apetools.connections.adbconnection.ADBConnectionError.html" title="Next Chapter: apetools.connections.adbconnection.ADBConnectionError"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.connect... &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/connections/adbconnection.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <div class="section" id="the-adb-connections">
 <h1>The ADB Connections<a class="headerlink" href="#the-adb-connections" title="Permalink to this headline">¶</a></h1>
 <p>An ADB connection sends commands to a local ADB Connection and interprets errors</p>
@@ -70,13 +176,13 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnectionError.html#apetools.connections.adbconnection.ADBConnectionError" title="apetools.connections.adbconnection.ADBConnectionError"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnectionError</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBConnectionError.html#apetools.connections.adbconnection.ADBConnectionError" title="apetools.connections.adbconnection.ADBConnectionError"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnectionError</span></tt></a></td>
 <td>Raise if there is a problem with the ADB Connection</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/connections/api/apetools.connections.adbconnection.ADBCommandError.html#apetools.connections.adbconnection.ADBCommandError" title="apetools.connections.adbconnection.ADBCommandError"><tt class="xref py py-obj docutils literal"><span class="pre">ADBCommandError</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBCommandError.html#apetools.connections.adbconnection.ADBCommandError" title="apetools.connections.adbconnection.ADBCommandError"><tt class="xref py py-obj docutils literal"><span class="pre">ADBCommandError</span></tt></a></td>
 <td>Raise if there is a problem with an ADB command</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnectionWarning.html#apetools.connections.adbconnection.ADBConnectionWarning" title="apetools.connections.adbconnection.ADBConnectionWarning"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnectionWarning</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBConnectionWarning.html#apetools.connections.adbconnection.ADBConnectionWarning" title="apetools.connections.adbconnection.ADBConnectionWarning"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnectionWarning</span></tt></a></td>
 <td>A warning to raise if something non-fatal but bad happens</td>
 </tr>
 </tbody>
@@ -100,7 +206,7 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/connections/api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection" title="apetools.connections.adbconnection.ADBConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnection</span></tt></a>([serial_number])</td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBConnection.html#apetools.connections.adbconnection.ADBConnection" title="apetools.connections.adbconnection.ADBConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBConnection</span></tt></a>([serial_number])</td>
 <td>An ADB Connection sends commands to the Android Debug Bridge</td>
 </tr>
 </tbody>
@@ -112,14 +218,14 @@ ADBConnection : serial_number" />
 </div>
 <div class="section" id="adbblockingconnection">
 <h2>ADBBlockingConnection<a class="headerlink" href="#adbblockingconnection" title="Permalink to this headline">¶</a></h2>
-<p>This is the same as the <a class="reference internal" href="../documentation/developer/connections/adbconnection.html#adb-connection"><em>ADBConnection</em></a> but will wait for the ADB server if it is not on-line yet. It was created for the somewhat obscure case where the device is rebooted.</p>
+<p>This is the same as the <a class="reference internal" href="#adb-connection"><em>ADBConnection</em></a> but will wait for the ADB server if it is not on-line yet. It was created for the somewhat obscure case where the device is rebooted.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/connections/api/apetools.connections.adbconnection.ADBBlockingConnection.html#apetools.connections.adbconnection.ADBBlockingConnection" title="apetools.connections.adbconnection.ADBBlockingConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBBlockingConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBBlockingConnection.html#apetools.connections.adbconnection.ADBBlockingConnection" title="apetools.connections.adbconnection.ADBBlockingConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBBlockingConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>Like the ADBConnection but waits for a device to come online</td>
 </tr>
 </tbody>
@@ -137,7 +243,7 @@ ADBConnection : serial_number" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection" title="apetools.connections.adbconnection.ADBShellConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBShellConnection.html#apetools.connections.adbconnection.ADBShellConnection" title="apetools.connections.adbconnection.ADBShellConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>An ADBShellConnection connects to the adb shell.</td>
 </tr>
 </tbody>
@@ -155,7 +261,7 @@ ADBConnection : serial_number" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/connections/api/apetools.connections.adbconnection.ADBShellBlockingConnection.html#apetools.connections.adbconnection.ADBShellBlockingConnection" title="apetools.connections.adbconnection.ADBShellBlockingConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellBlockingConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBShellBlockingConnection.html#apetools.connections.adbconnection.ADBShellBlockingConnection" title="apetools.connections.adbconnection.ADBShellBlockingConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellBlockingConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td></td>
 </tr>
 </tbody>
@@ -166,7 +272,7 @@ ADBConnection : serial_number" />
 </div>
 <div class="section" id="adbsshconnection">
 <h2>ADBSSHConnection<a class="headerlink" href="#adbsshconnection" title="Permalink to this headline">¶</a></h2>
-<p>Connects to the remote PC connected to the Android and issues ADB commands (this should be preferred to the <a class="reference internal" href="../documentation/developer/connections/adbconnection.html#adb-connection"><em>ADBConnection</em></a>).</p>
+<p>Connects to the remote PC connected to the Android and issues ADB commands (this should be preferred to the <a class="reference internal" href="#adb-connection"><em>ADBConnection</em></a>).</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
@@ -189,7 +295,7 @@ ADBSSHConnection : serial_number" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/connections/1/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection" title="apetools.connections.adbconnection.ADBShellSSHConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellSSHConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.adbconnection.ADBShellSSHConnection.html#apetools.connections.adbconnection.ADBShellSSHConnection" title="apetools.connections.adbconnection.ADBShellSSHConnection"><tt class="xref py py-obj docutils literal"><span class="pre">ADBShellSSHConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
 <td>A class to talk to the shell, note the adb-server</td>
 </tr>
 </tbody>
@@ -214,86 +320,21 @@ ADBSSHConnection : serial_number" />
 </div>
 
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">The ADB Connections</a><ul>
-<li><a class="reference internal" href="#errors">Errors</a></li>
-<li><a class="reference internal" href="#adbconnection">ADBConnection</a></li>
-<li><a class="reference internal" href="#adbblockingconnection">ADBBlockingConnection</a></li>
-<li><a class="reference internal" href="#adbshellconnection">ADBShellConnection</a></li>
-<li><a class="reference internal" href="#adbshellblockingconnection">ADBShellBlockingConnection</a></li>
-<li><a class="reference internal" href="#adbsshconnection">ADBSSHConnection</a></li>
-<li><a class="reference internal" href="#adbshellsshconnection">ADBShellSSHConnection</a></li>
-<li><a class="reference internal" href="#a-usage-example">A Usage Example</a></li>
-</ul>
-</li>
-</ul>
-<h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-</ul>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../commands/index.html">Commands</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2014, russelln.
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-      |
-      <a href="../_sources/connections/adbconnection.txt"
-          rel="nofollow">Page source</a></li>
-    </div>
-
-    
-
-    
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>

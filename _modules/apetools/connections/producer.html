@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,8 +7,10 @@
     
     <title>apetools.connections.producer &mdash; APETools 2014.09.18 documentation</title>
     
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
@@ -23,33 +24,119 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
-   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
   <body>
-    <div class="related">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="../../../genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="../../../py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li><a href="../../../index.html">APETools documentation</a> &raquo;</li>
-          <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li> 
-      </ul>
-    </div>  
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body">
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
             
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"></ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
   <h1>Source code for apetools.connections.producer</h1><div class="highlight"><pre>
 <span class="kn">import</span> <span class="nn">subprocess</span> 
 <span class="kn">import</span> <span class="nn">threading</span>
@@ -67,7 +154,7 @@
 
 
 <span class="k">class</span> <span class="nc">PopenProducer</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="PopenProducer"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenProducer"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenProducer.html#apetools.connections.producer.PopenProducer">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The subprocess.Popen Producer executes a command when its process or one of its files is requested</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -89,7 +176,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PopenProducer.lock"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.lock">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenProducer.lock"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenProducer.lock.html#apetools.connections.producer.PopenProducer.lock">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a re-entrant lock</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -98,7 +185,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">counter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PopenProducer.counter"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.counter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenProducer.counter"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenProducer.counter.html#apetools.connections.producer.PopenProducer.counter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: SharedCounter</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_counter</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -107,7 +194,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PopenProducer.process"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.process">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenProducer.process"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenProducer.process.html#apetools.connections.producer.PopenProducer.process">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a subprocess.Popen object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -119,7 +206,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">stdout</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PopenProducer.stdout"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.stdout">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenProducer.stdout"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenProducer.stdout.html#apetools.connections.producer.PopenProducer.stdout">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a subprocess.PopenFile containing the stdout of the process</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stdout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -134,7 +221,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">stderr</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PopenProducer.stderr"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.stderr">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenProducer.stderr"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenProducer.stderr.html#apetools.connections.producer.PopenProducer.stderr">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a subprocess.PopenFile containing the stderr of the process</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stderr</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -169,7 +256,7 @@
 
 
 <span class="k">class</span> <span class="nc">PopenFile</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="PopenFile"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenFile"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenFile.html#apetools.connections.producer.PopenFile">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A container for a process&#39; readable file-outputs</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_object</span><span class="p">,</span> <span class="n">process</span><span class="p">,</span> <span class="n">lock</span><span class="p">,</span> <span class="n">counter</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">queue</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -196,7 +283,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PopenFile.queue"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenFile.queue"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenFile.queue.html#apetools.connections.producer.PopenFile.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: Queue.Queue for lines of output</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -204,7 +291,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="PopenFile.run"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenFile.run"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenFile.run.html#apetools.connections.producer.PopenFile.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: lines read from the file and put on the Queue</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Starting to feed the queue&quot;</span><span class="p">)</span>
@@ -227,7 +314,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="PopenFile.start"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenFile.start"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenFile.start.html#apetools.connections.producer.PopenFile.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: self.run executing as self.thread</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">started</span><span class="p">:</span>
@@ -241,7 +328,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">readline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="PopenFile.readline"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenFile.readline"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenFile.readline.html#apetools.connections.producer.PopenFile.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: Next item in queue or EOF if it times out</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">timeout</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -256,7 +343,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="PopenFile.read"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.read">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenFile.read"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenFile.read.html#apetools.connections.producer.PopenFile.read">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `timeout`: number of seconds to try and read.</span>
@@ -279,7 +366,7 @@
         <span class="k">return</span> <span class="n">output</span>
 
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="PopenFile.close"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PopenFile.close"><a class="viewcode-back" href="../../../connections/api/apetools.connections.producer.PopenFile.close.html#apetools.connections.producer.PopenFile.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: file_object has been closed and self.closed is True</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
@@ -364,69 +451,21 @@
     <span class="k">del</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
 </pre></div>
 
-          </div>
-        </div>
-      </div>
-      <div class="sphinxsidebar">
-        <div class="sphinxsidebarwrapper"><h3>Navigation</h3>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../documentation/user/index.html">User Documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../documentation/developer/index.html">Developer Documentation</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../builders/index.html">Builders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../commands/index.html">Commands</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../commons/index.html">Commons</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../connections/index.html">Connections</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../devices/index.html">Devices</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../informants/index.html">Informants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../lexicographers/index.html">Lexicographers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../operations/index.html">Operations</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../parameters/index.html">Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../parsers/index.html">Parsers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../pipes/index.html">Pipes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../proletarians/index.html">Proletarians</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../threads/index.html">Threads</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../tools/index.html">Tools</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../watchers/index.html">Watchers</a></li>
-</ul>
-
-
-<div id="searchbox" style="display: none">
-  <h3>Quick search</h3>
-    <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
+    </div>
+      
+  </div>
 </div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
-    </div>
-    <div class="footer">
-      &copy;2014, russelln.
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
       
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.2.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.6.1</a>
-      
-    </div>
-
-    
-
-    
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+    </p>
+  </div>
+</footer>
   </body>
 </html>
