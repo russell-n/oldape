@@ -45,13 +45,18 @@ This is a class intended for the RotateCommand.__call__. It generates arguments 
    :toctree: api
 
    RotateArgumentsGenerator
-   RotateArgumentsGenerator.configuration
-   RotateArgumentsGenerator.section
-   RotateArgumentsGenerator.angles
-   RotateArgumentsGenerator.argument_strings
+   RotateArgumentsGenerator.base_arguments
    RotateArgumentsGenerator.values_string
    RotateArgumentsGenerator.booleans_string
-   RotateArgumentsGenerator.base_arguments
+   RotateArgumentsGenerator.angles
+   RotateArgumentsGenerator.argument_strings
+   RotateArgumentsGenerator.__len__
+   RotateArgumentsGenerator.__lt__
+   RotateArgumentsGenerator.__le__
+   RotateArgumentsGenerator.__eq__
+   RotateArgumentsGenerator.__ne__
+   RotateArgumentsGenerator.__gt__
+   RotateArgumentsGenerator.__ge__   
 
 
 
@@ -74,8 +79,9 @@ RotateCommand
    :toctree: api
 
    RotateCommand
-   RotateCommand.kill
+   RotateCommand.killers
    RotateCommand.kill_process
+   RotateCommand.rotate
    RotateCommand.__call__
    RotateCommand.check_errors
 
@@ -88,7 +94,7 @@ This is the original rotate command when the tables were giving feedback for the
 The RotateCommandUsurper
 ------------------------
 
-This is the newer rotate command (as of November 3, 2014) to use the replacement turntables built with raised platforms to temper the effects of electro-magnetic interference created by the turntable's motor.
+This is the newer rotate command (as of November 3, 2014) that uses the replacement turntables built with raised platforms to temper the effects of electro-magnetic interference created by the turntable's motor. As with the other command, it's just sending and receiving strings over SSH so any device that implements the same interface will work.
 
 .. '
 

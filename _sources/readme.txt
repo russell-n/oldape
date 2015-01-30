@@ -2,7 +2,7 @@ APE Readme
 ==========
 
 
-The `APE` is an attempt at a swiss-army knife style of test-runner, which uses a configuration file (`ini <http://en.wikipedia.org/wiki/INI_file>`_) to declare both the parts of the test to be executed and the parameters those parts need. Additionally, it accepts a `glob <http://en.wikipedia.org/wiki/Glob_(programming)>`_ so that separate configurations can be executed in lexicographic order.
+The `APE` is an attempt at a swiss-army knife style of test-runner, which uses a configuration file (`ini <http://en.wikipedia.org/wiki/INI_file>`_) to declare both the parts of the test to be executed and the parameters those parts need. Additionally, it accepts a `glob <http://en.wikipedia.org/wiki/Glob_(programming)>`_ so that separate configurations can be executed in lexicographic order. The written documentation is on `GitHub <https://rsnakamura.github.io/oldape/>`_.
 
 Installation
 ------------
@@ -105,10 +105,11 @@ The intention is for the `test` sub-command to test your configuration but right
 Documentation
 -------------
 
-It is currently being converted to a Literate Programming implementation. To build the documentation, make sure you have:
+The built documentation is on `GitHub <https://rsnakamura.github.io/oldape/index.html>`_. To build the documentation youself, make sure you have:
 
    * sphinx
-   * sphinxcontrib-uml
+   * sphinxcontrib-plantuml
+   * sphinx_bootstrap_theme
 
 Then run ``make <format>`` in the same director as the `Makefile`. For example, to create html-documentation::
 
@@ -127,4 +128,4 @@ The ``requirements.txt`` file is built using ``pip freeze``. It may have more th
 Bugs
 ----
 
-This code is currently in maintenance mode as the newer ape was meant to take its place. If you find a bug please file it through the bitbucket `issue tracker <https://bitbucket.org/rallion/apetools/issues>`_. If you're not sure what makes a good bug report, `this description <http://quaid.fedorapeople.org/TOS/Practical_Open_Source_Software_Exploration/html/sn-Debugging_the_Code-The_Anatomy_of_a_Good_Bug_Report.html>`_ from fedora might be helpful.
+This code is currently in maintenance mode as the newer ape was meant to take its place. If you find a bug please file it through the GitHub `issue tracker <https://github.com/rsnakamura/oldape/issues>`_. If you're not sure what makes a good bug report, `this description <http://quaid.fedorapeople.org/TOS/Practical_Open_Source_Software_Exploration/html/sn-Debugging_the_Code-The_Anatomy_of_a_Good_Bug_Report.html>`_ from fedora might be helpful.

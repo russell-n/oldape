@@ -160,20 +160,18 @@
   <div class="section" id="the-log-setter">
 <h1>The Log Setter<a class="headerlink" href="#the-log-setter" title="Permalink to this headline">¶</a></h1>
 <p>A place to hold the set_logger function. This has to be at the top-level so that modules in sub-folders can use it.</p>
-<div class="highlight-python"><div class="highlight"><pre>logger = logging.getLogger(__package__)
-SMALL_TIMESTAMP = &quot;%H:%M:%S&quot;
-SCREEN_FORMAT = &quot;%(levelname)s: %(name)s.%(funcName)s, Line: %(lineno)d [%(
-asctime)s] -- %(message)s&quot;
-SCREEN_FORMAT_QUIET = &quot;%(levelname)s: [%(asctime)s] -- %(message)s&quot;
-DATA_FRIENDLY_FORMAT = &quot;%(levelname)s,%(asctime)s,%(message)s&quot;
-LOG_FORMAT = &quot;%(levelname)s,%(module)s,%(threadName)s,%(funcName)s,Line: %(
-lineno)d,%(asctime)s,%(message)s&quot;
-LOG_TIMESTAMP = &quot;%Y-%m-%d %H:%M:%S&quot;
+<div class="highlight-python"><div class="highlight"><pre><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span>
+<span class="n">SMALL_TIMESTAMP</span> <span class="o">=</span> <span class="s">&quot;%H:%M:%S&quot;</span>
+<span class="n">SCREEN_FORMAT</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(levelname)s</span><span class="s">: </span><span class="si">%(name)s</span><span class="s">.</span><span class="si">%(funcName)s</span><span class="s">, Line: </span><span class="si">%(lineno)d</span><span class="s"> [</span><span class="si">%(asctime)s</span><span class="s">] -- </span><span class="si">%(message)s</span><span class="s">&quot;</span>
+<span class="n">SCREEN_FORMAT_QUIET</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(levelname)s</span><span class="s">: [</span><span class="si">%(asctime)s</span><span class="s">] -- </span><span class="si">%(message)s</span><span class="s">&quot;</span>
+<span class="n">DATA_FRIENDLY_FORMAT</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(levelname)s</span><span class="s">,</span><span class="si">%(asctime)s</span><span class="s">,</span><span class="si">%(message)s</span><span class="s">&quot;</span>
+<span class="n">LOG_FORMAT</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(levelname)s</span><span class="s">,</span><span class="si">%(module)s</span><span class="s">,</span><span class="si">%(threadName)s</span><span class="s">,</span><span class="si">%(funcName)s</span><span class="s">,Line: </span><span class="si">%(lineno)d</span><span class="s">,</span><span class="si">%(asctime)s</span><span class="s">,</span><span class="si">%(message)s</span><span class="s">&quot;</span>
+<span class="n">LOG_TIMESTAMP</span> <span class="o">=</span> <span class="s">&quot;%Y-%m-</span><span class="si">%d</span><span class="s"> %H:%M:%S&quot;</span>
 
-GIGABYTE = 1073741824
-BACKUP_LOGS = 5
+<span class="n">GIGABYTE</span> <span class="o">=</span> <span class="mi">1073741824</span>
+<span class="n">BACKUP_LOGS</span> <span class="o">=</span> <span class="mi">5</span>
 
-LOGNAME = &quot;{0}.log&quot;.format(__package__)
+<span class="n">LOGNAME</span> <span class="o">=</span> <span class="s">&quot;{0}.log&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="module-apetools.log_setter">
@@ -198,46 +196,47 @@ LOGNAME = &quot;{0}.log&quot;.format(__package__)
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.log_setter.set_logger.html#apetools.log_setter.set_logger" title="apetools.log_setter.set_logger"><tt class="xref py py-obj docutils literal"><span class="pre">set_logger</span></tt></a>(args)</td>
+<td>Creates a logger and sets the level based on args.</td>
+</tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre>def set_logger(args):
-    &quot;&quot;&quot;
-    Creates a logger and sets the level based on args.
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">set_logger</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Creates a logger and sets the level based on args.</span>
 
-    :param:
+<span class="sd">    :param:</span>
 
-     - `args`: args with debug and silent attributes
-    &quot;&quot;&quot;
-    cleanup()
-    stderr = logging.StreamHandler()
-    if args.debug:
-        screen_format = SCREEN_FORMAT
-    else:
-        screen_format = SCREEN_FORMAT_QUIET
+<span class="sd">     - `args`: args with debug and silent attributes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cleanup</span><span class="p">()</span>
+    <span class="n">stderr</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">screen_format</span> <span class="o">=</span> <span class="n">SCREEN_FORMAT</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">screen_format</span> <span class="o">=</span> <span class="n">SCREEN_FORMAT_QUIET</span>
 
-    screen_format = logging.Formatter(screen_format, datefmt=SMALL_TIMESTAM
-P)
-    stderr.setFormatter(screen_format)
+    <span class="n">screen_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">screen_format</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="n">SMALL_TIMESTAMP</span><span class="p">)</span>
+    <span class="n">stderr</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">screen_format</span><span class="p">)</span>
 
-    log_file = logging.handlers.RotatingFileHandler(LOGNAME,
-                                           maxBytes=GIGABYTE, backupCount=B
-ACKUP_LOGS)
-    file_format = logging.Formatter(LOG_FORMAT, datefmt=LOG_TIMESTAMP)
-    log_file.setFormatter(file_format)
+    <span class="n">log_file</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span><span class="n">LOGNAME</span><span class="p">,</span>
+                                           <span class="n">maxBytes</span><span class="o">=</span><span class="n">GIGABYTE</span><span class="p">,</span> <span class="n">backupCount</span><span class="o">=</span><span class="n">BACKUP_LOGS</span><span class="p">)</span>
+    <span class="n">file_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">LOG_FORMAT</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="n">LOG_TIMESTAMP</span><span class="p">)</span>
+    <span class="n">log_file</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_format</span><span class="p">)</span>
 
-    logger.setLevel(logging.DEBUG)
-    log_file.setLevel(logging.DEBUG)
+    <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="n">log_file</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
 
-    if args.debug:
-        stderr.setLevel(logging.DEBUG)
-    elif args.silent:
-        stderr.setLevel(logging.ERROR)
-    else:
-        stderr.setLevel(logging.INFO)
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="n">stderr</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">silent</span><span class="p">:</span>
+        <span class="n">stderr</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">stderr</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
 
-    logger.addHandler(stderr)
-    logger.addHandler(log_file)
-    return
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stderr</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">log_file</span><span class="p">)</span>
+    <span class="k">return</span>
 </pre></div>
 </div>
 </div>

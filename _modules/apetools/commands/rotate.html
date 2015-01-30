@@ -246,34 +246,76 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument_strings</span>
 
     <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateArgumentsGenerator.__len__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__len__.html#apetools.commands.rotate.RotateArgumentsGenerator.__len__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: number of angles</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        compares number of angles</span>
+    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RotateArgumentsGenerator.__lt__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__lt__.html#apetools.commands.rotate.RotateArgumentsGenerator.__lt__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &lt; operator</span>
+
+<span class="sd">        :return: True if has fewer angles than other</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RotateArgumentsGenerator.__le__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__le__.html#apetools.commands.rotate.RotateArgumentsGenerator.__le__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &lt;= operator</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
+<span class="sd">        :return: True if have same or fewer angles than other</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RotateArgumentsGenerator.__eq__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__eq__.html#apetools.commands.rotate.RotateArgumentsGenerator.__eq__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        = operator</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
+<span class="sd">        :return: True if have same amount of angles as other</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RotateArgumentsGenerator.__ne__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__ne__.html#apetools.commands.rotate.RotateArgumentsGenerator.__ne__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        != operator</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
+<span class="sd">        :return: True if count of angles differs from other&#39;s count</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RotateArgumentsGenerator.__gt__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__gt__.html#apetools.commands.rotate.RotateArgumentsGenerator.__gt__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &gt; operator</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
+<span class="sd">        :return: True if count of  angles are greater than the other&#39;s count</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RotateArgumentsGenerator.__ge__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__ge__.html#apetools.commands.rotate.RotateArgumentsGenerator.__ge__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &gt;= operator</span>
+
+<span class="sd">        :param:</span>
+
+<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
+<span class="sd">        :return: True if count of angles is greater than or equal to other&#39;s count</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">RotateCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<span class="k">class</span> <span class="nc">RotateCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
 <div class="viewcode-block" id="RotateCommand"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to issue a remote &#39;rotate&#39; command (older version for pre-Cameron turntables)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
