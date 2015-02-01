@@ -1,0 +1,89 @@
+All-in-one Performance Evaluation Tools
+=======================================
+<<name='imports', echo=False>>=
+# python standard library
+import subprocess
+@
+
+The `APE` is an attempt at a swiss-army knife style of test-runner, which uses a configuration file (`ini <http://en.wikipedia.org/wiki/INI_file>`_) to declare both the parts of the test to be executed and the parameters those parts need. Additionally, it accepts a `glob <http://en.wikipedia.org/wiki/Glob_(programming)>`_ so that separate configurations can be executed in lexicographic order.
+
+
+Installation
+------------
+
+The APE isn't on `PyPi` so you have to pull the repository and change into the top directory, then install it:
+
+    python setup.py install
+
+.. '    
+
+Command Line Help
+-----------------
+
+You Can Check out the help:
+
+   ape -h
+
+<<name='help', echo=False, wrap=False>>=
+print(subprocess.check_output('apetools -h'.split()))
+@
+
+There are three sub-commands -- `run`, `fetch`, and `test`.
+
+The Run Sub-command
+-------------------
+
+<<name='run_help', echo=False>>=
+print(subprocess.check_output('apetools run -h'.split()))
+@
+
+The run sub-command will read in the configuration and attempt to run the tests.
+
+The Fetch Sub-Command
+---------------------
+
+<<name='fetch_help', echo=False>>=
+print(subprocess.check_output('apetools fetch -h'.split()))
+@
+
+The fetch sub-command will retrieve a sample configuration.
+
+.. warning:: This will retrieve a file named ``ape.ini``. If there is already a file there by that name it will be replaced by the fresh copy.
+
+The Test Sub-Command
+--------------------
+
+<<name='test_help', echo=False>>=
+print(subprocess.check_output('apetools test -h'.split()))
+@
+
+The intention is for the test sub-command to test your configuration but right now it is broken.
+
+Documentation
+-------------
+
+The built documentation is `online at GitHub <https://rsnakamura.github.io/oldape/>. To build the documentation, make sure you have:
+
+   * sphinx
+   * sphinxcontrib-uml
+   * sphinx_bootstrap_theme
+
+Then run ``make <format>`` in the same director as the `Makefile`. For example, to create html-documentation::
+
+   make html
+
+The documentation should then be in the folder ``build/html``.
+
+Requirements
+------------
+
+The ``requirements.txt`` file is built using ``pip freeze``. It may have more than is needed (e.g. `pep8`) since it includes packages to help create the code, but it should have everything that's needed. To install from the file::
+
+   pip install -r requirements.txt
+
+.. '
+
+Bugs
+----
+
+This code is currently in maintenance mode as the newer ape was meant to take its place. If you find a bug please file it through the GitHub `issue tracker <https://github.com/rsnakamura/oldape/issues>`_. 
