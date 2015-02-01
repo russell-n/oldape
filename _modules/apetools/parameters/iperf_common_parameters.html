@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -164,7 +164,7 @@
 
 
 <span class="k">class</span> <span class="nc">IperfParametersEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParametersEnum"><a class="viewcode-back" href="../../../documentation/developer/api/parameters_api/apetools.parameters.iperf_common_parameters.html#apetools.parameters.iperf_common_parameters.IperfParametersEnum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder for Iperf Parameter Constants</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
@@ -173,7 +173,7 @@
 <span class="c"># end class IperfParametersEnum</span>
 
 
-<span class="k">class</span> <span class="nc">IperfCommonParameters</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">IperfCommonParameters</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
 <div class="viewcode-block" id="IperfCommonParameters"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iperf Common Parameters are common to all Iperf commands.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -461,17 +461,18 @@
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: string of set flags in alphabetical order (of the flags, not the values)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#import pudb;pudb.set_trace()</span>
         <span class="n">non_parameters</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;_block_attributes&quot;</span> <span class="p">,</span> <span class="s">&quot;_logger&quot;</span><span class="p">,</span> 
                                     <span class="s">&quot;_parameter_names&quot;</span><span class="p">,</span> <span class="s">&#39;_path&#39;</span><span class="p">)</span>
         
         <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">non_parameters</span><span class="p">]</span>
             <span class="c"># temporary fix for --bandwidth problem</span>
+            <span class="c">#import pudb;pudb.set_trace()</span>
         <span class="k">if</span> <span class="s">&#39;_client&#39;</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
             <span class="n">keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;_client&#39;</span><span class="p">)</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">UNDERSCORE</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span> <span class="c"># this is the server-side</span>
+        <span class="k">else</span><span class="p">:</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">UNDERSCORE</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
-            
         <span class="n">filtered_values</span> <span class="o">=</span> <span class="p">(</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="n">value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">SPACE</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered_values</span><span class="p">)</span>
 

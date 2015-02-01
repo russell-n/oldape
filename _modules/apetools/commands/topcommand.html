@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -156,11 +156,11 @@
 
 
 <span class="k">class</span> <span class="nc">TopCommand</span><span class="p">(</span><span class="n">BaseProcessCommand</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TopCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopCommand"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Top Command issues commands and watches for errors</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="TopCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopCommand.__init__"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TopCommand Constructor</span>
 
 <span class="sd">        :param:</span>
@@ -173,7 +173,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TopCommand.arguments"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopCommand.arguments"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        the arguments for the ``top`` command</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -182,7 +182,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">error_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TopCommand.error_expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.error_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopCommand.error_expression"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.error_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Holds the expression to match error messages</span>
 
 <span class="sd">        :return: compiled regular expression to match error messages</span>
@@ -203,7 +203,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TopCommand.run"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopCommand.run"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calls ``top`` on the connection</span>
 
 <span class="sd">        :return: output from the connections call to top (stdout, stderr)</span>
@@ -212,7 +212,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TopCommand.command"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopCommand.command"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopCommand.html#apetools.commands.topcommand.TopCommand.command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        `top`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -221,11 +221,11 @@
 
 
 <span class="k">class</span> <span class="nc">TopGrep</span><span class="p">(</span><span class="n">BaseProcessGrep</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="TopGrep"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopGrep"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Top command adapted to extract process IDs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="TopGrep.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopGrep.__init__"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        TopGrep Constructon</span>
 
 <span class="sd">        :param:</span>
@@ -237,7 +237,7 @@
             
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">process_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TopGrep.process_query"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.process_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopGrep.process_query"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.process_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The ``top`` command</span>
 
 <span class="sd">        :return: TopCommand to return output from the ``top`` command.</span>
@@ -248,7 +248,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TopGrep.expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TopGrep.expression"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TopGrep.html#apetools.commands.topcommand.TopGrep.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        An expression to parse a single line of output</span>
 
 <span class="sd">        :return: compiled regular expression to get PID</span>
@@ -532,7 +532,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestTop.test_constructor"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTop.test_constructor.html#apetools.commands.topcommand.TestTop.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTop.test_constructor"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_constructor.html#apetools.commands.topcommand.TestTop.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the constructor have the expected signature?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">connection</span><span class="o">=</span><span class="n">MagicMock</span><span class="p">()</span>
@@ -542,7 +542,7 @@
 
     <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
     <span class="k">def</span> <span class="nf">test_wrong_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestTop.test_wrong_command"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTop.test_wrong_command.html#apetools.commands.topcommand.TestTop.test_wrong_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTop.test_wrong_command"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_wrong_command.html#apetools.commands.topcommand.TestTop.test_wrong_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the TopCommand raise a TopCommandError if top isn&#39;t installed?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="s">&#39;-sh: top: command not found&#39;</span><span class="p">)</span>
@@ -550,7 +550,7 @@
 
     <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
     <span class="k">def</span> <span class="nf">test_bad_argument</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestTop.test_bad_argument"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTop.test_bad_argument.html#apetools.commands.topcommand.TestTop.test_bad_argument">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTop.test_bad_argument"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_bad_argument.html#apetools.commands.topcommand.TestTop.test_bad_argument">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does TopCommand raise a TopCommandError if a bad command is given?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;top: Unrecognized or missing option q&#39;</span>
@@ -561,7 +561,7 @@
 
     <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
     <span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestTop.test_standard_error"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTop.test_standard_error.html#apetools.commands.topcommand.TestTop.test_standard_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTop.test_standard_error"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTop.test_standard_error.html#apetools.commands.topcommand.TestTop.test_standard_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does an error from standard error get passed to the checker?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;-sh: top: command not found&#39;</span><span class="p">]</span>
@@ -577,7 +577,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">test_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestTopGrep.test_call"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTopGrep.test_call.html#apetools.commands.topcommand.TestTopGrep.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTopGrep.test_call"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_call.html#apetools.commands.topcommand.TestTopGrep.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the `__call__` return all the matching PIDs?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">top</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">test_output</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">])</span>
@@ -588,7 +588,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestTopGrep.test_constructor"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTopGrep.test_constructor.html#apetools.commands.topcommand.TestTopGrep.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTopGrep.test_constructor"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_constructor.html#apetools.commands.topcommand.TestTopGrep.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the constructor have the expected signature?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">process</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ascii_letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))])</span>
@@ -600,7 +600,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">test_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestTopGrep.test_unmatched"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTopGrep.test_unmatched.html#apetools.commands.topcommand.TestTopGrep.test_unmatched">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTopGrep.test_unmatched"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_unmatched.html#apetools.commands.topcommand.TestTopGrep.test_unmatched">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the expression not match lines similar to the process-lines?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">first_line</span><span class="p">))</span>
@@ -608,7 +608,7 @@
 
 
     <span class="k">def</span> <span class="nf">test_call_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestTopGrep.test_call_parameter"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTopGrep.test_call_parameter.html#apetools.commands.topcommand.TestTopGrep.test_call_parameter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTopGrep.test_call_parameter"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_call_parameter.html#apetools.commands.topcommand.TestTopGrep.test_call_parameter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does passing in the name of the process override the process passed in on construction?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
@@ -620,7 +620,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">test_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestTopGrep.test_expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.topcommand.TestTopGrep.test_expression.html#apetools.commands.topcommand.TestTopGrep.test_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestTopGrep.test_expression"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.topcommand.TestTopGrep.test_expression.html#apetools.commands.topcommand.TestTopGrep.test_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the expression match the output lines correctly?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">process_output</span><span class="p">):</span>

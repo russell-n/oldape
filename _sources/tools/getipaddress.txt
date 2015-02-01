@@ -1,25 +1,7 @@
 Get IP Address
 ==============
 
-A module to hold ip address finders. At the moment this only supports unix-like machines (it assumes the `ifconfig` command exists), since that's all I'm testing. It also requires the user to pass in a regular expression to find the value. It didn't occur to me until later that if I passed in the command as well this would be a general querier for any command, eventually this should go away.
-
-
-
-This is the expression for linux machines (defined in the :ref:`expressions <apetools.commons.expressions>`_ module).
-
-::
-
-    inet\s+addr:(?P<ip_address>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})
-    
-
-
-
-and this is the one defined for android (also in the `expressions` module).
-
-::
-
-    ip\s+(?P<ip_address>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})
-    
+A module to hold ip address finders.
 
 
 

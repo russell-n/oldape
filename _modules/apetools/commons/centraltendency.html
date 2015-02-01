@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -151,7 +151,7 @@
 
 
 <span class="k">class</span> <span class="nc">CentralTendency</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="CentralTendency"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.html#apetools.commons.centraltendency.CentralTendency">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The central tendency stores data and reports the median and mean</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bootstraps</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">z_score</span><span class="o">=</span><span class="mf">1.96</span><span class="p">,</span> <span class="n">precision</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
@@ -175,7 +175,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CentralTendency.data"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.data.html#apetools.commons.centraltendency.CentralTendency.data">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.data"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.data">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -184,7 +184,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CentralTendency.median"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.median.html#apetools.commons.centraltendency.CentralTendency.median">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.median"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.median">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the median value for the data</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorted</span><span class="p">:</span>
@@ -202,7 +202,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">median_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CentralTendency.median_error"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.median_error.html#apetools.commons.centraltendency.CentralTendency.median_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.median_error"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.median_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: bootstrapped error</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">choose</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span>
@@ -216,13 +216,13 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CentralTendency.mean"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.mean.html#apetools.commons.centraltendency.CentralTendency.mean">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.mean"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.mean">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the mean of the data set</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">meanaverage</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">meanaverage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CentralTendency.meanaverage"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.meanaverage.html#apetools.commons.centraltendency.CentralTendency.meanaverage">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.meanaverage"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.meanaverage">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `data`: a list or array</span>
@@ -233,13 +233,13 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">sample_deviation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CentralTendency.sample_deviation"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.sample_deviation.html#apetools.commons.centraltendency.CentralTendency.sample_deviation">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.sample_deviation"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.sample_deviation">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: sample standard deviation for the data set</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_std</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">_std</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CentralTendency._std"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency._std.html#apetools.commons.centraltendency.CentralTendency._std">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency._std"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency._std">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `data`: a list or array</span>
@@ -262,14 +262,14 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CentralTendency.add"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.add.html#apetools.commons.centraltendency.CentralTendency.add">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.add"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.add">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        An alias for __call__ for backwards compatibility</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CentralTendency.reset"><a class="viewcode-back" href="../../../commons/api/apetools.commons.centraltendency.CentralTendency.reset.html#apetools.commons.centraltendency.CentralTendency.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CentralTendency.reset"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.centraltendency.html#apetools.commons.centraltendency.CentralTendency.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition:</span>
 
 <span class="sd">         - `data` is None</span>

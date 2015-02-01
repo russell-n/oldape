@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -158,7 +158,7 @@
 
 
 <span class="k">class</span> <span class="nc">SerialConnection</span><span class="p">(</span><span class="n">LocalConnection</span><span class="p">):</span>
-<div class="viewcode-block" id="SerialConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialconnection.SerialConnection.html#apetools.connections.serialconnection.SerialConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SerialConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A SerialConnection executes commands over a serial connections</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -186,7 +186,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SerialConnection.client"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialconnection.SerialConnection.client.html#apetools.connections.serialconnection.SerialConnection.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SerialConnection.client"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: SerialAdapter for the Serial Connection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -195,7 +195,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
 
     <span class="k">def</span> <span class="nf">set_timeout</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_timeout</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SerialConnection.set_timeout"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialconnection.SerialConnection.set_timeout.html#apetools.connections.serialconnection.SerialConnection.set_timeout">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SerialConnection.set_timeout"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection.set_timeout">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Some of the configuration commands for devices take a long time.</span>
 
 <span class="sd">        This sets the client&#39;s timeout to whatever you want.</span>
@@ -208,7 +208,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span></div>
-<div class="viewcode-block" id="SerialConnection._procedure_call"><a class="viewcode-back" href="../../../connections/api/apetools.connections.serialconnection.SerialConnection._procedure_call.html#apetools.connections.serialconnection.SerialConnection._procedure_call">[docs]</a>                        <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<div class="viewcode-block" id="SerialConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection._procedure_call">[docs]</a>                        <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Despite its name, this isn&#39;t intended to be run.</span>
 <span class="sd">        The . notation is the expected interface.</span>

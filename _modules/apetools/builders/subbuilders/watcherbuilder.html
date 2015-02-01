@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -148,7 +148,7 @@
 
 
 <span class="k">class</span> <span class="nc">WatcherTypes</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WatcherTypes"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherTypes">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The names of the valid watcher types</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
@@ -164,7 +164,7 @@
 <span class="c"># end class WatcherTypes</span>
 
 
-<span class="n">watcher_builder</span> <span class="o">=</span> <span class="p">{</span><span class="n">WatcherTypes</span><span class="o">.</span><span class="n">adblogcat</span><span class="p">:</span><span class="n">LogcatWatcherBuilder</span><span class="p">,</span>
+<span class="n">watcher_builder</span> <span class="o">=</span> <span class="p">{</span><span class="n">WatcherTypes</span><span class="o">.</span><span class="n">adblogcat</span><span class="p">:</span><span class="n">LogcatWatcherBuilder</span><span class="p">,</span></div>
                    <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">logcat</span><span class="p">:</span><span class="n">LogWatcherBuilder</span><span class="p">,</span>
                    <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">rssi</span><span class="p">:</span><span class="n">RssiPollerBuilder</span><span class="p">,</span>
                    <span class="n">WatcherTypes</span><span class="o">.</span><span class="n">device</span><span class="p">:</span><span class="n">DevicePollerBuilder</span><span class="p">,</span>
@@ -176,7 +176,7 @@
 
 
 <span class="k">class</span> <span class="nc">WatcherBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span>
-<div class="viewcode-block" id="WatcherBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WatcherBuilder"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    builds a master logwatcher</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -194,7 +194,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">watcher_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WatcherBuilder.watcher_ids"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watcher_ids.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watcher_ids">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WatcherBuilder.watcher_ids"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watcher_ids">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of options from the Watch Log config section</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_watcher_ids</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -203,7 +203,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">watchers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WatcherBuilder.watchers"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watchers.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watchers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WatcherBuilder.watchers"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.watchers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: ListType</span>
 <span class="sd">        :return: A list of watchers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -227,7 +227,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WatcherBuilder.product"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.product.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WatcherBuilder.product"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: TheWatcher</span>
 <span class="sd">        :return: A master watcher</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -237,7 +237,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WatcherBuilder.parameters"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.parameters.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WatcherBuilder.parameters"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.watcherbuilder.html#apetools.builders.subbuilders.watcherbuilder.WatcherBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the previous_parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>

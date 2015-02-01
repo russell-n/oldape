@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -151,7 +151,7 @@
 
 
 <span class="k">class</span> <span class="nc">TelnetAdapter</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="TelnetAdapter"><a class="viewcode-back" href="../../../connections/api/apetools.connections.telnetadapter.TelnetAdapter.html#apetools.connections.telnetadapter.TelnetAdapter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TelnetAdapter"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetAdapter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A TelnetAdapter Adapts the telnetlib.Telnet to this libraries interfaces.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">,</span> <span class="n">login</span><span class="o">=</span><span class="s">&#39;root&#39;</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">end_of_line</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">,</span>
@@ -181,7 +181,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TelnetAdapter.client"><a class="viewcode-back" href="../../../connections/api/apetools.connections.telnetadapter.TelnetAdapter.client.html#apetools.connections.telnetadapter.TelnetAdapter.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TelnetAdapter.client"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetAdapter.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tries to login before returning.</span>
 
 <span class="sd">        :rtype: telnetlib.Telnet</span>
@@ -196,7 +196,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
 
     <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TelnetAdapter.exec_command"><a class="viewcode-back" href="../../../connections/api/apetools.connections.telnetadapter.TelnetAdapter.exec_command.html#apetools.connections.telnetadapter.TelnetAdapter.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TelnetAdapter.exec_command"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetAdapter.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The main interface.</span>
 
 <span class="sd">        Since I&#39;m hiding the client from users, this will do a read_very_eager before continuing.</span>
@@ -218,7 +218,7 @@
                            
     
     <span class="k">def</span> <span class="nf">writeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TelnetAdapter.writeline"><a class="viewcode-back" href="../../../connections/api/apetools.connections.telnetadapter.TelnetAdapter.writeline.html#apetools.connections.telnetadapter.TelnetAdapter.writeline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TelnetAdapter.writeline"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetAdapter.writeline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `message`: A message to send to the device.</span>
@@ -235,7 +235,7 @@
 <span class="n">MATCHING_STRING</span> <span class="o">=</span> <span class="mi">2</span>
 
 <span class="k">class</span> <span class="nc">TelnetOutput</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TelnetOutput"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetOutput">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The TelnetOutput converts the telnet output to a file-like object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">client</span><span class="p">,</span> <span class="n">prompt</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">,</span> <span class="n">end_of_line</span><span class="o">=</span><span class="s">&#39;</span><span class="se">\r\n</span><span class="s">&#39;</span><span class="p">,</span><span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -258,7 +258,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">readline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TelnetOutput.readline"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetOutput.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `timeout`: The readline timeout</span>
@@ -279,16 +279,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">finished</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">return</span> <span class="n">EOF</span>
 
-    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">next</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TelnetOutput.next"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetOutput.next">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :yield: the next line</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">readlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">readlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TelnetOutput.readlines"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetOutput.readlines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: A list of lines</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
@@ -298,19 +298,19 @@
             <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">lines</span>
 
-    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="TelnetOutput.read"><a class="viewcode-back" href="../../../documentation/developer/api/adapters_api/apetools.connections.telnetadapter.html#apetools.connections.telnetadapter.TelnetOutput.read">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: String of output</span>
 <span class="sd">        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">EMPTY_STRING</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
 
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
 <span class="c"># end class TelnetOutput</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div>
     <span class="n">ta</span> <span class="o">=</span> <span class="n">TelnetAdapter</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s">&quot;192.168.10.172&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">ta</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">&quot;iperf -c 192.168.10.51 -i 1&quot;</span><span class="p">):</span>
         <span class="k">print</span> <span class="n">line</span>

@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -146,7 +146,7 @@
 
 
 <span class="k">class</span> <span class="nc">Filterer</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="Filterer"><a class="viewcode-back" href="../../../commons/api/apetools.commons.filterer.Filterer.html#apetools.commons.filterer.Filterer">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Filterer"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.filterer.html#apetools.commons.filterer.Filterer">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Filterer filters out strings that don&#39;t match an expression.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -166,7 +166,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Filterer.event"><a class="viewcode-back" href="../../../commons/api/apetools.commons.filterer.Filterer.event.html#apetools.commons.filterer.Filterer.event">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Filterer.event"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.filterer.html#apetools.commons.filterer.Filterer.event">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: threading event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -175,7 +175,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Filterer.regex"><a class="viewcode-back" href="../../../commons/api/apetools.commons.filterer.Filterer.regex.html#apetools.commons.filterer.Filterer.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Filterer.regex"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.filterer.html#apetools.commons.filterer.Filterer.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: A compiled regular expression to match</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -201,14 +201,14 @@
 
 
 <span class="k">class</span> <span class="nc">DummyEvent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
-<div class="viewcode-block" id="DummyEvent"><a class="viewcode-back" href="../../../commons/api/apetools.commons.filterer.DummyEvent.html#apetools.commons.filterer.DummyEvent">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DummyEvent"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.filterer.html#apetools.commons.filterer.DummyEvent">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A dummy event for a pipeline</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <div class="viewcode-block" id="DummyEvent.__init__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.filterer.DummyEvent.html#apetools.commons.filterer.DummyEvent.__init__">[docs]</a>        <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">is_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="DummyEvent.is_set"><a class="viewcode-back" href="../../../commons/api/apetools.commons.filterer.DummyEvent.is_set.html#apetools.commons.filterer.DummyEvent.is_set">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DummyEvent.is_set"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.filterer.html#apetools.commons.filterer.DummyEvent.is_set">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Always returns True to leave the filter running</span>
 
 <span class="sd">        :rtype: Boolean</span>

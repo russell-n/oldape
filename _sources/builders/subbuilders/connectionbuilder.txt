@@ -20,7 +20,6 @@ This is a named-tuple to pass parameters to the ssh-connection.
    :toctree: api
 
    SSHParameters
-   SSHParameters.__eq__
 
 .. uml::
 
@@ -154,3 +153,19 @@ For example, to retrieve an SSHConnection from this module (connectionbuilder)::
    ConnectionBuilderTypes.ssh,SSHConnectionBuilder
    ConnectionBuilderTypes.dummy, DummyConnection
    
+
+
+Testing the Builders
+--------------------
+
+.. autosummary::
+   :toctree: api
+
+   TestConnectionBuilders.test_valid_keys
+   TestDummyConnectionBuilder.test_connection
+   TestConnectionBuilderBase.test_parameters
+   TestConnectionBuilderBase.test_no_connection
+
+
+
+

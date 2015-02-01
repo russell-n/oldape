@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -145,15 +145,13 @@
 <span class="kn">from</span> <span class="nn">basetoolbuilder</span> <span class="kn">import</span> <span class="n">BaseToolBuilder</span><span class="p">,</span> <span class="n">Parameters</span>
 <span class="kn">from</span> <span class="nn">apetools.lexicographers.config_options</span> <span class="kn">import</span> <span class="n">ConfigOptions</span>
 <span class="kn">from</span> <span class="nn">connectionbuilder</span> <span class="kn">import</span> <span class="n">connection_builders</span><span class="p">,</span> <span class="n">ConnectionBuilderTypes</span><span class="p">,</span> <span class="n">SSHParameters</span>
-<span class="kn">import</span> <span class="nn">apetools.builders.subbuilders.connectionbuilder</span>
-<span class="kn">from</span> <span class="nn">apetools.commands.rotate</span> <span class="kn">import</span> <span class="n">RotateCommand</span><span class="p">,</span> <span class="n">RotateArgumentsGenerator</span><span class="p">,</span> <span class="n">RotateCommandUsurper</span>
-<span class="kn">from</span> <span class="nn">apetools.commands.rotate</span> <span class="kn">import</span> <span class="n">ROTATE_USURPER_NAME</span>
+<span class="kn">from</span> <span class="nn">apetools.commands.rotate</span> <span class="kn">import</span> <span class="n">RotateCommand</span>
 
 
 <span class="n">COLON</span> <span class="o">=</span> <span class="s">&quot;:&quot;</span>
 
 <span class="k">class</span> <span class="nc">RotateBuilderEnums</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilderEnums"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilderEnums">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder of Rotate constants</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
@@ -161,7 +159,7 @@
 <span class="c"># end class RotateBuilderEnums</span>
 
 
-<span class="k">class</span> <span class="nc">RotateParameters</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;RotateParameters&quot;</span><span class="p">,</span> <span class="s">&quot;angle velocity clockwise&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span>
+<span class="k">class</span> <span class="nc">RotateParameters</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;RotateParameters&quot;</span><span class="p">,</span> <span class="s">&quot;angle velocity clockwise&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span></div>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -171,7 +169,7 @@
 
 
 <span class="k">class</span> <span class="nc">RotateBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilder"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Rotator builder</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -184,7 +182,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connections_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateBuilder.connections_parameters"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections_parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections_parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilder.connections_parameters"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections_parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of SSHParameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -197,7 +195,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateBuilder.connections"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilder.connections"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.connections">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of ssh-connections to the rotation-master</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -207,7 +205,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">angles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateBuilder.angles"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.angles.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.angles">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilder.angles"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.angles">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of angles</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angles</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -216,7 +214,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">velocities</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateBuilder.velocities"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.velocities.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.velocities">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilder.velocities"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.velocities">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of velocities</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_velocities</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -226,7 +224,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateBuilder.parameters"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilder.parameters"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of named-tuple Parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -251,7 +249,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateBuilder.product"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.rotatebuilder.RotateBuilder.product.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateBuilder.product"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.rotatebuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a RotateCommand</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -259,223 +257,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
 
 <span class="c"># end class RotateBuilder</span>
-
-
-<span class="k">class</span> <span class="nc">RotateUsurperConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div></div>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Constants for users </span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">name</span> <span class="o">=</span> <span class="n">ROTATE_USURPER_NAME</span>
-    <span class="n">section</span> <span class="o">=</span> <span class="s">&#39;ROTATE_CUBE&#39;</span>
-    <span class="n">tables_option</span> <span class="o">=</span> <span class="s">&#39;tables&#39;</span>
-    <span class="n">hostname_option</span> <span class="o">=</span> <span class="s">&#39;hostname&#39;</span>
-    <span class="n">username_option</span> <span class="o">=</span> <span class="s">&#39;username&#39;</span>
-    <span class="n">password_option</span> <span class="o">=</span> <span class="s">&#39;password&#39;</span>
-
-
-<span class="k">class</span> <span class="nc">RotateUsurperBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Builder of RotateUsurper object and parameters</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder.__init__"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">RotateUsurperBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_tables_sections</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_connections_parameters</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_table_arguments_generator</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
-
-    <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">connections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder.connections"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: SSHConnections</span>
-<span class="sd">        :rtype: list        </span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">build_dict</span> <span class="o">=</span> <span class="n">apetools</span><span class="o">.</span><span class="n">builders</span><span class="o">.</span><span class="n">subbuilders</span><span class="o">.</span><span class="n">connectionbuilder</span><span class="o">.</span><span class="n">connection_builders</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span> <span class="o">=</span> <span class="p">[</span><span class="n">build_dict</span><span class="p">[</span><span class="n">ConnectionBuilderTypes</span><span class="o">.</span><span class="n">ssh</span><span class="p">](</span><span class="n">parameters</span><span class="p">)</span><span class="o">.</span><span class="n">connection</span>
-                                 <span class="k">for</span> <span class="n">parameters</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connections_parameters</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections</span>
-
-    <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">connections_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder.connections_parameters"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.connections_parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: list of SSHParameters from tables sections</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_connections_parameters</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_ssh_parameter</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-                                            <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables_sections</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connections_parameters</span>
-
-    <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">tables_sections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder.tables_sections"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.tables_sections">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: list of section-headers with table information</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tables_sections</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_tables_sections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get_list</span><span class="p">(</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
-                                                             <span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">tables_option</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tables_sections</span>
-
-    <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">table_arguments_generator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder.table_arguments_generator"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.table_arguments_generator">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Dict of &lt;table name: RotateArgumentsGenerator</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_arguments_generator</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">table_arguments_generator</span> <span class="o">=</span> <span class="p">{}</span>
-            <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tables_sections</span><span class="p">:</span>
-                <span class="n">table_arguments_generator</span><span class="p">[</span><span class="n">table</span><span class="p">]</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="p">,</span>
-                                                                   <span class="n">section</span><span class="o">=</span><span class="n">table</span><span class="p">,</span>
-                                                                   <span class="n">infinite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_table_arguments_generator</span> <span class="o">=</span> <span class="n">table_arguments_generator</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_table_arguments_generator</span>
-        
-    <span class="nd">@property</span>    </div>
-    <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder.parameters"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        for each angle, create a dict of &lt;table-name:arguments string&gt;</span>
-<span class="sd">        </span>
-<span class="sd">        :return: list of named-tuple Parameters</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">table_parameters</span> <span class="o">=</span> <span class="p">[]</span>
-
-            <span class="c"># if any list of angles is shorter than others, then repeat last angle</span>
-            <span class="c"># until longest list of angles is done</span>
-            <span class="c"># assumes that the RotateArgumentsGenerator operators are overloaded using angle count</span>
-            <span class="n">most_angles</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">table_arguments_generator</span><span class="o">.</span><span class="n">itervalues</span><span class="p">())</span>
-
-            <span class="c"># use the arguments generator with the most angles as the limit</span>
-    
-            <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">most_angles</span><span class="p">)):</span>
-                <span class="n">rotate_params</span> <span class="o">=</span> <span class="p">{}</span>
-                
-                <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">table_arguments_generator</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-                    <span class="k">try</span><span class="p">:</span>
-                        <span class="n">rotate_params</span><span class="p">[</span><span class="n">table</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span>
-                    <span class="k">except</span> <span class="ne">IndexError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-                        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;{0} section had fewer angles than {1}, repeating last angle&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">table</span><span class="p">,</span>
-                                                                                                              <span class="n">most_angles</span><span class="o">.</span><span class="n">section</span><span class="p">))</span>
-                        <span class="n">rotate_params</span><span class="p">[</span><span class="n">table</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                <span class="n">table_parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rotate_params</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                                                       <span class="n">parameters</span><span class="o">=</span><span class="n">table_parameters</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
-
-    <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateUsurperBuilder.product"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Built RotateUsurper object</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">RotateCommandUsurper</span><span class="p">(</span><span class="n">connections</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="p">)</span>            
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
-
-    <span class="k">def</span> <span class="nf">get_ssh_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">table</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateUsurperBuilder.get_ssh_parameter"><a class="viewcode-back" href="../../../../documentation/developer/casestudies/api/apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.html#apetools.builders.subbuilders.rotatebuilder.RotateUsurperBuilder.get_ssh_parameter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Convenience method to get ssh parameters</span>
-
-<span class="sd">        :rtype: SSHParameters</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">constants</span> <span class="o">=</span> <span class="n">RotateUsurperConstants</span>
-        <span class="n">hostname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">table</span><span class="p">,</span>
-                                        <span class="n">constants</span><span class="o">.</span><span class="n">hostname_option</span><span class="p">)</span>
-        <span class="n">username</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">table</span><span class="p">,</span>
-                                        <span class="n">constants</span><span class="o">.</span><span class="n">username_option</span><span class="p">)</span>
-        <span class="n">password</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">table</span><span class="p">,</span>
-                                        <span class="n">constants</span><span class="o">.</span><span class="n">password_option</span><span class="p">,</span>
-                                        <span class="n">optional</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">SSHParameters</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="n">hostname</span><span class="p">,</span>
-                             <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span>
-                             <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
-                             <span class="n">identifier</span><span class="o">=</span><span class="n">table</span><span class="p">)</span>
-
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
-    <span class="kn">from</span> <span class="nn">ConfigParser</span> <span class="kn">import</span> <span class="n">SafeConfigParser</span>
-    <span class="kn">from</span> <span class="nn">apetools.builders.subbuilders.rotatebuilder</span> <span class="kn">import</span> <span class="n">RotateUsurperConstants</span>
-    <span class="kn">from</span> <span class="nn">apetools.builders.subbuilders.basetoolbuilder</span> <span class="kn">import</span> <span class="n">Parameters</span>
-    <span class="kn">from</span> <span class="nn">apetools.builders.subbuilders.connectionbuilder</span> <span class="kn">import</span> <span class="n">SSHParameters</span><span class="p">,</span> <span class="n">SSHConnectionBuilder</span>
-    <span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
-    <span class="kn">from</span> <span class="nn">apetools.lexicographers.configurationmap</span> <span class="kn">import</span> <span class="n">ConfigurationMap</span>
-    <span class="kn">from</span> <span class="nn">apetools.builders.subbuilders.rotatebuilder</span> <span class="kn">import</span> <span class="n">RotateUsurperBuilder</span>
-    <span class="n">parser</span> <span class="o">=</span> <span class="n">SafeConfigParser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">section</span><span class="p">)</span>
-    <span class="n">tables</span> <span class="o">=</span> <span class="s">&#39;able,baker&#39;</span>
-    <span class="n">tables_sections</span> <span class="o">=</span> <span class="n">tables</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
-
-    <span class="c"># setup table sections</span>
-    <span class="k">for</span> <span class="n">table</span> <span class="ow">in</span> <span class="n">tables_sections</span><span class="p">:</span>
-        <span class="n">parser</span><span class="o">.</span><span class="n">add_section</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-
-    <span class="n">able_angles</span> <span class="o">=</span> <span class="s">&#39;0 45 180&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-    <span class="n">able_ssh</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hostname&#39;</span><span class="p">:</span><span class="s">&#39;unable&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">:</span><span class="s">&#39;cable&#39;</span><span class="p">}</span>
-    <span class="n">able_table</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;angles&#39;</span><span class="p">:</span><span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">able_angles</span><span class="p">),</span> <span class="s">&#39;velocity&#39;</span><span class="p">:</span><span class="s">&#39;400&#39;</span><span class="p">}</span>
-    
-    <span class="n">baker_ssh</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;hostname&#39;</span><span class="p">:</span><span class="s">&#39;bakery&#39;</span><span class="p">,</span> <span class="s">&#39;username&#39;</span><span class="p">:</span><span class="s">&#39;broker&#39;</span><span class="p">,</span> <span class="s">&#39;password&#39;</span><span class="p">:</span><span class="s">&#39;broken&#39;</span><span class="p">}</span>
-    <span class="n">baker_table</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;angles&#39;</span><span class="p">:</span> <span class="s">&#39;90&#39;</span><span class="p">}</span>
-
-    <span class="n">parametersvalue</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="n">able_angles</span><span class="p">:</span>
-        <span class="n">parametersvalue</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;able&#39;</span><span class="p">:</span><span class="s">&#39; --velocity 400 {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="p">),</span>
-                          <span class="s">&#39;baker&#39;</span><span class="p">:</span> <span class="s">&#39; 90&#39;</span><span class="p">})</span>
-    <span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">Parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
-                <span class="n">parameters</span><span class="o">=</span><span class="n">parametersvalue</span><span class="p">)]</span>
-
-    <span class="n">ssh_values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">tables_sections</span><span class="p">,</span> <span class="p">(</span><span class="n">able_ssh</span><span class="p">,</span> <span class="n">baker_ssh</span><span class="p">)))</span>
-    <span class="n">table_values</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">tables_sections</span><span class="p">,</span> <span class="p">(</span><span class="n">able_table</span><span class="p">,</span> <span class="n">baker_table</span><span class="p">)))</span>
-
-    <span class="c"># add table-control parameters</span>
-    <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">options</span> <span class="ow">in</span> <span class="n">table_values</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
-            <span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
-
-    <span class="c"># add table-ssh parameters</span>
-    <span class="n">sshparameters</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">options</span> <span class="ow">in</span> <span class="n">ssh_values</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-        <span class="k">for</span> <span class="n">option</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
-            <span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">option</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="n">option</span><span class="p">])</span>
-        <span class="n">parameters</span> <span class="o">=</span> <span class="n">SSHParameters</span><span class="p">(</span><span class="o">**</span><span class="n">options</span><span class="p">)</span>
-        <span class="n">parameters</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">table</span>
-        <span class="n">sshparameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
-    
-    <span class="n">sshconnections</span> <span class="o">=</span> <span class="p">[</span><span class="n">MagicMock</span><span class="p">(</span><span class="n">spec</span><span class="o">=</span><span class="n">SSHConnectionBuilder</span><span class="p">)</span> <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">sshparameters</span><span class="p">]</span>
-    <span class="n">connections</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">ssh_values</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">sshconnections</span><span class="p">))</span>
-    
-    <span class="n">parser</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">section</span><span class="p">,</span>
-                       <span class="n">RotateUsurperConstants</span><span class="o">.</span><span class="n">tables_option</span><span class="p">,</span>
-                       <span class="n">tables</span><span class="p">)</span>
-
-    <span class="n">master</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
-    <span class="n">config_map</span> <span class="o">=</span> <span class="n">ConfigurationMap</span><span class="p">(</span><span class="s">&#39;fakefile&#39;</span><span class="p">)</span>
-    <span class="n">config_map</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">parser</span>
-    
-    <span class="n">previous_parameters</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">builder</span> <span class="o">=</span> <span class="n">RotateUsurperBuilder</span><span class="p">(</span><span class="n">master</span><span class="o">=</span><span class="n">master</span><span class="p">,</span>
-                                           <span class="n">config_map</span><span class="o">=</span><span class="n">config_map</span><span class="p">,</span>
-                                           <span class="n">previous_parameters</span><span class="o">=</span><span class="n">previous_parameters</span><span class="p">)</span>
-    <span class="c">#import pudb; pudb.set_trace()</span>
-    <span class="n">most_angles</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">table_arguments_generator</span><span class="o">.</span><span class="n">itervalues</span><span class="p">())</span>
-
-    <span class="c"># use the arguments generator with the most angles as the limit</span>
-    <span class="n">most_angles</span><span class="o">.</span><span class="n">infinite</span> <span class="o">=</span> <span class="bp">False</span>
-
-    <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">most_angles</span><span class="p">)):</span>
-        <span class="n">rotate_params</span> <span class="o">=</span> <span class="p">{}</span>
-        <span class="k">for</span> <span class="n">table</span><span class="p">,</span> <span class="n">params</span> <span class="ow">in</span> <span class="n">builder</span><span class="o">.</span><span class="n">table_arguments_generator</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">rotate_params</span><span class="p">[</span><span class="n">table</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span>
-            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-                <span class="n">rotate_params</span><span class="p">[</span><span class="n">table</span><span class="p">]</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-        <span class="k">print</span> <span class="n">rotate_params</span>
-    
-</pre></div>
+</pre></div></div></div>
 
     </div>
       

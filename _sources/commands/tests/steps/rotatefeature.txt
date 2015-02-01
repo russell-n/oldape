@@ -20,7 +20,7 @@ Scenario: Rotate Command is called with one table
         config = ConfigurationMap('test')
         config._parser = context.parser
     
-        context.arguments = RotateArgumentsGenerator(configuration=config,
+        context.arguments = RotateParameters(configuration=config,
                                              section='ape')
         context.connection = MagicMock()
         context.connection.identifier = 'table1'
@@ -83,7 +83,7 @@ Scenario: Rotate command is called and gives output
         config = ConfigurationMap('test')
         config._parser = context.parser
     
-        context.arguments = RotateArgumentsGenerator(configuration=config,
+        context.arguments = RotateParameters(configuration=config,
                                              section='ape')
     
         context.connection = MagicMock()

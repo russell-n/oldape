@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -150,7 +150,7 @@
 
 
 <span class="k">class</span> <span class="nc">BaseWifiCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseWifiCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basewificommand.BaseWifiCommand.html#apetools.commands.basewificommand.BaseWifiCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseWifiCommand"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basewificommand.html#apetools.commands.basewificommand.BaseWifiCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Base Wifi query command</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
@@ -178,7 +178,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">operating_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseWifiCommand.operating_system"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basewificommand.BaseWifiCommand.operating_system.html#apetools.commands.basewificommand.BaseWifiCommand.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseWifiCommand.operating_system"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basewificommand.html#apetools.commands.basewificommand.BaseWifiCommand.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the operating system for the device to query</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -187,14 +187,14 @@
     
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseWifiCommand.interface"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basewificommand.BaseWifiCommand.interface.html#apetools.commands.basewificommand.BaseWifiCommand.interface">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseWifiCommand.interface"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basewificommand.html#apetools.commands.basewificommand.BaseWifiCommand.interface">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the name of the wireless interface</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseWifiCommand.rssi"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basewificommand.BaseWifiCommand.rssi.html#apetools.commands.basewificommand.BaseWifiCommand.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseWifiCommand.rssi"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basewificommand.html#apetools.commands.basewificommand.BaseWifiCommand.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is dynamically generated</span>
 <span class="sd">        </span>
 <span class="sd">        :return: The rssi for the interface</span>
@@ -203,14 +203,14 @@
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">bitrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseWifiCommand.bitrate"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basewificommand.BaseWifiCommand.bitrate.html#apetools.commands.basewificommand.BaseWifiCommand.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseWifiCommand.bitrate"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basewificommand.html#apetools.commands.basewificommand.BaseWifiCommand.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the reported physical bit-rate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
     
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseWifiCommand.mac_address"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basewificommand.BaseWifiCommand.mac_address.html#apetools.commands.basewificommand.BaseWifiCommand.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseWifiCommand.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basewificommand.html#apetools.commands.basewificommand.BaseWifiCommand.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: MAC Address of the interface</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span>

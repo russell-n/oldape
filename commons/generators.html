@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -163,6 +163,10 @@
   <div class="section" id="generators">
 <h1>Generators<a class="headerlink" href="#generators" title="Permalink to this headline">¶</a></h1>
 <p>A module to hold the generators for the concatenator.</p>
+<p>&lt;&lt;name=&#8217;imports&#8217;, echo=False
+# python libraries
+import fnmatch
+import os</p>
 <div class="section" id="module-apetools.commons.generators">
 <span id="the-find-generator"></span><h2>The <cite>find</cite> Generator<a class="headerlink" href="#module-apetools.commons.generators" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="longtable docutils">
@@ -171,7 +175,7 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.find.html#apetools.commons.generators.find" title="apetools.commons.generators.find"><tt class="xref py py-obj docutils literal"><span class="pre">find</span></tt></a>(glob[,&nbsp;start])</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.find" title="apetools.commons.generators.find"><tt class="xref py py-obj docutils literal"><span class="pre">find</span></tt></a>(glob[,&nbsp;start])</td>
 <td>Matches all below cwd or start-directory</td>
 </tr>
 </tbody>
@@ -185,10 +189,10 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.html#apetools.commons.generators.ShallowFind" title="apetools.commons.generators.ShallowFind"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind</span></tt></a>(glob[,&nbsp;path])</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind" title="apetools.commons.generators.ShallowFind"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind</span></tt></a>(glob[,&nbsp;path])</td>
 <td>A finder of files that doesn&#8217;t traverse directories</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.path.html#apetools.commons.generators.ShallowFind.path" title="apetools.commons.generators.ShallowFind.path"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.path</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.path" title="apetools.commons.generators.ShallowFind.path"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.path</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -199,7 +203,7 @@
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.filenames.html#apetools.commons.generators.ShallowFind.filenames" title="apetools.commons.generators.ShallowFind.filenames"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.filenames</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.filenames" title="apetools.commons.generators.ShallowFind.filenames"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.filenames</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -210,10 +214,10 @@
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.matching_names.html#apetools.commons.generators.ShallowFind.matching_names" title="apetools.commons.generators.ShallowFind.matching_names"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.matching_names</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_names" title="apetools.commons.generators.ShallowFind.matching_names"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.matching_names</span></tt></a></td>
 <td>Added so count could be given to hortator</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.matching_count.html#apetools.commons.generators.ShallowFind.matching_count" title="apetools.commons.generators.ShallowFind.matching_count"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.matching_count</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_count" title="apetools.commons.generators.ShallowFind.matching_count"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.matching_count</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -224,7 +228,7 @@
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.reset.html#apetools.commons.generators.ShallowFind.reset" title="apetools.commons.generators.ShallowFind.reset"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.reset</span></tt></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.reset" title="apetools.commons.generators.ShallowFind.reset"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.reset</span></tt></a>()</td>
 <td>Sets all properties to None</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.ShallowFind.__iter__.html#apetools.commons.generators.ShallowFind.__iter__" title="apetools.commons.generators.ShallowFind.__iter__"><tt class="xref py py-obj docutils literal"><span class="pre">ShallowFind.__iter__</span></tt></a>()</td>
@@ -249,7 +253,7 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.shallow_find.html#apetools.commons.generators.shallow_find" title="apetools.commons.generators.shallow_find"><tt class="xref py py-obj docutils literal"><span class="pre">shallow_find</span></tt></a>(glob[,&nbsp;start])</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.shallow_find" title="apetools.commons.generators.shallow_find"><tt class="xref py py-obj docutils literal"><span class="pre">shallow_find</span></tt></a>(glob[,&nbsp;start])</td>
 <td>Matches only in one directory</td>
 </tr>
 </tbody>
@@ -263,7 +267,7 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.generators.concatenate.html#apetools.commons.generators.concatenate" title="apetools.commons.generators.concatenate"><tt class="xref py py-obj docutils literal"><span class="pre">concatenate</span></tt></a>(glob[,&nbsp;start])</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.concatenate" title="apetools.commons.generators.concatenate"><tt class="xref py py-obj docutils literal"><span class="pre">concatenate</span></tt></a>(glob[,&nbsp;start])</td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />

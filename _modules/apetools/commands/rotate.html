@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -154,29 +154,27 @@
 
 
 <span class="k">class</span> <span class="nc">RotateError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateError"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An error in the rotation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="c"># end class RotateError</span>
 
 
-<span class="k">class</span> <span class="nc">RotateArgumentsGenerator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateArgumentsGenerator"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.html#apetools.commands.rotate.RotateArgumentsGenerator">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    RotateArgumentsGenerator for the rotate command</span>
+<span class="k">class</span> <span class="nc">RotateParameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
+<div class="viewcode-block" id="RotateParameters"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    RotateParameters for the rotate command</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">section</span><span class="p">,</span> <span class="n">infinite</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.html#apetools.commands.rotate.RotateArgumentsGenerator.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configuration</span><span class="p">,</span> <span class="n">section</span><span class="p">):</span>
+<div class="viewcode-block" id="RotateParameters.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateParameters.html#apetools.commands.rotate.RotateParameters.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        RotateParameters constructor</span>
 
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `configuration`: Configuration Map with settings</span>
 <span class="sd">         - `section`: section header in configuration file</span>
-<span class="sd">         - `infinite`: If true, repeats last argument string forever</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">configuration</span> <span class="o">=</span> <span class="n">configuration</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">section</span> <span class="o">=</span> <span class="n">section</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">infinite</span> <span class="o">=</span> <span class="n">infinite</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_angles</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_argument_strings</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_values_string</span> <span class="o">=</span> <span class="bp">None</span>
@@ -186,7 +184,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">base_arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateArgumentsGenerator.base_arguments"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.base_arguments.html#apetools.commands.rotate.RotateArgumentsGenerator.base_arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateParameters.base_arguments"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.base_arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A Rotate BaseArguments object </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_base_arguments</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -195,7 +193,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">values_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateArgumentsGenerator.values_string"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.values_string.html#apetools.commands.rotate.RotateArgumentsGenerator.values_string">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateParameters.values_string"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.values_string">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: string of options with values</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_values_string</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -211,7 +209,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">booleans_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateArgumentsGenerator.booleans_string"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.booleans_string.html#apetools.commands.rotate.RotateArgumentsGenerator.booleans_string">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateParameters.booleans_string"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.booleans_string">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: string of boolean options </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_booleans_string</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -225,7 +223,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">angles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateArgumentsGenerator.angles"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.angles.html#apetools.commands.rotate.RotateArgumentsGenerator.angles">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateParameters.angles"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.angles">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        List of angles from the configuration</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_angles</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -235,92 +233,21 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">argument_strings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateArgumentsGenerator.argument_strings"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.argument_strings.html#apetools.commands.rotate.RotateArgumentsGenerator.argument_strings">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: list of argument strings for each angle</span>
+<div class="viewcode-block" id="RotateParameters.argument_strings"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.argument_strings">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Generates argument strings for each angle</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument_strings</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_argument_strings</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;{0}{1} {2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">booleans_string</span><span class="p">,</span>
-                                                <span class="bp">self</span><span class="o">.</span><span class="n">values_string</span><span class="p">,</span>
-                                                <span class="n">angle</span><span class="p">)</span>
-                                                <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">]</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_argument_strings</span>
-
-    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__len__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__len__.html#apetools.commands.rotate.RotateArgumentsGenerator.__len__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: number of angles</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__lt__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__lt__.html#apetools.commands.rotate.RotateArgumentsGenerator.__lt__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &lt; operator</span>
-
-<span class="sd">        :return: True if has fewer angles than other</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__le__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__le__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__le__.html#apetools.commands.rotate.RotateArgumentsGenerator.__le__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &lt;= operator</span>
-
-<span class="sd">        :param:</span>
-
-<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
-<span class="sd">        :return: True if have same or fewer angles than other</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__eq__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__eq__.html#apetools.commands.rotate.RotateArgumentsGenerator.__eq__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        = operator</span>
-
-<span class="sd">        :param:</span>
-
-<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
-<span class="sd">        :return: True if have same amount of angles as other</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__ne__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__ne__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__ne__.html#apetools.commands.rotate.RotateArgumentsGenerator.__ne__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        != operator</span>
-
-<span class="sd">        :param:</span>
-
-<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
-<span class="sd">        :return: True if count of angles differs from other&#39;s count</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__gt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__gt__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__gt__.html#apetools.commands.rotate.RotateArgumentsGenerator.__gt__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &gt; operator</span>
-
-<span class="sd">        :param:</span>
-
-<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
-<span class="sd">        :return: True if count of  angles are greater than the other&#39;s count</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">__ge__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateArgumentsGenerator.__ge__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateArgumentsGenerator.__ge__.html#apetools.commands.rotate.RotateArgumentsGenerator.__ge__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        &gt;= operator</span>
-
-<span class="sd">        :param:</span>
-
-<span class="sd">         - `other`: an other RotateArgumentsGenerator</span>
-<span class="sd">        :return: True if count of angles is greater than or equal to other&#39;s count</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">angles</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="s">&quot;{0}{1} {2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">booleans_string</span><span class="p">,</span>
+                                        <span class="bp">self</span><span class="o">.</span><span class="n">values_string</span><span class="p">,</span>
+                                        <span class="n">angle</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">RotateCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="RotateCommand"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateCommand"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to issue a remote &#39;rotate&#39; command (older version for pre-Cameron turntables)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connections</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateCommand.__init__"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `connections`: list of connections to turntable controls</span>
@@ -334,7 +261,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">killers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateCommand.killers"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.killers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateCommand.killers"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand.killers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: rotate process killer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_killers</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>            
@@ -344,7 +271,7 @@
 
 
     <span class="k">def</span> <span class="nf">kill_process</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateCommand.kill_process"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.kill_process">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateCommand.kill_process"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand.kill_process">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Kills rotate processes over the connection</span>
 
 <span class="sd">         * If the default level fails, tries a -9</span>
@@ -361,7 +288,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">120</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateCommand.rotate"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.rotate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateCommand.rotate"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand.rotate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        sends the arguments to the connection</span>
 
 <span class="sd">        :param:</span>
@@ -432,7 +359,7 @@
         <span class="k">return</span> <span class="s">&quot;angle_{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateCommand.check_errors"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateCommand.check_errors"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `line`: line of output from the rotate command</span>
@@ -447,12 +374,8 @@
 <span class="c"># end class RotateCommand</span>
 
 
-<span class="c"># this is for the builder to set the name of the parameters</span>
-<span class="n">ROTATE_USURPER_NAME</span> <span class="o">=</span> <span class="s">&#39;rotate_usurper&#39;</span></div></div>
-
-
-<span class="k">class</span> <span class="nc">RotateCommandUsurper</span><span class="p">(</span><span class="n">RotateCommand</span><span class="p">):</span>
-<div class="viewcode-block" id="RotateCommandUsurper"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommandUsurper.html#apetools.commands.rotate.RotateCommandUsurper">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">RotateCommandUsurper</span><span class="p">(</span><span class="n">RotateCommand</span><span class="p">):</span></div></div>
+<div class="viewcode-block" id="RotateCommandUsurper"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommandUsurper">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Command to rotate turntables</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -468,7 +391,7 @@
         <span class="n">output_string</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
         
         <span class="k">for</span> <span class="n">connection</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connections</span><span class="p">:</span>
-            <span class="n">arguments</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">rotate_usurper</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">connection</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span>
+            <span class="n">arguments</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">turntable</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">connection</span><span class="o">.</span><span class="n">identifier</span><span class="p">]</span>
             <span class="n">output_string</span> <span class="o">+=</span> <span class="s">&quot;{0}_{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
                                               <span class="s">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">arguments</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 
@@ -477,35 +400,38 @@
         <span class="k">return</span> <span class="n">output_string</span>
 
     <span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">600</span><span class="p">):</span></div>
-<div class="viewcode-block" id="RotateCommandUsurper.rotate"><a class="viewcode-back" href="../../../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommandUsurper.html#apetools.commands.rotate.RotateCommandUsurper.rotate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="RotateCommandUsurper.rotate"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommandUsurper.rotate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Assumes that the command will block until done and nothing unusual happens</span>
 
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `connection`: connection to the table (ssh)</span>
 <span class="sd">         - `arguments`: string to pass to the command</span>
-
-<span class="sd">        :raise: CommandError if error-level message is emitted</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;rotating {0} with arguments &quot;{1}&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">connection</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
-                                                                    <span class="n">arguments</span><span class="p">))</span>
         <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">arguments</span><span class="p">,</span>
                                            <span class="n">timeout</span><span class="p">)</span>
         
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">stdout</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
 
-        <span class="n">crash</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">stderr</span><span class="p">:</span>
-            <span class="k">if</span> <span class="s">&quot;ERROR&quot;</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
-                <span class="n">crash</span> <span class="o">=</span> <span class="bp">True</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">))</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">crash</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="s">&quot;Error with turntable&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log_error</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">return</span>
-</pre></div></div></div>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
+    <span class="kn">from</span> <span class="nn">apetools.connections.sshconnection</span> <span class="kn">import</span> <span class="n">SSHConnection</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&quot;pogo2&quot;</span><span class="p">,</span> <span class="s">&quot;root&quot;</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">RotateCommand</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Rotate to 90 degrees&quot;</span>
+    <span class="n">r</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Rotate to 180 Degrees&quot;</span>
+    <span class="n">r</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Rotate to 0 degrees&quot;</span>
+    <span class="n">r</span><span class="p">()</span>
+</pre></div>
 
     </div>
       

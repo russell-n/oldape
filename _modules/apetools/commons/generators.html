@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -138,17 +138,12 @@
     <div class="col-md-12">
       
   <h1>Source code for apetools.commons.generators</h1><div class="highlight"><pre>
-<span class="c"># python libraries</span>
-<span class="kn">import</span> <span class="nn">fnmatch</span>
-<span class="kn">import</span> <span class="nn">os</span>
-
-
 <span class="n">WRITEABLE</span> <span class="o">=</span> <span class="s">&#39;w&#39;</span>
 <span class="n">EOSection</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
 
 
 <span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="find"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.find.html#apetools.commons.generators.find">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="find"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.find">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Matches all below cwd or start-directory</span>
 <span class="sd">    </span>
 <span class="sd">    :param:</span>
@@ -167,7 +162,7 @@
 
 
 <span class="k">class</span> <span class="nc">ShallowFind</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ShallowFind"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.html#apetools.commons.generators.ShallowFind">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A finder of files that doesn&#39;t traverse directories</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glob</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -186,7 +181,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.path"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.path.html#apetools.commons.generators.ShallowFind.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.path"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the path to the directory to search</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -195,7 +190,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.filenames"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.filenames.html#apetools.commons.generators.ShallowFind.filenames">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.filenames"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.filenames">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: all files found in the path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -204,7 +199,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">matching_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.matching_names"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.matching_names.html#apetools.commons.generators.ShallowFind.matching_names">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.matching_names"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_names">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Added so count could be given to hortator</span>
 <span class="sd">        </span>
 <span class="sd">        :return: list of matching names</span>
@@ -215,7 +210,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">matching_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.matching_count"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.matching_count.html#apetools.commons.generators.ShallowFind.matching_count">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.matching_count"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_count">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: count of matching names</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matching_count</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -223,7 +218,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matching_count</span>
     
     <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ShallowFind.reset"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.reset.html#apetools.commons.generators.ShallowFind.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.reset"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets all properties to None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span> <span class="o">=</span> <span class="bp">None</span>
@@ -243,7 +238,7 @@
 
 
 <span class="k">def</span> <span class="nf">shallow_find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="shallow_find"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.shallow_find.html#apetools.commons.generators.shallow_find">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="shallow_find"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.shallow_find">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Matches only in one directory</span>
 <span class="sd">    </span>
 <span class="sd">    :param:</span>
@@ -259,7 +254,7 @@
 
 
 <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="concatenate"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.concatenate.html#apetools.commons.generators.concatenate">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="concatenate"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.concatenate">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param:</span>
 
 <span class="sd">     - `glob`: A file-glob to match interesting files.</span>

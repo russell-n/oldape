@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -153,13 +153,8 @@
 <span class="k">class</span> <span class="nc">Sleep</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
 <div class="viewcode-block" id="Sleep"><a class="viewcode-back" href="../../../tools/api/apetools.tools.sleep.Sleep.html#apetools.tools.sleep.Sleep">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The sleep provides a verbose sleep.</span>
-
-<span class="sd">    :param:</span>
-
-<span class="sd">     - `sleep_time`: total time to sleep</span>
-<span class="sd">     - `intervals`: reporting intervals</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_time</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">intervals</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_time</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 <div class="viewcode-block" id="Sleep.__init__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.sleep.Sleep.html#apetools.tools.sleep.Sleep.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
@@ -179,11 +174,9 @@
             <span class="n">sleep_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sleep_time</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">MESSAGE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">))</span>
-        <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-        <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">sleep_time</span>
-        <span class="k">while</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">end</span><span class="p">:</span>
-            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Waking up in {0:.1f} seconds.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()))</span>
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">sleep_time</span><span class="p">)):</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Wake up in {0} seconds.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sleep_time</span> <span class="o">-</span> <span class="n">t</span><span class="p">))</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_time</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>

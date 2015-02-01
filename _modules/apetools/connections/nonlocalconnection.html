@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -156,13 +156,13 @@
 
 
 <span class="k">class</span> <span class="nc">NonLocalConnection</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span>
-<div class="viewcode-block" id="NonLocalConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A non-local connection is the base for non-local connections</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command_prefix</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">lock</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> 
-<div class="viewcode-block" id="NonLocalConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.__init__">[docs]</a>                 <span class="n">operating_system</span><span class="o">=</span><span class="n">enumerations</span><span class="o">.</span><span class="n">OperatingSystem</span><span class="o">.</span><span class="n">linux</span><span class="p">,</span>
+<div class="viewcode-block" id="NonLocalConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.__init__">[docs]</a>                 <span class="n">operating_system</span><span class="o">=</span><span class="n">enumerations</span><span class="o">.</span><span class="n">OperatingSystem</span><span class="o">.</span><span class="n">linux</span><span class="p">,</span>
                  <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">library_path</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
                  <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -184,23 +184,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">lock</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="n">path</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">library_path</span> <span class="o">=</span> <span class="n">library_path</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="n">identifier</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">identifier</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">operating_system</span> <span class="o">=</span> <span class="n">operating_system</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">exc_info</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
     <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NonLocalConnection.identifier"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.identifier">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        an alternative identifier </span>
-<span class="sd">        Override to give a default id (see SSHConnection.identifier)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
-
-    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">lock</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NonLocalConnection.lock"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.lock">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection.lock"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.lock">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a re-entrant lock</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lock</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -209,7 +201,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NonLocalConnection.queue"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection.queue"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: Queue.Queue</span>
 <span class="sd">        :return: the local Queue</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -218,7 +210,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span>
 
     <span class="k">def</span> <span class="nf">add_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>        </div>
-<div class="viewcode-block" id="NonLocalConnection.add_path"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.add_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection.add_path"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.add_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Prepends any path additions passed in at instantiation to the command</span>
 
 <span class="sd">        :param:</span>
@@ -234,7 +226,7 @@
         <span class="k">return</span> <span class="n">command</span>
 
     <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NonLocalConnection._procedure_call"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection._procedure_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection._procedure_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is provided so it can be overriden by subclasses.</span>
 <span class="sd">        It is what&#39;s called directly by __getattr__ to support LocalConnection.command() calls</span>
 
@@ -244,7 +236,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NonLocalConnection._main"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection._main"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `command`: the command string to execute</span>
@@ -268,7 +260,7 @@
         <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">),</span><span class="n">StringIO</span><span class="p">(</span> <span class="s">&quot;&#39;{0} {1}&#39; timed out&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">)))</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NonLocalConnection.run"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection.run"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs the command in a thread and puts the output and error on the queue</span>
 
 <span class="sd">        :param:</span>
@@ -283,7 +275,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NonLocalConnection.start"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NonLocalConnection.start"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.NonLocalConnection.html#apetools.connections.nonlocalconnection.NonLocalConnection.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        starts run in a thread</span>
 
 <span class="sd">        :return: the thread object</span>
@@ -330,18 +322,18 @@
 
 
 <span class="k">class</span> <span class="nc">DummyConnection</span><span class="p">(</span><span class="n">NonLocalConnection</span><span class="p">):</span></div>
-<div class="viewcode-block" id="DummyConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DummyConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A dummy connection is used to fake connections in commands.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="DummyConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">DummyConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="DummyConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">DummyConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">main_string</span> <span class="o">=</span> <span class="s">&quot;command={0}, arguments={1}, timeout={2}&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run_string</span> <span class="o">=</span> <span class="s">&quot;command={0}, arguments={1}&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="s">&#39;DummyConnection&#39;</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span></div>
-<div class="viewcode-block" id="DummyConnection._main"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DummyConnection._main"><a class="viewcode-back" href="../../../documentation/developer/connections/apetools.connections.nonlocalconnection.DummyConnection.html#apetools.connections.nonlocalconnection.DummyConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does nothing.</span>
 
 <span class="sd">        :return: OutputError with EOF in both</span>
@@ -375,7 +367,7 @@
                                           <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source_string</span><span class="p">)))</span>
         
     <span class="k">def</span> <span class="nf">test_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestDummyConnection.test_call"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.TestDummyConnection.test_call.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestDummyConnection.test_call"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.nonlocalconnection.TestDummyConnection.test_call.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Can you call it and get no output or errors?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input</span><span class="p">()</span>
@@ -391,7 +383,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">test_dot_notation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestDummyConnection.test_dot_notation"><a class="viewcode-back" href="../../../connections/api/apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestDummyConnection.test_dot_notation"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation.html#apetools.connections.nonlocalconnection.TestDummyConnection.test_dot_notation">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the dot-notation work?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">arguments</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">random_input</span><span class="p">()</span>

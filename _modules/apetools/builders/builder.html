@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -185,7 +185,7 @@
 
 
 <span class="k">class</span> <span class="nc">GeneratorHolder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="GeneratorHolder"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.GeneratorHolder.html#apetools.builders.builder.GeneratorHolder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="GeneratorHolder"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.GeneratorHolder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder of generators</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">generator</span><span class="p">,</span> <span class="n">count</span><span class="p">):</span>
@@ -210,15 +210,15 @@
 
 
 <span class="k">class</span> <span class="nc">BuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div></div>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BuilderEnum"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.BuilderEnum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to hold constants for the builder</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
     <span class="n">repetition</span> <span class="o">=</span> <span class="s">&#39;repetition&#39;</span>
 
 
-<span class="k">class</span> <span class="nc">Builder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.html#apetools.builders.builder.Builder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">Builder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
+<div class="viewcode-block" id="Builder"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A builder builds objects</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maps</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -251,7 +251,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">saved_semaphore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.saved_semaphore"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.saved_semaphore.html#apetools.builders.builder.Builder.saved_semaphore">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.saved_semaphore"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.saved_semaphore">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: semaphore allowing increase in size (default=0)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_saved_semaphore</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -260,7 +260,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">semaphore</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.semaphore"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.semaphore.html#apetools.builders.builder.Builder.semaphore">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.semaphore"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.semaphore">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: semaphore with size incremented by one</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">saved_semaphore</span><span class="o">.</span><span class="n">increment_size</span><span class="p">()</span>
@@ -268,7 +268,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.events"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.events.html#apetools.builders.builder.Builder.events">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.events"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.events">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: EventHolder to hold events</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_events</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -287,7 +287,7 @@
 
     <span class="nd">@parameters.setter</span>
     <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_parameters</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.parameters"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.parameters.html#apetools.builders.builder.Builder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.parameters"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `new_parameters`: a list of parameter named tuples</span>
@@ -299,7 +299,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">repetitions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.repetitions"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.repetitions.html#apetools.builders.builder.Builder.repetitions">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.repetitions"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.repetitions">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of named tuples giving repetitions parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repetitions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -312,7 +312,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_repetitions</span>
 
     <span class="k">def</span> <span class="nf">operation_setup_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_map</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Builder.operation_setup_builder"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.operation_setup_builder.html#apetools.builders.builder.Builder.operation_setup_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.operation_setup_builder"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.operation_setup_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: builder for the operation</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation_setup_builder</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -324,7 +324,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation_setup_builder</span>
 
     <span class="k">def</span> <span class="nf">operation_teardown_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_map</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Builder.operation_teardown_builder"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.operation_teardown_builder.html#apetools.builders.builder.Builder.operation_teardown_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.operation_teardown_builder"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.operation_teardown_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: builder for the operation teardown</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation_teardown_builder</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -337,7 +337,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operation_teardown_builder</span>
 
     <span class="k">def</span> <span class="nf">setup_test_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_map</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Builder.setup_test_builder"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.setup_test_builder.html#apetools.builders.builder.Builder.setup_test_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.setup_test_builder"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.setup_test_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: builder for the test setup</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setup_test_builder</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -349,7 +349,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_setup_test_builder</span>
 
     <span class="k">def</span> <span class="nf">execute_test_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_map</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Builder.execute_test_builder"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.execute_test_builder.html#apetools.builders.builder.Builder.execute_test_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.execute_test_builder"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.execute_test_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: builder for the test executor</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_test_builder</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -361,7 +361,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_execute_test_builder</span>
 
     <span class="k">def</span> <span class="nf">teardown_test_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_map</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Builder.teardown_test_builder"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.teardown_test_builder.html#apetools.builders.builder.Builder.teardown_test_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.teardown_test_builder"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.teardown_test_builder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: builder for the test teardown</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_teardown_test_builder</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -374,7 +374,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.nodes"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.nodes.html#apetools.builders.builder.Builder.nodes">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.nodes"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.nodes">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: dictionary of id:node-device pairs</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_nodes</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -384,7 +384,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">thread_nodes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.thread_nodes"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.thread_nodes.html#apetools.builders.builder.Builder.thread_nodes">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.thread_nodes"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.thread_nodes">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: dictionary of id:node-device pairs to be used in threads</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_nodes</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -393,7 +393,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_nodes</span>
 
     <span class="k">def</span> <span class="nf">build_operator</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_map</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Builder.build_operator"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.build_operator.html#apetools.builders.builder.Builder.build_operator">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.build_operator"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.build_operator">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Put here so operators property can catch exceptions</span>
 <span class="sd">        and prevent killing later operators</span>
 
@@ -462,7 +462,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">operators</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.operators"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.operators.html#apetools.builders.builder.Builder.operators">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.operators"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.operators">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :yield: test operators</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">config_map</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">:</span>
@@ -476,7 +476,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">hortator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.hortator"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.hortator.html#apetools.builders.builder.Builder.hortator">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.hortator"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.hortator">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The Hortator for the test operators</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hortator</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -488,7 +488,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">tpc_device</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.tpc_device"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.tpc_device.html#apetools.builders.builder.Builder.tpc_device">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.tpc_device"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.tpc_device">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This only creates a new device the first time.</span>
 
 <span class="sd">        :return: device for the traffic pc</span>
@@ -499,7 +499,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">storage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Builder.storage"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.storage.html#apetools.builders.builder.Builder.storage">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.storage"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.storage">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `folder_name`: The name of the output folder for data.</span>
@@ -521,7 +521,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span>
 
     <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Builder.reset"><a class="viewcode-back" href="../../../builders/api/apetools.builders.builder.Builder.reset.html#apetools.builders.builder.Builder.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Builder.reset"><a class="viewcode-back" href="../../../documentation/developer/api/builders_api/apetools.builders.builder.html#apetools.builders.builder.Builder.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: parameters reset to None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">None</span>

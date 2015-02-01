@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -165,7 +165,7 @@
 
 
 <span class="k">class</span> <span class="nc">BaseDevice</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.html#apetools.devices.basedevice.BaseDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An abstract base class for devices</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
@@ -199,7 +199,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.connection"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.connection.html#apetools.devices.basedevice.BaseDevice.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.connection"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: A connection to the device. </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -208,28 +208,28 @@
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">bitrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.bitrate"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.bitrate.html#apetools.devices.basedevice.BaseDevice.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.bitrate"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the current bitrate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> 
 
     <span class="nd">@abstractmethod</span></div>
     <span class="k">def</span> <span class="nf">disable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.disable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.disable_wifi.html#apetools.devices.basedevice.BaseDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.disable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disable the WiFi Radio</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
 
     <span class="nd">@abstractmethod</span></div>
     <span class="k">def</span> <span class="nf">enable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.enable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.enable_wifi.html#apetools.devices.basedevice.BaseDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.enable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable the WiFi radio.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">wifi_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.wifi_info"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.wifi_info.html#apetools.devices.basedevice.BaseDevice.wifi_info">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.wifi_info"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.wifi_info">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: wifi info summary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">csv</span><span class="p">:</span>
@@ -247,7 +247,7 @@
     
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.address.html#apetools.devices.basedevice.BaseDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.address"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: String</span>
 <span class="sd">        :return: the address (presumably) IP for the test-interface for the device</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -255,49 +255,49 @@
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.ssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.ssid.html#apetools.devices.basedevice.BaseDevice.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.ssid"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the SSID of the attached AP</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.bssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.bssid.html#apetools.devices.basedevice.BaseDevice.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.bssid"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the MAC address of the attached AP</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bssid</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">channel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.channel"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.channel.html#apetools.devices.basedevice.BaseDevice.channel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.channel"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.channel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the channel for the wifi connection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_channel</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">noise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.noise"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.noise.html#apetools.devices.basedevice.BaseDevice.noise">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.noise"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.noise">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the current reported noise for the wifi channel</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_noise</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.mac_address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.mac_address.html#apetools.devices.basedevice.BaseDevice.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the mac address of the device</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.rssi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.rssi.html#apetools.devices.basedevice.BaseDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.rssi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the RSSI for the wifi signal</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rssi</span>
     
     <span class="nd">@abstractmethod</span></div>
     <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseDevice.log"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.log.html#apetools.devices.basedevice.BaseDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.log"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Send a message to the device&#39;s log.</span>
 
 <span class="sd">        :param:</span>
@@ -307,7 +307,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">poll</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="BaseDevice.poll"><a class="viewcode-back" href="../../../devices/api/apetools.devices.basedevice.BaseDevice.poll.html#apetools.devices.basedevice.BaseDevice.poll">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseDevice.poll"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.basedevice.html#apetools.devices.basedevice.BaseDevice.poll">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: rssi,noise,bitrate</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="s">&quot;{0},{1},{2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rssi</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">noise</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">bitrate</span><span class="o">.</span><span class="n">rstrip</span><span class="p">())</span>

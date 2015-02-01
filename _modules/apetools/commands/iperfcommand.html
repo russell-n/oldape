@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -157,14 +157,14 @@
 
 
 <span class="k">class</span> <span class="nc">IperfError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfError"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfError.html#apetools.commands.iperfcommand.IperfError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfError"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfError.html#apetools.commands.iperfcommand.IperfError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An IperfError indicates a connection problem between the client and server.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="c"># end class IperfError</span>
 
 
 <span class="k">class</span> <span class="nc">IperfCommandError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommandError"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommandError.html#apetools.commands.iperfcommand.IperfCommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommandError"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommandError.html#apetools.commands.iperfcommand.IperfCommandError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    an error to raise if the settings are unknown</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="c"># end class IperfCommandError</span>
@@ -184,11 +184,11 @@
 
 
 <span class="k">class</span> <span class="nc">IperfCommand</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An Iperf Command executes iperf commands</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">role</span><span class="p">,</span> <span class="n">base_filename</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">subdirectory</span><span class="o">=</span><span class="s">&quot;raw_iperf&quot;</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.__init__"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `parameters`: An IperfParameter to use</span>
@@ -216,7 +216,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">get_output_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.get_output_filename"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.get_output_filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.get_output_filename"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.get_output_filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns self.last_filename extended by the StorageOutput</span>
 
 <span class="sd">         * This is another ipad hack</span>
@@ -235,7 +235,7 @@
 
     <span class="nd">@parameters.setter</span>
     <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand.parameters"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.parameters"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the parameters and re-sets is_daemon</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_daemon</span> <span class="o">=</span> <span class="bp">None</span>
@@ -244,7 +244,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">is_daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand.is_daemon"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.is_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.is_daemon"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.is_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If this is run is a server, will it be a daemon?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_daemon</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -253,7 +253,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand.parser"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.parser">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.parser"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.parser">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: SumParser pipeline (if this is the client)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parser</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -275,7 +275,7 @@
 
     <span class="nd">@output.setter</span>
     <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand.output"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.output"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `out`: an output pipeline object</span>
@@ -290,7 +290,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand.now"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.now">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.now"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.now">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: time-function to check for timeouts</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_now</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -301,7 +301,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_now</span>
 
     <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">node_type</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.filename"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.filename"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `filename`: base filename to add prefix to</span>
@@ -334,7 +334,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">max_time</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommand.max_time"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.max_time">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.max_time"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.max_time">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the maximum amount of time to run</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -344,7 +344,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_time</span>
     
     <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.validate"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.validate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.validate"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.validate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `line`: a line of output</span>
@@ -367,14 +367,14 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">abort</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.abort"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.abort">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.abort"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.abort">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: self.stop is True      </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">stop</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">send_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.send_line"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.send_line">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.send_line"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.send_line">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends the line to the pipeline output. Traps StopIteration exceptions</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
@@ -385,7 +385,7 @@
         <span class="k">return</span>
         
     <span class="k">def</span> <span class="nf">run_daemon</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.run_daemon"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.run_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.run_daemon"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.run_daemon">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the iperf command as a daemon, redirecting output to a file and detaching</span>
 
 <span class="sd">        * This was specifically created for the ipad, probably won&#39;t work otherwise</span>
@@ -445,7 +445,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.run"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.run"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Run the iperf command and send to the output</span>
 
 <span class="sd">        :param:</span>
@@ -514,7 +514,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">server</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommand.start"><a class="viewcode-back" href="../../../commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommand.start"><a class="viewcode-back" href="../../../documentation/developer/commands/api/apetools.commands.iperfcommand.IperfCommand.html#apetools.commands.iperfcommand.IperfCommand.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This runs the iperf command in a thread so it won&#39;t block execution.</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>

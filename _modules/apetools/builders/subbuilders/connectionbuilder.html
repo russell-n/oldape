@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -151,51 +151,42 @@
 
 <span class="c">#SSHParameters = namedtuple(&quot;SSHParameters&quot;, &quot;hostname username password&quot;.split())</span>
 <span class="k">class</span> <span class="nc">SSHParameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHParameters"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHParameters"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    To make the parameters optional this is changed to a class</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHParameters.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SSHParameters.__init__"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="n">hostname</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">username</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="n">password</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="n">identifier</span>
-        <span class="k">return</span>
-
-    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SSHParameters.__eq__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHParameters.__eq__.html#apetools.builders.subbuilders.connectionbuilder.SSHParameters.__eq__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Checks that all the attributes are the same</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">properties</span> <span class="o">=</span> <span class="s">&#39;hostname username password identifier&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-        <span class="k">return</span> <span class="nb">all</span><span class="p">([</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prop</span><span class="p">)</span> <span class="o">==</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">prop</span><span class="p">)</span> <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">])</span>
     
 
 
 <span class="k">class</span> <span class="nc">ConnectionBuilderBase</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="ConnectionBuilderBase"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase">[docs]</a>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
+<div class="viewcode-block" id="ConnectionBuilderBase"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase">[docs]</a>    <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
-<div class="viewcode-block" id="ConnectionBuilderBase.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
+<div class="viewcode-block" id="ConnectionBuilderBase.__init__"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.__init__">[docs]</a>        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ConnectionBuilderBase.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ConnectionBuilderBase.connection"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.html#apetools.builders.subbuilders.connectionbuilder.ConnectionBuilderBase.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The built connection.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>        
 
 
 <span class="k">class</span> <span class="nc">DummyConnectionBuilder</span><span class="p">(</span><span class="n">ConnectionBuilderBase</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="DummyConnectionBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DummyConnectionBuilder"><a class="viewcode-back" href="../../../../documentation/developer/connections/1/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Builds a Dummy Connection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="DummyConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">DummyConnectionBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="DummyConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../documentation/developer/connections/1/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">DummyConnectionBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="DummyConnectionBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DummyConnectionBuilder.connection"><a class="viewcode-back" href="../../../../documentation/developer/connections/1/apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.DummyConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The DummyConnection</span>
 
 <span class="sd">        :return: DummyConnection object</span>
@@ -206,11 +197,11 @@
 
 
 <span class="k">class</span> <span class="nc">AdbShellConnectionBuilder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="AdbShellConnectionBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellConnectionBuilder"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use this to get an adb shell connection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="AdbShellConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        AdbShellConnectionBuilder Constructor</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -223,7 +214,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="AdbShellConnectionBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellConnectionBuilder.connection"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The ADB Shell Connection</span>
 <span class="sd">        </span>
 <span class="sd">        :rtype: ADBShellConnection</span>
@@ -237,11 +228,11 @@
 
 
 <span class="k">class</span> <span class="nc">SSHConnectionBuilder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="SSHConnectionBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Use this to get an ssh connection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `parameters`: An object with `hostname`, `username`, and `password` attributes</span>
@@ -256,21 +247,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_library_path</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
     <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.identifier"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.identifier">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        :return: Connection identifier</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
-
-    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">operating_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.operating_system"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.operating_system"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: parameters.operating_system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -283,7 +264,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">library_path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.library_path"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.library_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.library_path"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.library_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: LD_LIBRARY_PATH value(s) or None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_library_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -295,7 +276,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.path"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.path"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: additions to the PATH</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -304,10 +285,9 @@
             <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span>
-    
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">hostname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.hostname"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.hostname">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.hostname"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.hostname">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: StringType</span>
 <span class="sd">        :return: The hostname (I.P.) to connect to</span>
 <span class="sd">        :raise: ConfigurationError if not set</span>
@@ -326,7 +306,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">username</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.username"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.username">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.username"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.username">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: StringType</span>
 <span class="sd">        :return: user login name</span>
 <span class="sd">        :raise: ConfigurationError if not found</span>
@@ -345,7 +325,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">password</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.password"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.password">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.password"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.password">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the password for the connection (sets to None if not given in the parameters)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_password</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -358,7 +338,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnectionBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnectionBuilder.connection"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.SSHConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: an SSHConnection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -366,7 +346,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="o">=</span> <span class="n">sshconnection</span><span class="o">.</span><span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">hostname</span><span class="p">,</span>
                                                            <span class="n">username</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
                                                            <span class="n">password</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">,</span>
-                                                           <span class="n">identifier</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
                                                            <span class="n">path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
                                                            <span class="n">library_path</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">library_path</span><span class="p">,</span>
                                                            <span class="n">operating_system</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">operating_system</span><span class="p">)</span>
@@ -375,11 +354,11 @@
 
 
 <span class="k">class</span> <span class="nc">AdbShellSshConnectionBuilder</span><span class="p">(</span><span class="n">SSHConnectionBuilder</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="AdbShellSshConnectionBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellSshConnectionBuilder"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to build an adb-shell connection over ssh</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="AdbShellSshConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellSshConnectionBuilder.__init__"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `parameters`: An object with `hostname`, `username`, and `password` attributes</span>
@@ -390,7 +369,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">serial_number</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="AdbShellSshConnectionBuilder.serial_number"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.serial_number">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellSshConnectionBuilder.serial_number"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.serial_number">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A serial number for the USB connection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_serial_number</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -400,7 +379,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="AdbShellSshConnectionBuilder.connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="AdbShellSshConnectionBuilder.connection"><a class="viewcode-back" href="../../../../documentation/developer/connections/api/apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.html#apetools.builders.subbuilders.connectionbuilder.AdbShellSshConnectionBuilder.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: ADBShellSSHConnection instance</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -429,7 +408,67 @@
                        <span class="n">ConnectionBuilderTypes</span><span class="o">.</span><span class="n">adbshellssh</span><span class="p">:</span> <span class="n">AdbShellSshConnectionBuilder</span><span class="p">,</span>
                        <span class="n">ConnectionBuilderTypes</span><span class="o">.</span><span class="n">adbshell</span><span class="p">:</span> <span class="n">AdbShellConnectionBuilder</span><span class="p">,</span>
                        <span class="n">ConnectionBuilderTypes</span><span class="o">.</span><span class="n">dummy</span><span class="p">:</span> <span class="n">DummyConnectionBuilder</span><span class="p">}</span>
-</pre></div>
+
+
+<span class="c">#python standard library</span>
+<span class="kn">import</span> <span class="nn">unittest</span>
+
+<span class="c">#third-party</span>
+<span class="kn">from</span> <span class="nn">mock</span> <span class="kn">import</span> <span class="n">MagicMock</span>
+<span class="kn">from</span> <span class="nn">nose.tools</span> <span class="kn">import</span> <span class="n">raises</span>
+
+
+<span class="k">class</span> <span class="nc">BadChild</span><span class="p">(</span><span class="n">ConnectionBuilderBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BadChild</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+<span class="k">class</span> <span class="nc">GoodChild</span><span class="p">(</span><span class="n">ConnectionBuilderBase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">GoodChild</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+    
+<span class="k">class</span> <span class="nc">TestConnectionBuilderBase</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">test_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestConnectionBuilderBase.test_parameters"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_parameters.html#apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does ConnectionBuilderBase take a `parameters` argument on construction?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">GoodChild</span><span class="p">(</span><span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">builder</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="nd">@raises</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">)</span></div>
+    <span class="k">def</span> <span class="nf">test_no_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestConnectionBuilderBase.test_no_connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_no_connection.html#apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilderBase.test_no_connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Does a child that hasn&#39;t implemented the connection raise an error?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">BadChild</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="k">return</span>
+
+
+<span class="k">class</span> <span class="nc">TestDummyConnectionBuilder</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span></div>
+    <span class="k">def</span> <span class="nf">test_connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestDummyConnectionBuilder.test_connection"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestDummyConnectionBuilder.test_connection.html#apetools.builders.subbuilders.connectionbuilder.TestDummyConnectionBuilder.test_connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Is the connection a Dummy Connection?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="n">DummyConnectionBuilder</span><span class="p">(</span><span class="bp">None</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">assertIsInstance</span><span class="p">(</span><span class="n">builder</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">nonlocalconnection</span><span class="o">.</span><span class="n">DummyConnection</span><span class="p">)</span>        
+        <span class="k">return</span>
+
+
+<span class="k">class</span> <span class="nc">TestConnectionBuilders</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span></div>
+    <span class="k">def</span> <span class="nf">test_valid_keys</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TestConnectionBuilders.test_valid_keys"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilders.test_valid_keys.html#apetools.builders.subbuilders.connectionbuilder.TestConnectionBuilders.test_valid_keys">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Are all the keys in the ConnectionBuilderTypes?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">connection_type</span> <span class="ow">in</span> <span class="n">connection_builders</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">ConnectionBuilderTypes</span><span class="p">,</span> <span class="n">connection_type</span><span class="p">))</span>
+        <span class="k">return</span>
+</pre></div></div>
 
     </div>
       

@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
     <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
-    <link rel="next" title="The Network Topology" href="network_topology.html" />
+    <link rel="next" title="Sleep Configuration" href="sleep.html" />
     <link rel="prev" title="PowerOn Configuration" href="poweron.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -107,10 +107,7 @@
       role="menu"
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">Iperf Configuration</a><ul>
-<li><a class="reference internal" href="#basics">Basics</a></li>
-<li><a class="reference internal" href="#directions">Directions</a></li>
 <li><a class="reference internal" href="#the-common-options">The Common Options</a></li>
-<li><a class="reference internal" href="#iperf-s-help">Iperf&#8217;s Help</a></li>
 </ul>
 </li>
 </ul>
@@ -126,7 +123,7 @@
     </a>
   </li>
   <li>
-    <a href="network_topology.html" title="Next Chapter: The Network Topology"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Network Topo... &raquo;</span>
+    <a href="sleep.html" title="Next Chapter: Sleep Configuration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Sleep Configurat... &raquo;</span>
     </a>
   </li>
               
@@ -162,8 +159,6 @@
       
   <div class="section" id="iperf-configuration">
 <h1>Iperf Configuration<a class="headerlink" href="#iperf-configuration" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="basics">
-<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
 <p>The Iperf Configuration section begins with the <cite>[IPERF]</cite> header (case-sensitive) and generally uses the long-parameter names for iperf as the names of the options. For example, to set the target ip you might use:</p>
 <div class="highlight-python"><div class="highlight"><pre>iperf --client 192.168.10.25
 </pre></div>
@@ -172,9 +167,6 @@
 <div class="highlight-python"><div class="highlight"><pre>client = 192.168.10.25
 </pre></div>
 </div>
-</div>
-<div class="section" id="directions">
-<h2>Directions<a class="headerlink" href="#directions" title="Permalink to this headline">¶</a></h2>
 <p>The only non-iperf options are the <cite>directions</cite>:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">directions</span> <span class="o">=</span> <span class="n">from_dut</span><span class="p">,</span> <span class="n">to_dut</span>
 </pre></div>
@@ -201,27 +193,23 @@
 </div></blockquote>
 <p>(e.g. <cite>from_dut</cite>, <cite>uplink</cite>, <cite>transmit</cite>, <cite>tx</cite>, <cite>send</cite> are all equivalente).</p>
 <p>This is a plural property so you can have more than one if you use comma-separation (e.g. &#8216;tx, rx&#8217;, will run traffic from the Node to the Traffic PC then reverse directions).</p>
-</div>
 <div class="section" id="the-common-options">
 <h2>The Common Options<a class="headerlink" href="#the-common-options" title="Permalink to this headline">¶</a></h2>
-<p>These are generally the most common settings of what I have seen being changed.</p>
+<p>Most tests at Allion use a common subset of options:</p>
 <blockquote>
 <div>time = &lt;time&gt;</div></blockquote>
 <p>The default here is seconds, but you can use suffixes to change it (days, hours, minutes, or seconds). e.g. to run it for 2 days, 3 hours and 22 minutes you could use:</p>
 <div class="highlight-python"><div class="highlight"><pre>time = 2 days 3 hours 22 minutes
 </pre></div>
 </div>
-<p>The rest of the more common options (note that the buffer-length is set using <tt class="docutils literal"><span class="pre">len</span></tt> not <tt class="docutils literal"><span class="pre">length</span></tt> to match the iperf option):</p>
-<div class="highlight-python"><div class="highlight"><pre>protocol = tcp
+<blockquote>
+<div><p>protocol = tcp
 window = 256K
-len = 1470
-
-parallel = 4
-
-interval = 1
-format = b
-</pre></div>
-</div>
+len = 1470</p>
+<p>parallel = 4</p>
+<p>interval = 1
+format = b</p>
+</div></blockquote>
 <p>The last flag can be one of:</p>
 <blockquote>
 <div><ul class="simple">
@@ -232,63 +220,6 @@ format = b
 <li>M (for MegaBytes/second)</li>
 </ul>
 </div></blockquote>
-</div>
-<div class="section" id="iperf-s-help">
-<h2>Iperf&#8217;s Help<a class="headerlink" href="#iperf-s-help" title="Permalink to this headline">¶</a></h2>
-<p>This is a dump of iperf&#8217;s  help string (version 2.0.5).</p>
-<div class="highlight-python"><div class="highlight"><pre>Usage: iperf [-s|-c host] [options]
-       iperf [-h|--help] [-v|--version]
-
-Client/Server:
-  -f, --format    [kmKM]   format to report: Kbits, Mbits, KBytes, MBytes
-  -i, --interval  #        seconds between periodic bandwidth reports
-  -l, --len       #[KM]    length of buffer to read or write (default 8 KB)
-  -m, --print_mss          print TCP maximum segment size (MTU - TCP/IP header)
-  -o, --output    &lt;filename&gt; output the report or error message to this specified file
-  -p, --port      #        server port to listen on/connect to
-  -u, --udp                use UDP rather than TCP
-  -w, --window    #[KM]    TCP window size (socket buffer size)
-  -B, --bind      &lt;host&gt;   bind to &lt;host&gt;, an interface or multicast address
-  -C, --compatibility      for use with older versions does not sent extra msgs
-  -M, --mss       #        set TCP maximum segment size (MTU - 40 bytes)
-  -N, --nodelay            set TCP no delay, disabling Nagle&#39;s Algorithm
-  -V, --IPv6Version        Set the domain to IPv6
-
-Server specific:
-  -s, --server             run in server mode
-  -U, --single_udp         run in single threaded UDP mode
-  -D, --daemon             run the server as a daemon
-
-Client specific:
-  -b, --bandwidth #[KM]    for UDP, bandwidth to send at in bits/sec
-                           (default 1 Mbit/sec, implies -u)
-  -c, --client    &lt;host&gt;   run in client mode, connecting to &lt;host&gt;
-  -d, --dualtest           Do a bidirectional test simultaneously
-  -n, --num       #[KM]    number of bytes to transmit (instead of -t)
-  -r, --tradeoff           Do a bidirectional test individually
-  -t, --time      #        time in seconds to transmit for (default 10 secs)
-  -F, --fileinput &lt;name&gt;   input the data to be transmitted from a file
-  -I, --stdin              input the data to be transmitted from stdin
-  -L, --listenport #       port to receive bidirectional tests back on
-  -P, --parallel  #        number of parallel client threads to run
-  -T, --ttl       #        time-to-live, for multicast (default 1)
-  -Z, --linux-congestion &lt;algo&gt;  set TCP congestion control algorithm (Linux only)
-
-Miscellaneous:
-  -x, --reportexclude [CDMSV]   exclude C(connection) D(data) M(multicast) S(settings) V(server) reports
-  -y, --reportstyle C      report as a Comma-Separated Values
-  -h, --help               print this message and quit
-  -v, --version            print version information and quit
-
-[KM] Indicates options that support a K or M suffix for kilo- or mega-
-
-The TCP window size option can be set by the environment variable
-TCP_WINDOW_SIZE. Most other options can be set by an environment variable
-IPERF_&lt;long option name&gt;, such as IPERF_BANDWIDTH.
-
-Report bugs to &lt;iperf-users@lists.sourceforge.net&gt;
-</pre></div>
-</div>
 </div>
 </div>
 

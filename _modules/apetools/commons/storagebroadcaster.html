@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -149,7 +149,7 @@
 
 
 <span class="k">class</span> <span class="nc">StorageBroadcaster</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="StorageBroadcaster"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storagebroadcaster.StorageBroadcaster.html#apetools.commons.storagebroadcaster.StorageBroadcaster">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageBroadcaster"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.StorageBroadcaster">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Storage Broadcaster maintains an open file and a set of targets.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -166,7 +166,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">targets</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="StorageBroadcaster.targets"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storagebroadcaster.StorageBroadcaster.targets.html#apetools.commons.storagebroadcaster.StorageBroadcaster.targets">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageBroadcaster.targets"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.StorageBroadcaster.targets">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of output targets</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_targets</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -175,7 +175,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">folder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="StorageBroadcaster.folder"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storagebroadcaster.StorageBroadcaster.folder.html#apetools.commons.storagebroadcaster.StorageBroadcaster.folder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageBroadcaster.folder"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.StorageBroadcaster.folder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the path to the output folder</span>
 <span class="sd">        :postcondition: the folder exists on the local machine</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -185,7 +185,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_folder</span>
 
     <span class="k">def</span> <span class="nf">check_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">folder</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageBroadcaster.check_folder"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storagebroadcaster.StorageBroadcaster.check_folder.html#apetools.commons.storagebroadcaster.StorageBroadcaster.check_folder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageBroadcaster.check_folder"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.StorageBroadcaster.check_folder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `folder`: the name of a folder</span>
@@ -197,7 +197,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">subdir</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageBroadcaster.open"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storagebroadcaster.StorageBroadcaster.open.html#apetools.commons.storagebroadcaster.StorageBroadcaster.open">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageBroadcaster.open"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.StorageBroadcaster.open">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `filename`: the name of a file to open and add to the targets</span>
@@ -260,7 +260,7 @@
 
 
 <span class="k">class</span> <span class="nc">CallFile</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div></div>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CallFile"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.CallFile">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to wrap a file to meet the interface of the other targets</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
@@ -280,13 +280,13 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span>
 
     <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CallFile.send"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.CallFile.send">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        an alias for write to use in coroutines</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
         <span class="k">return</span>
     
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
@@ -296,27 +296,27 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CallFile.write"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.CallFile.write">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        an alias for __call__</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="CallFile.close"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storagebroadcaster.html#apetools.commons.storagebroadcaster.CallFile.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: open_file is closed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__del__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: open_file is closed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">open_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
         <span class="k">return</span>
 <span class="c"># end CallFile</span>
-</pre></div>
+</pre></div></div>
 
     </div>
       

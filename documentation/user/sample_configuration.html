@@ -30,8 +30,8 @@
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
     <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
-    <link rel="next" title="Sleep Configuration" href="sleep.html" />
-    <link rel="prev" title="Cube Turntable (Rotate Cube)" href="rotate_cube.html" />
+    <link rel="next" title="Basic Usage" href="basic_usage.html" />
+    <link rel="prev" title="PowerOn Configuration" href="poweron.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -116,11 +116,11 @@
               
                 
   <li>
-    <a href="rotate_cube.html" title="Previous Chapter: Cube Turntable (Rotate Cube)"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Cube Turntable (...</span>
+    <a href="poweron.html" title="Previous Chapter: PowerOn Configuration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; PowerOn Configur...</span>
     </a>
   </li>
   <li>
-    <a href="sleep.html" title="Next Chapter: Sleep Configuration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Sleep Configurat... &raquo;</span>
+    <a href="basic_usage.html" title="Next Chapter: Basic Usage"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Basic Usage &raquo;</span>
     </a>
   </li>
               
@@ -156,14 +156,14 @@
       
   <div class="section" id="sample-configuration">
 <h1>Sample Configuration<a class="headerlink" href="#sample-configuration" title="Permalink to this headline">¶</a></h1>
-<p>A sample configuration file that used all of the previous sections.</p>
-<div class="code ini highlight-python"><div class="highlight"><pre>[TEST]
+<p>A sample configuration file that used all of the previous sections:</p>
+<div class="highlight-python"><div class="highlight"><pre>[TEST]
 operation_setup = watchlogs
-setup_test = rotate, rotate_cube,timetorecovery,dumpdevicestate
+setup_test = rotate,timetorecovery,dumpdevicestate
 execute_test = iperf
 output_folder = tate_71_apg_lab126_{t}
 repeat = 2
-tag = APE
+tag = ALLION
 recovery_time = 1 Second
 
 [SLEEP]
@@ -181,22 +181,6 @@ hostname = phoridfly
 username = root
 #password =
 angles = 180,0:50,45,90:100,    270:10
-
- [ROTATE_CUBE]
- tables = moira, moira_again
-
- [moira]
- hostname = moiragetes
- username = tester
- angles = 0, 90, 180
- velocity = 500
- clockwise = True
-
- [moira_again]
- hostname = moiragetes
- username = tester
- angles = 10, 20
-
 
 [TRAFFIC_PC]
 tpc = operating_system:linux,connection:ssh,test_interface:eth3,hostname:lancet,login:allion

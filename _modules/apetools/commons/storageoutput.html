@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -162,7 +162,7 @@
 
 
 <span class="k">class</span> <span class="nc">StorageOutput</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="StorageOutput"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A StorageOutput maintains an output file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_folder</span><span class="p">,</span> <span class="n">timestamp_format</span><span class="o">=</span><span class="n">IPERF_TIMESTAMP</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -182,7 +182,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="StorageOutput.path"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.path"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a timestamp if there&#39;s a {t} in the name.</span>
 <span class="sd">        </span>
 <span class="sd">        :precondition: self.output_folder is a valid file name</span>
@@ -199,7 +199,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span>
 
     <span class="k">def</span> <span class="nf">extend_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subdirectory</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.extend_path"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.extend_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.extend_path"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.extend_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Extends the current path with the given sub-directory.</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -216,7 +216,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">is_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">subdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.is_file"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.is_file">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.is_file"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.is_file">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if the file exists within the known path</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -233,7 +233,7 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">get_full_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.get_full_path"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.get_full_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.get_full_path"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.get_full_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Returns the filename with the (relative) path </span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -246,7 +246,7 @@
         <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">subdir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">WRITEABLE</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.open"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.open">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.open"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.open">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Opens a writeable file using the stored path information </span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -263,7 +263,7 @@
         <span class="k">return</span> <span class="n">clone</span>
 
     <span class="k">def</span> <span class="nf">get_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">subdir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">WRITEABLE</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.get_filename"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.get_filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.get_filename"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.get_filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Builds a super-filename with the path and numbering</span>
 
 <span class="sd">         * This was broken out so that other file-related classes can use it</span>
@@ -290,7 +290,7 @@
 
 
     <span class="k">def</span> <span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">timestamp_format</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.timestamp"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.timestamp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.timestamp"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.timestamp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks for a &#39;{t}&#39; in the string for a placeholder</span>
 <span class="sd">        </span>
 <span class="sd">        :return: name with timestamp</span>
@@ -303,7 +303,7 @@
         <span class="k">return</span> <span class="n">name</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">timestamp</span><span class="p">)</span>
         
     <span class="k">def</span> <span class="nf">_fix_duplicate_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">extension</span><span class="p">,</span> <span class="n">subdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput._fix_duplicate_names"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput._fix_duplicate_names">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput._fix_duplicate_names"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput._fix_duplicate_names">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Checks if the name exists as a prefix and adds a number if it does.</span>
 
 <span class="sd">        :return: uniqued name</span>
@@ -319,7 +319,7 @@
         <span class="k">return</span> <span class="n">name</span>
 
     <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.write"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.write">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.write"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.write">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write a line to the file</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -339,7 +339,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">writeline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.writeline"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.writeline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.writeline"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.writeline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Coerces the line to a string and adds a newline.</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -352,7 +352,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">writelines</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.writelines"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.writelines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.writelines"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.writelines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Write all the lines to the output file</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -364,7 +364,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">subdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.copy"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.copy">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.copy"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.copy">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Copy the file to a subdirectory</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -390,7 +390,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">subdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.move"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.move">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.move"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.move">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Move the file to a subdirectory.</span>
 <span class="sd">        :param:</span>
 
@@ -413,7 +413,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StorageOutput.close"><a class="viewcode-back" href="../../../commons/api/apetools.commons.storageoutput.StorageOutput.html#apetools.commons.storageoutput.StorageOutput.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StorageOutput.close"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.storageoutput.html#apetools.commons.storageoutput.StorageOutput.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Close the output filen</span>
 <span class="sd">        :postcondition:</span>
 

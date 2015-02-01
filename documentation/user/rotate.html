@@ -29,9 +29,9 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
-    <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
-    <link rel="next" title="Cube Turntable (Rotate Cube)" href="rotate_cube.html" />
-    <link rel="prev" title="PowerOn Configuration" href="poweron.html" />
+    <link rel="up" title="The Configuration File" href="configuration_file.html" />
+    <link rel="next" title="Watchlogs Configuration" href="watchlogs.html" />
+    <link rel="prev" title="Iperf Configuration" href="iperf.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -121,11 +121,11 @@
               
                 
   <li>
-    <a href="poweron.html" title="Previous Chapter: PowerOn Configuration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; PowerOn Configur...</span>
+    <a href="iperf.html" title="Previous Chapter: Iperf Configuration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Iperf Configurat...</span>
     </a>
   </li>
   <li>
-    <a href="rotate_cube.html" title="Next Chapter: Cube Turntable (Rotate Cube)"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Cube Turntable (... &raquo;</span>
+    <a href="watchlogs.html" title="Next Chapter: Watchlogs Configuration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Watchlogs Config... &raquo;</span>
     </a>
   </li>
               
@@ -162,6 +162,13 @@
   <div class="section" id="rotate-configuration">
 <h1>Rotate Configuration<a class="headerlink" href="#rotate-configuration" title="Permalink to this headline">¶</a></h1>
 <p id="id1">This explains the <cite>[ROTATE]</cite> section of a configuration file. It assumes that there is a PC connected to the turntable with the <cite>rotate</cite> command installed on it.</p>
+<p>Contents:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#rotate-configuration-test-section"><em>Setting up the TEST Section</em></a></li>
+<li><a class="reference internal" href="#rotate-configuration-rotate-section"><em>Setting up the ROTATE Section</em></a></li>
+</ul>
+</div></blockquote>
 <div class="section" id="the-test-section">
 <span id="rotate-configuration-test-section"></span><h2>The TEST Section<a class="headerlink" href="#the-test-section" title="Permalink to this headline">¶</a></h2>
 <p>To be included as part of the execution you need to add the <cite>rotate</cite> to one of the TEST fields. The recommended location would be the <cite>setup_test</cite> option (if you put it in <cite>execute_test</cite> option the angle information won&#8217;t get added to file names). If you wanted to rotate the table and run <cite>iperf</cite>, for instance, you might use:</p>
@@ -176,13 +183,15 @@
 <span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
 </pre></div>
 </div>
-<p>Just remember that everything added to this section needs a corresponding section later in the configuration file with a capitalized version of the option as a header. For example, this setup will expect <tt class="docutils literal"><span class="pre">[SLEEP]</span></tt>, <tt class="docutils literal"><span class="pre">[ROTATE]</span></tt>, and <tt class="docutils literal"><span class="pre">[IPERF]</span></tt> sections somewhere in the configuration file.</p>
+<p>Just remember that everthing added to this section needs a corresponding section later in the configuration file with a capitalized version of the option as a header. For example, this setup will expect <tt class="docutils literal"><span class="pre">[SLEEP]</span></tt>, <tt class="docutils literal"><span class="pre">[ROTATE]</span></tt>, and <tt class="docutils literal"><span class="pre">[IPERF]</span></tt> sections somewhere in the configuration file.</p>
 </div>
 <div class="section" id="the-rotate-section">
 <span id="rotate-configuration-rotate-section"></span><h2>The ROTATE Section<a class="headerlink" href="#the-rotate-section" title="Permalink to this headline">¶</a></h2>
 <p>An example setup would be:</p>
 <div class="highlight-python"><div class="highlight"><pre>[ROTATE]
-node1 = hostname:phoridfly, username:root, password:testlabs
+hostname = phoridfly
+username = root
+#password =
 angles = 180,0:50,45,90:100, 270:10
 </pre></div>
 </div>
@@ -191,16 +200,11 @@ angles = 180,0:50,45,90:100, 270:10
 <li>The &lt;angular velocity&gt; is optional (e.g. angles=0,45,90 or angles=0:100, 45:50, 90)</li>
 <li>Negative numbers rotate clockwise (depending on the table)</li>
 <li>The PC connected to the turntable to control it is assumed to have an SSH connection to it so the first three parameters are to log in to it</li>
-<li>The convoluted node information was added to accomodate a request for multiple turntables &#8211; add as many lines as there are turntables to control.</li>
 </ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">At the time the request was made to extend this to handle multiple turntables the use-case was for them to rotate in lock-step (i.e. the same angles) the <a class="reference internal" href="rotate_cube.html#rotate-cube-configuration"><em>newer table</em></a> accomodates different angle lists but this does not. Since these turntables are being replaced because of a flaw in the design I assume that they won&#8217;t be used any more so I&#8217;m not updating their behavior.</p>
-</div>
 </div>
 <div class="section" id="the-tables">
 <h2>The Tables<a class="headerlink" href="#the-tables" title="Permalink to this headline">¶</a></h2>
-<p>There are two-tables that this is meant to work with &#8211; a servo-based turntable and a motor-based one.</p>
+<p>There are two-tables that this is meant to work with &#8211; a servo-based turntable (currently at Allion Labs) and a motor-based one (Cynthia Lane).</p>
 <p>The servo-based turntable won&#8217;t rotate as far or with as fine a degree of separation between changes in angle and it uses absolute angles (so there&#8217;s no such thing as a direction, it will always turn clockwise if the chosen angle is less than the current angle or anti-clockwise if the chosen angle is greater than the current one).</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>

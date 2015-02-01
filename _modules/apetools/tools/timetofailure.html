@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -161,11 +161,21 @@
 <span class="sd">         - `threshold`: The number of consecutive failures to make a fail</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">TimeToFailure</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">pinger</span> <span class="o">=</span> <span class="n">pinger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pinger</span> <span class="o">=</span> <span class="n">pinger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
         <span class="k">return</span>
+
+    <span class="nd">@property</span></div>
+    <span class="k">def</span> <span class="nf">pinger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeToFailure.pinger"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetofailure.TimeToFailure.pinger.html#apetools.tools.timetofailure.TimeToFailure.pinger">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: A pinger object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_pinger</span> <span class="o">=</span> <span class="n">ping</span><span class="o">.</span><span class="n">ADBPing</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinger</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span></div>
 <div class="viewcode-block" id="TimeToFailure.run"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetofailure.TimeToFailure.html#apetools.tools.timetofailure.TimeToFailure.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>

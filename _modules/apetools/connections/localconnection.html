@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -167,7 +167,7 @@
 
 
 <span class="k">class</span> <span class="nc">LocalConnection</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="LocalConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection.html#apetools.connections.localconnection.LocalConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A local connection talks to a local command-line shell.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -186,7 +186,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LocalConnection.queue"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection.queue.html#apetools.connections.localconnection.LocalConnection.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalConnection.queue"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: Queue.Queue</span>
 <span class="sd">        :return: the local Queue</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -195,7 +195,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span>
 
     <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span></div>
-<div class="viewcode-block" id="LocalConnection._procedure_call"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection._procedure_call.html#apetools.connections.localconnection.LocalConnection._procedure_call">[docs]</a>                        <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._procedure_call">[docs]</a>                        <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is provided so it can be overriden by subclasses.</span>
 
@@ -204,7 +204,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
     
     <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span></div>
-<div class="viewcode-block" id="LocalConnection._main"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection._main.html#apetools.connections.localconnection.LocalConnection._main">[docs]</a>              <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalConnection._main"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._main">[docs]</a>              <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
@@ -243,7 +243,7 @@
 
 
 <span class="k">class</span> <span class="nc">LocalNixConnection</span><span class="p">(</span><span class="n">LocalConnection</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="LocalNixConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalNixConnection.html#apetools.connections.localconnection.LocalNixConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalNixConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Class that uses Pexpect to get around the problem of file-buffering</span>
 
 <span class="sd">    So far as I know, Pexpect only works on *nix-based systems.</span>
@@ -254,7 +254,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LocalNixConnection.run"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalNixConnection.run.html#apetools.connections.localconnection.LocalNixConnection.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalNixConnection.run"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        runs the Pexpect command and puts lines of output on the Queue</span>
 
 <span class="sd">        :param:</span>

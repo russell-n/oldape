@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -142,7 +142,7 @@
 
 
 <span class="k">class</span> <span class="nc">Broadcaster</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="Broadcaster"><a class="viewcode-back" href="../../../commons/api/apetools.commons.broadcaster.Broadcaster.html#apetools.commons.broadcaster.Broadcaster">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Broadcaster"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A broadcaster sends a single datum to multiple targets</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">receivers</span><span class="p">):</span>
@@ -166,7 +166,7 @@
 
     <span class="nd">@receivers.setter</span>
     <span class="k">def</span> <span class="nf">receivers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_receivers</span><span class="p">):</span>
-<div class="viewcode-block" id="Broadcaster.receivers"><a class="viewcode-back" href="../../../commons/api/apetools.commons.broadcaster.Broadcaster.receivers.html#apetools.commons.broadcaster.Broadcaster.receivers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Broadcaster.receivers"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.receivers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `new_receivers`: iterable of callable receivers (or single receiver)</span>
@@ -189,7 +189,7 @@
 
     <span class="nd">@temp_receivers.setter</span>
     <span class="k">def</span> <span class="nf">temp_receivers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_receivers</span><span class="p">):</span>        
-<div class="viewcode-block" id="Broadcaster.temp_receivers"><a class="viewcode-back" href="../../../commons/api/apetools.commons.broadcaster.Broadcaster.temp_receivers.html#apetools.commons.broadcaster.Broadcaster.temp_receivers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Broadcaster.temp_receivers"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.temp_receivers">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `new_receivers`: iterable of callable receivers (or single receiver)</span>
@@ -202,7 +202,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">receiver</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Broadcaster.subscribe"><a class="viewcode-back" href="../../../commons/api/apetools.commons.broadcaster.Broadcaster.subscribe.html#apetools.commons.broadcaster.Broadcaster.subscribe">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Broadcaster.subscribe"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.subscribe">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Adds a new receiver to the receivers (if it isn&#39;t already there)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">receiver</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">receivers</span><span class="p">:</span>
@@ -211,7 +211,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">unsubscribe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">receiver</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Broadcaster.unsubscribe"><a class="viewcode-back" href="../../../commons/api/apetools.commons.broadcaster.Broadcaster.unsubscribe.html#apetools.commons.broadcaster.Broadcaster.unsubscribe">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Broadcaster.unsubscribe"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.unsubscribe">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `receiver`: a receiver object to remove</span>
@@ -220,7 +220,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">set_up</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">targets</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Broadcaster.set_up"><a class="viewcode-back" href="../../../commons/api/apetools.commons.broadcaster.Broadcaster.set_up.html#apetools.commons.broadcaster.Broadcaster.set_up">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Broadcaster.set_up"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.set_up">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The targets are removed the next time this is called.</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -241,7 +241,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Broadcaster.reset"><a class="viewcode-back" href="../../../commons/api/apetools.commons.broadcaster.Broadcaster.reset.html#apetools.commons.broadcaster.Broadcaster.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Broadcaster.reset"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: self.receivers is None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_receivers</span> <span class="o">=</span> <span class="bp">None</span>

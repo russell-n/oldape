@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -184,8 +184,8 @@
 </tbody>
 </table>
 <p class="plantuml">
-<img src="../_images/plantuml-bcf777166b61f8f63a3fd9b696bbf5bc7725c030.png" alt="IperfTest -|&gt; BaseClass
-IperfTest o--  IperfCommand
+<img src="../_images/plantuml-786587c1eb93dfde7683d7ddcd5ff4c254392c2f.png" alt="IperfTest -|&gt; BaseClass
+IperfTest '1' o-- '2' IperfCommand
 IperfTest o-- Sleep
 IperfTest o-- Kill
 IperfTest : sender_command
@@ -195,8 +195,8 @@ IperfTest : wait_events
 IperfTest : kill" />
 </p>
 <ul class="simple">
-<li><a class="reference internal" href="../commands/iperfcommand.html#iperf-command"><em>IperfCommand</em></a> runs the actual iperf-commands</li>
-<li><a class="reference internal" href="sleep.html#apetools-tools-sleep"><em>Sleep</em></a> provides a sleep after the server is started so the client does not start too soon</li>
+<li>See <a class="reference internal" href="../documentation/developer/commands/iperfcommand.html#iperf-command"><em>IperfCommand</em></a> runs the actual iperf-commands</li>
+<li><em class="xref std std-ref">Sleep</em> provides a sleep after the server is started so the client does not start too soon</li>
 <li><em class="xref std std-ref">Kill</em> is used to kill all pre-existing iperf-sessions.</li>
 </ul>
 <p>Example Use:</p>
@@ -205,7 +205,7 @@ IperfTest : kill" />
 </pre></div>
 </div>
 <ul class="simple">
-<li>The <cite>iperf_client_command</cite> and <cite>iperf_server_command</cite> are <a class="reference internal" href="../commands/iperfcommand.html#iperf-command"><em>IperfCommands</em></a>.</li>
+<li>The <cite>iperf_client_command</cite> and <cite>iperf_server_command</cite> are <a class="reference internal" href="../documentation/developer/commands/iperfcommand.html#iperf-command"><em>IperfCommands</em></a>.</li>
 <li>The <cite>node</cite> and <cite>traffic_pc</cite> are <em class="xref std std-ref">Devices</em></li>
 </ul>
 </div>

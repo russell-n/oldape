@@ -3,7 +3,7 @@ The Configuration File
 
 .. _configuration-file:
 
-The configuration file is how a particular test or set of tests is run. When the `run` sub-command is given::
+The configuration file is how a particular test or set of test is run. When the `run` sub-command is given::
 
     ape run
 
@@ -43,8 +43,6 @@ For example, the following would only run `iperf`::
     [TEST]
     #operation_setup = watchlogs,oscillate
     execute_test = iperf
-
-The values that can go in the section are properties of a class that has them mapped to the code to build them (see the :ref:`ToolBuilder Documentation <apetools-tool-builder>`) for the values allowed. Generally speaking, for each value declared (e.g. ``oscillate``) there should be an upper-cased section header in the configuration file that gives the parameters for it (e.g. ``[OSCILLATE]``).
 
 
 Operation Setup

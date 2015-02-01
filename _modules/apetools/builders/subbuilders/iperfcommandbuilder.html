@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -146,7 +146,7 @@
 
 
 <span class="k">class</span> <span class="nc">IperfCommandBuilder</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommandBuilder"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommandBuilder"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.iperfcommandbuilder.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A builder of IperfCommands</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_map</span><span class="p">):</span>
@@ -165,7 +165,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommandBuilder.filename"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.filename.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommandBuilder.filename"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.iperfcommandbuilder.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the filename base from the config-file</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -177,7 +177,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommandBuilder.output"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.output.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommandBuilder.output"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.iperfcommandbuilder.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a new storage pipe (so that the behavior can be changed independently)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">StoragePipeBuilder</span><span class="p">(</span><span class="n">config_map</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">config_map</span><span class="p">,</span>
@@ -185,7 +185,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommandBuilder.parameters"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.parameters.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommandBuilder.parameters"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.iperfcommandbuilder.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: An Iperf Parameters Builder</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -194,7 +194,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">client_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommandBuilder.client_command"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.client_command.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.client_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommandBuilder.client_command"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.iperfcommandbuilder.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.client_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: iperf command with client parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client_command</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -206,7 +206,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">server_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommandBuilder.server_command"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.server_command.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.server_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommandBuilder.server_command"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.iperfcommandbuilder.html#apetools.builders.subbuilders.iperfcommandbuilder.IperfCommandBuilder.server_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: iperf command with server parameters</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_server_command</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>

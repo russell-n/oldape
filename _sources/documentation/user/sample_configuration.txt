@@ -1,17 +1,15 @@
 Sample Configuration
 ====================
 
-A sample configuration file that used all of the previous sections.
-
-.. code:: ini
+A sample configuration file that used all of the previous sections::
 
    [TEST]
    operation_setup = watchlogs
-   setup_test = rotate, rotate_cube,timetorecovery,dumpdevicestate
+   setup_test = rotate,timetorecovery,dumpdevicestate
    execute_test = iperf
    output_folder = tate_71_apg_lab126_{t}
    repeat = 2
-   tag = APE
+   tag = ALLION
    recovery_time = 1 Second
    
    [SLEEP]
@@ -29,22 +27,6 @@ A sample configuration file that used all of the previous sections.
    username = root
    #password = 
    angles = 180,0:50,45,90:100,    270:10
-
-    [ROTATE_CUBE]
-    tables = moira, moira_again
-    
-    [moira]
-    hostname = moiragetes
-    username = tester
-    angles = 0, 90, 180
-    velocity = 500
-    clockwise = True
-    
-    [moira_again]
-    hostname = moiragetes
-    username = tester
-    angles = 10, 20
-
    
    [TRAFFIC_PC]
    tpc = operating_system:linux,connection:ssh,test_interface:eth3,hostname:lancet,login:allion

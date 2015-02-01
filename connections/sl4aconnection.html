@@ -30,7 +30,6 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
     <link rel="up" title="Connections" href="index.html" />
-    <link rel="next" title="apetools.connections.sl4aconnection.SL4AConnection" href="api/apetools.connections.sl4aconnection.SL4AConnection.html" />
     <link rel="prev" title="apetools.connections.sharedcounter.SharedCounter.__eq__" href="api/apetools.connections.sharedcounter.SharedCounter.__eq__.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -74,7 +73,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -117,10 +116,6 @@
                 
   <li>
     <a href="api/apetools.connections.sharedcounter.SharedCounter.__eq__.html" title="Previous Chapter: apetools.connections.sharedcounter.SharedCounter.__eq__"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.connect...</span>
-    </a>
-  </li>
-  <li>
-    <a href="api/apetools.connections.sl4aconnection.SL4AConnection.html" title="Next Chapter: apetools.connections.sl4aconnection.SL4AConnection"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.connect... &raquo;</span>
     </a>
   </li>
               
@@ -166,25 +161,97 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sl4aconnection.SL4AConnection.html#apetools.connections.sl4aconnection.SL4AConnection" title="apetools.connections.sl4aconnection.SL4AConnection"><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>Adapter to the SL4A class to behave like the other connections</td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection</span></tt></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.connections.sl4aconnection.SL4AConnection.__getattr__.html#apetools.connections.sl4aconnection.SL4AConnection.__getattr__" title="apetools.connections.sl4aconnection.SL4AConnection.__getattr__"><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.__getattr__</span></tt></a>(method)</td>
-<td><table class="docutils field-list" frame="void" rules="none">
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.__getattr__</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.check_error</span></tt></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>&lt;&lt;name=&#8217;SL4AConnection&#8217;, echo=False&gt;&gt;+
+class SL4AConnection(android.Android):</p>
+<blockquote>
+<div><p>&#8220;&#8221;&#8221;
+Adapter to the SL4A class to behave like the other connections
+&#8220;&#8221;&#8221;
+def __init__(self, <a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>try:</dt>
+<dd><p class="first">super(SL4AConnection, self).__init__(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs)
+self.logger = logging.getLogger(&#8220;{0}.{1}&#8221;.format(self.__module__,</p>
+<blockquote class="last">
+<div>self.__class__.__name__))</div></blockquote>
+</dd>
+<dt>except (socket.error,socket.gaierror) as error:</dt>
+<dd>raise ConnectionError(&#8220;Unable to create an SL4A connection: {0}&#8221;.format(error))</dd>
+</dl>
+<p>return</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>def __getattr__(self, method):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+:param:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>method</cite>: The name of an SL4a method</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">Whatever result.result is</td>
+</tr>
+<tr class="field-even field"><th class="field-name">raise:</th><td class="field-body">CommandError if result.error is not None</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">raise:</th><td class="field-body">ConnectionError if the SL4a server returns an error.</td>
 </tr>
 </tbody>
 </table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sl4aconnection.SL4AConnection.check_error.html#apetools.connections.sl4aconnection.SL4AConnection.check_error" title="apetools.connections.sl4aconnection.SL4AConnection.check_error"><tt class="xref py py-obj docutils literal"><span class="pre">SL4AConnection.check_error</span></tt></a>(error,&nbsp;method)</td>
-<td>Checks the result for errors</td>
-</tr>
-</tbody>
-</table>
+<p>&#8220;&#8221;&#8221;
+def rpc_call(<a href="#id9"><span class="problematic" id="id10">*</span></a>args):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>try:</dt>
+<dd>result = self._rpc(method, <a href="#id11"><span class="problematic" id="id12">*</span></a>args)</dd>
+<dt>except ValueError as error:</dt>
+<dd>self.logger.error(error)
+raise ConnectionError(&#8220;Unable to connect to the SL4a server. Check your connection.&#8221;)</dd>
+<dt>if result.error is not None:</dt>
+<dd>self.check_error(result.error, method)</dd>
+</dl>
+<p>return result.result</p>
+</div></blockquote>
+<p class="last">return rpc_call</p>
+</dd>
+<dt>def check_error(self, error, method):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+Checks the result for errors
+&#8220;&#8221;&#8221;
+if error.startswith(&#8216;com.googlecode.android_scripting.rpc.RpcError:&#8217;):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if error.endswith(&#8220;Unkown RPC.&#8221;):</dt>
+<dd>raise CommandError(&#8220;Unknown SL4a Command: &#8221; + method)</dd>
+<dt>else:</dt>
+<dd>message = error.split(&#8221;:&#8221;, 1)[-1]
+raise CommandError(&#8220;SL4a command error: {0}({1}) &#8221;.format(method,message))</dd>
+</dl>
+</div></blockquote>
+<dl class="docutils">
+<dt>else:</dt>
+<dd>raise CommandError(error)</dd>
+</dl>
+<p class="last">return</p>
+</dd>
+</dl>
+</div></blockquote>
+<p># end class SL4aConnection</p>
 </div>
 
 

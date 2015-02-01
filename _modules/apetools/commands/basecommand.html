@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -148,12 +148,12 @@
 
 
 <span class="k">class</span> <span class="nc">BaseThreadedCommand</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseThreadedCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseThreadedCommand.html#apetools.commands.basecommand.BaseThreadedCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseThreadedCommand"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseThreadedCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An abstract base-class for simple commands to run in a thread</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseThreadedCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseThreadedCommand.html#apetools.commands.basecommand.BaseThreadedCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Only instantiates the BaseClass and sets the properties</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BaseThreadedCommand</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
@@ -162,16 +162,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
-    <span class="nd">@abstractmethod</span></div>
+    <span class="nd">@abstractmethod</span>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseThreadedCommand.run"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseThreadedCommand.html#apetools.commands.basecommand.BaseThreadedCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseThreadedCommand.run"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseThreadedCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The method put into the thread.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
 
     <span class="nd">@abstractmethod</span></div>
     <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseThreadedCommand.stop"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseThreadedCommand.html#apetools.commands.basecommand.BaseThreadedCommand.stop">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseThreadedCommand.stop"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseThreadedCommand.stop">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: the thread is stopped </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
@@ -214,12 +214,12 @@
 
 
 <span class="k">class</span> <span class="nc">BaseProcessCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A parent class for process-commands (e.g. ``ps``)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        BaseProcessCommand Constructor</span>
 
 <span class="sd">        :param:</span>
@@ -236,7 +236,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The connection to the device</span>
@@ -247,7 +247,7 @@
 
     <span class="nd">@connection.setter</span>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.connection"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand.connection"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the connection and re-sets the arguments</span>
 
 <span class="sd">        :param:</span>
@@ -262,21 +262,21 @@
     
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.arguments"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand.arguments"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        the arguments for the command based on the operating system</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.command"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand.command"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand.command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The actual command that&#39;s issued (used for logging and ID)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span>    
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">error_messages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.error_messages"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.error_messages">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand.error_messages"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand.error_messages">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A dictionary of error-messages</span>
 
 <span class="sd">        :return: error messages for the `check_errors`</span>
@@ -289,7 +289,7 @@
 
     <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">error_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.error_expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.error_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand.error_expression"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand.error_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Holds the expression to match error messages</span>
 
 <span class="sd">        :return: compiled regular expression to match error messages</span>
@@ -298,7 +298,7 @@
 
     <span class="nd">@abstractmethod</span></div>
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.run"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand.run"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is where the connection is called. Since it changes with each command it is separated out</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
@@ -323,7 +323,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseProcessCommand.check_errors"><a class="viewcode-back" href="../../../commands/api/apetools.commands.basecommand.BaseProcessCommand.html#apetools.commands.basecommand.BaseProcessCommand.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessCommand.check_errors"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessCommand.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Check the line for known errors</span>
 
 <span class="sd">        :param:</span>
@@ -352,7 +352,7 @@
 
 
 <span class="k">class</span> <span class="nc">BaseProcessGrep</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessGrep"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessGrep">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A base class to grep process information</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
@@ -378,19 +378,19 @@
 
     <span class="nd">@abstractproperty</span>
     <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessGrep.expression"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessGrep.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The compiled regular expression to match the process output</span>
 <span class="sd">        &quot;&quot;&quot;</span>        
         <span class="k">return</span>
     
-    <span class="nd">@abstractproperty</span>
+    <span class="nd">@abstractproperty</span></div>
     <span class="k">def</span> <span class="nf">process_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessGrep.process_query"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessGrep.process_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The command to query the device for process information        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span>
+    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The connection to the device</span>
@@ -399,7 +399,7 @@
 
     <span class="nd">@connection.setter</span>
     <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseProcessGrep.connection"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.basecommand.html#apetools.commands.basecommand.BaseProcessGrep.connection">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the connection for the process_query</span>
 
 <span class="sd">         * self.process_query is reset to None as there is a circular reference</span>
@@ -417,7 +417,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">process</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Finds the process name and generates PIDs</span>
 
@@ -438,7 +438,7 @@
                 <span class="n">line_map</span> <span class="o">=</span> <span class="n">match</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
                 <span class="k">yield</span> <span class="n">line_map</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">field</span><span class="p">]</span>
         <span class="k">return</span>    
-</pre></div>
+</pre></div></div>
 
     </div>
       

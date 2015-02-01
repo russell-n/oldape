@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -154,7 +154,7 @@
 
 
 <span class="k">class</span> <span class="nc">StandardOutput</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="StandardOutput"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.StandardOutput.html#apetools.commons.readoutput.StandardOutput">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StandardOutput"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.StandardOutput">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to act as a file (read-only)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span>  <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -182,7 +182,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">readline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StandardOutput.readline"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.StandardOutput.readline.html#apetools.commons.readoutput.StandardOutput.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StandardOutput.readline"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.StandardOutput.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `timeout`: The length of time to wait for output</span>
@@ -199,7 +199,7 @@
         <span class="k">return</span> <span class="n">EOF</span>
 
     <span class="k">def</span> <span class="nf">readlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StandardOutput.readlines"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.StandardOutput.readlines.html#apetools.commons.readoutput.StandardOutput.readlines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StandardOutput.readlines"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.StandardOutput.readlines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: lisf of lines of output.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">line</span> <span class="o">=</span> <span class="bp">None</span>
@@ -209,7 +209,7 @@
         <span class="k">return</span> <span class="n">lines</span>
 
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StandardOutput.read"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.StandardOutput.read.html#apetools.commons.readoutput.StandardOutput.read">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StandardOutput.read"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.StandardOutput.read">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: output as a single string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">EMPTY_STRING</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>
@@ -217,7 +217,7 @@
 
 
 <span class="k">class</span> <span class="nc">ValidatingOutput</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="ValidatingOutput"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.ValidatingOutput.html#apetools.commons.readoutput.ValidatingOutput">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ValidatingOutput"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.ValidatingOutput">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A ValidatingOutput reads from an iterable and validates the lines.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lines</span><span class="p">,</span> <span class="n">validate</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -254,7 +254,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">readline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ValidatingOutput.readline"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.ValidatingOutput.readline.html#apetools.commons.readoutput.ValidatingOutput.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ValidatingOutput.readline"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.ValidatingOutput.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the next line in lines</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
@@ -264,7 +264,7 @@
         <span class="k">return</span> <span class="n">line</span>
 
     <span class="k">def</span> <span class="nf">readlines</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ValidatingOutput.readlines"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.ValidatingOutput.readlines.html#apetools.commons.readoutput.ValidatingOutput.readlines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ValidatingOutput.readlines"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.ValidatingOutput.readlines">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of validated lines</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">lines</span> <span class="o">=</span> <span class="p">[]</span>
@@ -276,7 +276,7 @@
         <span class="k">return</span> <span class="n">lines</span>
 
     <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ValidatingOutput.read"><a class="viewcode-back" href="../../../commons/api/apetools.commons.readoutput.ValidatingOutput.html#apetools.commons.readoutput.ValidatingOutput.read">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ValidatingOutput.read"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.readoutput.html#apetools.commons.readoutput.ValidatingOutput.read">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: validated lines joined as a string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">EMPTY_STRING</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">readlines</span><span class="p">())</span>

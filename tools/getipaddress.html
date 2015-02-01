@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -156,15 +156,7 @@
       
   <div class="section" id="get-ip-address">
 <h1>Get IP Address<a class="headerlink" href="#get-ip-address" title="Permalink to this headline">¶</a></h1>
-<p>A module to hold ip address finders. At the moment this only supports unix-like machines (it assumes the <cite>ifconfig</cite> command exists), since that&#8217;s all I&#8217;m testing. It also requires the user to pass in a regular expression to find the value. It didn&#8217;t occur to me until later that if I passed in the command as well this would be a general querier for any command, eventually this should go away.</p>
-<p>This is the expression for linux machines (defined in the <a href="#id1"><span class="problematic" id="id2">:ref:`expressions &lt;apetools.commons.expressions&gt;`_</span></a> module).</p>
-<div class="highlight-python"><div class="highlight"><pre>inet\s+addr:(?P&lt;ip_address&gt;\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})
-</pre></div>
-</div>
-<p>and this is the one defined for android (also in the <cite>expressions</cite> module).</p>
-<div class="highlight-python"><div class="highlight"><pre>ip\s+(?P&lt;ip_address&gt;\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})
-</pre></div>
-</div>
+<p>A module to hold ip address finders.</p>
 <p class="plantuml">
 <img src="../_images/plantuml-bb1f509592d20caa302f8c1eef2d9074d3a630cf.png" alt="BaseClass &lt;|-- GetIp" />
 </p>

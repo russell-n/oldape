@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -148,7 +148,7 @@
 
 
 <span class="k">class</span> <span class="nc">NetcfgCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="NetcfgCommand"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netcfg.NetcfgCommand.html#apetools.commands.netcfg.NetcfgCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetcfgCommand"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netcfg.html#apetools.commands.netcfg.NetcfgCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The NetcfgCommand interprets netcfg</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">interface</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">operating_system</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
@@ -170,7 +170,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">operating_system</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetcfgCommand.operating_system"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netcfg.NetcfgCommand.operating_system.html#apetools.commands.netcfg.NetcfgCommand.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetcfgCommand.operating_system"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netcfg.html#apetools.commands.netcfg.NetcfgCommand.operating_system">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the operating system for the device to query</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_operating_system</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -179,7 +179,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">ip_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetcfgCommand.ip_address"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netcfg.NetcfgCommand.ip_address.html#apetools.commands.netcfg.NetcfgCommand.ip_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetcfgCommand.ip_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netcfg.html#apetools.commands.netcfg.NetcfgCommand.ip_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The IP Address of the interface</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">expression</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">NETCFG_IP</span>
@@ -195,7 +195,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetcfgCommand.interface"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netcfg.NetcfgCommand.interface.html#apetools.commands.netcfg.NetcfgCommand.interface">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetcfgCommand.interface"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netcfg.html#apetools.commands.netcfg.NetcfgCommand.interface">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The name of the (presumably wireless) interface</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -211,7 +211,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetcfgCommand.mac_address"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netcfg.NetcfgCommand.mac_address.html#apetools.commands.netcfg.NetcfgCommand.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetcfgCommand.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netcfg.html#apetools.commands.netcfg.NetcfgCommand.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: MAC Address of the interface</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -225,7 +225,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetcfgCommand.output"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netcfg.NetcfgCommand.output.html#apetools.commands.netcfg.NetcfgCommand.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetcfgCommand.output"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netcfg.html#apetools.commands.netcfg.NetcfgCommand.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This stores the value so it won&#39;t reflect updated changes.</span>
 <span class="sd">        Does a tee so that it can be used by more than one attribute</span>
 <span class="sd">                </span>
@@ -240,7 +240,7 @@
         <span class="k">return</span> <span class="n">output</span>
 
     <span class="k">def</span> <span class="nf">_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetcfgCommand._match"><a class="viewcode-back" href="../../../commands/api/apetools.commands.netcfg.NetcfgCommand._match.html#apetools.commands.netcfg.NetcfgCommand._match">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetcfgCommand._match"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.netcfg.html#apetools.commands.netcfg.NetcfgCommand._match">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `expression`: The regular expression to match</span>

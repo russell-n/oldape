@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -153,14 +153,14 @@
 
 
 <span class="k">class</span> <span class="nc">OscillatorError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
-<div class="viewcode-block" id="OscillatorError"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.OscillatorError.html#apetools.commands.oscillate.OscillatorError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OscillatorError"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.OscillatorError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Exception to raise if the oscillator fails</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 <span class="c"># end class OscillatorError</span>
 
 
 <span class="k">class</span> <span class="nc">Oscillate</span><span class="p">(</span><span class="n">BaseThreadedCommand</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Oscillate"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.html#apetools.commands.oscillate.Oscillate">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Class to start and stop an oscillator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">retries</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
@@ -190,7 +190,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Oscillate.sleep"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.sleep.html#apetools.commands.oscillate.Oscillate.sleep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.sleep"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.sleep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a blocking (but verbose) sleep</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -199,7 +199,7 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Oscillate.event"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.event.html#apetools.commands.oscillate.Oscillate.event">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.event"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.event">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: OscillateEvent with self.rotation_start event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_event</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -208,7 +208,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Oscillate.timestamp"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.timestamp.html#apetools.commands.oscillate.Oscillate.timestamp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.timestamp"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.timestamp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: timestamper</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -217,7 +217,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">error_queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Oscillate.error_queue"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.error_queue.html#apetools.commands.oscillate.Oscillate.error_queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.error_queue"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.error_queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: queue of error messages</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_queue</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -226,7 +226,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">rotation_start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Oscillate.rotation_start"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.rotation_start.html#apetools.commands.oscillate.Oscillate.rotation_start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.rotation_start"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.rotation_start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: threading event</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rotation_start</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -235,7 +235,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">thread</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Oscillate.thread"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.thread.html#apetools.commands.oscillate.Oscillate.thread">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.thread"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.thread">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: self.run executing in a thread</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -251,7 +251,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span>
 
     <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Oscillate.run"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.run.html#apetools.commands.oscillate.Oscillate.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.run"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: oscillate command sent to the oscillator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">rotation_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">&quot;Rotating\s+[Ff]rom&quot;</span><span class="p">)</span>
@@ -282,7 +282,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">check_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Oscillate.check_error"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.check_error.html#apetools.commands.oscillate.Oscillate.check_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.check_error"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.check_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Not fully implented yet.</span>
 
 <span class="sd">        :param:</span>
@@ -309,7 +309,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">generate_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Oscillate.generate_output"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.generate_output.html#apetools.commands.oscillate.Oscillate.generate_output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.generate_output"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.generate_output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `output`: stdout file</span>
@@ -322,7 +322,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Oscillate.stop"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.Oscillate.stop.html#apetools.commands.oscillate.Oscillate.stop">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Oscillate.stop"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.Oscillate.stop">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition:</span>
 
 <span class="sd">         - `stopped` is True</span>
@@ -346,6 +346,7 @@
 <span class="sd">        :return: name</span>
 <span class="sd">        :postcondition: thread is running, rotation_start is set</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c">#import pudb;pudb.set_trace()</span>
         <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">retries</span><span class="p">):</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span><span class="o">.</span><span class="n">is_alive</span><span class="p">():</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">block</span><span class="p">:</span>
@@ -380,7 +381,7 @@
 
 
 <span class="k">class</span> <span class="nc">OscillateEvent</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="OscillateEvent"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.OscillateEvent.html#apetools.commands.oscillate.OscillateEvent">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OscillateEvent"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.OscillateEvent">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An event to coordinate other commands with the start of a rotation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
@@ -395,13 +396,13 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">is_set</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="OscillateEvent.is_set"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.OscillateEvent.is_set.html#apetools.commands.oscillate.OscillateEvent.is_set">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OscillateEvent.is_set"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.OscillateEvent.is_set">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: True if the event is set, False otherwise.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="OscillateEvent.wait"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.OscillateEvent.wait.html#apetools.commands.oscillate.OscillateEvent.wait">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OscillateEvent.wait"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.OscillateEvent.wait">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `timeout`: if not None, stop blocking after timeout (seconds)</span>
@@ -419,7 +420,7 @@
 
 
 <span class="k">class</span> <span class="nc">OscillateStop</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="OscillateStop"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.OscillateStop.html#apetools.commands.oscillate.OscillateStop">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OscillateStop"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.OscillateStop">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to explicitly stop the Oscillator</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
@@ -443,7 +444,7 @@
         <span class="k">return</span> <span class="bp">True</span>
 
     <span class="k">def</span> <span class="nf">kill_and_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sleep_time</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span></div>
-<div class="viewcode-block" id="OscillateStop.kill_and_rotate"><a class="viewcode-back" href="../../../commands/api/apetools.commands.oscillate.OscillateStop.kill_and_rotate.html#apetools.commands.oscillate.OscillateStop.kill_and_rotate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OscillateStop.kill_and_rotate"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.oscillate.html#apetools.commands.oscillate.OscillateStop.kill_and_rotate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `sleep`: time to sleep between oscillate and rotate commands</span>

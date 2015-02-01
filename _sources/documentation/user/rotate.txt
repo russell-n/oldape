@@ -5,6 +5,12 @@ Rotate Configuration
 
 This explains the `[ROTATE]` section of a configuration file. It assumes that there is a PC connected to the turntable with the `rotate` command installed on it.
 
+Contents:
+
+   * :ref:`Setting up the TEST Section <rotate-configuration-test-section>`
+
+   * :ref:`Setting up the ROTATE Section <rotate-configuration-rotate-section>`
+
 .. _rotate-configuration-test-section:
 
 The TEST Section
@@ -22,7 +28,7 @@ As always, you can add more things to the options using a comma-separated list. 
    setup_test = rotate, sleep
    execute_test = iperf
 
-Just remember that everything added to this section needs a corresponding section later in the configuration file with a capitalized version of the option as a header. For example, this setup will expect ``[SLEEP]``, ``[ROTATE]``, and ``[IPERF]`` sections somewhere in the configuration file.
+Just remember that everthing added to this section needs a corresponding section later in the configuration file with a capitalized version of the option as a header. For example, this setup will expect ``[SLEEP]``, ``[ROTATE]``, and ``[IPERF]`` sections somewhere in the configuration file.
 
 .. _rotate-configuration-rotate-section:
 
@@ -32,7 +38,9 @@ The ROTATE Section
 An example setup would be::
 
    [ROTATE]
-   node1 = hostname:phoridfly, username:root, password:testlabs
+   hostname = phoridfly
+   username = root
+   #password = 
    angles = 180,0:50,45,90:100, 270:10
 
 
@@ -43,15 +51,12 @@ An example setup would be::
 * Negative numbers rotate clockwise (depending on the table)
 
 * The PC connected to the turntable to control it is assumed to have an SSH connection to it so the first three parameters are to log in to it
-  
-* The convoluted node information was added to accomodate a request for multiple turntables -- add as many lines as there are turntables to control.
 
-.. note:: At the time the request was made to extend this to handle multiple turntables the use-case was for them to rotate in lock-step (i.e. the same angles) the :ref:`newer table <rotate-cube-configuration>` accomodates different angle lists but this does not. Since these turntables are being replaced because of a flaw in the design I assume that they won't be used any more so I'm not updating their behavior.
 
 The Tables
 ----------
 
-There are two-tables that this is meant to work with -- a servo-based turntable and a motor-based one. 
+There are two-tables that this is meant to work with -- a servo-based turntable (currently at Allion Labs) and a motor-based one (Cynthia Lane). 
 
 The servo-based turntable won't rotate as far or with as fine a degree of separation between changes in angle and it uses absolute angles (so there's no such thing as a direction, it will always turn clockwise if the chosen angle is less than the current angle or anti-clockwise if the chosen angle is greater than the current one).
 

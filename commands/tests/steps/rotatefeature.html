@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -173,7 +173,7 @@
     <span class="n">config</span> <span class="o">=</span> <span class="n">ConfigurationMap</span><span class="p">(</span><span class="s">&#39;test&#39;</span><span class="p">)</span>
     <span class="n">config</span><span class="o">.</span><span class="n">_parser</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">parser</span>
 
-    <span class="n">context</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+    <span class="n">context</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="n">RotateParameters</span><span class="p">(</span><span class="n">configuration</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
                                          <span class="n">section</span><span class="o">=</span><span class="s">&#39;ape&#39;</span><span class="p">)</span>
     <span class="n">context</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
     <span class="n">context</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">identifier</span> <span class="o">=</span> <span class="s">&#39;table1&#39;</span>
@@ -225,7 +225,7 @@
       config = ConfigurationMap(&#39;test&#39;)
       config._parser = context.parser
 
-      context.arguments = RotateArgumentsGenerator(configuration=config,
+      context.arguments = RotateParameters(configuration=config,
                                            section=&#39;ape&#39;)
 
       context.connection = MagicMock()

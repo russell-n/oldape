@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -156,7 +156,7 @@
 <span class="sd">    The Ps Command issues commands and watches for errors</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="PsCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsCommand.html#apetools.commands.pscommand.PsCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        PsCommand Constructor</span>
 
 <span class="sd">        :param:</span>
@@ -167,9 +167,9 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">PsCommand</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">arguments</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PsCommand.arguments"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsCommand.html#apetools.commands.pscommand.PsCommand.arguments">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        ``ps`` arguments based on the connection.operating_system</span>
 <span class="sd">        </span>
 <span class="sd">        :return: argument string for the ``ps`` call        </span>
@@ -184,9 +184,9 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span> <span class="o">=</span> <span class="s">&quot;-e&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arguments</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">error_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PsCommand.error_expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsCommand.html#apetools.commands.pscommand.PsCommand.error_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Holds the expression to match error messages</span>
 
 <span class="sd">        :return: compiled regular expression to match error messages</span>
@@ -208,17 +208,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">missing</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="n">bad_arg</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_error_expression</span>
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="PsCommand.run"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsCommand.html#apetools.commands.pscommand.PsCommand.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calls ``ps`` on the connection</span>
 
 <span class="sd">        :return: output from the connections call to ps (stdout, stderr)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PsCommand.command"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsCommand.html#apetools.commands.pscommand.PsCommand.command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        `ps`</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_command</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -227,7 +227,7 @@
 
 
 <span class="c"># linux ps expressions</span>
-<span class="n">PID</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span></div></div>
+<span class="n">PID</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">,</span></div>
                            <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span><span class="p">)</span>
 <span class="n">TTY</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span><span class="s">&quot;\?&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s">&quot;pts/&quot;</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NATURAL</span> <span class="o">+</span>
                     <span class="n">oatbran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NOT_SPACES</span><span class="p">)</span>
@@ -261,7 +261,7 @@
 <span class="sd">    The Ps command adapted to extract process IDs.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="PsGrep.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsGrep.html#apetools.commands.pscommand.PsGrep.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        PsGrep Constructon</span>
 
 <span class="sd">        :param:</span>
@@ -271,9 +271,9 @@
         <span class="nb">super</span><span class="p">(</span><span class="n">PsGrep</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span>
             
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">process_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PsGrep.process_query"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsGrep.html#apetools.commands.pscommand.PsGrep.process_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The ``top`` command</span>
 
 <span class="sd">        :return: PsCommand to return output from the ``top`` command.</span>
@@ -283,9 +283,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span> <span class="o">=</span> <span class="n">PsCommand</span><span class="p">(</span><span class="n">connection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_query</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PsGrep.expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.PsGrep.html#apetools.commands.pscommand.PsGrep.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets the regular expression to match output based on the connection.operating_system</span>
 <span class="sd">        </span>
 <span class="sd">        :return: compiled regular expression for the ps command</span>
@@ -316,7 +316,7 @@
 
 
 <span class="c">#python standard library</span>
-<span class="kn">import</span> <span class="nn">unittest</span></div></div>
+<span class="kn">import</span> <span class="nn">unittest</span></div>
 <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
 <span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">ascii_letters</span>
@@ -1177,7 +1177,7 @@
         <span class="k">return</span>
     
     <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestPs.test_constructor"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPs.test_constructor.html#apetools.commands.pscommand.TestPs.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the constructor have the expected signature?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">connection</span><span class="o">=</span><span class="n">MagicMock</span><span class="p">()</span>
@@ -1185,25 +1185,25 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">ps</span><span class="o">.</span><span class="n">connection</span><span class="p">,</span> <span class="n">connection</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">test_wrong_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestPs.test_wrong_command"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPs.test_wrong_command.html#apetools.commands.pscommand.TestPs.test_wrong_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the PsCommand raise a CommandError if ``ps`` isn&#39;t installed?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="s">&#39;ps: command not found&#39;</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">test_wrong_command_nexus</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestPs.test_wrong_command_nexus"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPs.test_wrong_command_nexus.html#apetools.commands.pscommand.TestPs.test_wrong_command_nexus">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the wrong-command expression match a nexus 7 error message?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="s">&#39;/system/bin/sh: ps: not found&#39;</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">test_bad_argument</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestPs.test_bad_argument"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPs.test_bad_argument.html#apetools.commands.pscommand.TestPs.test_bad_argument">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does PsCommand raise a CommandError if a bad command is given?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;error: unsupported SysV option&#39;</span>
@@ -1211,17 +1211,17 @@
         <span class="k">return</span>
 
 
-    <span class="k">def</span> <span class="nf">test_bad_argument_android</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestPs.test_bad_argument_android"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPs.test_bad_argument_android.html#apetools.commands.pscommand.TestPs.test_bad_argument_android">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">test_bad_argument_android</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does PsCommand raise a CommandError if a bad command is given on an Android (no)&quot;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">line</span> <span class="o">=</span> <span class="s">&#39;USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">check_errors</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span></div>
+    <span class="nd">@raises</span><span class="p">(</span><span class="n">CommandError</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">test_standard_error</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestPs.test_standard_error"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPs.test_standard_error.html#apetools.commands.pscommand.TestPs.test_standard_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does an error from standard error get passed to the checker?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;ps: command not found&#39;</span><span class="p">]</span>
@@ -1229,8 +1229,8 @@
             <span class="k">pass</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">test_no_processes_found</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestPs.test_no_processes_found"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPs.test_no_processes_found.html#apetools.commands.pscommand.TestPs.test_no_processes_found">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">test_no_processes_found</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Is a warning raised if no processes are found?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">]</span>
@@ -1242,7 +1242,7 @@
         <span class="k">return</span>
 
 
-<span class="k">class</span> <span class="nc">TestPsGrep</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span></div>
+<span class="k">class</span> <span class="nc">TestPsGrep</span><span class="p">(</span><span class="n">unittest</span><span class="o">.</span><span class="n">TestCase</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">MagicMock</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_process</span> <span class="o">=</span> <span class="s">&#39;spotify&#39;</span>
@@ -1251,7 +1251,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">test_call</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestPsGrep.test_call"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPsGrep.test_call.html#apetools.commands.pscommand.TestPsGrep.test_call">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the `__call__` return all the matching PIDs?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">ps</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="p">(</span><span class="n">ubuntu_lines</span><span class="p">,</span> <span class="p">[</span><span class="s">&#39;&#39;</span><span class="p">])</span>
@@ -1261,8 +1261,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">getty_pids</span><span class="p">))</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestPsGrep.test_constructor"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPsGrep.test_constructor.html#apetools.commands.pscommand.TestPsGrep.test_constructor">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">test_constructor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the constructor have the expected signature?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">process</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ascii_letters</span><span class="p">)</span> <span class="k">for</span> <span class="n">letter</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">randrange</span><span class="p">(</span><span class="mi">10</span><span class="p">))])</span>
@@ -1273,16 +1273,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertEqual</span><span class="p">(</span><span class="n">grep</span><span class="o">.</span><span class="n">field</span><span class="p">,</span> <span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">process</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">test_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestPsGrep.test_unmatched"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPsGrep.test_unmatched.html#apetools.commands.pscommand.TestPsGrep.test_unmatched">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">test_unmatched</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the expression not match lines similar to the process-lines?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">assertIsNone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">grep</span><span class="o">.</span><span class="n">expression</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">first_ubuntu_line</span><span class="p">))</span>
         <span class="k">return</span>
 
 
-    <span class="k">def</span> <span class="nf">test_call_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestPsGrep.test_call_parameter"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPsGrep.test_call_parameter.html#apetools.commands.pscommand.TestPsGrep.test_call_parameter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">test_call_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does passing in the name of the process override the process passed in on construction?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">found</span> <span class="o">=</span> <span class="bp">False</span>
@@ -1293,8 +1293,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">assertTrue</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">test_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestPsGrep.test_expression"><a class="viewcode-back" href="../../../commands/api/apetools.commands.pscommand.TestPsGrep.test_expression.html#apetools.commands.pscommand.TestPsGrep.test_expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">test_expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Does the expression match the output lines correctly?</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ubuntu_lines</span><span class="p">):</span>
@@ -1310,7 +1310,7 @@
                                                                     <span class="n">pid_map</span><span class="p">[</span><span class="n">ProcessGrepEnum</span><span class="o">.</span><span class="n">pid</span><span class="p">]))</span>
         <span class="k">return</span>
 
-    <span class="k">def</span> <span class="nf">test_name_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+    <span class="k">def</span> <span class="nf">test_name_field</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If the process-name-field is set, will it yield the names instead of PID?</span>
 <span class="sd">        &quot;&quot;&quot;</span>

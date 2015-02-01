@@ -39,34 +39,3 @@ Scenario: User sets the connection's identifier
         return
     
 
-
-
-Scenario: User doesn't set the connection's identifier
-------------------------------------------------------
-
-::
-
-    @given("an ssh connection created with no identifier")
-    def sshconnection_no_id(context):
-        context.hostname = 'apple'
-        context.connection = SSHConnection(hostname=context.hostname,
-                                   username='banana')
-        return
-    
-
-
-
-  When the connection's identifier is checked
-
-.. '
-  
-::
-
-    @then("the connection's identifier is the hostname")
-    def hostname_identifier(context):
-        assert_that(context.connection.identifier,
-                    is_(equal_to(context.hostname)))
-        
-        return
-    
-

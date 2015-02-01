@@ -31,7 +31,7 @@
     <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
     <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
     <link rel="next" title="Sample Configuration" href="sample_configuration.html" />
-    <link rel="prev" title="Basic Usage" href="basic_usage.html" />
+    <link rel="prev" title="Watchlogs Configuration" href="watchlogs.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -141,7 +141,7 @@
               
                 
   <li>
-    <a href="basic_usage.html" title="Previous Chapter: Basic Usage"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Basic Usage</span>
+    <a href="watchlogs.html" title="Previous Chapter: Watchlogs Configuration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Watchlogs Config...</span>
     </a>
   </li>
   <li>
@@ -181,7 +181,7 @@
       
   <div class="section" id="the-configuration-file">
 <h1>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Permalink to this headline">¶</a></h1>
-<p id="configuration-file">The configuration file is how a particular test or set of tests is run. When the <cite>run</cite> sub-command is given:</p>
+<p id="configuration-file">The configuration file is how a particular test or set of test is run. When the <cite>run</cite> sub-command is given:</p>
 <div class="highlight-python"><div class="highlight"><pre>ape run
 </pre></div>
 </div>
@@ -214,7 +214,6 @@
 <span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
 </pre></div>
 </div>
-<p>The values that can go in the section are properties of a class that has them mapped to the code to build them (see the <a class="reference internal" href="../../builders/subbuilders/toolbuilder.html#apetools-tool-builder"><em>ToolBuilder Documentation</em></a>) for the values allowed. Generally speaking, for each value declared (e.g. <tt class="docutils literal"><span class="pre">oscillate</span></tt>) there should be an upper-cased section header in the configuration file that gives the parameters for it (e.g. <tt class="docutils literal"><span class="pre">[OSCILLATE]</span></tt>).</p>
 <div class="section" id="operation-setup">
 <h4>Operation Setup<a class="headerlink" href="#operation-setup" title="Permalink to this headline">¶</a></h4>
 <p>The <cite>operation_setup</cite> option is run once per test (conceptually a configuration file corresponds to a single test, so these components will only be run once per file-setup). An example use of this option is to run the <cite>watchlogs</cite> component which captures various logs from devices:</p>

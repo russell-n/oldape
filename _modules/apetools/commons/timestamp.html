@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -146,7 +146,7 @@
 
 
 <span class="k">class</span> <span class="nc">TimestampFormatEnums</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimestampFormatEnums"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.timestamp.html#apetools.commons.timestamp.TimestampFormatEnums">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to hold the format names</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
@@ -154,12 +154,12 @@
     <span class="n">log</span> <span class="o">=</span> <span class="s">&#39;log&#39;</span>
 <span class="c"># end class TimestampFormatEnums</span>
 
-<span class="n">formats</span> <span class="o">=</span> <span class="p">{</span><span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">iperf</span><span class="p">:</span><span class="s">&quot;%Y%m</span><span class="si">%d</span><span class="s">%H%M%S&quot;</span><span class="p">,</span>
+<span class="n">formats</span> <span class="o">=</span> <span class="p">{</span><span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">iperf</span><span class="p">:</span><span class="s">&quot;%Y%m</span><span class="si">%d</span><span class="s">%H%M%S&quot;</span><span class="p">,</span></div>
            <span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">log</span><span class="p">:</span><span class="n">LOG_TIMESTAMP</span><span class="p">}</span>
 
 
 <span class="k">class</span> <span class="nc">TimestampFormat</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="TimestampFormat"><a class="viewcode-back" href="../../../commons/api/apetools.commons.timestamp.TimestampFormat.html#apetools.commons.timestamp.TimestampFormat">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimestampFormat"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.timestamp.html#apetools.commons.timestamp.TimestampFormat">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to hold timestampformats</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">format_type</span><span class="o">=</span><span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">log</span><span class="p">):</span>
@@ -175,7 +175,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimestampFormat.format"><a class="viewcode-back" href="../../../commons/api/apetools.commons.timestamp.TimestampFormat.format.html#apetools.commons.timestamp.TimestampFormat.format">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimestampFormat.format"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.timestamp.html#apetools.commons.timestamp.TimestampFormat.format">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the strftime format</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">formats</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">format_type</span><span class="p">]</span>
@@ -183,13 +183,13 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimestampFormat.now"><a class="viewcode-back" href="../../../commons/api/apetools.commons.timestamp.TimestampFormat.now.html#apetools.commons.timestamp.TimestampFormat.now">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimestampFormat.now"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.timestamp.html#apetools.commons.timestamp.TimestampFormat.now">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: timestamp for now</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">convert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">time_in_seconds</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimestampFormat.convert"><a class="viewcode-back" href="../../../commons/api/apetools.commons.timestamp.TimestampFormat.convert.html#apetools.commons.timestamp.TimestampFormat.convert">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimestampFormat.convert"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.timestamp.html#apetools.commons.timestamp.TimestampFormat.convert">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `time_in_seconds`: seconds since the epoch (as float)</span>

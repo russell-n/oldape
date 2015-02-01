@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -168,11 +168,11 @@
 
 
 <span class="k">class</span> <span class="nc">SSHClient</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">SSHClient</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHClient"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHClient"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Subclasses paramiko&#39;s SSHClient to add a timeout.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">combine_stderr</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHClient.exec_command"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHClient.exec_command"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `command`: A string to send to the client.</span>
@@ -196,7 +196,7 @@
         <span class="k">return</span> <span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span>
 
     <span class="k">def</span> <span class="nf">invoke_shell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="o">=</span><span class="s">&#39;vt100&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SSHClient.invoke_shell"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.invoke_shell">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHClient.invoke_shell"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.invoke_shell">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `term`: Terminal to emulate.</span>
@@ -218,7 +218,7 @@
         <span class="k">return</span> <span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span>
 
     <span class="k">def</span> <span class="nf">invoke_shell_rw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">term</span><span class="o">=</span><span class="s">&#39;vt100&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=-</span><span class="mi">1</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SSHClient.invoke_shell_rw"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.invoke_shell_rw">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHClient.invoke_shell_rw"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient.invoke_shell_rw">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `term`: Terminal to emulate.</span>
@@ -242,13 +242,13 @@
 
 
 <span class="k">class</span> <span class="nc">SimpleClient</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="SimpleClient"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SimpleClient"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A simple wrapper around paramiko&#39;s SSHClient.</span>
 
 <span class="sd">    The only intended public interface is exec_command.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
-<div class="viewcode-block" id="SimpleClient.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SimpleClient.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `hostname`: ip address or resolvable hostname.</span>
@@ -268,7 +268,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SimpleClient.exec_command"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SimpleClient.exec_command"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.exec_command">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A pass-through to the SSHClient&#39;s exec_command.</span>
 
 <span class="sd">        :param:</span>
@@ -303,7 +303,7 @@
         
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SimpleClient.client"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SimpleClient.client"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: paramiko.SSHClient</span>
 <span class="sd">        :return: An instance of SSHClient connected to remote host.</span>
 <span class="sd">        :raise: ClientError if the connection fails.</span>
@@ -327,7 +327,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SimpleClient.__str__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SimpleClient.__str__.html#apetools.connections.sshconnection.SimpleClient.__str__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: username, hostname, port, password in string</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">user</span> <span class="o">=</span> <span class="s">&quot;Username: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">username</span><span class="p">)</span>
@@ -336,8 +336,8 @@
         <span class="n">password</span> <span class="o">=</span> <span class="s">&quot;Password: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">password</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">NEWLINE</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">user</span><span class="p">,</span> <span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">password</span><span class="p">])</span>
 
-    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SimpleClient.close"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+<div class="viewcode-block" id="SimpleClient.close"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient.close">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: client&#39;s connection is closed and self._client is None                </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
@@ -347,11 +347,11 @@
 
 
 <span class="k">class</span> <span class="nc">SSHConnection</span><span class="p">(</span><span class="n">NonLocalConnection</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="SSHConnection"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnection"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An SSHConnection executes commands over an SSHConnection</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">,</span> <span class="n">username</span><span class="p">,</span>
-<div class="viewcode-block" id="SSHConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.__init__">[docs]</a>                 <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+<div class="viewcode-block" id="SSHConnection.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.__init__">[docs]</a>                 <span class="n">password</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">22</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
                  <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        SSHConnection Constructor</span>
@@ -377,17 +377,8 @@
         <span class="k">return</span>
 
     <span class="nd">@property</span></div>
-    <span class="k">def</span> <span class="nf">identifier</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnection.identifier"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHConnection.identifier.html#apetools.connections.sshconnection.SSHConnection.identifier">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        an alternative string identifier (defaults to hostname)</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hostname</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_identifier</span>
-
-    <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="SSHConnection.client"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHConnection.client.html#apetools.connections.sshconnection.SSHConnection.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnection.client"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.client">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: SimpleClient for the SSHConnection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -398,7 +389,7 @@
     
 
     <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">timeout</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SSHConnection._main"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHConnection._main.html#apetools.connections.sshconnection.SSHConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnection._main"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection._main">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This isn&#39;t intended to be run.</span>
 <span class="sd">        The . notation is the expected interface.</span>
 <span class="sd">        </span>
@@ -433,7 +424,7 @@
         <span class="k">return</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">OutputFile</span><span class="p">(</span><span class="n">stdout</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">),</span> <span class="n">OutputFile</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_errors</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">check_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SSHConnection.check_errors"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.SSHConnection.check_errors.html#apetools.connections.sshconnection.SSHConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SSHConnection.check_errors"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection.check_errors">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Doesn&#39;t do anything - SSHClient handles ssh errors. Overwrite in sub-classes if needed</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span>
@@ -444,17 +435,17 @@
 
 
 <span class="k">class</span> <span class="nc">OutputFile</span><span class="p">(</span><span class="n">ValidatingOutput</span><span class="p">):</span></div>
-<div class="viewcode-block" id="OutputFile"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OutputFile"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to handle the ssh output files</span>
 
 <span class="sd">    This traps socket timeouts.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="OutputFile.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">OutputFile</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="OutputFile.__init__"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">OutputFile</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">readline</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span></div>
-<div class="viewcode-block" id="OutputFile.readline"><a class="viewcode-back" href="../../../connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="OutputFile.readline"><a class="viewcode-back" href="../../../documentation/developer/connections/api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile.readline">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `timeout`: The length of time to wait for output</span>

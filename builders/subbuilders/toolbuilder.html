@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -108,7 +108,7 @@
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">Tool Builder</a><ul>
 <li><a class="reference internal" href="#the-tool-builder-enum">The Tool Builder Enum</a></li>
-<li><a class="reference internal" href="#the-tool-builder">The Tool Builder</a></li>
+<li><a class="reference internal" href="#module-apetools.builders.subbuilders.toolbuilder">The Tool Builder</a></li>
 </ul>
 </li>
 </ul>
@@ -166,8 +166,7 @@
 <p class="last">This will eventually be replaced by the importer class(es)</p>
 </div>
 <div class="section" id="the-tool-builder-enum">
-<span id="apetools-tool-builder-enum"></span><h2>The Tool Builder Enum<a class="headerlink" href="#the-tool-builder-enum" title="Permalink to this headline">¶</a></h2>
-<p>It looks like the Enum is a red-herring. The <em>BaseOperationBuilder</em> is just getting properties from the <em>ToolBuilder</em> (using <em>gettattr</em>).</p>
+<h2>The Tool Builder Enum<a class="headerlink" href="#the-tool-builder-enum" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ToolBuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
     <span class="n">ners</span> <span class="o">=</span> <span class="s">&quot;ners&quot;</span>
@@ -181,87 +180,26 @@
     <span class="n">oscillatestop</span> <span class="o">=</span> <span class="s">&#39;oscillatestop&#39;</span>
     <span class="n">sleep</span> <span class="o">=</span> <span class="s">&#39;sleep&#39;</span>
     <span class="n">naxxx</span> <span class="o">=</span> <span class="s">&#39;naxxx&#39;</span>
-    <span class="n">busyboxwget</span> <span class="o">=</span> <span class="s">&#39;busyboxwget&#39;</span>
-    <span class="n">rotate_cube</span> <span class="o">=</span> <span class="s">&#39;rotate_cube&#39;</span>
+    <span class="n">busyboxwget</span> <span class="o">=</span> <span class="s">&#39;busiboxwget&#39;</span>
 <span class="c"># end class ToolBuilderEnum</span>
 </pre></div>
 </div>
 </div>
-<div class="section" id="the-tool-builder">
-<span id="apetools-tool-builder"></span><h2>The Tool Builder<a class="headerlink" href="#the-tool-builder" title="Permalink to this headline">¶</a></h2>
-<p>The <cite>ToolBuilder</cite> is used by the <a class="reference internal" href="baseoperationbuilder.html#apetools-baseoperationbuilder"><em>BaseOperationBuilder</em></a> to find the classes that build the code the user has requested in the configuration file. The names of the properties are what should be in the configuration file&#8217;s [TEST] section.</p>
-<p>For example, the <cite>dumpdevicestate</cite> is meant to run in the <cite>operation_setup</cite> phase, and <cite>iperf</cite> in the <cite>execute_test section</cite>, so the configuration file that declares it would have this in it (along with other things).</p>
-<div class="highlight-ini"><div class="highlight"><pre><span class="k">[TEST]</span>
-<span class="na">operation_setup</span> <span class="o">=</span> <span class="s">dumpdevicestate</span>
-<span class="na">execute_test</span> <span class="o">=</span> <span class="s">iperf</span>
-</pre></div>
-</div>
-<p>With the values corresponding to <cite>ToolBuilder.dumpdevicestate</cite> and <cite>ToolBuilder.iperf</cite>.</p>
-<span class="target" id="module-apetools.builders.subbuilders.toolbuilder"></span><table border="1" class="longtable docutils">
+<div class="section" id="module-apetools.builders.subbuilders.toolbuilder">
+<span id="the-tool-builder"></span><h2>The Tool Builder<a class="headerlink" href="#module-apetools.builders.subbuilders.toolbuilder" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder</span></tt></a>()</td>
 <td>An aggregator of tool builders</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.apconnect</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.busyboxwget</span></tt></a></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.busyboxwget</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.commandwatch</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.dumpdevicestate</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.iperf</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.naxxx</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.ners</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillate</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillatestop</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweroff</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweron</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A builder for the Synaxxx power on</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.rotate</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate_cube.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate_cube" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate_cube"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.rotate_cube</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">RotateUsurperBuilder</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.sleep</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.sleep</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -272,10 +210,7 @@
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.timetorecovery</span></tt></a></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.watchlogs</span></tt></a></td>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.watchlogs</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -285,6 +220,50 @@
 </tbody>
 </table>
 </td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillatestop</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillate</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.commandwatch</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.rotate</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweron</span></tt></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A builder for the Synaxxx power on</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweroff</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.ners</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.apconnect</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.timetorecovery</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.dumpdevicestate</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.iperf</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.naxxx</span></tt></a></td>
+<td></td>
 </tr>
 </tbody>
 </table>

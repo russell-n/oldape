@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -154,7 +154,7 @@
 
 
 <span class="k">class</span> <span class="nc">BaseClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseClass"><a class="viewcode-back" href="../../api/apetools.baseclass.BaseClass.html#apetools.baseclass.BaseClass">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseClass"><a class="viewcode-back" href="../../documentation/developer/api/base_api/apetools.baseclass.html#apetools.baseclass.BaseClass">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class holds the minimum common features.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -163,7 +163,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="BaseClass.logger"><a class="viewcode-back" href="../../api/apetools.baseclass.BaseClass.logger.html#apetools.baseclass.BaseClass.logger">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseClass.logger"><a class="viewcode-back" href="../../documentation/developer/api/base_api/apetools.baseclass.html#apetools.baseclass.BaseClass.logger">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: A logging object with module name and class name set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -172,7 +172,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span>
 
     <span class="k">def</span> <span class="nf">log_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
-<div class="viewcode-block" id="BaseClass.log_error"><a class="viewcode-back" href="../../api/apetools.baseclass.BaseClass.log_error.html#apetools.baseclass.BaseClass.log_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseClass.log_error"><a class="viewcode-back" href="../../documentation/developer/api/base_api/apetools.baseclass.html#apetools.baseclass.BaseClass.log_error">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Logs the message as an error, adding extra formatting</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">RED_RESET</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thing</span><span class="o">=</span><span class="n">message</span><span class="p">))</span>
@@ -182,7 +182,7 @@
 
 
 <span class="k">class</span> <span class="nc">BaseThreadClass</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="BaseThreadClass"><a class="viewcode-back" href="../../api/apetools.baseclass.BaseThreadClass.html#apetools.baseclass.BaseThreadClass">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseThreadClass"><a class="viewcode-back" href="../../documentation/developer/api/base_api/apetools.baseclass.html#apetools.baseclass.BaseThreadClass">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Extends the base-class with a run_thread method that logs the traceback on error.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -191,7 +191,7 @@
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">run_thread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span></div>
-<div class="viewcode-block" id="BaseThreadClass.run_thread"><a class="viewcode-back" href="../../api/apetools.baseclass.BaseThreadClass.run_thread.html#apetools.baseclass.BaseThreadClass.run_thread">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="BaseThreadClass.run_thread"><a class="viewcode-back" href="../../documentation/developer/api/base_api/apetools.baseclass.html#apetools.baseclass.BaseThreadClass.run_thread">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        To use:</span>
 
 <span class="sd">           * define run(*args, **kwargs) in child</span>
@@ -206,7 +206,7 @@
             <span class="kn">import</span> <span class="nn">traceback</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span>        
 <span class="c"># end BaseThreadClass</span>
 </pre></div></div></div>
 

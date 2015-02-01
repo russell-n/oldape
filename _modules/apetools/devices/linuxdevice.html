@@ -72,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -145,7 +145,7 @@
 
 
 <span class="k">class</span> <span class="nc">LinuxDevice</span><span class="p">(</span><span class="n">BaseDevice</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.html#apetools.devices.linuxdevice.LinuxDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to configure and query linux devices</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -162,7 +162,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">ifconfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.ifconfig"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.ifconfig.html#apetools.devices.linuxdevice.LinuxDevice.ifconfig">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.ifconfig"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.ifconfig">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: ifconfig command</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ifconfig</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -173,7 +173,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">wifi_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.wifi_query"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.wifi_query.html#apetools.devices.linuxdevice.LinuxDevice.wifi_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.wifi_query"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.wifi_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: wifi_query command (Iwconfig command object)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_query</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -183,7 +183,7 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.address.html#apetools.devices.linuxdevice.LinuxDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.address"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the IP address of the device (using ifconfig)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -192,35 +192,35 @@
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.mac_address"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.mac_address.html#apetools.devices.linuxdevice.LinuxDevice.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the MAC address of the device (using ifconfig)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ifconfig</span><span class="o">.</span><span class="n">mac_address</span>
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">bssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.bssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.bssid.html#apetools.devices.linuxdevice.LinuxDevice.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.bssid"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.bssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: AP MAC address (using iwconfig)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wifi_query</span><span class="o">.</span><span class="n">bssid</span>
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.ssid"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.ssid.html#apetools.devices.linuxdevice.LinuxDevice.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.ssid"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: AP SSID (using iwconfig)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wifi_query</span><span class="o">.</span><span class="n">ssid</span>
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">noise</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.noise"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.noise.html#apetools.devices.linuxdevice.LinuxDevice.noise">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.noise"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.noise">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: AP link noise (using iwconfig)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wifi_query</span><span class="o">.</span><span class="n">noise</span>
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">channel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.channel"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.channel.html#apetools.devices.linuxdevice.LinuxDevice.channel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.channel"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.channel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Not implemented</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;channel query not implemented&#39;</span><span class="p">)</span>
@@ -228,34 +228,34 @@
     
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.rssi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.rssi.html#apetools.devices.linuxdevice.LinuxDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.rssi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: rssi from the wifi_query</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wifi_query</span><span class="o">.</span><span class="n">rssi</span>
 
     <span class="nd">@property</span></div>
     <span class="k">def</span> <span class="nf">bitrate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LinuxDevice.bitrate"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.bitrate.html#apetools.devices.linuxdevice.LinuxDevice.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.bitrate"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.bitrate">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: bitrate from the wifi_query</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">wifi_query</span><span class="o">.</span><span class="n">bitrate</span>
 
     <span class="k">def</span> <span class="nf">disable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LinuxDevice.disable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.disable_wifi.html#apetools.devices.linuxdevice.LinuxDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.disable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        runs &#39;rfkill block wifi&#39; command</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">rfkill</span><span class="p">(</span><span class="s">&quot;block wifi&quot;</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">enable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LinuxDevice.enable_wifi"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.enable_wifi.html#apetools.devices.linuxdevice.LinuxDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.enable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        run &#39;rfkill unblock wifi&#39; command</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">rfkill</span><span class="p">(</span><span class="s">&quot;unblock wifi&quot;</span><span class="p">)</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LinuxDevice.log"><a class="viewcode-back" href="../../../devices/api/apetools.devices.linuxdevice.LinuxDevice.log.html#apetools.devices.linuxdevice.LinuxDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LinuxDevice.log"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.linuxdevice.html#apetools.devices.linuxdevice.LinuxDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sends the message to the syslog</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>

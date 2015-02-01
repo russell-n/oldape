@@ -30,7 +30,7 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
     <link rel="up" title="Commands" href="index.html" />
-    <link rel="next" title="apetools.commands.rotate.RotateArgumentsGenerator" href="api/apetools.commands.rotate.RotateArgumentsGenerator.html" />
+    <link rel="next" title="apetools.commands.rotate.RotateParameters" href="api/apetools.commands.rotate.RotateParameters.html" />
     <link rel="prev" title="apetools.commands.pscommand.TestPsGrep.test_call_parameter" href="api/apetools.commands.pscommand.TestPsGrep.test_call_parameter.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">APE Readme</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -108,7 +108,7 @@
       aria-labelledby="dLabelLocalToc"><ul>
 <li><a class="reference internal" href="#">The Rotate</a><ul>
 <li><a class="reference internal" href="#rotateerror">RotateError</a></li>
-<li><a class="reference internal" href="#rotateargumentsgenerator">RotateArgumentsGenerator</a></li>
+<li><a class="reference internal" href="#rotateparameters">RotateParameters</a></li>
 <li><a class="reference internal" href="#module-apetools.commands.rotate">RotateCommand</a></li>
 <li><a class="reference internal" href="#the-rotatecommandusurper">The RotateCommandUsurper</a></li>
 </ul>
@@ -126,7 +126,7 @@
     </a>
   </li>
   <li>
-    <a href="api/apetools.commands.rotate.RotateArgumentsGenerator.html" title="Next Chapter: apetools.commands.rotate.RotateArgumentsGenerator"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.command... &raquo;</span>
+    <a href="api/apetools.commands.rotate.RotateParameters.html" title="Next Chapter: apetools.commands.rotate.RotateParameters"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.command... &raquo;</span>
     </a>
   </li>
               
@@ -180,11 +180,11 @@
 </pre></div>
 </div>
 </div>
-<div class="section" id="rotateargumentsgenerator">
-<h2>RotateArgumentsGenerator<a class="headerlink" href="#rotateargumentsgenerator" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rotateparameters">
+<h2>RotateParameters<a class="headerlink" href="#rotateparameters" title="Permalink to this headline">¶</a></h2>
 <p>This is a class intended for the RotateCommand.__call__. It generates arguments based on what settings it gets. It is only concerned with the argument string(s) needed to be sent to the rotate command. Something else will have to make sure that the right arguments are sent to the right table.</p>
 <p class="plantuml">
-<img src="../_images/plantuml-9d0f7afb4e49ba998554b186c0ad7179094d1ca8.png" alt="RotateArgumentsGenerator o- ConfigurationMap" />
+<img src="../_images/plantuml-dde189ab4846232ad56204c34e8d5d8d2ff1b0d0.png" alt="RotateParameters o- ConfigurationMap" />
 </p>
 <span class="target" id="module-apetools.commands.rotate"></span><table border="1" class="longtable docutils">
 <colgroup>
@@ -192,13 +192,22 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.html#apetools.commands.rotate.RotateArgumentsGenerator" title="apetools.commands.rotate.RotateArgumentsGenerator"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator</span></tt></a>(configuration,&nbsp;section)</td>
-<td>RotateArgumentsGenerator for the rotate command</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters" title="apetools.commands.rotate.RotateParameters"><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters</span></tt></a>(configuration,&nbsp;section)</td>
+<td>RotateParameters for the rotate command</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.base_arguments.html#apetools.commands.rotate.RotateArgumentsGenerator.base_arguments" title="apetools.commands.rotate.RotateArgumentsGenerator.base_arguments"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.base_arguments</span></tt></a></td>
-<td>A Rotate BaseArguments object</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters.configuration</span></tt></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.values_string.html#apetools.commands.rotate.RotateArgumentsGenerator.values_string" title="apetools.commands.rotate.RotateArgumentsGenerator.values_string"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.values_string</span></tt></a></td>
+<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters.section</span></tt></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.angles" title="apetools.commands.rotate.RotateParameters.angles"><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters.angles</span></tt></a></td>
+<td>List of angles from the configuration</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.argument_strings" title="apetools.commands.rotate.RotateParameters.argument_strings"><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters.argument_strings</span></tt></a></td>
+<td>Generates argument strings for each angle</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.values_string" title="apetools.commands.rotate.RotateParameters.values_string"><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters.values_string</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -209,7 +218,7 @@
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.booleans_string.html#apetools.commands.rotate.RotateArgumentsGenerator.booleans_string" title="apetools.commands.rotate.RotateArgumentsGenerator.booleans_string"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.booleans_string</span></tt></a></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.booleans_string" title="apetools.commands.rotate.RotateParameters.booleans_string"><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters.booleans_string</span></tt></a></td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -220,56 +229,16 @@
 </table>
 </td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.angles.html#apetools.commands.rotate.RotateArgumentsGenerator.angles" title="apetools.commands.rotate.RotateArgumentsGenerator.angles"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.angles</span></tt></a></td>
-<td>List of angles from the configuration</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.argument_strings.html#apetools.commands.rotate.RotateArgumentsGenerator.argument_strings" title="apetools.commands.rotate.RotateArgumentsGenerator.argument_strings"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.argument_strings</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">list of argument strings for each angle</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.__len__.html#apetools.commands.rotate.RotateArgumentsGenerator.__len__" title="apetools.commands.rotate.RotateArgumentsGenerator.__len__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.__len__</span></tt></a>()</td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">number of angles</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.__lt__.html#apetools.commands.rotate.RotateArgumentsGenerator.__lt__" title="apetools.commands.rotate.RotateArgumentsGenerator.__lt__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.__lt__</span></tt></a>(other)</td>
-<td>&lt; operator</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.__le__.html#apetools.commands.rotate.RotateArgumentsGenerator.__le__" title="apetools.commands.rotate.RotateArgumentsGenerator.__le__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.__le__</span></tt></a>(other)</td>
-<td>&lt;= operator</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.__eq__.html#apetools.commands.rotate.RotateArgumentsGenerator.__eq__" title="apetools.commands.rotate.RotateArgumentsGenerator.__eq__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.__eq__</span></tt></a>(other)</td>
-<td>= operator</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.__ne__.html#apetools.commands.rotate.RotateArgumentsGenerator.__ne__" title="apetools.commands.rotate.RotateArgumentsGenerator.__ne__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.__ne__</span></tt></a>(other)</td>
-<td>!= operator</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.__gt__.html#apetools.commands.rotate.RotateArgumentsGenerator.__gt__" title="apetools.commands.rotate.RotateArgumentsGenerator.__gt__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.__gt__</span></tt></a>(other)</td>
-<td>&gt; operator</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateArgumentsGenerator.__ge__.html#apetools.commands.rotate.RotateArgumentsGenerator.__ge__" title="apetools.commands.rotate.RotateArgumentsGenerator.__ge__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateArgumentsGenerator.__ge__</span></tt></a>(other)</td>
-<td>&gt;= operator</td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateParameters.base_arguments" title="apetools.commands.rotate.RotateParameters.base_arguments"><tt class="xref py py-obj docutils literal"><span class="pre">RotateParameters.base_arguments</span></tt></a></td>
+<td>A Rotate BaseArguments object</td>
 </tr>
 </tbody>
 </table>
 <p>The basic idea (assuming you only have one table) is that you would traverse the <cite>argument_strings</cite> and send them to the call.</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">rotate</span> <span class="o">=</span> <span class="n">RotateCommand</span><span class="p">(</span><span class="n">connections</span><span class="o">=</span><span class="n">connection</span><span class="p">)</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="n">RotateArgumentsGenerator</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="s">&#39;table1&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">arguments</span> <span class="ow">in</span> <span class="n">parameters</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">:</span>
-    <span class="n">rotate</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="n">RotateParameters</span><span class="p">(</span><span class="n">configuration</span><span class="p">,</span> <span class="n">section</span><span class="o">=</span><span class="s">&#39;table1&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">arguments</span> <span class="ow">in</span> <span class="n">pramaters</span><span class="o">.</span><span class="n">argument_strings</span><span class="p">:</span>
+    <span class="n">command</span><span class="p">(</span><span class="n">arguments</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This is not nearly so straight-forward in the builders themselves since the rotate is called in between the iperf calls... how does this work?</p>
@@ -282,27 +251,16 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand" title="apetools.commands.rotate.RotateCommand"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand</span></tt></a>(connections[,&nbsp;retries])</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand" title="apetools.commands.rotate.RotateCommand"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand</span></tt></a>(connections[,&nbsp;retries])</td>
 <td>A class to issue a remote &#8216;rotate&#8217; command (older version for pre-Cameron turntables)</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.killers" title="apetools.commands.rotate.RotateCommand.killers"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.killers</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">rotate process killer</td>
+<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.kill</span></tt></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.kill_process" title="apetools.commands.rotate.RotateCommand.kill_process"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.kill_process</span></tt></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand.kill_process" title="apetools.commands.rotate.RotateCommand.kill_process"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.kill_process</span></tt></a>()</td>
 <td>Kills rotate processes over the connection</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.rotate" title="apetools.commands.rotate.RotateCommand.rotate"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.rotate</span></tt></a>(connection,&nbsp;arguments)</td>
-<td>sends the arguments to the connection</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateCommand.__call__.html#apetools.commands.rotate.RotateCommand.__call__" title="apetools.commands.rotate.RotateCommand.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.__call__</span></tt></a>(parameters[,&nbsp;...])</td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateCommand.__call__.html#apetools.commands.rotate.RotateCommand.__call__" title="apetools.commands.rotate.RotateCommand.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.__call__</span></tt></a>(parameters[,&nbsp;...])</td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -313,7 +271,7 @@
 </table>
 </td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommand.html#apetools.commands.rotate.RotateCommand.check_errors" title="apetools.commands.rotate.RotateCommand.check_errors"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.check_errors</span></tt></a>(line)</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommand.check_errors" title="apetools.commands.rotate.RotateCommand.check_errors"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommand.check_errors</span></tt></a>(line)</td>
 <td><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -329,8 +287,8 @@
 <p>This is the original rotate command when the tables were giving feedback for their positions.</p>
 </div>
 <div class="section" id="the-rotatecommandusurper">
-<span id="apetools-rotate-command-usurper"></span><h2>The RotateCommandUsurper<a class="headerlink" href="#the-rotatecommandusurper" title="Permalink to this headline">¶</a></h2>
-<p>This is the newer rotate command (as of November 3, 2014) that uses the replacement turntables built with raised platforms to temper the effects of electro-magnetic interference created by the turntable&#8217;s motor. As with the other command, it&#8217;s just sending and receiving strings over SSH so any device that implements the same interface will work.</p>
+<h2>The RotateCommandUsurper<a class="headerlink" href="#the-rotatecommandusurper" title="Permalink to this headline">¶</a></h2>
+<p>This is the newer rotate command (as of November 3, 2014) to use the replacement turntables built with raised platforms to temper the effects of electro-magnetic interferece created by the turntable&#8217;s motor.</p>
 <p class="plantuml">
 <img src="../_images/plantuml-052bd66527a2e3cce243a75317b5b4c5e8bb9c3d.png" alt="RotateCommand &lt;|-- RotateCommandUsurper" />
 </p>
@@ -340,19 +298,29 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommandUsurper.html#apetools.commands.rotate.RotateCommandUsurper" title="apetools.commands.rotate.RotateCommandUsurper"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommandUsurper</span></tt></a>(connections[,&nbsp;retries])</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommandUsurper" title="apetools.commands.rotate.RotateCommandUsurper"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommandUsurper</span></tt></a>(connections[,&nbsp;retries])</td>
 <td>Command to rotate turntables</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="api/apetools.commands.rotate.RotateCommandUsurper.__call__.html#apetools.commands.rotate.RotateCommandUsurper.__call__" title="apetools.commands.rotate.RotateCommandUsurper.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommandUsurper.__call__</span></tt></a>(parameters[,&nbsp;...])</td>
 <td>Main interface to rotate tables</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/casestudies/api/apetools.commands.rotate.RotateCommandUsurper.html#apetools.commands.rotate.RotateCommandUsurper.rotate" title="apetools.commands.rotate.RotateCommandUsurper.rotate"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommandUsurper.rotate</span></tt></a>(connection[,&nbsp;...])</td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.rotate.html#apetools.commands.rotate.RotateCommandUsurper.rotate" title="apetools.commands.rotate.RotateCommandUsurper.rotate"><tt class="xref py py-obj docutils literal"><span class="pre">RotateCommandUsurper.rotate</span></tt></a>(connection[,&nbsp;...])</td>
 <td>Assumes that the command will block until done and nothing unusual happens</td>
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span class="c"># this is for the builder to set the name of the parameters</span>
-<span class="n">ROTATE_USURPER_NAME</span> <span class="o">=</span> <span class="s">&#39;rotate_usurper&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">apetools.connections.sshconnection</span> <span class="kn">import</span> <span class="n">SSHConnection</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&quot;pogo2&quot;</span><span class="p">,</span> <span class="s">&quot;root&quot;</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">RotateCommand</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Rotate to 90 degrees&quot;</span>
+    <span class="n">r</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Rotate to 180 Degrees&quot;</span>
+    <span class="n">r</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span> <span class="s">&quot;Rotate to 0 degrees&quot;</span>
+    <span class="n">r</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
