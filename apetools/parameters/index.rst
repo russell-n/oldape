@@ -1,6 +1,8 @@
 Parameters
 ==========
 
+*Parameters* help configure commands that have (too) many parameters.
+
 
 .. toctree::
    :maxdepth: 1

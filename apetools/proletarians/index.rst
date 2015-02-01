@@ -1,6 +1,8 @@
 Proletarians
 ============
 
+*Proletarians* provide the infrastructure to do most of the ape's work.
+
 
 .. toctree::
    :maxdepth: 1
@@ -15,6 +17,9 @@ Proletarians
    Hortator <hortator.rst>
    List Strategy <liststrategy.rst>
    Setup Run <setuprun.rst>
+   Strategerizer <strategerizer.rst>
+   Tear Down <teardown.rst>
+   Test Operator <testoperator.rst>
 
 .. toctree::
    :maxdepth: 1

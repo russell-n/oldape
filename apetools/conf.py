@@ -11,8 +11,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys, os
-import alabaster
+# the bootstrap theme <https://pypi.python.org/pypi/sphinx-bootstrap-theme>
+import sphinx_bootstrap_theme
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -112,18 +112,17 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'bootstrap'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    'logo':'tuning_fork.jpg',
-    'logo_name': 'true'
+    'bootswatch_theme': 'readable'
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
-html_theme_path = [alabaster.get_path()]
+html_theme_path = sphinx_bootstrap_theme.get_html_theme_path()
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -155,9 +154,9 @@ html_static_path = ['_static']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-html_sidebars = {
-    '**': ['localtoc.html', 'navigation.html', 'searchbox.html']
-}
+#html_sidebars = {
+#    '**': ['localtoc.html', 'navigation.html', 'searchbox.html']
+#}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -190,7 +189,7 @@ html_show_sphinx = True
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-basename = "Throughput-Over-Time"
+basename = "The Old Ape"
 htmlhelp_basename = basename + 'doc'
 
 
@@ -212,7 +211,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'throughput_over_time.tex', basename + u' Test Documentation',
+  ('index', 'oldape.tex', basename + u' Test Documentation',
    u'russelln', 'manual'),
 ]
 

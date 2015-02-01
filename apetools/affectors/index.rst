@@ -1,6 +1,8 @@
 Affectors
 =========
 
+Affectors change the environment around the device under test using external hardware controllers.
+
 
 .. toctree::
    :maxdepth: 1

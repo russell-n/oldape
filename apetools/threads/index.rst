@@ -1,6 +1,8 @@
 Threads
 =======
 
+These are meant to help when using threads. I don't think I actually use them anywhere anymore.
+
 
 .. toctree::
    :maxdepth: 1

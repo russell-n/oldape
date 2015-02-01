@@ -1,6 +1,8 @@
 Pipes
 =====
 
+*Pipes* help split and combine output streams.
+
 
 .. toctree::
    :maxdepth: 1

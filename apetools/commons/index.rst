@@ -1,6 +1,8 @@
 Commons
 =======
 
+The Commons is a place where miscellaneous code that is shared by different parts of the ape are stored.
+
 
 .. toctree::
    :maxdepth: 1

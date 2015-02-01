@@ -1,6 +1,8 @@
 Parsers
 =======
 
+*Parsers* help extract text from text.
+
 
 .. toctree::
    :maxdepth: 1

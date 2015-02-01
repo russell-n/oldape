@@ -1,6 +1,8 @@
 Builders
 ========
 
+The Builders take the user's configuration and build the objects to be executed.
+
 
 .. toctree::
    :maxdepth: 1

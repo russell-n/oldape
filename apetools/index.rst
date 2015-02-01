@@ -33,6 +33,7 @@ These are the documents created from the source files.
    The BaseClass <baseclass.rst>
    The Log Setter <log_setter.rst>
    The Main Module <main.rst>
+   All-in-one Performance Evaluation Tools <readme.rst>
 
 .. toctree::
    :maxdepth: 1

@@ -1,6 +1,8 @@
 Operations
 ==========
 
+*Operations* hold the tools and runs them for the ape.
+
 
 .. toctree::
    :maxdepth: 1

@@ -1,6 +1,8 @@
 Tools
 =====
 
+*Tools* are bundles of commands meant to be used by the user.
+
 
 .. toctree::
    :maxdepth: 1

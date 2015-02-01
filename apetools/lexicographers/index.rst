@@ -1,6 +1,8 @@
 Lexicographers
 ==============
 
+*Lexicographers* create dictionaries from configurations.
+
 
 .. toctree::
    :maxdepth: 1

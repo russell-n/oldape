@@ -1,6 +1,8 @@
 Devices
 =======
 
+Devices bundle connections with OS-specific methods or data.
+
 
 .. toctree::
    :maxdepth: 1

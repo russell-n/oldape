@@ -1,6 +1,8 @@
 Connections
 ===========
 
+*Connections* provide the *ape* a way to communicate with external devices.
+
 
 .. toctree::
    :maxdepth: 1

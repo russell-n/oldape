@@ -1,6 +1,8 @@
 Watchers
 ========
 
+*Watchers* monitor data in the background while the rest of the ape is being run.
+
 
 .. toctree::
    :maxdepth: 1

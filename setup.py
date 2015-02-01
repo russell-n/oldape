@@ -10,21 +10,20 @@ except ImportError:
 from datetime import datetime
 
 setup(name='apetools',
-      version= datetime.today().strftime("%Y.%m.%d"),
+      version= datetime.today().strftime("0.0.3"),
       description="A program to run tests",
       author="russell",
       platforms=['linux'],
       url = '',
-      author_email="russellnakamura@us.allion.com",
+      author_email="rsnakamura@acm.org",
       license = "",
-      install_requires = ['pudb', 'paramiko', 'pyserial', 'numpy', 'mock', 'nose'],
+      install_requires = ['pudb', 'paramiko'],
       packages = find_packages(exclude=["__main__"]),
       include_package_data = True,
       package_data = {"apetools":["*.txt", "*.rst", "lexicographers/configfiles/*.ini"]},
       entry_points = """
 	  [console_scripts]
-          ape=apetools.main:main
-          takataka=apetools.parsers.main:main
+          apetools=apetools.main:main
 	  """
       )
 

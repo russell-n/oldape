@@ -1,6 +1,8 @@
 Sub-Builders
 ============
 
+The Sub-Builders build the tools that the user declares in the configuration file.
+
 
 .. toctree::
    :maxdepth: 1
