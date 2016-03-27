@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,95 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-baseclass">
-<h1>apetools.baseclass<a class="headerlink" href="#apetools-baseclass" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.baseclass">
+<span id="apetools-baseclass"></span><h1>apetools.baseclass<a class="headerlink" href="#module-apetools.baseclass" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.baseclass.BaseClass" title="apetools.baseclass.BaseClass"><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code></a>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.baseclass.BaseThreadClass" title="apetools.baseclass.BaseThreadClass"><code class="xref py py-obj docutils literal"><span class="pre">BaseThreadClass</span></code></a>()</td>
+<td>Extends the base-class with a run_thread method that logs the traceback on error.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.baseclass.BaseClass">
+<em class="property">class </em><code class="descclassname">apetools.baseclass.</code><code class="descname">BaseClass</code><a class="reference internal" href="../../../../_modules/apetools/baseclass.html#BaseClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.baseclass.BaseClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class holds the minimum common features.</p>
+<dl class="method">
+<dt id="apetools.baseclass.BaseClass.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/baseclass.html#BaseClass.log_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.baseclass.BaseClass.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.baseclass.BaseClass.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.baseclass.BaseClass.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.baseclass.BaseThreadClass">
+<em class="property">class </em><code class="descclassname">apetools.baseclass.</code><code class="descname">BaseThreadClass</code><a class="reference internal" href="../../../../_modules/apetools/baseclass.html#BaseThreadClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.baseclass.BaseThreadClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extends the base-class with a run_thread method that logs the traceback on error.</p>
+<dl class="method">
+<dt id="apetools.baseclass.BaseThreadClass.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.baseclass.BaseThreadClass.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.baseclass.BaseThreadClass.run_thread">
+<code class="descname">run_thread</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/baseclass.html#BaseThreadClass.run_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.baseclass.BaseThreadClass.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.baseclass.BaseThreadClass.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.baseclass.BaseThreadClass.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

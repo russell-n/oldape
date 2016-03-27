@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,41 +135,42 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.commons.events</h1><div class="highlight"><pre>
-<span class="c"># python standard library</span>
+<span></span>
+<span class="c1"># python standard library</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="c">#apetools</span>
+<span class="c1">#apetools</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 
 
-<span class="k">class</span> <span class="nc">EventHolder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="EventHolder"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.events.html#apetools.commons.events.EventHolder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="EventHolder"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.events.html#apetools.commons.events.EventHolder">[docs]</a><span class="k">class</span> <span class="nc">EventHolder</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder of events that will timeout</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="EventHolder.__init__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.events.EventHolder.html#apetools.commons.events.EventHolder.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="EventHolder.__init__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.events.EventHolder.html#apetools.commons.events.EventHolder.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `timeout`: if not None, quit after timeout</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">EventHolder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_events</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="EventHolder.events"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.events.html#apetools.commons.events.EventHolder.events">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a list of events</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_events</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_events</span> <span class="o">=</span> <span class="p">[]</span>        
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_events</span>
 
-    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span></div>
-<div class="viewcode-block" id="EventHolder.append"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.events.html#apetools.commons.events.EventHolder.append">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="EventHolder.append"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.events.html#apetools.commons.events.EventHolder.append">[docs]</a>    <span class="k">def</span> <span class="nf">append</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `event`: an event to add</span>
@@ -177,10 +178,10 @@
 <span class="sd">        :postcondition: event appended to self.events</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">event</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="EventHolder.wait"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.events.html#apetools.commons.events.EventHolder.wait">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="EventHolder.wait"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.events.html#apetools.commons.events.EventHolder.wait">[docs]</a>    <span class="k">def</span> <span class="nf">wait</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `timeout`: number of seconds to wait</span>
@@ -195,9 +196,9 @@
             <span class="k">if</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">end_time</span><span class="p">:</span>
                 <span class="k">return</span> <span class="bp">False</span>
             <span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span> <span class="o">-</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">wait_start</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">True</span>
-<span class="c"># end class EventHolder</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="bp">True</span></div></div>
+<span class="c1"># end class EventHolder</span>
+</pre></div>
 
     </div>
       
@@ -211,7 +212,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

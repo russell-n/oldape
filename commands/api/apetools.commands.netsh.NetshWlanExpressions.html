@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -29,6 +29,9 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../index.html" />
+    <link rel="up" title="Netsh" href="../netsh.html" />
+    <link rel="next" title="apetools.commands.netsh.NetshWlanExpressions.authentication" href="apetools.commands.netsh.NetshWlanExpressions.authentication.html" />
+    <link rel="prev" title="Netsh" href="../netsh.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -73,10 +76,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Commands</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Commands</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../commons/index.html">Commons</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
@@ -112,6 +115,14 @@
             
               
                 
+  <li>
+    <a href="../netsh.html" title="Previous Chapter: Netsh"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Netsh</span>
+    </a>
+  </li>
+  <li>
+    <a href="apetools.commands.netsh.NetshWlanExpressions.authentication.html" title="Next Chapter: apetools.commands.netsh.NetshWlanExpressions.authentication"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.comm... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -145,6 +156,374 @@
       
   <div class="section" id="apetools-commands-netsh-netshwlanexpressions">
 <h1>apetools.commands.netsh.NetshWlanExpressions<a class="headerlink" href="#apetools-commands-netsh-netshwlanexpressions" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="apetools.commands.netsh.NetshWlanExpressions">
+<em class="property">class </em><code class="descclassname">apetools.commands.netsh.</code><code class="descname">NetshWlanExpressions</code><a class="reference internal" href="../../_modules/apetools/commands/netsh.html#NetshWlanExpressions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions" title="Permalink to this definition">¶</a></dt>
+<dd><p>A container of expressions  for the output of <cite>netsh wlan show interfaces</cite></p>
+<dl class="method">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/apetools/commands/netsh.html#NetshWlanExpressions.__init__"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.__init__" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.netsh.NetshWlanExpressions.__init__" title="apetools.commands.netsh.NetshWlanExpressions.__init__"><code class="xref py py-obj docutils literal"><span class="pre">__init__</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.get_expression" title="apetools.commands.netsh.NetshWlanExpressions.get_expression"><code class="xref py py-obj docutils literal"><span class="pre">get_expression</span></code></a>(key,&nbsp;name)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">expression that matches anything in the value column</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.authentication" title="apetools.commands.netsh.NetshWlanExpressions.authentication"><code class="xref py py-obj docutils literal"><span class="pre">authentication</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression that gets the authentication type</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.bssid" title="apetools.commands.netsh.NetshWlanExpressions.bssid"><code class="xref py py-obj docutils literal"><span class="pre">bssid</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the BSSID</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.channel" title="apetools.commands.netsh.NetshWlanExpressions.channel"><code class="xref py py-obj docutils literal"><span class="pre">channel</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the channel</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.cipher" title="apetools.commands.netsh.NetshWlanExpressions.cipher"><code class="xref py py-obj docutils literal"><span class="pre">cipher</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the authentication cipher</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.connection_state" title="apetools.commands.netsh.NetshWlanExpressions.connection_state"><code class="xref py py-obj docutils literal"><span class="pre">connection_state</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the connection state</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.description" title="apetools.commands.netsh.NetshWlanExpressions.description"><code class="xref py py-obj docutils literal"><span class="pre">description</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the interface model</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.mac_address" title="apetools.commands.netsh.NetshWlanExpressions.mac_address"><code class="xref py py-obj docutils literal"><span class="pre">mac_address</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the MAC Address of the interface</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.name" title="apetools.commands.netsh.NetshWlanExpressions.name"><code class="xref py py-obj docutils literal"><span class="pre">name</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match names</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.radio_type" title="apetools.commands.netsh.NetshWlanExpressions.radio_type"><code class="xref py py-obj docutils literal"><span class="pre">radio_type</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match the radio type</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.receive_rate" title="apetools.commands.netsh.NetshWlanExpressions.receive_rate"><code class="xref py py-obj docutils literal"><span class="pre">receive_rate</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match receive rate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.signal" title="apetools.commands.netsh.NetshWlanExpressions.signal"><code class="xref py py-obj docutils literal"><span class="pre">signal</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the signal</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.ssid" title="apetools.commands.netsh.NetshWlanExpressions.ssid"><code class="xref py py-obj docutils literal"><span class="pre">ssid</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the ssid</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/commands_api/apetools.commands.netsh.html#apetools.commands.netsh.NetshWlanExpressions.transmit_rate" title="apetools.commands.netsh.NetshWlanExpressions.transmit_rate"><code class="xref py py-obj docutils literal"><span class="pre">transmit_rate</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to get the transmit rate</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.get_expression">
+<code class="descname">get_expression</code><span class="sig-paren">(</span><em>key</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/apetools/commands/netsh.html#NetshWlanExpressions.get_expression"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.get_expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">expression that matches anything in the value column</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.authentication">
+<code class="descname">authentication</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.authentication" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression that gets the authentication type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.bssid">
+<code class="descname">bssid</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.bssid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the BSSID</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.channel">
+<code class="descname">channel</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.channel" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the channel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.cipher">
+<code class="descname">cipher</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.cipher" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the authentication cipher</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.connection_state">
+<code class="descname">connection_state</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.connection_state" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the connection state</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.description">
+<code class="descname">description</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.description" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the interface model</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.mac_address">
+<code class="descname">mac_address</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.mac_address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the MAC Address of the interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.name">
+<code class="descname">name</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to match names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.radio_type">
+<code class="descname">radio_type</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.radio_type" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to match the radio type</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.receive_rate">
+<code class="descname">receive_rate</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.receive_rate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to match receive rate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.signal">
+<code class="descname">signal</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.signal" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the signal</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.ssid">
+<code class="descname">ssid</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.ssid" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the ssid</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.netsh.NetshWlanExpressions.transmit_rate">
+<code class="descname">transmit_rate</code><a class="headerlink" href="#apetools.commands.netsh.NetshWlanExpressions.transmit_rate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to get the transmit rate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

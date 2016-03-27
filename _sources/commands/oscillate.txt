@@ -4,6 +4,13 @@ Oscillate
 A class to talk to an oscillator.
 
 
+.. code::
+
+    <class 'ImportError'>
+    No module named 'Queue'
+    
+
+
 
 Oscillator Error
 ----------------
@@ -17,6 +24,13 @@ Oscillator Error
    :toctree: api
 
    OscillatorError
+
+
+.. code::
+
+    <class 'NameError'>
+    name 'CommandError' is not defined
+    
 
 
 
@@ -46,6 +60,13 @@ Oscillate
    Oscillate.__del__
 
 
+.. code::
+
+    <class 'NameError'>
+    name 'BaseThreadedCommand' is not defined
+    
+
+
 
 The Oscillate Event
 -------------------
@@ -63,6 +84,13 @@ The Oscillate Event
    OscillateEvent.__str__
 
 
+.. code::
+
+    <class 'NameError'>
+    name 'BaseClass' is not defined
+    
+
+
 
 Oscillate Stop
 --------------
@@ -78,4 +106,12 @@ Oscillate Stop
    OscillateStop.check_output
    OscillateStop.kill_and_rotate
    OscillateStop.__call__
+
+
+.. code::
+
+    <class 'NameError'>
+    name 'BaseClass' is not defined
+    
+
 

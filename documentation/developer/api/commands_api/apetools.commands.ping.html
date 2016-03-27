@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,147 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-commands-ping">
-<h1>apetools.commands.ping<a class="headerlink" href="#apetools-commands-ping" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.commands.ping">
+<span id="apetools-commands-ping"></span><h1>apetools.commands.ping<a class="headerlink" href="#module-apetools.commands.ping" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">namedtuple</span></code>(typename,&nbsp;field_names[,&nbsp;verbose,&nbsp;...])</td>
+<td>Returns a new subclass of tuple with named fields.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.ping.PingArguments" title="apetools.commands.ping.PingArguments"><code class="xref py py-obj docutils literal"><span class="pre">PingArguments</span></code></a></td>
+<td>PingArguments is a holder of ping arguments</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.ping.PingCommand" title="apetools.commands.ping.PingCommand"><code class="xref py py-obj docutils literal"><span class="pre">PingCommand</span></code></a>([target,&nbsp;connection,&nbsp;...])</td>
+<td>A ping is a simple ping-command.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../../commands/api/apetools.commands.ping.PingData.html#apetools.commands.ping.PingData" title="apetools.commands.ping.PingData"><code class="xref py py-obj docutils literal"><span class="pre">PingData</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigurationError</span></code></td>
+<td>A ConfigurationError is raised if there is an error in the configuration file</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.commands.ping.PingArguments">
+<em class="property">class </em><code class="descclassname">apetools.commands.ping.</code><code class="descname">PingArguments</code><a class="reference internal" href="../../../../_modules/apetools/commands/ping.html#PingArguments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.ping.PingArguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>PingArguments is a holder of ping arguments</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commands.ping.PingCommand">
+<em class="property">class </em><code class="descclassname">apetools.commands.ping.</code><code class="descname">PingCommand</code><span class="sig-paren">(</span><em>target=None</em>, <em>connection=None</em>, <em>operating_system=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/ping.html#PingCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.ping.PingCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>A ping is a simple ping-command.</p>
+<p>PingCommand constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>target</cite>: An IP Address to ping.</li>
+<li><cite>connection</cite>: A Connection to the device</li>
+<li><cite>operating_system</cite>: The operating system of the device</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.ping.PingCommand.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commands.ping.PingCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.ping.PingCommand.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>target=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/ping.html#PingCommand.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.ping.PingCommand.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Executes a single ping, checks for a success, returns ping data if it succeeds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>target</cite>: The host to ping.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">PingData or None</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">ConfigurationError if the target is unknown</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.ping.PingCommand.arguments">
+<code class="descname">arguments</code><a class="headerlink" href="#apetools.commands.ping.PingCommand.arguments" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The ping arguments to use</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.ping.PingCommand.expression">
+<code class="descname">expression</code><a class="headerlink" href="#apetools.commands.ping.PingCommand.expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression matching a successful ping.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.ping.PingCommand.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commands.ping.PingCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

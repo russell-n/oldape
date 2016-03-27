@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,58 +135,59 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.connections.localconnection</h1><div class="highlight"><pre>
-<span class="c">#python Libraries</span>
+<span></span>
+<span class="c1">#python Libraries</span>
 <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">Queue</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="c"># Third-party Libraries</span>
+<span class="c1"># Third-party Libraries</span>
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pexpect</span>
 <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
-    <span class="c">#print error</span>
+    <span class="c1">#print error</span>
     <span class="k">pass</span>
 
-<span class="c"># apetools Libraries</span>
+<span class="c1"># apetools Libraries</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConnectionError</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.readoutput</span> <span class="kn">import</span> <span class="n">StandardOutput</span>
 <span class="kn">from</span> <span class="nn">producer</span> <span class="kn">import</span> <span class="n">PopenProducer</span>
 
 
-<span class="n">SPACER</span> <span class="o">=</span> <span class="s">&#39;{0} {1} &#39;</span>
-<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s">&quot;Unknown command: &quot;</span>
-<span class="n">EOF</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-<span class="n">SPACE</span> <span class="o">=</span> <span class="s">&quot; &quot;</span>
+<span class="n">SPACER</span> <span class="o">=</span> <span class="s1">&#39;{0} {1} &#39;</span>
+<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s2">&quot;Unknown command: &quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">SPACE</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
 
-<span class="n">OutputError</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;OutputError&quot;</span><span class="p">,</span> <span class="s">&#39;output error&#39;</span><span class="p">)</span>
+<span class="n">OutputError</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;OutputError&quot;</span><span class="p">,</span> <span class="s1">&#39;output error&#39;</span><span class="p">)</span>
 
 
-<span class="k">class</span> <span class="nc">LocalConnection</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="LocalConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection">[docs]</a><span class="k">class</span> <span class="nc">LocalConnection</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A local connection talks to a local command-line shell.</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command_prefix</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="LocalConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection.html#apetools.connections.localconnection.LocalConnection.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection.html#apetools.connections.localconnection.LocalConnection.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command_prefix</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `command_prefix`: A prefix to prepend to commands (e.g. &#39;adb shell&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">LocalConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="c"># logger is defined in BaseClass but declared here for child-classes</span>
+        <span class="c1"># logger is defined in BaseClass but declared here for child-classes</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span> <span class="o">=</span> <span class="n">command_prefix</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">queue</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LocalConnection.queue"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection.queue">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: Queue.Queue</span>
 <span class="sd">        :return: the local Queue</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -194,17 +195,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span>
 
-    <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span></div>
-<div class="viewcode-block" id="LocalConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._procedure_call">[docs]</a>                        <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalConnection._procedure_call"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._procedure_call">[docs]</a>    <span class="k">def</span> <span class="nf">_procedure_call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span>
+                        <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is provided so it can be overriden by subclasses.</span>
 
 <span class="sd">        Otherwise it just returns _main()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_main</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">timeout</span><span class="p">)</span></div>
     
-    <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">,</span></div>
-<div class="viewcode-block" id="LocalConnection._main"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._main">[docs]</a>              <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="LocalConnection._main"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._main">[docs]</a>    <span class="k">def</span> <span class="nf">_main</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+              <span class="n">timeout</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
@@ -216,19 +217,19 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">command</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Creating PopenProducer&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Creating PopenProducer&quot;</span><span class="p">)</span>
             <span class="n">process</span> <span class="o">=</span> <span class="n">PopenProducer</span><span class="p">(</span><span class="n">SPACE</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">command_prefix</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">)),</span>
                                     <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
             <span class="n">oe</span> <span class="o">=</span> <span class="n">OutputError</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">process</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;returning Output Error&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;returning Output Error&quot;</span><span class="p">)</span>
             
             <span class="k">return</span> <span class="n">oe</span>
         <span class="k">except</span> <span class="ne">OSError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s">&quot;Unable to execute &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">SPACE</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">))))</span>
+            <span class="k">raise</span> <span class="n">ConnectionError</span><span class="p">(</span><span class="s2">&quot;Unable to execute &#39;{0}&#39;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">SPACE</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">))))</span></div>
     
-    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LocalConnection.__getattr__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection.__getattr__.html#apetools.connections.localconnection.LocalConnection.__getattr__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalConnection.__getattr__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalConnection.__getattr__.html#apetools.connections.localconnection.LocalConnection.__getattr__">[docs]</a>    <span class="k">def</span> <span class="nf">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `command`: The command to call.</span>
@@ -237,24 +238,24 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">def</span> <span class="nf">procedure_call</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_procedure_call</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">procedure_call</span>
+        <span class="k">return</span> <span class="n">procedure_call</span></div></div>
 
-<span class="c"># end class LocalConnection</span>
+<span class="c1"># end class LocalConnection</span>
 
 
-<span class="k">class</span> <span class="nc">LocalNixConnection</span><span class="p">(</span><span class="n">LocalConnection</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="LocalNixConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalNixConnection"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection">[docs]</a><span class="k">class</span> <span class="nc">LocalNixConnection</span><span class="p">(</span><span class="n">LocalConnection</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Class that uses Pexpect to get around the problem of file-buffering</span>
 
 <span class="sd">    So far as I know, Pexpect only works on *nix-based systems.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="LocalNixConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalNixConnection.html#apetools.connections.localconnection.LocalNixConnection.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">LocalNixConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="LocalNixConnection.__init__"><a class="viewcode-back" href="../../../connections/api/apetools.connections.localconnection.LocalNixConnection.html#apetools.connections.localconnection.LocalNixConnection.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LocalNixConnection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LocalNixConnection.run"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LocalNixConnection.run"><a class="viewcode-back" href="../../../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        runs the Pexpect command and puts lines of output on the Queue</span>
 
 <span class="sd">        :param:</span>
@@ -273,35 +274,35 @@
 
         <span class="n">output_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
         <span class="n">output</span> <span class="o">=</span> <span class="n">StandardOutput</span><span class="p">(</span><span class="n">queue</span><span class="o">=</span><span class="n">output_queue</span><span class="p">)</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">OutputError</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">error</span><span class="p">))</span>
         <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span> <span class="n">EOF</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
                 <span class="n">output_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="k">except</span> <span class="n">pexpect</span><span class="o">.</span><span class="n">TIMEOUT</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;pexpect.readline() timed out&quot;</span><span class="p">)</span>
-        <span class="n">output_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-<span class="c"># end class LocalNixConnection</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;pexpect.readline() timed out&quot;</span><span class="p">)</span>
+        <span class="n">output_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">line</span><span class="p">)</span></div></div>
+<span class="c1"># end class LocalNixConnection</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
-    <span class="n">arguments</span> <span class="o">=</span> <span class="s">&quot;-l&quot;</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">arguments</span> <span class="o">=</span> <span class="s2">&quot;-l&quot;</span>
     <span class="n">lc</span> <span class="o">=</span> <span class="n">LocalConnection</span><span class="p">()</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="s1">&#39;-l&#39;</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="s">&quot;-c 10 192.168.0.1&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">ping</span><span class="p">(</span><span class="n">arguments</span><span class="o">=</span><span class="s2">&quot;-c 10 192.168.0.1&quot;</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
         <span class="k">print</span> <span class="n">x</span>
     <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="s">&#39;-i 1 -c localhost&#39;</span><span class="p">)</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="s1">&#39;-i 1 -c localhost&#39;</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-    <span class="c">#lc = LocalNixConnection()</span>
-    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="s">&#39;-h&#39;</span><span class="p">)</span>
+    <span class="c1">#lc = LocalNixConnection()</span>
+    <span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="s1">&#39;-h&#39;</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-    <span class="c">#for line in  output.output:</span>
-    <span class="c">#    print line</span>
+    <span class="c1">#for line in  output.output:</span>
+    <span class="c1">#    print line</span>
     <span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
     
 </pre></div>
@@ -318,7 +319,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

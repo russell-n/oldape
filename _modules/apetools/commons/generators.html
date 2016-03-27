@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,15 +135,16 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.commons.generators</h1><div class="highlight"><pre>
-<span class="n">WRITEABLE</span> <span class="o">=</span> <span class="s">&#39;w&#39;</span>
-<span class="n">EOSection</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span></span>
+<span class="n">WRITEABLE</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+<span class="n">EOSection</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
 
-<span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="find"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.find">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="find"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.find">[docs]</a><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Matches all below cwd or start-directory</span>
 <span class="sd">    </span>
 <span class="sd">    :param:</span>
@@ -158,15 +159,15 @@
     <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">dir_list</span><span class="p">,</span> <span class="n">file_list</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">glob</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">class</span> <span class="nc">ShallowFind</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ShallowFind"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind">[docs]</a><span class="k">class</span> <span class="nc">ShallowFind</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A finder of files that doesn&#39;t traverse directories</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glob</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.__init__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.html#apetools.commons.generators.ShallowFind.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.__init__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.html#apetools.commons.generators.ShallowFind.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glob</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `glob`: a file glob to match</span>
@@ -177,29 +178,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_matching_names</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_matching_count</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.path"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the path to the directory to search</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_path</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.filenames"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.filenames">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: all files found in the path</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">matching_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.matching_names"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_names">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Added so count could be given to hortator</span>
 <span class="sd">        </span>
 <span class="sd">        :return: list of matching names</span>
@@ -208,37 +209,37 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_matching_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">glob</span><span class="p">)]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matching_names</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">matching_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ShallowFind.matching_count"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.matching_count">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: count of matching names</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matching_count</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_matching_count</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matching_names</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_matching_count</span>
     
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ShallowFind.reset"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.reset"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.ShallowFind.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Sets all properties to None</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_matching_names</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_matching_count</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="ShallowFind.__iter__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.__iter__.html#apetools.commons.generators.ShallowFind.__iter__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ShallowFind.__iter__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.generators.ShallowFind.__iter__.html#apetools.commons.generators.ShallowFind.__iter__">[docs]</a>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :yield: the matching filenames</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">matching_names</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">name</span>    
-        <span class="k">return</span> 
-<span class="c"># end class ShallowFind</span>
+        <span class="k">return</span> </div></div>
+<span class="c1"># end class ShallowFind</span>
 
 
-<span class="k">def</span> <span class="nf">shallow_find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="shallow_find"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.shallow_find">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="shallow_find"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.shallow_find">[docs]</a><span class="k">def</span> <span class="nf">shallow_find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span> <span class="o">=</span> <span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Matches only in one directory</span>
 <span class="sd">    </span>
 <span class="sd">    :param:</span>
@@ -250,11 +251,11 @@
     <span class="n">names</span> <span class="o">=</span> <span class="p">(</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">glob</span><span class="p">):</span>
         <span class="k">yield</span> <span class="n">name</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="concatenate"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.concatenate">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="concatenate"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.generators.html#apetools.commons.generators.concatenate">[docs]</a><span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param:</span>
 
 <span class="sd">     - `glob`: A file-glob to match interesting files.</span>
@@ -265,8 +266,8 @@
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">line</span>
-    <span class="k">return</span>
-</pre></div></div>
+    <span class="k">return</span></div>
+</pre></div>
 
     </div>
       
@@ -280,7 +281,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

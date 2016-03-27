@@ -4,6 +4,10 @@ Netsh
 A class to make inquiries of the wlan via `netsh`.
 
 
+
+
+
+
 Nesh Wlan Expressions
 ---------------------
 
@@ -29,10 +33,12 @@ Nesh Wlan Expressions
 
 
 
+
 Netsh Wlan Keys
 ---------------
 
-::
+
+.. code:: python
 
     class NetshWlanKeys(object):
         __slots__ = ()
@@ -50,7 +56,6 @@ Netsh Wlan Keys
         ssid = "SSID"
         transmit_rate = "Transmit"
     # end class NetshWlanExpressions
-    
     
 
 
@@ -73,4 +78,6 @@ Netsh Wlan
    NetshWlan.check_errors
    NetshWlan.reset
    NetshWlan.__getattr__
+
+
 

@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -239,23 +239,23 @@ SSHConnection : port
 SSHConnection : timeout" />
 </p>
 <p>SimpleClient Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>connection = SimpleClient(hostname=&#39;192.168.10.24&#39;, username=&#39;allion&#39;)
-stdin, output, error = connection.exec_command(&#39;ls -l&#39;)
-for line in output:
-    print line
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">SimpleClient</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;allion&#39;</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s1">&#39;ls -l&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
 
-for line in error:
-    print line
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">error</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
 </pre></div>
 </div>
 <p>Equivalent SSHConnection Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>connection = SSHConnection(username=&quot;allion&quot;, hostname=&quot;192.168.10.24&quot;)
-output, error = connection.ls(&#39;-l&#39;)
-for line in output:
-    print line
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s2">&quot;allion&quot;</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="s2">&quot;192.168.10.24&quot;</span><span class="p">)</span>
+<span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
 
-for line in output:
-    print line
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+    <span class="k">print</span> <span class="n">line</span>
 </pre></div>
 </div>
 </div>
@@ -280,11 +280,11 @@ OutputFile : readline(timeout)" />
 </div>
 <div class="section" id="another-example">
 <h2>Another Example<a class="headerlink" href="#another-example" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span>if __name__ == &quot;__main__&quot;:
-    c = SSHConnection(&#39;igor&#39;, &#39;developer&#39;)
-    o = c.wmic(&#39;path win32_networkadapter where netconnectionid=&quot;\&#39;Wireless Network Connection\&#39;&quot; call enable&#39;)
-    for index, line in enumerate(o.output):
-        print index, line
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s1">&#39;igor&#39;</span><span class="p">,</span> <span class="s1">&#39;developer&#39;</span><span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">wmic</span><span class="p">(</span><span class="s1">&#39;path win32_networkadapter where netconnectionid=&quot;</span><span class="se">\&#39;</span><span class="s1">Wireless Network Connection</span><span class="se">\&#39;</span><span class="s1">&quot; call enable&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">output</span><span class="p">):</span>
+        <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span>
 </pre></div>
 </div>
 </div>

@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,9 +135,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.devices.windowsdevice</h1><div class="highlight"><pre>
+<span></span>
 <span class="kn">from</span> <span class="nn">basedevice</span> <span class="kn">import</span> <span class="n">BaseDevice</span>
 <span class="kn">from</span> <span class="nn">apetools.commands.wmic</span> <span class="kn">import</span> <span class="n">WmicWin32NetworkAdapter</span>
 <span class="kn">from</span> <span class="nn">apetools.commands.netsh</span> <span class="kn">import</span> <span class="n">NetshWlan</span>
@@ -146,81 +147,81 @@
 <span class="kn">from</span> <span class="nn">apetools.commands.windowsssidconnect</span> <span class="kn">import</span> <span class="n">WindowsSSIDConnect</span>
 
 
-<span class="k">class</span> <span class="nc">WindowsDevice</span><span class="p">(</span><span class="n">BaseDevice</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice">[docs]</a><span class="k">class</span> <span class="nc">WindowsDevice</span><span class="p">(</span><span class="n">BaseDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to control and query windows devices</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.__init__"><a class="viewcode-back" href="../../../devices/api/apetools.devices.windowsdevice.WindowsDevice.html#apetools.devices.windowsdevice.WindowsDevice.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">WindowsDevice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="WindowsDevice.__init__"><a class="viewcode-back" href="../../../devices/api/apetools.devices.windowsdevice.WindowsDevice.html#apetools.devices.windowsdevice.WindowsDevice.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WindowsDevice</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_control</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_query</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rssi_query</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ipconfig</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ssid_connect</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_address</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ssid_connect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.ssid_connect"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.ssid_connect">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a Windows SSID Connect command</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssid_connect</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ssid_connect</span> <span class="o">=</span> <span class="n">WindowsSSIDConnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ssid_connect</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ipconfig</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.ipconfig"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.ipconfig">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the Ipconfig</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ipconfig</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_ipconfig</span> <span class="o">=</span> <span class="n">Ipconfig</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ipconfig</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">wifi_control</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.wifi_control"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wifi_control">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: WmicWin32NetworkAdapter</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_control</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_control</span> <span class="o">=</span> <span class="n">WmicWin32NetworkAdapter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_control</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">rssi_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.rssi_query"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.rssi_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: WinRssi querier</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rssi_query</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_rssi_query</span> <span class="o">=</span> <span class="n">WinRssi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rssi_query</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">rssi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.rssi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.rssi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the current rssi on the device</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">rssi_query</span><span class="p">()</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">wifi_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.wifi_info"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wifi_info">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        calls &#39;wifi status&#39;</span>
 <span class="sd">        </span>
 <span class="sd">        :return: String containing the wifi info</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">wifi</span><span class="p">(</span><span class="s">&#39;status&#39;</span><span class="p">)</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">out</span><span class="p">])</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">wifi</span><span class="p">(</span><span class="s1">&#39;status&#39;</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">out</span><span class="p">])</span>
         <span class="n">error</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">output</span>
             
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">wifi_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.wifi_query"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wifi_query">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a NetshWlan query</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_query</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -228,67 +229,67 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_wifi_query</span>
 
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WindowsDevice.address"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the IP Address of the wireless interface</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ipconfig</span><span class="o">.</span><span class="n">address</span>
     
-    <span class="k">def</span> <span class="nf">enable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WindowsDevice.enable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.enable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice.enable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.enable_wifi">[docs]</a>    <span class="k">def</span> <span class="nf">enable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: `wmic` called to enable the radio</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wifi_control</span><span class="o">.</span><span class="n">enable_wifi</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
     
-    <span class="k">def</span> <span class="nf">disable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WindowsDevice.disable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.disable_wifi">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice.disable_wifi"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.disable_wifi">[docs]</a>    <span class="k">def</span> <span class="nf">disable_wifi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: `wmic` called to disable radio</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wifi_control</span><span class="o">.</span><span class="n">disable_wifi</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WindowsDevice.display"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.display">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice.display"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Not implemented</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Display not implemented&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Display not implemented&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WindowsDevice.log"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.log">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice.log"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.log">[docs]</a>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calls &#39;eventcreate /l Sysytem /id 999 /d &quot;&lt;message&gt;&quot; /t Informateion /so Private&#39;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">eventcreate</span><span class="p">(</span><span class="s">&#39;/l System /id 999 /d &quot;{0}&quot; /t Information /so Private&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
-        <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">eventcreate</span><span class="p">(</span><span class="s1">&#39;/l System /id 999 /d &quot;{0}&quot; /t Information /so Private&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">message</span><span class="p">))</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">wake_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WindowsDevice.wake_screen"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wake_screen">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice.wake_screen"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.wake_screen">[docs]</a>    <span class="k">def</span> <span class="nf">wake_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Not implemented</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Wake-Screen Not Implemented&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Wake-Screen Not Implemented&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssid</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WindowsDevice.connect"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.connect">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice.connect"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.connect">[docs]</a>    <span class="k">def</span> <span class="nf">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ssid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `ssid`: The SSID and Profile name to connect to</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ssid_connect</span><span class="p">(</span><span class="n">ssid</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WindowsDevice.disconnect"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.disconnect">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WindowsDevice.disconnect"><a class="viewcode-back" href="../../../documentation/developer/api/devices_api/apetools.devices.windowsdevice.html#apetools.devices.windowsdevice.WindowsDevice.disconnect">[docs]</a>    <span class="k">def</span> <span class="nf">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Calls &#39;netsh wlan disconnect&#39;</span>
 <span class="sd">        </span>
 <span class="sd">        :postcondition: the device is disconnected from the AP but no disabled</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">netsh</span><span class="p">(</span><span class="s">&quot;wlan disconnect&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-<span class="c"># end class WindowsDevice</span>
-</pre></div></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">netsh</span><span class="p">(</span><span class="s2">&quot;wlan disconnect&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div></div>
+<span class="c1"># end class WindowsDevice</span>
+</pre></div>
 
     </div>
       
@@ -302,7 +303,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

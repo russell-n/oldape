@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,57 +135,58 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.proletarians.crashhandler</h1><div class="highlight"><pre>
-<span class="c"># python</span>
+<span></span>
+<span class="c1"># python</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">from</span> <span class="nn">StringIO</span> <span class="kn">import</span> <span class="n">StringIO</span>
 
-<span class="c"># apetools</span>
+<span class="c1"># apetools</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">storageoutput</span>
 <span class="kn">from</span> <span class="nn">apetools.log_setter</span> <span class="kn">import</span> <span class="n">LOGNAME</span>
 
 
-<span class="k">class</span> <span class="nc">CrashHandler</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="CrashHandler"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.crashhandler.CrashHandler.html#apetools.proletarians.crashhandler.CrashHandler">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CrashHandler"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.crashhandler.CrashHandler.html#apetools.proletarians.crashhandler.CrashHandler">[docs]</a><span class="k">class</span> <span class="nc">CrashHandler</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The CrashHandler is called if the entire program crashes and collects crash information.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="CrashHandler.__init__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.crashhandler.CrashHandler.html#apetools.proletarians.crashhandler.CrashHandler.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CrashHandler.__init__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.crashhandler.CrashHandler.html#apetools.proletarians.crashhandler.CrashHandler.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arguments</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `arguments`: The command line arguments given.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">CrashHandler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">arguments</span> <span class="o">=</span> <span class="n">arguments</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CrashHandler.run"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.crashhandler.CrashHandler.run.html#apetools.proletarians.crashhandler.CrashHandler.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CrashHandler.run"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.crashhandler.CrashHandler.run.html#apetools.proletarians.crashhandler.CrashHandler.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">error</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is called when the program crashes.</span>
 
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `error`: The error returned by the exception</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;The program has crashed. I weep for you.&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;The program has crashed. I weep for you.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-        <span class="n">output</span> <span class="o">=</span> <span class="n">storageoutput</span><span class="o">.</span><span class="n">StorageOutput</span><span class="p">(</span><span class="s">&quot;crash_report_{t}&quot;</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="n">storageoutput</span><span class="o">.</span><span class="n">StorageOutput</span><span class="p">(</span><span class="s2">&quot;crash_report_{t}&quot;</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">LOGNAME</span><span class="p">)</span>
-        <span class="n">f</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;crashreport.log&quot;</span><span class="p">)</span>
-        <span class="n">separator</span> <span class="o">=</span> <span class="s">&quot;*&quot;</span> <span class="o">*</span> <span class="mi">20</span>
-        <span class="n">message</span> <span class="o">=</span> <span class="s">&quot; Crash Report &quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;crashreport.log&quot;</span><span class="p">)</span>
+        <span class="n">separator</span> <span class="o">=</span> <span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="mi">20</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot; Crash Report &quot;</span>
         <span class="n">header</span> <span class="o">=</span>  <span class="n">separator</span> <span class="o">+</span> <span class="n">message</span> <span class="o">+</span> <span class="n">separator</span>
-        <span class="n">footer</span> <span class="o">=</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="s">&quot;*&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="n">footer</span> <span class="o">=</span> <span class="n">separator</span> <span class="o">+</span> <span class="n">separator</span> <span class="o">+</span> <span class="s2">&quot;*&quot;</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">header</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         
         <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
-        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">footer</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-<span class="c"># end CrashHandler</span>
-</pre></div></div></div>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">footer</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div></div>
+<span class="c1"># end CrashHandler</span>
+</pre></div>
 
     </div>
       
@@ -199,7 +200,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

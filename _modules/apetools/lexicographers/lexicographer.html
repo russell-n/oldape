@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,37 +135,38 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.lexicographers.lexicographer</h1><div class="highlight"><pre>
-<span class="c"># apetools Libraries</span>
+<span></span>
+<span class="c1"># apetools Libraries</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.generators</span> <span class="kn">import</span> <span class="n">ShallowFind</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span>
 <span class="kn">import</span> <span class="nn">configurationmap</span>
 
 
-<span class="k">class</span> <span class="nc">Lexicographer</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="Lexicographer"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.html#apetools.lexicographers.lexicographer.Lexicographer">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Lexicographer"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.html#apetools.lexicographers.lexicographer.Lexicographer">[docs]</a><span class="k">class</span> <span class="nc">Lexicographer</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Lexicographer yields configuration Maps.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glob</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="Lexicographer.__init__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.html#apetools.lexicographers.lexicographer.Lexicographer.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Lexicographer.__init__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.html#apetools.lexicographers.lexicographer.Lexicographer.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">glob</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `glob`: a file glob to match the config file.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">Lexicographer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Lexicographer using glob: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">glob</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Lexicographer using glob: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">glob</span><span class="p">))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">glob</span> <span class="o">=</span> <span class="n">glob</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_maps</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_filenames</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_finder</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">filenames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Lexicographer.filenames"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.filenames.html#apetools.lexicographers.lexicographer.Lexicographer.filenames">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Generates filenames that match self.glob.</span>
 <span class="sd">        This is made a parameter so other classes can retrieve the list.</span>
 <span class="sd">        </span>
@@ -176,35 +177,35 @@
             <span class="n">found</span> <span class="o">=</span> <span class="bp">True</span>            
             <span class="k">yield</span> <span class="n">file_name</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">found</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ArgumentError</span><span class="p">((</span><span class="s">&quot;Your glob for the config file (&#39;{0}&#39;) doesn&#39;t match any file in&quot;</span>
-                                        <span class="s">&quot; directory {1}&quot;</span>
-                                        <span class="s">&quot; which contains ({2})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">finder</span><span class="o">.</span><span class="n">glob</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ArgumentError</span><span class="p">((</span><span class="s2">&quot;Your glob for the config file (&#39;{0}&#39;) doesn&#39;t match any file in&quot;</span>
+                                        <span class="s2">&quot; directory {1}&quot;</span>
+                                        <span class="s2">&quot; which contains ({2})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">finder</span><span class="o">.</span><span class="n">glob</span><span class="p">,</span>
                                                                     <span class="bp">self</span><span class="o">.</span><span class="n">finder</span><span class="o">.</span><span class="n">path</span><span class="p">,</span>
                                                                     <span class="bp">self</span><span class="o">.</span><span class="n">finder</span><span class="o">.</span><span class="n">filenames</span><span class="p">))</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">finder</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="Lexicographer.finder"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.finder.html#apetools.lexicographers.lexicographer.Lexicographer.finder">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: shallow-find filename generator</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_finder</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_finder</span> <span class="o">=</span> <span class="n">ShallowFind</span><span class="p">(</span><span class="n">glob</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">glob</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_finder</span>
     
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="Lexicographer.__iter__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.__iter__.html#apetools.lexicographers.lexicographer.Lexicographer.__iter__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Lexicographer.__iter__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.lexicographer.Lexicographer.__iter__.html#apetools.lexicographers.lexicographer.Lexicographer.__iter__">[docs]</a>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :yield: TestParameters namedtuple</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filenames</span><span class="p">:</span>
             <span class="k">yield</span> <span class="n">configurationmap</span><span class="o">.</span><span class="n">ConfigurationMap</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
-        <span class="k">return</span> 
-<span class="c"># end class Lexicographer</span>
+        <span class="k">return</span> </div></div>
+<span class="c1"># end class Lexicographer</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">pudb</span><span class="p">;</span> <span class="n">pudb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
-    <span class="n">l</span> <span class="o">=</span> <span class="n">Lexicographer</span><span class="p">(</span><span class="s">&quot;tot.ini&quot;</span><span class="p">)</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">Lexicographer</span><span class="p">(</span><span class="s2">&quot;tot.ini&quot;</span><span class="p">)</span>
     
     <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
         <span class="k">print</span> <span class="n">parameter</span><span class="o">.</span><span class="n">iperf</span>
@@ -222,7 +223,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

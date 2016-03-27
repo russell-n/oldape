@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,16 +135,17 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.proletarians.countdown</h1><div class="highlight"><pre>
-<span class="c"># python libraries</span>
+<span></span>
+<span class="c1"># python libraries</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span> <span class="k">as</span> <span class="n">clock</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">heapq</span>
 <span class="kn">import</span> <span class="nn">math</span>
 
-<span class="c">#apetools</span>
+<span class="c1">#apetools</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 
 
@@ -152,25 +153,25 @@
 <span class="n">TWENTY_FOUR</span> <span class="o">=</span> <span class="mi">24</span>
 
 
-<span class="k">class</span> <span class="nc">Times</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;Times&quot;</span><span class="p">,</span> <span class="s">&#39;days hours minutes seconds&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span>
+<span class="k">class</span> <span class="nc">Times</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;Times&quot;</span><span class="p">,</span> <span class="s1">&#39;days hours minutes seconds&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Times holds the times after seconds are converted to d,h,m,s</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">&quot;{0} days, {1} hours, {2} minutes, and {3} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">,</span>
+        <span class="k">return</span> <span class="s2">&quot;{0} days, {1} hours, {2} minutes, and {3} seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">,</span>
                                                                           <span class="bp">self</span><span class="o">.</span><span class="n">hours</span><span class="p">,</span>
                                                                           <span class="bp">self</span><span class="o">.</span><span class="n">minutes</span><span class="p">,</span>
                                                                           <span class="bp">self</span><span class="o">.</span><span class="n">seconds</span><span class="p">)</span>
-<span class="c">#end class Times</span>
+<span class="c1">#end class Times</span>
 
 
-<span class="k">class</span> <span class="nc">CountDown</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="CountDown"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.html#apetools.proletarians.countdown.CountDown">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CountDown"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.html#apetools.proletarians.countdown.CountDown">[docs]</a><span class="k">class</span> <span class="nc">CountDown</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A countdown timer</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total_repetitions</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-<div class="viewcode-block" id="CountDown.__init__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.html#apetools.proletarians.countdown.CountDown.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CountDown.__init__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.html#apetools.proletarians.countdown.CountDown.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">total_repetitions</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `total_repetitions`: number of times the operations will be repeated</span>
@@ -182,19 +183,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_heap</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_median</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_elapsed</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">elapsed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CountDown.elapsed"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.elapsed.html#apetools.proletarians.countdown.CountDown.elapsed">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: timedelta between start time and now (or None if start not set)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">median</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CountDown.median"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.median.html#apetools.proletarians.countdown.CountDown.median">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: dictionary of modulus:function to get median</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_median</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -203,31 +204,31 @@
                                  <span class="n">heap</span><span class="p">[(</span><span class="nb">len</span><span class="p">(</span><span class="n">heap</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">())</span><span class="o">/</span><span class="mf">2.</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_median</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">heap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CountDown.heap"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.heap.html#apetools.proletarians.countdown.CountDown.heap">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of timedeltas</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_heap</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_heap</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_heap</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">now</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CountDown.now"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.now.html#apetools.proletarians.countdown.CountDown.now">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: datetime.datetime.now()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">clock</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CountDown.start"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.start.html#apetools.proletarians.countdown.CountDown.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CountDown.start"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.start.html#apetools.proletarians.countdown.CountDown.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: self.start_time is now</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">clock</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CountDown.add"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.add.html#apetools.proletarians.countdown.CountDown.add">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CountDown.add"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.add.html#apetools.proletarians.countdown.CountDown.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_time</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `start_time`: datetime object from start of operation</span>
@@ -235,10 +236,10 @@
 <span class="sd">        :postcondition: now - start-time added to the heap</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">heapq</span><span class="o">.</span><span class="n">heappush</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heap</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">now</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_count</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CountDown.remaining"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.remaining.html#apetools.proletarians.countdown.CountDown.remaining">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CountDown.remaining"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.remaining.html#apetools.proletarians.countdown.CountDown.remaining">[docs]</a>    <span class="k">def</span> <span class="nf">remaining</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_count</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `current_count`: 0-based index of current operation</span>
@@ -250,10 +251,10 @@
             <span class="k">return</span>
         <span class="n">median_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">median</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">heap</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span><span class="p">](</span><span class="bp">self</span><span class="o">.</span><span class="n">heap</span><span class="p">)</span>
         <span class="n">remaining_time</span> <span class="o">=</span> <span class="n">remaining</span> <span class="o">*</span> <span class="n">median_time</span>
-        <span class="n">remaining_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_time</span><span class="p">(</span><span class="n">remaining_time</span><span class="p">)</span>
+        <span class="n">remaining_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_time</span><span class="p">(</span><span class="n">remaining_time</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">to_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span></div>
-<div class="viewcode-block" id="CountDown.to_time"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.to_time.html#apetools.proletarians.countdown.CountDown.to_time">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CountDown.to_time"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.countdown.CountDown.to_time.html#apetools.proletarians.countdown.CountDown.to_time">[docs]</a>    <span class="k">def</span> <span class="nf">to_time</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">seconds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `seconds`: time in seconds (float)</span>
@@ -266,10 +267,10 @@
         <span class="k">return</span> <span class="n">Times</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">days</span><span class="p">)),</span>
                      <span class="n">hours</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">hours</span> <span class="o">*</span> <span class="n">TWENTY_FOUR</span><span class="p">)),</span>
                      <span class="n">minutes</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">minutes</span> <span class="o">*</span> <span class="n">SIXTY</span><span class="p">)),</span>
-                     <span class="n">seconds</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">seconds</span> <span class="o">*</span> <span class="n">SIXTY</span><span class="p">)))</span>
+                     <span class="n">seconds</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">seconds</span> <span class="o">*</span> <span class="n">SIXTY</span><span class="p">)))</span></div></div>
 
-<span class="c">#end class CountDown</span>
-</pre></div></div></div>
+<span class="c1">#end class CountDown</span>
+</pre></div>
 
     </div>
       
@@ -283,7 +284,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

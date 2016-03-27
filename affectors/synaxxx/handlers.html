@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -156,15 +156,15 @@
       
   <div class="section" id="an-example-run-function">
 <h1>An Example Run Function<a class="headerlink" href="#an-example-run-function" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><div class="highlight"><pre><span></span>def run(args):
-    naxxx = Synaxxx(args.hostname)
-    if args.status:
-        status = naxxx.status
-        for switch in sorted(status):
-            print switch, status[switch]
-        return
-    naxxx(args.switches)
-    return
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="n">naxxx</span> <span class="o">=</span> <span class="n">Synaxxx</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">hostname</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">status</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">naxxx</span><span class="o">.</span><span class="n">status</span>
+        <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">status</span><span class="p">):</span>
+            <span class="k">print</span> <span class="n">switch</span><span class="p">,</span> <span class="n">status</span><span class="p">[</span><span class="n">switch</span><span class="p">]</span>
+        <span class="k">return</span>
+    <span class="n">naxxx</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">switches</span><span class="p">)</span>
+    <span class="k">return</span>
 </pre></div>
 </div>
 </div>

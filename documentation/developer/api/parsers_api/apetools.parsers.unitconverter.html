@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,132 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-parsers-unitconverter">
-<h1>apetools.parsers.unitconverter<a class="headerlink" href="#apetools-parsers-unitconverter" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.parsers.unitconverter">
+<span id="apetools-parsers-unitconverter"></span><h1>apetools.parsers.unitconverter<a class="headerlink" href="#module-apetools.parsers.unitconverter" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../../../../parsers/api/apetools.parsers.unitconverter.UnitConverter.html#apetools.parsers.unitconverter.UnitConverter" title="apetools.parsers.unitconverter.UnitConverter"><code class="xref py py-obj docutils literal"><span class="pre">UnitConverter</span></code></a>()</td>
+<td>The UnitConverter is a conversion lookup table.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.parsers.unitconverter.UnitNames" title="apetools.parsers.unitconverter.UnitNames"><code class="xref py py-obj docutils literal"><span class="pre">UnitNames</span></code></a></td>
+<td>Unit Names is a namepace to hold units</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.parsers.unitconverter.UnitConverter">
+<em class="property">class </em><code class="descclassname">apetools.parsers.unitconverter.</code><code class="descname">UnitConverter</code><a class="reference internal" href="../../../../_modules/apetools/parsers/unitconverter.html#UnitConverter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The UnitConverter is a conversion lookup table.</p>
+<p>Use class UnitNames to get valid unit names</p>
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.clear">
+<code class="descname">clear</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; None.  Remove all items from D.<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.clear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; a shallow copy of D<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.copy" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.fromkeys">
+<code class="descname">fromkeys</code><span class="sig-paren">(</span><em>S</em><span class="optional">[</span>, <em>v</em><span class="optional">]</span><span class="sig-paren">)</span> &rarr; New dict with keys from S and values equal to v.<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.fromkeys" title="Permalink to this definition">¶</a></dt>
+<dd><p>v defaults to None.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>k</em><span class="optional">[</span>, <em>d</em><span class="optional">]</span><span class="sig-paren">)</span> &rarr; D[k] if k in D, else d.  d defaults to None.<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.has_key">
+<code class="descname">has_key</code><span class="sig-paren">(</span><em>k</em><span class="sig-paren">)</span> &rarr; True if D has a key k, else False<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.has_key" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.items">
+<code class="descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; list of D's (key, value) pairs, as 2-tuples<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.iteritems">
+<code class="descname">iteritems</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; an iterator over the (key, value) items of D<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.iteritems" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.iterkeys">
+<code class="descname">iterkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; an iterator over the keys of D<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.iterkeys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.itervalues">
+<code class="descname">itervalues</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; an iterator over the values of D<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.itervalues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.keys">
+<code class="descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; list of D's keys<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.pop">
+<code class="descname">pop</code><span class="sig-paren">(</span><em>k</em><span class="optional">[</span>, <em>d</em><span class="optional">]</span><span class="sig-paren">)</span> &rarr; v, remove specified key and return the corresponding value.<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.pop" title="Permalink to this definition">¶</a></dt>
+<dd><p>If key is not found, d is returned if given, otherwise KeyError is raised</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.popitem">
+<code class="descname">popitem</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; (k, v), remove and return some (key, value) pair as a<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.popitem" title="Permalink to this definition">¶</a></dt>
+<dd><p>2-tuple; but raise KeyError if D is empty.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.setdefault">
+<code class="descname">setdefault</code><span class="sig-paren">(</span><em>k</em><span class="optional">[</span>, <em>d</em><span class="optional">]</span><span class="sig-paren">)</span> &rarr; D.get(k,d), also set D[k]=d if k not in D<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.setdefault" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.update">
+<code class="descname">update</code><span class="sig-paren">(</span><span class="optional">[</span><em>E</em>, <span class="optional">]</span><em>**F</em><span class="sig-paren">)</span> &rarr; None.  Update D from dict/iterable E and F.<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
+If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
+In either case, this is followed by: for k in F: D[k] = F[k]</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.values">
+<code class="descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; list of D's values<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.viewitems">
+<code class="descname">viewitems</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; a set-like object providing a view on D's items<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.viewitems" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.viewkeys">
+<code class="descname">viewkeys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; a set-like object providing a view on D's keys<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.viewkeys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.parsers.unitconverter.UnitConverter.viewvalues">
+<code class="descname">viewvalues</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &rarr; an object providing a view on D's values<a class="headerlink" href="#apetools.parsers.unitconverter.UnitConverter.viewvalues" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.parsers.unitconverter.UnitNames">
+<em class="property">class </em><code class="descclassname">apetools.parsers.unitconverter.</code><code class="descname">UnitNames</code><a class="reference internal" href="../../../../_modules/apetools/parsers/unitconverter.html#UnitNames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.unitconverter.UnitNames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unit Names is a namepace to hold units</p>
+</dd></dl>
+
 </div>
 
 

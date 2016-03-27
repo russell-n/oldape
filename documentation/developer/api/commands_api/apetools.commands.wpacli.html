@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,177 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-commands-wpacli">
-<h1>apetools.commands.wpacli<a class="headerlink" href="#apetools-commands-wpacli" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.commands.wpacli">
+<span id="apetools-commands-wpacli"></span><h1>apetools.commands.wpacli<a class="headerlink" href="#module-apetools.commands.wpacli" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.wpacli.WpaCliCommand" title="apetools.commands.wpacli.WpaCliCommand"><code class="xref py py-obj docutils literal"><span class="pre">WpaCliCommand</span></code></a>(connection[,&nbsp;interface])</td>
+<td>The WpaCliCommand interprets ifconfig</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CommandError</span></code></td>
+<td>A CommandError reflects a problem with the command on the Device-side</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.commands.wpacli.WpaCliCommand">
+<em class="property">class </em><code class="descclassname">apetools.commands.wpacli.</code><code class="descname">WpaCliCommand</code><span class="sig-paren">(</span><em>connection</em>, <em>interface=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/wpacli.html#WpaCliCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>The WpaCliCommand interprets ifconfig</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>connection</cite>: A connection to the device</li>
+<li><cite>interface</cite>: The interface to check</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.wpacli.WpaCliCommand._match">
+<code class="descname">_match</code><span class="sig-paren">(</span><em>expression</em>, <em>name</em>, <em>arguments</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/wpacli.html#WpaCliCommand._match"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand._match" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>expression</cite>: The regular expression to match</li>
+<li><cite>name</cite>: The group name to pull the match out of the line</li>
+<li><cite>command</cite>: The arguments to give to the wpa_cli</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The named-group that matched or None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.wpacli.WpaCliCommand.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.wpacli.WpaCliCommand.interface">
+<code class="descname">interface</code><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.interface" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is found once and stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The connected interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.wpacli.WpaCliCommand.ip_address">
+<code class="descname">ip_address</code><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.ip_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is dynamically generated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The IP Address of the interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.wpacli.WpaCliCommand.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.wpacli.WpaCliCommand.mac_address">
+<code class="descname">mac_address</code><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.mac_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is found once and stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">MAC Address of the interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.wpacli.WpaCliCommand.ssid">
+<code class="descname">ssid</code><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.ssid" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is dynamically generated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The SSID of the attached AP</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.wpacli.WpaCliCommand.status">
+<code class="descname">status</code><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is dynamically generated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The status of the wpa-connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.wpacli.WpaCliCommand.supplicant_state">
+<code class="descname">supplicant_state</code><a class="headerlink" href="#apetools.commands.wpacli.WpaCliCommand.supplicant_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is dynamically generated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The supplicant-state</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

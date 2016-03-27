@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,6 +30,8 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Commons" href="index.html" />
+    <link rel="next" title="apetools.commons.broadcaster.Broadcaster" href="api/apetools.commons.broadcaster.Broadcaster.html" />
+    <link rel="prev" title="apetools.commons.assertions.assert_is" href="api/apetools.commons.assertions.assert_is.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -113,6 +115,14 @@
             
               
                 
+  <li>
+    <a href="api/apetools.commons.assertions.assert_is.html" title="Previous Chapter: apetools.commons.assertions.assert_is"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.comm...</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/apetools.commons.broadcaster.Broadcaster.html" title="Next Chapter: apetools.commons.broadcaster.Broadcaster"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.comm... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -156,35 +166,83 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster" title="apetools.commons.broadcaster.Broadcaster"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster</span></code></a>(receivers)</td>
+<td>A broadcaster sends a single datum to multiple targets</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.receivers</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.receivers" title="apetools.commons.broadcaster.Broadcaster.receivers"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.receivers</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">receivers of broadcast</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.temp_receivers</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.subscribe</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.temp_receivers" title="apetools.commons.broadcaster.Broadcaster.temp_receivers"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.temp_receivers</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">iterable of receivers to remove at next set-up</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.unsubscribe</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.set_up</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.subscribe" title="apetools.commons.broadcaster.Broadcaster.subscribe"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.subscribe</span></code></a>(receiver)</td>
+<td>Adds a new receiver to the receivers (if it isn&#8217;t already there)</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.reset</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.unsubscribe" title="apetools.commons.broadcaster.Broadcaster.unsubscribe"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.unsubscribe</span></code></a>(receiver)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.__contains__</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.__iter__</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.set_up" title="apetools.commons.broadcaster.Broadcaster.set_up"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.set_up</span></code></a>([targets])</td>
+<td>The targets are removed the next time this is called.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.__call__</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commons_api/apetools.commons.broadcaster.html#apetools.commons.broadcaster.Broadcaster.reset" title="apetools.commons.broadcaster.Broadcaster.reset"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.reset</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">self.receivers is None</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commons.broadcaster.Broadcaster.__contains__.html#apetools.commons.broadcaster.Broadcaster.__contains__" title="apetools.commons.broadcaster.Broadcaster.__contains__"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.__contains__</span></code></a>(receiver)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commons.broadcaster.Broadcaster.__iter__.html#apetools.commons.broadcaster.Broadcaster.__iter__" title="apetools.commons.broadcaster.Broadcaster.__iter__"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.__iter__</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">iterator over self.receivers</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.commons.broadcaster.Broadcaster.__call__.html#apetools.commons.broadcaster.Broadcaster.__call__" title="apetools.commons.broadcaster.Broadcaster.__call__"><code class="xref py py-obj docutils literal"><span class="pre">Broadcaster.__call__</span></code></a>(datum)</td>
+<td>Calls each receiver with the <cite>datum</cite></td>
 </tr>
 </tbody>
 </table>

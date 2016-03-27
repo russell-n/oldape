@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,6 +30,7 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Connections" href="index.html" />
+    <link rel="next" title="apetools.connections.localconnection.LocalConnection" href="api/apetools.connections.localconnection.LocalConnection.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -117,6 +118,10 @@
             
               
                 
+  <li>
+    <a href="api/apetools.connections.localconnection.LocalConnection.html" title="Next Chapter: apetools.connections.localconnection.LocalConnection"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.conn... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -154,9 +159,9 @@
 <p>The LocalConnection takes the command-line command as a property and
 the arguments to the command as parameters.</p>
 <p>e.g.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>lc = LocalConnection()
-output = lc.ls(&#39;-l&#39;)
-print output.output
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">lc</span> <span class="o">=</span> <span class="n">LocalConnection</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span>
 </pre></div>
 </div>
 <p>prints the output of the <cite>ls -l</cite> command line command</p>
@@ -182,20 +187,44 @@ causing the output to block (i.e. it is file-buffered, not line or character buf
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection" title="apetools.connections.localconnection.LocalConnection"><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection</span></code></a>([command_prefix])</td>
+<td>A local connection talks to a local command-line shell.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection.queue</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection.queue" title="apetools.connections.localconnection.LocalConnection.queue"><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection.queue</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Queue.Queue</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection._procedure_call</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection._main</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._procedure_call" title="apetools.connections.localconnection.LocalConnection._procedure_call"><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection._procedure_call</span></code></a>(command[,&nbsp;...])</td>
+<td>This is provided so it can be overriden by subclasses.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection.__getattr__</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._main" title="apetools.connections.localconnection.LocalConnection._main"><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection._main</span></code></a>(command[,&nbsp;arguments,&nbsp;...])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.localconnection.LocalConnection.__getattr__.html#apetools.connections.localconnection.LocalConnection.__getattr__" title="apetools.connections.localconnection.LocalConnection.__getattr__"><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection.__getattr__</span></code></a>(command)</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>
@@ -212,11 +241,11 @@ causing the output to block (i.e. it is file-buffered, not line or character buf
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection" title="apetools.connections.localconnection.LocalNixConnection"><code class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td>A Class that uses Pexpect to get around the problem of file-buffering</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection.run</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection.run" title="apetools.connections.localconnection.LocalNixConnection.run"><code class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection.run</span></code></a>(command,&nbsp;arguments)</td>
+<td>runs the Pexpect command and puts lines of output on the Queue</td>
 </tr>
 </tbody>
 </table>

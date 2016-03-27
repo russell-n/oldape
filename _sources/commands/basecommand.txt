@@ -6,7 +6,8 @@ A base for certain (simple) commands.
 
 
 
-.. _base_threade-command:
+
+.. _base_threaded-command:
 
 The BaseThreadedCommand
 -----------------------
@@ -31,6 +32,7 @@ This is an abstract base class for threaded commands. Children of it will raise 
    BaseThreadedCommand : __call__(*args, **kwargs)
 
 * To understand the `run_thread` see :ref:`BaseThreadClass <base-thread-class>`.   
+
 
 
 
@@ -88,10 +90,20 @@ This is an Abstract Class that should not be instantiated.
 
 
 
+
+
+
+
+
+
+
 .. _base_process-grep:
 
 The BaseProcessGrep
 -------------------
 
 A base class to search for processes in the output of the BaseProcessCommand children.
+
+
+
 

@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,30 +135,31 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.commons.datacounter</h1><div class="highlight"><pre>
-<span class="c"># python standard library</span>
+<span></span>
+<span class="c1"># python standard library</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
 
-<span class="k">class</span> <span class="nc">CounterDatum</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;CounterDatum&quot;</span><span class="p">,</span> <span class="s">&quot;first count&quot;</span><span class="p">)):</span>
-<div class="viewcode-block" id="CounterDatum"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.CounterDatum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CounterDatum"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.CounterDatum">[docs]</a><span class="k">class</span> <span class="nc">CounterDatum</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;CounterDatum&quot;</span><span class="p">,</span> <span class="s2">&quot;first count&quot;</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    CounterDatum is used to hold the final count:</span>
 
 <span class="sd">     - `first`: seconds from start() to first call</span>
 <span class="sd">     - `count`: total number of calls to DataCounter</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-<span class="c"># end class CounterDatum</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="c1"># end class CounterDatum</span>
 
 
-<span class="k">class</span> <span class="nc">DataCounter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
-<div class="viewcode-block" id="DataCounter"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DataCounter"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter">[docs]</a><span class="k">class</span> <span class="nc">DataCounter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The DataCounter counts the number of times it&#39;s called</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s">&#39;na&#39;</span><span class="p">):</span>
-<div class="viewcode-block" id="DataCounter.__init__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.datacounter.DataCounter.html#apetools.commons.datacounter.DataCounter.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DataCounter.__init__"><a class="viewcode-back" href="../../../commons/api/apetools.commons.datacounter.DataCounter.html#apetools.commons.datacounter.DataCounter.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s1">&#39;na&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `missing`: token to use if counter never called</span>
@@ -168,10 +169,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">missing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">datum</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="DataCounter.start"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DataCounter.start"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition:</span>
 
 <span class="sd">         - `start_time`: set to time()</span>
@@ -181,10 +182,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">missing</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="DataCounter.stop"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter.stop">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DataCounter.stop"><a class="viewcode-back" href="../../../documentation/developer/api/commons_api/apetools.commons.datacounter.html#apetools.commons.datacounter.DataCounter.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition:</span>
 
 <span class="sd">         - `datum`: set to CounterDatum</span>
@@ -196,9 +197,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">missing</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="k">return</span>
-<span class="c"># end class DataCounter</span>
-</pre></div></div></div>
+        <span class="k">return</span></div></div>
+<span class="c1"># end class DataCounter</span>
+</pre></div>
 
     </div>
       
@@ -212,7 +213,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

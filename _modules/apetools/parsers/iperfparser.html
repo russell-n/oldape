@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,14 +135,15 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.parsers.iperfparser</h1><div class="highlight"><pre>
-<span class="c"># python libraries</span>
+<span></span>
+<span class="c1"># python libraries</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
-<span class="c"># this package</span>
+<span class="c1"># this package</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 
 <span class="kn">from</span> <span class="nn">iperfexpressions</span> <span class="kn">import</span> <span class="n">HumanExpression</span><span class="p">,</span> <span class="n">ParserKeys</span>
@@ -151,12 +152,12 @@
 <span class="kn">from</span> <span class="nn">coroutine</span> <span class="kn">import</span> <span class="n">coroutine</span>
 
 
-<span class="k">class</span> <span class="nc">IperfParser</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfParser"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.html#apetools.parsers.iperfparser.IperfParser">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParser"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.html#apetools.parsers.iperfparser.IperfParser">[docs]</a><span class="k">class</span> <span class="nc">IperfParser</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Iperf Parser extracts bandwidth and other information from the output</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expected_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">interval_tolerance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s">&quot;Mbits&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
-<div class="viewcode-block" id="IperfParser.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.html#apetools.parsers.iperfparser.IperfParser.__init__">[docs]</a>                 <span class="n">maximum</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">):</span>
+<div class="viewcode-block" id="IperfParser.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.html#apetools.parsers.iperfparser.IperfParser.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expected_interval</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">interval_tolerance</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="s2">&quot;Mbits&quot;</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                 <span class="n">maximum</span><span class="o">=</span><span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
@@ -186,11 +187,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">thread_count</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">current_thread</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emit</span> <span class="o">=</span> <span class="bp">True</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">bandwidths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfParser.bandwidths"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.bandwidths.html#apetools.parsers.iperfparser.IperfParser.bandwidths">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: iterator over the bandwidths</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">intervals</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
@@ -198,9 +199,9 @@
             <span class="k">yield</span> <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[</span><span class="n">interval</span><span class="p">]</span>
             
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfParser.regex"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.regex.html#apetools.parsers.iperfparser.IperfParser.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: format:regex dictionary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -208,9 +209,9 @@
                            <span class="n">ParserKeys</span><span class="o">.</span><span class="n">csv</span><span class="p">:</span><span class="n">CsvExpression</span><span class="p">()</span><span class="o">.</span><span class="n">regex</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">intervals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfParser.intervals"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.intervals.html#apetools.parsers.iperfparser.IperfParser.intervals">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: dict with default values of 0</span>
 <span class="sd">        :return: interval: bandwidth  </span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -218,17 +219,17 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_intervals</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="k">lambda</span><span class="p">:</span><span class="mi">0</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_intervals</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">conversion</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfParser.conversion"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.conversion.html#apetools.parsers.iperfparser.IperfParser.conversion">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: UnitConveter nested dictionary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conversion</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_conversion</span> <span class="o">=</span> <span class="n">UnitConverter</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conversion</span>
     
-    <span class="k">def</span> <span class="nf">valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfParser.valid"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.valid.html#apetools.parsers.iperfparser.IperfParser.valid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParser.valid"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.valid.html#apetools.parsers.iperfparser.IperfParser.valid">[docs]</a>    <span class="k">def</span> <span class="nf">valid</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `match`: a groupdict containing parsed iperf fields</span>
@@ -236,10 +237,10 @@
 <span class="sd">        :return: True if the end-start interval is valid (within tolerance)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">end</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_interval</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval_tolerance</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">expected_interval</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">interval_tolerance</span></div>
 
-    <span class="k">def</span> <span class="nf">bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfParser.bandwidth"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.bandwidth.html#apetools.parsers.iperfparser.IperfParser.bandwidth">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParser.bandwidth"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.bandwidth.html#apetools.parsers.iperfparser.IperfParser.bandwidth">[docs]</a>    <span class="k">def</span> <span class="nf">bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">match</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `match`: A parsed match group dictionary</span>
@@ -251,15 +252,15 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">units</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">units</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="c"># assume a csv-format</span>
-            <span class="n">units</span> <span class="o">=</span> <span class="s">&#39;bits&#39;</span>
+            <span class="c1"># assume a csv-format</span>
+            <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;bits&#39;</span>
         <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">conversion</span><span class="p">[</span><span class="n">units</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">]</span> <span class="o">*</span> <span class="n">bandwidth</span>
         <span class="k">if</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">maximum</span><span class="p">:</span>
             <span class="k">return</span> <span class="mf">0.0</span>
-        <span class="k">return</span> <span class="n">b</span>
+        <span class="k">return</span> <span class="n">b</span></div>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfParser.__call__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.__call__.html#apetools.parsers.iperfparser.IperfParser.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParser.__call__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.__call__.html#apetools.parsers.iperfparser.IperfParser.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `line`: a line of iperf output</span>
@@ -274,10 +275,10 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">current_thread</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">])</span>
                 <span class="n">bandwidth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">intervals</span><span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">])]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">bandwidth</span>
+        <span class="k">return</span> <span class="n">bandwidth</span></div>
     
-    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfParser.search"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.search.html#apetools.parsers.iperfparser.IperfParser.search">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParser.search"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.search.html#apetools.parsers.iperfparser.IperfParser.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `line`: a string of iperf output</span>
@@ -286,32 +287,32 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;{0} skipped, format not set&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;{0} skipped, format not set&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">pass</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">human</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Matched: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>            
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Matched: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>            
             <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">ParserKeys</span><span class="o">.</span><span class="n">human</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Setting format to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting format to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">match</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">pass</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regex</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">csv</span><span class="p">]</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">groupdict</span><span class="p">()</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Matched: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Matched: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="n">ParserKeys</span><span class="o">.</span><span class="n">csv</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Setting format to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Setting format to {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">format</span><span class="p">))</span>
             <span class="k">return</span> <span class="n">match</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="k">pass</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@coroutine</span></div>
-    <span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfParser.pipe"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.pipe.html#apetools.parsers.iperfparser.IperfParser.pipe">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="nd">@coroutine</span>
+<div class="viewcode-block" id="IperfParser.pipe"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.pipe.html#apetools.parsers.iperfparser.IperfParser.pipe">[docs]</a>    <span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        </span>
 <span class="sd">        :warnings:</span>
 
@@ -333,17 +334,17 @@
             <span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
             <span class="n">match</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">match</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">valid</span><span class="p">(</span><span class="n">match</span><span class="p">):</span>
-                <span class="c"># threads is a dict of interval:(thread_count, bandwidths)</span>
+                <span class="c1"># threads is a dict of interval:(thread_count, bandwidths)</span>
                 <span class="n">interval</span> <span class="o">=</span> <span class="n">match</span><span class="p">[</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">]</span>
                 <span class="n">threads</span><span class="p">[</span><span class="n">interval</span><span class="p">][</span><span class="n">thread_count</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="n">threads</span><span class="p">[</span><span class="n">interval</span><span class="p">][</span><span class="n">bandwidth</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">(</span><span class="n">match</span><span class="p">)</span>
                 <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
                     <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="nb">min</span><span class="p">(</span><span class="n">threads</span><span class="p">)</span> <span class="ow">and</span> <span class="n">threads</span><span class="p">[</span><span class="n">interval</span><span class="p">][</span><span class="n">thread_count</span><span class="p">]</span><span class="o">==</span><span class="bp">self</span><span class="o">.</span><span class="n">threads</span><span class="p">:</span>
                         <span class="n">target</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">threads</span><span class="p">[</span><span class="n">interval</span><span class="p">][</span><span class="n">bandwidth</span><span class="p">])</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
     
-    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfParser.reset"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.reset.html#apetools.parsers.iperfparser.IperfParser.reset">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParser.reset"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.reset.html#apetools.parsers.iperfparser.IperfParser.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Resets the attributes set during parsing</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="bp">None</span>
@@ -351,10 +352,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_intervals</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thread_count</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_threads</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basename</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfParser.filename"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.filename.html#apetools.parsers.iperfparser.IperfParser.filename">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParser.filename"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfparser.IperfParser.filename.html#apetools.parsers.iperfparser.IperfParser.filename">[docs]</a>    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">basename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `basename`: a the raw-iperf filename (without path)</span>
@@ -362,9 +363,9 @@
 <span class="sd">        :return: the filename with the extension changed to .csv</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">base</span><span class="p">,</span> <span class="n">ext</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">splitext</span><span class="p">(</span><span class="n">basename</span><span class="p">)</span>
-        <span class="k">return</span> <span class="s">&quot;{0}.csv&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
-<span class="c"># end class IperfParser</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="s2">&quot;{0}.csv&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">base</span><span class="p">)</span></div></div>
+<span class="c1"># end class IperfParser</span>
+</pre></div>
 
     </div>
       
@@ -378,7 +379,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

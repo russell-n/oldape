@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,36 +135,37 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.pipes.storagepipe</h1><div class="highlight"><pre>
+<span></span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.coroutine</span> <span class="kn">import</span> <span class="n">coroutine</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.storageoutput</span> <span class="kn">import</span> <span class="n">StorageOutput</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.timestamp</span> <span class="kn">import</span> <span class="n">TimestampFormat</span><span class="p">,</span> <span class="n">TimestampFormatEnums</span>
 
 
-<span class="n">EOF</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
-<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="n">NEWLINE</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">StoragePipeEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="StoragePipeEnum"><a class="viewcode-back" href="../../../documentation/developer/api/pipes_api/apetools.pipes.storagepipe.html#apetools.pipes.storagepipe.StoragePipeEnum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipeEnum"><a class="viewcode-back" href="../../../documentation/developer/api/pipes_api/apetools.pipes.storagepipe.html#apetools.pipes.storagepipe.StoragePipeEnum">[docs]</a><span class="k">class</span> <span class="nc">StoragePipeEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder of constants for the StoragePipe</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span>  <span class="o">=</span> <span class="p">()</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="s">&quot;start&quot;</span>
-    <span class="n">pipe</span> <span class="o">=</span> <span class="s">&quot;pipe&quot;</span>
-    <span class="n">sink</span> <span class="o">=</span> <span class="s">&quot;sink&quot;</span>
-<span class="c"># end class StoragePipeEnum</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="s2">&quot;start&quot;</span>
+    <span class="n">pipe</span> <span class="o">=</span> <span class="s2">&quot;pipe&quot;</span>
+    <span class="n">sink</span> <span class="o">=</span> <span class="s2">&quot;sink&quot;</span></div>
+<span class="c1"># end class StoragePipeEnum</span>
 
 
-<span class="k">class</span> <span class="nc">StoragePipe</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StoragePipe"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.html#apetools.pipes.storagepipe.StoragePipe">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipe"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.html#apetools.pipes.storagepipe.StoragePipe">[docs]</a><span class="k">class</span> <span class="nc">StoragePipe</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to add a pipe interface to the Storage Output</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">StoragePipeEnum</span><span class="o">.</span><span class="n">pipe</span><span class="p">,</span>
-<div class="viewcode-block" id="StoragePipe.__init__"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.html#apetools.pipes.storagepipe.StoragePipe.__init__">[docs]</a>                 <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header_token</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+<div class="viewcode-block" id="StoragePipe.__init__"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.html#apetools.pipes.storagepipe.StoragePipe.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">role</span><span class="o">=</span><span class="n">StoragePipeEnum</span><span class="o">.</span><span class="n">pipe</span><span class="p">,</span>
+                 <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header_token</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emit</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
                  <span class="n">add_timestamp</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
@@ -187,29 +188,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">add_timestamp</span> <span class="o">=</span> <span class="n">add_timestamp</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="StoragePipe.timestamp"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.timestamp.html#apetools.pipes.storagepipe.StoragePipe.timestamp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: TimestampFormat</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="o">=</span> <span class="n">TimestampFormat</span><span class="p">(</span><span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">log</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">storage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="StoragePipe.storage"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.storage.html#apetools.pipes.storagepipe.StoragePipe.storage">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: opened StorageOutput</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span> <span class="o">=</span> <span class="n">StorageOutput</span><span class="p">(</span><span class="n">output_folder</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_storage</span>
 
-    <span class="nd">@coroutine</span></div>
-    <span class="k">def</span> <span class="nf">pipe_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<div class="viewcode-block" id="StoragePipe.pipe_start"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.pipe_start.html#apetools.pipes.storagepipe.StoragePipe.pipe_start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="nd">@coroutine</span>
+<div class="viewcode-block" id="StoragePipe.pipe_start"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.pipe_start.html#apetools.pipes.storagepipe.StoragePipe.pipe_start">[docs]</a>    <span class="k">def</span> <span class="nf">pipe_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        If a header_token was set, starts the header line</span>
 <span class="sd">        .</span>
 <span class="sd">        :param:</span>
@@ -225,7 +226,7 @@
         <span class="n">line</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_timestamp</span><span class="p">:</span>
-                <span class="n">header</span> <span class="o">=</span> <span class="s">&quot;timestamp,{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+                <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;timestamp,{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span>
             <span class="n">output</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
@@ -239,16 +240,16 @@
                     <span class="k">continue</span>
                 
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_timestamp</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="s">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
                 
             <span class="n">output</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
             <span class="n">target</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@coroutine</span></div>
-    <span class="k">def</span> <span class="nf">pipe_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<div class="viewcode-block" id="StoragePipe.pipe_sink"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.pipe_sink.html#apetools.pipes.storagepipe.StoragePipe.pipe_sink">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="nd">@coroutine</span>
+<div class="viewcode-block" id="StoragePipe.pipe_sink"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.pipe_sink.html#apetools.pipes.storagepipe.StoragePipe.pipe_sink">[docs]</a>    <span class="k">def</span> <span class="nf">pipe_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Assumes there are no further targets in the pipe.</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -264,7 +265,7 @@
         <span class="n">line</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
-            <span class="n">output</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="s">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span><span class="p">))</span>
+            <span class="n">output</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="s2">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span><span class="p">))</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span>  <span class="n">EOF</span><span class="p">:</span>
@@ -277,17 +278,17 @@
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_timestamp</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="s">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
                 
             <span class="n">output</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
         <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
     
 
-    <span class="nd">@coroutine</span></div>
-    <span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<div class="viewcode-block" id="StoragePipe.pipe"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.pipe.html#apetools.pipes.storagepipe.StoragePipe.pipe">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+    <span class="nd">@coroutine</span>
+<div class="viewcode-block" id="StoragePipe.pipe"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.pipe.html#apetools.pipes.storagepipe.StoragePipe.pipe">[docs]</a>    <span class="k">def</span> <span class="nf">pipe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Acts as a tee between a previous agent and the next target.</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -303,26 +304,26 @@
         <span class="n">line</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
-            <span class="n">target</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span><span class="p">))</span>
+            <span class="n">target</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="s2">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">header_token</span><span class="p">))</span>
 
         <span class="k">while</span> <span class="n">line</span> <span class="o">!=</span>  <span class="n">EOF</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="k">yield</span><span class="p">)</span>
 
-            <span class="c"># transform the data if needed before passing down the pipe</span>
+            <span class="c1"># transform the data if needed before passing down the pipe</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">line</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
                     <span class="k">continue</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_timestamp</span><span class="p">:</span>
-                <span class="n">line</span> <span class="o">=</span> <span class="s">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
 
             <span class="n">output</span><span class="o">.</span><span class="n">writeline</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
             <span class="n">target</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
         <span class="n">output</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">open_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StoragePipe.open_start"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.open_start.html#apetools.pipes.storagepipe.StoragePipe.open_start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipe.open_start"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.open_start.html#apetools.pipes.storagepipe.StoragePipe.open_start">[docs]</a>    <span class="k">def</span> <span class="nf">open_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `filename`: The name of the file to open</span>
@@ -330,20 +331,20 @@
 <span class="sd">        :return: coroutine to send lines to</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe_start</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe_start</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">open_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StoragePipe.open_sink"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.open_sink.html#apetools.pipes.storagepipe.StoragePipe.open_sink">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipe.open_sink"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.open_sink.html#apetools.pipes.storagepipe.StoragePipe.open_sink">[docs]</a>    <span class="k">def</span> <span class="nf">open_sink</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `filename`: the name of the file to open</span>
 
 <span class="sd">        :return: coroutine to send lines to</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe_sink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe_sink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StoragePipe.open"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.open.html#apetools.pipes.storagepipe.StoragePipe.open">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipe.open"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.open.html#apetools.pipes.storagepipe.StoragePipe.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This uses self.role to chose the type of pipe to return.</span>
 <span class="sd">        :param:</span>
 
@@ -358,10 +359,10 @@
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">role</span> <span class="o">==</span> <span class="n">StoragePipeEnum</span><span class="o">.</span><span class="n">sink</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">open_sink</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pipe</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
 
-    <span class="k">def</span> <span class="nf">extend_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subdirectory</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StoragePipe.extend_path"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.extend_path.html#apetools.pipes.storagepipe.StoragePipe.extend_path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipe.extend_path"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.extend_path.html#apetools.pipes.storagepipe.StoragePipe.extend_path">[docs]</a>    <span class="k">def</span> <span class="nf">extend_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subdirectory</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        A pass-through to the storage&#39;s command</span>
 <span class="sd">        </span>
 <span class="sd">        :param:</span>
@@ -369,27 +370,27 @@
 <span class="sd">         - `subdirectory`: A sub-directory within the output folder</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">extend_path</span><span class="p">(</span><span class="n">subdirectory</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">set_emit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StoragePipe.set_emit"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.set_emit.html#apetools.pipes.storagepipe.StoragePipe.set_emit">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipe.set_emit"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.set_emit.html#apetools.pipes.storagepipe.StoragePipe.set_emit">[docs]</a>    <span class="k">def</span> <span class="nf">set_emit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: if has target, target.set_emit called, emit set</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emit</span> <span class="o">=</span> <span class="bp">True</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">set_emit</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">unset_emit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="StoragePipe.unset_emit"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.unset_emit.html#apetools.pipes.storagepipe.StoragePipe.unset_emit">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="StoragePipe.unset_emit"><a class="viewcode-back" href="../../../pipes/api/apetools.pipes.storagepipe.StoragePipe.unset_emit.html#apetools.pipes.storagepipe.StoragePipe.unset_emit">[docs]</a>    <span class="k">def</span> <span class="nf">unset_emit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :postcondition: if has target, target.unset_emit called, emit unset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">emit</span> <span class="o">=</span> <span class="bp">False</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">unset_emit</span><span class="p">()</span>
-        <span class="k">return</span>
-<span class="c"># end class StoragePipe</span>
-</pre></div></div></div>
+        <span class="k">return</span></div></div>
+<span class="c1"># end class StoragePipe</span>
+</pre></div>
 
     </div>
       
@@ -403,7 +404,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

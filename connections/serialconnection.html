@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -150,9 +150,9 @@
 <p>The SerialConnection takes the command-line command as a property and
 the arguments to the command as parameters.</p>
 <p>e.g.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>sc = SerialConnection()
-output = sc.ls(&#39;-l&#39;)
-print output.output
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sc</span> <span class="o">=</span> <span class="n">SerialConnection</span><span class="p">()</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s1">&#39;-l&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span>
 </pre></div>
 </div>
 <p>prints the output of the <cite>ls -l</cite> command line command</p>

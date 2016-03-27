@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,37 +135,38 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.tools.timetorecovery</h1><div class="highlight"><pre>
-<span class="c">#python</span>
+<span></span>
+<span class="c1">#python</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span>
 
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 
-<span class="c"># apetools libraries</span>
+<span class="c1"># apetools libraries</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">CommandError</span>
 <span class="kn">from</span> <span class="nn">apetools.commands</span> <span class="kn">import</span> <span class="n">ping</span>
 
 
-<span class="k">class</span> <span class="nc">TTRData</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;TTRData&quot;</span><span class="p">,</span> <span class="s">&quot;ttr rtt&quot;</span><span class="p">)):</span>
-<div class="viewcode-block" id="TTRData"><a class="viewcode-back" href="../../../documentation/developer/api/tools_api/apetools.tools.timetorecovery.html#apetools.tools.timetorecovery.TTRData">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TTRData"><a class="viewcode-back" href="../../../documentation/developer/api/tools_api/apetools.tools.timetorecovery.html#apetools.tools.timetorecovery.TTRData">[docs]</a><span class="k">class</span> <span class="nc">TTRData</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;TTRData&quot;</span><span class="p">,</span> <span class="s2">&quot;ttr rtt&quot;</span><span class="p">)):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A TTRData holds the TimeToRecovery data</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">&quot;ttr={0},rtt={1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ttr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rtt</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;ttr={0},rtt={1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ttr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rtt</span><span class="p">)</span></div>
 
 
-<span class="k">class</span> <span class="nc">TimeToRecovery</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeToRecovery"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.html#apetools.tools.timetorecovery.TimeToRecovery">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeToRecovery"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.html#apetools.tools.timetorecovery.TimeToRecovery">[docs]</a><span class="k">class</span> <span class="nc">TimeToRecovery</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A TimeToRecovery pings a target until the pings succeeed.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">pinger</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
-<div class="viewcode-block" id="TimeToRecovery.__init__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.html#apetools.tools.timetorecovery.TimeToRecovery.__init__">[docs]</a>                 <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeToRecovery.__init__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.html#apetools.tools.timetorecovery.TimeToRecovery.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">pinger</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span>
+                 <span class="n">threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
@@ -182,19 +183,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pinger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeToRecovery.pinger"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.pinger.html#apetools.tools.timetorecovery.TimeToRecovery.pinger">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: A pinger object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pinger</span> <span class="o">=</span> <span class="n">ping</span><span class="o">.</span><span class="n">PingCommand</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pinger</span>
 
-    <span class="k">def</span> <span class="nf">_unpack_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeToRecovery._unpack_parameters"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery._unpack_parameters.html#apetools.tools.timetorecovery.TimeToRecovery._unpack_parameters">[docs]</a>        <span class="k">try</span><span class="p">:</span>
+<div class="viewcode-block" id="TimeToRecovery._unpack_parameters"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery._unpack_parameters.html#apetools.tools.timetorecovery.TimeToRecovery._unpack_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">_unpack_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
             <span class="n">target</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">parameters</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span>
@@ -206,10 +207,10 @@
             <span class="n">threshold</span> <span class="o">=</span> <span class="n">parameters</span><span class="o">.</span><span class="n">threshold</span><span class="o">.</span><span class="n">parameters</span>
         <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
             <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span>
-        <span class="k">return</span> <span class="n">target</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">threshold</span>
+        <span class="k">return</span> <span class="n">target</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">threshold</span></div>
         
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeToRecovery.run"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.run.html#apetools.tools.timetorecovery.TimeToRecovery.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeToRecovery.run"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.run.html#apetools.tools.timetorecovery.TimeToRecovery.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Pings until failure or timeout.</span>
 
 <span class="sd">        :param:</span>
@@ -223,8 +224,8 @@
 <span class="sd">        :return: time from start of run to first of successful pings (or None)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">target</span><span class="p">,</span> <span class="n">timeout</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unpack_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">((</span><span class="s">&quot;{pinger}: Waiting for {target} to return {threshold} pings&quot;</span>
-                          <span class="s">&quot; (up to {timeout} seconds)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">((</span><span class="s2">&quot;{pinger}: Waiting for {target} to return {threshold} pings&quot;</span>
+                          <span class="s2">&quot; (up to {timeout} seconds)&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">,</span>
                                                                <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">,</span> <span class="n">pinger</span><span class="o">=</span><span class="n">connection</span><span class="p">))</span>
         <span class="n">start</span> <span class="o">=</span> <span class="n">now</span><span class="p">()</span>
         <span class="n">time_limit</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">timeout</span>
@@ -236,19 +237,19 @@
             <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
                 <span class="n">pings</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">if</span> <span class="n">pings</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Pinged target&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Pinged target&quot;</span><span class="p">)</span>
                     <span class="n">first</span> <span class="o">=</span> <span class="n">now</span><span class="p">()</span>
                     <span class="n">first_result</span> <span class="o">=</span> <span class="n">result</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Failed ping&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Failed ping&quot;</span><span class="p">)</span>
                 <span class="n">pings</span> <span class="o">=</span> <span class="mi">0</span>
                 <span class="n">first</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="k">if</span> <span class="n">pings</span> <span class="o">==</span> <span class="n">threshold</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">TTRData</span><span class="p">(</span><span class="n">ttr</span><span class="o">=</span><span class="n">first</span> <span class="o">-</span> <span class="n">start</span><span class="p">,</span> <span class="n">rtt</span><span class="o">=</span><span class="n">first_result</span><span class="o">.</span><span class="n">rtt</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeToRecovery.__call__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.__call__.html#apetools.tools.timetorecovery.TimeToRecovery.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeToRecovery.__call__"><a class="viewcode-back" href="../../../tools/api/apetools.tools.timetorecovery.TimeToRecovery.__call__.html#apetools.tools.timetorecovery.TimeToRecovery.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `parameters`: namedtuple with nodes and targets attribute</span>
@@ -256,12 +257,12 @@
 <span class="sd">        :raises: CommandError if unable to recover</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">ttr</span> <span class="o">=</span>  <span class="bp">self</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">parameters</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">parameters</span><span class="p">]</span><span class="o">.</span><span class="n">connection</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;TTR: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ttr</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;TTR: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ttr</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">ttr</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="s">&quot;Unable to ping {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
-        <span class="k">return</span> 
-<span class="c"># end TimeToRecovery</span>
-</pre></div></div></div>
+            <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="s2">&quot;Unable to ping {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameters</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">parameters</span><span class="p">))</span>
+        <span class="k">return</span> </div></div>
+<span class="c1"># end TimeToRecovery</span>
+</pre></div>
 
     </div>
       
@@ -275,7 +276,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

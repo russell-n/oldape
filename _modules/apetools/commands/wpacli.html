@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,26 +135,26 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.commands.wpacli</h1><div class="highlight"><pre>
-<span class="c">#python libraries</span>
+<span></span>
+<span class="c1">#python libraries</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
-<span class="c"># this package</span>
+<span class="c1"># this package</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">expressions</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span>
 
 <span class="n">CommandError</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">CommandError</span>
 
-
-<span class="k">class</span> <span class="nc">WpaCliCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WpaCliCommand"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand">[docs]</a><span class="k">class</span> <span class="nc">WpaCliCommand</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The WpaCliCommand interprets ifconfig</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">interface</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.wpacli.WpaCliCommand.html#apetools.commands.wpacli.WpaCliCommand.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WpaCliCommand.__init__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.wpacli.WpaCliCommand.html#apetools.commands.wpacli.WpaCliCommand.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">,</span> <span class="n">interface</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `connection`: A connection to the device</span>
@@ -168,26 +168,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_status</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_ssid</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_supplicant_state</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">status_command</span> <span class="o">=</span> <span class="s">&quot;status&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">interface_list_command</span> <span class="o">=</span> <span class="s">&quot;interface_list&quot;</span>
-        <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_command</span> <span class="o">=</span> <span class="s2">&quot;status&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interface_list_command</span> <span class="o">=</span> <span class="s2">&quot;interface_list&quot;</span>
+        <span class="k">return</span></div>
 
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand.status"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand.status">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is dynamically generated.</span>
 <span class="sd">        </span>
 <span class="sd">        :return: The status of the wpa-connection</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
-            <span class="n">output</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">wpa_cli</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_command</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">output</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">wpa_cli</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_command</span><span class="p">)[</span><span class="mi">0</span><span class="p">]])</span>
         <span class="k">return</span> <span class="n">output</span>
 
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ip_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand.ip_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand.ip_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is dynamically generated.</span>
 <span class="sd">        </span>
 <span class="sd">        :return: The IP Address of the interface</span>
@@ -199,9 +199,9 @@
                            <span class="n">name</span><span class="p">,</span>
                            <span class="n">command</span><span class="p">)</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ssid</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand.ssid"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand.ssid">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is dynamically generated.</span>
 <span class="sd">        </span>
 <span class="sd">        :return: The SSID of the attached AP</span>
@@ -211,9 +211,9 @@
         <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_command</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_match</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">supplicant_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand.supplicant_state"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand.supplicant_state">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is dynamically generated.</span>
 
 <span class="sd">        :return: The supplicant-state</span>
@@ -223,9 +223,9 @@
         <span class="n">command</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_command</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_match</span><span class="p">(</span><span class="n">expression</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">command</span><span class="p">)</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">interface</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand.interface"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand.interface">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is found once and stored.</span>
 <span class="sd">        </span>
 <span class="sd">        :return: The connected interface</span>
@@ -239,9 +239,9 @@
                                           <span class="n">command</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interface</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mac_address</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="WpaCliCommand.mac_address"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand.mac_address">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is found once and stored.</span>
 <span class="sd">        </span>
 <span class="sd">        :return: MAC Address of the interface</span>
@@ -256,8 +256,8 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mac_address</span>
 
     
-    <span class="k">def</span> <span class="nf">_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WpaCliCommand._match"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand._match">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="WpaCliCommand._match"><a class="viewcode-back" href="../../../documentation/developer/api/commands_api/apetools.commands.wpacli.html#apetools.commands.wpacli.WpaCliCommand._match">[docs]</a>    <span class="k">def</span> <span class="nf">_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">expression</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">arguments</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `expression`: The regular expression to match</span>
@@ -277,24 +277,23 @@
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">CommandError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="WpaCliCommand.__str__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.wpacli.WpaCliCommand.__str__.html#apetools.commands.wpacli.WpaCliCommand.__str__">[docs]</a>        <span class="k">return</span> <span class="s">&quot;({i}) IP: {ip}, MAC: {mac}, ssid: {ssid}, suplicant-state: {sup}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="p">,</span>
+<div class="viewcode-block" id="WpaCliCommand.__str__"><a class="viewcode-back" href="../../../commands/api/apetools.commands.wpacli.WpaCliCommand.__str__.html#apetools.commands.wpacli.WpaCliCommand.__str__">[docs]</a>    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;({i}) IP: {ip}, MAC: {mac}, ssid: {ssid}, suplicant-state: {sup}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="p">,</span>
                                                                                          <span class="n">ip</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ip_address</span><span class="p">,</span>
                                                                                          <span class="n">mac</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac_address</span><span class="p">,</span>
                                                                                          <span class="n">ssid</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ssid</span><span class="p">,</span>
-                                                                                         <span class="n">sup</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">supplicant_state</span><span class="p">)</span>
+                                                                                         <span class="n">sup</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">supplicant_state</span><span class="p">)</span></div></div>
 
-<span class="c"># end class WpaCliCommand</span>
+<span class="c1"># end class WpaCliCommand</span>
 
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">apetools.connections</span> <span class="kn">import</span> <span class="n">adbconnection</span>
     <span class="n">connection</span> <span class="o">=</span> <span class="n">adbconnection</span><span class="o">.</span><span class="n">ADBShellConnection</span><span class="p">()</span>
     <span class="n">command</span> <span class="o">=</span> <span class="n">WpaCliCommand</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
-    <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">command</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">command</span><span class="o">.</span><span class="n">status</span>
+    <span class="k">print</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">command</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">command</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -309,7 +308,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

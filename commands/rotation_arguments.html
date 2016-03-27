@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -170,7 +170,7 @@
       
   <div class="section" id="the-rotation-arguments">
 <h1>The Rotation Arguments<a class="headerlink" href="#the-rotation-arguments" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;rotate (a turntable controller)</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;rotate (a turntable controller)</span>
 
 <span class="sd">Usage: rotate -h | -v</span>
 <span class="sd">       rotate [options] &lt;angle&gt;</span>
@@ -224,10 +224,14 @@
 <p class="first admonition-title">Note</p>
 <p class="last">The docstring was created so that I could use <cite>docopt</cite>, but it turns out that <cite>docopt</cite> has a very major flaw in that it cannot accept negative numbers unless they are passed into a subcommand (otherwise it thinks that you are trying to pass in a short-option (e.g. <cite>-45</cite> is interpreted as option <cite>4</cite> with value <cite>5</cite>). So, I&#8217;m going to have to go back to ArgParse.</p>
 </div>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;ImportError&#39;&gt;
+No module named &#39;schema&#39;
+</pre></div>
+</div>
 <div class="section" id="global-constants">
 <h2>Global Constants<a class="headerlink" href="#global-constants" title="Permalink to this headline">¶</a></h2>
 <p>Constants for Rotator numeric settings.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">DEGREES_IN_CIRCLE</span> <span class="o">=</span> <span class="mi">360</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">DEGREES_IN_CIRCLE</span> <span class="o">=</span> <span class="mi">360</span>
 
 <span class="c1"># from ht.cfg [rotator]</span>
 <span class="n">MIN_ACCELERATION</span> <span class="o">=</span> <span class="mf">0.167</span>
@@ -242,7 +246,7 @@
 <div class="section" id="the-argumentconstants">
 <h2>The ArgumentConstants<a class="headerlink" href="#the-argumentconstants" title="Permalink to this headline">¶</a></h2>
 <p>Constants specific to the command-line options.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ArgumentsConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ArgumentsConstants</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Constants for the arguments</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -278,7 +282,7 @@
 <div class="section" id="arguments-schema">
 <h2>Arguments Schema<a class="headerlink" href="#arguments-schema" title="Permalink to this headline">¶</a></h2>
 <p>The <cite>arguments_schema</cite> validates and adjusts the command-line arguments as needed. Now that I&#8217;m using ArgParse it&#8217;s not quite as clean (since ArgParse does some of this by itself), but I&#8217;m going to leave it in since it makes the description for the non-Boolean arguments more explicit.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">args_schema</span> <span class="o">=</span> <span class="p">{}</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">args_schema</span> <span class="o">=</span> <span class="p">{}</span>
 </pre></div>
 </div>
 <div class="section" id="acceleration">
@@ -290,12 +294,16 @@
 </div>
 <div class="math">
 <p><img src="../_images/math/45d8ecf087114441eeb30996cda022333e1f3901.png" alt="schema = \{a | (a \in \mathbb{R}) \land (0.167 \leq a \leq 5,461.167))\}"/></p>
-</div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">acceleration</span>
+</div><div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">acceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">acceleration</span>
 <span class="n">args_schema</span><span class="p">[</span><span class="n">acceleration</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s1">&#39;acceleration must be float&#39;</span><span class="p">),</span>
                                        <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">,</span>
                                        <span class="n">error</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;acceleration out of range: &quot;</span>
                                               <span class="s2">&quot;({0} &lt;= accel &lt;= {1})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_ACCELERATION</span><span class="p">,</span>
                                                                               <span class="n">MAX_ACCELERATION</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;Schema&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -304,12 +312,16 @@
 <p>The deceleration option sets how fast the table slows down as it nears the target angle.</p>
 <div class="math">
 <p><img src="../_images/math/7c440045d5549405302ce254153f043c922b0db1.png" alt="schema = \{d |  ((d \in \mathbb{R}) \land (0.167 \leq d \leq 5,461.167))\}"/></p>
-</div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">deceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">deceleration</span>
+</div><div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">deceleration</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">deceleration</span>
 <span class="n">args_schema</span><span class="p">[</span><span class="n">deceleration</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">error</span><span class="o">=</span><span class="s1">&#39;deceleration must be float&#39;</span><span class="p">),</span>
                                        <span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">MIN_ACCELERATION</span> <span class="o">&lt;=</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">MAX_ACCELERATION</span><span class="p">,</span>
                                        <span class="n">error</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;deceleration out of range: &quot;</span>
                                               <span class="s2">&quot;({0} &lt;= accel &lt;= {1})&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_ACCELERATION</span><span class="p">,</span>
                                                                               <span class="n">MAX_ACCELERATION</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;Schema&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -319,10 +331,14 @@
 <div class="math">
 <p><img src="../_images/math/a63c974b194bc6664fe33ed52ec8af773779134b.png" alt="schema = \{ a | a \in \mathbb{Z} \land 0 \leq a &lt; 359 \}"/></p>
 </div><p>In this case the ArgumentParser is doing the conversion to integers and supplying a default of 0. I&#8217;ll leave the integer conversion in the schema and add a modulus to keep the values within range (so really, there&#8217;s no failing values because ArgParse will catch it). The schema won&#8217;t know the value of the <code class="docutils literal"><span class="pre">--clockwise</span></code> option so the BaseArguments will have to do the anti-clockwise conversion for itself.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">angle</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">angle</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">angle</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">angle</span>
 <span class="n">args_schema</span><span class="p">[</span><span class="n">angle</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span>
                                     <span class="n">error</span><span class="o">=</span><span class="s1">&#39;Angle must be an integer&#39;</span><span class="p">),</span>
                                 <span class="n">Use</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">:</span> <span class="n">a</span> <span class="o">%</span> <span class="n">DEGREES_IN_CIRCLE</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;Schema&#39; is not defined
 </pre></div>
 </div>
 <p>The way the angles will be converted will depend on whether the user sets the <code class="docutils literal"><span class="pre">--clockwise</span></code> flag or not. First the schema applies the modulus to all angle values.</p>
@@ -333,48 +349,10 @@
 <p><img src="../_images/math/5cde12aa4ea33d9067a44bd1747f5bbb90da251b.png" alt="angle'' \gets (360 - angle') \mod{360}"/></p>
 </div><p>We don&#8217;t have to do anything special for negative angles because according to the python <a class="reference external" href="https://docs.python.org/2/reference/expressions.html#binary-arithmetic-operations">documentation</a> &#8216;<em>The modulo operator always yields a result with the same sign as its second operand (or zero)</em>&#8216; so in this case the outcome of <code class="docutils literal"><span class="pre">angle</span> <span class="pre">%</span> <span class="pre">360</span></code> will always be positive since 360 is positive.</p>
 <p>For example, if we mod the values in <img class="math" src="../_images/math/91b8b1f844eb0dae9561a49d170145da1dbd3902.png" alt="\{0, -45, \dots, -315\}"/> we get:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>for angle in xrange(0, -360, -45):
-    print &quot;   {0},{1}&quot;.format(angle, angle % 360)
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">angle</span> <span class="ow">in</span> <span class="nb">xrange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">360</span><span class="p">,</span> <span class="o">-</span><span class="mi">45</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span> <span class="s2">&quot;   {0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="n">angle</span> <span class="o">%</span> <span class="mi">360</span><span class="p">))</span>
 </pre></div>
 </div>
-<table border="1" class="docutils" id="id1">
-<caption><span class="caption-text">Modulo Example</span><a class="headerlink" href="#id1" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col width="50%" />
-<col width="50%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Angle</th>
-<th class="head">Angle % 360</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>0</td>
-<td>0</td>
-</tr>
-<tr class="row-odd"><td>-45</td>
-<td>315</td>
-</tr>
-<tr class="row-even"><td>-90</td>
-<td>270</td>
-</tr>
-<tr class="row-odd"><td>-135</td>
-<td>225</td>
-</tr>
-<tr class="row-even"><td>-180</td>
-<td>180</td>
-</tr>
-<tr class="row-odd"><td>-225</td>
-<td>135</td>
-</tr>
-<tr class="row-even"><td>-270</td>
-<td>90</td>
-</tr>
-<tr class="row-odd"><td>-315</td>
-<td>45</td>
-</tr>
-</tbody>
-</table>
 </div>
 <div class="section" id="module-rotation_table.Rotator">
 <span id="velocity"></span><h3>Velocity<a class="headerlink" href="#module-rotation_table.Rotator" title="Permalink to this headline">¶</a></h3>
@@ -430,12 +408,16 @@ velocity &amp;= angularVelocity \times DegreesPerRevolution\\"/></p>
 <p>So our schema becomes:</p>
 <div class="math">
 <p><img src="../_images/math/0aa71f8a56a43ecc06065597e92871f85968b7ff.png" alt="schema = \{v | (v \in \mathbb{R}) \land (1.512 \leq v \leq 720)\}"/></p>
-</div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">velocity</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">velocity</span>
+</div><div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">velocity</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">velocity</span>
 <span class="n">args_schema</span><span class="p">[</span><span class="n">velocity</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span>
                                        <span class="n">error</span><span class="o">=</span><span class="s2">&quot;&#39;velocity&#39; must be a real number&quot;</span><span class="p">),</span>
                                         <span class="k">lambda</span> <span class="n">v</span><span class="p">:</span> <span class="n">MIN_VELOCITY</span> <span class="o">&lt;=</span> <span class="n">v</span> <span class="o">&lt;=</span> <span class="n">MAX_VELOCITY</span><span class="p">,</span>
                                         <span class="n">error</span><span class="o">=</span><span class="s2">&quot;velocity out of range ({0} &lt;= v &lt; {1})&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MIN_VELOCITY</span><span class="p">,</span>
                                                                                              <span class="n">MAX_VELOCITY</span> <span class="p">)))</span>
+</pre></div>
+</div>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;Schema&#39; is not defined
 </pre></div>
 </div>
 <div class="admonition note">
@@ -448,10 +430,14 @@ velocity &amp;= angularVelocity \times DegreesPerRevolution\\"/></p>
 <p>The configuration is an optional valid ini file with settings to override the table&#8217;s default values. To avoid the expense of building the ConfigParser this only checks that the file exists, not that it&#8217;s a valid configuration file.</p>
 <div class="math">
 <p><img src="../_images/math/bc89b888ec8f8cf80d9081fd0d61ad1dfbd9ae75.png" alt="schema = \{c | None \lor isfile(c)\}"/></p>
-</div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">configuration</span>
+</div><div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">configuration</span>
 <span class="n">args_schema</span><span class="p">[</span><span class="n">config</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">Or</span><span class="p">(</span><span class="bp">None</span><span class="p">,</span>
                                 <span class="k">lambda</span> <span class="n">c</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">c</span><span class="p">),</span>
                                 <span class="n">error</span><span class="o">=</span><span class="s2">&quot;File not found&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;Schema&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -471,10 +457,14 @@ velocity &amp;= angularVelocity \times DegreesPerRevolution\\"/></p>
 <p>The Rotator&#8217;s rotation method call (<code class="docutils literal"><span class="pre">rotateAbsolute</span></code>) doesn&#8217;t block execution so the code would likely exit before the table reached its target position when called if nothing else was done (and thus kill the serial connection and stopping the table). To make sure that code waits for the table before exiting you can use the <code class="docutils literal"><span class="pre">waitForPosition</span></code> method, which takes an optional <code class="docutils literal"><span class="pre">timeout</span></code> argument (seconds to wait). It looks like sometimes when a slow speed (<cite>velocity</cite>) is used the <code class="docutils literal"><span class="pre">waitForPosition</span></code> method times-out so this option lets the user extend the wait-time further. The only invalid values are negative numbers (or non-numbers), although setting it to 0 might not make sense.</p>
 <div class="math">
 <p><img src="../_images/math/7567255caa6e4bf82a44afcedfc35385865efa18.png" alt="schema \gets \{t | (t \in \mathbb{R}) \land (t \geq 0)\}"/></p>
-</div><div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">timeout</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">timeout</span>
+</div><div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">timeout</span> <span class="o">=</span> <span class="n">ArgumentsConstants</span><span class="o">.</span><span class="n">timeout</span>
 <span class="n">args_schema</span><span class="p">[</span><span class="n">timeout</span><span class="p">]</span> <span class="o">=</span> <span class="n">Schema</span><span class="p">(</span><span class="n">And</span><span class="p">(</span><span class="n">Use</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span>
                                   <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">t</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span>
                                   <span class="n">error</span><span class="o">=</span><span class="s1">&#39;timeout must be a non-negative float&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;Schema&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -496,6 +486,10 @@ velocity &amp;= angularVelocity \times DegreesPerRevolution\\"/></p>
 </tr>
 </tbody>
 </table>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;SchemaError&#39; is not defined
+</pre></div>
+</div>
 </div>
 <div class="section" id="the-basearguments">
 <h2>The BaseArguments<a class="headerlink" href="#the-basearguments" title="Permalink to this headline">¶</a></h2>
@@ -551,6 +545,10 @@ BaseArguments o- ArgumentParser" />
 </table>
 <div class="section" id="the-options">
 <h4>The Options<a class="headerlink" href="#the-options" title="Permalink to this headline">¶</a></h4>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;NameError&#39;&gt;
+name &#39;BaseClass&#39; is not defined
+</pre></div>
+</div>
 </div>
 </div>
 </div>

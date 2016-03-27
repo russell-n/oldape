@@ -28,6 +28,16 @@ Since the paramiko :ref:`SSHClient <ssh-client>` is somewhat buried within the :
    SftpCommand : put(local, remote)
 
 
+.. code::
+
+    <class 'SyntaxError'>
+    Missing parentheses in call to 'print' (sshconnection.py, line 338)
+    
+
+
+
+
+
 
 Example Use::
 
@@ -51,6 +61,16 @@ Testing the SftpCommand
    TestSftpCommand.test_put
    TestSftpCommand.test_connection_builder
    TestSftpCommand.test_connection_setter
+
+
+.. code::
+
+    <class 'ImportError'>
+    No module named 'mock'
+    
+
+
+
 
 
 

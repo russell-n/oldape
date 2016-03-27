@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,59 +135,60 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.parsers.iperfexpressions</h1><div class="highlight"><pre>
-<span class="c"># python standard library</span>
+<span></span>
+<span class="c1"># python standard library</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABCMeta</span><span class="p">,</span> <span class="n">abstractproperty</span>
 
-<span class="c"># this package</span>
+<span class="c1"># this package</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">import</span> <span class="nn">oatbran</span> <span class="kn">as</span> <span class="nn">bran</span>
 
 
-<span class="k">class</span> <span class="nc">ExpressionBase</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="ExpressionBase"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.ExpressionBase.html#apetools.parsers.iperfexpressions.ExpressionBase">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ExpressionBase"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.ExpressionBase.html#apetools.parsers.iperfexpressions.ExpressionBase">[docs]</a><span class="k">class</span> <span class="nc">ExpressionBase</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An Abstract Base class for regular expression containers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__metaclass__</span> <span class="o">=</span> <span class="n">ABCMeta</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ExpressionBase.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.ExpressionBase.html#apetools.parsers.iperfexpressions.ExpressionBase.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+<div class="viewcode-block" id="ExpressionBase.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.ExpressionBase.html#apetools.parsers.iperfexpressions.ExpressionBase.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@abstractproperty</span></div>
+    <span class="nd">@abstractproperty</span>
     <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ExpressionBase.expression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.ExpressionBase.expression.html#apetools.parsers.iperfexpressions.ExpressionBase.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: String</span>
 <span class="sd">        :return: regular expression to match given input</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
 
-    <span class="nd">@abstractproperty</span></div>
+    <span class="nd">@abstractproperty</span>
     <span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="ExpressionBase.regex"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.ExpressionBase.regex.html#apetools.parsers.iperfexpressions.ExpressionBase.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: re.RegexObject</span>
 <span class="sd">        :return: compiled regex object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span></div>
 
 
-<span class="k">class</span> <span class="nc">HumanExpression</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="HumanExpression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.HumanExpression.html#apetools.parsers.iperfexpressions.HumanExpression">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="HumanExpression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.HumanExpression.html#apetools.parsers.iperfexpressions.HumanExpression">[docs]</a><span class="k">class</span> <span class="nc">HumanExpression</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Human Expression matches the human-readable iperf output</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="HumanExpression.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.HumanExpression.html#apetools.parsers.iperfexpressions.HumanExpression.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">HumanExpression</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+<div class="viewcode-block" id="HumanExpression.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.HumanExpression.html#apetools.parsers.iperfexpressions.HumanExpression.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">HumanExpression</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">thread_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="HumanExpression.thread_column"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.HumanExpression.thread_column.html#apetools.parsers.iperfexpressions.HumanExpression.thread_column">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the expression to match the thread column        </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -196,9 +197,9 @@
                                    <span class="n">bran</span><span class="o">.</span><span class="n">R_BRACKET</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="HumanExpression.expression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.HumanExpression.expression.html#apetools.parsers.iperfexpressions.HumanExpression.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: String</span>
 <span class="sd">        :return: regular expression to match iperf output</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -206,54 +207,54 @@
             <span class="n">interval_column</span> <span class="o">=</span> <span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">)</span> <span class="o">+</span>
                                <span class="n">bran</span><span class="o">.</span><span class="n">DASH</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">OPTIONAL_SPACES</span> <span class="o">+</span>
                                <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">end</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">FLOAT</span><span class="p">)</span> <span class="o">+</span>
-                               <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="s">&#39;sec&#39;</span><span class="p">)</span>
+                               <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="s1">&#39;sec&#39;</span><span class="p">)</span>
             <span class="n">transfer_column</span> <span class="o">=</span> <span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">transfer</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">REAL</span><span class="p">)</span>
-                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="s">&#39;GKM&#39;</span><span class="p">)</span>
-                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="s">&quot;Bytes&quot;</span><span class="p">)</span>
+                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="s1">&#39;GKM&#39;</span><span class="p">)</span>
+                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="s2">&quot;Bytes&quot;</span><span class="p">)</span>
             <span class="n">bandwidth_column</span> <span class="o">=</span> <span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">REAL</span><span class="p">)</span> <span class="o">+</span>
-                                <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">units</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="s">&quot;GKM&quot;</span><span class="p">)</span>
-                                <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span> <span class="s">&quot;bits&quot;</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s">&quot;Bytes&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="s">&quot;/sec&quot;</span><span class="p">)</span>
+                                <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">units</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="s2">&quot;GKM&quot;</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span> <span class="s2">&quot;bits&quot;</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s2">&quot;Bytes&quot;</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;/sec&quot;</span><span class="p">)</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">thread_column</span><span class="p">,</span> <span class="n">interval_column</span><span class="p">,</span>
                                                  <span class="n">transfer_column</span><span class="p">,</span> <span class="n">bandwidth_column</span><span class="p">])</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="HumanExpression.regex"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.HumanExpression.regex.html#apetools.parsers.iperfexpressions.HumanExpression.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: compiled regex object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span>
-<span class="c"># end class HumanExpression</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span></div>
+<span class="c1"># end class HumanExpression</span>
 
 
-<span class="k">class</span> <span class="nc">CsvExpression</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="CsvExpression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CsvExpression.html#apetools.parsers.iperfexpressions.CsvExpression">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CsvExpression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CsvExpression.html#apetools.parsers.iperfexpressions.CsvExpression">[docs]</a><span class="k">class</span> <span class="nc">CsvExpression</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Csv Expression holds the expression to match iperf&#39;s csv format</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CsvExpression.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CsvExpression.html#apetools.parsers.iperfexpressions.CsvExpression.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">CsvExpression</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+<div class="viewcode-block" id="CsvExpression.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CsvExpression.html#apetools.parsers.iperfexpressions.CsvExpression.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CsvExpression</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">thread_column</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CsvExpression.thread_column"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CsvExpression.thread_column.html#apetools.parsers.iperfexpressions.CsvExpression.thread_column">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the expression to match the thread id</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">thread</span><span class="p">,</span> <span class="n">bran</span><span class="o">.</span><span class="n">NATURAL</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_thread_column</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CsvExpression.expression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CsvExpression.expression.html#apetools.parsers.iperfexpressions.CsvExpression.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: string regular expression to match csv-format</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">COMMA</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span>
+            <span class="n">COMMA</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
             <span class="n">timestamp</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">bran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">)</span>
             <span class="n">sender_ip</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">sender_ip</span><span class="p">,</span> <span class="n">bran</span><span class="o">.</span><span class="n">IP_ADDRESS</span><span class="p">)</span>
             <span class="n">sender_port</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">sender_port</span><span class="p">,</span> <span class="n">bran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">)</span>
@@ -277,26 +278,26 @@
             
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CsvExpression.regex"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CsvExpression.regex.html#apetools.parsers.iperfexpressions.CsvExpression.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: compiled regular expression to match csv-format</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span>
-<span class="c"># end class CsvExpression</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span></div>
+<span class="c1"># end class CsvExpression</span>
 
 
-<span class="k">class</span> <span class="nc">CombinedExpression</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="CombinedExpression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CombinedExpression.html#apetools.parsers.iperfexpressions.CombinedExpression">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="CombinedExpression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CombinedExpression.html#apetools.parsers.iperfexpressions.CombinedExpression">[docs]</a><span class="k">class</span> <span class="nc">CombinedExpression</span><span class="p">(</span><span class="n">ExpressionBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A Combined expression matches either case (but doesn&#39;t break up the line).</span>
 
 <span class="sd">    This is intended for implemetations that set the expression type on first match.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">expression</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CombinedExpression.expression"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CombinedExpression.expression.html#apetools.parsers.iperfexpressions.CombinedExpression.expression">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: String</span>
 <span class="sd">        :return: regular expression that matches both formats</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -307,19 +308,19 @@
             <span class="n">interval_column</span> <span class="o">=</span> <span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">FLOAT</span> <span class="o">+</span>
                                <span class="n">bran</span><span class="o">.</span><span class="n">DASH</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">OPTIONAL_SPACES</span> <span class="o">+</span>
                                <span class="n">bran</span><span class="o">.</span><span class="n">FLOAT</span> <span class="o">+</span>
-                               <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="s">&#39;sec&#39;</span><span class="p">)</span>
+                               <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="s1">&#39;sec&#39;</span><span class="p">)</span>
             <span class="n">transfer_column</span> <span class="o">=</span> <span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">REAL</span>
-                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="s">&#39;GKM&#39;</span><span class="p">)</span>
-                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="s">&quot;Bytes&quot;</span><span class="p">)</span>
+                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="s1">&#39;GKM&#39;</span><span class="p">)</span>
+                               <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="s2">&quot;Bytes&quot;</span><span class="p">)</span>
             <span class="n">bandwidth_column</span> <span class="o">=</span> <span class="p">(</span><span class="n">bran</span><span class="o">.</span><span class="n">REAL</span> <span class="o">+</span>
-                                <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="s">&quot;GKM&quot;</span><span class="p">)</span>
-                                <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span> <span class="s">&quot;bits&quot;</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s">&quot;Bytes&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot;/sec&quot;</span><span class="p">)</span>
+                                <span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">CLASS</span><span class="p">(</span><span class="n">e</span><span class="o">=</span><span class="s2">&quot;GKM&quot;</span><span class="p">)</span>
+                                <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">GROUP</span><span class="p">(</span> <span class="s2">&quot;bits&quot;</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="s2">&quot;Bytes&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;/sec&quot;</span><span class="p">)</span>
             <span class="n">human</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">human</span><span class="p">,</span>
                                <span class="n">e</span><span class="o">=</span><span class="n">bran</span><span class="o">.</span><span class="n">SPACES</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">thread_column</span><span class="p">,</span>
                                                    <span class="n">interval_column</span><span class="p">,</span>
                                                    <span class="n">transfer_column</span><span class="p">,</span>
                                                    <span class="n">bandwidth_column</span><span class="p">]))</span>
-            <span class="n">COMMA</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span>
+            <span class="n">COMMA</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span>
             <span class="n">csv</span> <span class="o">=</span> <span class="n">bran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">ParserKeys</span><span class="o">.</span><span class="n">csv</span><span class="p">,</span>
                              <span class="n">e</span><span class="o">=</span><span class="n">COMMA</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">bran</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">COMMA</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">5</span> <span class="o">+</span> <span class="p">[</span><span class="n">bran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">]</span>
                                           <span class="o">+</span> <span class="p">[</span><span class="n">bran</span><span class="o">.</span><span class="n">NOT</span><span class="p">(</span><span class="n">COMMA</span><span class="p">)]</span> <span class="o">*</span> <span class="mi">3</span><span class="p">))</span>
@@ -327,41 +328,41 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span> <span class="o">=</span> <span class="n">human</span> <span class="o">+</span> <span class="n">bran</span><span class="o">.</span><span class="n">OR</span> <span class="o">+</span> <span class="n">csv</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expression</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">regex</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="CombinedExpression.regex"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.iperfexpressions.CombinedExpression.regex.html#apetools.parsers.iperfexpressions.CombinedExpression.regex">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: compiled regex that matches both formats</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">expression</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span>
-<span class="c"># end class CombinedExpression</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_regex</span></div>
+<span class="c1"># end class CombinedExpression</span>
 
 
-<span class="k">class</span> <span class="nc">ParserKeys</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="ParserKeys"><a class="viewcode-back" href="../../../documentation/developer/api/parsers_api/apetools.parsers.iperfexpressions.html#apetools.parsers.iperfexpressions.ParserKeys">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ParserKeys"><a class="viewcode-back" href="../../../documentation/developer/api/parsers_api/apetools.parsers.iperfexpressions.html#apetools.parsers.iperfexpressions.ParserKeys">[docs]</a><span class="k">class</span> <span class="nc">ParserKeys</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder of the keys to the groupdict</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">units</span> <span class="o">=</span> <span class="s">&quot;units&quot;</span>
-    <span class="n">thread</span> <span class="o">=</span> <span class="s">&quot;thread&quot;</span>
-    <span class="n">start</span> <span class="o">=</span> <span class="s">&quot;start&quot;</span>
-    <span class="n">end</span> <span class="o">=</span> <span class="s">&quot;end&quot;</span>
-    <span class="n">transfer</span> <span class="o">=</span> <span class="s">&quot;transfer&quot;</span>
-    <span class="n">bandwidth</span> <span class="o">=</span> <span class="s">&#39;bandwidth&#39;</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="s2">&quot;units&quot;</span>
+    <span class="n">thread</span> <span class="o">=</span> <span class="s2">&quot;thread&quot;</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="s2">&quot;start&quot;</span>
+    <span class="n">end</span> <span class="o">=</span> <span class="s2">&quot;end&quot;</span>
+    <span class="n">transfer</span> <span class="o">=</span> <span class="s2">&quot;transfer&quot;</span>
+    <span class="n">bandwidth</span> <span class="o">=</span> <span class="s1">&#39;bandwidth&#39;</span>
 
-    <span class="c">#csv-only</span>
-    <span class="n">timestamp</span> <span class="o">=</span> <span class="s">&quot;timestamp&quot;</span>
-    <span class="n">sender_ip</span> <span class="o">=</span> <span class="s">&quot;sender_ip&quot;</span>
-    <span class="n">sender_port</span> <span class="o">=</span> <span class="s">&quot;sender_port&quot;</span>
-    <span class="n">receiver_ip</span> <span class="o">=</span> <span class="s">&quot;receiver_ip&quot;</span>
-    <span class="n">receiver_port</span> <span class="o">=</span> <span class="s">&quot;receiver_port&quot;</span>
+    <span class="c1">#csv-only</span>
+    <span class="n">timestamp</span> <span class="o">=</span> <span class="s2">&quot;timestamp&quot;</span>
+    <span class="n">sender_ip</span> <span class="o">=</span> <span class="s2">&quot;sender_ip&quot;</span>
+    <span class="n">sender_port</span> <span class="o">=</span> <span class="s2">&quot;sender_port&quot;</span>
+    <span class="n">receiver_ip</span> <span class="o">=</span> <span class="s2">&quot;receiver_ip&quot;</span>
+    <span class="n">receiver_port</span> <span class="o">=</span> <span class="s2">&quot;receiver_port&quot;</span>
 
-    <span class="c"># combined</span>
-    <span class="n">human</span> <span class="o">=</span> <span class="s">&quot;human&quot;</span>
-    <span class="n">csv</span> <span class="o">=</span> <span class="s">&quot;csv&quot;</span>
-<span class="c"># end class ParserKeys</span>
-</pre></div></div>
+    <span class="c1"># combined</span>
+    <span class="n">human</span> <span class="o">=</span> <span class="s2">&quot;human&quot;</span>
+    <span class="n">csv</span> <span class="o">=</span> <span class="s2">&quot;csv&quot;</span></div>
+<span class="c1"># end class ParserKeys</span>
+</pre></div>
 
     </div>
       
@@ -375,7 +376,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

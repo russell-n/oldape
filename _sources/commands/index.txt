@@ -4,9 +4,14 @@ Commands
 Commands correspond to commands to be executed on a device.
 
 
+
+
+
+
 .. toctree::
    :maxdepth: 1
 
+   """ <airportcommand.rst>
    The Base Command <basecommand.rst>
    The Base WiFi Command <basewificommand.rst>
    Busybox wget <busyboxwget.rst>
@@ -40,5 +45,7 @@ Commands correspond to commands to be executed on a device.
 
 .. toctree::
    :maxdepth: 1
+
+
 
 

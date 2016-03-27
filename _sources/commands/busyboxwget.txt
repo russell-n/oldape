@@ -7,6 +7,10 @@ A wget hack for the busybox wget command (to simulate file-transfers over the in
 
 
 
+
+
+
+
 The Busybox Wget Data
 ---------------------
 
@@ -29,6 +33,7 @@ This is what will be returned by the wget. The idea I am converging on is that `
    
 
 
+
 The Busybox Enum
 ----------------
 
@@ -38,6 +43,7 @@ A holder of constants for users of this module.
    :toctree: api
 
    BusyboxEnum.destination
+
 
 
    
@@ -57,6 +63,21 @@ The Busybox Wget Command
    BusyboxWget.expression
    BusyboxWget.run
    BusyboxWget.__call__
+
+
+
+
+
+.. code::
+
+    <class 'ImportError'>
+    No module named 'StringIO'
+    
+
+
+
+
+
 
 
 

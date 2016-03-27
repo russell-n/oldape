@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,26 +135,27 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.parsers.unitconverter</h1><div class="highlight"><pre>
-<span class="k">class</span> <span class="nc">UnitNames</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="UnitNames"><a class="viewcode-back" href="../../../documentation/developer/api/parsers_api/apetools.parsers.unitconverter.html#apetools.parsers.unitconverter.UnitNames">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<span></span>
+<div class="viewcode-block" id="UnitNames"><a class="viewcode-back" href="../../../documentation/developer/api/parsers_api/apetools.parsers.unitconverter.html#apetools.parsers.unitconverter.UnitNames">[docs]</a><span class="k">class</span> <span class="nc">UnitNames</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Unit Names is a namepace to hold units</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">bits</span> <span class="o">=</span> <span class="s">&quot;bits&quot;</span>
-    <span class="n">kbits</span> <span class="o">=</span> <span class="s">&quot;K&quot;</span> <span class="o">+</span> <span class="n">bits</span>
-    <span class="n">mbits</span> <span class="o">=</span> <span class="s">&quot;M&quot;</span> <span class="o">+</span> <span class="n">bits</span>
-    <span class="n">gbits</span> <span class="o">=</span> <span class="s">&quot;G&quot;</span> <span class="o">+</span> <span class="n">bits</span>
-    <span class="nb">bytes</span> <span class="o">=</span> <span class="s">&quot;Bytes&quot;</span>
-    <span class="n">kbytes</span> <span class="o">=</span> <span class="s">&quot;KBytes&quot;</span>
-    <span class="n">mbytes</span> <span class="o">=</span> <span class="s">&quot;MBytes&quot;</span>
-    <span class="n">gbytes</span> <span class="o">=</span> <span class="s">&quot;GBytes&quot;</span>
-<span class="c"># end UnitNames</span>
+    <span class="n">bits</span> <span class="o">=</span> <span class="s2">&quot;bits&quot;</span>
+    <span class="n">kbits</span> <span class="o">=</span> <span class="s2">&quot;K&quot;</span> <span class="o">+</span> <span class="n">bits</span>
+    <span class="n">mbits</span> <span class="o">=</span> <span class="s2">&quot;M&quot;</span> <span class="o">+</span> <span class="n">bits</span>
+    <span class="n">gbits</span> <span class="o">=</span> <span class="s2">&quot;G&quot;</span> <span class="o">+</span> <span class="n">bits</span>
+    <span class="nb">bytes</span> <span class="o">=</span> <span class="s2">&quot;Bytes&quot;</span>
+    <span class="n">kbytes</span> <span class="o">=</span> <span class="s2">&quot;KBytes&quot;</span>
+    <span class="n">mbytes</span> <span class="o">=</span> <span class="s2">&quot;MBytes&quot;</span>
+    <span class="n">gbytes</span> <span class="o">=</span> <span class="s2">&quot;GBytes&quot;</span></div>
+<span class="c1"># end UnitNames</span>
 
 
-<span class="n">IDENTITY</span> <span class="o">=</span> <span class="mi">1</span></div>
+<span class="n">IDENTITY</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">ONE</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">KILO</span> <span class="o">=</span> <span class="mi">10</span><span class="o">**</span><span class="mi">3</span>
 <span class="n">TO_KILO</span> <span class="o">=</span> <span class="n">ONE</span><span class="o">/</span><span class="n">KILO</span>
@@ -201,14 +202,14 @@
 <span class="n">from_gbytes</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">to_units</span><span class="p">,</span> <span class="n">byte_row_4</span> <span class="o">+</span> <span class="n">bit_row_4</span><span class="p">))</span>
 
 
-<span class="k">class</span> <span class="nc">UnitConverter</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
-<div class="viewcode-block" id="UnitConverter"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.unitconverter.UnitConverter.html#apetools.parsers.unitconverter.UnitConverter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="UnitConverter"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.unitconverter.UnitConverter.html#apetools.parsers.unitconverter.UnitConverter">[docs]</a><span class="k">class</span> <span class="nc">UnitConverter</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The UnitConverter is a conversion lookup table.</span>
 
 <span class="sd">    Use class UnitNames to get valid unit names</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="UnitConverter.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.unitconverter.UnitConverter.html#apetools.parsers.unitconverter.UnitConverter.__init__">[docs]</a>        <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">bits</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_bits</span>
+<div class="viewcode-block" id="UnitConverter.__init__"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.unitconverter.UnitConverter.html#apetools.parsers.unitconverter.UnitConverter.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">bits</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_bits</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">kbits</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_kbits</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">mbits</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_mbits</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">gbits</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_gbits</span>
@@ -217,9 +218,9 @@
         <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">kbytes</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_kbytes</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">mbytes</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_mbytes</span>
         <span class="bp">self</span><span class="p">[</span><span class="n">UnitNames</span><span class="o">.</span><span class="n">gbytes</span><span class="p">]</span> <span class="o">=</span> <span class="n">from_gbytes</span>
-        <span class="k">return</span>
-<span class="c"># end class UnitConverter</span>
-</pre></div></div></div>
+        <span class="k">return</span></div></div>
+<span class="c1"># end class UnitConverter</span>
+</pre></div>
 
     </div>
       
@@ -233,7 +234,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

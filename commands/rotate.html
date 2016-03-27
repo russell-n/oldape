@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -153,7 +153,11 @@
   <div class="section" id="the-rotate">
 <h1>The Rotate<a class="headerlink" href="#the-rotate" title="Permalink to this headline">¶</a></h1>
 <p>A command-line interface to run the rotate command remotely.</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SIGKILL</span> <span class="o">=</span> <span class="mi">9</span>
+<div class="code highlight-python"><div class="highlight"><pre><span></span>&lt;class &#39;ImportError&#39;&gt;
+cannot import name &#39;IntType&#39;
+</pre></div>
+</div>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="n">SIGKILL</span> <span class="o">=</span> <span class="mi">9</span>
 <span class="n">PROCESS</span> <span class="o">=</span> <span class="s1">&#39;rotate&#39;</span>
 </pre></div>
 </div>
@@ -162,7 +166,7 @@
 <p class="plantuml">
 <img src="../_images/plantuml-8ffb6c637bd34122148a9108795f4a3a5ab2132b.png" alt="CommandError &lt;|-- RotateError" />
 </p>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RotateError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">RotateError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An error in the rotation</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -267,18 +271,18 @@
 </tr>
 </tbody>
 </table>
-<div class="highlight-python"><div class="highlight"><pre><span></span>if __name__ == &quot;__main__&quot;:
-    from apetools.connections.sshconnection import SSHConnection
-    c = SSHConnection(&quot;pogo2&quot;, &quot;root&quot;)
-    r = RotateCommand(c)
-    print &quot;Rotate to 90 degrees&quot;
-    r(90)
-    time.sleep(1)
-    print &quot;Rotate to 180 Degrees&quot;
-    r(180)
-    time.sleep(1)
-    print &quot;Rotate to 0 degrees&quot;
-    r()
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">apetools.connections.sshconnection</span> <span class="kn">import</span> <span class="n">SSHConnection</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s2">&quot;pogo2&quot;</span><span class="p">,</span> <span class="s2">&quot;root&quot;</span><span class="p">)</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">RotateCommand</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Rotate to 90 degrees&quot;</span><span class="p">)</span>
+    <span class="n">r</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">&quot;Rotate to 180 Degrees&quot;</span><span class="p">)</span>
+    <span class="n">r</span><span class="p">(</span><span class="mi">180</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span> <span class="s2">&quot;Rotate to 0 degrees&quot;</span><span class="p">)</span>
+    <span class="n">r</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>

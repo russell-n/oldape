@@ -3,11 +3,20 @@ The Rotate
 
 A command-line interface to run the rotate command remotely.
 
-::
+
+.. code::
+
+    <class 'ImportError'>
+    cannot import name 'IntType'
+    
+
+
+
+
+.. code:: python
 
     SIGKILL = 9
     PROCESS = 'rotate'
-    
     
 
 
@@ -19,14 +28,14 @@ RotateError
 
    CommandError <|-- RotateError
    
-::
+
+.. code:: python
 
     class RotateError(CommandError):
         """
         An error in the rotation
         """
     # end class RotateError
-    
     
 
 
@@ -52,6 +61,7 @@ This is a class intended for the RotateCommand.__call__. It generates arguments 
    RotateParameters.values_string
    RotateParameters.booleans_string
    RotateParameters.base_arguments
+
 
 
 
@@ -83,6 +93,7 @@ This is the original rotate command when the tables were giving feedback for the
    
 
 
+
 The RotateCommandUsurper
 ------------------------
 
@@ -101,20 +112,24 @@ This is the newer rotate command (as of November 3, 2014) to use the replacement
    RotateCommandUsurper.__call__
    RotateCommandUsurper.rotate
 
-::
+
+
+
+
+.. code:: python
 
     if __name__ == "__main__":
         from apetools.connections.sshconnection import SSHConnection
         c = SSHConnection("pogo2", "root")
         r = RotateCommand(c)
-        print "Rotate to 90 degrees"
+        print("Rotate to 90 degrees")
         r(90)
         time.sleep(1)
-        print "Rotate to 180 Degrees"
+        print("Rotate to 180 Degrees")
         r(180)
         time.sleep(1)
-        print "Rotate to 0 degrees"
+        print( "Rotate to 0 degrees")
         r()
     
-    
+
 

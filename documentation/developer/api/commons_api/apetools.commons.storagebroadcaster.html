@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,168 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-commons-storagebroadcaster">
-<h1>apetools.commons.storagebroadcaster<a class="headerlink" href="#apetools-commons-storagebroadcaster" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.commons.storagebroadcaster">
+<span id="apetools-commons-storagebroadcaster"></span><h1>apetools.commons.storagebroadcaster<a class="headerlink" href="#module-apetools.commons.storagebroadcaster" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commons.storagebroadcaster.CallFile" title="apetools.commons.storagebroadcaster.CallFile"><code class="xref py py-obj docutils literal"><span class="pre">CallFile</span></code></a>(filename)</td>
+<td>A class to wrap a file to meet the interface of the other targets</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commons.storagebroadcaster.StorageBroadcaster" title="apetools.commons.storagebroadcaster.StorageBroadcaster"><code class="xref py py-obj docutils literal"><span class="pre">StorageBroadcaster</span></code></a>(path[,&nbsp;targets])</td>
+<td>The Storage Broadcaster maintains an open file and a set of targets.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.commons.storagebroadcaster.CallFile">
+<em class="property">class </em><code class="descclassname">apetools.commons.storagebroadcaster.</code><code class="descname">CallFile</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/storagebroadcaster.html#CallFile"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storagebroadcaster.CallFile" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to wrap a file to meet the interface of the other targets</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>filename</cite>: the name of the file to open</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commons.storagebroadcaster.CallFile.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/storagebroadcaster.html#CallFile.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storagebroadcaster.CallFile.close" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">open_file is closed</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storagebroadcaster.CallFile.send">
+<code class="descname">send</code><span class="sig-paren">(</span><em>output</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/storagebroadcaster.html#CallFile.send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storagebroadcaster.CallFile.send" title="Permalink to this definition">¶</a></dt>
+<dd><p>an alias for write to use in coroutines</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storagebroadcaster.CallFile.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>output</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/storagebroadcaster.html#CallFile.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storagebroadcaster.CallFile.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>an alias for __call__</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commons.storagebroadcaster.StorageBroadcaster">
+<em class="property">class </em><code class="descclassname">apetools.commons.storagebroadcaster.</code><code class="descname">StorageBroadcaster</code><span class="sig-paren">(</span><em>path</em>, <em>targets=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/storagebroadcaster.html#StorageBroadcaster"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storagebroadcaster.StorageBroadcaster" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Storage Broadcaster maintains an open file and a set of targets.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>path</cite>: a folder path for the output file.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commons.storagebroadcaster.StorageBroadcaster.check_folder">
+<code class="descname">check_folder</code><span class="sig-paren">(</span><em>folder</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/storagebroadcaster.html#StorageBroadcaster.check_folder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storagebroadcaster.StorageBroadcaster.check_folder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>folder</cite>: the name of a folder</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">folder is a folder in the local filesystem</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storagebroadcaster.StorageBroadcaster.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commons.storagebroadcaster.StorageBroadcaster.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.storagebroadcaster.StorageBroadcaster.open">
+<code class="descname">open</code><span class="sig-paren">(</span><em>filename</em>, <em>subdir=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/storagebroadcaster.html#StorageBroadcaster.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.storagebroadcaster.StorageBroadcaster.open" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>filename</cite>: the name of a file to open and add to the targets</li>
+<li><cite>subdir</cite>: a sub-directory within the main path.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commons.storagebroadcaster.StorageBroadcaster.folder">
+<code class="descname">folder</code><a class="headerlink" href="#apetools.commons.storagebroadcaster.StorageBroadcaster.folder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the path to the output folder</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body">the folder exists on the local machine</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commons.storagebroadcaster.StorageBroadcaster.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commons.storagebroadcaster.StorageBroadcaster.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commons.storagebroadcaster.StorageBroadcaster.targets">
+<code class="descname">targets</code><a class="headerlink" href="#apetools.commons.storagebroadcaster.StorageBroadcaster.targets" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of output targets</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

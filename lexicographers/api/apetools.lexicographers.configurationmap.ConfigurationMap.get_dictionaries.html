@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -29,6 +29,9 @@
     <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../index.html" />
+    <link rel="up" title="Configuration Map" href="../configurationmap.html" />
+    <link rel="next" title="apetools.lexicographers.configurationmap.ConfigurationMap.get_namedtuple" href="apetools.lexicographers.configurationmap.ConfigurationMap.get_namedtuple.html" />
+    <link rel="prev" title="apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionary" href="apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionary.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -73,7 +76,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../builders/index.html">Builders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../commands/index.html">Commands</a></li>
@@ -81,7 +84,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../connections/index.html">Connections</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../devices/index.html">Devices</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../informants/index.html">Informants</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../index.html">Lexicographers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Lexicographers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../operations/index.html">Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../parameters/index.html">Parameters</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../parsers/index.html">Parsers</a></li>
@@ -112,6 +115,14 @@
             
               
                 
+  <li>
+    <a href="apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionary.html" title="Previous Chapter: apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionary"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.lexi...</span>
+    </a>
+  </li>
+  <li>
+    <a href="apetools.lexicographers.configurationmap.ConfigurationMap.get_namedtuple.html" title="Next Chapter: apetools.lexicographers.configurationmap.ConfigurationMap.get_namedtuple"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.lexi... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -145,6 +156,37 @@
       
   <div class="section" id="apetools-lexicographers-configurationmap-configurationmap-get-dictionaries">
 <h1>apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionaries<a class="headerlink" href="#apetools-lexicographers-configurationmap-configurationmap-get-dictionaries" title="Permalink to this headline">¶</a></h1>
+<dl class="method">
+<dt id="apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionaries">
+<code class="descclassname">ConfigurationMap.</code><code class="descname">get_dictionaries</code><span class="sig-paren">(</span><em>section</em>, <em>option</em>, <em>default=None</em>, <em>optional=False</em>, <em>delimiter='</em>, <em>'</em>, <em>converter=&lt;type 'str'&gt;</em>, <em>key_value_separator=':'</em>, <em>dictionary_separator=';'</em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/apetools/lexicographers/configurationmap.html#ConfigurationMap.get_dictionaries"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.lexicographers.configurationmap.ConfigurationMap.get_dictionaries" title="Permalink to this definition">¶</a></dt>
+<dd><p>This expects a format of <cite>{key:value, key:value}</cite></p>
+<p>For clarity dictionaries can be enclosed in braces ({}) but only the dictionary_separator is used</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>section</cite>: The [section] in the config file.</li>
+<li><cite>option</cite>: the option in the section</li>
+<li><cite>default</cite>: what to return if fails and optional</li>
+<li><cite>optional</cite>: if True, returns defauln instead of raising an error</li>
+<li><cite>delimiter</cite>: what separates the different key:value pairs</li>
+<li><cite>converter</cite>: a function to apply to the value</li>
+<li><cite>key_value_separator</cite>: Token to separate key-value pairs</li>
+<li><cite>dictionary_separator</cite>: what separates the different dictionaries</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">list of dictionaries of key:value pairings</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><p class="first last">ConfigurationError if not optional and not found.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </div>
 
 

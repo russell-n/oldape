@@ -5,6 +5,10 @@ A base module to query the device for interface information.
 
 
 
+
+
+
+
 The Base WiFi Command
 ---------------------
 
@@ -22,4 +26,6 @@ The Base WiFi Command
    BaseWifiCommand.rssi
    BaseWifiCommand.bitrate
    BaseWifiCommand.mac_address
+
+
 

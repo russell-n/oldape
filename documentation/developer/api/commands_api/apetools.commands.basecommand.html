@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,282 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-commands-basecommand">
-<h1>apetools.commands.basecommand<a class="headerlink" href="#apetools-commands-basecommand" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.commands.basecommand">
+<span id="apetools-commands-basecommand"></span><h1>apetools.commands.basecommand<a class="headerlink" href="#module-apetools.commands.basecommand" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">abstractmethod</span></code>(funcobj)</td>
+<td>A decorator indicating abstract methods.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ABCMeta</span></code></td>
+<td>Metaclass for defining Abstract Base Classes (ABCs).</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseThreadClass</span></code>()</td>
+<td>Extends the base-class with a run_thread method that logs the traceback on error.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.basecommand.BaseThreadedCommand" title="apetools.commands.basecommand.BaseThreadedCommand"><code class="xref py py-obj docutils literal"><span class="pre">BaseThreadedCommand</span></code></a>()</td>
+<td>An abstract base-class for simple commands to run in a thread</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Thread</span></code>([group,&nbsp;target,&nbsp;name,&nbsp;args,&nbsp;kwargs,&nbsp;...])</td>
+<td>A class that represents a thread of control.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.commands.basecommand.BaseProcessCommand">
+<em class="property">class </em><code class="descclassname">apetools.commands.basecommand.</code><code class="descname">BaseProcessCommand</code><span class="sig-paren">(</span><em>connection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/basecommand.html#BaseProcessCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>A parent class for process-commands (e.g. <code class="docutils literal"><span class="pre">ps</span></code>)</p>
+<p>BaseProcessCommand Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>connection</cite>: Connection to a device</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.check_errors">
+<code class="descname">check_errors</code><span class="sig-paren">(</span><em>line</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/basecommand.html#BaseProcessCommand.check_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.check_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the line for known errors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>line</cite>: a line with possible top-related errors</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last"><cite>CommandError</cite> if an error is detected</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/basecommand.html#BaseProcessCommand.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is where the connection is called. Since it changes with each command it is separated out</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.arguments">
+<code class="descname">arguments</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.arguments" title="Permalink to this definition">¶</a></dt>
+<dd><p>the arguments for the command based on the operating system</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.command">
+<code class="descname">command</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.command" title="Permalink to this definition">¶</a></dt>
+<dd><p>The actual command that&#8217;s issued (used for logging and ID)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.connection">
+<code class="descname">connection</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The connection to the device</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the device connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.error_expression">
+<code class="descname">error_expression</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.error_expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds the expression to match error messages</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to match error messages</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.error_messages">
+<code class="descname">error_messages</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.error_messages" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of error-messages</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">error messages for the <cite>check_errors</cite></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessCommand.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commands.basecommand.BaseProcessGrep">
+<em class="property">class </em><code class="descclassname">apetools.commands.basecommand.</code><code class="descname">BaseProcessGrep</code><span class="sig-paren">(</span><em>connection</em>, <em>process=None</em>, <em>field='pid'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/basecommand.html#BaseProcessGrep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessGrep" title="Permalink to this definition">¶</a></dt>
+<dd><p>A base class to grep process information</p>
+<p>BaseProcessGrep Constructor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>connection</cite>: connection to a device</li>
+<li><cite>process</cite>: The name of the process to get (if not set pass into call())</li>
+<li><cite>field</cite>: Column to extract from the command output (e.g. pid)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseProcessGrep.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessGrep.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessGrep.connection">
+<code class="descname">connection</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessGrep.connection" title="Permalink to this definition">¶</a></dt>
+<dd><p>The connection to the device</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessGrep.expression">
+<code class="descname">expression</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessGrep.expression" title="Permalink to this definition">¶</a></dt>
+<dd><p>The compiled regular expression to match the process output</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessGrep.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessGrep.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseProcessGrep.process_query">
+<code class="descname">process_query</code><a class="headerlink" href="#apetools.commands.basecommand.BaseProcessGrep.process_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>The command to query the device for process information</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.commands.basecommand.BaseThreadedCommand">
+<em class="property">class </em><code class="descclassname">apetools.commands.basecommand.</code><code class="descname">BaseThreadedCommand</code><a class="reference internal" href="../../../../_modules/apetools/commands/basecommand.html#BaseThreadedCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basecommand.BaseThreadedCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>An abstract base-class for simple commands to run in a thread</p>
+<p>Only instantiates the BaseClass and sets the properties</p>
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseThreadedCommand.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commands.basecommand.BaseThreadedCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseThreadedCommand.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/basecommand.html#BaseThreadedCommand.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basecommand.BaseThreadedCommand.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method put into the thread.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseThreadedCommand.run_thread">
+<code class="descname">run_thread</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commands.basecommand.BaseThreadedCommand.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commands.basecommand.BaseThreadedCommand.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/basecommand.html#BaseThreadedCommand.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basecommand.BaseThreadedCommand.stop" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">the thread is stopped</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basecommand.BaseThreadedCommand.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commands.basecommand.BaseThreadedCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

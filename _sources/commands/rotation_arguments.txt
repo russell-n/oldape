@@ -1,6 +1,7 @@
 The Rotation Arguments
 ======================
-::
+
+.. code:: python
 
     """rotate (a turntable controller)
     
@@ -49,7 +50,7 @@ The Rotation Arguments
         Whenever it is powered up, you should tell it what angle it's at.
     
         --set  If set, calls set_angle instead of rotate function
-    """     
+    """
     
 
 
@@ -62,13 +63,21 @@ The Rotation Arguments
 
 
 
+.. code::
+
+    <class 'ImportError'>
+    No module named 'schema'
+    
+
+
 
 Global Constants
 ----------------
 
 Constants for Rotator numeric settings.
 
-::
+
+.. code:: python
 
     DEGREES_IN_CIRCLE = 360
     
@@ -89,7 +98,8 @@ The ArgumentConstants
 
 Constants specific to the command-line options.
 
-::
+
+.. code:: python
 
     class ArgumentsConstants(object):
         """
@@ -97,7 +107,7 @@ Constants specific to the command-line options.
         """
         __slots__ = ()
         #options
-        acceleration = "--acceleration"    
+        acceleration = "--acceleration"
         angle = "<angle>"
         clockwise = "--clockwise"
         configuration = '--configuration'
@@ -120,8 +130,7 @@ Constants specific to the command-line options.
         default_timeout = 10
         default_acceleration = 100
         default_deceleration = 100
-    # end ArgumentConstants    
-    
+    # end ArgumentConstants
     
 
 
@@ -133,10 +142,10 @@ The `arguments_schema` validates and adjusts the command-line arguments as neede
 
 .. '
 
-::
+
+.. code:: python
 
     args_schema = {}
-    
     
 
 
@@ -152,7 +161,8 @@ The acceleration option (``--acceleration <accel>``) is used to set how fast the
 
    schema = \{a | (a \in \mathbb{R}) \land (0.167 \leq a \leq 5,461.167))\}
 
-::
+
+.. code:: python
 
     acceleration = ArgumentsConstants.acceleration
     args_schema[acceleration] = Schema(And(Use(float, error='acceleration must be float'),
@@ -161,6 +171,11 @@ The acceleration option (``--acceleration <accel>``) is used to set how fast the
                                                   "({0} <= accel <= {1})").format(MIN_ACCELERATION,
                                                                                   MAX_ACCELERATION)))
     
+
+.. code::
+
+    <class 'NameError'>
+    name 'Schema' is not defined
 
 
 
@@ -173,7 +188,8 @@ The deceleration option sets how fast the table slows down as it nears the targe
 
    schema = \{d |  ((d \in \mathbb{R}) \land (0.167 \leq d \leq 5,461.167))\}
 
-::
+
+.. code:: python
 
     deceleration = ArgumentsConstants.deceleration
     args_schema[deceleration] = Schema(And(Use(float, error='deceleration must be float'),
@@ -182,6 +198,11 @@ The deceleration option sets how fast the table slows down as it nears the targe
                                                   "({0} <= accel <= {1})").format(MIN_ACCELERATION,
                                                                                   MAX_ACCELERATION)))
     
+
+.. code::
+
+    <class 'NameError'>
+    name 'Schema' is not defined
 
 
 
@@ -198,13 +219,19 @@ In this case the ArgumentParser is doing the conversion to integers and supplyin
 
 .. '    
 
-::
+
+.. code:: python
 
     angle = ArgumentsConstants.angle
     args_schema[angle] = Schema(And(Use(int,
                                         error='Angle must be an integer'),
                                     Use(lambda a: a % DEGREES_IN_CIRCLE)))
     
+
+.. code::
+
+    <class 'NameError'>
+    name 'Schema' is not defined
 
 
 
@@ -229,21 +256,11 @@ We don't have to do anything special for negative angles because according to th
 For example, if we mod the values in :math:`\{0, -45, \dots, -315\}` we get::
 
     for angle in xrange(0, -360, -45):
-        print "   {0},{1}".format(angle, angle % 360)
+        print( "   {0},{1}".format(angle, angle % 360))
 
 
 
-.. csv-table:: Modulo Example
-   :header: Angle, Angle % 360
 
-   0,0
-   -45,315
-   -90,270
-   -135,225
-   -180,180
-   -225,135
-   -270,90
-   -315,45
 
 
 
@@ -302,7 +319,8 @@ So our schema becomes:
 
    schema = \{v | (v \in \mathbb{R}) \land (1.512 \leq v \leq 720)\}
 
-::
+
+.. code:: python
 
     velocity = ArgumentsConstants.velocity
     args_schema[velocity] = Schema(And(Use(float,
@@ -311,6 +329,11 @@ So our schema becomes:
                                             error="velocity out of range ({0} <= v < {1})".format(MIN_VELOCITY,
                                                                                                  MAX_VELOCITY )))
     
+
+.. code::
+
+    <class 'NameError'>
+    name 'Schema' is not defined
 
 
 
@@ -325,13 +348,19 @@ The configuration is an optional valid ini file with settings to override the ta
 
    schema = \{c | None \lor isfile(c)\}
 
-::
+
+.. code:: python
 
     config = ArgumentsConstants.configuration
     args_schema[config] = Schema(Or(None,
                                     lambda c: os.path.isfile(c),
                                     error="File not found"))
     
+
+.. code::
+
+    <class 'NameError'>
+    name 'Schema' is not defined
 
 
 
@@ -350,13 +379,19 @@ The Rotator's rotation method call (``rotateAbsolute``) doesn't block execution 
 
    schema \gets \{t | (t \in \mathbb{R}) \land (t \geq 0)\}
 
-::
+
+.. code:: python
 
     timeout = ArgumentsConstants.timeout
     args_schema[timeout] = Schema(And(Use(float),
                                       lambda t: t >= 0,
                                       error='timeout must be a non-negative float'))
     
+
+.. code::
+
+    <class 'NameError'>
+    name 'Schema' is not defined
 
 
 
@@ -374,6 +409,13 @@ The `ArgumentsError` is an error to raise if the argument can't be validated. Th
    :toctree: api
 
    ArgumentError   
+
+
+.. code::
+
+    <class 'NameError'>
+    name 'SchemaError' is not defined
+    
 
 
    
@@ -431,4 +473,14 @@ The Options
    BaseArguments.timeout
    BaseArguments.test
    BaseArguments.crash
+
+
+.. code::
+
+    <class 'NameError'>
+    name 'BaseClass' is not defined
+    
+
+
+
 

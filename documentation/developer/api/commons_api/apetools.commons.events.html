@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,110 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-commons-events">
-<h1>apetools.commons.events<a class="headerlink" href="#apetools-commons-events" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.commons.events">
+<span id="apetools-commons-events"></span><h1>apetools.commons.events<a class="headerlink" href="#module-apetools.commons.events" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.commons.events.EventHolder" title="apetools.commons.events.EventHolder"><code class="xref py py-obj docutils literal"><span class="pre">EventHolder</span></code></a>()</td>
+<td>A holder of events that will timeout</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.commons.events.EventHolder">
+<em class="property">class </em><code class="descclassname">apetools.commons.events.</code><code class="descname">EventHolder</code><a class="reference internal" href="../../../../_modules/apetools/commons/events.html#EventHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.events.EventHolder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A holder of events that will timeout</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>timeout</cite>: if not None, quit after timeout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commons.events.EventHolder.append">
+<code class="descname">append</code><span class="sig-paren">(</span><em>event</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/events.html#EventHolder.append"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.events.EventHolder.append" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>event</cite>: an event to add</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">event appended to self.events</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.events.EventHolder.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commons.events.EventHolder.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.commons.events.EventHolder.wait">
+<code class="descname">wait</code><span class="sig-paren">(</span><em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commons/events.html#EventHolder.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commons.events.EventHolder.wait" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>timeout</cite>: number of seconds to wait</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if events set, False on timeout</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commons.events.EventHolder.events">
+<code class="descname">events</code><a class="headerlink" href="#apetools.commons.events.EventHolder.events" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of events</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commons.events.EventHolder.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commons.events.EventHolder.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

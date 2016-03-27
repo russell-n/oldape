@@ -7,6 +7,10 @@ A Ping command pings and checks the response.
 
 
 
+
+
+
+
 The PingData
 ------------
 
@@ -23,6 +27,7 @@ The `PingData` class is a namedtuple that holds the address that was pinged and 
    PingData : target
    PingData : rtt
    PingData : __str__()
+
 
 
                    
@@ -43,6 +48,7 @@ Example Use::
 
 
 
+
 The PingCommand
 ---------------
 
@@ -60,6 +66,7 @@ The `PingCommand` issues the ping command and checks the outcome
 .. uml::
 
    BaseClass <|-- PingCommand
+
 
 
 

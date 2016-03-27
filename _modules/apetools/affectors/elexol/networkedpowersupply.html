@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,38 +135,39 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.affectors.elexol.networkedpowersupply</h1><div class="highlight"><pre>
-<span class="c">#python</span>
+<span></span>
+<span class="c1">#python</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">IntType</span>
 
-<span class="c">#apetools</span>
+<span class="c1">#apetools</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 
-<span class="c">#affectors</span>
+<span class="c1">#affectors</span>
 <span class="kn">from</span> <span class="nn">elexol</span> <span class="kn">import</span> <span class="n">elexol24</span>
 <span class="kn">from</span> <span class="nn">errors</span> <span class="kn">import</span> <span class="n">FaucetteError</span>
 
 
-<span class="c"># Total number of AC ports device can control</span>
+<span class="c1"># Total number of AC ports device can control</span>
 <span class="n">MAX_PINS</span> <span class="o">=</span> <span class="mi">24</span>
-<span class="c"># Total number of AC devices per port (A, B, C)</span>
+<span class="c1"># Total number of AC devices per port (A, B, C)</span>
 <span class="n">PINS_PER_PORT</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="c"># Time, in seconds, to delay between turning a device on/off</span>
+<span class="c1"># Time, in seconds, to delay between turning a device on/off</span>
 <span class="n">TOGGLE_DELAY</span> <span class="o">=</span> <span class="mf">0.05</span>
-<span class="c"># Maximum number of devices that are allowed to be on at a time.</span>
+<span class="c1"># Maximum number of devices that are allowed to be on at a time.</span>
 <span class="n">MAX_ON</span> <span class="o">=</span> <span class="mi">6</span>
-<span class="c"># ID if first pin</span>
+<span class="c1"># ID if first pin</span>
 <span class="n">FIRST_PIN</span> <span class="o">=</span> <span class="mi">0</span>
 
-<span class="n">ON</span> <span class="o">=</span> <span class="s">&quot;on&quot;</span>
-<span class="n">OFF</span> <span class="o">=</span> <span class="s">&quot;off&quot;</span>
+<span class="n">ON</span> <span class="o">=</span> <span class="s2">&quot;on&quot;</span>
+<span class="n">OFF</span> <span class="o">=</span> <span class="s2">&quot;off&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">NetworkedPowerSupply</span> <span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply">[docs]</a><span class="k">class</span> <span class="nc">NetworkedPowerSupply</span> <span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This class provides access to the Network Power Supply (NPS). </span>
 <span class="sd">    It prevents electrically unsafe use.</span>
 
@@ -183,8 +184,8 @@
 
 <span class="sd">    Error checking is done to ensure that devices turn on/off as expected.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IP</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ports</span><span class="o">=</span><span class="s">&quot;ABC&quot;</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.__init__"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.__init__"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span> <span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">IP</span><span class="p">,</span> <span class="n">clear</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">retry</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">ports</span><span class="o">=</span><span class="s2">&quot;ABC&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Initializes an elexol24 object to talk to the NPS device.</span>
 <span class="sd">     </span>
 <span class="sd">        :param:</span>
@@ -202,19 +203,19 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_elexol</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_port_status</span> <span class="o">=</span> <span class="bp">None</span>
         
-        <span class="c"># index iterators</span>
+        <span class="c1"># index iterators</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_attempts</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pins</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_pins_per_port</span> <span class="o">=</span> <span class="bp">None</span>
 
-        <span class="c"># method dictionaries</span>
+        <span class="c1"># method dictionaries</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_switch_is</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_turn_switch</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">turn_switch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.turn_switch"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_switch">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: dict of ON:elexol.setpin24, OFF:elexol.clearpin24</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_turn_switch</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -223,9 +224,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_turn_switch</span><span class="p">[</span><span class="n">OFF</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elexol</span><span class="o">.</span><span class="n">clearpin24</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_turn_switch</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">check_switch_is</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.check_switch_is"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.check_switch_is">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: dict of ON:self.switch_is_on, OFF:port_is_off</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_switch_is</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -234,36 +235,36 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_check_switch_is</span><span class="p">[</span><span class="n">OFF</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">switch_is_off</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_check_switch_is</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">attempts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.attempts"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.attempts">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: List of allowed attempts (up to self.num_retry times)     </span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attempts</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_attempts</span> <span class="o">=</span> <span class="p">[</span><span class="n">attempt</span> <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">retry</span><span class="p">)]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_attempts</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.pins"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: List of all pin identifiers</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pins</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pins</span> <span class="o">=</span> <span class="p">[</span><span class="n">pin</span> <span class="k">for</span> <span class="n">pin</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">MAX_PINS</span><span class="p">)]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pins</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">pins_per_port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.pins_per_port"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.pins_per_port">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: List of pins for a single port (0-7)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pins_per_port</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_pins_per_port</span> <span class="o">=</span> <span class="p">[</span><span class="n">pin</span> <span class="k">for</span> <span class="n">pin</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">PINS_PER_PORT</span><span class="p">)]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pins_per_port</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">elexol</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.elexol"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.elexol">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: elexol24 object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elexol</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -272,9 +273,9 @@
                                     <span class="bp">self</span><span class="o">.</span><span class="n">retry</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elexol</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">port_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="NetworkedPowerSupply.port_status"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.port_status">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: Dict of port:pin-status-list</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port_status</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -283,8 +284,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_port_status</span><span class="p">[</span><span class="n">port</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">False</span> <span class="k">for</span> <span class="n">pin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins_per_port</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_port_status</span>
     
-    <span class="k">def</span> <span class="nf">set_port_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.set_port_status"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.set_port_status">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.set_port_status"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.set_port_status">[docs]</a>    <span class="k">def</span> <span class="nf">set_port_status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        sets current ON/OFF status for all pins from elexol.</span>
 <span class="sd">        </span>
 <span class="sd">        Example retrieval of status::</span>
@@ -306,10 +307,10 @@
             <span class="n">raw_int</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elexol</span><span class="o">.</span><span class="n">getport</span><span class="p">(</span><span class="n">port</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">pin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins_per_port</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">port_status</span><span class="p">[</span><span class="n">port</span><span class="p">][</span><span class="n">pin</span><span class="p">]</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">raw_int</span> <span class="o">&amp;</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">pin</span><span class="p">))</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">switch_is_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.switch_is_on"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_on">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.switch_is_on"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_on">[docs]</a>    <span class="k">def</span> <span class="nf">switch_is_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `switch`: The switch ID (e.g. 16 for port C, pin 0)</span>
@@ -319,27 +320,27 @@
 <span class="sd">        :raise: FaucetteError if switch ID is invalid.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">IntType</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">(</span><span class="s">&quot;Switch must be integer, not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">switch</span><span class="p">)))</span>
+            <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">(</span><span class="s2">&quot;Switch must be integer, not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">switch</span><span class="p">)))</span>
         <span class="k">if</span> <span class="n">switch</span> <span class="o">&gt;=</span> <span class="n">MAX_PINS</span> <span class="ow">or</span> <span class="n">switch</span> <span class="o">&lt;</span> <span class="n">FIRST_PIN</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">(</span><span class="s">&quot;Switch # {0} does not exist!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">(</span><span class="s2">&quot;Switch # {0} does not exist!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">))</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">set_port_status</span><span class="p">()</span>
         
         <span class="n">port</span><span class="p">,</span> <span class="n">pin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">[</span><span class="n">switch</span><span class="o">/</span><span class="n">PINS_PER_PORT</span><span class="p">],</span> <span class="n">switch</span> <span class="o">%</span> <span class="n">PINS_PER_PORT</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">port_status</span><span class="p">[</span><span class="n">port</span><span class="p">][</span><span class="n">pin</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">port_status</span><span class="p">[</span><span class="n">port</span><span class="p">][</span><span class="n">pin</span><span class="p">]</span></div>
 
-    <span class="k">def</span> <span class="nf">switch_is_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.switch_is_off"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_off">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.switch_is_off"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switch_is_off">[docs]</a>    <span class="k">def</span> <span class="nf">switch_is_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `switch`: The switch ID</span>
 <span class="sd">        :return: True if pin is off</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">switch_is_on</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">switch_is_on</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span></div>
 
         
-    <span class="k">def</span> <span class="nf">switches_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.switches_on"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switches_on">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.switches_on"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.switches_on">[docs]</a>    <span class="k">def</span> <span class="nf">switches_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Queries Elexol to determine how many switches are currently on.</span>
 
 <span class="sd">        :rtype: int</span>
@@ -350,10 +351,10 @@
                 
         <span class="k">for</span> <span class="n">port</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">:</span>
             <span class="n">count</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">([</span><span class="n">pin</span> <span class="k">for</span> <span class="n">pin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins_per_port</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">port_status</span><span class="p">[</span><span class="n">port</span><span class="p">][</span><span class="n">pin</span><span class="p">]])</span>
-        <span class="k">return</span> <span class="n">count</span>
+        <span class="k">return</span> <span class="n">count</span></div>
     
-    <span class="k">def</span> <span class="nf">turn_on_switches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switches</span><span class="p">,</span> <span class="n">turn_others_off</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.turn_on_switches"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on_switches">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.turn_on_switches"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on_switches">[docs]</a>    <span class="k">def</span> <span class="nf">turn_on_switches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switches</span><span class="p">,</span> <span class="n">turn_others_off</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turn on all switches whose numbers are included in a provided list.</span>
 
 <span class="sd">        :param:</span>
@@ -370,10 +371,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">all_off_except</span><span class="p">(</span><span class="n">switches</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="n">switches</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">turn_on</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
     
-    <span class="k">def</span> <span class="nf">turn_off_switches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">off_list</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.turn_off_switches"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off_switches">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.turn_off_switches"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off_switches">[docs]</a>    <span class="k">def</span> <span class="nf">turn_off_switches</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">off_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turn off all devices whose numbers are included in a provided list.</span>
 
 <span class="sd">        :param:</span>
@@ -384,10 +385,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">switch</span> <span class="ow">in</span> <span class="n">off_list</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">turn_off</span><span class="p">(</span><span class="n">switch</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">toggle_switch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">,</span> <span class="n">on_or_off</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.toggle_switch"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.toggle_switch">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.toggle_switch"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.toggle_switch">[docs]</a>    <span class="k">def</span> <span class="nf">toggle_switch</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">,</span> <span class="n">on_or_off</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turns switch on or off based on `on_or_off` value.</span>
 
 <span class="sd">        :param:</span>
@@ -397,22 +398,22 @@
 <span class="sd">         </span>
 <span class="sd">        :raise: FaucetteError if invalid switch, failed change, too many switches on.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Turning switch {0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="n">on_or_off</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Turning switch {0} {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="n">on_or_off</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">on_or_off</span> <span class="o">==</span> <span class="n">ON</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">switches_on</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="n">MAX_ON</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">((</span><span class="s">&#39;Maximum number of ON switches exceeded&#39;</span>
-                                 <span class="s">&#39; ({0})--switch {1} was not turned on&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MAX_ON</span><span class="p">,</span> <span class="n">switch</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">((</span><span class="s1">&#39;Maximum number of ON switches exceeded&#39;</span>
+                                 <span class="s1">&#39; ({0})--switch {1} was not turned on&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">MAX_ON</span><span class="p">,</span> <span class="n">switch</span><span class="p">))</span>
 
         <span class="k">for</span> <span class="n">attempt</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attempts</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_switch_is</span><span class="p">[</span><span class="n">on_or_off</span><span class="p">](</span><span class="n">switch</span><span class="p">):</span>
                 <span class="k">return</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">turn_switch</span><span class="p">[</span><span class="n">on_or_off</span><span class="p">](</span><span class="n">switch</span><span class="p">)</span>
             <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">TOGGLE_DELAY</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">(</span><span class="s">&quot;Could not turn {o} pin #{s}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">switch</span><span class="p">,</span>
+        <span class="k">raise</span> <span class="n">FaucetteError</span><span class="p">(</span><span class="s2">&quot;Could not turn {o} pin #{s}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="n">switch</span><span class="p">,</span>
                                                                  <span class="n">o</span><span class="o">=</span><span class="n">on_or_off</span><span class="p">))</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
     
-    <span class="k">def</span> <span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.turn_on"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.turn_on"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_on">[docs]</a>    <span class="k">def</span> <span class="nf">turn_on</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turn *on* switch </span>
 
 <span class="sd">        :param:</span>
@@ -421,10 +422,10 @@
 <span class="sd">        :postcondition: switch is on.</span>
 <span class="sd">        :raise: FaucetteError if switch out of bounds, too many on, or unable to turn on.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_switch</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="n">ON</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">toggle_switch</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="n">ON</span><span class="p">)</span></div>
     
-    <span class="k">def</span> <span class="nf">turn_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.turn_off"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.turn_off"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.turn_off">[docs]</a>    <span class="k">def</span> <span class="nf">turn_off</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">switch</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turn *off* switch listed by number</span>
 
 <span class="sd">        :param:</span>
@@ -436,10 +437,10 @@
 <span class="sd">        :raise: FaucetteError if switch out of bounds or unable to turn off.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">toggle_switch</span><span class="p">(</span><span class="n">switch</span><span class="p">,</span> <span class="n">OFF</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
     
-    <span class="k">def</span> <span class="nf">all_off_except</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exceptions</span><span class="o">=</span><span class="p">[]):</span></div>
-<div class="viewcode-block" id="NetworkedPowerSupply.all_off_except"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="NetworkedPowerSupply.all_off_except"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.networkedpowersupply.html#apetools.affectors.elexol.networkedpowersupply.NetworkedPowerSupply.all_off_except">[docs]</a>    <span class="k">def</span> <span class="nf">all_off_except</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exceptions</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Turns off all devices on the Elexol NPS not listed in `exception` list</span>
 
 <span class="sd">        :param: </span>
@@ -447,19 +448,19 @@
 
 <span class="sd">        :postcondition: All devices not in `exception` are turned off.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Turning off all pins except {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exceptions</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Turning off all pins except {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exceptions</span><span class="p">))</span>
         <span class="k">for</span> <span class="n">pin</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pins</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">pin</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">exceptions</span><span class="p">:</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">turn_off</span><span class="p">(</span><span class="n">pin</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="s">&quot;NetworkedPowerSupply: IP={0} clear={1} retry={2} ports={3}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IP</span><span class="p">,</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;NetworkedPowerSupply: IP={0} clear={1} retry={2} ports={3}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">IP</span><span class="p">,</span>
                                                                                    <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">,</span>
                                                                                    <span class="bp">self</span><span class="o">.</span><span class="n">retry</span><span class="p">,</span>
-                                                                                   <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">)</span>
-<span class="c"># end class NetworkedPowerSupply</span>
-</pre></div></div>
+                                                                                   <span class="bp">self</span><span class="o">.</span><span class="n">ports</span><span class="p">)</span></div>
+<span class="c1"># end class NetworkedPowerSupply</span>
+</pre></div>
 
     </div>
       
@@ -473,7 +474,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,6 +30,8 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="apetools.commands.ipconfig.IpconfigError" href="api/apetools.commands.ipconfig.IpconfigError.html" />
+    <link rel="prev" title="apetools.commands.ifconfig.IfconfigCommand._match" href="api/apetools.commands.ifconfig.IfconfigCommand._match.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -118,6 +120,14 @@
             
               
                 
+  <li>
+    <a href="api/apetools.commands.ifconfig.IfconfigCommand._match.html" title="Previous Chapter: apetools.commands.ifconfig.IfconfigCommand._match"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.comm...</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/apetools.commands.ipconfig.IpconfigError.html" title="Next Chapter: apetools.commands.ipconfig.IpconfigError"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.comm... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -154,7 +164,7 @@
 <p>A module to extract information from <cite>ipconfig</cite>.</p>
 <div class="section" id="the-ipconfig-enum">
 <h2>The Ipconfig Enum<a class="headerlink" href="#the-ipconfig-enum" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IpconfigEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="code python highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">IpconfigEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
     <span class="n">address</span> <span class="o">=</span> <span class="s2">&quot;address&quot;</span>
 <span class="c1"># end class IpConfigEnum</span>
@@ -172,8 +182,8 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">IpconfigError</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ipconfig.html#apetools.commands.ipconfig.IpconfigError" title="apetools.commands.ipconfig.IpconfigError"><code class="xref py py-obj docutils literal"><span class="pre">IpconfigError</span></code></a></td>
+<td>An exception to raise if the command fails.</td>
 </tr>
 </tbody>
 </table>
@@ -189,14 +199,30 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Ipconfig</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ipconfig.html#apetools.commands.ipconfig.Ipconfig" title="apetools.commands.ipconfig.Ipconfig"><code class="xref py py-obj docutils literal"><span class="pre">Ipconfig</span></code></a>(connection[,&nbsp;interface,&nbsp;...])</td>
+<td>A class to interpret the <cite>ipconfig</cite> output</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Ipconfig.ip_expression</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ipconfig.html#apetools.commands.ipconfig.Ipconfig.ip_expression" title="apetools.commands.ipconfig.Ipconfig.ip_expression"><code class="xref py py-obj docutils literal"><span class="pre">Ipconfig.ip_expression</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">comiled regular expression to extract the IP address</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Ipconfig.address</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.ipconfig.html#apetools.commands.ipconfig.Ipconfig.address" title="apetools.commands.ipconfig.Ipconfig.address"><code class="xref py py-obj docutils literal"><span class="pre">Ipconfig.address</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the address of the interface</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>

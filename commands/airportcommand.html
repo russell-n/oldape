@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>&lt;no title&gt; &mdash; APETools 0.0.3 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
+    <link rel="up" title="Commands" href="index.html" />
+    <link rel="next" title="The Base Command" href="basecommand.html" />
+    <link rel="prev" title="Commands" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html">
+          APETools</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/user/index.html">User Documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/developer/index.html">Developer Documentation</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../builders/index.html">Builders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">Commands</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../commons/index.html">Commons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../connections/index.html">Connections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../devices/index.html">Devices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../informants/index.html">Informants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../lexicographers/index.html">Lexicographers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parameters/index.html">Parameters</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parsers/index.html">Parsers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pipes/index.html">Pipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../proletarians/index.html">Proletarians</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../threads/index.html">Threads</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../watchers/index.html">Watchers</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul class="simple">
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+  <li>
+    <a href="index.html" title="Previous Chapter: Commands"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Commands</span>
+    </a>
+  </li>
+  <li>
+    <a href="basecommand.html" title="Next Chapter: The Base Command"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Base Command &raquo;</span>
+    </a>
+  </li>
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="../_sources/commands/airportcommand.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <p>&#8220;&#8221;&#8221;
+A module to query a mac for interface information.
+&#8220;&#8221;&#8221;
+#python libraries
+import re
+from collections import defaultdict</p>
+<p>#apetools
+from apetools.commons import errors
+import apetools.commons.expressions as expressions
+from basewificommand import BaseWifiCommand
+CommandError = errors.CommandError</p>
+<p>NA = &#8216;NA&#8217;</p>
+<p>WORD_BOUNDARY = r&#8217;b&#8217;
+SPACE = r&#8217;s&#8216;
+ONE_OR_MORE = &#8216;+&#8217;
+SPACES = SPACE + ONE_OR_MORE
+BASE_EXPRESSION = WORD_BOUNDARY + &#8216;{0}:&#8217;   + SPACES + &#8216;(.*)&#8217;</p>
+<dl class="docutils">
+<dt>class AirportCommandError(CommandError):</dt>
+<dd>&#8220;&#8221;&#8221;
+An error to raise if the Wifi Command fails
+&#8220;&#8221;&#8220;</dd>
+</dl>
+<p># end class WifiCommandError</p>
+<dl class="docutils">
+<dt>class AirportCommand(BaseWifiCommand):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+The Wifi Command interprets <cite>airport</cite> information</p>
+<p>&#8220;&#8221;&#8221;
+def __init__(self, airport_command=&#8217;airport &#8211;getinfo&#8217;,</p>
+<blockquote>
+<div><blockquote>
+<div><a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs):</div></blockquote>
+<p>&#8220;&#8221;&#8221;
+:param:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>connection</cite>: A connection to the device</li>
+<li><cite>interface</cite>: The interface to check</li>
+<li><cite>airport_command</cite>: Command to get the info from airport</li>
+</ul>
+</div></blockquote>
+<p>&#8220;&#8221;&#8221;
+super(AirportCommand, self).__init__(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs)
+self.airport_command = airport_command
+self._expressions = None
+self._mac_expression = None
+self._ip_address = None
+self._ip_expression = None
+return</p>
+</div></blockquote>
+<p>&#64;property
+def ip_expression(self):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if self._ip_expression is None:</dt>
+<dd><dl class="first docutils">
+<dt>expression = (expressions.SPACES + &#8216;inet&#8217;</dt>
+<dd><ul class="first simple">
+<li>expressions.SPACES +</li>
+</ul>
+<p class="last">expressions.IP_ADDRESS)</p>
+</dd>
+</dl>
+<p class="last">self._ip_expression = re.compile(expression)</p>
+</dd>
+</dl>
+<p>return self._ip_expression</p>
+</div></blockquote>
+<p>&#64;property
+def ip_address(self):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>with self.connection.lock:</dt>
+<dd>output, error = self.connection.ifconfig(self.interface)</dd>
+</dl>
+<p>interface = False
+for line in output:</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if not interface:</dt>
+<dd>interface = line.startswith(self.interface)
+continue</dd>
+</dl>
+<p>match = self.ip_expression.search(line)
+if match:</p>
+<blockquote>
+<div>return match.groupdict()[expressions.IP_ADDRESS_NAME]</div></blockquote>
+</div></blockquote>
+<p>err = error.readline()
+if err:</p>
+<blockquote>
+<div>self.logger.error(&#8220;Unable to get ip for {0}&#8221;.format(self.connection))
+raise Exception(err)</div></blockquote>
+<p>return</p>
+</div></blockquote>
+<p>&#64;property
+def mac_expression(self):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if self._mac_expression is None:</dt>
+<dd>expression = &#8216;ether&#8217; + expressions.SPACES + expressions.MAC_ADDRESS
+self._mac_expression = re.compile(expression)</dd>
+</dl>
+<p>return self._mac_expression</p>
+</div></blockquote>
+<p>&#64;property
+def expressions(self):</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>if self._expressions is None:</dt>
+<dd>self._expressions = defaultdict(lambda : None)</dd>
+</dl>
+<p>return self._expressions</p>
+</div></blockquote>
+<p>&#64;property
+def bitrate(self):</p>
+<blockquote>
+<div>&#8220;&#8221;&#8221;
+:return: the max bitrate if found
+&#8220;&#8221;&#8221;
+return self.get(&#8220;lastTxRate&#8221;)</div></blockquote>
+<p>&#64;property
+def interface(self):</p>
+<blockquote>
+<div><p>&#8220;&#8221;&#8221;
+:return: the name of the wireless interface
+&#8220;&#8221;&#8221;
+if self._interface is None:</p>
+<blockquote>
+<div>self.logger.warning(&#8220;interface name not set&#8221;)</div></blockquote>
+<p>return self._interface</p>
+</div></blockquote>
+<p>&#64;property
+def rssi(self):</p>
+<blockquote>
+<div><p>&#8220;&#8221;&#8221;
+This is dynamically generated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">The rssi for the interface</td>
+</tr>
+</tbody>
+</table>
+<p>&#8220;&#8221;&#8221;
+return self.get(&#8220;agrCtlRSSI&#8221;)</p>
+</div></blockquote>
+<p>&#64;property
+def mac_address(self):</p>
+<blockquote>
+<div><p>&#8220;&#8221;&#8221;
+:return: MAC Address of the interface
+&#8220;&#8221;&#8221;
+if self._mac_address is None:</p>
+<blockquote>
+<div><p>interface = False
+MAC_ADDRESS_NAME = expressions.MAC_ADDRESS_NAME
+with self.connection.lock:</p>
+<blockquote>
+<div>output, error = self.connection.ifconfig(self.interface)</div></blockquote>
+<dl class="docutils">
+<dt>for line in output:</dt>
+<dd><dl class="first docutils">
+<dt>if not interface:</dt>
+<dd>interface = line.startswith(self.interface)
+continue</dd>
+</dl>
+<p>match = self.mac_expression.search(line)
+if match:</p>
+<blockquote class="last">
+<div>self._mac_address = match.groupdict()[MAC_ADDRESS_NAME]
+break</div></blockquote>
+</dd>
+</dl>
+<p>err = error.readline()
+if err:</p>
+<blockquote>
+<div>raise AirportCommand(err)</div></blockquote>
+</div></blockquote>
+<p>return self._mac_address</p>
+</div></blockquote>
+<p>&#64;property
+def ssid(self):</p>
+<blockquote>
+<div>&#8220;&#8221;&#8221;
+:return: the SSID of the currently attched ap
+&#8220;&#8221;&#8221;
+return self.get(&#8216;SSID&#8217;)</div></blockquote>
+<p>&#64;property
+def noise(self):</p>
+<blockquote>
+<div>&#8220;&#8221;&#8221;
+:return: the current noise
+&#8220;&#8221;&#8221;
+return self.get(&#8216;agrCtlNoise&#8217;)</div></blockquote>
+<p>&#64;property
+def channel(self):</p>
+<blockquote>
+<div>&#8220;&#8221;&#8221;
+:return: the current channel setting
+&#8220;&#8221;&#8221;
+return self.get(&#8216;channel&#8217;)</div></blockquote>
+<p>&#64;property
+def bssid(self):</p>
+<blockquote>
+<div>&#8220;&#8221;&#8221;
+:return: the bssid of the attached ap
+&#8220;&#8221;&#8221;
+return self.get(&#8216;BSSID&#8217;)</div></blockquote>
+<dl class="last docutils">
+<dt>def get(self, token):</dt>
+<dd><p class="first">&#8220;&#8221;&#8221;
+:param:</p>
+<blockquote>
+<div><ul class="simple">
+<li><cite>token</cite>: token to look for in the airport output</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">value that matches the token</td>
+</tr>
+</tbody>
+</table>
+<p>&#8220;&#8221;&#8221;
+with self.connection.lock:</p>
+<blockquote>
+<div>output, error = self.connection.airport(self.airport_command)</div></blockquote>
+<dl class="docutils">
+<dt>if self.expressions[token] is None:</dt>
+<dd>self.expressions[token] = re.compile(BASE_EXPRESSION.format(token))</dd>
+</dl>
+<p>expression = self.expressions[token]
+for line in output:</p>
+<blockquote>
+<div><p>match = expression.search(line)
+if match:</p>
+<blockquote>
+<div>return match.groups()[-1]</div></blockquote>
+</div></blockquote>
+<p>err = error.readline()
+if len(err):</p>
+<blockquote>
+<div><p>self.logger.error(err)
+if &#8220;No such device&#8221; in err:</p>
+<blockquote>
+<div>raise CommandError(&#8220;Unknown Interface: {0}&#8221;.format(self.interface))</div></blockquote>
+<dl class="docutils">
+<dt>else:</dt>
+<dd>raise CommandError(err)</dd>
+</dl>
+</div></blockquote>
+<p class="last">return</p>
+</dd>
+<dt>def status(self):</dt>
+<dd><dl class="first last docutils">
+<dt>return &#8220;MAC: {0}nIP: {2}n{1}n&#8221;.format(self.mac_address,</dt>
+<dd>str(self),
+self.ip_address)</dd>
+</dl>
+</dd>
+<dt>def __str__(self):</dt>
+<dd>return &#8220;&#8221;.join([line for line in self.connection.airport(self.airport_command)])</dd>
+</dl>
+</dd>
+</dl>
+<p># end class WifiCommand</p>
+<dl class="docutils">
+<dt>if __name__ == &#8220;__main__&#8221;:</dt>
+<dd><p class="first">from mock import MagicMock
+from StringIO import StringIO
+OUTPUT = &#8220;&#8221;&#8220;</p>
+<blockquote>
+<div>agrCtlRSSI: -79
+agrExtRSSI: 0</div></blockquote>
+<p>agrCtlNoise: -89
+agrExtNoise: 0</p>
+<blockquote class="last">
+<div><blockquote>
+<div><blockquote>
+<div>state: running</div></blockquote>
+<p>op mode: station</p>
+</div></blockquote>
+<dl class="docutils">
+<dt>lastTxRate: 216</dt>
+<dd>maxRate: 450</dd>
+</dl>
+</div></blockquote>
+</dd>
+<dt>lastAssocStatus: 0</dt>
+<dd><dl class="first docutils">
+<dt>802.11 auth: open</dt>
+<dd><dl class="first last docutils">
+<dt>link auth: wpa2-psk</dt>
+<dd><blockquote class="first">
+<div><dl class="docutils">
+<dt>BSSID: 84:1b:5e:da:34:8</dt>
+<dd><dl class="first last docutils">
+<dt>SSID: r6300_5</dt>
+<dd>MCS: 13</dd>
+</dl>
+</dd>
+</dl>
+</div></blockquote>
+<p class="last">channel: 36,1
+&#8220;&#8221;&#8220;</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>connection = MagicMock()
+command = AirportCommand(connection=connection,</p>
+<blockquote>
+<div>interface=&#8217;wlan0&#8217;)</div></blockquote>
+<p class="last">connection.airport.return_value = StringIO(OUTPUT), StringIO(&#8220;&#8221;)
+import pudb;pudb.set_trace()
+print(command.ssid)</p>
+</dd>
+</dl>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2014, russelln.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

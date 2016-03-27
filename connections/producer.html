@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,6 +30,7 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Connections" href="index.html" />
+    <link rel="next" title="apetools.connections.producer.PopenProducer" href="api/apetools.connections.producer.PopenProducer.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -117,6 +118,10 @@
             
               
                 
+  <li>
+    <a href="api/apetools.connections.producer.PopenProducer.html" title="Next Chapter: apetools.connections.producer.PopenProducer"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.conn... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -162,26 +167,66 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer" title="apetools.connections.producer.PopenProducer"><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer</span></code></a>(command[,&nbsp;timeout])</td>
+<td>The subprocess.Popen Producer executes a command when its process or one of its files is requested</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.lock</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.lock" title="apetools.connections.producer.PopenProducer.lock"><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.lock</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a re-entrant lock</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.counter</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.process</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.counter" title="apetools.connections.producer.PopenProducer.counter"><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.counter</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">SharedCounter</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.stdout</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.stderr</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.process" title="apetools.connections.producer.PopenProducer.process"><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.process</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a subprocess.Popen object</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.__del__</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.stdout" title="apetools.connections.producer.PopenProducer.stdout"><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.stdout</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a subprocess.PopenFile containing the stdout of the process</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenProducer.stderr" title="apetools.connections.producer.PopenProducer.stderr"><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.stderr</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a subprocess.PopenFile containing the stderr of the process</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.producer.PopenProducer.__del__.html#apetools.connections.producer.PopenProducer.__del__" title="apetools.connections.producer.PopenProducer.__del__"><code class="xref py py-obj docutils literal"><span class="pre">PopenProducer.__del__</span></code></a>()</td>
+<td>It appears that the way python&#8217;s garbage collection works, the counter is unnecessary.</td>
 </tr>
 </tbody>
 </table>
@@ -197,32 +242,88 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile" title="apetools.connections.producer.PopenFile"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile</span></code></a>(file_object,&nbsp;process,&nbsp;lock[,&nbsp;...])</td>
+<td>A container for a process&#8217; readable file-outputs</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.queue</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.queue" title="apetools.connections.producer.PopenFile.queue"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.queue</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">Queue.Queue for lines of output</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.run</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.start</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.run" title="apetools.connections.producer.PopenFile.run"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.run</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">lines read from the file and put on the Queue</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.readline</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.read</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.start" title="apetools.connections.producer.PopenFile.start"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.start</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">self.run executing as self.thread</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.close</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.__iter__</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.readline" title="apetools.connections.producer.PopenFile.readline"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.readline</span></code></a>([timeout])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">Next item in queue or EOF if it times out</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.__del__</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.read" title="apetools.connections.producer.PopenFile.read"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.read</span></code></a>([timeout])</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.producer.html#apetools.connections.producer.PopenFile.close" title="apetools.connections.producer.PopenFile.close"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.close</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">file_object has been closed and self.closed is True</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.connections.producer.PopenFile.__iter__.html#apetools.connections.producer.PopenFile.__iter__" title="apetools.connections.producer.PopenFile.__iter__"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.__iter__</span></code></a>()</td>
+<td>SPACE is yielded on timeout so it isn&#8217;t mistaken for an EOF</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.producer.PopenFile.__del__.html#apetools.connections.producer.PopenFile.__del__" title="apetools.connections.producer.PopenFile.__del__"><code class="xref py py-obj docutils literal"><span class="pre">PopenFile.__del__</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">if process was given, self.close called</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>

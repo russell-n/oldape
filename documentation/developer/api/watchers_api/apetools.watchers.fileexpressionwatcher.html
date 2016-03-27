@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,406 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-watchers-fileexpressionwatcher">
-<h1>apetools.watchers.fileexpressionwatcher<a class="headerlink" href="#apetools-watchers-fileexpressionwatcher" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.watchers.fileexpressionwatcher">
+<span id="apetools-watchers-fileexpressionwatcher"></span><h1>apetools.watchers.fileexpressionwatcher<a class="headerlink" href="#module-apetools.watchers.fileexpressionwatcher" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">sleep</span></code>(seconds)</td>
+<td>Delay execution for a given number of seconds.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">time</span></code>(()&nbsp;-&gt;&nbsp;floating&nbsp;point&nbsp;number)</td>
+<td>Return the current time in seconds since the Epoch.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ABCMeta</span></code></td>
+<td>Metaclass for defining Abstract Base Classes (ABCs).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../../watchers/api/apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.html#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher" title="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher"><code class="xref py py-obj docutils literal"><span class="pre">BaseFileexpressionwatcher</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to repeatedly cat a file and output a csv-line.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster</span></code>(device,&nbsp;output[,&nbsp;expression,&nbsp;...])</td>
+<td>An abstract class to base Device-Pollsters on.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../../watchers/api/apetools.watchers.fileexpressionwatcher.BatteryWatcher.html#apetools.watchers.fileexpressionwatcher.BatteryWatcher" title="apetools.watchers.fileexpressionwatcher.BatteryWatcher"><code class="xref py py-obj docutils literal"><span class="pre">BatteryWatcher</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td>Watches the battery data from a proc file</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">defaultdict</span></code></td>
+<td>defaultdict(default_factory[, ...]) &#8211;&gt; dict with default factory</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigurationError</span></code></td>
+<td>A ConfigurationError is raised if there is an error in the configuration file</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher">
+<em class="property">class </em><code class="descclassname">apetools.watchers.fileexpressionwatcher.</code><code class="descname">BaseFileexpressionwatcher</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/watchers/fileexpressionwatcher.html#BaseFileexpressionwatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to repeatedly cat a file and output a csv-line. Unlike regular pollster, does no calculation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><cite>output</cite>: A writeable file-like object</li>
+<li><cite>interface</cite>: The name of the interface to watch</li>
+<li><cite>interval</cite>: seconds between samples</li>
+<li><cite>connection</cite>: the connection to the device to watch</li>
+<li><cite>name</cite>: the name of the file to watch</li>
+<li><cite>expression</cite>: A regular expression with groups to match the output</li>
+</ul>
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/watchers/fileexpressionwatcher.html#BaseFileexpressionwatcher.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Repeatedly cats file self.name and saves matching output</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.run_thread">
+<code class="descname">run_thread</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.start" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">self.thread contains the run() thread</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.connection">
+<code class="descname">connection</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.connection" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the node connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.expression">
+<code class="descname">expression</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">uncompiled expression to match the output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.expression_keys">
+<code class="descname">expression_keys</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.expression_keys" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of group-keys to order the output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.name">
+<code class="descname">name</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the path to the file to cat</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.regex">
+<code class="descname">regex</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.regex" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a compiled regular expression to match the output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.stopped">
+<code class="descname">stopped</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.stopped" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if self.stop is set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.timestamp">
+<code class="descname">timestamp</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BaseFileexpressionwatcher.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">timestamp creator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher">
+<em class="property">class </em><code class="descclassname">apetools.watchers.fileexpressionwatcher.</code><code class="descname">BatteryWatcher</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/watchers/fileexpressionwatcher.html#BatteryWatcher"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher" title="Permalink to this definition">¶</a></dt>
+<dd><p>Watches the battery data from a proc file</p>
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Repeatedly cats file self.name and saves matching output</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.run_thread">
+<code class="descname">run_thread</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.run_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>To use:</p>
+<blockquote>
+<div><ul class="simple">
+<li>define run(<a href="#id5"><span class="problematic" id="id6">*</span></a>args, <a href="#id7"><span class="problematic" id="id8">**</span></a>kwargs) in child</li>
+<li>use self.run_thread as target for thread</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.start">
+<code class="descname">start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.start" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">self.thread contains the run() thread</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.connection">
+<code class="descname">connection</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.connection" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the node connection</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression">
+<code class="descname">expression</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">regular expression to match the output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression_keys">
+<code class="descname">expression_keys</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.expression_keys" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of group-dict keys in order</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.header">
+<code class="descname">header</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.header" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the header to use in files</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.name">
+<code class="descname">name</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.name" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the path to the file to cat</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.regex">
+<code class="descname">regex</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.regex" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a compiled regular expression to match the output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.stopped">
+<code class="descname">stopped</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.stopped" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">Boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">True if self.stop is set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.watchers.fileexpressionwatcher.BatteryWatcher.timestamp">
+<code class="descname">timestamp</code><a class="headerlink" href="#apetools.watchers.fileexpressionwatcher.BatteryWatcher.timestamp" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">timestamp creator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

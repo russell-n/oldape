@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,311 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-affectors-elexol-elexol">
-<h1>apetools.affectors.elexol.elexol<a class="headerlink" href="#apetools-affectors-elexol-elexol" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.affectors.elexol.elexol">
+<span id="apetools-affectors-elexol-elexol"></span><h1>apetools.affectors.elexol.elexol<a class="headerlink" href="#module-apetools.affectors.elexol.elexol" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.affectors.elexol.elexol.elexol24" title="apetools.affectors.elexol.elexol.elexol24"><code class="xref py py-obj docutils literal"><span class="pre">elexol24</span></code></a>(IP[,&nbsp;clear,&nbsp;retry,&nbsp;ports,&nbsp;pins])</td>
+<td>A class for UDP socket communication with the Elexol24 Ethernet I/O board.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.affectors.elexol.elexol.elexol24">
+<em class="property">class </em><code class="descclassname">apetools.affectors.elexol.elexol.</code><code class="descname">elexol24</code><span class="sig-paren">(</span><em>IP</em>, <em>clear=True</em>, <em>retry=5</em>, <em>ports='ABC'</em>, <em>pins=8</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class for UDP socket communication with the Elexol24 Ethernet I/O board.</p>
+<dl class="docutils">
+<dt>The class must be instantiated using the IP address as an argument, for example::</dt>
+<dd>a = elexol.elexol24(&#8220;192.168.20.68&#8221;)</dd>
+</dl>
+<p>The UDP port is set at 2424 (the Elexol default).  After connecting with the device all pins are set to output mode and cleared (set to zero).
+The most useful methods are probably <code class="docutils literal"><span class="pre">setpin24()</span></code>, <code class="docutils literal"><span class="pre">setxpin24()</span></code>, and <code class="docutils literal"><span class="pre">getpin24()</span></code>, as they don&#8217;t require any messing with the ports on the Elexol board.</p>
+<p>Constructor - Establishes communication with the Elexol24 and by default sets all pins to output mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li>&#8216;IP&#8217; : a string containing the IP address of the Elexol24.  Connection is made on port 2424.</li>
+<li><cite>ports</cite>: The Identifier for the serial port on the elexol</li>
+<li><cite>pins</cite>: The number of pins per port</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.clearall">
+<code class="descname">clearall</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.clearall"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.clearall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all pins on the device.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.clearpin">
+<code class="descname">clearpin</code><span class="sig-paren">(</span><em>port</em>, <em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.clearpin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.clearpin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears an individual pin on a specified port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217;.</li>
+<li>&#8216;pin&#8217; : A zero-indexed value specifying the desired pin. Valid range is 0-7.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.clearpin24">
+<code class="descname">clearpin24</code><span class="sig-paren">(</span><em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.clearpin24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.clearpin24" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears an individual pin across the entire device, leaving all other untouched.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>pin</cite> : A zero-indexed value specifying the desired pin. Valid range is 0-23.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">AssertionError if <cite>pin</cite> out of range.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.clearport">
+<code class="descname">clearport</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.clearport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.clearport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears all values on given port</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217;.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.close">
+<code class="descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Closes open sockets. Automatically called by destructor.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.getpin">
+<code class="descname">getpin</code><span class="sig-paren">(</span><em>port</em>, <em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.getpin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.getpin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the status of an individual pin on a specified port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217;.</li>
+<li>&#8216;pin&#8217; : A zero-indexed value specifying the desired pin. Valid range is 0-7.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">Boolean</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The value of the specified pin.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.getpin24">
+<code class="descname">getpin24</code><span class="sig-paren">(</span><em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.getpin24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.getpin24" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the value of an individual pin across the entire device.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>&#8216;pin&#8217; : A zero-indexed value specifying the desired pin. Valid range is 0-23.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">Boolean</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The value of the specified pin.</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">AssertionError if ping out of range</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.getport">
+<code class="descname">getport</code><span class="sig-paren">(</span><em>port</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.getport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.getport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets current values on a particular port.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217;.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">Byte</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A byte containing the current status of the desired port.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.setpin">
+<code class="descname">setpin</code><span class="sig-paren">(</span><em>port</em>, <em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.setpin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.setpin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets an individual pin value, but leaves all other pins untouched.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217;.</li>
+<li>&#8216;pin&#8217; : A zero-indexed value specifying the desired pin. Valid range is 0-7.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">AssertionError if pin is out of range.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.setpin24">
+<code class="descname">setpin24</code><span class="sig-paren">(</span><em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.setpin24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.setpin24" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets an individual pin across the entire device, and leaves all other untouched.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li>&#8216;pin&#8217; : A zero-indexed value specifying the desired pin.  Valid range is 0-23</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.setport">
+<code class="descname">setport</code><span class="sig-paren">(</span><em>port</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.setport"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.setport" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes values to a single port</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217; to indicate desired port.</li>
+<li>&#8216;value&#8217; : A byte containing binary values to write to the port.  ex: 255 will write all 1&#8217;s to the port.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.setportdirection">
+<code class="descname">setportdirection</code><span class="sig-paren">(</span><em>port</em>, <em>direction</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.setportdirection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.setportdirection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the desired I/O pin direction for a particular Elexol24 port</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217; to indicate the desired port.</li>
+<li>&#8216;direction&#8217; : A byte containing binary pin direction settings for that particular port, where binary 0 is input and binary 1 is output.  ex: setting direction to 255 will set all pins to &#8216;1&#8217; and thus set the entire port to input.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.setxpin">
+<code class="descname">setxpin</code><span class="sig-paren">(</span><em>port</em>, <em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.setxpin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.setxpin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets an individual pin on a specified port, and clears the rest.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li>&#8216;port&#8217; : A string containing either &#8216;A&#8217;, &#8216;B&#8217;, or &#8216;C&#8217;.</li>
+<li>&#8216;pin&#8217; : A zero-indexed value specifying the desired pin. Valid range is 0-7.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.affectors.elexol.elexol.elexol24.setxpin24">
+<code class="descname">setxpin24</code><span class="sig-paren">(</span><em>pin</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/affectors/elexol/elexol.html#elexol24.setxpin24"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.setxpin24" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets an individual pin across the entire device. All other pins are cleared.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>pin</cite> : A zero-indexed value specifying the desired pin. Valid range is 0-23.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">AssertionError if pin out of range.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.affectors.elexol.elexol.elexol24.socket">
+<code class="descname">socket</code><a class="headerlink" href="#apetools.affectors.elexol.elexol.elexol24.socket" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">UPD socket</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,17 +135,18 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.proletarians.testoperator</h1><div class="highlight"><pre>
-<span class="c">#python standard library</span>
+<span></span>
+<span class="c1">#python standard library</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span> <span class="nn">Queue</span> <span class="kn">import</span> <span class="n">Queue</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">signal</span>
 
-<span class="c"># apetools modules</span>
+<span class="c1"># apetools modules</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.tools</span> <span class="kn">import</span> <span class="n">sleep</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span>
@@ -154,28 +155,28 @@
 <span class="kn">from</span> <span class="nn">apetools.log_setter</span> <span class="kn">import</span> <span class="n">LOGNAME</span>
 
 
-<span class="n">TIME_REMAINING</span> <span class="o">=</span> <span class="s">&quot;Estimated time Remaining: {t}&quot;</span>
+<span class="n">TIME_REMAINING</span> <span class="o">=</span> <span class="s2">&quot;Estimated time Remaining: {t}&quot;</span>
 
 
-<span class="n">OperatorStaticTestParameters</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;OperatorStaticTestParameters&quot;</span><span class="p">,</span>
-                                          <span class="p">[</span><span class="s">&#39;operator_parameters&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;static_parameters&#39;</span><span class="p">,</span>
-                                           <span class="s">&#39;test_parameters&#39;</span><span class="p">])</span>
+<span class="n">OperatorStaticTestParameters</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;OperatorStaticTestParameters&quot;</span><span class="p">,</span>
+                                          <span class="p">[</span><span class="s1">&#39;operator_parameters&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;static_parameters&#39;</span><span class="p">,</span>
+                                           <span class="s1">&#39;test_parameters&#39;</span><span class="p">])</span>
 
 
-<span class="n">TEST_TAG</span> <span class="o">=</span> <span class="s">&quot;**** {tag}: {s} Test {r} of {t} ****&quot;</span>
+<span class="n">TEST_TAG</span> <span class="o">=</span> <span class="s2">&quot;**** {tag}: {s} Test {r} of {t} ****&quot;</span>
 
-<span class="n">TEST_POSTAMBLE</span> <span class="o">=</span> <span class="s">&quot;**** {tag}: Ending test - elapsed time = {t} ****&quot;</span>
-<span class="n">TEST_RESULT</span> <span class="o">=</span> <span class="s">&quot;**** {tag}: Test Result = {r} ****&quot;</span>
+<span class="n">TEST_POSTAMBLE</span> <span class="o">=</span> <span class="s2">&quot;**** {tag}: Ending test - elapsed time = {t} ****&quot;</span>
+<span class="n">TEST_RESULT</span> <span class="o">=</span> <span class="s2">&quot;**** {tag}: Test Result = {r} ****&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">TestOperator</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
-<div class="viewcode-block" id="TestOperator"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.html#apetools.proletarians.testoperator.TestOperator">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestOperator"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.html#apetools.proletarians.testoperator.TestOperator">[docs]</a><span class="k">class</span> <span class="nc">TestOperator</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An operator runs the sequence of operations.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_parameters</span><span class="p">,</span> <span class="n">operation_setup</span><span class="p">,</span> <span class="n">operation_teardown</span><span class="p">,</span>
-<div class="viewcode-block" id="TestOperator.__init__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.html#apetools.proletarians.testoperator.TestOperator.__init__">[docs]</a>                 <span class="n">test_setup</span><span class="p">,</span> <span class="n">tests</span><span class="p">,</span> <span class="n">test_teardown</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">no_cleanup</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span>
-                 <span class="n">countdown_timer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">&quot;APETools&quot;</span><span class="p">,</span> <span class="n">sleep</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+<div class="viewcode-block" id="TestOperator.__init__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.html#apetools.proletarians.testoperator.TestOperator.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_parameters</span><span class="p">,</span> <span class="n">operation_setup</span><span class="p">,</span> <span class="n">operation_teardown</span><span class="p">,</span>
+                 <span class="n">test_setup</span><span class="p">,</span> <span class="n">tests</span><span class="p">,</span> <span class="n">test_teardown</span><span class="p">,</span> <span class="n">nodes</span><span class="p">,</span> <span class="n">no_cleanup</span><span class="p">,</span> <span class="n">storage</span><span class="p">,</span>
+                 <span class="n">countdown_timer</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;APETools&quot;</span><span class="p">,</span> <span class="n">sleep</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :params:</span>
 
@@ -207,37 +208,37 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="o">=</span> <span class="n">sleep</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_sub_logger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameter_queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">countdown_timer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestOperator.countdown_timer"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.countdown_timer.html#apetools.proletarians.testoperator.TestOperator.countdown_timer">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: countdown-timer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_countdown_timer</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_countdown_timer</span> <span class="o">=</span> <span class="n">CountDown</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_countdown_timer</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sub_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestOperator.sub_logger"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.sub_logger.html#apetools.proletarians.testoperator.TestOperator.sub_logger">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: holder of sub-logger</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sub_logger</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sub_logger</span> <span class="o">=</span> <span class="n">sublogger</span><span class="o">.</span><span class="n">SubLogger</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sub_logger</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">sleep</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TestOperator.sleep"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.sleep.html#apetools.proletarians.testoperator.TestOperator.sleep">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: default Sleep object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span> <span class="o">=</span> <span class="n">sleep</span><span class="o">.</span><span class="n">Sleep</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sleep</span>
 
-    <span class="k">def</span> <span class="nf">one_repetition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestOperator.one_repetition"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.one_repetition.html#apetools.proletarians.testoperator.TestOperator.one_repetition">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestOperator.one_repetition"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.one_repetition.html#apetools.proletarians.testoperator.TestOperator.one_repetition">[docs]</a>    <span class="k">def</span> <span class="nf">one_repetition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameter</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Holds the test algorithm for one repetition.</span>
 
 <span class="sd">        This was moved out to make the exception handling cleaner.</span>
@@ -252,37 +253,37 @@
 <span class="sd">         - `count`: the current test-count (for logging)</span>
 <span class="sd">         - `prefix`: any file-prefix given by the operation-setup</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#import pudb;pudb.set_trace()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;starting TestOperator.one_repetition&quot;</span><span class="p">)</span>
+        <span class="c1">#import pudb;pudb.set_trace()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;starting TestOperator.one_repetition&quot;</span><span class="p">)</span>
         <span class="n">test_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">countdown_timer</span><span class="o">.</span><span class="n">now</span>
         <span class="k">if</span> <span class="n">prefix</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">filename_prefix</span> <span class="o">=</span> <span class="n">prefix</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">filename_prefix</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-        <span class="c">#**** Setup Test</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Running Parameters: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameter</span><span class="p">))</span>
+            <span class="n">filename_prefix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="c1">#**** Setup Test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running Parameters: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameter</span><span class="p">))</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">TEST_TAG</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">count</span><span class="p">,</span>
                                   <span class="n">t</span><span class="o">=</span><span class="n">parameter</span><span class="o">.</span><span class="n">total_count</span><span class="p">,</span>
-                                  <span class="n">s</span><span class="o">=</span><span class="s">&#39;Starting&#39;</span><span class="p">,</span>
+                                  <span class="n">s</span><span class="o">=</span><span class="s1">&#39;Starting&#39;</span><span class="p">,</span>
                                   <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">parameter</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Running test setup&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running test setup&quot;</span><span class="p">)</span>
 
-        <span class="n">filename_prefix</span> <span class="o">=</span> <span class="s">&quot;{0}_{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_prefix</span><span class="p">,</span>
+        <span class="n">filename_prefix</span> <span class="o">=</span> <span class="s2">&quot;{0}_{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename_prefix</span><span class="p">,</span>
                                            <span class="bp">self</span><span class="o">.</span><span class="n">test_setup</span><span class="p">(</span><span class="n">parameter</span><span class="p">))</span>
-        <span class="c">#self.sleep()</span>
+        <span class="c1">#self.sleep()</span>
 
-        <span class="c">#**** Execute test</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Running Test&quot;</span><span class="p">)</span>
+        <span class="c1">#**** Execute test</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running Test&quot;</span><span class="p">)</span>
         <span class="n">test_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tests</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">TEST_RESULT</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">test_result</span><span class="p">,</span>
                                             <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Running teardown&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Running teardown&quot;</span><span class="p">)</span>
 
-        <span class="c">#**** Teardown Test</span>
+        <span class="c1">#**** Teardown Test</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_teardown</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">countdown_timer</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">test_start</span><span class="p">)</span>
         <span class="n">remaining</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">countdown_timer</span><span class="o">.</span><span class="n">remaining</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
@@ -290,16 +291,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">TIME_REMAINING</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">remaining</span><span class="p">))</span>
         <span class="n">message</span> <span class="o">=</span> <span class="n">TEST_TAG</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">r</span><span class="o">=</span><span class="n">count</span><span class="p">,</span>
                                   <span class="n">t</span><span class="o">=</span><span class="n">parameter</span><span class="o">.</span><span class="n">total_count</span><span class="p">,</span>
-                                  <span class="n">s</span><span class="o">=</span><span class="s">&#39;Ending&#39;</span><span class="p">,</span>
+                                  <span class="n">s</span><span class="o">=</span><span class="s1">&#39;Ending&#39;</span><span class="p">,</span>
                                   <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">log_info</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">parameter</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">parameters</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">log_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestOperator.log_info"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.log_info.html#apetools.proletarians.testoperator.TestOperator.log_info">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestOperator.log_info"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.log_info.html#apetools.proletarians.testoperator.TestOperator.log_info">[docs]</a>    <span class="k">def</span> <span class="nf">log_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `message`: a string to log</span>
@@ -308,26 +309,26 @@
 <span class="sd">        :postcondition: message sent to node and info log.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-        <span class="c">#self.nodes[node].logger(&#39;&quot;{0}&quot;&#39;.format(message))</span>
-        <span class="k">return</span>
+        <span class="c1">#self.nodes[node].logger(&#39;&quot;{0}&quot;&#39;.format(message))</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestOperator.__call__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.__call__.html#apetools.proletarians.testoperator.TestOperator.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestOperator.__call__"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.__call__.html#apetools.proletarians.testoperator.TestOperator.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is the main operation method.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Starting Test Operation&quot;</span><span class="p">)</span>
-        <span class="n">sublog_name</span> <span class="o">=</span> <span class="s">&#39;testoperation.log&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Starting Test Operation&quot;</span><span class="p">)</span>
+        <span class="n">sublog_name</span> <span class="o">=</span> <span class="s1">&#39;testoperation.log&#39;</span>
         <span class="n">sublog_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">get_full_path</span><span class="p">(</span><span class="n">sublog_name</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sub_logger</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">sublog_name</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">no_cleanup</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">keyboard_interrupt_intercept</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">countdown_timer</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
 
-        <span class="c">#Run the Operation Setup</span>
+        <span class="c1">#Run the Operation Setup</span>
         <span class="n">prefix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">operation_setup</span><span class="p">()</span>
 
         <span class="k">try</span><span class="p">:</span>
-            <span class="c"># the count is decremented on error, so it can&#39;t use enmurate</span>
+            <span class="c1"># the count is decremented on error, so it can&#39;t use enmurate</span>
             <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
             <span class="k">for</span> <span class="n">parameter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_parameters</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">countdown_timer</span><span class="o">.</span><span class="n">total_repetitions</span> <span class="o">=</span> <span class="n">parameter</span><span class="o">.</span><span class="n">total_count</span>
@@ -337,40 +338,40 @@
                     <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">except</span> <span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">AffectorError</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">CommandError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Quitting this test&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Quitting this test&quot;</span><span class="p">)</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">parameter_queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">parameter</span><span class="p">)</span>
                     <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
             <span class="k">while</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
                 <span class="n">parameter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Re-trying: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameter</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Re-trying: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">parameter</span><span class="p">))</span>
                 <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
                 <span class="k">try</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">one_repetition</span><span class="p">(</span><span class="n">parameter</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span>
                 <span class="k">except</span> <span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">AffectorError</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">CommandError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&quot;Quitting this iteration&quot;</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s2">&quot;Quitting this iteration&quot;</span><span class="p">)</span>
 
             <span class="n">elapsed_time</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">countdown_timer</span><span class="o">.</span><span class="n">elapsed</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">TEST_POSTAMBLE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">elapsed_time</span><span class="p">,</span>
                                                    <span class="n">tag</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tag</span><span class="p">))</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Sleeping to let logs finish recording test-information&quot;</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Sleeping to let logs finish recording test-information&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sleep</span><span class="p">()</span>
         <span class="k">except</span> <span class="p">(</span><span class="n">errors</span><span class="o">.</span><span class="n">ConnectionError</span><span class="p">,</span> <span class="n">errors</span><span class="o">.</span><span class="n">CommandError</span><span class="p">,</span>
                 <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span><span class="p">)</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
         <span class="k">finally</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&quot;Tearing Down the Current Operation&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Tearing Down the Current Operation&quot;</span><span class="p">)</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">operation_teardown</span><span class="p">()</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">LOGNAME</span><span class="p">)</span>
             <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">sub_logger</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">logname</span><span class="o">=</span><span class="n">sublog_name</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">keyboard_interrupt_intercept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TestOperator.keyboard_interrupt_intercept"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept.html#apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TestOperator.keyboard_interrupt_intercept"><a class="viewcode-back" href="../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept.html#apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept">[docs]</a>    <span class="k">def</span> <span class="nf">keyboard_interrupt_intercept</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        The watcher watches for signal interrupts and kills children.</span>
 
 <span class="sd">        This was implemented to prevent user-confusion when a ctrl-c is</span>
@@ -382,14 +383,14 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">os</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
         <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
-            <span class="n">warning</span> <span class="o">=</span> <span class="s">&quot;Keyboard-Interrupt (killing without cleanup...)&quot;</span>
+            <span class="n">warning</span> <span class="o">=</span> <span class="s2">&quot;Keyboard-Interrupt (killing without cleanup...)&quot;</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">warning</span><span class="p">)</span>
             <span class="n">os</span><span class="o">.</span><span class="n">kill</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">signal</span><span class="o">.</span><span class="n">SIGKILL</span><span class="p">)</span>
         <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div></div>
 
-<span class="c"># end TestOperator</span>
-</pre></div></div></div>
+<span class="c1"># end TestOperator</span>
+</pre></div>
 
     </div>
       
@@ -403,7 +404,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

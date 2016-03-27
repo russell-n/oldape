@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,6 +30,7 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Watchers" href="index.html" />
+    <link rel="next" title="apetools.watchers.basepollster.BasePollster" href="api/apetools.watchers.basepollster.BasePollster.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -113,6 +114,10 @@
             
               
                 
+  <li>
+    <a href="api/apetools.watchers.basepollster.BasePollster.html" title="Next Chapter: apetools.watchers.basepollster.BasePollster"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.watc... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -156,26 +161,58 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.basepollster.BasePollster.html#apetools.watchers.basepollster.BasePollster" title="apetools.watchers.basepollster.BasePollster"><code class="xref py py-obj docutils literal"><span class="pre">BasePollster</span></code></a>(device,&nbsp;output[,&nbsp;expression,&nbsp;...])</td>
+<td>An abstract class to base Device-Pollsters on.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.name</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.basepollster.BasePollster.name.html#apetools.watchers.basepollster.BasePollster.name" title="apetools.watchers.basepollster.BasePollster.name"><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.name</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the name for logging (or the name of the file)</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.timestamp</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.run</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.basepollster.BasePollster.timestamp.html#apetools.watchers.basepollster.BasePollster.timestamp" title="apetools.watchers.basepollster.BasePollster.timestamp"><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.timestamp</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">timestamp creator</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.start</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.__call__</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.basepollster.BasePollster.run.html#apetools.watchers.basepollster.BasePollster.run" title="apetools.watchers.basepollster.BasePollster.run"><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.run</span></code></a>()</td>
+<td>The method to poll the device</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.__del__</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.basepollster.BasePollster.start.html#apetools.watchers.basepollster.BasePollster.start" title="apetools.watchers.basepollster.BasePollster.start"><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.start</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">self.thread contains the run() thread</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.basepollster.BasePollster.__call__.html#apetools.watchers.basepollster.BasePollster.__call__" title="apetools.watchers.basepollster.BasePollster.__call__"><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.__call__</span></code></a>()</td>
+<td>A pass-through to start</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.basepollster.BasePollster.__del__.html#apetools.watchers.basepollster.BasePollster.__del__" title="apetools.watchers.basepollster.BasePollster.__del__"><code class="xref py py-obj docutils literal"><span class="pre">BasePollster.__del__</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">output file is closed</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>

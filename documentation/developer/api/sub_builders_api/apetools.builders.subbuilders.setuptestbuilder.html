@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,183 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-builders-subbuilders-setuptestbuilder">
-<h1>apetools.builders.subbuilders.setuptestbuilder<a class="headerlink" href="#apetools-builders-subbuilders-setuptestbuilder" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.builders.subbuilders.setuptestbuilder">
+<span id="apetools-builders-subbuilders-setuptestbuilder"></span><h1>apetools.builders.subbuilders.setuptestbuilder<a class="headerlink" href="#module-apetools.builders.subbuilders.setuptestbuilder" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseOperationBuilder</span></code>(master,&nbsp;config_map,&nbsp;...)</td>
+<td>A class to build Test Setups</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigOptions</span></code></td>
+<td>An enumeration of sorts to hold the section and option names for the config file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">SetupTest</span></code>(*args,&nbsp;**kwargs)</td>
+<td>A class to run every iteration</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder" title="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder"><code class="xref py py-obj docutils literal"><span class="pre">SetupTestBuilder</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td>A class to build Test Setups</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder">
+<em class="property">class </em><code class="descclassname">apetools.builders.subbuilders.setuptestbuilder.</code><code class="descname">SetupTestBuilder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/setuptestbuilder.html#SetupTestBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to build Test Setups</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>master</cite>: Builder (inherited argument)</li>
+<li><cite>config_map</cite>: ConfigurationMap (inherited argument)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.builders">
+<code class="descname">builders</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.builders" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of builders made from plans</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.config_option">
+<code class="descname">config_option</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.config_option" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">config_file option for this operation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.operation">
+<code class="descname">operation</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.operation" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the class definition for this operation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of named-tuple parameters for the products</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.plans">
+<code class="descname">plans</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.plans" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of options from the setup_test value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.product">
+<code class="descname">product</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.product" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Test Setup object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.products">
+<code class="descname">products</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.products" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of products from the builders</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.section">
+<code class="descname">section</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.section" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.tool_builder">
+<code class="descname">tool_builder</code><a class="headerlink" href="#apetools.builders.subbuilders.setuptestbuilder.SetupTestBuilder.tool_builder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ToolBuilder aggregator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

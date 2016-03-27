@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,192 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-builders-subbuilders-baseoperationbuilder">
-<h1>apetools.builders.subbuilders.baseoperationbuilder<a class="headerlink" href="#apetools-builders-subbuilders-baseoperationbuilder" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.builders.subbuilders.baseoperationbuilder">
+<span id="apetools-builders-subbuilders-baseoperationbuilder"></span><h1>apetools.builders.subbuilders.baseoperationbuilder<a class="headerlink" href="#module-apetools.builders.subbuilders.baseoperationbuilder" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ABCMeta</span></code></td>
+<td>Metaclass for defining Abstract Base Classes (ABCs).</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder" title="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder"><code class="xref py py-obj docutils literal"><span class="pre">BaseOperationBuilder</span></code></a>(master,&nbsp;config_map,&nbsp;...)</td>
+<td>A class to build Test Setups</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigOptions</span></code></td>
+<td>An enumeration of sorts to hold the section and option names for the config file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DummyOperation</span></code>(*args,&nbsp;**kwargs)</td>
+<td>A dummy for an Test</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder</span></code>()</td>
+<td>An aggregator of tool builders</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigurationError</span></code></td>
+<td>A ConfigurationError is raised if there is an error in the configuration file</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigurationOptionError</span></code></td>
+<td>An error to raise if an option is missing</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder">
+<em class="property">class </em><code class="descclassname">apetools.builders.subbuilders.baseoperationbuilder.</code><code class="descname">BaseOperationBuilder</code><span class="sig-paren">(</span><em>master</em>, <em>config_map</em>, <em>previous_parameters</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/baseoperationbuilder.html#BaseOperationBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A class to build Test Setups</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>master</cite>: Builder (inherited argument)</li>
+<li><cite>config_map</cite>: ConfigurationMap (inherited argument)</li>
+<li><cite>previous_parameters</cite>: parameters built by other builders</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.builders">
+<code class="descname">builders</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.builders" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of builders made from plans</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.config_option">
+<code class="descname">config_option</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.config_option" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Config file option corresponding to the operation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.operation">
+<code class="descname">operation</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.operation" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">class definition for the product</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of named-tuple parameters for the products</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.plans">
+<code class="descname">plans</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.plans" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of options from the setup_test value</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.product">
+<code class="descname">product</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.product" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Test Setup object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.products">
+<code class="descname">products</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.products" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of products from the builders</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.tool_builder">
+<code class="descname">tool_builder</code><a class="headerlink" href="#apetools.builders.subbuilders.baseoperationbuilder.BaseOperationBuilder.tool_builder" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">ToolBuilder aggregator</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

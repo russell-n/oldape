@@ -5,10 +5,12 @@ A module to extract information from `iwconfig`.
 
 
 
+
 Iwconfig Enums
 --------------
 
-::
+
+.. code:: python
 
     class IwconfigEnums(object):
         __slots__ = ()
@@ -18,7 +20,6 @@ Iwconfig Enums
         noise = 'noise'
         bitrate = 'bitrate'
     # end class IwconfigEnums
-    
     
 
 
@@ -44,4 +45,6 @@ Iwconfig
    Iwconfig.output
    Iwconfig.search
    Iwconfig.validate
+
+
 

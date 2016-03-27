@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,6 +30,8 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Threads" href="index.html" />
+    <link rel="next" title="apetools.threads.semaphore.Semaphore" href="api/apetools.threads.semaphore.Semaphore.html" />
+    <link rel="prev" title="apetools.threads.lock.Lock.__exit__" href="api/apetools.threads.lock.Lock.__exit__.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -113,6 +115,14 @@
             
               
                 
+  <li>
+    <a href="api/apetools.threads.lock.Lock.__exit__.html" title="Previous Chapter: apetools.threads.lock.Lock.__exit__"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.thre...</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/apetools.threads.semaphore.Semaphore.html" title="Next Chapter: apetools.threads.semaphore.Semaphore"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.thre... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -156,17 +166,25 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Semaphore</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.threads.semaphore.Semaphore.html#apetools.threads.semaphore.Semaphore" title="apetools.threads.semaphore.Semaphore"><code class="xref py py-obj docutils literal"><span class="pre">Semaphore</span></code></a>([size])</td>
+<td>Implements a Semaphore using Alan Downey&#8217;s notation.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Semaphore.wait</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.threads.semaphore.Semaphore.wait.html#apetools.threads.semaphore.Semaphore.wait" title="apetools.threads.semaphore.Semaphore.wait"><code class="xref py py-obj docutils literal"><span class="pre">Semaphore.wait</span></code></a>()</td>
+<td>Decrements the semaphore if &gt; 0, waits if it is 0</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Semaphore.signal</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.threads.semaphore.Semaphore.signal.html#apetools.threads.semaphore.Semaphore.signal" title="apetools.threads.semaphore.Semaphore.signal"><code class="xref py py-obj docutils literal"><span class="pre">Semaphore.signal</span></code></a>([value])</td>
+<td>Increments the Semaphore</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Semaphore.increment_size</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.threads.semaphore.Semaphore.increment_size.html#apetools.threads.semaphore.Semaphore.increment_size" title="apetools.threads.semaphore.Semaphore.increment_size"><code class="xref py py-obj docutils literal"><span class="pre">Semaphore.increment_size</span></code></a>()</td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">self.semaphore is a new semaphore that is 1 bigger than last</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>

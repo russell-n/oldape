@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,30 +135,31 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.watchers.logwatcher</h1><div class="highlight"><pre>
+<span></span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseThreadClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">CommandError</span>
 <span class="kn">from</span> <span class="nn">apetools.threads</span> <span class="kn">import</span> <span class="n">threads</span>
 <span class="kn">from</span> <span class="nn">apetools.commons.timestamp</span> <span class="kn">import</span> <span class="n">TimestampFormat</span><span class="p">,</span> <span class="n">TimestampFormatEnums</span>
 
 
-<span class="k">class</span> <span class="nc">LogWatcherError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
-<div class="viewcode-block" id="LogWatcherError"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcherError.html#apetools.watchers.logwatcher.LogWatcherError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LogWatcherError"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcherError.html#apetools.watchers.logcatwatcher.LogWatcherError">[docs]</a><span class="k">class</span> <span class="nc">LogWatcherError</span><span class="p">(</span><span class="n">CommandError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An error to raise if something is wrong with the LogWatcher</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-<span class="c"># end class LogWatcherError</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="c1"># end class LogWatcherError</span>
 
 
-<span class="k">class</span> <span class="nc">LogWatcher</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LogWatcher"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.html#apetools.watchers.logwatcher.LogWatcher">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LogWatcher"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.html#apetools.watchers.logcatwatcher.LogWatcher">[docs]</a><span class="k">class</span> <span class="nc">LogWatcher</span><span class="p">(</span><span class="n">BaseThreadClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A LogWatcher watches a log.</span>
 
 <span class="sd">    In this case it assumes the log is a file that can be &#39;cat&#39;-ed and it will block</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>  <span class="n">arguments</span><span class="o">=</span><span class="s">&quot;/proc/kmsg&quot;</span><span class="p">,</span>
-<div class="viewcode-block" id="LogWatcher.__init__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.html#apetools.watchers.logwatcher.LogWatcher.__init__">[docs]</a>                 <span class="n">timestamp_format</span><span class="o">=</span><span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
+<div class="viewcode-block" id="LogWatcher.__init__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.html#apetools.watchers.logcatwatcher.LogWatcher.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">event</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>  <span class="n">arguments</span><span class="o">=</span><span class="s2">&quot;/proc/kmsg&quot;</span><span class="p">,</span>
+                 <span class="n">timestamp_format</span><span class="o">=</span><span class="n">TimestampFormatEnums</span><span class="o">.</span><span class="n">log</span><span class="p">,</span>
                  <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
@@ -179,31 +180,31 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stopped</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">timestamp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LogWatcher.timestamp"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.timestamp.html#apetools.watchers.logwatcher.LogWatcher.timestamp">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a time-stamper</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span> <span class="o">=</span> <span class="n">TimestampFormat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp_format</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_timestamp</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LogWatcher.stop"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.stop.html#apetools.watchers.logwatcher.LogWatcher.stop">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This sets the event (to match the Watcher).</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="c">#self.event.set()</span>
+            <span class="c1">#self.event.set()</span>
             <span class="k">pass</span>
         <span class="k">return</span> 
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">stopped</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="LogWatcher.stopped"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.stopped.html#apetools.watchers.logwatcher.LogWatcher.stopped">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: Boolean</span>
 <span class="sd">        :return: True if self.stop is set.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -211,8 +212,8 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="o">.</span><span class="n">is_set</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">False</span>
 
-    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LogWatcher.execute"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.execute.html#apetools.watchers.logwatcher.LogWatcher.execute">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LogWatcher.execute"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.execute.html#apetools.watchers.logcatwatcher.LogWatcher.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This is a hack until the run can be generalized to accept the command (e.g. &#39;cat&#39;)</span>
 <span class="sd">        </span>
 <span class="sd">        :return: stdout, stderr</span>
@@ -220,10 +221,10 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
             <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">error</span>
+        <span class="k">return</span> <span class="n">output</span><span class="p">,</span> <span class="n">error</span></div>
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LogWatcher.run"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.run.html#apetools.watchers.logwatcher.LogWatcher.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LogWatcher.run"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.run.html#apetools.watchers.logcatwatcher.LogWatcher.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs an infinite loop that executes cat on self.arguments</span>
 <span class="sd">        Writes the lines to self.output.write()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -231,16 +232,16 @@
         <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;{0},{1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">line</span><span class="p">))</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>
                 <span class="k">return</span>
         <span class="n">err</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">err</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="LogWatcher.start"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.start.html#apetools.watchers.logwatcher.LogWatcher.start">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="LogWatcher.start"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.LogWatcher.start.html#apetools.watchers.logcatwatcher.LogWatcher.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs self in a thread.</span>
 
 <span class="sd">        :rtype: threading.Thread</span>
@@ -248,51 +249,51 @@
         <span class="k">if</span> <span class="n">connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="n">connection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span>
         <span class="k">if</span> <span class="n">connection</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">LogWatcherError</span><span class="p">(</span><span class="s">&quot;Connection not given&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">LogWatcherError</span><span class="p">(</span><span class="s2">&quot;Connection not given&quot;</span><span class="p">)</span>
         
         <span class="bp">self</span><span class="o">.</span><span class="n">thread</span> <span class="o">=</span>  <span class="n">threads</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_thread</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">connection</span><span class="p">,),</span>
-                                      <span class="n">name</span><span class="o">=</span><span class="s">&quot;LogWatcher {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>        
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span>
+                                      <span class="n">name</span><span class="o">=</span><span class="s2">&quot;LogWatcher {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">thread</span></div>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-        <span class="k">return</span> <span class="s">&quot;cat {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
-<span class="c"># end class LogWatcher</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;cat {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span></div>
+<span class="c1"># end class LogWatcher</span>
 
 
-<span class="k">class</span> <span class="nc">SafeLogWatcher</span><span class="p">(</span><span class="n">LogWatcher</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SafeLogWatcher"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.SafeLogWatcher.html#apetools.watchers.logwatcher.SafeLogWatcher">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SafeLogWatcher"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.SafeLogWatcher.html#apetools.watchers.logcatwatcher.SafeLogWatcher">[docs]</a><span class="k">class</span> <span class="nc">SafeLogWatcher</span><span class="p">(</span><span class="n">LogWatcher</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A SafeLogWatcher uses the connection&#39;s lock to protect calls to the connection.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="SafeLogWatcher.__init__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.SafeLogWatcher.html#apetools.watchers.logwatcher.SafeLogWatcher.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SafeLogWatcher.__init__"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.SafeLogWatcher.html#apetools.watchers.logcatwatcher.SafeLogWatcher.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `lock`: A threading.lock</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SafeLogWatcher</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">lock</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="SafeLogWatcher.run"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.SafeLogWatcher.run.html#apetools.watchers.logwatcher.SafeLogWatcher.run">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SafeLogWatcher.run"><a class="viewcode-back" href="../../../watchers/api/apetools.watchers.logwatcher.SafeLogWatcher.run.html#apetools.watchers.logcatwatcher.SafeLogWatcher.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Runs an infinite loop that reads the tail of the log.</span>
 <span class="sd">        Writes the lines to self.output.write()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Catting the file: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Catting the file: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">))</span>
         <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="p">:</span>
             <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connection</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arguments</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Out of the catting&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Out of the catting&quot;</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stopped</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;logwatcher stopped&quot;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;logwatcher stopped&quot;</span><span class="p">)</span>
                 <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&quot;Exiting the SafeLogWatcher&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
-<span class="c"># end class SafeLogWatcher</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;Exiting the SafeLogWatcher&quot;</span><span class="p">)</span>
+        <span class="k">return</span></div></div>
+<span class="c1"># end class SafeLogWatcher</span>
 
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">import</span> <span class="nn">sys</span>
     <span class="n">kw</span> <span class="o">=</span> <span class="n">LogWatcher</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
     <span class="k">print</span> <span class="n">kw</span><span class="o">.</span><span class="n">arguments</span>
@@ -311,7 +312,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

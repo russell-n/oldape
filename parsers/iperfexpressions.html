@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -30,6 +30,8 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Parsers" href="index.html" />
+    <link rel="next" title="apetools.parsers.iperfexpressions.ExpressionBase" href="api/apetools.parsers.iperfexpressions.ExpressionBase.html" />
+    <link rel="prev" title="apetools.parsers.finder.line_counter" href="api/apetools.parsers.finder.line_counter.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
@@ -120,6 +122,14 @@
             
               
                 
+  <li>
+    <a href="api/apetools.parsers.finder.line_counter.html" title="Previous Chapter: apetools.parsers.finder.line_counter"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.pars...</span>
+    </a>
+  </li>
+  <li>
+    <a href="api/apetools.parsers.iperfexpressions.ExpressionBase.html" title="Next Chapter: apetools.parsers.iperfexpressions.ExpressionBase"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.pars... &raquo;</span>
+    </a>
+  </li>
               
             
             
@@ -164,14 +174,30 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ExpressionBase</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.ExpressionBase.html#apetools.parsers.iperfexpressions.ExpressionBase" title="apetools.parsers.iperfexpressions.ExpressionBase"><code class="xref py py-obj docutils literal"><span class="pre">ExpressionBase</span></code></a>()</td>
+<td>An Abstract Base class for regular expression containers</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ExpressionBase.expression</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.ExpressionBase.expression.html#apetools.parsers.iperfexpressions.ExpressionBase.expression" title="apetools.parsers.iperfexpressions.ExpressionBase.expression"><code class="xref py py-obj docutils literal"><span class="pre">ExpressionBase.expression</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ExpressionBase.regex</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.ExpressionBase.regex.html#apetools.parsers.iperfexpressions.ExpressionBase.regex" title="apetools.parsers.iperfexpressions.ExpressionBase.regex"><code class="xref py py-obj docutils literal"><span class="pre">ExpressionBase.regex</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">re.RegexObject</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>
@@ -187,17 +213,41 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.html#apetools.parsers.iperfexpressions.HumanExpression" title="apetools.parsers.iperfexpressions.HumanExpression"><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression</span></code></a>()</td>
+<td>The Human Expression matches the human-readable iperf output</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression.thread_column</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.thread_column.html#apetools.parsers.iperfexpressions.HumanExpression.thread_column" title="apetools.parsers.iperfexpressions.HumanExpression.thread_column"><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression.thread_column</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the expression to match the thread column</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression.expression</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression.regex</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.expression.html#apetools.parsers.iperfexpressions.HumanExpression.expression" title="apetools.parsers.iperfexpressions.HumanExpression.expression"><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression.expression</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.HumanExpression.regex.html#apetools.parsers.iperfexpressions.HumanExpression.regex" title="apetools.parsers.iperfexpressions.HumanExpression.regex"><code class="xref py py-obj docutils literal"><span class="pre">HumanExpression.regex</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regex object</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>
@@ -213,17 +263,41 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.html#apetools.parsers.iperfexpressions.CsvExpression" title="apetools.parsers.iperfexpressions.CsvExpression"><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression</span></code></a>()</td>
+<td>The Csv Expression holds the expression to match iperf&#8217;s csv format</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression.thread_column</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.thread_column.html#apetools.parsers.iperfexpressions.CsvExpression.thread_column" title="apetools.parsers.iperfexpressions.CsvExpression.thread_column"><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression.thread_column</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the expression to match the thread id</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression.expression</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression.regex</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.expression.html#apetools.parsers.iperfexpressions.CsvExpression.expression" title="apetools.parsers.iperfexpressions.CsvExpression.expression"><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression.expression</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">string regular expression to match csv-format</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CsvExpression.regex.html#apetools.parsers.iperfexpressions.CsvExpression.regex" title="apetools.parsers.iperfexpressions.CsvExpression.regex"><code class="xref py py-obj docutils literal"><span class="pre">CsvExpression.regex</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match csv-format</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>
@@ -239,14 +313,30 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CombinedExpression</span></code></td>
-<td></td>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CombinedExpression.html#apetools.parsers.iperfexpressions.CombinedExpression" title="apetools.parsers.iperfexpressions.CombinedExpression"><code class="xref py py-obj docutils literal"><span class="pre">CombinedExpression</span></code></a>()</td>
+<td>A Combined expression matches either case (but doesn&#8217;t break up the line).</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CombinedExpression.expression</span></code></td>
-<td></td>
+<tr class="row-even"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CombinedExpression.expression.html#apetools.parsers.iperfexpressions.CombinedExpression.expression" title="apetools.parsers.iperfexpressions.CombinedExpression.expression"><code class="xref py py-obj docutils literal"><span class="pre">CombinedExpression.expression</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">String</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CombinedExpression.regex</span></code></td>
-<td></td>
+</tbody>
+</table>
+</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="api/apetools.parsers.iperfexpressions.CombinedExpression.regex.html#apetools.parsers.iperfexpressions.CombinedExpression.regex" title="apetools.parsers.iperfexpressions.CombinedExpression.regex"><code class="xref py py-obj docutils literal"><span class="pre">CombinedExpression.regex</span></code></a></td>
+<td><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regex that matches both formats</td>
+</tr>
+</tbody>
+</table>
+</td>
 </tr>
 </tbody>
 </table>

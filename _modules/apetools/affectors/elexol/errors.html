@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,10 +135,11 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.affectors.elexol.errors</h1><div class="highlight"><pre>
-<span class="c"># this package</span>
+<span></span>
+<span class="c1"># this package</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span>
 <span class="n">ConfigurationError</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span>
 
@@ -146,24 +147,24 @@
 <span class="n">MAX_PINS</span> <span class="o">=</span> <span class="mi">24</span>
 
 
-<span class="k">class</span> <span class="nc">FaucetteError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
-<div class="viewcode-block" id="FaucetteError"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.errors.html#apetools.affectors.elexol.errors.FaucetteError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="FaucetteError"><a class="viewcode-back" href="../../../../documentation/developer/api/naxxx_api/apetools.affectors.elexol.errors.html#apetools.affectors.elexol.errors.FaucetteError">[docs]</a><span class="k">class</span> <span class="nc">FaucetteError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A FaucetteError is raised if a configuration error is detected</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">message</span> <span class="o">=</span>  <span class="s">&quot;&quot;&quot;!!!!!!!!!!!!!!!!!    You&#39;re blowin&#39; it!     !!!!!!!!!!!!!</span>
-<span class="s">        </span>
-<span class="s">        {m}</span>
+        <span class="n">message</span> <span class="o">=</span>  <span class="s2">&quot;&quot;&quot;!!!!!!!!!!!!!!!!!    You&#39;re blowin&#39; it!     !!!!!!!!!!!!!</span>
+<span class="s2">        </span>
+<span class="s2">        {m}</span>
 
-<span class="s">        Allowed PIN IDs: 0 to {x}</span>
-<span class="s">        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">,</span>
+<span class="s2">        Allowed PIN IDs: 0 to {x}</span>
+<span class="s2">        !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">message</span><span class="p">,</span>
                                                                             <span class="n">x</span><span class="o">=</span><span class="n">MAX_PINS</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">message</span>
-</pre></div></div>
+        <span class="k">return</span> <span class="n">message</span></div>
+</pre></div>
 
     </div>
       
@@ -177,7 +178,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

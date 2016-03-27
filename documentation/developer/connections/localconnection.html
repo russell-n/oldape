@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -150,9 +150,9 @@
 <h1>LocalConnection<a class="headerlink" href="#localconnection" title="Permalink to this headline">¶</a></h1>
 <p>A LocalConnection takes a command as a procedure call and sends it to the local shell.</p>
 <p>e.g. to get the local <cite>iperf</cite> help string (which gets sent to stderr):</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>lc = LocalConnection()
-outerr = lc.iperf(&#39;-h&#39;)
-print outerr.error
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">lc</span> <span class="o">=</span> <span class="n">LocalConnection</span><span class="p">()</span>
+<span class="n">outerr</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">iperf</span><span class="p">(</span><span class="s1">&#39;-h&#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">outerr</span><span class="o">.</span><span class="n">error</span>
 </pre></div>
 </div>
 <p class="plantuml">

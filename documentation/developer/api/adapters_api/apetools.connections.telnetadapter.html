@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,221 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-connections-telnetadapter">
-<h1>apetools.connections.telnetadapter<a class="headerlink" href="#apetools-connections-telnetadapter" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.connections.telnetadapter">
+<span id="apetools-connections-telnetadapter"></span><h1>apetools.connections.telnetadapter<a class="headerlink" href="#module-apetools.connections.telnetadapter" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#apetools.connections.telnetadapter.TelnetAdapter" title="apetools.connections.telnetadapter.TelnetAdapter"><code class="xref py py-obj docutils literal"><span class="pre">TelnetAdapter</span></code></a>(host[,&nbsp;prompt,&nbsp;login,&nbsp;...])</td>
+<td>A TelnetAdapter Adapts the telnetlib.Telnet to this libraries interfaces.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.connections.telnetadapter.TelnetOutput" title="apetools.connections.telnetadapter.TelnetOutput"><code class="xref py py-obj docutils literal"><span class="pre">TelnetOutput</span></code></a>(client[,&nbsp;prompt,&nbsp;end_of_line,&nbsp;...])</td>
+<td>The TelnetOutput converts the telnet output to a file-like object</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.connections.telnetadapter.TelnetAdapter">
+<em class="property">class </em><code class="descclassname">apetools.connections.telnetadapter.</code><code class="descname">TelnetAdapter</code><span class="sig-paren">(</span><em>host</em>, <em>prompt='#'</em>, <em>login='root'</em>, <em>password=None</em>, <em>port=23</em>, <em>timeout=2</em>, <em>end_of_line='rn'</em>, <em>login_prompt='login:'</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetAdapter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetAdapter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TelnetAdapter Adapts the telnetlib.Telnet to this libraries interfaces.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>host</cite>: The address of the telnet server</li>
+<li><cite>prompt</cite>: The prompt used on the device</li>
+<li><cite>port</cite>: The port of the telnet server</li>
+<li><cite>login</cite>: The login (if needed)</li>
+<li><cite>timeout</cite>: The timeout for blocking methods</li>
+<li><cite>end_of_line</cite>: The end of line string used by the device.</li>
+<li><cite>login_prompt</cite>: The prompt to look for when starting a connection.</li>
+<li><cite>password</cite>: if given tries to login</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetAdapter.exec_command">
+<code class="descname">exec_command</code><span class="sig-paren">(</span><em>command</em>, <em>timeout=10</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetAdapter.exec_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetAdapter.exec_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main interface.</p>
+<p>Since I&#8217;m hiding the client from users, this will do a read_very_eager before continuing.
+The read is intended to try and flush the output</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>command</cite>: The command to execute on the device</li>
+<li><cite>timeout</cite>: The readline timeout</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">TelnetOutput with the this object&#8217;s as client</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetAdapter.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetAdapter.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetAdapter.writeline">
+<code class="descname">writeline</code><span class="sig-paren">(</span><em>message=''</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetAdapter.writeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetAdapter.writeline" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>message</cite>: A message to send to the device.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetadapter.TelnetAdapter.client">
+<code class="descname">client</code><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetAdapter.client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to login before returning.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://docs.python.org/library/telnetlib.html#telnetlib.Telnet" title="(in Python v2.7)">telnetlib.Telnet</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The telnet client</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetadapter.TelnetAdapter.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetAdapter.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.connections.telnetadapter.TelnetOutput">
+<em class="property">class </em><code class="descclassname">apetools.connections.telnetadapter.</code><code class="descname">TelnetOutput</code><span class="sig-paren">(</span><em>client</em>, <em>prompt='#'</em>, <em>end_of_line='rn'</em>, <em>timeout=10</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetOutput"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetOutput" title="Permalink to this definition">¶</a></dt>
+<dd><p>The TelnetOutput converts the telnet output to a file-like object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>client</cite> : a connected telnet client</li>
+<li><cite>prompt</cite>: The current prompt on the client</li>
+<li><cite>end_of_line</cite>: Then end of line character</li>
+<li><cite>timeout</cite>: The readline timeout</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetOutput.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetOutput.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetOutput.next">
+<code class="descname">next</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetOutput.next"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetOutput.next" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Yield:</th><td class="field-body">the next line</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetOutput.read">
+<code class="descname">read</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetOutput.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetOutput.read" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String of output</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetOutput.readline">
+<code class="descname">readline</code><span class="sig-paren">(</span><em>timeout=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetOutput.readline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetOutput.readline" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>timeout</cite>: The readline timeout</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The next line of text</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.connections.telnetadapter.TelnetOutput.readlines">
+<code class="descname">readlines</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/connections/telnetadapter.html#TelnetOutput.readlines"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetOutput.readlines" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A list of lines</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.connections.telnetadapter.TelnetOutput.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.connections.telnetadapter.TelnetOutput.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

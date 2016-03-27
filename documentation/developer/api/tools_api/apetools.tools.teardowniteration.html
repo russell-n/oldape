@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,82 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-tools-teardowniteration">
-<h1>apetools.tools.teardowniteration<a class="headerlink" href="#apetools-tools-teardowniteration" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.tools.teardowniteration">
+<span id="apetools-tools-teardowniteration"></span><h1>apetools.tools.teardowniteration<a class="headerlink" href="#module-apetools.tools.teardowniteration" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Sleep</span></code>([sleep_time])</td>
+<td>The sleep provides a verbose sleep.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../../tools/api/apetools.tools.teardowniteration.TeardownIteration.html#apetools.tools.teardowniteration.TeardownIteration" title="apetools.tools.teardowniteration.TeardownIteration"><code class="xref py py-obj docutils literal"><span class="pre">TeardownIteration</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td>A TeardownIteration does what&#8217;s needed after a single iteration.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.tools.teardowniteration.TeardownIteration">
+<em class="property">class </em><code class="descclassname">apetools.tools.teardowniteration.</code><code class="descname">TeardownIteration</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/tools/teardowniteration.html#TeardownIteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.tools.teardowniteration.TeardownIteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>A TeardownIteration does what&#8217;s needed after a single iteration.</p>
+<dl class="method">
+<dt id="apetools.tools.teardowniteration.TeardownIteration.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.tools.teardowniteration.TeardownIteration.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.tools.teardowniteration.TeardownIteration.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>parameters</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/tools/teardowniteration.html#TeardownIteration.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.tools.teardowniteration.TeardownIteration.run" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>parameters</cite>: object with <cite>recovery_time</cite> property</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.tools.teardowniteration.TeardownIteration.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.tools.teardowniteration.TeardownIteration.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.tools.teardowniteration.TeardownIteration.sleep">
+<code class="descname">sleep</code><a class="headerlink" href="#apetools.tools.teardowniteration.TeardownIteration.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="../../../../tools/api/apetools.tools.sleep.Sleep.html#apetools.tools.sleep.Sleep" title="apetools.tools.sleep.Sleep">sleep.Sleep</a></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Blocking countdown-timer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

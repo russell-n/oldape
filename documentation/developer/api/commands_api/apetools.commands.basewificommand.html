@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,142 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-commands-basewificommand">
-<h1>apetools.commands.basewificommand<a class="headerlink" href="#apetools-commands-basewificommand" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.commands.basewificommand">
+<span id="apetools-commands-basewificommand"></span><h1>apetools.commands.basewificommand<a class="headerlink" href="#module-apetools.commands.basewificommand" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ABCMeta</span></code></td>
+<td>Metaclass for defining Abstract Base Classes (ABCs).</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.basewificommand.BaseWifiCommand" title="apetools.commands.basewificommand.BaseWifiCommand"><code class="xref py py-obj docutils literal"><span class="pre">BaseWifiCommand</span></code></a>(connection[,&nbsp;interface,&nbsp;...])</td>
+<td>The Base Wifi query command</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">CommandError</span></code></td>
+<td>A CommandError reflects a problem with the command on the Device-side</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand">
+<em class="property">class </em><code class="descclassname">apetools.commands.basewificommand.</code><code class="descname">BaseWifiCommand</code><span class="sig-paren">(</span><em>connection</em>, <em>interface=None</em>, <em>operating_system=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/commands/basewificommand.html#BaseWifiCommand"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Base Wifi query command</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>connection</cite>: A connection to the device</li>
+<li><cite>interface</cite>: The interface to check</li>
+<li><cite>operating_system</cite> : The operating system on the devices.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand.bitrate">
+<code class="descname">bitrate</code><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand.bitrate" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the reported physical bit-rate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand.interface">
+<code class="descname">interface</code><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand.interface" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the wireless interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand.mac_address">
+<code class="descname">mac_address</code><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand.mac_address" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">MAC Address of the interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand.operating_system">
+<code class="descname">operating_system</code><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand.operating_system" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the operating system for the device to query</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.commands.basewificommand.BaseWifiCommand.rssi">
+<code class="descname">rssi</code><a class="headerlink" href="#apetools.commands.basewificommand.BaseWifiCommand.rssi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is dynamically generated</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The rssi for the interface</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

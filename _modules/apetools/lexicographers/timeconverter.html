@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,50 +135,51 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.lexicographers.timeconverter</h1><div class="highlight"><pre>
-<span class="c"># python standard library</span>
+<span></span>
+<span class="c1"># python standard library</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
-<span class="c"># this package</span>
+<span class="c1"># this package</span>
 <span class="kn">from</span> <span class="nn">apetools.parsers</span> <span class="kn">import</span> <span class="n">oatbran</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 
 
 <span class="n">ZERO</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">EMPTY_STRING</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+<span class="n">EMPTY_STRING</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">TimeConversions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConversions"><a class="viewcode-back" href="../../../documentation/developer/api/lexicographer_api/apetools.lexicographers.timeconverter.html#apetools.lexicographers.timeconverter.TimeConversions">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConversions"><a class="viewcode-back" href="../../../documentation/developer/api/lexicographer_api/apetools.lexicographers.timeconverter.html#apetools.lexicographers.timeconverter.TimeConversions">[docs]</a><span class="k">class</span> <span class="nc">TimeConversions</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class in hold the multiplers for conversion</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
     <span class="n">same</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">seconds_per_minute</span> <span class="o">=</span> <span class="mi">60</span>
     <span class="n">seconds_per_hour</span> <span class="o">=</span> <span class="n">seconds_per_minute</span> <span class="o">*</span> <span class="mi">60</span>
-    <span class="n">seconds_per_day</span> <span class="o">=</span> <span class="n">seconds_per_hour</span> <span class="o">*</span> <span class="mi">24</span>
-<span class="c"># end class TimeConversions</span>
+    <span class="n">seconds_per_day</span> <span class="o">=</span> <span class="n">seconds_per_hour</span> <span class="o">*</span> <span class="mi">24</span></div>
+<span class="c1"># end class TimeConversions</span>
 
 
-<span class="k">class</span> <span class="nc">TimeUnits</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeUnits"><a class="viewcode-back" href="../../../documentation/developer/api/lexicographer_api/apetools.lexicographers.timeconverter.html#apetools.lexicographers.timeconverter.TimeUnits">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeUnits"><a class="viewcode-back" href="../../../documentation/developer/api/lexicographer_api/apetools.lexicographers.timeconverter.html#apetools.lexicographers.timeconverter.TimeUnits">[docs]</a><span class="k">class</span> <span class="nc">TimeUnits</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An enumerator of sorts for time-units</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">days</span> <span class="o">=</span> <span class="s">&quot;d&quot;</span>
-    <span class="n">hours</span> <span class="o">=</span> <span class="s">&quot;h&quot;</span>
-    <span class="n">minutes</span> <span class="o">=</span> <span class="s">&quot;m&quot;</span>
-    <span class="n">seconds</span> <span class="o">=</span> <span class="s">&quot;s&quot;</span>
-<span class="c"># end class TimeUnits</span>
+    <span class="n">days</span> <span class="o">=</span> <span class="s2">&quot;d&quot;</span>
+    <span class="n">hours</span> <span class="o">=</span> <span class="s2">&quot;h&quot;</span>
+    <span class="n">minutes</span> <span class="o">=</span> <span class="s2">&quot;m&quot;</span>
+    <span class="n">seconds</span> <span class="o">=</span> <span class="s2">&quot;s&quot;</span></div>
+<span class="c1"># end class TimeUnits</span>
 
 
-<span class="k">class</span> <span class="nc">TimeConverter</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeConverter"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.html#apetools.lexicographers.timeconverter.TimeConverter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverter"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.html#apetools.lexicographers.timeconverter.TimeConverter">[docs]</a><span class="k">class</span> <span class="nc">TimeConverter</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    The Time Converter converts times</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">TimeUnits</span><span class="o">.</span><span class="n">seconds</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverter.__init__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.html#apetools.lexicographers.timeconverter.TimeConverter.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverter.__init__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.html#apetools.lexicographers.timeconverter.TimeConverter.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">units</span><span class="o">=</span><span class="n">TimeUnits</span><span class="o">.</span><span class="n">seconds</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `units`: the units to convert to</span>
@@ -187,20 +188,20 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">units</span> <span class="o">=</span> <span class="n">units</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_converter</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">expressions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverter.expressions"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.expressions.html#apetools.lexicographers.timeconverter.TimeConverter.expressions">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: expression-based time-tokenizer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span> <span class="o">=</span> <span class="n">TimeConverterExpressions</span><span class="p">()</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expressions</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">converter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverter.converter"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.converter.html#apetools.lexicographers.timeconverter.TimeConverter.converter">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: &lt;time-prefix&gt;&lt;units-prefix&gt;:conversion-factor dictionary</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_converter</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -211,8 +212,8 @@
                                <span class="n">TimeUnits</span><span class="o">.</span><span class="n">days</span> <span class="o">+</span> <span class="n">TimeUnits</span><span class="o">.</span><span class="n">seconds</span><span class="p">:</span><span class="n">TimeConversions</span><span class="o">.</span><span class="n">seconds_per_day</span><span class="p">}</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_converter</span>
 
-    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeConverter.__call__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.__call__.html#apetools.lexicographers.timeconverter.TimeConverter.__call__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverter.__call__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverter.__call__.html#apetools.lexicographers.timeconverter.TimeConverter.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `source`: string that has time-units tokens to convert</span>
@@ -235,16 +236,16 @@
             <span class="k">print</span> <span class="n">time</span>
             <span class="n">accumulator</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">converter</span><span class="p">[</span><span class="n">units_key</span><span class="p">]</span> <span class="o">*</span> <span class="n">time</span>
             <span class="k">print</span> <span class="n">units_key</span><span class="p">,</span> <span class="n">time</span>
-        <span class="k">return</span> <span class="n">accumulator</span>
-<span class="c"># end class Time Converter</span>
+        <span class="k">return</span> <span class="n">accumulator</span></div></div>
+<span class="c1"># end class Time Converter</span>
 
 
-<span class="k">class</span> <span class="nc">TimeConverterExpressions</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="TimeConverterExpressions"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.html#apetools.lexicographers.timeconverter.TimeConverterExpressions">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverterExpressions"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.html#apetools.lexicographers.timeconverter.TimeConverterExpressions">[docs]</a><span class="k">class</span> <span class="nc">TimeConverterExpressions</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to hold the regular expressions for the TimeConverter</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.__init__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.__init__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverterExpressions.__init__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `source`: a string to iterate over and tokenize</span>
@@ -263,11 +264,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">base_time</span> <span class="o">=</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">time</span><span class="p">,</span>
                                        <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">REAL</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">float</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.float"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.float.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.float">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This requires a value after the decimal point::</span>
 
 <span class="sd">            value = 1.0</span>
@@ -284,9 +285,9 @@
                                                    <span class="n">e</span><span class="o">=</span><span class="n">expression</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_float</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">integer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.integer"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.integer.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.integer">[docs]</a>
+
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: expression that matches entire line as integer</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -295,8 +296,8 @@
                                                      <span class="n">e</span><span class="o">=</span><span class="n">oatbran</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_integer</span>
 
-    <span class="k">def</span> <span class="nf">units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeConverterExpressions.units"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.units.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.units">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverterExpressions.units"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.units.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.units">[docs]</a>    <span class="k">def</span> <span class="nf">units</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `prefix`: the character-class prefix for the units</span>
@@ -307,11 +308,11 @@
         <span class="k">return</span> <span class="n">oatbran</span><span class="o">.</span><span class="n">NAMED</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">enums</span><span class="o">.</span><span class="n">units</span><span class="p">,</span>
                              <span class="n">e</span><span class="o">=</span><span class="p">(</span><span class="n">oatbran</span><span class="o">.</span><span class="n">OPTIONAL_SPACES</span> <span class="o">+</span>
                                 <span class="n">prefix</span> <span class="o">+</span>
-                                <span class="n">oatbran</span><span class="o">.</span><span class="n">OPTIONAL_LETTERS</span><span class="p">))</span>
+                                <span class="n">oatbran</span><span class="o">.</span><span class="n">OPTIONAL_LETTERS</span><span class="p">))</span></div>
         
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">unitless</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.unitless"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.unitless.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.unitless">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: RegexObject</span>
 <span class="sd">        :return: compiled expression to match unitless time</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -322,53 +323,53 @@
                                                    <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="n">oatbran</span><span class="o">.</span><span class="n">STRING_END</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_unitless</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">seconds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.seconds"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.seconds.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.seconds">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: RegexObject</span>
 <span class="sd">        :return: compiled expression to match seconds</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seconds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_seconds</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_time</span> <span class="o">+</span>
-                                       <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s">&quot;[Ss]&quot;</span><span class="p">))</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s2">&quot;[Ss]&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_seconds</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">minutes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.minutes"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.minutes.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.minutes">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: RegexObject</span>
 <span class="sd">        :return: compiled expression to match minutes</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minutes</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_minutes</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_time</span> <span class="o">+</span>
-                                       <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s">&quot;[Mm]&quot;</span><span class="p">))</span>
+                                       <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s2">&quot;[Mm]&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_minutes</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hours</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.hours"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.hours.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.hours">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: RegexObject</span>
 <span class="sd">        :return: compiled expression to match hours</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hours</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_hours</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_time</span> <span class="o">+</span>
-                                     <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s">&quot;[Hh]&quot;</span><span class="p">))</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s2">&quot;[Hh]&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_hours</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">days</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.days"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.days.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.days">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: RegexObject</span>
 <span class="sd">        :return: compiled expression to match days</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_days</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_days</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">base_time</span> <span class="o">+</span>
-                                    <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s">&quot;[Dd]&quot;</span><span class="p">))</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">units</span><span class="p">(</span><span class="s2">&quot;[Dd]&quot;</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_days</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">times</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.times"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.times.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.times">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :rtype: tuple</span>
 <span class="sd">        :return: collection of compiled expression to match times</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -380,17 +381,17 @@
                            <span class="bp">self</span><span class="o">.</span><span class="n">days</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_times</span>
         
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">enums</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="TimeConverterExpressions.enums"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.enums.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.enums">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: SublexicographerEnums</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enums</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_enums</span> <span class="o">=</span> <span class="n">TimeConverterEnums</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enums</span>
     
-    <span class="k">def</span> <span class="nf">tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeConverterExpressions.tokens"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.tokens.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.tokens">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverterExpressions.tokens"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.tokens.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.tokens">[docs]</a>    <span class="k">def</span> <span class="nf">tokens</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Tokenizes a source stream based on `times` property.</span>
 
 <span class="sd">        :yield: the next time-token group-dict in `source`</span>
@@ -409,29 +410,29 @@
             <span class="k">for</span> <span class="n">expression</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">times</span><span class="p">:</span>
                 <span class="n">match</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
                 <span class="k">if</span> <span class="n">match</span><span class="p">:</span> <span class="k">break</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
-<div class="viewcode-block" id="TimeConverterExpressions.__iter__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.__iter__.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.__iter__">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverterExpressions.__iter__"><a class="viewcode-back" href="../../../lexicographers/api/apetools.lexicographers.timeconverter.TimeConverterExpressions.__iter__.html#apetools.lexicographers.timeconverter.TimeConverterExpressions.__iter__">[docs]</a>    <span class="k">def</span> <span class="nf">__iter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :yield: groupdict for time and units</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tokens</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">source</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">token</span>
-        <span class="k">return</span>
-<span class="c"># end class TimeConverterExpressions</span>
+        <span class="k">return</span></div></div>
+<span class="c1"># end class TimeConverterExpressions</span>
 
 
-<span class="k">class</span> <span class="nc">TimeConverterEnums</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div></div>
-<div class="viewcode-block" id="TimeConverterEnums"><a class="viewcode-back" href="../../../documentation/developer/api/lexicographer_api/apetools.lexicographers.timeconverter.html#apetools.lexicographers.timeconverter.TimeConverterEnums">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="TimeConverterEnums"><a class="viewcode-back" href="../../../documentation/developer/api/lexicographer_api/apetools.lexicographers.timeconverter.html#apetools.lexicographers.timeconverter.TimeConverterEnums">[docs]</a><span class="k">class</span> <span class="nc">TimeConverterEnums</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to hold some constants</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">integer</span> <span class="o">=</span> <span class="s">&quot;integer&quot;</span>
-    <span class="nb">float</span> <span class="o">=</span> <span class="s">&quot;float&quot;</span>
-    <span class="n">time</span> <span class="o">=</span> <span class="s">&quot;time&quot;</span>
-    <span class="n">units</span> <span class="o">=</span> <span class="s">&#39;units&#39;</span>
-<span class="c"># end class TimeConverterEnums</span>
-</pre></div></div>
+    <span class="n">integer</span> <span class="o">=</span> <span class="s2">&quot;integer&quot;</span>
+    <span class="nb">float</span> <span class="o">=</span> <span class="s2">&quot;float&quot;</span>
+    <span class="n">time</span> <span class="o">=</span> <span class="s2">&quot;time&quot;</span>
+    <span class="n">units</span> <span class="o">=</span> <span class="s1">&#39;units&#39;</span></div>
+<span class="c1"># end class TimeConverterEnums</span>
+</pre></div>
 
     </div>
       
@@ -445,7 +446,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

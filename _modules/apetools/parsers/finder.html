@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,21 +135,22 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.parsers.finder</h1><div class="highlight"><pre>
-<span class="c"># python libraries</span>
+<span></span>
+<span class="c1"># python libraries</span>
 <span class="kn">import</span> <span class="nn">fnmatch</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
 
-<span class="n">WRITEABLE</span> <span class="o">=</span> <span class="s">&#39;w&#39;</span>
-<span class="n">EOSection</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+<span class="n">WRITEABLE</span> <span class="o">=</span> <span class="s1">&#39;w&#39;</span>
+<span class="n">EOSection</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
 
 
-<span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-<div class="viewcode-block" id="find"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.find.html#apetools.parsers.finder.find">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="find"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.find.html#apetools.parsers.finder.find">[docs]</a><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param:</span>
 
 <span class="sd">     - `glob`: A file-glob to match interesting files.</span>
@@ -162,11 +163,11 @@
     <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">dir_list</span><span class="p">,</span> <span class="n">file_list</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">fnmatch</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">file_list</span><span class="p">,</span> <span class="n">glob</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="concatenate"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.concatenate.html#apetools.parsers.finder.concatenate">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="concatenate"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.concatenate.html#apetools.parsers.finder.concatenate">[docs]</a><span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param:</span>
 
 <span class="sd">     - `glob`: A file-glob to match interesting files.</span>
@@ -177,11 +178,11 @@
     <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">find</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">line</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">sections</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="sections"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.sections.html#apetools.parsers.finder.sections">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="sections"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.sections.html#apetools.parsers.finder.sections">[docs]</a><span class="k">def</span> <span class="nf">sections</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param:</span>
 
 <span class="sd">     - `glob`: A file glob that matches source files</span>
@@ -196,11 +197,11 @@
     <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">concatenator</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">start</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
             <span class="k">yield</span> <span class="n">section</span><span class="p">(</span><span class="n">concatenator</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">section</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">firstline</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span></div>
-<div class="viewcode-block" id="section"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.section.html#apetools.parsers.finder.section">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="section"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.section.html#apetools.parsers.finder.section">[docs]</a><span class="k">def</span> <span class="nf">section</span><span class="p">(</span><span class="n">iterator</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">firstline</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    :param:</span>
 
 <span class="sd">     - `iterator`: An iterator of lines</span>
@@ -211,7 +212,7 @@
     <span class="n">ended</span> <span class="o">=</span> <span class="bp">False</span>
     <span class="k">if</span> <span class="n">firstline</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
         <span class="k">yield</span> <span class="n">firstline</span>
-    <span class="c"># uses next instead of iterator so it doesn&#39;t consume the last line</span>
+    <span class="c1"># uses next instead of iterator so it doesn&#39;t consume the last line</span>
     <span class="k">while</span> <span class="ow">not</span> <span class="n">ended</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">=</span> <span class="n">iterator</span><span class="o">.</span><span class="n">next</span><span class="p">()</span>
@@ -219,11 +220,11 @@
                 <span class="n">ended</span> <span class="o">=</span> <span class="bp">True</span>
             <span class="k">yield</span> <span class="n">line</span>
         <span class="k">except</span> <span class="ne">StopIteration</span><span class="p">:</span>
-            <span class="k">return</span>
+            <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">line_counter</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">interesting</span><span class="p">):</span></div>
-<div class="viewcode-block" id="line_counter"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.line_counter.html#apetools.parsers.finder.line_counter">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="line_counter"><a class="viewcode-back" href="../../../parsers/api/apetools.parsers.finder.line_counter.html#apetools.parsers.finder.line_counter">[docs]</a><span class="k">def</span> <span class="nf">line_counter</span><span class="p">(</span><span class="n">glob</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">interesting</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Counts interesting lines within sections</span>
 
 <span class="sd">    :param:</span>
@@ -241,8 +242,8 @@
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">section</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">interesting</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
                 <span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="k">yield</span> <span class="n">counter</span>
-</pre></div></div>
+        <span class="k">yield</span> <span class="n">counter</span></div>
+</pre></div>
 
     </div>
       
@@ -256,7 +257,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

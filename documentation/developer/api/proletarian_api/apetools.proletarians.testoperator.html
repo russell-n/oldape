@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,235 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-proletarians-testoperator">
-<h1>apetools.proletarians.testoperator<a class="headerlink" href="#apetools-proletarians-testoperator" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.proletarians.testoperator">
+<span id="apetools-proletarians-testoperator"></span><h1>apetools.proletarians.testoperator<a class="headerlink" href="#module-apetools.proletarians.testoperator" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Functions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">namedtuple</span></code>(typename,&nbsp;field_names[,&nbsp;verbose,&nbsp;...])</td>
+<td>Returns a new subclass of tuple with named fields.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></code>()</td>
+<td>This class holds the minimum common features.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">CountDown</span></code>([total_repetitions])</td>
+<td>A countdown timer</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters" title="apetools.proletarians.testoperator.OperatorStaticTestParameters"><code class="xref py py-obj docutils literal"><span class="pre">OperatorStaticTestParameters</span></code></a>(...)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">Queue</span></code>([maxsize])</td>
+<td>Create a queue object with a given maximum size.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../../proletarians/api/apetools.proletarians.testoperator.TestOperator.html#apetools.proletarians.testoperator.TestOperator" title="apetools.proletarians.testoperator.TestOperator"><code class="xref py py-obj docutils literal"><span class="pre">TestOperator</span></code></a>(test_parameters,&nbsp;...[,&nbsp;...])</td>
+<td>An operator runs the sequence of operations.</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters">
+<em class="property">class </em><code class="descclassname">apetools.proletarians.testoperator.</code><code class="descname">OperatorStaticTestParameters</code><span class="sig-paren">(</span><em>operator_parameters</em>, <em>static_parameters</em>, <em>test_parameters</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters._asdict">
+<code class="descname">_asdict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters._asdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OrderedDict which maps field names to their values</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters._make">
+<em class="property">classmethod </em><code class="descname">_make</code><span class="sig-paren">(</span><em>iterable</em>, <em>new=&lt;built-in method __new__ of type object at 0x8fc940&gt;</em>, <em>len=&lt;built-in function len&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters._make" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a new OperatorStaticTestParameters object from a sequence or iterable</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters._replace">
+<code class="descname">_replace</code><span class="sig-paren">(</span><em>_self</em>, <em>**kwds</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters._replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new OperatorStaticTestParameters object replacing specified fields with new values</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters.count">
+<code class="descname">count</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span> &rarr; integer -- return number of occurrences of value<a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters.count" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters.index">
+<code class="descname">index</code><span class="sig-paren">(</span><em>value</em><span class="optional">[</span>, <em>start</em><span class="optional">[</span>, <em>stop</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span> &rarr; integer -- return first index of value.<a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raises ValueError if the value is not present.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters.operator_parameters">
+<code class="descname">operator_parameters</code><a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters.operator_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters.static_parameters">
+<code class="descname">static_parameters</code><a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters.static_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.proletarians.testoperator.OperatorStaticTestParameters.test_parameters">
+<code class="descname">test_parameters</code><a class="headerlink" href="#apetools.proletarians.testoperator.OperatorStaticTestParameters.test_parameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.proletarians.testoperator.TestOperator">
+<em class="property">class </em><code class="descclassname">apetools.proletarians.testoperator.</code><code class="descname">TestOperator</code><span class="sig-paren">(</span><em>test_parameters</em>, <em>operation_setup</em>, <em>operation_teardown</em>, <em>test_setup</em>, <em>tests</em>, <em>test_teardown</em>, <em>nodes</em>, <em>no_cleanup</em>, <em>storage</em>, <em>countdown_timer=None</em>, <em>tag='APETools'</em>, <em>sleep=None</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/proletarians/testoperator.html#TestOperator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>An operator runs the sequence of operations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Params:</th><td class="field-body"><ul class="first last simple">
+<li><cite>test_parameters</cite>: A generator of test parameters</li>
+<li><cite>operation_setup</cite>: A set up to run before (all) the tests</li>
+<li><cite>operation_teardown</cite>: A TearDown to run after (all) the tests</li>
+<li><cite>test_setup</cite>: A set up to run before each test</li>
+<li><cite>tests</cite>: The tests to be run with each parameter subset</li>
+<li><cite>test_teardown</cite>: A tear down to run after each test is run</li>
+<li><cite>nodes</cite>: a dictionary of nodes</li>
+<li><cite>no_cleanup</cite>: if True, allow ctrl-c to kill immediately</li>
+<li><cite>countdown_timer</cite>: An estimator of remaining time</li>
+<li><cite>storage</cite>: a storage-output</li>
+<li><cite>tag</cite>: String to identify start/stop of test in log</li>
+<li><cite>sleep</cite>: A sleep for recovery times</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept">
+<code class="descname">keyboard_interrupt_intercept</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/proletarians/testoperator.html#TestOperator.keyboard_interrupt_intercept"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.keyboard_interrupt_intercept" title="Permalink to this definition">¶</a></dt>
+<dd><p>The watcher watches for signal interrupts and kills children.</p>
+<p>This was implemented to prevent user-confusion when a ctrl-c is
+sent and the interpreter tries to clean up the threads</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.proletarians.testoperator.TestOperator.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.proletarians.testoperator.TestOperator.log_info">
+<code class="descname">log_info</code><span class="sig-paren">(</span><em>message</em>, <em>node</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/proletarians/testoperator.html#TestOperator.log_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.log_info" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>message</cite>: a string to log</li>
+<li><cite>node</cite>: the name of the current node</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">message sent to node and info log.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.proletarians.testoperator.TestOperator.one_repetition">
+<code class="descname">one_repetition</code><span class="sig-paren">(</span><em>parameter</em>, <em>count</em>, <em>prefix</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/proletarians/testoperator.html#TestOperator.one_repetition"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.one_repetition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Holds the test algorithm for one repetition.</p>
+<p>This was moved out to make the exception handling cleaner.</p>
+<ol class="arabic simple">
+<li>Runs Setup</li>
+<li>Runs test</li>
+<li>Runs Teardown</li>
+</ol>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first last simple">
+<li><cite>parameter</cite>: namedtuple with tool-parameters</li>
+<li><cite>count</cite>: the current test-count (for logging)</li>
+<li><cite>prefix</cite>: any file-prefix given by the operation-setup</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.proletarians.testoperator.TestOperator.countdown_timer">
+<code class="descname">countdown_timer</code><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.countdown_timer" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">countdown-timer</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.proletarians.testoperator.TestOperator.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.proletarians.testoperator.TestOperator.sleep">
+<code class="descname">sleep</code><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">default Sleep object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.proletarians.testoperator.TestOperator.sub_logger">
+<code class="descname">sub_logger</code><a class="headerlink" href="#apetools.proletarians.testoperator.TestOperator.sub_logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">holder of sub-logger</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

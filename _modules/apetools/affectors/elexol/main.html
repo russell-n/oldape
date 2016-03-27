@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,31 +135,32 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.affectors.elexol.main</h1><div class="highlight"><pre>
-<span class="c"># python libraries</span>
+<span></span>
+<span class="c1"># python libraries</span>
 <span class="kn">import</span> <span class="nn">argparse</span>
 <span class="kn">import</span> <span class="nn">traceback</span>
 <span class="kn">import</span> <span class="nn">logging</span>
 <span class="kn">import</span> <span class="nn">logging.handlers</span>
 
-<span class="c">#nps libraries</span>
+<span class="c1">#nps libraries</span>
 <span class="kn">from</span> <span class="nn">naxxx</span> <span class="kn">import</span> <span class="n">Naxxx</span>
 
 
-<span class="n">IPERF_TIMESTAMP</span> <span class="o">=</span> <span class="s">&quot;%Y%m</span><span class="si">%d</span><span class="s">%H%M%S&quot;</span>
+<span class="n">IPERF_TIMESTAMP</span> <span class="o">=</span> <span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">%H%M%S&quot;</span>
 <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__package__</span><span class="p">)</span>
-<span class="n">SCREEN_FORMAT</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(levelname)s</span><span class="s">: </span><span class="si">%(name)s</span><span class="s">.</span><span class="si">%(funcName)s</span><span class="s">, Line: </span><span class="si">%(lineno)d</span><span class="s"> [</span><span class="si">%(asctime)s</span><span class="s">] -- </span><span class="si">%(message)s</span><span class="s">&quot;</span>
-<span class="n">SCREEN_FORMAT_QUIET</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(levelname)s</span><span class="s">: [</span><span class="si">%(asctime)s</span><span class="s">] -- </span><span class="si">%(message)s</span><span class="s">&quot;</span>
-<span class="n">LOG_FORMAT</span> <span class="o">=</span> <span class="s">&quot;</span><span class="si">%(levelname)s</span><span class="s">,</span><span class="si">%(name)s</span><span class="s">,</span><span class="si">%(threadName)s</span><span class="s">,</span><span class="si">%(funcName)s</span><span class="s">,Line: </span><span class="si">%(lineno)d</span><span class="s">,</span><span class="si">%(asctime)s</span><span class="s">,</span><span class="si">%(message)s</span><span class="s">&quot;</span>
+<span class="n">SCREEN_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(levelname)s</span><span class="s2">: </span><span class="si">%(name)s</span><span class="s2">.</span><span class="si">%(funcName)s</span><span class="s2">, Line: </span><span class="si">%(lineno)d</span><span class="s2"> [</span><span class="si">%(asctime)s</span><span class="s2">] -- </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+<span class="n">SCREEN_FORMAT_QUIET</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(levelname)s</span><span class="s2">: [</span><span class="si">%(asctime)s</span><span class="s2">] -- </span><span class="si">%(message)s</span><span class="s2">&quot;</span>
+<span class="n">LOG_FORMAT</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%(levelname)s</span><span class="s2">,</span><span class="si">%(name)s</span><span class="s2">,</span><span class="si">%(threadName)s</span><span class="s2">,</span><span class="si">%(funcName)s</span><span class="s2">,Line: </span><span class="si">%(lineno)d</span><span class="s2">,</span><span class="si">%(asctime)s</span><span class="s2">,</span><span class="si">%(message)s</span><span class="s2">&quot;</span>
 
 <span class="n">GIGABYTE</span> <span class="o">=</span> <span class="mi">1073741824</span>
 <span class="n">BACKUP_LOGS</span> <span class="o">=</span> <span class="mi">5</span>
 
 
-<span class="k">def</span> <span class="nf">set_logger</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-<div class="viewcode-block" id="set_logger"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.set_logger.html#apetools.affectors.elexol.main.set_logger">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="set_logger"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.set_logger.html#apetools.affectors.elexol.main.set_logger">[docs]</a><span class="k">def</span> <span class="nf">set_logger</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates a logger and sets the level based on args.</span>
 
 <span class="sd">    :param:</span>
@@ -175,7 +176,7 @@
     <span class="n">screen_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">screen_format</span><span class="p">)</span>
     <span class="n">stderr</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">screen_format</span><span class="p">)</span>
 
-    <span class="n">log_file</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span><span class="s">&#39;{0}.log&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__package__</span><span class="p">),</span>
+    <span class="n">log_file</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">RotatingFileHandler</span><span class="p">(</span><span class="s1">&#39;{0}.log&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">__package__</span><span class="p">),</span>
                                            <span class="n">maxBytes</span><span class="o">=</span><span class="n">GIGABYTE</span><span class="p">,</span> <span class="n">backupCount</span><span class="o">=</span><span class="n">BACKUP_LOGS</span><span class="p">)</span>
     <span class="n">file_format</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span><span class="n">LOG_FORMAT</span><span class="p">,</span> <span class="n">datefmt</span><span class="o">=</span><span class="n">IPERF_TIMESTAMP</span><span class="p">)</span>
     <span class="n">log_file</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">file_format</span><span class="p">)</span>
@@ -192,11 +193,11 @@
 
     <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stderr</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">log_file</span><span class="p">)</span>
-    <span class="k">return</span> 
+    <span class="k">return</span> </div>
 
 
-<span class="k">def</span> <span class="nf">enable_debugging</span><span class="p">(</span><span class="n">args</span><span class="p">):</span></div>
-<div class="viewcode-block" id="enable_debugging"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.enable_debugging.html#apetools.affectors.elexol.main.enable_debugging">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="enable_debugging"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.enable_debugging.html#apetools.affectors.elexol.main.enable_debugging">[docs]</a><span class="k">def</span> <span class="nf">enable_debugging</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Checks if pdb pudb has been set runs pudb if it was</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">pdb</span><span class="p">:</span>
@@ -206,44 +207,44 @@
     <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
     <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span></div>
-<div class="viewcode-block" id="parse_args"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.parse_args.html#apetools.affectors.elexol.main.parse_args">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="parse_args"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.parse_args.html#apetools.affectors.elexol.main.parse_args">[docs]</a><span class="k">def</span> <span class="nf">parse_args</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    parses the command-line arguments</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">()</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;--pdb&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Start an interactive debugger.&quot;</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;--pdb&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Start an interactive debugger.&quot;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-d&quot;</span><span class="p">,</span> <span class="s">&quot;--debug&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Enable more debugging output to the screen.&quot;</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&#39;-s&#39;</span><span class="p">,</span> <span class="s">&#39;--silent&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;Turn off screen output.&quot;</span><span class="p">,</span>
-                        <span class="n">action</span><span class="o">=</span><span class="s">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-d&quot;</span><span class="p">,</span> <span class="s2">&quot;--debug&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable more debugging output to the screen.&quot;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s1">&#39;-s&#39;</span><span class="p">,</span> <span class="s1">&#39;--silent&#39;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Turn off screen output.&quot;</span><span class="p">,</span>
+                        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
     
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-a&quot;</span><span class="p">,</span> <span class="s">&quot;--address&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;The IP Address of the Networked Power Supply.&quot;</span><span class="p">,</span>
-                        <span class="n">metavar</span><span class="o">=</span><span class="s">&quot;ip-address&quot;</span><span class="p">,</span>
-                        <span class="n">dest</span><span class="o">=</span><span class="s">&quot;ip_address&quot;</span><span class="p">,</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-a&quot;</span><span class="p">,</span> <span class="s2">&quot;--address&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;The IP Address of the Networked Power Supply.&quot;</span><span class="p">,</span>
+                        <span class="n">metavar</span><span class="o">=</span><span class="s2">&quot;ip-address&quot;</span><span class="p">,</span>
+                        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;ip_address&quot;</span><span class="p">,</span>
                         <span class="n">required</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s">&quot;-i&quot;</span><span class="p">,</span> <span class="s">&quot;--id-list&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s">&quot;comma-seprated ids of the switches to turn on.&quot;</span><span class="p">,</span>
-                        <span class="n">dest</span><span class="o">=</span><span class="s">&quot;id_list&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;-i&quot;</span><span class="p">,</span> <span class="s2">&quot;--id-list&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;comma-seprated ids of the switches to turn on.&quot;</span><span class="p">,</span>
+                        <span class="n">dest</span><span class="o">=</span><span class="s2">&quot;id_list&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span></div>
 
 
-<span class="k">def</span> <span class="nf">handle_crash</span><span class="p">(</span><span class="n">error</span><span class="p">):</span></div>
-<div class="viewcode-block" id="handle_crash"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.handle_crash.html#apetools.affectors.elexol.main.handle_crash">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="handle_crash"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.handle_crash.html#apetools.affectors.elexol.main.handle_crash">[docs]</a><span class="k">def</span> <span class="nf">handle_crash</span><span class="p">(</span><span class="n">error</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Generates a crash report.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;crashreport.naxxx&quot;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;crashreport.naxxx&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">args</span><span class="p">):</span></div>
-<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.run.html#apetools.affectors.elexol.main.run">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="run"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.run.html#apetools.affectors.elexol.main.run">[docs]</a><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Runs the naxxx</span>
 
 <span class="sd">    :param:</span>
@@ -251,21 +252,21 @@
 <span class="sd">     - `args`: namespace with id_list attribute</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">try</span><span class="p">:</span>
-        <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">id_list</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)]</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">id_list</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
     <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
         <span class="n">ids</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">print</span> <span class="s">&quot;Killing all switches&quot;</span>
+        <span class="k">print</span> <span class="s2">&quot;Killing all switches&quot;</span>
         <span class="k">return</span>
     <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
-        <span class="k">print</span> <span class="s">&quot;ids need to be comma-separated integers, got {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">id_list</span><span class="p">)</span>
+        <span class="k">print</span> <span class="s2">&quot;ids need to be comma-separated integers, got {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">id_list</span><span class="p">)</span>
         <span class="k">return</span>
     <span class="n">naxxx</span> <span class="o">=</span> <span class="n">Naxxx</span><span class="p">(</span><span class="n">IP</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">ip_address</span><span class="p">)</span>
     <span class="n">naxxx</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">ids</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
 
-<span class="k">def</span> <span class="nf">main</span><span class="p">():</span></div>
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.main.html#apetools.affectors.elexol.main.main">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../../../affectors/elexol/api/apetools.affectors.elexol.main.main.html#apetools.affectors.elexol.main.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    calls parse_args, set_logger, enable_debugging, and run</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">args</span> <span class="o">=</span> <span class="n">parse_args</span><span class="p">()</span>
@@ -276,9 +277,9 @@
         <span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
         <span class="n">handle_crash</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-    <span class="k">return</span>
+    <span class="k">return</span></div>
 
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span></div>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="n">main</span><span class="p">()</span>
 </pre></div>
 
@@ -294,7 +295,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -237,10 +237,10 @@ TopCommand : __call__()" />
 </ul>
 </div></blockquote>
 <p>Example Use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>connection = SSHConnection(hostname=&#39;elin&#39;, username=&#39;tester&#39;)
-top = TopCommand(connection)
-for line in top():
-    print line
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;elin&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">top</span> <span class="o">=</span> <span class="n">TopCommand</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">top</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">line</span>
 </pre></div>
 </div>
 </div>
@@ -295,10 +295,10 @@ TopGrep : expression" />
 </ul>
 </div></blockquote>
 <p>Example Use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>connection = SSHConnection(hostname=&#39;elin&#39;, username=&#39;tester&#39;)
-grep = TopGrep(connection, &#39;iperf&#39;)
-for pid in grep():
-    print pid
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;elin&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">grep</span> <span class="o">=</span> <span class="n">TopGrep</span><span class="p">(</span><span class="n">connection</span><span class="p">,</span> <span class="s1">&#39;iperf&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">grep</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">pid</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -306,15 +306,15 @@ for pid in grep():
 <p class="last">Since the <cite>TopGrep</cite> is implemented in this case to directly use the <cite>TopCommand</cite> it acts as a <cite>Builder</cite> for it, making the collaboration with the <cite>TopCommand</cite> somewhat obscure.</p>
 </div>
 <p>The advantage in having this relationship is that you can change the <cite>TopCommand</cite> by changing the <cite>TopGrep</cite> connection:</p>
-<div class="highlight-python"><div class="highlight"><pre><span></span>connection_1 = SSHConnection(hostname=&#39;elin&#39;, username=&#39;tester&#39;)
-connection_2 = SSHConnection(hostname=&#39;bob&#39;, username=&#39;tester&#39;)
-grep = TopGrep(connection)
-for pid in grep():
-    print pid
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">connection_1</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;elin&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">connection_2</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;bob&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;tester&#39;</span><span class="p">)</span>
+<span class="n">grep</span> <span class="o">=</span> <span class="n">TopGrep</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">grep</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">pid</span>
 
-grep.connection = connection_2
-for pid in grep():
-    print pid
+<span class="n">grep</span><span class="o">.</span><span class="n">connection</span> <span class="o">=</span> <span class="n">connection_2</span>
+<span class="k">for</span> <span class="n">pid</span> <span class="ow">in</span> <span class="n">grep</span><span class="p">():</span>
+    <span class="k">print</span> <span class="n">pid</span>
 </pre></div>
 </div>
 </div>

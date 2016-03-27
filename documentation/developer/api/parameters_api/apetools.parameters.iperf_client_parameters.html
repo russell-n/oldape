@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,772 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-parameters-iperf-client-parameters">
-<h1>apetools.parameters.iperf_client_parameters<a class="headerlink" href="#apetools-parameters-iperf-client-parameters" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.parameters.iperf_client_parameters">
+<span id="apetools-parameters-iperf-client-parameters"></span><h1>apetools.parameters.iperf_client_parameters<a class="headerlink" href="#module-apetools.parameters.iperf_client_parameters" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BooleanType</span></code></td>
+<td>alias of <a class="reference external" href="http://docs.python.org/library/functions.html#bool" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">bool</span></code></a></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">IperfCommonTcpParameters</span></code>()</td>
+<td>IperfCommonTcpParameters is a super-set of the IperfCommonParameters for TCP.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">IperfParametersEnum</span></code></td>
+<td>A holder for Iperf Parameter Constants</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.html#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters" title="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters"><code class="xref py py-obj docutils literal"><span class="pre">IperfTcpClientParameters</span></code></a>()</td>
+<td>IperfTcpClientParameters holds parameters used by Iperf TCP clients</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../../../parameters/api/apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.html#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters" title="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters"><code class="xref py py-obj docutils literal"><span class="pre">IperfUdpClientParameters</span></code></a>()</td>
+<td>IperfUdpClientParameters is a superset of the IperfTcpClientParameters.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Exceptions</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigurationError</span></code></td>
+<td>A ConfigurationError is raised if there is an error in the configuration file</td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters">
+<em class="property">class </em><code class="descclassname">apetools.parameters.iperf_client_parameters.</code><code class="descname">IperfTcpClientParameters</code><a class="reference internal" href="../../../../_modules/apetools/parameters/iperf_client_parameters.html#IperfTcpClientParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>IperfTcpClientParameters holds parameters used by Iperf TCP clients</p>
+<dl class="method">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.bind">
+<code class="descname">bind</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.bind" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The host to bind to. (-B &lt;host&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.client">
+<code class="descname">client</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.client" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">client flag (-c &lt;hostname&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.compatibility">
+<code class="descname">compatibility</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.compatibility" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">backwards-compatability flag (-C)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.dualtest">
+<code class="descname">dualtest</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.dualtest" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dualtest flag (-d)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.fileinput">
+<code class="descname">fileinput</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.fileinput" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;&#8211;fileinput &lt;filename&gt;&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.format">
+<code class="descname">format</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.format" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the format parameter (&#8211;f [bkmKM])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.interval">
+<code class="descname">interval</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.interval" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The time between data reports (-i &lt;seconds&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.ipv6version">
+<code class="descname">ipv6version</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.ipv6version" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The flag to indicate IPv6 is being used (-V).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.len">
+<code class="descname">len</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.len" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The length of the read-write-buffer (-l [KM])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.listenport">
+<code class="descname">listenport</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.listenport" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The listenport flag (-L &lt;port&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.mss">
+<code class="descname">mss</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.mss" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Maximum TCP Segment size flag</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.nodelay">
+<code class="descname">nodelay</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.nodelay" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the nodelay flag</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.num">
+<code class="descname">num</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.num" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of bytes to send flag (-n &lt;bytes&gt;[KM])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.output">
+<code class="descname">output</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.output" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name iperf should use as the file-name (-o &lt;filename&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.parallel">
+<code class="descname">parallel</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.parallel" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The parallel thread flag (-P &lt;count&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.parameter_names">
+<code class="descname">parameter_names</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.parameter_names" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of valid parameter names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.path">
+<code class="descname">path</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.path" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the path to the iperf executable or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.port">
+<code class="descname">port</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.port" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The network port the server is (will be) using (-p &lt;port&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.print_mss">
+<code class="descname">print_mss</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.print_mss" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The print_mss flag to show the maximum segment size.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.reportexclude">
+<code class="descname">reportexclude</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.reportexclude" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The report exclude flags (-x [CDMSV])<ul class="simple">
+<li>C - Connection</li>
+<li>D - Data</li>
+<li>M - Mutlicast</li>
+<li>S - Settings</li>
+<li>V - serVer reports</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.reportstyle">
+<code class="descname">reportstyle</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.reportstyle" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The output-to-csv flag (-y C|c)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.time">
+<code class="descname">time</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The time flag (-t &lt;seconds&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.tradeoff">
+<code class="descname">tradeoff</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.tradeoff" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the Tradeoff flag (-r)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.ttl">
+<code class="descname">ttl</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.ttl" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The time-to-live flag (-T &lt;hops&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.window">
+<code class="descname">window</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfTcpClientParameters.window" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The window-size parameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters">
+<em class="property">class </em><code class="descclassname">apetools.parameters.iperf_client_parameters.</code><code class="descname">IperfUdpClientParameters</code><a class="reference internal" href="../../../../_modules/apetools/parameters/iperf_client_parameters.html#IperfUdpClientParameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>IperfUdpClientParameters is a superset of the IperfTcpClientParameters.
+Adds udp and bandwidth.</p>
+<dl class="method">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.bandwidth">
+<code class="descname">bandwidth</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.bandwidth" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The udp bandwidth flag (-b n[KM])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.bind">
+<code class="descname">bind</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.bind" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The host to bind to. (-B &lt;host&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.client">
+<code class="descname">client</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.client" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">client flag (-c &lt;hostname&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.compatibility">
+<code class="descname">compatibility</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.compatibility" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">backwards-compatability flag (-C)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.dualtest">
+<code class="descname">dualtest</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.dualtest" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The dualtest flag (-d)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.fileinput">
+<code class="descname">fileinput</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.fileinput" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">&#8216;&#8211;fileinput &lt;filename&gt;&#8217;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.format">
+<code class="descname">format</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.format" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the format parameter (&#8211;f [bkmKM])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.interval">
+<code class="descname">interval</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.interval" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The time between data reports (-i &lt;seconds&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.ipv6version">
+<code class="descname">ipv6version</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.ipv6version" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The flag to indicate IPv6 is being used (-V).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.len">
+<code class="descname">len</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.len" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The length of the read-write-buffer (-l [KM])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.listenport">
+<code class="descname">listenport</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.listenport" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The listenport flag (-L &lt;port&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.mss">
+<code class="descname">mss</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.mss" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Maximum TCP Segment size flag</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.nodelay">
+<code class="descname">nodelay</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.nodelay" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the nodelay flag</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.num">
+<code class="descname">num</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.num" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The number of bytes to send flag (-n &lt;bytes&gt;[KM])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.output">
+<code class="descname">output</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.output" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The name iperf should use as the file-name (-o &lt;filename&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.parallel">
+<code class="descname">parallel</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.parallel" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The parallel thread flag (-P &lt;count&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.parameter_names">
+<code class="descname">parameter_names</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.parameter_names" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a list of valid parameter names</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.path">
+<code class="descname">path</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.path" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the path to the iperf executable or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.port">
+<code class="descname">port</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.port" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The network port the server is (will be) using (-p &lt;port&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.print_mss">
+<code class="descname">print_mss</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.print_mss" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The print_mss flag to show the maximum segment size.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.reportexclude">
+<code class="descname">reportexclude</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.reportexclude" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The report exclude flags (-x [CDMSV])<ul class="simple">
+<li>C - Connection</li>
+<li>D - Data</li>
+<li>M - Mutlicast</li>
+<li>S - Settings</li>
+<li>V - serVer reports</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.reportstyle">
+<code class="descname">reportstyle</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.reportstyle" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The output-to-csv flag (-y C|c)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.time">
+<code class="descname">time</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.time" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The time flag (-t &lt;seconds&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.tradeoff">
+<code class="descname">tradeoff</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.tradeoff" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the Tradeoff flag (-r)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.ttl">
+<code class="descname">ttl</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.ttl" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The time-to-live flag (-T &lt;hops&gt;)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.window">
+<code class="descname">window</code><a class="headerlink" href="#apetools.parameters.iperf_client_parameters.IperfUdpClientParameters.window" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The window-size parameter</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

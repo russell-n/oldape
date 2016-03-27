@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
     <link rel="up" title="Module code" href="../../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,14 +135,15 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.builders.subbuilders.poweronbuilder</h1><div class="highlight"><pre>
-<span class="c"># python libraries</span>
+<span></span>
+<span class="c1"># python libraries</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">namedtuple</span>
 <span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">lower</span>
 
-<span class="c"># apetools modules</span>
+<span class="c1"># apetools modules</span>
 <span class="kn">from</span> <span class="nn">basetoolbuilder</span> <span class="kn">import</span> <span class="n">BaseToolBuilder</span><span class="p">,</span> <span class="n">Parameters</span>
 <span class="kn">from</span> <span class="nn">apetools.lexicographers.config_options</span> <span class="kn">import</span> <span class="n">ConfigOptions</span>
 
@@ -152,48 +153,48 @@
 <span class="kn">from</span> <span class="nn">apetools.commons.errors</span> <span class="kn">import</span> <span class="n">ConfigurationError</span>
 
 
-<span class="k">class</span> <span class="nc">PowerOnConfigurationError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnConfigurationError"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnConfigurationError">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PowerOnConfigurationError"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnConfigurationError">[docs]</a><span class="k">class</span> <span class="nc">PowerOnConfigurationError</span><span class="p">(</span><span class="n">ConfigurationError</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An error to raise if the user&#39;s configuration is wrong</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-<span class="c"># end class PowerOnConfigurationError</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+<span class="c1"># end class PowerOnConfigurationError</span>
 
 
-<span class="k">class</span> <span class="nc">PowerOnBuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
-<div class="viewcode-block" id="PowerOnBuilderEnum"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilderEnum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PowerOnBuilderEnum"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilderEnum">[docs]</a><span class="k">class</span> <span class="nc">PowerOnBuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder of Synaxxx constants</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">id_switch</span> <span class="o">=</span> <span class="s">&quot;id_switch&quot;</span>
-    <span class="n">timeout</span> <span class="o">=</span> <span class="s">&#39;timeout&#39;</span>
-    <span class="n">sleep</span> <span class="o">=</span> <span class="s">&quot;sleep&quot;</span>
-<span class="c"># end class PowerOnBuilderEnums</span>
+    <span class="n">id_switch</span> <span class="o">=</span> <span class="s2">&quot;id_switch&quot;</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="s1">&#39;timeout&#39;</span>
+    <span class="n">sleep</span> <span class="o">=</span> <span class="s2">&quot;sleep&quot;</span></div>
+<span class="c1"># end class PowerOnBuilderEnums</span>
 
 
-<span class="k">class</span> <span class="nc">PowerOnParameters</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;PowerOnParameters&quot;</span><span class="p">,</span></div>
-                                   <span class="s">&quot;identifier switch&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span>
+<span class="k">class</span> <span class="nc">PowerOnParameters</span><span class="p">(</span><span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;PowerOnParameters&quot;</span><span class="p">,</span>
+                                   <span class="s2">&quot;identifier switch&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">())):</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s">&quot;identifier: {0} switch: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
+        <span class="k">return</span> <span class="s2">&quot;identifier: {0} switch: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">identifier</span><span class="p">,</span>
                                                     <span class="bp">self</span><span class="o">.</span><span class="n">switch</span><span class="p">)</span>
-<span class="c"># end class PowerOnParameters</span>
+<span class="c1"># end class PowerOnParameters</span>
 
 
-<span class="k">class</span> <span class="nc">PowerOnBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnBuilder"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PowerOnBuilder"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder">[docs]</a><span class="k">class</span> <span class="nc">PowerOnBuilder</span><span class="p">(</span><span class="n">BaseToolBuilder</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A networked power-switch builder</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">PowerOnBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<div class="viewcode-block" id="PowerOnBuilder.__init__"><a class="viewcode-back" href="../../../../builders/subbuilders/api/apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PowerOnBuilder</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span> <span class="o">=</span> <span class="bp">None</span>
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">synaxxxes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnBuilder.synaxxxes"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.synaxxxes">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: dict of &lt;hostname&gt;:&lt;synaxxx&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -203,9 +204,9 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span><span class="p">[</span><span class="n">identifier</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clients</span><span class="p">[</span><span class="n">param</span><span class="o">.</span><span class="n">hostname</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_synaxxxes</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">clients</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnBuilder.clients"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.clients">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a dict of &lt;hostname&gt;: telnet-client</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -226,9 +227,9 @@
                                                              <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_clients</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">config_options</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnBuilder.config_options"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.config_options">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: dictionary of &lt;id&gt;: &lt;hostname, switch number&gt;</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -242,26 +243,26 @@
                                                                 <span class="k">for</span> <span class="n">identifier</span> <span class="ow">in</span> <span class="n">identifiers</span><span class="p">]</span>
             <span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Missing POWERON section in the config-file.&quot;</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Missing POWERON section in the config-file.&quot;</span>
                 <span class="k">raise</span> <span class="n">PowerOnConfigurationError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">identifiers</span><span class="p">,</span> <span class="n">config_tuples</span><span class="p">))</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span><span class="p">):</span>
-                <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;Missing POWERON options (&lt;ID&gt;=hostname:&lt;hostname&gt;,switch:&lt;switch ID&gt;) in the config file&quot;</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Missing POWERON options (&lt;ID&gt;=hostname:&lt;hostname&gt;,switch:&lt;switch ID&gt;) in the config file&quot;</span>
                 <span class="k">raise</span> <span class="n">PowerOnConfigurationError</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_options</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">product</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnBuilder.product"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.product">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: PowerOn object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_product</span> <span class="o">=</span> <span class="n">PowerOn</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">synaxxxes</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_product</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="PowerOnBuilder.parameters"><a class="viewcode-back" href="../../../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.poweronbuilder.html#apetools.builders.subbuilders.poweronbuilder.PowerOnBuilder.parameters">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of named tuples</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
@@ -275,9 +276,9 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Parameters</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
                                                        <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">previous_parameters</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span>
-<span class="c"># end class PowerOnBuilder</span>
-</pre></div></div></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameters</span></div>
+<span class="c1"># end class PowerOnBuilder</span>
+</pre></div>
 
     </div>
       
@@ -291,7 +292,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

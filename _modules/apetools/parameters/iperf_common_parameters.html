@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -26,7 +26,7 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
     <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="Module code" href="../../index.html" />
@@ -36,7 +36,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -135,14 +135,15 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <h1>Source code for apetools.parameters.iperf_common_parameters</h1><div class="highlight"><pre>
-<span class="c">#python</span>
+<span></span>
+<span class="c1">#python</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">types</span> <span class="kn">import</span> <span class="n">BooleanType</span>
 
-<span class="c">#apetools</span>
+<span class="c1">#apetools</span>
 <span class="kn">from</span> <span class="nn">apetools.baseclass</span> <span class="kn">import</span> <span class="n">BaseClass</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">errors</span>
 <span class="kn">from</span> <span class="nn">apetools.commons</span> <span class="kn">import</span> <span class="n">expressions</span>
@@ -150,36 +151,36 @@
 <span class="n">ConfigurationError</span> <span class="o">=</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span>
 
 
-<span class="n">SPACE</span> <span class="o">=</span> <span class="s">&#39; &#39;</span>
-<span class="n">UNDERSCORE</span> <span class="o">=</span> <span class="s">&quot;_&quot;</span>
+<span class="n">SPACE</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+<span class="n">UNDERSCORE</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span>
 
-<span class="n">VALID_BUFFER_LENGTHS</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">REAL</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">CLASS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;KM&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">WORD_ENDING</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">LINE_ENDING</span>
-<span class="n">VALID_FORMATS</span> <span class="o">=</span> <span class="s">&#39;b k m K M&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">VALID_BUFFER_LENGTHS</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">REAL</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">CLASS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;KM&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">ZERO_OR_ONE</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">WORD_ENDING</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">LINE_ENDING</span>
+<span class="n">VALID_FORMATS</span> <span class="o">=</span> <span class="s1">&#39;b k m K M&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 <span class="n">MAXIMUM_PORT</span> <span class="o">=</span> <span class="mi">65535</span>
 <span class="n">MINIMUM_PORT</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">LOWEST_PORT</span> <span class="o">=</span> <span class="mi">1024</span>
 <span class="n">VALID_OUTPUT</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">NOT_SPACE</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">ONE_OR_MORE</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">WORD_ENDING</span>
-<span class="n">VALID_EXCLUDES</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">CLASS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&quot;CDMSV&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">ONE_OR_MORE</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">WORD_ENDING</span>
-<span class="n">VALID_REPORT_STYLES</span> <span class="o">=</span> <span class="s">&quot;cC&quot;</span>
+<span class="n">VALID_EXCLUDES</span> <span class="o">=</span> <span class="n">expressions</span><span class="o">.</span><span class="n">CLASS</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;CDMSV&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">ONE_OR_MORE</span> <span class="o">+</span> <span class="n">expressions</span><span class="o">.</span><span class="n">WORD_ENDING</span>
+<span class="n">VALID_REPORT_STYLES</span> <span class="o">=</span> <span class="s2">&quot;cC&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">IperfParametersEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfParametersEnum"><a class="viewcode-back" href="../../../documentation/developer/api/parameters_api/apetools.parameters.iperf_common_parameters.html#apetools.parameters.iperf_common_parameters.IperfParametersEnum">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfParametersEnum"><a class="viewcode-back" href="../../../documentation/developer/api/parameters_api/apetools.parameters.iperf_common_parameters.html#apetools.parameters.iperf_common_parameters.IperfParametersEnum">[docs]</a><span class="k">class</span> <span class="nc">IperfParametersEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A holder for Iperf Parameter Constants</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">udp</span> <span class="o">=</span> <span class="s">&quot;udp&quot;</span>
-    <span class="n">tcp</span> <span class="o">=</span> <span class="s">&quot;tcp&quot;</span>
-<span class="c"># end class IperfParametersEnum</span>
+    <span class="n">udp</span> <span class="o">=</span> <span class="s2">&quot;udp&quot;</span>
+    <span class="n">tcp</span> <span class="o">=</span> <span class="s2">&quot;tcp&quot;</span></div>
+<span class="c1"># end class IperfParametersEnum</span>
 
 
-<span class="k">class</span> <span class="nc">IperfCommonParameters</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfCommonParameters"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters">[docs]</a>    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="IperfCommonParameters"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters">[docs]</a><span class="k">class</span> <span class="nc">IperfCommonParameters</span><span class="p">(</span><span class="n">BaseClass</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Iperf Common Parameters are common to all Iperf commands.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_block_attributes</span> <span class="o">=</span> <span class="bp">False</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.__init__"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.__init__">[docs]</a>        <span class="nb">super</span><span class="p">(</span><span class="n">IperfCommonParameters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+<div class="viewcode-block" id="IperfCommonParameters.__init__"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.__init__">[docs]</a>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IperfCommonParameters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_format</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="bp">None</span>
@@ -195,9 +196,9 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_parallel</span> <span class="o">=</span> <span class="bp">None</span>        
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="bp">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_block_attributes</span> <span class="o">=</span> <span class="bp">True</span>        
-        <span class="k">return</span>
+        <span class="k">return</span></div>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parallel</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The parallel thread flag (-P &lt;count&gt;)</span>
@@ -206,7 +207,7 @@
 
     <span class="nd">@parallel.setter</span>
     <span class="k">def</span> <span class="nf">parallel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">thread_count</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.parallel"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.parallel">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `thread_count`: The number of parallel threads to run</span>
@@ -215,11 +216,11 @@
             <span class="n">thread_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">thread_count</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Thread count must be an integer, not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thread_count</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_parallel</span> <span class="o">=</span> <span class="s">&quot;--parallel {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thread_count</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Thread count must be an integer, not {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thread_count</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_parallel</span> <span class="o">=</span> <span class="s2">&quot;--parallel {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">thread_count</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the path to the iperf executable or None</span>
@@ -228,7 +229,7 @@
 
     <span class="nd">@path.setter</span>
     <span class="k">def</span> <span class="nf">path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.path"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.path">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `path`: fully-qualified path to add to the iperf command</span>
@@ -238,7 +239,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_path</span> <span class="o">=</span> <span class="n">path</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: the format parameter (--f [bkmKM])</span>
@@ -247,17 +248,17 @@
 
     <span class="nd">@format.setter</span>
     <span class="k">def</span> <span class="nf">format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_format</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.format"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.format">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `format`: one of {b, k, m, K, M}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">new_format</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_FORMATS</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Invalid format: {0} (must be &#39;b&#39;, &#39;k&#39;, &#39;m&#39;, &#39;K&#39;, or &#39;M&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_format</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_format</span> <span class="o">=</span> <span class="s">&quot;--format {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_format</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">errors</span><span class="o">.</span><span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Invalid format: {0} (must be &#39;b&#39;, &#39;k&#39;, &#39;m&#39;, &#39;K&#39;, or &#39;M&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_format</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_format</span> <span class="o">=</span> <span class="s2">&quot;--format {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_format</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">interval</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The time between data reports (-i &lt;seconds&gt;)</span>
@@ -266,22 +267,22 @@
 
     <span class="nd">@interval.setter</span>
     <span class="k">def</span> <span class="nf">interval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_interval</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.interval"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.interval">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `new_interval`: something that can be cast to a float.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">expressions</span><span class="o">.</span><span class="n">INTEGER</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_interval</span><span class="p">)):</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="s">&quot;--interval {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_interval</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="s2">&quot;--interval {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_interval</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="s">&quot;--interval {0:.1f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">new_interval</span><span class="p">))</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_interval</span> <span class="o">=</span> <span class="s2">&quot;--interval {0:.1f}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">new_interval</span><span class="p">))</span>
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Invalid Interval: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_interval</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Invalid Interval: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_interval</span><span class="p">))</span>
         <span class="k">return</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The length of the read-write-buffer (-l [KM])</span>
@@ -290,17 +291,17 @@
 
     <span class="nd">@len.setter</span>
     <span class="k">def</span> <span class="nf">len</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_len</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.len"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.len">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `new_len`: Buffer Length (format &#39;n[KM]&#39;)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">VALID_BUFFER_LENGTHS</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">new_len</span><span class="p">)):</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Invalid Buffer Length: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_len</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_len</span> <span class="o">=</span> <span class="s">&quot;--len {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_len</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Invalid Buffer Length: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_len</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_len</span> <span class="o">=</span> <span class="s2">&quot;--len {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_len</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The name iperf should use as the file-name (-o &lt;filename&gt;)</span>
@@ -309,17 +310,17 @@
 
     <span class="nd">@output.setter</span>
     <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.output"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.output">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `name`: A valid file name (so just about anything (but no spaces)).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">SPACE</span> <span class="ow">in</span> <span class="n">name</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Output Name ({0}) can&#39;t have spaces&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="s">&quot;--output {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Output Name ({0}) can&#39;t have spaces&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_output</span> <span class="o">=</span> <span class="s2">&quot;--output {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The network port the server is (will be) using (-p &lt;port&gt;)</span>
@@ -328,7 +329,7 @@
 
     <span class="nd">@port.setter</span>
     <span class="k">def</span> <span class="nf">port</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_port</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.port"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.port">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `new_port`: a valid network port 1 - 65535</span>
@@ -339,16 +340,16 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="n">new_port</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">new_port</span><span class="p">)</span>
             <span class="k">if</span> <span class="n">MAXIMUM_PORT</span> <span class="o">&lt;</span> <span class="n">new_port</span> <span class="ow">or</span> <span class="n">new_port</span> <span class="o">&lt;</span> <span class="n">MINIMUM_PORT</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Port {0} out of range&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">))</span>
+                <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Port {0} out of range&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">new_port</span> <span class="o">&lt;</span> <span class="n">LOWEST_PORT</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&quot;Port {0} is within well-known ports range (1-1023)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="s">&quot;--port {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">&quot;Port {0} is within well-known ports range (1-1023)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_port</span> <span class="o">=</span> <span class="s2">&quot;--port {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">error</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Invalid port: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Invalid port: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">new_port</span><span class="p">))</span>
         <span class="k">return</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The host to bind to. (-B &lt;host&gt;)</span>
@@ -357,15 +358,15 @@
 
     <span class="nd">@bind.setter</span>
     <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hostname</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.bind"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.bind">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `hostname`: A valid hostname </span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_bind</span> <span class="o">=</span> <span class="s">&quot;--bind {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hostname</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_bind</span> <span class="o">=</span> <span class="s2">&quot;--bind {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">hostname</span><span class="p">)</span>
         <span class="k">return</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">compatibility</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: backwards-compatability flag (-C)</span>
@@ -374,18 +375,18 @@
 
     <span class="nd">@compatibility.setter</span>
     <span class="k">def</span> <span class="nf">compatibility</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_compatible</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.compatibility"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.compatibility">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `set_compatible`: A boolean which if True sets the flag</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">set_compatible</span><span class="p">)</span> <span class="ow">is</span> <span class="n">BooleanType</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;{0} must be True or False&quot;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;{0} must be True or False&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">set_compatible</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_compatibility</span> <span class="o">=</span> <span class="s">&#39;--compatibility&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_compatibility</span> <span class="o">=</span> <span class="s1">&#39;--compatibility&#39;</span>
         <span class="k">return</span>
         
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ipv6version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The flag to indicate IPv6 is being used (-V).</span>
@@ -394,18 +395,18 @@
 
     <span class="nd">@ipv6version.setter</span>
     <span class="k">def</span> <span class="nf">ipv6version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">set_to_ipv6</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.ipv6version"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.ipv6version">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `set_to_ipv6`: A boolean which if True, sets the IPv6Version flag.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">set_to_ipv6</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">BooleanType</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;{0} must be True or False&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_to_ipv6</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;{0} must be True or False&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">set_to_ipv6</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">set_to_ipv6</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_ipv6version</span> <span class="o">=</span> <span class="s">&quot;--IPv6Version&quot;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ipv6version</span> <span class="o">=</span> <span class="s2">&quot;--IPv6Version&quot;</span>
         <span class="k">return</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">reportexclude</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The report exclude flags (-x [CDMSV])</span>
@@ -420,17 +421,17 @@
 
     <span class="nd">@reportexclude.setter</span>
     <span class="k">def</span> <span class="nf">reportexclude</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclude_flags</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.reportexclude"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.reportexclude">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `exclude_flags`: a subset of CDMSV</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">VALID_EXCLUDES</span><span class="p">,</span> <span class="n">exclude_flags</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;{0} must only contain a subset of CDMSV&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exclude_flags</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reportexclude</span> <span class="o">=</span> <span class="s">&quot;--reportexclude {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exclude_flags</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;{0} must only contain a subset of CDMSV&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exclude_flags</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reportexclude</span> <span class="o">=</span> <span class="s2">&quot;--reportexclude {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exclude_flags</span><span class="p">)</span>
         <span class="k">return</span>
     
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">reportstyle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: The output-to-csv flag (-y C|c)</span>
@@ -439,37 +440,37 @@
 
     <span class="nd">@reportstyle.setter</span>
     <span class="k">def</span> <span class="nf">reportstyle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">csv_flag</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.reportstyle"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.reportstyle">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param:</span>
 
 <span class="sd">         - `csv_flag`: in {c, C}</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">csv_flag</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">VALID_REPORT_STYLES</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Invalid report-style: {0} (should be &#39;c&#39; or &#39;C&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_flag</span><span class="p">))</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_reportstyle</span> <span class="o">=</span> <span class="s">&quot;--reportstyle {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_flag</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Invalid report-style: {0} (should be &#39;c&#39; or &#39;C&#39;)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_flag</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_reportstyle</span> <span class="o">=</span> <span class="s2">&quot;--reportstyle {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">csv_flag</span><span class="p">)</span>
 
-    <span class="nd">@property</span></div>
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">parameter_names</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-<div class="viewcode-block" id="IperfCommonParameters.parameter_names"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfCommonParameters.html#apetools.parameters.iperf_common_parameters.IperfCommonParameters.parameter_names">[docs]</a>        <span class="sd">&quot;&quot;&quot;</span>
+        <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: a list of valid parameter names</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameter_names</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_parameter_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s">&quot;parameter_names&quot;</span><span class="p">,</span><span class="s">&quot;logger&quot;</span><span class="p">)]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_parameter_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">field</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">field</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">field</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;parameter_names&quot;</span><span class="p">,</span><span class="s2">&quot;logger&quot;</span><span class="p">)]</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parameter_names</span>
 
-    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span></div>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: string of set flags in alphabetical order (of the flags, not the values)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="c">#import pudb;pudb.set_trace()</span>
-        <span class="n">non_parameters</span> <span class="o">=</span> <span class="p">(</span><span class="s">&quot;_block_attributes&quot;</span> <span class="p">,</span> <span class="s">&quot;_logger&quot;</span><span class="p">,</span> 
-                                    <span class="s">&quot;_parameter_names&quot;</span><span class="p">,</span> <span class="s">&#39;_path&#39;</span><span class="p">)</span>
+        <span class="c1">#import pudb;pudb.set_trace()</span>
+        <span class="n">non_parameters</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;_block_attributes&quot;</span> <span class="p">,</span> <span class="s2">&quot;_logger&quot;</span><span class="p">,</span> 
+                                    <span class="s2">&quot;_parameter_names&quot;</span><span class="p">,</span> <span class="s1">&#39;_path&#39;</span><span class="p">)</span>
         
         <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">non_parameters</span><span class="p">]</span>
-            <span class="c"># temporary fix for --bandwidth problem</span>
-            <span class="c">#import pudb;pudb.set_trace()</span>
-        <span class="k">if</span> <span class="s">&#39;_client&#39;</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
-            <span class="n">keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s">&#39;_client&#39;</span><span class="p">)</span>
+            <span class="c1"># temporary fix for --bandwidth problem</span>
+            <span class="c1">#import pudb;pudb.set_trace()</span>
+        <span class="k">if</span> <span class="s1">&#39;_client&#39;</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;_client&#39;</span><span class="p">)</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">UNDERSCORE</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="n">UNDERSCORE</span><span class="p">))</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">]</span>
@@ -481,18 +482,18 @@
 <span class="sd">        Overrides the setattr to add a freeze to prevent accidentally adding attributes.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_block_attributes</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s">&quot;Unknown Attribute: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="k">raise</span> <span class="n">ConfigurationError</span><span class="p">(</span><span class="s2">&quot;Unknown Attribute: {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">IperfCommonParameters</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__setattr__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
-        <span class="k">return</span>
-<span class="c"># end class IperfCommonParameters</span>
+        <span class="k">return</span></div>
+<span class="c1"># end class IperfCommonParameters</span>
 
 
-<span class="k">class</span> <span class="nc">IperfExtraParameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></div>
-<div class="viewcode-block" id="IperfExtraParameters"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfExtraParameters.html#apetools.parameters.iperf_common_parameters.IperfExtraParameters">[docs]</a>    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">directions</span> <span class="o">=</span> <span class="s">&#39;directions&#39;</span>
-    <span class="n">protocol</span> <span class="o">=</span> <span class="s">&#39;protocol&#39;</span>
-    <span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">directions</span><span class="p">,</span> <span class="n">protocol</span><span class="p">]</span>
-</pre></div></div>
+<div class="viewcode-block" id="IperfExtraParameters"><a class="viewcode-back" href="../../../parameters/api/apetools.parameters.iperf_common_parameters.IperfExtraParameters.html#apetools.parameters.iperf_common_parameters.IperfExtraParameters">[docs]</a><span class="k">class</span> <span class="nc">IperfExtraParameters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+    <span class="n">directions</span> <span class="o">=</span> <span class="s1">&#39;directions&#39;</span>
+    <span class="n">protocol</span> <span class="o">=</span> <span class="s1">&#39;protocol&#39;</span>
+    <span class="n">parameters</span> <span class="o">=</span> <span class="p">[</span><span class="n">directions</span><span class="p">,</span> <span class="n">protocol</span><span class="p">]</span></div>
+</pre></div>
 
     </div>
       
@@ -506,7 +507,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

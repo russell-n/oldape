@@ -9,7 +9,7 @@
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/spacelab/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
@@ -143,8 +143,171 @@
   <div class="row">
     <div class="col-md-12 content">
       
-  <div class="section" id="apetools-builders-subbuilders-timetorecoverybuilder">
-<h1>apetools.builders.subbuilders.timetorecoverybuilder<a class="headerlink" href="#apetools-builders-subbuilders-timetorecoverybuilder" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="module-apetools.builders.subbuilders.timetorecoverybuilder">
+<span id="apetools-builders-subbuilders-timetorecoverybuilder"></span><h1>apetools.builders.subbuilders.timetorecoverybuilder<a class="headerlink" href="#module-apetools.builders.subbuilders.timetorecoverybuilder" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">BaseToolBuilder</span></code>(master,&nbsp;config_map,&nbsp;...)</td>
+<td>A Base class to build tool-builders around.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ConfigOptions</span></code></td>
+<td>An enumeration of sorts to hold the section and option names for the config file.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">Parameters</span></code>(name,&nbsp;parameters)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">TimeToRecovery</span></code>(nodes[,&nbsp;pinger,&nbsp;target,&nbsp;...])</td>
+<td>A TimeToRecovery pings a target until the pings succeeed.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder" title="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder"><code class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryBuilder</span></code></a>(*args,&nbsp;**kwargs)</td>
+<td>A builder of TTR Objects</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">TimeToRecoveryBuilderEnum</span></code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder">
+<em class="property">class </em><code class="descclassname">apetools.builders.subbuilders.timetorecoverybuilder.</code><code class="descname">TimeToRecoveryBuilder</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/timetorecoverybuilder.html#TimeToRecoveryBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder" title="Permalink to this definition">¶</a></dt>
+<dd><p>A builder of TTR Objects</p>
+<dl class="method">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.add_parameter">
+<code class="descname">add_parameter</code><span class="sig-paren">(</span><em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/timetorecoverybuilder.html#TimeToRecoveryBuilder.add_parameter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.add_parameter" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
+<li><cite>name</cite>: the name of the parameter to add</li>
+<li><cite>value</cite>: the value of the parameter to add</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">Parameters(name, value) in self.previous_parameters</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.log_error">
+<code class="descname">log_error</code><span class="sig-paren">(</span><em>message</em><span class="sig-paren">)</span><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.log_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logs the message as an error, adding extra formatting</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.logger">
+<code class="descname">logger</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.logger" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.parameters">
+<code class="descname">parameters</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.parameters" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">namedtuple with <cite>name</cite> and <cite>parameters</cite> attribute</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.product">
+<code class="descname">product</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.product" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a TTR</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.section">
+<code class="descname">section</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.section" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the name of the section in the config_file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.target">
+<code class="descname">target</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.target" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">target from the config file</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.threshold">
+<code class="descname">threshold</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the number of consecutive pings to count as a recovery sign</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.timeout">
+<code class="descname">timeout</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the total time to try and ping</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.ttr">
+<code class="descname">ttr</code><a class="headerlink" href="#apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.ttr" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A time to recovery object</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 

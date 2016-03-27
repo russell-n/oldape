@@ -5,6 +5,10 @@ This is a module for base classes that have common methods to inherit.
 
 
 
+
+
+
+
 The BaseClass
 -------------
 
@@ -17,6 +21,7 @@ The `BaseClass` sets up a logger for its children so that the module and class n
    BaseClass
    BaseClass.logger
    
+
 
 
 The BaseThreadClass
@@ -34,3 +39,5 @@ The `BaseThreadClass` extends the `BaseClass` by adding a `run_thread` method th
    BaseThreadClass
    BaseThreadClass.run_thread
    
+
+
