@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Dumpsys Wifi &mdash; APETools 2014.09.18 documentation</title>
+    <title>Dumpsys Wifi &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,19 +26,17 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Commands" href="index.html" />
-    <link rel="next" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions" href="api/apetools.commands.dumpsyswifi.DumpsysWifiExpressions.html" />
-    <link rel="prev" title="apetools.commands.changeprompt.ChangePrompt.run" href="api/apetools.commands.changeprompt.ChangePrompt.run.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -120,14 +118,6 @@
             
               
                 
-  <li>
-    <a href="api/apetools.commands.changeprompt.ChangePrompt.run.html" title="Previous Chapter: apetools.commands.changeprompt.ChangePrompt.run"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.command...</span>
-    </a>
-  </li>
-  <li>
-    <a href="api/apetools.commands.dumpsyswifi.DumpsysWifiExpressions.html" title="Next Chapter: apetools.commands.dumpsyswifi.DumpsysWifiExpressions"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.command... &raquo;</span>
-    </a>
-  </li>
               
             
             
@@ -157,27 +147,27 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="dumpsys-wifi">
 <h1>Dumpsys Wifi<a class="headerlink" href="#dumpsys-wifi" title="Permalink to this headline">¶</a></h1>
 <p>A command to query the dumpsys about wifi information.</p>
 <div class="section" id="dumpsys-wifi-enumerations">
 <h2>Dumpsys Wifi Enumerations<a class="headerlink" href="#dumpsys-wifi-enumerations" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">DumpsysWifiEnumerations</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DumpsysWifiEnumerations</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    An enumerations object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">state</span> <span class="o">=</span> <span class="s">&quot;wifistate&quot;</span>
-    <span class="n">interface</span> <span class="o">=</span> <span class="s">&quot;interface&quot;</span>
-    <span class="n">ssid</span> <span class="o">=</span> <span class="s">&quot;ssid&quot;</span>
-    <span class="n">bssid</span> <span class="o">=</span> <span class="s">&quot;bssid&quot;</span>
-    <span class="n">mac_address</span> <span class="o">=</span> <span class="s">&quot;mac_address&quot;</span>
-    <span class="n">supplicant_state</span> <span class="o">=</span> <span class="s">&quot;supplicant_state&quot;</span>
-    <span class="n">rssi</span> <span class="o">=</span> <span class="s">&quot;rssi&quot;</span>
-    <span class="n">link_speed</span> <span class="o">=</span> <span class="s">&quot;link_speed&quot;</span>
-<span class="c"># end class DumpsysWifiEnumerations</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="s2">&quot;wifistate&quot;</span>
+    <span class="n">interface</span> <span class="o">=</span> <span class="s2">&quot;interface&quot;</span>
+    <span class="n">ssid</span> <span class="o">=</span> <span class="s2">&quot;ssid&quot;</span>
+    <span class="n">bssid</span> <span class="o">=</span> <span class="s2">&quot;bssid&quot;</span>
+    <span class="n">mac_address</span> <span class="o">=</span> <span class="s2">&quot;mac_address&quot;</span>
+    <span class="n">supplicant_state</span> <span class="o">=</span> <span class="s2">&quot;supplicant_state&quot;</span>
+    <span class="n">rssi</span> <span class="o">=</span> <span class="s2">&quot;rssi&quot;</span>
+    <span class="n">link_speed</span> <span class="o">=</span> <span class="s2">&quot;link_speed&quot;</span>
+<span class="c1"># end class DumpsysWifiEnumerations</span>
 </pre></div>
 </div>
 </div>
@@ -189,96 +179,32 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions</span></tt></a>()</td>
-<td>A class to hold regular expressions to parse the <cite>dumpsys wifi</cite> output</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.state" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.state"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.state</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to match the wifi enabled/disabled states</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.state</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.interface</span></code></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.interface" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.interface"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.interface</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">An expression to find the interface name</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.ssid</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.bssid</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.ssid" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.ssid"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.ssid</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled expression to extract the ssid</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.mac_address</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.supplicant_state</span></code></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.bssid" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.bssid"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.bssid</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled expression to extract the BSSID</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.rssi</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.mac_address" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.mac_address"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.mac_address</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled expression to match the MAC Address of the device</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.supplicant_state" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.supplicant_state"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.supplicant_state</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled expression to match the WPA Supplicant State</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.rssi" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.rssi</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to extract the rssi</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifiExpressions.link_speed" title="apetools.commands.dumpsyswifi.DumpsysWifiExpressions.link_speed"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.link_speed</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">compiled regular expression to extract the link speed</td>
-</tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifiExpressions.link_speed</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -294,131 +220,43 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi" title="apetools.commands.dumpsyswifi.DumpsysWifi"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi</span></tt></a>([connection,&nbsp;service,&nbsp;na])</td>
-<td>A class to query and interpret the dumpsys wifi command</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.expressions" title="apetools.commands.dumpsyswifi.DumpsysWifi.expressions"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.expressions</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">DumpsysWifiExpressions</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.expressions</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.connection</span></code></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.connection" title="apetools.commands.dumpsyswifi.DumpsysWifi.connection"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.connection</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a connection to the android</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.state</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.interface</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.state" title="apetools.commands.dumpsyswifi.DumpsysWifi.state"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.state</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Boolean</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.ssid</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.bssid</span></code></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.interface" title="apetools.commands.dumpsyswifi.DumpsysWifi.interface"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.interface</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">name of the wifi interface</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.mac_address</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.supplicant_state</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.ssid" title="apetools.commands.dumpsyswifi.DumpsysWifi.ssid"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.ssid</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">ssid of connection</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.rssi</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.link_speed</span></code></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.bssid" title="apetools.commands.dumpsyswifi.DumpsysWifi.bssid"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.bssid</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">bssid of the connection</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.get_match</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.mac_address" title="apetools.commands.dumpsyswifi.DumpsysWifi.mac_address"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.mac_address</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">MAC Address of the Wifi Interface</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.supplicant_state" title="apetools.commands.dumpsyswifi.DumpsysWifi.supplicant_state"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.supplicant_state</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">WPA Supplicant&#8217;s state&gt;</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.rssi" title="apetools.commands.dumpsyswifi.DumpsysWifi.rssi"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.rssi</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the Received Signal Strength Indicator</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.link_speed" title="apetools.commands.dumpsyswifi.DumpsysWifi.link_speed"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.link_speed</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">the link speed of the WiFi connection</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/commands_api/apetools.commands.dumpsyswifi.html#apetools.commands.dumpsyswifi.DumpsysWifi.get_match" title="apetools.commands.dumpsyswifi.DumpsysWifi.get_match"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.get_match</span></tt></a>(expression,&nbsp;key)</td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.commands.dumpsyswifi.DumpsysWifi.__str__.html#apetools.commands.dumpsyswifi.DumpsysWifi.__str__" title="apetools.commands.dumpsyswifi.DumpsysWifi.__str__"><tt class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.__str__</span></tt></a>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">DumpsysWifi.__str__</span></code></td>
 <td></td>
 </tr>
 </tbody>
@@ -439,7 +277,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

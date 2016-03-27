@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>IPad Throughput Example &mdash; APETools 2014.09.18 documentation</title>
+    <title>IPad Throughput Example &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
     <link rel="up" title="User Examples" href="index.html" />
     <link rel="next" title="Read-Only Device, Non-Interactive PATH Not Complete" href="set_path_example.html" />
     <link rel="prev" title="User Examples" href="index.html" />
@@ -38,7 +38,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +51,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -130,7 +130,7 @@
     </a>
   </li>
   <li>
-    <a href="set_path_example.html" title="Next Chapter: Read-Only Device, Non-Interactive PATH Not Complete"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Read-Only Device... &raquo;</span>
+    <a href="set_path_example.html" title="Next Chapter: Read-Only Device, Non-Interactive PATH Not Complete"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Read-Only Dev... &raquo;</span>
     </a>
   </li>
               
@@ -162,7 +162,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="ipad-throughput-example">
 <h1>IPad Throughput Example<a class="headerlink" href="#ipad-throughput-example" title="Permalink to this headline">¶</a></h1>
@@ -197,7 +197,7 @@
 <li><p class="first">It has a running ssh-server</p>
 </li>
 <li><p class="first"><cite>iperf</cite> is installed on the non-interactive path. Check the path with:</p>
-<div class="highlight-python"><div class="highlight"><pre>ssh IPAD &#39;echo $PATH&#39;
+<div class="highlight-python"><div class="highlight"><pre><span></span>ssh IPAD &#39;echo $PATH&#39;
 </pre></div>
 </div>
 </li>
@@ -207,7 +207,7 @@
 </div>
 <div class="section" id="the-process">
 <h2>The Process<a class="headerlink" href="#the-process" title="Permalink to this headline">¶</a></h2>
-<p>The first step might seem a little abstract so see <a class="reference internal" href="#example-ipad-config-file"><em>the example</em></a> below.</p>
+<p>The first step might seem a little abstract so see <a class="reference internal" href="#example-ipad-config-file"><span>the example</span></a> below.</p>
 <ol class="arabic">
 <li><p class="first">Edit the config file:</p>
 <ol class="arabic simple">
@@ -217,23 +217,23 @@
 </ol>
 </li>
 <li><p class="first">Start the server on the ipad:</p>
-<div class="highlight-python"><div class="highlight"><pre>ssh IPAD &#39;iperf -sD &gt; /dev/null&#39;
+<div class="highlight-python"><div class="highlight"><pre><span></span>ssh IPAD &#39;iperf -sD &gt; /dev/null&#39;
 </pre></div>
 </div>
 </li>
 <li><p class="first">Run the APE:</p>
-<div class="highlight-python"><div class="highlight"><pre>ape run
+<div class="highlight-python"><div class="highlight"><pre><span></span>ape run
 </pre></div>
 </div>
 </li>
 </ol>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you find it hard to remember the iperf flags you can also use <tt class="docutils literal"><span class="pre">iperf</span> <span class="pre">--server</span> <span class="pre">--daemon</span> <span class="pre">&gt;</span> <span class="pre">/dev/null</span></tt></p>
+<p class="last">If you find it hard to remember the iperf flags you can also use <code class="docutils literal"><span class="pre">iperf</span> <span class="pre">--server</span> <span class="pre">--daemon</span> <span class="pre">&gt;</span> <span class="pre">/dev/null</span></code></p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you want to save the output replace <tt class="docutils literal"><span class="pre">/dev/null</span></tt> with a filename</p>
+<p class="last">If you want to save the output replace <code class="docutils literal"><span class="pre">/dev/null</span></code> with a filename</p>
 </div>
 </div>
 <div class="section" id="killing-iperf">
@@ -241,14 +241,14 @@
 <p>If you&#8217;ve installed <cite>top</cite> then you should be able to kill it by doing the following:</p>
 <ol class="arabic">
 <li><p class="first">Get the process ID:</p>
-<div class="highlight-python"><div class="highlight"><pre>ssh IPAD &#39;top -l 1&#39; | grep iperf
+<div class="highlight-python"><div class="highlight"><pre><span></span>ssh IPAD &#39;top -l 1&#39; | grep iperf
 </pre></div>
 </div>
 </li>
 <li><p class="first">Note the <em>process ID</em> (the first number of the line).</p>
 </li>
 <li><p class="first">Kill the process:</p>
-<div class="highlight-python"><div class="highlight"><pre>ssh IPAD kill &lt;process id&gt;
+<div class="highlight-python"><div class="highlight"><pre><span></span>ssh IPAD kill &lt;process id&gt;
 </pre></div>
 </div>
 </li>
@@ -261,7 +261,7 @@
 <div class="section" id="example-config-file">
 <span id="example-ipad-config-file"></span><h2>Example Config File<a class="headerlink" href="#example-config-file" title="Permalink to this headline">¶</a></h2>
 <p>To setup a test that only ran traffic to the ipad you could use a configuration like the following:</p>
-<div class="highlight-ini"><div class="highlight"><pre><span class="k">[TEST]</span>
+<div class="highlight-ini"><div class="highlight"><pre><span></span><span class="k">[TEST]</span>
 <span class="na">execute_test</span> <span class="o">=</span> <span class="s">iperf</span>
 <span class="na">output_folder</span> <span class="o">=</span> <span class="s">iperf_hack_test_{t}</span>
 <span class="na">repeat</span> <span class="o">=</span> <span class="s">2</span>
@@ -306,7 +306,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

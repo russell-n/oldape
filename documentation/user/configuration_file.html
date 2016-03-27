@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Configuration File &mdash; APETools 2014.09.18 documentation</title>
+    <title>The Configuration File &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,9 +26,9 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../index.html" />
     <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
     <link rel="next" title="Sample Configuration" href="sample_configuration.html" />
     <link rel="prev" title="Watchlogs Configuration" href="watchlogs.html" />
@@ -38,7 +38,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +51,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -141,11 +141,11 @@
               
                 
   <li>
-    <a href="watchlogs.html" title="Previous Chapter: Watchlogs Configuration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Watchlogs Config...</span>
+    <a href="watchlogs.html" title="Previous Chapter: Watchlogs Configuration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Watchlogs Con...</span>
     </a>
   </li>
   <li>
-    <a href="sample_configuration.html" title="Next Chapter: Sample Configuration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Sample Configura... &raquo;</span>
+    <a href="sample_configuration.html" title="Next Chapter: Sample Configuration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Sample Config... &raquo;</span>
     </a>
   </li>
               
@@ -177,12 +177,12 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="the-configuration-file">
 <h1>The Configuration File<a class="headerlink" href="#the-configuration-file" title="Permalink to this headline">¶</a></h1>
 <p id="configuration-file">The configuration file is how a particular test or set of test is run. When the <cite>run</cite> sub-command is given:</p>
-<div class="highlight-python"><div class="highlight"><pre>ape run
+<div class="highlight-python"><div class="highlight"><pre><span></span>ape run
 </pre></div>
 </div>
 <p>The program will look for any file that matches the file-glob (<cite>*.ini</cite> by default) and execute them in lexicographic order. The configuration files use the <a class="reference external" href="http://en.wikipedia.org/wiki/INI_file">INI</a> file format.</p>
@@ -209,15 +209,15 @@
 </div></blockquote>
 <p>Each of these options takes a comma-separated list that corresponds to a component. See the following sections for examples. If you don&#8217;t want to use a particular option, comment it out or remove it.</p>
 <p>For example, the following would only run <cite>iperf</cite>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
-<span class="c">#operation_setup = watchlogs,oscillate</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<span class="c1">#operation_setup = watchlogs,oscillate</span>
 <span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
 </pre></div>
 </div>
 <div class="section" id="operation-setup">
 <h4>Operation Setup<a class="headerlink" href="#operation-setup" title="Permalink to this headline">¶</a></h4>
 <p>The <cite>operation_setup</cite> option is run once per test (conceptually a configuration file corresponds to a single test, so these components will only be run once per file-setup). An example use of this option is to run the <cite>watchlogs</cite> component which captures various logs from devices:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
 <span class="n">operation_setup</span> <span class="o">=</span> <span class="n">watchlogs</span>
 </pre></div>
 </div>
@@ -226,7 +226,7 @@
 <div class="section" id="the-setup-test-option">
 <h4>The Setup Test Option<a class="headerlink" href="#the-setup-test-option" title="Permalink to this headline">¶</a></h4>
 <p>The next option is <cite>setup_test</cite>. Components declared here will be run once for every test repetition. This is more of a conceptual-distinction, as you could put them in the test section. An example would be if you are using a power switch to turn on AP&#8217;s and want the code to wait until the device has connected to the AP:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">setup_test</span> <span class="o">=</span> <span class="n">poweron</span><span class="p">,</span><span class="n">timetorecovery</span><span class="p">,</span><span class="n">dumpdevicestate</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">setup_test</span> <span class="o">=</span> <span class="n">poweron</span><span class="p">,</span><span class="n">timetorecovery</span><span class="p">,</span><span class="n">dumpdevicestate</span>
 </pre></div>
 </div>
 <p>The <cite>poweron</cite> component will be executed first (and will expect a <cite>[POWERON]</cite> section in the configuration), the <cite>timetorecovery</cite> will ping until there is a connection (or a timeout) and the <cite>dumpdevicestate</cite> will dump whatever information about the state of the device&#8217;s connection that it can get to the screen and a log-file.</p>
@@ -234,7 +234,7 @@
 <div class="section" id="the-execute-test-options">
 <h4>The Execute Test Options<a class="headerlink" href="#the-execute-test-options" title="Permalink to this headline">¶</a></h4>
 <p>This is the section where components to actually run the test should go. The most common thing here would be <cite>iperf</cite>:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
 </pre></div>
 </div>
 <p>As with the previous options, there will need to be an <cite>[IPERF]</cite> section for this to be a valid configuration.</p>
@@ -259,7 +259,7 @@
 <div class="section" id="output-folder-option">
 <h4>Output Folder Option<a class="headerlink" href="#output-folder-option" title="Permalink to this headline">¶</a></h4>
 <p>Hopefully this is fairly intuitive. The only thing that might not be is the time-stamping option. Anywhere in the string that there&#8217;s a <cite>{t}</cite> a timestamp will be inserted. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>output_folder = tate_cisco_1250_{t}
+<div class="highlight-python"><div class="highlight"><pre><span></span>output_folder = tate_cisco_1250_{t}
 </pre></div>
 </div>
 <p>Might produce a folder with the name <cite>tate_cisco_1250_2013_04_08</cite>.</p>
@@ -285,7 +285,7 @@
 <div class="section" id="the-nodes">
 <span id="node-configuration"></span><h2>The Nodes<a class="headerlink" href="#the-nodes" title="Permalink to this headline">¶</a></h2>
 <p>The next required section is [NODES]. This is where devices that are to be tested are declared. Each device gets its own line. For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>[NODES]
+<div class="highlight-python"><div class="highlight"><pre><span></span>[NODES]
 
 tate = hostname:phoridfly,login:root,operating_system:android,connection:adbshellssh,test_interface:wlan0
 </pre></div>
@@ -302,7 +302,7 @@ tate = hostname:phoridfly,login:root,operating_system:android,connection:adbshel
 </ul>
 </div></blockquote>
 <p>The general form for the node declarations are:</p>
-<div class="highlight-python"><div class="highlight"><pre>&lt;identifier&gt; = hostname:&lt;ip or name&gt;,login:&lt;user login&gt;,operating_system:&lt;OS&gt;,
+<div class="highlight-python"><div class="highlight"><pre><span></span>&lt;identifier&gt; = hostname:&lt;ip or name&gt;,login:&lt;user login&gt;,operating_system:&lt;OS&gt;,
     connection:&lt;type&gt;,test_interface:&lt;interface name&gt;
 </pre></div>
 </div>
@@ -330,7 +330,7 @@ tate = hostname:phoridfly,login:root,operating_system:android,connection:adbshel
 <p>If other options are neede by the connection, add with &lt;name&gt;:&lt;value&gt; format. The only extra option at the moment is <cite>password:&lt;login password&gt;</cite> which is only needed if the public-keys aren&#8217;t set up between the PC running the code and the Node.</p>
 <p>As a rule of thumb, prefer <em>ssh</em> over <em>telnet</em>, <em>telnet</em> over <em>serial</em> or <em>local</em>.</p>
 <p>A MacBook Sample:</p>
-<div class="highlight-python"><div class="highlight"><pre>[NODES]
+<div class="highlight-python"><div class="highlight"><pre><span></span>[NODES]
 hostname:macbook,login:allion,password:testlabs,operating_system:mac, connection:ssh, test_interface:en1
 </pre></div>
 </div>
@@ -339,7 +339,7 @@ hostname:macbook,login:allion,password:testlabs,operating_system:mac, connection
 <span id="traffic-pc"></span><h2>The Traffic PC<a class="headerlink" href="#the-traffic-pc" title="Permalink to this headline">¶</a></h2>
 <p>The next required section is the <cite>[TRAFFIC_PC]</cite>. It uses the same format as the nodes but is used only for the other side of an iperf session.</p>
 <p>For example:</p>
-<div class="highlight-python"><div class="highlight"><pre>[TRAFFIC_PC]
+<div class="highlight-python"><div class="highlight"><pre><span></span>[TRAFFIC_PC]
 tpc = operating_system:linux,connection:ssh,test_interface:eth3,hostname:lancet,login:allion
 </pre></div>
 </div>
@@ -372,7 +372,7 @@ tpc = operating_system:linux,connection:ssh,test_interface:eth3,hostname:lancet,
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>apetools.builders.builder &mdash; APETools 2014.09.18 documentation</title>
+    <title>apetools.builders.builder &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -141,400 +141,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
-  <div class="section" id="module-apetools.builders.builder">
-<span id="apetools-builders-builder"></span><h1>apetools.builders.builder<a class="headerlink" href="#module-apetools.builders.builder" title="Permalink to this headline">¶</a></h1>
-<p class="rubric">Classes</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
-<td>This class holds the minimum common features.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#apetools.builders.builder.Builder" title="apetools.builders.builder.Builder"><tt class="xref py py-obj docutils literal"><span class="pre">Builder</span></tt></a>(maps,&nbsp;*args,&nbsp;**kwargs)</td>
-<td>A builder builds objects</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.builders.builder.BuilderEnum" title="apetools.builders.builder.BuilderEnum"><tt class="xref py py-obj docutils literal"><span class="pre">BuilderEnum</span></tt></a></td>
-<td>A class to hold constants for the builder</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConfigOptions</span></tt></td>
-<td>An enumeration of sorts to hold the section and option names for the config file.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionTypes</span></tt></td>
-<td>ConnectionTypes holds the connection names</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ExecuteTestBuilder</span></tt>(*args,&nbsp;**kwargs)</td>
-<td>A class to build execute test Operations</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.builders.builder.GeneratorHolder" title="apetools.builders.builder.GeneratorHolder"><tt class="xref py py-obj docutils literal"><span class="pre">GeneratorHolder</span></tt></a>(generator,&nbsp;count)</td>
-<td>A holder of generators</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">MagicMock</span></tt></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">NoOpDummy</span></tt>([name])</td>
-<td>The NoOpDummy does nothing when asked to do something.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">NodesBuilder</span></tt>(builder,&nbsp;config_map)</td>
-<td>A generic builder of id:device dictionaries</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">OperationSetupBuilder</span></tt>(*args,&nbsp;**kwargs)</td>
-<td>A class to build Operation Setups</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">OperationTeardownBuilder</span></tt>(*args,&nbsp;**kwargs)</td>
-<td>A class to build Teardown Operations</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">ParameterGenerator</span></tt>(parameters,&nbsp;*args,&nbsp;**kwargs)</td>
-<td>A ParameterGenerator is an iterator that generates test-parameters.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Parameters</span></tt></td>
-<td>Parameters(name, parameters)</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">Semaphore</span></tt>([size])</td>
-<td>Implements a Semaphore using Alan Downey&#8217;s notation.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">SetupTestBuilder</span></tt>(*args,&nbsp;**kwargs)</td>
-<td>A class to build Test Setups</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">TeardownTestBuilder</span></tt>(*args,&nbsp;**kwargs)</td>
-<td>A class to build Setup Operations</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">TestOperator</span></tt>(test_parameters,&nbsp;...[,&nbsp;...])</td>
-<td>An operator runs the sequence of operations.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">TpcDeviceBuilder</span></tt>(config_map)</td>
-<td>A class to build the TPC device</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">iperf_direction</span></tt></td>
-<td>alias of <tt class="xref py py-class docutils literal"><span class="pre">IperfDirection</span></tt></td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">operating_systems</span></tt></td>
-<td>alias of <tt class="xref py py-class docutils literal"><span class="pre">OperatingSystem</span></tt></td>
-</tr>
-</tbody>
-</table>
-<dl class="class">
-<dt id="apetools.builders.builder.Builder">
-<em class="property">class </em><tt class="descclassname">apetools.builders.builder.</tt><tt class="descname">Builder</tt><big>(</big><em>maps</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A builder builds objects</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>maps</cite>: A generator of ConfigurationMaps</li>
-</ul>
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.build_operator">
-<tt class="descname">build_operator</tt><big>(</big><em>config_map</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.build_operator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.build_operator" title="Permalink to this definition">¶</a></dt>
-<dd><p>Put here so operators property can catch exceptions
-and prevent killing later operators</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>config_map</cite>: a Configuration Map</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">Built TestOperator</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Postconditions:</th><td class="field-body"><ul class="first last simple">
-<li>reset called</li>
-<li>self.current_config set to the config_map</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.execute_test_builder">
-<tt class="descname">execute_test_builder</tt><big>(</big><em>config_map=None</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.execute_test_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.execute_test_builder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">builder for the test executor</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.builders.builder.Builder.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.operation_setup_builder">
-<tt class="descname">operation_setup_builder</tt><big>(</big><em>config_map=None</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.operation_setup_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.operation_setup_builder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">builder for the operation</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.operation_teardown_builder">
-<tt class="descname">operation_teardown_builder</tt><big>(</big><em>config_map=None</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.operation_teardown_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.operation_teardown_builder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">builder for the operation teardown</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.reset">
-<tt class="descname">reset</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.reset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.reset" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">parameters reset to None</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.setup_test_builder">
-<tt class="descname">setup_test_builder</tt><big>(</big><em>config_map=None</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.setup_test_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.setup_test_builder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">builder for the test setup</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.builders.builder.Builder.teardown_test_builder">
-<tt class="descname">teardown_test_builder</tt><big>(</big><em>config_map=None</em>, <em>parameters=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.teardown_test_builder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.teardown_test_builder" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">builder for the test teardown</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.events">
-<tt class="descname">events</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.events"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.events" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">EventHolder to hold events</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.hortator">
-<tt class="descname">hortator</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.hortator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.hortator" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">The Hortator for the test operators</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.builders.builder.Builder.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.nodes">
-<tt class="descname">nodes</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.nodes" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary of id:node-device pairs</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.operators">
-<tt class="descname">operators</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.operators"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.operators" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Yield:</th><td class="field-body">test operators</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.parameters">
-<tt class="descname">parameters</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.parameters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.parameters" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of parameters</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.repetitions">
-<tt class="descname">repetitions</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.repetitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.repetitions" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list of named tuples giving repetitions parameters</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.saved_semaphore">
-<tt class="descname">saved_semaphore</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.saved_semaphore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.saved_semaphore" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">semaphore allowing increase in size (default=0)</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.semaphore">
-<tt class="descname">semaphore</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.semaphore"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.semaphore" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">semaphore with size incremented by one</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.storage">
-<tt class="descname">storage</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.storage"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.storage" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>folder_name</cite>: The name of the output folder for data.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body"><p class="first">self.current_config is a configuration map</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">StorageOutput for the folder.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.thread_nodes">
-<tt class="descname">thread_nodes</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.thread_nodes"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.thread_nodes" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary of id:node-device pairs to be used in threads</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.builder.Builder.tpc_device">
-<tt class="descname">tpc_device</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#Builder.tpc_device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.Builder.tpc_device" title="Permalink to this definition">¶</a></dt>
-<dd><p>This only creates a new device the first time.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">device for the traffic pc</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.builders.builder.BuilderEnum">
-<em class="property">class </em><tt class="descclassname">apetools.builders.builder.</tt><tt class="descname">BuilderEnum</tt><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#BuilderEnum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.BuilderEnum" title="Permalink to this definition">¶</a></dt>
-<dd><p>A class to hold constants for the builder</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.builders.builder.GeneratorHolder">
-<em class="property">class </em><tt class="descclassname">apetools.builders.builder.</tt><tt class="descname">GeneratorHolder</tt><big>(</big><em>generator</em>, <em>count</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/builder.html#GeneratorHolder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.builder.GeneratorHolder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A holder of generators</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>generator</cite>: a generator to yield objects</li>
-<li><cite>count</cite> : the number of items that should be generated</li>
-</ul>
-</dd></dl>
-
+  <div class="section" id="apetools-builders-builder">
+<h1>apetools.builders.builder<a class="headerlink" href="#apetools-builders-builder" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -550,7 +160,7 @@ and prevent killing later operators</p>
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

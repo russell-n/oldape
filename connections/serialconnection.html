@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Serial Connection &mdash; APETools 2014.09.18 documentation</title>
+    <title>Serial Connection &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,19 +26,17 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Connections" href="index.html" />
-    <link rel="next" title="apetools.connections.serialconnection.SerialConnection" href="api/apetools.connections.serialconnection.SerialConnection.html" />
-    <link rel="prev" title="apetools.connections.serialadapter.SerialAdapter.writeline" href="api/apetools.connections.serialadapter.SerialAdapter.writeline.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -115,14 +113,6 @@
             
               
                 
-  <li>
-    <a href="api/apetools.connections.serialadapter.SerialAdapter.writeline.html" title="Previous Chapter: apetools.connections.serialadapter.SerialAdapter.writeline"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.connect...</span>
-    </a>
-  </li>
-  <li>
-    <a href="api/apetools.connections.serialconnection.SerialConnection.html" title="Next Chapter: apetools.connections.serialconnection.SerialConnection"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.connect... &raquo;</span>
-    </a>
-  </li>
               
             
             
@@ -152,7 +142,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="serial-connection">
 <h1>Serial Connection<a class="headerlink" href="#serial-connection" title="Permalink to this headline">¶</a></h1>
@@ -160,9 +150,9 @@
 <p>The SerialConnection takes the command-line command as a property and
 the arguments to the command as parameters.</p>
 <p>e.g.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sc</span> <span class="o">=</span> <span class="n">SerialConnection</span><span class="p">()</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>sc = SerialConnection()
+output = sc.ls(&#39;-l&#39;)
+print output.output
 </pre></div>
 </div>
 <p>prints the output of the <cite>ls -l</cite> command line command</p>
@@ -175,25 +165,17 @@ the arguments to the command as parameters.</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection" title="apetools.connections.serialconnection.SerialConnection"><tt class="xref py py-obj docutils literal"><span class="pre">SerialConnection</span></tt></a>(port,&nbsp;baudrate[,&nbsp;timeout,&nbsp;...])</td>
-<td>A SerialConnection executes commands over a serial connections</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">SerialConnection</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection.client" title="apetools.connections.serialconnection.SerialConnection.client"><tt class="xref py py-obj docutils literal"><span class="pre">SerialConnection.client</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">SerialAdapter for the Serial Connection</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">SerialConnection.client</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">SerialConnection.set_timeout</span></code></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection.set_timeout" title="apetools.connections.serialconnection.SerialConnection.set_timeout"><tt class="xref py py-obj docutils literal"><span class="pre">SerialConnection.set_timeout</span></tt></a>(new_timeout)</td>
-<td>Some of the configuration commands for devices take a long time.</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.serialconnection.html#apetools.connections.serialconnection.SerialConnection._procedure_call" title="apetools.connections.serialconnection.SerialConnection._procedure_call"><tt class="xref py py-obj docutils literal"><span class="pre">SerialConnection._procedure_call</span></tt></a>(command[,&nbsp;...])</td>
-<td>Despite its name, this isn&#8217;t intended to be run.</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">SerialConnection._procedure_call</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -212,7 +194,7 @@ the arguments to the command as parameters.</p>
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

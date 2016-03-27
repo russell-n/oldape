@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The IperfSession &mdash; APETools 2014.09.18 documentation</title>
+    <title>The IperfSession &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -147,11 +147,11 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="the-iperfsession">
 <h1>The IperfSession<a class="headerlink" href="#the-iperfsession" title="Permalink to this headline">¶</a></h1>
-<p>An adapter to make the tools match the use of multiple nodes. It extracts the correct node and determines if it is acting as the client or server based on the parameters passed in, then calls on the <a class="reference internal" href="../../../tools/iperftest.html#iperf-test"><em>IperfTest</em></a> to run the test.</p>
+<p>An adapter to make the tools match the use of multiple nodes. It extracts the correct node and determines if it is acting as the client or server based on the parameters passed in, then calls on the <a class="reference internal" href="../../../tools/iperftest.html#iperf-test"><span>IperfTest</span></a> to run the test.</p>
 <div class="section" id="parameters">
 <h2>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h2>
 <p>The <cite>SenderReceiver</cite> parameters are used to bundle two nodes and identify their role.</p>
@@ -177,8 +177,8 @@ SenderReceiver : receiver" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../../../tools/api/apetools.tools.iperfsession.IperfSession.html#apetools.tools.iperfsession.IperfSession" title="apetools.tools.iperfsession.IperfSession"><tt class="xref py py-obj docutils literal"><span class="pre">IperfSession</span></tt></a>(iperf_test,&nbsp;nodes,&nbsp;tpc[,&nbsp;...])</td>
-<td>A bundler of nodes and the iperftest</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">IperfSession</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -191,15 +191,15 @@ IperfSession : filename_base
 IperfSession : __call__(parameters, filename_prefix)" />
 </p>
 <ul class="simple">
-<li>See <a class="reference internal" href="../../../tools/iperftest.html#iperf-test"><em>IperfTest</em></a></li>
-<li><tt class="docutils literal"><span class="pre">nodes</span></tt> is a dictionary of <cite>id</cite> (key`) to <cite>device</cite> (value) mappings.</li>
-<li><tt class="docutils literal"><span class="pre">tpc</span></tt> is a built <cite>device</cite> for the traffic-generating PC</li>
+<li>See <a class="reference internal" href="../../../tools/iperftest.html#iperf-test"><span>IperfTest</span></a></li>
+<li><code class="docutils literal"><span class="pre">nodes</span></code> is a dictionary of <cite>id</cite> (key`) to <cite>device</cite> (value) mappings.</li>
+<li><code class="docutils literal"><span class="pre">tpc</span></code> is a built <cite>device</cite> for the traffic-generating PC</li>
 </ul>
 </div>
 <div class="section" id="the-call">
 <h2>The Call<a class="headerlink" href="#the-call" title="Permalink to this headline">¶</a></h2>
-<p>The <tt class="docutils literal"><span class="pre">__call__</span></tt> takes a namedtuple (<cite>parameters</cite>) and an optional filename-prefix that it will add to the output file (if given):</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">sender_receiver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particpants</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+<p>The <code class="docutils literal"><span class="pre">__call__</span></code> takes a namedtuple (<cite>parameters</cite>) and an optional filename-prefix that it will add to the output file (if given):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sender_receiver</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">particpants</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
 <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">parameters</span><span class="p">,</span> <span class="n">filename_prefix</span><span class="p">)</span>
 <span class="bp">self</span><span class="o">.</span><span class="n">poll</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iperf_test</span><span class="p">(</span><span class="n">sender</span><span class="o">=</span><span class="n">sender_receiver</span><span class="o">.</span><span class="n">sender</span><span class="p">,</span>
                             <span class="n">receiver</span><span class="o">=</span><span class="n">sender_receiver</span><span class="o">.</span><span class="n">receiver</span><span class="p">,</span>
@@ -207,9 +207,9 @@ IperfSession : __call__(parameters, filename_prefix)" />
 </pre></div>
 </div>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">self.participants</span></tt> gets the <cite>node</cite> and direction from the parameters and returns a <cite>SenderReceiver</cite></li>
-<li><tt class="docutils literal"><span class="pre">self.filename</span></tt> creates a string with the suffix <cite>.iperf</cite></li>
-<li><tt class="docutils literal"><span class="pre">self.poll</span></tt> is set in case meaningful output is returned and a user of the <cite>IperfSession</cite> wanted to retrieve it later</li>
+<li><code class="docutils literal"><span class="pre">self.participants</span></code> gets the <cite>node</cite> and direction from the parameters and returns a <cite>SenderReceiver</cite></li>
+<li><code class="docutils literal"><span class="pre">self.filename</span></code> creates a string with the suffix <cite>.iperf</cite></li>
+<li><code class="docutils literal"><span class="pre">self.poll</span></code> is set in case meaningful output is returned and a user of the <cite>IperfSession</cite> wanted to retrieve it later</li>
 </ul>
 </div>
 </div>
@@ -227,7 +227,7 @@ IperfSession : __call__(parameters, filename_prefix)" />
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

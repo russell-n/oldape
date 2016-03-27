@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tshark Watcher &mdash; APETools 2014.09.18 documentation</title>
+    <title>Tshark Watcher &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,19 +26,17 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Watchers" href="index.html" />
-    <link rel="next" title="apetools.watchers.tsharkwatcher.TsharkWatcher" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.html" />
-    <link rel="prev" title="apetools.watchers.thewatcher.TheWatcher.__del__" href="api/apetools.watchers.thewatcher.TheWatcher.__del__.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -115,14 +113,6 @@
             
               
                 
-  <li>
-    <a href="api/apetools.watchers.thewatcher.TheWatcher.__del__.html" title="Previous Chapter: apetools.watchers.thewatcher.TheWatcher.__del__"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.watcher...</span>
-    </a>
-  </li>
-  <li>
-    <a href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.html" title="Next Chapter: apetools.watchers.tsharkwatcher.TsharkWatcher"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.watcher... &raquo;</span>
-    </a>
-  </li>
               
             
             
@@ -152,20 +142,20 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="tshark-watcher">
 <h1>Tshark Watcher<a class="headerlink" href="#tshark-watcher" title="Permalink to this headline">¶</a></h1>
 <p>A module to watch frame and byte-counts using tshark.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">TsharkWatcherEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">TsharkWatcherEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    A class to hold variable names</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">frames</span> <span class="o">=</span> <span class="s">&quot;frames&quot;</span>
-    <span class="nb">bytes</span> <span class="o">=</span> <span class="s">&#39;bytes&#39;</span>
+    <span class="n">frames</span> <span class="o">=</span> <span class="s2">&quot;frames&quot;</span>
+    <span class="nb">bytes</span> <span class="o">=</span> <span class="s1">&#39;bytes&#39;</span>
 
-<span class="c"># end class TsharkWatcherEnum</span>
+<span class="c1"># end class TsharkWatcherEnum</span>
 </pre></div>
 </div>
 <p class="plantuml">
@@ -177,72 +167,32 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.html#apetools.watchers.tsharkwatcher.TsharkWatcher" title="apetools.watchers.tsharkwatcher.TsharkWatcher"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher</span></tt></a>(connection[,&nbsp;output,&nbsp;interface])</td>
-<td>A class to watch bytes and frames using tshark</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.timestamp.html#apetools.watchers.tsharkwatcher.TsharkWatcher.timestamp" title="apetools.watchers.tsharkwatcher.TsharkWatcher.timestamp"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.timestamp</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">timestamper</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.output.html#apetools.watchers.tsharkwatcher.TsharkWatcher.output" title="apetools.watchers.tsharkwatcher.TsharkWatcher.output"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.output</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">file object to write to</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.expression.html#apetools.watchers.tsharkwatcher.TsharkWatcher.expression" title="apetools.watchers.tsharkwatcher.TsharkWatcher.expression"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.expression</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">a regular expression to match tshark output</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.call_once.html#apetools.watchers.tsharkwatcher.TsharkWatcher.call_once" title="apetools.watchers.tsharkwatcher.TsharkWatcher.call_once"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.call_once</span></tt></a>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher</span></code></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.stop.html#apetools.watchers.tsharkwatcher.TsharkWatcher.stop" title="apetools.watchers.tsharkwatcher.TsharkWatcher.stop"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.stop</span></tt></a>()</td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">self.stopped is True</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.timestamp</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.output</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.expression</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.call_once</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.stop</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.__call__</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.watchers.tsharkwatcher.TsharkWatcher.__call__.html#apetools.watchers.tsharkwatcher.TsharkWatcher.__call__" title="apetools.watchers.tsharkwatcher.TsharkWatcher.__call__"><tt class="xref py py-obj docutils literal"><span class="pre">TsharkWatcher.__call__</span></tt></a>([duration])</td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">postcondition:</th><td class="field-body">tshark data sent to self.output</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">apetools.connections.sshconnection</span> <span class="kn">import</span> <span class="n">SSHConnection</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&quot;portegeether&quot;</span><span class="p">,</span> <span class="s">&quot;portegeadmin&quot;</span><span class="p">)</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s2">&quot;portegeether&quot;</span><span class="p">,</span> <span class="s2">&quot;portegeadmin&quot;</span><span class="p">)</span>
     <span class="n">watch</span> <span class="o">=</span> <span class="n">TsharkWatcher</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
     <span class="n">watch</span><span class="p">()</span>
 </pre></div>
@@ -262,7 +212,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

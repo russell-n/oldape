@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Fetched Files &mdash; APETools 2014.09.18 documentation</title>
+    <title>The Fetched Files &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,19 +26,18 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Lexicographers" href="index.html" />
     <link rel="next" title="Time Converter" href="timeconverter.html" />
-    <link rel="prev" title="apetools.lexicographers.parametertree.ParameterTree._traverse" href="api/apetools.lexicographers.parametertree.ParameterTree._traverse.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +50,7 @@
         </button>
         <a class="navbar-brand" href="../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +73,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -119,10 +118,6 @@
               
                 
   <li>
-    <a href="api/apetools.lexicographers.parametertree.ParameterTree._traverse.html" title="Previous Chapter: apetools.lexicographers.parametertree.ParameterTree._traverse"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.lexicog...</span>
-    </a>
-  </li>
-  <li>
     <a href="timeconverter.html" title="Next Chapter: Time Converter"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Time Converter &raquo;</span>
     </a>
   </li>
@@ -155,7 +150,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="the-fetched-files">
 <h1>The Fetched Files<a class="headerlink" href="#the-fetched-files" title="Permalink to this headline">¶</a></h1>
@@ -173,14 +168,14 @@
 </div></blockquote>
 <p>For those not familiar with the <cite>source</cite> command, Unix doesn&#8217;t allow a running program to change the state of its parents variables, so if you want to change an environment variable (in this case <cite>AP_PORT</cite>, which android.py uses to find the SL4a server), you need to use the <cite>source</cite> command to get around this.</p>
 <p>The <cite>source_this_for_sl4a</cite> file:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="c"># This will find the sl4a server port and forward it.</span>
-<span class="c"># Due to permission restrictions, you can&#39;t run this as a script.</span>
-<span class="c"># instead use source:</span>
-<span class="c"># bash_prompt&gt; source source_this_for_sl4a</span>
-<span class="c"># Warning: this is a work in progress. In particular, netstat doesn&#39;t have a way to idendtify what the meaning of the ports are</span>
-<span class="c"># So the port-forwarding might not work. On recently started machines, it usually works.</span>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="c1"># This will find the sl4a server port and forward it.</span>
+<span class="c1"># Due to permission restrictions, you can&#39;t run this as a script.</span>
+<span class="c1"># instead use source:</span>
+<span class="c1"># bash_prompt&gt; source source_this_for_sl4a</span>
+<span class="c1"># Warning: this is a work in progress. In particular, netstat doesn&#39;t have a way to idendtify what the meaning of the ports are</span>
+<span class="c1"># So the port-forwarding might not work. On recently started machines, it usually works.</span>
 
-<span class="c">#echo  &quot;the Happy Path : kill all the servers in the SL4A GUI then source this.&quot;</span>
+<span class="c1">#echo  &quot;the Happy Path : kill all the servers in the SL4A GUI then source this.&quot;</span>
 
 <span class="nv">PREFIX</span><span class="o">=</span><span class="s2">&quot;::ffff:127\.0\.0\.1:&quot;</span>
 <span class="nv">PORT</span><span class="o">=</span><span class="s2">&quot;[0-9]\{5\}&quot;</span>
@@ -188,25 +183,25 @@
 <span class="nv">LOCAL_ADDRESS</span><span class="o">=</span><span class="nv">$PREFIX$PORT</span>
 
 
-<span class="c"># check if the server has been started</span>
-<span class="nv">SL4A</span><span class="o">=</span><span class="sb">`</span>adb shell netstat | grep -o <span class="nv">$LOCAL_ADDRESS</span> | grep -o <span class="nv">$PORT</span><span class="sb">`</span>
+<span class="c1"># check if the server has been started</span>
+<span class="nv">SL4A</span><span class="o">=</span><span class="sb">`</span>adb shell netstat <span class="p">|</span> grep -o <span class="nv">$LOCAL_ADDRESS</span> <span class="p">|</span> grep -o <span class="nv">$PORT</span><span class="sb">`</span>
 
-<span class="c">#start the server</span>
+<span class="c1">#start the server</span>
 <span class="k">if</span> <span class="o">[</span> -z <span class="nv">$SL4A</span> <span class="o">]</span>
     <span class="k">then</span>
-<span class="k">        </span>adb shell am start -a com.googlecode.android_scripting.action.LAUNCH_SERVER -n com.googlecode.android_scripting/.activity.ScriptingLayerServiceLauncher
+        adb shell am start -a com.googlecode.android_scripting.action.LAUNCH_SERVER -n com.googlecode.android_scripting/.activity.ScriptingLayerServiceLauncher
         <span class="nb">echo</span> <span class="s2">&quot;Sleeping for a second to let the server start.&quot;</span>
         sleep 1
 <span class="k">fi</span>
 
-<span class="nv">SL4A</span><span class="o">=</span><span class="sb">`</span>adb shell netstat | grep -o <span class="nv">$LOCAL_ADDRESS</span> | grep -o <span class="nv">$PORT</span><span class="sb">`</span>
+<span class="nv">SL4A</span><span class="o">=</span><span class="sb">`</span>adb shell netstat <span class="p">|</span> grep -o <span class="nv">$LOCAL_ADDRESS</span> <span class="p">|</span> grep -o <span class="nv">$PORT</span><span class="sb">`</span>
 
 <span class="nb">echo</span> <span class="s2">&quot;Forwarding to port: &quot;</span><span class="nv">$SL4A</span>
 
 <span class="nb">echo</span> <span class="nv">$SL4A</span>
 adb forward tcp:9999 tcp:<span class="nv">$SL4A</span>
 
-<span class="nb">export </span><span class="nv">AP_PORT</span><span class="o">=</span>9999
+<span class="nb">export</span> <span class="nv">AP_PORT</span><span class="o">=</span>9999
 </pre></div>
 </div>
 </div>
@@ -225,7 +220,7 @@ adb forward tcp:9999 tcp:<span class="nv">$SL4A</span>
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

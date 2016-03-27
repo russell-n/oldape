@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>apetools.builders.subbuilders.devicebuilder &mdash; APETools 2014.09.18 documentation</title>
+    <title>apetools.builders.subbuilders.devicebuilder &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -141,300 +141,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
-  <div class="section" id="module-apetools.builders.subbuilders.devicebuilder">
-<span id="apetools-builders-subbuilders-devicebuilder"></span><h1>apetools.builders.subbuilders.devicebuilder<a class="headerlink" href="#module-apetools.builders.subbuilders.devicebuilder" title="Permalink to this headline">¶</a></h1>
-<p class="rubric">Classes</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder" title="apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">AndroidDeviceBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>A Device Builder builds Android devices</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseDeviceBuilder</span></tt>(connection,&nbsp;role[,&nbsp;...])</td>
-<td>A template-class for device-builders</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">DeviceBuilderTypes</span></tt></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Hr44DeviceBuilder</span></tt></td>
-<td></td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder" title="apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">LinuxDeviceBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>A Device Builder for Linux Devices</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder" title="apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">MacDeviceBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>A Device Builder builds mac os devices</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder" title="apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">WindowsDeviceBuilder</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>A Device Builder for Windows Devices</td>
-</tr>
-</tbody>
-</table>
-<dl class="class">
-<dt id="apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder">
-<em class="property">class </em><tt class="descclassname">apetools.builders.subbuilders.devicebuilder.</tt><tt class="descname">AndroidDeviceBuilder</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#AndroidDeviceBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Device Builder builds Android devices</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>connection</cite>: a connection to the device</li>
-<li><cite>role</cite>: some kind of identifier (e.g. node)</li>
-<li><cite>interface</cite>: the name of the test interface</li>
-<li><cite>address</cite>: hostname of the test interface</li>
-</ul>
-<dl class="method">
-<dt id="apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder.device">
-<tt class="descname">device</tt><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#AndroidDeviceBuilder.device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder.device" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A device for the dut</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.AndroidDeviceBuilder.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder">
-<em class="property">class </em><tt class="descclassname">apetools.builders.subbuilders.devicebuilder.</tt><tt class="descname">IosDeviceBuilder</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#IosDeviceBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Device Builder builds ios devices</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>connection</cite>: a connection to the device</li>
-<li><cite>role</cite>: some kind of identifier (e.g. node)</li>
-<li><cite>interface</cite>: the name of the test interface</li>
-<li><cite>address</cite>: hostname of the test interface</li>
-</ul>
-<dl class="method">
-<dt id="apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder.device">
-<tt class="descname">device</tt><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#IosDeviceBuilder.device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder.device" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A device for the dut</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.IosDeviceBuilder.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder">
-<em class="property">class </em><tt class="descclassname">apetools.builders.subbuilders.devicebuilder.</tt><tt class="descname">LinuxDeviceBuilder</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#LinuxDeviceBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Device Builder for Linux Devices</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>connection</cite>: a connection to the device</li>
-<li><cite>role</cite>: the role (tpc, node)</li>
-<li><cite>interface</cite>: The name of the wireless interface</li>
-<li><cite>address</cite>: the test address (if needed)</li>
-</ul>
-<dl class="method">
-<dt id="apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder.device">
-<tt class="descname">device</tt><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#LinuxDeviceBuilder.device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder.device" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Linux Device</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.LinuxDeviceBuilder.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder">
-<em class="property">class </em><tt class="descclassname">apetools.builders.subbuilders.devicebuilder.</tt><tt class="descname">MacDeviceBuilder</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#MacDeviceBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Device Builder builds mac os devices</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>connection</cite>: a connection to the device</li>
-<li><cite>role</cite>: some kind of identifier (e.g. node)</li>
-<li><cite>interface</cite>: the name of the test interface</li>
-<li><cite>address</cite>: hostname of the test interface</li>
-</ul>
-<dl class="method">
-<dt id="apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder.device">
-<tt class="descname">device</tt><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#MacDeviceBuilder.device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder.device" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A device for the dut</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.MacDeviceBuilder.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder">
-<em class="property">class </em><tt class="descclassname">apetools.builders.subbuilders.devicebuilder.</tt><tt class="descname">WindowsDeviceBuilder</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#WindowsDeviceBuilder"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Device Builder for Windows Devices</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>connection</cite>: a connection to the device</li>
-<li><cite>role</cite>: some kind of identifier (e.g. node)</li>
-<li><cite>interface</cite>: the name of the test interface</li>
-<li><cite>address</cite>: hostname of the test interface</li>
-</ul>
-<dl class="method">
-<dt id="apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder.device">
-<tt class="descname">device</tt><a class="reference internal" href="../../../../_modules/apetools/builders/subbuilders/devicebuilder.html#WindowsDeviceBuilder.device"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder.device" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A Windows Device</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.builders.subbuilders.devicebuilder.WindowsDeviceBuilder.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="apetools-builders-subbuilders-devicebuilder">
+<h1>apetools.builders.subbuilders.devicebuilder<a class="headerlink" href="#apetools-builders-subbuilders-devicebuilder" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -450,7 +160,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

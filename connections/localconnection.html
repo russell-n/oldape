@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Local Connection &mdash; APETools 2014.09.18 documentation</title>
+    <title>Local Connection &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,19 +26,17 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../index.html" />
     <link rel="up" title="Connections" href="index.html" />
-    <link rel="next" title="apetools.connections.localconnection.LocalConnection" href="api/apetools.connections.localconnection.LocalConnection.html" />
-    <link rel="prev" title="apetools.connections.adbconnection.ADBShellSSHConnection" href="api/apetools.connections.adbconnection.ADBShellSSHConnection.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../affectors/index.html">Affectors</a></li>
@@ -119,14 +117,6 @@
             
               
                 
-  <li>
-    <a href="api/apetools.connections.adbconnection.ADBShellSSHConnection.html" title="Previous Chapter: apetools.connections.adbconnection.ADBShellSSHConnection"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.connect...</span>
-    </a>
-  </li>
-  <li>
-    <a href="api/apetools.connections.localconnection.LocalConnection.html" title="Next Chapter: apetools.connections.localconnection.LocalConnection"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.connect... &raquo;</span>
-    </a>
-  </li>
               
             
             
@@ -156,7 +146,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="local-connection">
 <h1>Local Connection<a class="headerlink" href="#local-connection" title="Permalink to this headline">¶</a></h1>
@@ -164,21 +154,21 @@
 <p>The LocalConnection takes the command-line command as a property and
 the arguments to the command as parameters.</p>
 <p>e.g.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">lc</span> <span class="o">=</span> <span class="n">LocalConnection</span><span class="p">()</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">lc</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
-<span class="k">print</span> <span class="n">output</span><span class="o">.</span><span class="n">output</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>lc = LocalConnection()
+output = lc.ls(&#39;-l&#39;)
+print output.output
 </pre></div>
 </div>
 <p>prints the output of the <cite>ls -l</cite> command line command</p>
 <p>This is using subprocess so anything with lots of iperf runs the risk of
 causing the output to block (i.e. it is file-buffered, not line or character buffered).</p>
 <p>In most cases it&#8217;s better to use the LocalNixConnection instead which uses Pexpect to avoid the block.</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">SPACER</span> <span class="o">=</span> <span class="s">&#39;{0} {1} &#39;</span>
-<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s">&quot;Unknown command: &quot;</span>
-<span class="n">EOF</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
-<span class="n">SPACE</span> <span class="o">=</span> <span class="s">&quot; &quot;</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SPACER</span> <span class="o">=</span> <span class="s1">&#39;{0} {1} &#39;</span>
+<span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s2">&quot;Unknown command: &quot;</span>
+<span class="n">EOF</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="n">SPACE</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span>
 
-<span class="n">OutputError</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s">&quot;OutputError&quot;</span><span class="p">,</span> <span class="s">&#39;output error&#39;</span><span class="p">)</span>
+<span class="n">OutputError</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;OutputError&quot;</span><span class="p">,</span> <span class="s1">&#39;output error&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="section" id="localconnection">
@@ -192,44 +182,20 @@ causing the output to block (i.e. it is file-buffered, not line or character buf
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection" title="apetools.connections.localconnection.LocalConnection"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection</span></tt></a>([command_prefix])</td>
-<td>A local connection talks to a local command-line shell.</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection.queue" title="apetools.connections.localconnection.LocalConnection.queue"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection.queue</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">rtype:</th><td class="field-body">Queue.Queue</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection.queue</span></code></td>
+<td></td>
 </tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection._procedure_call</span></code></td>
+<td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._procedure_call" title="apetools.connections.localconnection.LocalConnection._procedure_call"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection._procedure_call</span></tt></a>(command[,&nbsp;...])</td>
-<td>This is provided so it can be overriden by subclasses.</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection._main</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalConnection._main" title="apetools.connections.localconnection.LocalConnection._main"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection._main</span></tt></a>(command[,&nbsp;arguments,&nbsp;...])</td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.localconnection.LocalConnection.__getattr__.html#apetools.connections.localconnection.LocalConnection.__getattr__" title="apetools.connections.localconnection.LocalConnection.__getattr__"><tt class="xref py py-obj docutils literal"><span class="pre">LocalConnection.__getattr__</span></tt></a>(command)</td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalConnection.__getattr__</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -246,11 +212,11 @@ causing the output to block (i.e. it is file-buffered, not line or character buf
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection" title="apetools.connections.localconnection.LocalNixConnection"><tt class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>A Class that uses Pexpect to get around the problem of file-buffering</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection</span></code></td>
+<td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../documentation/developer/api/connections_api/apetools.connections.localconnection.html#apetools.connections.localconnection.LocalNixConnection.run" title="apetools.connections.localconnection.LocalNixConnection.run"><tt class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection.run</span></tt></a>(command,&nbsp;arguments)</td>
-<td>runs the Pexpect command and puts lines of output on the Queue</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">LocalNixConnection.run</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -270,7 +236,7 @@ causing the output to block (i.e. it is file-buffered, not line or character buf
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

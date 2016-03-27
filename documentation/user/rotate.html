@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Rotate Configuration &mdash; APETools 2014.09.18 documentation</title>
+    <title>Rotate Configuration &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,19 +26,19 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
-    <link rel="up" title="The Configuration File" href="configuration_file.html" />
-    <link rel="next" title="Watchlogs Configuration" href="watchlogs.html" />
-    <link rel="prev" title="Iperf Configuration" href="iperf.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../index.html" />
+    <link rel="up" title="The Old Ape’s User Documentation" href="index.html" />
+    <link rel="next" title="The Network Topology" href="network_topology.html" />
+    <link rel="prev" title="The Old Ape’s User Documentation" href="index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +51,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +74,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -121,11 +121,11 @@
               
                 
   <li>
-    <a href="iperf.html" title="Previous Chapter: Iperf Configuration"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Iperf Configurat...</span>
+    <a href="index.html" title="Previous Chapter: The Old Ape’s User Documentation"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; The Old Ape’s...</span>
     </a>
   </li>
   <li>
-    <a href="watchlogs.html" title="Next Chapter: Watchlogs Configuration"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Watchlogs Config... &raquo;</span>
+    <a href="network_topology.html" title="Next Chapter: The Network Topology"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">The Network T... &raquo;</span>
     </a>
   </li>
               
@@ -157,7 +157,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="rotate-configuration">
 <h1>Rotate Configuration<a class="headerlink" href="#rotate-configuration" title="Permalink to this headline">¶</a></h1>
@@ -165,30 +165,30 @@
 <p>Contents:</p>
 <blockquote>
 <div><ul class="simple">
-<li><a class="reference internal" href="#rotate-configuration-test-section"><em>Setting up the TEST Section</em></a></li>
-<li><a class="reference internal" href="#rotate-configuration-rotate-section"><em>Setting up the ROTATE Section</em></a></li>
+<li><a class="reference internal" href="#rotate-configuration-test-section"><span>Setting up the TEST Section</span></a></li>
+<li><a class="reference internal" href="#rotate-configuration-rotate-section"><span>Setting up the ROTATE Section</span></a></li>
 </ul>
 </div></blockquote>
 <div class="section" id="the-test-section">
 <span id="rotate-configuration-test-section"></span><h2>The TEST Section<a class="headerlink" href="#the-test-section" title="Permalink to this headline">¶</a></h2>
 <p>To be included as part of the execution you need to add the <cite>rotate</cite> to one of the TEST fields. The recommended location would be the <cite>setup_test</cite> option (if you put it in <cite>execute_test</cite> option the angle information won&#8217;t get added to file names). If you wanted to rotate the table and run <cite>iperf</cite>, for instance, you might use:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
 <span class="n">setup_test</span> <span class="o">=</span> <span class="n">rotate</span>
 <span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
 </pre></div>
 </div>
 <p>As always, you can add more things to the options using a comma-separated list. For example, to sleep after every rotation:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">TEST</span><span class="p">]</span>
 <span class="n">setup_test</span> <span class="o">=</span> <span class="n">rotate</span><span class="p">,</span> <span class="n">sleep</span>
 <span class="n">execute_test</span> <span class="o">=</span> <span class="n">iperf</span>
 </pre></div>
 </div>
-<p>Just remember that everthing added to this section needs a corresponding section later in the configuration file with a capitalized version of the option as a header. For example, this setup will expect <tt class="docutils literal"><span class="pre">[SLEEP]</span></tt>, <tt class="docutils literal"><span class="pre">[ROTATE]</span></tt>, and <tt class="docutils literal"><span class="pre">[IPERF]</span></tt> sections somewhere in the configuration file.</p>
+<p>Just remember that everthing added to this section needs a corresponding section later in the configuration file with a capitalized version of the option as a header. For example, this setup will expect <code class="docutils literal"><span class="pre">[SLEEP]</span></code>, <code class="docutils literal"><span class="pre">[ROTATE]</span></code>, and <code class="docutils literal"><span class="pre">[IPERF]</span></code> sections somewhere in the configuration file.</p>
 </div>
 <div class="section" id="the-rotate-section">
 <span id="rotate-configuration-rotate-section"></span><h2>The ROTATE Section<a class="headerlink" href="#the-rotate-section" title="Permalink to this headline">¶</a></h2>
 <p>An example setup would be:</p>
-<div class="highlight-python"><div class="highlight"><pre>[ROTATE]
+<div class="highlight-python"><div class="highlight"><pre><span></span>[ROTATE]
 hostname = phoridfly
 username = root
 #password =
@@ -211,10 +211,10 @@ angles = 180,0:50,45,90:100, 270:10
 <p class="last">The motor-based turntable has a finer-degree of control and will spin forever. If you are going to run more than one cycle then you should make the first or last angle negative so that it will revolve in the opposite direction. Otherwise whatever sits on the table will continue to rotate in the same direction, likely tangling whatever cables are attached to it.</p>
 </div>
 <p>For example, to rotate the table at 90 degree angles with the default speed:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="p">[</span><span class="n">ROTATE</span><span class="p">]</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">ROTATE</span><span class="p">]</span>
 <span class="n">hostname</span> <span class="o">=</span> <span class="n">phoridfly</span>
 <span class="n">username</span> <span class="o">=</span> <span class="n">root</span>
-<span class="c">#password =</span>
+<span class="c1">#password =</span>
 <span class="n">angles</span> <span class="o">=</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">180</span><span class="p">,</span> <span class="mi">270</span><span class="p">,</span> <span class="o">-</span><span class="mi">0</span>
 </pre></div>
 </div>
@@ -238,7 +238,7 @@ angles = 180,0:50,45,90:100, 270:10
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>apetools.commands.oscillate &mdash; APETools 2014.09.18 documentation</title>
+    <title>apetools.commands.oscillate &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -141,422 +141,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
-  <div class="section" id="module-apetools.commands.oscillate">
-<span id="apetools-commands-oscillate"></span><h1>apetools.commands.oscillate<a class="headerlink" href="#module-apetools.commands.oscillate" title="Permalink to this headline">¶</a></h1>
-<p class="rubric">Functions</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">Event</span></tt>(*args,&nbsp;**kwargs)</td>
-<td>A factory function that returns a new event.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">sleep</span></tt>(seconds)</td>
-<td>Delay execution for a given number of seconds.</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Classes</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseClass</span></tt>()</td>
-<td>This class holds the minimum common features.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">BaseThreadedCommand</span></tt>()</td>
-<td>An abstract base-class for simple commands to run in a thread</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.oscillate.Oscillate" title="apetools.commands.oscillate.Oscillate"><tt class="xref py py-obj docutils literal"><span class="pre">Oscillate</span></tt></a>(connection,&nbsp;output,&nbsp;arguments[,&nbsp;...])</td>
-<td>A Class to start and stop an oscillator</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="#apetools.commands.oscillate.OscillateEvent" title="apetools.commands.oscillate.OscillateEvent"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateEvent</span></tt></a>(event)</td>
-<td>An event to coordinate other commands with the start of a rotation</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.oscillate.OscillateStop" title="apetools.commands.oscillate.OscillateStop"><tt class="xref py py-obj docutils literal"><span class="pre">OscillateStop</span></tt></a>(connection)</td>
-<td>A class to explicitly stop the Oscillator</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Queue</span></tt>([maxsize])</td>
-<td>Create a queue object with a given maximum size.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">Sleep</span></tt>([sleep_time])</td>
-<td>The sleep provides a verbose sleep.</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">Thread</span></tt>([group,&nbsp;target,&nbsp;name,&nbsp;args,&nbsp;kwargs,&nbsp;...])</td>
-<td>A class that represents a thread of control.</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">TimestampFormat</span></tt>([format_type])</td>
-<td>A class to hold timestampformats</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Exceptions</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">CommandError</span></tt></td>
-<td>A CommandError reflects a problem with the command on the Device-side</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">ConnectionError</span></tt></td>
-<td>A ConnectionError is raised by connectinos to indicate a problem.</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#apetools.commands.oscillate.OscillatorError" title="apetools.commands.oscillate.OscillatorError"><tt class="xref py py-obj docutils literal"><span class="pre">OscillatorError</span></tt></a></td>
-<td>Exception to raise if the oscillator fails</td>
-</tr>
-</tbody>
-</table>
-<dl class="exception">
-<dt id="apetools.commands.oscillate.OscillatorError">
-<em class="property">exception </em><tt class="descclassname">apetools.commands.oscillate.</tt><tt class="descname">OscillatorError</tt><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#OscillatorError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.OscillatorError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Exception to raise if the oscillator fails</p>
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.commands.oscillate.Oscillate">
-<em class="property">class </em><tt class="descclassname">apetools.commands.oscillate.</tt><tt class="descname">Oscillate</tt><big>(</big><em>connection</em>, <em>output</em>, <em>arguments</em>, <em>retries=2</em>, <em>block=False</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate" title="Permalink to this definition">¶</a></dt>
-<dd><p>A Class to start and stop an oscillator</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>connection</cite>: connection to oscillation master</li>
-<li><cite>output</cite>: file to send angle information to</li>
-<li><cite>arguments</cite>: string of arguments for the oscillate command</li>
-<li><cite>retries</cite>: number of times to retry the oscillate command</li>
-<li><cite>block</cite>: if True, waits for rotation start on each call</li>
-</ul>
-<dl class="method">
-<dt id="apetools.commands.oscillate.Oscillate.check_error">
-<tt class="descname">check_error</tt><big>(</big><em>error</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.check_error"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.check_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Not fully implented yet.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>error</cite>: stderr file</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Raise:</th><td class="field-body"><p class="first last">CommandError if detected</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.Oscillate.generate_output">
-<tt class="descname">generate_output</tt><big>(</big><em>output</em>, <em>error</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.generate_output"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.generate_output" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>output</cite>: stdout file</li>
-<li><cite>error</cite>: stderr file</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Yield:</th><td class="field-body"><p class="first last">lines of stdout</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.Oscillate.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.Oscillate.run">
-<tt class="descname">run</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.run" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body">oscillate command sent to the oscillator</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.Oscillate.run_thread">
-<tt class="descname">run_thread</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.run_thread" title="Permalink to this definition">¶</a></dt>
-<dd><p>To use:</p>
-<blockquote>
-<div><ul class="simple">
-<li>define run(<a href="#id1"><span class="problematic" id="id2">*</span></a>args, <a href="#id3"><span class="problematic" id="id4">**</span></a>kwargs) in child</li>
-<li>use self.run_thread as target for thread</li>
-</ul>
-</div></blockquote>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">Whatever self.run accepts</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Precondition:</th><td class="field-body">self.run method exists and is thread-safe</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.Oscillate.stop">
-<tt class="descname">stop</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.stop" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Postcondition:</th><td class="field-body"><ul class="first last simple">
-<li><cite>stopped</cite> is True</li>
-<li>pkill(<cite>oscillate</cite>) called</li>
-<li>rotate() called</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.Oscillate.error_queue">
-<tt class="descname">error_queue</tt><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.error_queue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.error_queue" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">queue of error messages</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.Oscillate.event">
-<tt class="descname">event</tt><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.event"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.event" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">OscillateEvent with self.rotation_start event</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.Oscillate.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.Oscillate.rotation_start">
-<tt class="descname">rotation_start</tt><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.rotation_start"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.rotation_start" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">threading event</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.Oscillate.sleep">
-<tt class="descname">sleep</tt><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.sleep"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.sleep" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a blocking (but verbose) sleep</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.Oscillate.thread">
-<tt class="descname">thread</tt><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.thread" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">self.run executing in a thread</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.Oscillate.timestamp">
-<tt class="descname">timestamp</tt><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#Oscillate.timestamp"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.Oscillate.timestamp" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">timestamper</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.commands.oscillate.OscillateEvent">
-<em class="property">class </em><tt class="descclassname">apetools.commands.oscillate.</tt><tt class="descname">OscillateEvent</tt><big>(</big><em>event</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#OscillateEvent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.OscillateEvent" title="Permalink to this definition">¶</a></dt>
-<dd><p>An event to coordinate other commands with the start of a rotation</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>event</cite>: a python Event</li>
-</ul>
-<dl class="method">
-<dt id="apetools.commands.oscillate.OscillateEvent.is_set">
-<tt class="descname">is_set</tt><big>(</big><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#OscillateEvent.is_set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.OscillateEvent.is_set" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the event is set, False otherwise.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.OscillateEvent.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commands.oscillate.OscillateEvent.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.OscillateEvent.wait">
-<tt class="descname">wait</tt><big>(</big><em>timeout=None</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#OscillateEvent.wait"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.OscillateEvent.wait" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>timeout</cite>: if not None, stop blocking after timeout (seconds)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first last">event is cleared then waited for</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.OscillateEvent.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commands.oscillate.OscillateEvent.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.commands.oscillate.OscillateStop">
-<em class="property">class </em><tt class="descclassname">apetools.commands.oscillate.</tt><tt class="descname">OscillateStop</tt><big>(</big><em>connection</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#OscillateStop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.OscillateStop" title="Permalink to this definition">¶</a></dt>
-<dd><p>A class to explicitly stop the Oscillator</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>connection</cite>: a connection to the rotation master</li>
-</ul>
-<dl class="method">
-<dt id="apetools.commands.oscillate.OscillateStop.kill_and_rotate">
-<tt class="descname">kill_and_rotate</tt><big>(</big><em>sleep_time=1</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/commands/oscillate.html#OscillateStop.kill_and_rotate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.commands.oscillate.OscillateStop.kill_and_rotate" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>sleep</cite>: time to sleep between oscillate and rotate commands</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Postcondition:</th><td class="field-body"><p class="first">pkill oscillate and rotate 0 -k sent to connection</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if on stderr output, False otherwise</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.commands.oscillate.OscillateStop.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.commands.oscillate.OscillateStop.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.commands.oscillate.OscillateStop.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.commands.oscillate.OscillateStop.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="apetools-commands-oscillate">
+<h1>apetools.commands.oscillate<a class="headerlink" href="#apetools-commands-oscillate" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -572,7 +160,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Measure Device Throughput Test Case &mdash; APETools 2014.09.18 documentation</title>
+    <title>Measure Device Throughput Test Case &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -141,10 +141,65 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="measure-device-throughput-test-case">
 <h1>Measure Device Throughput Test Case<a class="headerlink" href="#measure-device-throughput-test-case" title="Permalink to this headline">¶</a></h1>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-c425118767b958db8e7291c9bf58d96c48d0b593.png" alt="scale .75
+
+APE --&gt; (Measure Device Throughput)
+(Measure Device Throughput) --&gt; (Perform Measurement) : &lt;&lt;include&gt;&gt;
+(Measure Device Throughput) --&gt; (Configure System) : &lt;&lt;include&gt;&gt;
+(Measure Device Throughput) --&gt; (Watch) : &lt;&lt;include&gt;&gt;
+
+(Perform Measurement) --&gt; (Control Device) : &lt;&lt;include&gt;&gt;
+(Configure System) --&gt; (Configure Device) : &lt;&lt;include&gt;&gt;
+(Configure System) --&gt; (Configure Measurement) : &lt;&lt;include&gt;&gt;
+(Configure System) --&gt; (Configure Environment) : &lt;&lt;include&gt;&gt;
+(Watch) &lt;|---- (Watch Device) : &lt;&lt;extend&gt;&gt;
+(Watch) &lt;|---- (Watch Environment) : &lt;&lt;extend&gt;&gt;
+
+(Control Device) &lt;|-- (Control Android) : &lt;&lt;extend&gt;&gt;
+(Control Device) &lt;|-- (Control Linux) : &lt;&lt;extend&gt;&gt;
+
+(Configure Device) &lt;|-- (Configure WiFi) : &lt;&lt;extend&gt;&gt;
+(Configure Device) &lt;|-- (Push Button) : &lt;&lt;extend&gt;&gt;
+
+(Configure Measurement) &lt;|-- (Fix Parameters) : &lt;&lt;extend&gt;&gt;
+(Configure Measurement) &lt;|-- (Vary Parameters) : &lt;&lt;extend&gt;&gt;
+(Configure Measurement) &lt;|-- (Randomize Parameters) : &lt;&lt;extend&gt;&gt;
+
+(Configure Environment) &lt;|-- (Switch Power) : &lt;&lt;extend&gt;&gt;
+(Configure Environment) &lt;|-- (Attenuate Signal) : &lt;&lt;extend&gt;&gt;
+(Configure Environment) &lt;|-- (Configure AP) : &lt;&lt;extend&gt;&gt;
+
+(Control Android) --&gt; (Connect ADB) : &lt;&lt;include&gt;&gt;
+(Control Linux) --&gt; (Connect) : &lt;&lt;include&gt;&gt;
+
+(Configure WiFi) --&gt; (Control Device) : &lt;&lt;include&gt;&gt;
+
+(Connect ADB) --&gt; (Connect) : &lt;&lt;include&gt;&gt;
+
+(Connect) &lt;|-- (Connect Locally) : &lt;&lt;extend&gt;&gt;
+(Connect) &lt;|-- (Connect SSH) : &lt;&lt;extend&gt;&gt;
+(Connect) &lt;|-- (Connect Serial) :&lt;&lt;extend&gt;&gt;
+(Connect) &lt;|-- (Connect Telnet) : &lt;&lt;extend&gt;&gt;
+
+(Watch Device) &lt;|-- (Watch RSSI) : &lt;&lt;extend&gt;&gt;
+(Watch Device) &lt;|-- (Watch Noise) : &lt;&lt;extend&gt;&gt;
+(Watch Device) &lt;|-- (Watch Logs) : &lt;&lt;extend&gt;&gt;
+(Watch Device) &lt;|-- (Watch Resources) : &lt;&lt;extend&gt;&gt;
+(Watch Device) --&gt; (Control Device) : &lt;&lt;include&gt;&gt;
+
+(Watch Logs) &lt;|-- (Watch KMSG) : &lt;&lt;extend&gt;&gt;
+(Watch Logs) &lt;|-- (Watch Logcat) : &lt;&lt;extend&gt;&gt;
+
+(Watch Resources) &lt;|-- (Watch Power) : &lt;&lt;extends&gt;&gt;
+(Watch Resources) &lt;|-- (Watch CPU) : &lt;&lt;extends&gt;&gt;
+(Watch Resources) &lt;|-- (Watch Process) : &lt;&lt;extends&gt;&gt;
+(Watch Resources) &lt;|-- (Watch Memory) : &lt;&lt;extends&gt;&gt;" />
+</p>
 </div>
 
 
@@ -160,7 +215,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

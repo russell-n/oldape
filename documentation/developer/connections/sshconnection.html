@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The SSHConnection &mdash; APETools 2014.09.18 documentation</title>
+    <title>The SSHConnection &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../affectors/index.html">Affectors</a></li>
@@ -148,22 +148,22 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="the-sshconnection">
 <h1>The SSHConnection<a class="headerlink" href="#the-sshconnection" title="Permalink to this headline">¶</a></h1>
 <p>Encapsulates the Paramiko <a class="reference external" href="http://www.lag.net/paramiko/docs/paramiko.SSHClient-class.html">SSHClient</a> to provide a common interface with the other connection types.</p>
 <div class="section" id="ssh-client">
 <span id="id1"></span><h2>SSHClient<a class="headerlink" href="#ssh-client" title="Permalink to this headline">¶</a></h2>
-<p>This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used or with the added <tt class="docutils literal"><span class="pre">timeout</span></tt> parameter.</p>
+<p>This is an extension of paramiko.SSHClient that adds a timeout to the output read attempts. It can be used transparently the same way the paramiko SSHClient is used or with the added <code class="docutils literal"><span class="pre">timeout</span></code> parameter.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.SSHClient.html#apetools.connections.sshconnection.SSHClient" title="apetools.connections.sshconnection.SSHClient"><tt class="xref py py-obj docutils literal"><span class="pre">SSHClient</span></tt></a>()</td>
-<td>Subclasses paramiko&#8217;s SSHClient to add a timeout.</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">SSHClient</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -176,18 +176,18 @@ SSHClient : invoke_shell_rw(term, width, Height, timeout, bufsize)" />
 </div>
 <div class="section" id="simpleclient">
 <span id="simple-client"></span><h2>SimpleClient<a class="headerlink" href="#simpleclient" title="Permalink to this headline">¶</a></h2>
-<p>This is a wrapper around the <a class="reference internal" href="#ssh-client"><em>SSHClient</em></a> that sets some flags to avoid host-key errors. The following are (roughly) equivalent.</p>
+<p>This is a wrapper around the <a class="reference internal" href="#ssh-client"><span>SSHClient</span></a> that sets some flags to avoid host-key errors. The following are (roughly) equivalent.</p>
 <p>SSHClient:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">c</span> <span class="o">=</span> <span class="n">SSHClient</span><span class="p">()</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">SSHClient</span><span class="p">()</span>
 <span class="n">c</span><span class="o">.</span><span class="n">set_missing_host_key_policy</span><span class="p">(</span><span class="n">paramiko</span><span class="o">.</span><span class="n">AutoAddPolicy</span><span class="p">())</span>
 <span class="n">c</span><span class="o">.</span><span class="n">load_system_host_keys</span><span class="p">()</span>
-<span class="n">c</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;allion&#39;</span><span class="p">)</span>
-<span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderror</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">&#39;ls&#39;</span><span class="p">)</span>
+<span class="n">c</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;allion&#39;</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderror</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s1">&#39;ls&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>SimpleClient:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">c</span> <span class="o">=</span> <span class="n">SimpleClient</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;allion&#39;</span><span class="p">)</span>
-<span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">&#39;ls&#39;</span><span class="p">)</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="n">SimpleClient</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s1">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s1">&#39;allion&#39;</span><span class="p">)</span>
+<span class="n">stdin</span><span class="p">,</span> <span class="n">stdout</span><span class="p">,</span> <span class="n">stderr</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s1">&#39;ls&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <table border="1" class="longtable docutils">
@@ -196,8 +196,8 @@ SSHClient : invoke_shell_rw(term, width, Height, timeout, bufsize)" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.SimpleClient.html#apetools.connections.sshconnection.SimpleClient" title="apetools.connections.sshconnection.SimpleClient"><tt class="xref py py-obj docutils literal"><span class="pre">SimpleClient</span></tt></a>(hostname,&nbsp;username[,&nbsp;password,&nbsp;...])</td>
-<td>A simple wrapper around paramiko&#8217;s SSHClient.</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">SimpleClient</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -217,15 +217,15 @@ SimpleClient : close()" />
 </div>
 <div class="section" id="ssh-connecton">
 <span id="id2"></span><h2>The SSHConnection<a class="headerlink" href="#ssh-connecton" title="Permalink to this headline">¶</a></h2>
-<p>This class uses the <a class="reference internal" href="#simple-client"><em>SimpleClient</em></a> to implement the <a class="reference internal" href="nonlocalconnection.html#non-local-connection"><em>NonLocalConnection</em></a> interface.</p>
+<p>This class uses the <a class="reference internal" href="#simple-client"><span>SimpleClient</span></a> to implement the <a class="reference internal" href="nonlocalconnection.html#non-local-connection"><span>NonLocalConnection</span></a> interface.</p>
 <table border="1" class="longtable docutils">
 <colgroup>
 <col width="10%" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.SSHConnection.html#apetools.connections.sshconnection.SSHConnection" title="apetools.connections.sshconnection.SSHConnection"><tt class="xref py py-obj docutils literal"><span class="pre">SSHConnection</span></tt></a>(hostname,&nbsp;username[,&nbsp;...])</td>
-<td>An SSHConnection executes commands over an SSHConnection</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">SSHConnection</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -239,23 +239,23 @@ SSHConnection : port
 SSHConnection : timeout" />
 </p>
 <p>SimpleClient Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SimpleClient</span><span class="p">(</span><span class="n">hostname</span><span class="o">=</span><span class="s">&#39;192.168.10.24&#39;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s">&#39;allion&#39;</span><span class="p">)</span>
-<span class="n">stdin</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">exec_command</span><span class="p">(</span><span class="s">&#39;ls -l&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">line</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>connection = SimpleClient(hostname=&#39;192.168.10.24&#39;, username=&#39;allion&#39;)
+stdin, output, error = connection.exec_command(&#39;ls -l&#39;)
+for line in output:
+    print line
 
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">error</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">line</span>
+for line in error:
+    print line
 </pre></div>
 </div>
 <p>Equivalent SSHConnection Example:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">connection</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="s">&quot;allion&quot;</span><span class="p">,</span> <span class="n">hostname</span><span class="o">=</span><span class="s">&quot;192.168.10.24&quot;</span><span class="p">)</span>
-<span class="n">output</span><span class="p">,</span> <span class="n">error</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="n">ls</span><span class="p">(</span><span class="s">&#39;-l&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">line</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>connection = SSHConnection(username=&quot;allion&quot;, hostname=&quot;192.168.10.24&quot;)
+output, error = connection.ls(&#39;-l&#39;)
+for line in output:
+    print line
 
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
-    <span class="k">print</span> <span class="n">line</span>
+for line in output:
+    print line
 </pre></div>
 </div>
 </div>
@@ -268,8 +268,8 @@ SSHConnection : timeout" />
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.connections.sshconnection.OutputFile.html#apetools.connections.sshconnection.OutputFile" title="apetools.connections.sshconnection.OutputFile"><tt class="xref py py-obj docutils literal"><span class="pre">OutputFile</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>A class to handle the ssh output files</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">OutputFile</span></code></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -280,11 +280,11 @@ OutputFile : readline(timeout)" />
 </div>
 <div class="section" id="another-example">
 <h2>Another Example<a class="headerlink" href="#another-example" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">SSHConnection</span><span class="p">(</span><span class="s">&#39;igor&#39;</span><span class="p">,</span> <span class="s">&#39;developer&#39;</span><span class="p">)</span>
-    <span class="n">o</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">wmic</span><span class="p">(</span><span class="s">&#39;path win32_networkadapter where netconnectionid=&quot;</span><span class="se">\&#39;</span><span class="s">Wireless Network Connection</span><span class="se">\&#39;</span><span class="s">&quot; call enable&#39;</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">output</span><span class="p">):</span>
-        <span class="k">print</span> <span class="n">index</span><span class="p">,</span> <span class="n">line</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span>if __name__ == &quot;__main__&quot;:
+    c = SSHConnection(&#39;igor&#39;, &#39;developer&#39;)
+    o = c.wmic(&#39;path win32_networkadapter where netconnectionid=&quot;\&#39;Wireless Network Connection\&#39;&quot; call enable&#39;)
+    for index, line in enumerate(o.output):
+        print index, line
 </pre></div>
 </div>
 </div>
@@ -303,7 +303,7 @@ OutputFile : readline(timeout)" />
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

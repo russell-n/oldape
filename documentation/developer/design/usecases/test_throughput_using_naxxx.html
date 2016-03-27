@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Test Throughput Using Multiple APs Use Case &mdash; APETools 2014.09.18 documentation</title>
+    <title>Test Throughput Using Multiple APs Use Case &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -151,7 +151,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="test-throughput-using-multiple-aps-use-case">
 <h1>Test Throughput Using Multiple APs Use Case<a class="headerlink" href="#test-throughput-using-multiple-aps-use-case" title="Permalink to this headline">¶</a></h1>
@@ -164,6 +164,22 @@
 <p>Before running the throughput tests, the system inserts a message into the DUT&#8217;s log indicating that the throughput tests will be starting. For each direction specified the system starts by killing any pre-existing <cite>iperf</cite> processes on the DUT and TPC. Once the <cite>iperf</cite> processes are dead, the system starts the <cite>iperf</cite> server on the receiving device, sleeps for a brief period while the server starts, then starts the client on the sending device. The system opens a file for each device using names based on the switch identifier, the direction of traffic relative to the DUT, the repetition number, and the protocol (i.e. <em>tcp</em> or <em>udp</em>). As the traffic is sent between the two devices, the standard output of each is captured in their respective files.</p>
 <p>When the traffic is completed, output summarizing the outcome of the test is recorded by the system in the DUT&#8217;s log. The system then sleeps for a brief recovery period before continuing with the next test.</p>
 <p>When all the tests specified in the configuration are completed the system inserts a closing message into the DUT&#8217;s log, waits for a brief period to allow the logs to complete, then copies the system log and configuration file to the data folder in order to enable reconstructing the test at a later date if it&#8217;s needed.</p>
+<p class="plantuml">
+<img src="../../../../_images/plantuml-bd7d76c03429a6fa92f08a916c87320c25830370.png" alt="left to right direction
+APE --&gt; (&quot;Test Throughput Using Multiple APs&quot;)
+(&quot;Test Throughput Using Multiple APs&quot;) ..&gt; (&quot;Cleanup Session&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Test Throughput Using Multiple APs&quot;) ..&gt; (&quot;Setup Session&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Test Throughput Using Multiple APs&quot;) ..&gt; (&quot;Run Test&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Run Test&quot;) ..&gt; (&quot;Measure Throughput&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Measure Throughput&quot;) &lt;|-- (&quot;Run Traffic From DUT&quot;)
+(&quot;Measure Throughput&quot;) &lt;|-- (&quot;Run Traffic To DUT&quot;)
+(&quot;Measure Throughput&quot;) &lt;|-- (&quot;Run Traffic To and From DUT&quot;)
+(&quot;Run Test&quot;) ..&gt; (&quot;Setup Iteration&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Setup Iteration&quot;) ..&gt; (&quot;Environmental Affector&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Setup Iteration&quot;) ..&gt; (&quot;Wait For Device&quot;) : &lt;&lt;include&gt;&gt;
+(&quot;Environmental Affector&quot;) &lt;|-- (&quot;Naxxx&quot;)
+(&quot;Wait For Device&quot;) &lt;|-- (&quot;Time To Recovery&quot;)" />
+</p>
 </div>
 <div class="section" id="preconditions">
 <h2>Preconditions<a class="headerlink" href="#preconditions" title="Permalink to this headline">¶</a></h2>
@@ -180,8 +196,8 @@
 </div>
 <div class="section" id="main-path">
 <h2>Main Path<a class="headerlink" href="#main-path" title="Permalink to this headline">¶</a></h2>
-<table border="1" class="docutils">
-<caption>Main Path</caption>
+<table border="1" class="docutils" id="id3">
+<caption><span class="caption-text">Main Path</span><a class="headerlink" href="#id3" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col width="20%" />
 <col width="20%" />
@@ -503,7 +519,7 @@ endif
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

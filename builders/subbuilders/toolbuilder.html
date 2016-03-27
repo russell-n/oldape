@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Tool Builder &mdash; APETools 2014.09.18 documentation</title>
+    <title>Tool Builder &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,19 +26,17 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../index.html" />
     <link rel="up" title="Sub-Builders" href="index.html" />
-    <link rel="next" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.html" />
-    <link rel="prev" title="apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.add_parameter" href="api/apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.add_parameter.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -51,7 +49,7 @@
         </button>
         <a class="navbar-brand" href="../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -74,7 +72,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../affectors/index.html">Affectors</a></li>
@@ -119,14 +117,6 @@
             
               
                 
-  <li>
-    <a href="api/apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.add_parameter.html" title="Previous Chapter: apetools.builders.subbuilders.timetorecoverybuilder.TimeToRecoveryBuilder.add_parameter"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; apetools.builder...</span>
-    </a>
-  </li>
-  <li>
-    <a href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.html" title="Next Chapter: apetools.builders.subbuilders.toolbuilder.ToolBuilder"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">apetools.builder... &raquo;</span>
-    </a>
-  </li>
               
             
             
@@ -156,7 +146,7 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
   <div class="section" id="tool-builder">
 <h1>Tool Builder<a class="headerlink" href="#tool-builder" title="Permalink to this headline">¶</a></h1>
@@ -167,21 +157,21 @@
 </div>
 <div class="section" id="the-tool-builder-enum">
 <h2>The Tool Builder Enum<a class="headerlink" href="#the-tool-builder-enum" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ToolBuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">ToolBuilderEnum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="n">__slots__</span> <span class="o">=</span> <span class="p">()</span>
-    <span class="n">ners</span> <span class="o">=</span> <span class="s">&quot;ners&quot;</span>
-    <span class="n">apconnect</span> <span class="o">=</span> <span class="s">&quot;apconnect&quot;</span>
-    <span class="n">timetorecovery</span> <span class="o">=</span> <span class="s">&quot;timetorecovery&quot;</span>
-    <span class="n">dumpdevicestatebuilder</span> <span class="o">=</span> <span class="s">&quot;dumpdevicestatebuilder&quot;</span>
-    <span class="n">iperf</span> <span class="o">=</span> <span class="s">&quot;iperf&quot;</span>
-    <span class="n">rotate</span> <span class="o">=</span> <span class="s">&#39;rotate&#39;</span>
-    <span class="n">poweron</span> <span class="o">=</span> <span class="s">&#39;poweron&#39;</span>
-    <span class="n">oscillate</span> <span class="o">=</span> <span class="s">&#39;oscillate&#39;</span>
-    <span class="n">oscillatestop</span> <span class="o">=</span> <span class="s">&#39;oscillatestop&#39;</span>
-    <span class="n">sleep</span> <span class="o">=</span> <span class="s">&#39;sleep&#39;</span>
-    <span class="n">naxxx</span> <span class="o">=</span> <span class="s">&#39;naxxx&#39;</span>
-    <span class="n">busyboxwget</span> <span class="o">=</span> <span class="s">&#39;busiboxwget&#39;</span>
-<span class="c"># end class ToolBuilderEnum</span>
+    <span class="n">ners</span> <span class="o">=</span> <span class="s2">&quot;ners&quot;</span>
+    <span class="n">apconnect</span> <span class="o">=</span> <span class="s2">&quot;apconnect&quot;</span>
+    <span class="n">timetorecovery</span> <span class="o">=</span> <span class="s2">&quot;timetorecovery&quot;</span>
+    <span class="n">dumpdevicestatebuilder</span> <span class="o">=</span> <span class="s2">&quot;dumpdevicestatebuilder&quot;</span>
+    <span class="n">iperf</span> <span class="o">=</span> <span class="s2">&quot;iperf&quot;</span>
+    <span class="n">rotate</span> <span class="o">=</span> <span class="s1">&#39;rotate&#39;</span>
+    <span class="n">poweron</span> <span class="o">=</span> <span class="s1">&#39;poweron&#39;</span>
+    <span class="n">oscillate</span> <span class="o">=</span> <span class="s1">&#39;oscillate&#39;</span>
+    <span class="n">oscillatestop</span> <span class="o">=</span> <span class="s1">&#39;oscillatestop&#39;</span>
+    <span class="n">sleep</span> <span class="o">=</span> <span class="s1">&#39;sleep&#39;</span>
+    <span class="n">naxxx</span> <span class="o">=</span> <span class="s1">&#39;naxxx&#39;</span>
+    <span class="n">busyboxwget</span> <span class="o">=</span> <span class="s1">&#39;busiboxwget&#39;</span>
+<span class="c1"># end class ToolBuilderEnum</span>
 </pre></div>
 </div>
 </div>
@@ -193,76 +183,52 @@
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder</span></tt></a>()</td>
-<td>An aggregator of tool builders</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.busyboxwget"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.busyboxwget</span></tt></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder</span></code></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.sleep"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.sleep</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">class to build sleep</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.watchlogs"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.watchlogs</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">TheWatcher builder</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillatestop"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillatestop</span></tt></a></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.busyboxwget</span></code></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.oscillate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillate</span></tt></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.sleep</span></code></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.commandwatch"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.commandwatch</span></tt></a></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.watchlogs</span></code></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.rotate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.rotate</span></tt></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillatestop</span></code></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweron"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweron</span></tt></a></td>
-<td><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">A builder for the Synaxxx power on</td>
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../../documentation/developer/api/sub_builders_api/apetools.builders.subbuilders.toolbuilder.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.poweroff"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweroff</span></tt></a></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.oscillate</span></code></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.ners"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.ners</span></tt></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.commandwatch</span></code></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.apconnect"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.apconnect</span></tt></a></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.rotate</span></code></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.timetorecovery"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.timetorecovery</span></tt></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweron</span></code></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.dumpdevicestate"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.dumpdevicestate</span></tt></a></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.poweroff</span></code></td>
 <td></td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.iperf"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.iperf</span></tt></a></td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.ners</span></code></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="api/apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx.html#apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx" title="apetools.builders.subbuilders.toolbuilder.ToolBuilder.naxxx"><tt class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.naxxx</span></tt></a></td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.apconnect</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.timetorecovery</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.dumpdevicestate</span></code></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.iperf</span></code></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal"><span class="pre">ToolBuilder.naxxx</span></code></td>
 <td></td>
 </tr>
 </tbody>
@@ -283,7 +249,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>

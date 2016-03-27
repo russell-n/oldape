@@ -5,17 +5,17 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>apetools.parsers.sumparser &mdash; APETools 2014.09.18 documentation</title>
+    <title>apetools.parsers.sumparser &mdash; APETools 0.0.3 documentation</title>
     
     <link rel="stylesheet" href="../../../../_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../../_static/bootswatch-3.2.0/readable/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/bootswatch-3.3.4/readable/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="../../../../_static/bootstrap-sphinx.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../../',
-        VERSION:     '2014.09.18',
+        VERSION:     '0.0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -26,16 +26,16 @@
     <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../../../_static/js/jquery-fix.js"></script>
-    <script type="text/javascript" src="../../../../_static/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../../../_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../../../_static/bootstrap-sphinx.js"></script>
-    <link rel="top" title="APETools 2014.09.18 documentation" href="../../../../index.html" />
+    <link rel="top" title="APETools 0.0.3 documentation" href="../../../../index.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
 <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
 <meta name="apple-mobile-web-app-capable" content="yes">
 
   </head>
-  <body>
+  <body role="document">
 
   <div id="navbar" class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -48,7 +48,7 @@
         </button>
         <a class="navbar-brand" href="../../../../index.html">
           APETools</a>
-        <span class="navbar-text navbar-version pull-left"><b>2014.09.18</b></span>
+        <span class="navbar-text navbar-version pull-left"><b>0.0.3</b></span>
       </div>
 
         <div class="collapse navbar-collapse nav-collapse">
@@ -71,7 +71,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../../../baseclass.html">The BaseClass</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../log_setter.html">The Log Setter</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../../main.html">The Main Module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">All-in-one Performance Evaluation Tools (Read Me)</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../../affectors/index.html">Affectors</a></li>
@@ -141,399 +141,10 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 content">
       
-  <div class="section" id="module-apetools.parsers.sumparser">
-<span id="apetools-parsers-sumparser"></span><h1>apetools.parsers.sumparser<a class="headerlink" href="#module-apetools.parsers.sumparser" title="Permalink to this headline">¶</a></h1>
-<p class="rubric">Functions</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">coroutine</span></tt>(func)</td>
-<td>A decorator to start coroutines</td>
-</tr>
-</tbody>
-</table>
-<p class="rubric">Classes</p>
-<table border="1" class="longtable docutils">
-<colgroup>
-<col width="10%" />
-<col width="90%" />
-</colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">BandwidthData</span></tt></td>
-<td></td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpression</span></tt>()</td>
-<td>The Csv Expression holds the expression to match iperf&#8217;s csv format</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../../../parsers/api/apetools.parsers.sumparser.CsvExpressionSum.html#apetools.parsers.sumparser.CsvExpressionSum" title="apetools.parsers.sumparser.CsvExpressionSum"><tt class="xref py py-obj docutils literal"><span class="pre">CsvExpressionSum</span></tt></a>([threads])</td>
-<td>Changes the thread column to look for -1 if needed</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpression</span></tt>()</td>
-<td>The Human Expression matches the human-readable iperf output</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="../../../../parsers/api/apetools.parsers.sumparser.HumanExpressionSum.html#apetools.parsers.sumparser.HumanExpressionSum" title="apetools.parsers.sumparser.HumanExpressionSum"><tt class="xref py py-obj docutils literal"><span class="pre">HumanExpressionSum</span></tt></a>([threads])</td>
-<td>Changes the thread-column regular expression to match SUMS if needed</td>
-</tr>
-<tr class="row-even"><td><tt class="xref py py-obj docutils literal"><span class="pre">IperfParser</span></tt>([expected_interval,&nbsp;...])</td>
-<td>The Iperf Parser extracts bandwidth and other information from the output</td>
-</tr>
-<tr class="row-odd"><td><tt class="xref py py-obj docutils literal"><span class="pre">ParserKeys</span></tt></td>
-<td>A holder of the keys to the groupdict</td>
-</tr>
-<tr class="row-even"><td><a class="reference internal" href="../../../../parsers/api/apetools.parsers.sumparser.SumParser.html#apetools.parsers.sumparser.SumParser" title="apetools.parsers.sumparser.SumParser"><tt class="xref py py-obj docutils literal"><span class="pre">SumParser</span></tt></a>(*args,&nbsp;**kwargs)</td>
-<td>The SumParser emits bandwidth sum lines</td>
-</tr>
-</tbody>
-</table>
-<dl class="class">
-<dt id="apetools.parsers.sumparser.CsvExpressionSum">
-<em class="property">class </em><tt class="descclassname">apetools.parsers.sumparser.</tt><tt class="descname">CsvExpressionSum</tt><big>(</big><em>threads=4</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/sumparser.html#CsvExpressionSum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.sumparser.CsvExpressionSum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes the thread column to look for -1 if needed</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>threads</cite>: the number of parallel threads</li>
-</ul>
-<dl class="method">
-<dt id="apetools.parsers.sumparser.CsvExpressionSum.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.CsvExpressionSum.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.CsvExpressionSum.expression">
-<tt class="descname">expression</tt><a class="headerlink" href="#apetools.parsers.sumparser.CsvExpressionSum.expression" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string regular expression to match csv-format</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.CsvExpressionSum.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.parsers.sumparser.CsvExpressionSum.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.CsvExpressionSum.regex">
-<tt class="descname">regex</tt><a class="headerlink" href="#apetools.parsers.sumparser.CsvExpressionSum.regex" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regular expression to match csv-format</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.CsvExpressionSum.thread_column">
-<tt class="descname">thread_column</tt><a class="reference internal" href="../../../../_modules/apetools/parsers/sumparser.html#CsvExpressionSum.thread_column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.sumparser.CsvExpressionSum.thread_column" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the expression to match the thread (sum) column</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.parsers.sumparser.HumanExpressionSum">
-<em class="property">class </em><tt class="descclassname">apetools.parsers.sumparser.</tt><tt class="descname">HumanExpressionSum</tt><big>(</big><em>threads=4</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/sumparser.html#HumanExpressionSum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.sumparser.HumanExpressionSum" title="Permalink to this definition">¶</a></dt>
-<dd><p>Changes the thread-column regular expression to match SUMS if needed</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"></td>
-</tr>
-</tbody>
-</table>
-<ul class="simple">
-<li><cite>threads</cite>: number of parallel threads</li>
-</ul>
-<dl class="method">
-<dt id="apetools.parsers.sumparser.HumanExpressionSum.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.HumanExpressionSum.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.HumanExpressionSum.expression">
-<tt class="descname">expression</tt><a class="headerlink" href="#apetools.parsers.sumparser.HumanExpressionSum.expression" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">String</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">regular expression to match iperf output</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.HumanExpressionSum.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.parsers.sumparser.HumanExpressionSum.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.HumanExpressionSum.regex">
-<tt class="descname">regex</tt><a class="headerlink" href="#apetools.parsers.sumparser.HumanExpressionSum.regex" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">compiled regex object</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.HumanExpressionSum.thread_column">
-<tt class="descname">thread_column</tt><a class="reference internal" href="../../../../_modules/apetools/parsers/sumparser.html#HumanExpressionSum.thread_column"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.sumparser.HumanExpressionSum.thread_column" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">expression to match the thread (sum) column</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="apetools.parsers.sumparser.SumParser">
-<em class="property">class </em><tt class="descclassname">apetools.parsers.sumparser.</tt><tt class="descname">SumParser</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/sumparser.html#SumParser"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.sumparser.SumParser" title="Permalink to this definition">¶</a></dt>
-<dd><p>The SumParser emits bandwidth sum lines</p>
-<dl class="method">
-<dt id="apetools.parsers.sumparser.SumParser.bandwidth">
-<tt class="descname">bandwidth</tt><big>(</big><em>match</em><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.bandwidth" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>match</cite>: A parsed match group dictionary</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">float</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the bandwidth in the self.units</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.parsers.sumparser.SumParser.filename">
-<tt class="descname">filename</tt><big>(</big><em>basename</em><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.filename" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>basename</cite>: a the raw-iperf filename (without path)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the filename with the extension changed to .csv</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.parsers.sumparser.SumParser.log_error">
-<tt class="descname">log_error</tt><big>(</big><em>message</em><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.log_error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Logs the message as an error, adding extra formatting</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.parsers.sumparser.SumParser.pipe">
-<tt class="descname">pipe</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../../../../_modules/apetools/parsers/sumparser.html#SumParser.pipe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.pipe" title="Permalink to this definition">¶</a></dt>
-<dd><p>A coroutine to pipe output through</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Warnings:</th><td class="field-body"><ul class="first simple">
-<li>For bad connections with threads this might break (as the threads die)</li>
-<li>Use for good connections or live data only (use <cite>bandwidths</cite> and completed data for greater fidelity)</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><cite>target</cite>: a target to send matched output to</li>
-</ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Send:</th><td class="field-body"><ul class="first last simple">
-<li>bandwidth converted to self.units as a float</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.parsers.sumparser.SumParser.reset">
-<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.reset" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resets the attributes set during parsing</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.parsers.sumparser.SumParser.search">
-<tt class="descname">search</tt><big>(</big><em>line</em><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.search" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>line</cite>: a string of iperf output</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">match dict or None</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="apetools.parsers.sumparser.SumParser.valid">
-<tt class="descname">valid</tt><big>(</big><em>match</em><big>)</big><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.valid" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><ul class="first simple">
-<li><cite>match</cite>: a groupdict containing parsed iperf fields</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">True if the end-start interval is valid (within tolerance)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.SumParser.bandwidths">
-<tt class="descname">bandwidths</tt><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.bandwidths" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">iterator over the bandwidths</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.SumParser.conversion">
-<tt class="descname">conversion</tt><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.conversion" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">UnitConveter nested dictionary</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.SumParser.intervals">
-<tt class="descname">intervals</tt><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.intervals" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">dict with default values of 0</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">interval: bandwidth</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.SumParser.logger">
-<tt class="descname">logger</tt><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.logger" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">A logging object with module name and class name set.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="apetools.parsers.sumparser.SumParser.regex">
-<tt class="descname">regex</tt><a class="reference internal" href="../../../../_modules/apetools/parsers/sumparser.html#SumParser.regex"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#apetools.parsers.sumparser.SumParser.regex" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a dictionary of compiled regular expressions</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+  <div class="section" id="apetools-parsers-sumparser">
+<h1>apetools.parsers.sumparser<a class="headerlink" href="#apetools-parsers-sumparser" title="Permalink to this headline">¶</a></h1>
 </div>
 
 
@@ -549,7 +160,7 @@
     </p>
     <p>
         &copy; Copyright 2014, russelln.<br/>
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.3.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.6.<br/>
     </p>
   </div>
 </footer>
