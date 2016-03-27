@@ -7,7 +7,8 @@ The OldApe
 
 
 
-This is the older APE, that was meant to have been retired last year, but things came up so it is still in use. It is in maintenance mode, but as things come up they might be added to help out with specific projects as needed.
+
+This is the older APE, that was meant to have been retired, but is still in use. It is in maintenance mode, but as things come up they might be added to help out with specific projects as needed. The repository is hosted on `github <https://github.com/russellnakamura/oldape>`_.
 
 
 Written Documentation
@@ -27,13 +28,14 @@ Auto-Generated Documentation
 These are the documents created from the source files.
 
 
+
 .. toctree::
    :maxdepth: 1
 
    The BaseClass <baseclass.rst>
    The Log Setter <log_setter.rst>
    The Main Module <main.rst>
-   All-in-one Performance Evaluation Tools <readme.rst>
+   All-in-one Performance Evaluation Tools (Read Me) <readme.rst>
 
 .. toctree::
    :maxdepth: 1
@@ -54,4 +56,6 @@ These are the documents created from the source files.
    Threads <threads/index.rst>
    Tools <tools/index.rst>
    Watchers <watchers/index.rst>
+
+
 

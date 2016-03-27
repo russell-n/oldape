@@ -3,7 +3,6 @@
 import os
 import string
 
-
 RST_EXTENSION = '.rst'
 INDEX = 'index.rst'
 NEWLINE = '\n'
@@ -11,7 +10,6 @@ TOCTREE = NEWLINE + '.. toctree::'
 MAXDEPTH = '   :maxdepth: {0}' + NEWLINE
 HEADER = TOCTREE + NEWLINE + MAXDEPTH
 CONTENTS = '   {0} <{1}>'
-
 
 def grab_headline(filename):
     """
@@ -28,7 +26,6 @@ def grab_headline(filename):
             if len(line.strip()):
                 return line.strip()
     return
-
 
 def create_toctree(maxdepth=1, subfolders=None, add_headers=False):
     """
@@ -47,16 +44,15 @@ def create_toctree(maxdepth=1, subfolders=None, add_headers=False):
     filenames = sorted(name for name in contents if name.endswith(RST_EXTENSION)
                  and name != INDEX)
 
-    print HEADER.format(maxdepth)
+    print(HEADER.format(maxdepth))
 
     for filename in filenames:
         pretty_name = grab_headline(filename)
-        print CONTENTS.format(pretty_name, filename)
+        print(CONTENTS.format(pretty_name, filename))
 
     subfolder_toctree(maxdepth, subfolders, add_headers)
-    print
+    print("")
     return
-
 
 def subfolder_toctree(maxdepth=1, subfolders=None, add_headers=False):
     """
@@ -76,23 +72,22 @@ def subfolder_toctree(maxdepth=1, subfolders=None, add_headers=False):
     if subfolders is None and add_headers:
         name_indices = ((name, join(name, INDEX)) for name in contents if exists(join(name, INDEX)))
         for name, index in name_indices:
-            print name + ":"
-            print HEADER.format(maxdepth)
+            print(name + ":")
+            print(HEADER.format(maxdepth))
             pretty_name = grab_headline(index)
-            print CONTENTS.format(pretty_name, index)
+            print(CONTENTS.format(pretty_name, index))
         return
     
-    print HEADER.format(maxdepth)
+    print( HEADER.format(maxdepth))
     if subfolders is not None:
         sub_indices = (join(subfolder, INDEX) for subfolder in subfolders)
     else:
         sub_indices = (join(name, INDEX) for name in contents if exists(join(name, INDEX)))
         for sub_index in sorted(sub_indices):
             pretty_name = grab_headline(sub_index)
-            print CONTENTS.format(pretty_name, sub_index)
+            print(CONTENTS.format(pretty_name, sub_index))
     
     return
-
 
 if __name__ == '__main__':
     import pudb
