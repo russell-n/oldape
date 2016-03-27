@@ -5,16 +5,20 @@ A module to extract information from `ipconfig`.
 
 
 
+
+
+
+
 The Ipconfig Enum
 -----------------
 
-::
+
+.. code:: python
 
     class IpconfigEnum(object):
         __slots__ = ()
         address = "address"
     # end class IpConfigEnum
-    
     
 
 
@@ -34,6 +38,7 @@ The Ipconfig Error
 
 
 
+
 The Ipconfig Command
 --------------------
 
@@ -47,4 +52,6 @@ The Ipconfig Command
    Ipconfig
    Ipconfig.ip_expression
    Ipconfig.address
+
+
 

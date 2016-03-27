@@ -216,16 +216,16 @@ We don't have to do anything special for negative angles because according to th
 For example, if we mod the values in :math:`\{0, -45, \dots, -315\}` we get::
 
     for angle in xrange(0, -360, -45):
-        print "   {0},{1}".format(angle, angle % 360)
+        print( "   {0},{1}".format(angle, angle % 360))
 
 
 
 <<name='negative_modulo_example', echo=False, results='sphinx'>>=
 if __name__ == '__builtin__':
-    print ".. csv-table:: Modulo Example"
-    print "   :header: Angle, Angle % 360\n"
+    print( ".. csv-table:: Modulo Example")
+    print( "   :header: Angle, Angle % 360\n")
     for angle in xrange(0, -360, -45):
-        print "   {0},{1}".format(angle, angle % 360)
+        print( "   {0},{1}".format(angle, angle % 360))
 @
 
 Velocity

@@ -6,6 +6,10 @@ Meant to help serial, telnet and other connections that read streams.
 
 
 
+
+
+
+
 The Change Prompt
 -----------------
 
@@ -20,5 +24,7 @@ The Change Prompt
    ChangePrompt
    ChangePrompt.prompt
    ChangePrompt.run
+
+
 
 

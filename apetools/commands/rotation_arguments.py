@@ -46,8 +46,7 @@ Set Table Angle:
     Whenever it is powered up, you should tell it what angle it's at.
 
     --set  If set, calls set_angle instead of rotate function
-"""     
-
+"""
 
 # python standard library
 from argparse import ArgumentParser
@@ -59,7 +58,6 @@ from schema import Schema, Or, And, Use, SchemaError
 # this package
 from apetools import VERSION, BaseClass
 
-
 DEGREES_IN_CIRCLE = 360
 
 # from ht.cfg [rotator]
@@ -69,7 +67,6 @@ MAX_ACCELERATION = 5461.167
 # calculated from the ht.cfg velocity range
 MIN_VELOCITY = 1.512
 MAX_VELOCITY = 720
-
 
 class ArgumentsConstants(object):
     """
@@ -100,11 +97,9 @@ class ArgumentsConstants(object):
     default_timeout = 10
     default_acceleration = 100
     default_deceleration = 100
-# end ArgumentConstants    
-
+# end ArgumentConstants
 
 args_schema = {}
-
 
 acceleration = ArgumentsConstants.acceleration
 args_schema[acceleration] = Schema(And(Use(float, error='acceleration must be float'),
@@ -113,7 +108,6 @@ args_schema[acceleration] = Schema(And(Use(float, error='acceleration must be fl
                                               "({0} <= accel <= {1})").format(MIN_ACCELERATION,
                                                                               MAX_ACCELERATION)))
 
-
 deceleration = ArgumentsConstants.deceleration
 args_schema[deceleration] = Schema(And(Use(float, error='deceleration must be float'),
                                        lambda a: MIN_ACCELERATION <= a <= MAX_ACCELERATION,
@@ -121,19 +115,16 @@ args_schema[deceleration] = Schema(And(Use(float, error='deceleration must be fl
                                               "({0} <= accel <= {1})").format(MIN_ACCELERATION,
                                                                               MAX_ACCELERATION)))
 
-
 angle = ArgumentsConstants.angle
 args_schema[angle] = Schema(And(Use(int,
                                     error='Angle must be an integer'),
                                 Use(lambda a: a % DEGREES_IN_CIRCLE)))
 
-
 if __name__ == '__builtin__':
-    print ".. csv-table:: Modulo Example"
-    print "   :header: Angle, Angle % 360\n"
+    print( ".. csv-table:: Modulo Example")
+    print( "   :header: Angle, Angle % 360\n")
     for angle in xrange(0, -360, -45):
-        print "   {0},{1}".format(angle, angle % 360)
-
+        print( "   {0},{1}".format(angle, angle % 360))
 
 velocity = ArgumentsConstants.velocity
 args_schema[velocity] = Schema(And(Use(float,
@@ -142,24 +133,20 @@ args_schema[velocity] = Schema(And(Use(float,
                                         error="velocity out of range ({0} <= v < {1})".format(MIN_VELOCITY,
                                                                                              MAX_VELOCITY )))
 
-
 config = ArgumentsConstants.configuration
 args_schema[config] = Schema(Or(None,
                                 lambda c: os.path.isfile(c),
                                 error="File not found"))
-
 
 timeout = ArgumentsConstants.timeout
 args_schema[timeout] = Schema(And(Use(float),
                                   lambda t: t >= 0,
                                   error='timeout must be a non-negative float'))
 
-
 class ArgumentError(SchemaError):
     """
     Error to raise if the schema validation fails
     """
-
 
 class BaseArguments(BaseClass):
     def __init__(self, args=None):
@@ -522,4 +509,4 @@ class BaseArguments(BaseClass):
                      "silent timeout velocity").split()
         for attribute in attributes:
             getattr(self, attribute)
-# end class BaseArguments    
+# end class BaseArguments

@@ -12,13 +12,11 @@ from apetools.commons.timestamp import TimestampFormat
 from apetools.tools.sleep import Sleep
 from basecommand import BaseThreadedCommand
 
-
 class OscillatorError(CommandError):
     """
     Exception to raise if the oscillator fails
     """
 # end class OscillatorError
-
 
 class Oscillate(BaseThreadedCommand):
     """
@@ -240,7 +238,6 @@ class Oscillate(BaseThreadedCommand):
 
 # end class Oscillator
 
-
 class OscillateEvent(BaseClass):
     """
     An event to coordinate other commands with the start of a rotation
@@ -278,7 +275,6 @@ class OscillateEvent(BaseClass):
     def __str__(self):
         return "Wait For Next Rotation Event"
 # end class OscillateEvent
-
 
 class OscillateStop(BaseClass):
     """

@@ -6,9 +6,7 @@ from apetools.baseclass import BaseClass
 from apetools.parsers import oatbran as bran
 from apetools.commons.errors import CommandError
 
-
 COLON = ":"
-
 
 class NetshWlanExpressions(object):
     """
@@ -173,7 +171,6 @@ class NetshWlanExpressions(object):
         value = bran.NAMED(n=name,e=bran.ANYTHING_BOUNDED_BY_SPACES)
         return re.compile(bran.SPACES.join((key + value).split()))
 
-
 class NetshWlanKeys(object):
     __slots__ = ()
     authentication = "Authentication"
@@ -190,7 +187,6 @@ class NetshWlanKeys(object):
     ssid = "SSID"
     transmit_rate = "Transmit"
 # end class NetshWlanExpressions
-
 
 class NetshWlan(BaseClass):
     """

@@ -1,2 +1,2 @@
 VERSION = "2014.10.28"
-from baseclass import BaseClass
+from apetools.baseclass import BaseClass

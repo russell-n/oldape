@@ -4,6 +4,7 @@ Win RSSI
 A command to interpret the output of Miller's rssi puller.
 
 
+
 Win Rssi Error
 --------------
 
@@ -16,6 +17,10 @@ Win Rssi Error
    :toctree: api
 
    WinRssiError
+
+
+
+
 
 
 
@@ -33,4 +38,6 @@ Win RSSI
    WinRssi.expression
    WinRssi.validate
    WinRssi.__call__
+
+
 

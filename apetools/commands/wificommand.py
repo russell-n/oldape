@@ -7,17 +7,14 @@ from apetools.commons import errors
 
 from basewificommand import BaseWifiCommand
 
-
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
-
 
 class WifiCommandError(CommandError):
     """
     An error to raise if the Wifi Command fails
     """
 # end class WifiCommandError
-
 
 class WifiCommand(BaseWifiCommand):
     """
@@ -151,9 +148,8 @@ class WifiCommand(BaseWifiCommand):
                                                rssi=self.rssi)
 # end class WifiCommand
 
-
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()
     iw = IwCommand(connection)
-    print str(iw)
+    print(str(iw))

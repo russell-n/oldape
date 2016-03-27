@@ -10,11 +10,9 @@ from apetools.baseclass import BaseThreadClass
 from localconnection import OutputError 
 from apetools.commons import enumerations
 
-
 SPACER = '{0} {1} '
 UNKNOWN = "Unknown command: "
 EOF = ''
-
 
 class NonLocalConnection(BaseThreadClass):
     """
@@ -112,7 +110,7 @@ class NonLocalConnection(BaseThreadClass):
         thread = self.start(command, arguments)
         try:
             if self.exc_info:
-                raise self.exc_info[1], None, self.exc_info[2]
+                raise (self.exc_info[1], None, self.exc_info[2])
             return self.queue.get(timeout=timeout)
         except Queue.Empty as error:
             self.logger.debug(error)
@@ -181,7 +179,6 @@ class NonLocalConnection(BaseThreadClass):
         return "{0}".format(self.__class__.__name__)
 # end class NonLocalConnection
 
-
 class DummyConnection(NonLocalConnection):
     """
     A dummy connection is used to fake connections in commands.
@@ -204,14 +201,12 @@ class DummyConnection(NonLocalConnection):
                                                  timeout))
         return OutputError(StringIO(''), StringIO(''))
 
-
 # python standard library
 import unittest
 import random
 import string
 #third party
 from mock import MagicMock
-
 
 class TestDummyConnection(unittest.TestCase):
     def setUp(self):

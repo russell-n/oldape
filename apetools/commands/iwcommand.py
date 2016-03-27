@@ -7,10 +7,8 @@ from apetools.commons import enumerations
 from apetools.commons import expressions
 from apetools.commons import errors
 
-
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
-
 
 class IwCommand(BaseClass):
     """
@@ -140,9 +138,8 @@ class IwCommand(BaseClass):
                                                rssi=self.rssi)
 # end class IfconfigCommand
 
-
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()
     iw = IwCommand(connection)
-    print str(iw)
+    print(str(iw))

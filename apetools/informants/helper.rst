@@ -6,6 +6,10 @@ The Helper is a plugin manager that gets and builds help classes.
    
 
 
+
+
+
+
 The Helper
 ----------
 
@@ -22,6 +26,7 @@ The Helper
    
 
 
+
 Testing The Helper
 ------------------
 
@@ -29,6 +34,10 @@ Testing The Helper
    :toctree: api
 
    TestHelper.test_constructor
+
+
+
+
 
 
 

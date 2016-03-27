@@ -7,10 +7,8 @@ from apetools.commons import errors
 
 from basewificommand import BaseWifiCommand
 
-
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
-
 
 class WlCommand(BaseWifiCommand):
     """
@@ -142,9 +140,8 @@ class WlCommand(BaseWifiCommand):
                                                rssi=self.rssi)
 # end class WlCommand
 
-
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()
     iw = IwCommand(connection)
-    print str(iw)
+    print( str(iw))

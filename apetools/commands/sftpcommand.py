@@ -2,7 +2,6 @@
 from apetools.baseclass import BaseClass
 from apetools.connections.sshconnection import SSHConnection
 
-
 class SftpCommand(BaseClass):
     """
     An interface to the SftpCommand
@@ -128,15 +127,12 @@ class SftpCommand(BaseClass):
          - `remote`: path to put file on remote host
         """
         return self.sftp.put(localpath=local, remotepath=remote)
-        
-
 
 #python standard library
 import unittest
 
 #third party
 from mock import MagicMock, patch
-
 
 class TestSftpCommand(unittest.TestCase):
     def setUp(self):

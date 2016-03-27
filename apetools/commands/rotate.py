@@ -9,17 +9,14 @@ from apetools.commons.errors import CommandError
 from apetools.tools.killall import KillAll, KillAllError
 from apetools.commands.rotation_arguments import BaseArguments
 
-
 SIGKILL = 9
 PROCESS = 'rotate'
-
 
 class RotateError(CommandError):
     """
     An error in the rotation
     """
 # end class RotateError
-
 
 class RotateParameters(object):
     """
@@ -101,7 +98,6 @@ class RotateParameters(object):
             yield "{0}{1} {2}".format(self.booleans_string,
                                         self.values_string,
                                         angle)
-
 
 class RotateCommand(BaseClass):
     """
@@ -234,7 +230,6 @@ class RotateCommand(BaseClass):
 
 # end class RotateCommand
 
-
 class RotateCommandUsurper(RotateCommand):
     """
     Command to rotate turntables
@@ -279,16 +274,15 @@ class RotateCommandUsurper(RotateCommand):
             self.log_error(line)
         return
 
-
 if __name__ == "__main__":
     from apetools.connections.sshconnection import SSHConnection
     c = SSHConnection("pogo2", "root")
     r = RotateCommand(c)
-    print "Rotate to 90 degrees"
+    print("Rotate to 90 degrees")
     r(90)
     time.sleep(1)
-    print "Rotate to 180 Degrees"
+    print("Rotate to 180 Degrees")
     r(180)
     time.sleep(1)
-    print "Rotate to 0 degrees"
+    print( "Rotate to 0 degrees")
     r()

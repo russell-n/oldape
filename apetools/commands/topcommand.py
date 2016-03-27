@@ -9,12 +9,10 @@ from apetools.parsers import oatbran
 from apetools.commands.basecommand import BaseProcessCommand, BaseProcessGrep
 from apetools.commands.basecommand import ProcessCommandEnum, ProcessGrepEnum
 
-
 class TopCommandError(CommandError):
     """
     A command to raise if there is a problem with the top command.
     """
-
 
 class TopCommand(BaseProcessCommand):
     """
@@ -80,7 +78,6 @@ class TopCommand(BaseProcessCommand):
             self._command = 'top'
         return self._command
 
-
 class TopGrep(BaseProcessGrep):
     """
     The Top command adapted to extract process IDs.
@@ -133,8 +130,7 @@ class TopGrep(BaseProcessGrep):
                               oatbran.INTEGER + '[KBMG]\+']))
         return self._expression
 
-# end class TopGrep    
-
+# end class TopGrep
 
 #python standard library
 import unittest
@@ -145,7 +141,6 @@ from string import ascii_letters
 # third-party
 from nose.tools import raises
 from mock import MagicMock
-
 
 first_line = "Processes:  49 total, 1 running, 1 stuck, 47 sleeping... 223 threads    23:00:00"
 test_output = """"Processes:  49 total, 1 running, 1 stuck, 47 sleeping... 223 threads    23:00:00
@@ -375,8 +370,6 @@ UserEventA
 launchd
 """.split('\n')]
 
-
-
 test_line = '   61 backboardd   0.0%  2:07:12  12   577+     0      0      0  9884K+  406M+'
 test_pid = '61'
 test_process = 'backboardd'
@@ -429,7 +422,6 @@ class TestTop(unittest.TestCase):
         for line in self.top():
             pass
         return
-
 
 class TestTopGrep(unittest.TestCase):
     def setUp(self):

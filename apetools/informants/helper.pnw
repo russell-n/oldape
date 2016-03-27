@@ -75,7 +75,7 @@ class Helper(BaseClass):
                   stdin=PIPE,
                   stderr=STDOUT).communicate(input=source.output)
         except Exception as error:
-            print getattr(source.output)
+            print(getattr(source.output))
             self.logger.debug(error)
         return
 # end class Helper

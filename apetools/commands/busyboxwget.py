@@ -7,7 +7,6 @@ from collections import namedtuple
 from apetools.baseclass import BaseClass
 from apetools.parsers import oatbran
 
-
 EMPTY_STRING = ''
 NA = 'NA'
 UNKNOWN_HOST = 'unknown host'
@@ -25,7 +24,6 @@ NOT_A_SERVER= "Connection refused"
 ERRORS = [SERVER_DOWN, BAD_URL,
           BAD_ADDRESS, NO_RESPONSE, NOT_A_SERVER]
 
-
 attributes = 'elapsed error percentage kbits'
 
 HEADER = 'Elapsed(seconds),Complete(%),Size,Error\n'
@@ -41,8 +39,6 @@ class BusyboxWgetData(namedtuple('BusyboxWgetData', attributes)):
                                                              complete=self.percentage,
                                                              kbits=self.kbits,
                                                              error=self.error)
-        
-
 
 class BusyboxEnum(object):
     """
@@ -52,8 +48,7 @@ class BusyboxEnum(object):
     destination = 'destination'
     percentage_completed = 'percentage'
     kbits_transferred = 'kbits_transferred'
-# end BusyboxEnum        
-
+# end BusyboxEnum
 
 class BusyboxWget(BaseClass):
     """
@@ -170,7 +165,6 @@ class BusyboxWget(BaseClass):
         return self.run()
 # end class BusyboxWget
 
-
 # python standard library
 import unittest
 import random
@@ -207,7 +201,6 @@ wget: can't connect to remote host (192.168.20.51): No route to host
 
 """
 APE_LOG='null                  99% |****************************** |  1021M 00:00:00 ETA^Mnull                 100% |*******************************|  1024M 00:00:00 ETA'
-
 
 class TestBusyboxWget(unittest.TestCase):
     def setUp(self):
@@ -354,7 +347,6 @@ class TestBusyboxWget(unittest.TestCase):
         with patch('time.time', time_time):
             data = self.wget.__call__()
         self.assertEqual(data.percentage, '100')
-
 
 if __name__ == "__main__":
     connection = MagicMock()

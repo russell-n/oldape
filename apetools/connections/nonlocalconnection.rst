@@ -13,6 +13,16 @@ Calls to a NonLocalConnection takes the command-line command as a property and t
    DummyConnection
 
 
+.. code::
+
+    <class 'ImportError'>
+    No module named 'StringIO'
+    
+
+
+
+
+
 
 .. _non-local-connection:
 
@@ -33,6 +43,13 @@ The NonLocalConnection
    NonLocalConnection : __call__(command, arguments)
 
 
+.. code::
+
+    <class 'NameError'>
+    name 'BaseThreadClass' is not defined
+    
+
+
 
 The DummyConnection
 -------------------
@@ -41,6 +58,13 @@ The DummyConnection
 
    DummyConnection -|> NonLocalConnection
    DummyConnection -|> hostname
+
+
+.. code::
+
+    <class 'NameError'>
+    name 'NonLocalConnection' is not defined
+    
 
 
 
@@ -53,6 +77,16 @@ Testing the DummyConnection
    TestDummyConnection.test_constructor
    TestDummyConnection.test_call
    TestDummyConnection.test_dot_notation
+
+
+.. code::
+
+    <class 'ImportError'>
+    No module named 'mock'
+    
+
+
+
 
 
 

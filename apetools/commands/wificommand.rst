@@ -4,6 +4,10 @@ WiFi Command
 A module to query the device for interface information.
 
 
+
+
+
+
 Wifi Command Error
 ------------------
 
@@ -16,6 +20,7 @@ Wifi Command Error
    :toctree: api
 
    WifiCommandError
+
 
 
 
@@ -41,4 +46,9 @@ Wifi Command
    WifiCommand.get
    WifiCommand._match
    WifiCommand.__str__
+
+
+
+
+
 

@@ -1,7 +1,6 @@
 
 from apetools.baseclass import BaseClass
 
-
 class PowerOff(BaseClass):
     """
     A class to power-off a networked-switch

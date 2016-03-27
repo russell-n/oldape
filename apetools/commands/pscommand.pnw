@@ -64,7 +64,7 @@ Example Use::
     connection = SSHConnection(hostname='elin', username='tester')
     ps = PsCommand(connection)
     for line in ps():
-        print line
+        print(line)
 
 The Error Expression
 --------------------
@@ -190,7 +190,7 @@ Example Use::
                                operating_system=OperatingSystem.ios)
     grep = PsGrep(connection, 'iperf')
     for pid in grep():
-        print pid
+        print(pid)
 
 .. note:: Since the `PsGrep` is implemented in this case to directly use the `PsCommand` it acts as a `Builder` for it, making the collaboration with the `PsCommand` somewhat obscure.
 
@@ -202,11 +202,11 @@ The advantage in having this relationship is that you can change the `PsCommand`
                                 Operating_system=OperatingSystem.linux)
    grep = PsGrep(connection)
    for pid in grep('iperf'):
-       print pid
+       print(pid)
 
    grep.connection = connection_2
    for pid in grep('iperf'):
-       print pid
+       print(pid)
 
 <<name="expressions", echo=False>>=
 # linux ps expressions

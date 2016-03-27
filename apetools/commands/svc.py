@@ -5,7 +5,6 @@ from apetools.baseclass import BaseClass
 from apetools.connections import adbconnection
 from apetools.commons.errors import CommandError
 
-
 class ToggleWifiBase(BaseClass):
     """
     A callable class to enable or disable wifi
@@ -40,7 +39,6 @@ class ToggleWifiBase(BaseClass):
         return
 # end class ToggleWifiBase
 
-
 class EnableWifi(ToggleWifiBase):
     """
     A callable class to enable wifi
@@ -57,7 +55,6 @@ class EnableWifi(ToggleWifiBase):
         return
 # end class EnableWifi
 
-
 class DisableWifi(ToggleWifiBase):
     """
     A callable class to disable wifi
@@ -73,7 +70,6 @@ class DisableWifi(ToggleWifiBase):
         self.command.disable_wifi()
         return
 # end class DisableWifi
-
 
 class Svc(BaseClass):
     """

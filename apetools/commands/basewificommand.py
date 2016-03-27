@@ -5,10 +5,8 @@ from abc import ABCMeta, abstractproperty
 from apetools.baseclass import BaseClass
 from apetools.commons import errors
 
-
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
 CommandError = errors.CommandError
-
 
 class BaseWifiCommand(BaseClass):
     """

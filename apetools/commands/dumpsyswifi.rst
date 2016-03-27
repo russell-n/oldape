@@ -4,11 +4,19 @@ Dumpsys Wifi
 A command to query the dumpsys about wifi information.
 
 
+.. code::
+
+    <class 'ImportError'>
+    No module named 'StringIO'
+    
+
+
 
 Dumpsys Wifi Enumerations
 -------------------------
 
-::
+
+.. code:: python
 
     class DumpsysWifiEnumerations(object):
         """
@@ -24,7 +32,6 @@ Dumpsys Wifi Enumerations
         rssi = "rssi"
         link_speed = "link_speed"
     # end class DumpsysWifiEnumerations
-    
     
 
 
@@ -45,6 +52,7 @@ Dumpsys WiFi Expressions
    DumpsysWifiExpressions.supplicant_state
    DumpsysWifiExpressions.rssi
    DumpsysWifiExpressions.link_speed
+
 
 
 
@@ -72,4 +80,12 @@ DumpsysWifi
    DumpsysWifi.link_speed
    DumpsysWifi.get_match
    DumpsysWifi.__str__
+
+
+.. code::
+
+    <class 'NameError'>
+    name 'BaseClass' is not defined
+    
+
 

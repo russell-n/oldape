@@ -16,20 +16,17 @@ from apetools.parameters.iperf_common_parameters import IperfParametersEnum
 ConfigurationError = errors.ConfigurationError
 CommandError = errors.CommandError
 
-
 class IperfError(CommandError):
     """
     An IperfError indicates a connection problem between the client and server.
     """
 # end class IperfError
 
-
 class IperfCommandError(ConfigurationError):
     """
     an error to raise if the settings are unknown
     """
 # end class IperfCommandError
-
 
 class IperfCommandEnum(object):
     __slots__ = ()
@@ -42,7 +39,6 @@ class IperfCommandEnum(object):
     path = 'path'
     iperf = 'iperf'
 # end IperfCommandEnum
-
 
 class IperfCommand(BaseThreadClass):
     """
@@ -417,7 +413,6 @@ class IperfCommand(BaseThreadClass):
     
 # end IperfCommand
 
-
 # python standard library
 import unittest
 from threading import Lock
@@ -428,7 +423,6 @@ from mock import MagicMock
 
 #ape
 from apetools.parameters.iperf_udp_server_parameters import IperfUdpServerParameters
-
 
 class TestIperfCommand(unittest.TestCase):
     def setUp(self):

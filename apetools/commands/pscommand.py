@@ -11,7 +11,6 @@ from apetools.commands.basecommand import BaseProcessCommand, ProcessCommandEnum
 from apetools.commands.basecommand import BaseProcessGrep, ProcessGrepEnum
 operating_systems = enumerations.OperatingSystem
 
-
 class PsCommand(BaseProcessCommand):
     """
     The Ps Command issues commands and watches for errors
@@ -86,7 +85,6 @@ class PsCommand(BaseProcessCommand):
             self._command = 'ps'
         return self._command
 
-
 # linux ps expressions
 PID = oatbran.NAMED(n=ProcessGrepEnum.pid,
                            e=oatbran.NATURAL)
@@ -115,7 +113,6 @@ PS_ANDROID = oatbran.SPACES.join((USER, PID, PPID, VSIZE, RSS, WCHAN, PC, S_OR_R
 
 #cygwin
 #CYGWIN = oatbran.STRING_START + oatbran.SPACES + NAMED(n=expressions.PID_NAME,e=INTEGER)
-
 
 class PsGrep(BaseProcessGrep):
     """
@@ -173,8 +170,7 @@ class PsGrep(BaseProcessGrep):
             self._expression = re.compile(expression)
         return self._expression       
 
-# end class PsGrep    
-
+# end class PsGrep
 
 #python standard library
 import unittest
@@ -188,7 +184,6 @@ from mock import MagicMock
 import nose
 #apetools
 from apetools.commons.enumerations import OperatingSystem
-
 
 nexus_command_not_found = '/system/bin/sh: ps: not found'
 first_ubuntu_line = "  PID TTY          TIME CMD"
@@ -1028,7 +1023,6 @@ android_line = "app_115   22449 95    219336 21816 ffffffff 6fd0eb8c S im.doit.p
 android_process = 'im.doit.pro'
 android_pid = '22449'
 
-
 class TestPs(unittest.TestCase):
     def setUp(self):        
         self.logger = MagicMock()
@@ -1101,7 +1095,6 @@ class TestPs(unittest.TestCase):
         self.logger.warning.assert_called_with("No processes found, check `ps `")
         self.logger.debug.assert_called_with('USER     PID   PPID  VSIZE  RSS     WCHAN    PC         NAME')
         return
-
 
 class TestPsGrep(unittest.TestCase):
     def setUp(self):

@@ -5,6 +5,13 @@ A module to hold a generic iperf command.
 
 .. currentmodule:: apetools.commands.iperfcommand
 
+.. code::
+
+    <class 'ImportError'>
+    No module named 'Queue'
+    
+
+
 
 Errors Raised
 -------------
@@ -26,6 +33,13 @@ The `IperfError` is raised if a problem with the connection between the client a
    IperfError
 
 
+.. code::
+
+    <class 'NameError'>
+    name 'CommandError' is not defined
+    
+
+
 
 IperfCommandError
 ~~~~~~~~~~~~~~~~~
@@ -40,6 +54,13 @@ The `IperfCommandError` is raised if an error in the command-string is detected.
    :toctree: api
 
    IperfCommandError
+
+
+.. code::
+
+    <class 'NameError'>
+    name 'ConfigurationError' is not defined
+    
 
 
 
@@ -58,6 +79,7 @@ The `IperfCommandEnum` holds string constants for the :ref:`IperfCommand <iperf-
    IperfCommandEnum : udp
    IperfCommandEnum : path
    IperfCommandEnum : iperf
+
 
 
 
@@ -97,6 +119,7 @@ Because the server is running in a thread, it will set a ``self.last_filename`` 
    IperfCommand : __call__(device, filename, server)
    IperfCommand : last_filename
    IperfCommand : is_daemon
+
 
 
 
@@ -220,6 +243,16 @@ Testing The Iperf Command
    TestIperfCommand.test_daemon
    TestIperfCommand.test_is_daemon
    TestIperfCommand.test_set_parameters
+
+
+.. code::
+
+    <class 'ImportError'>
+    No module named 'StringIO'
+    
+
+
+
 
 
 

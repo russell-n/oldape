@@ -7,16 +7,13 @@ from apetools.parsers import oatbran
 from apetools.commons.errors import CommandError
 from apetools.baseclass import BaseClass
 
-
 class WinRssiError(CommandError):
     """
     A Win Rssi Error is raised if the output of Miller's rssi indicates a known error
     """
 # end WinRssiError
 
-
 NA = "NA"
-
 
 class WinRssi(BaseClass):
     """

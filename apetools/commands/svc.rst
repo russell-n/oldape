@@ -3,6 +3,13 @@ SVC
 
 A module to hold a front for android's `svc` command.
 
+.. code::
+
+    <class 'ImportError'>
+    No module named 'StringIO'
+    
+
+
 
 Toggle WiFi Base
 ----------------
@@ -21,6 +28,7 @@ Toggle WiFi Base
 
 
 
+
 Enable Wifi
 -----------
 
@@ -33,6 +41,7 @@ Enable Wifi
 
    EnableWifi
    EnableWifi.__call__
+
 
 
 
@@ -49,6 +58,7 @@ Disable Wifi
    DisableWifi
    DisableWifi.__call__
     
+
 
 
 SVC
@@ -68,3 +78,5 @@ SVC
    Svc.disable_wifi
    Svc.validate
     
+
+

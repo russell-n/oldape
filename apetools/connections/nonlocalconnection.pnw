@@ -146,7 +146,7 @@ class NonLocalConnection(BaseThreadClass):
         thread = self.start(command, arguments)
         try:
             if self.exc_info:
-                raise self.exc_info[1], None, self.exc_info[2]
+                raise (self.exc_info[1], None, self.exc_info[2])
             return self.queue.get(timeout=timeout)
         except Queue.Empty as error:
             self.logger.debug(error)

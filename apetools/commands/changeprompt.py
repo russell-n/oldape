@@ -8,9 +8,7 @@ from itertools import repeat
 # apetools libraries
 from apetools.baseclass import BaseClass
 
-
 EMPTY_STRING = ''
-
 
 class ChangePrompt(BaseClass):
     """

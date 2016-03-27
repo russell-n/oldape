@@ -9,9 +9,7 @@ from yapsy.PluginManager import PluginManager
 from apetools.baseclass import BaseClass
 from constants import HELP_FOLDER, BOLD, RESET, HELP_BASE, OUTPUT_VARIABLE
 
-
 IMPORT_PATH = "{f}.{t}"
-
 
 class Helper(BaseClass):
     """
@@ -53,15 +51,13 @@ class Helper(BaseClass):
                   stdin=PIPE,
                   stderr=STDOUT).communicate(input=source.output)
         except Exception as error:
-            print getattr(source.output)
+            print(getattr(source.output))
             self.logger.debug(error)
         return
 # end class Helper
 
-
 #standard library
 import unittest
-
 
 class TestHelper(unittest.TestCase):
     def test_constructor(self):

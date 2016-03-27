@@ -7,15 +7,12 @@ from apetools.baseclass import BaseClass
 from apetools.commons.errors import CommandError
 from apetools.parsers import oatbran
 
-
 NEWLINE = "\n"
-
 
 class WmicEnumeration(object):
     __slots__ = ()
     code = "code"
 # class WmicEnumeration
-
 
 class WmicWin32NetworkAdapter(BaseClass):
     """

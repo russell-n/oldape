@@ -7,7 +7,6 @@ import os
 from apetools.parsers import oatbran
 from apetools.commons.errors import CommandError
 
-
 class IwconfigEnums(object):
     __slots__ = ()
     ssid = "ssid"
@@ -16,7 +15,6 @@ class IwconfigEnums(object):
     noise = 'noise'
     bitrate = 'bitrate'
 # end class IwconfigEnums
-
 
 class Iwconfig(object):
     """

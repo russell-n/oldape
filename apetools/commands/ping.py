@@ -11,17 +11,14 @@ from apetools.commons import errors
 
 ConfigurationError = errors.ConfigurationError
 
-
 UNKNOWN_HOST = 'unknown host'
 NEWLINE = "\n"
-
 
 class PingData(namedtuple("PingData", ["target", "rtt"])):
     __slots__ = ()
 
     def __str__(self):
         return ",".join(["{f}:{v}".format(f=f,v=getattr(self, f)) for f in self._fields])
-
 
 class PingArguments(object):
     """
@@ -34,7 +31,6 @@ class PingArguments(object):
                  OperatingSystem.mac:' -c 1 -t 1 ',
                  OperatingSystem.ios:' -c 1 '}
 # end class PingArguments
-
 
 class PingCommand(BaseClass):
     """

@@ -5,16 +5,20 @@ A module to hold a front for window's `wmic` command to enable/disable wifi.
 
 
 
+
+
+
+
 Wmic Enumeration
 ----------------
 
-::
+
+.. code:: python
 
     class WmicEnumeration(object):
         __slots__ = ()
         code = "code"
     # class WmicEnumeration
-    
     
 
 
@@ -38,3 +42,5 @@ WmicWin32 Network Adapter
    WmicWin32NetworkAdapter.call_wmic
    WmicWin32NetworkAdapter.validate
     
+
+

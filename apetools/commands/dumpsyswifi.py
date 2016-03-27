@@ -6,7 +6,6 @@ from apetools.connections import adbconnection
 from apetools.parsers import oatbran
 from apetools.baseclass import BaseClass
 
-
 class DumpsysWifiEnumerations(object):
     """
     An enumerations object
@@ -21,7 +20,6 @@ class DumpsysWifiEnumerations(object):
     rssi = "rssi"
     link_speed = "link_speed"
 # end class DumpsysWifiEnumerations
-
 
 class DumpsysWifiExpressions(object):
     """
@@ -140,7 +138,6 @@ class DumpsysWifiExpressions(object):
             self._link_speed = re.compile(prefix + oatbran.SPACES + link + suffix)
         return self._link_speed
 # end class DumpsysWifiExpression
-
 
 class DumpsysWifi(BaseClass):
     """

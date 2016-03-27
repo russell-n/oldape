@@ -7,7 +7,6 @@ from apetools.baseclass import BaseClass
 from apetools.commons import enumerations
 from apetools.commons import expressions
 
-
 class NetcfgCommand(BaseClass):
     """
     The NetcfgCommand interprets netcfg
@@ -123,9 +122,8 @@ class NetcfgCommand(BaseClass):
                                                            mac=self.mac_address)
 # end class IfconfigCommand
 
-
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()
     netcfg = NetcfgCommand(connection)
-    print str(netcfg)
+    print(str(netcfg))

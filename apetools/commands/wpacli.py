@@ -9,7 +9,6 @@ from apetools.commons import errors
 
 CommandError = errors.CommandError
 
-
 class WpaCliCommand(BaseClass):
     """
     The WpaCliCommand interprets ifconfig
@@ -149,10 +148,9 @@ class WpaCliCommand(BaseClass):
 
 # end class WpaCliCommand
 
-
 if __name__ == "__main__":
     from apetools.connections import adbconnection
     connection = adbconnection.ADBShellConnection()
     command = WpaCliCommand(connection)
-    print str(command)
-    print command.status
+    print( str(command))
+    print(command.status)

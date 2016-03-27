@@ -2,7 +2,6 @@
 # python standard library
 import logging
 
-
 DOT_JOIN = "{0}.{1}"
 
 # the BaseClass is being imported into the __init__.py so these have to be defined here
@@ -12,7 +11,6 @@ BOLD = "\033[1m"
 RESET = "\033[0;0m"
 
 RED_RESET =  "{red}{{thing}}{reset}".format(red=RED, reset=RESET)
-
 
 class BaseClass(object):
     """
@@ -40,7 +38,6 @@ class BaseClass(object):
         return
 
 # end BaseClass
-
 
 class BaseThreadClass(BaseClass):
     """

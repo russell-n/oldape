@@ -9,16 +9,13 @@ from apetools.commons import enumerations
 from apetools.commons import expressions
 from apetools.commons.errors import ConfigurationError
 
-
 MAC_UNAVAILABLE = "MAC Unavailable (use `netcfg`)"
-
 
 class IfconfigError(ConfigurationError):
     """
     raise this if there is a user error
     """
 # end class Ifconfig error
-
 
 class IfconfigCommand(BaseClass):
     """

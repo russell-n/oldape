@@ -7,7 +7,6 @@ from threading import Thread
 from apetools.baseclass import BaseThreadClass, BaseClass
 from apetools.commons.errors import CommandError
 
-
 class BaseThreadedCommand(BaseThreadClass):
     """
     An abstract base-class for simple commands to run in a thread
@@ -61,18 +60,15 @@ class BaseThreadedCommand(BaseThreadClass):
         return
 # end class BaseThreadedCommand
 
-
 class ProcessCommandEnum(object):
     __slots__ = ()
     missing = 'missing'
     bad_arg = 'bad_arg'
 
-
 class ProcessGrepEnum(object):
     __slots__ = ()
     pid = 'pid'
     process = 'process'
-
 
 class BaseProcessCommand(BaseClass):
     """
@@ -211,7 +207,6 @@ class BaseProcessCommand(BaseClass):
         return "{0} {1}".format(self.command, self.arguments)
 # end class BaseProcessCommand
 
-
 class BaseProcessGrep(BaseClass):
     """
     A base class to grep process information
@@ -298,4 +293,4 @@ class BaseProcessGrep(BaseClass):
             if match:
                 line_map = match.groupdict()
                 yield line_map[self.field]
-        return    
+        return

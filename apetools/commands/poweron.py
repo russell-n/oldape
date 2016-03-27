@@ -1,7 +1,6 @@
 
 from apetools.baseclass import BaseClass
 
-
 class PowerOn(BaseClass):
     """
     A class to power-on a networked-switch
